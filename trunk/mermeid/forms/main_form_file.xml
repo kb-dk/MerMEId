@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<h:div id="revision-div" 
+	xmlns:h="http://www.w3.org/1999/xhtml" 
+	xmlns:xf="http://www.w3.org/2002/xforms" 
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:m="http://www.music-encoding.org/ns/mei">
+	<h:div class="inputdiv">
+		<xf:repeat nodeset="instance('data-instance')/m:meihead/m:filedesc/m:notesstmt/m:annot[@type='private_notes']" id="repeat-private_notes">
+			<h:fieldset>
+				<h:legend>Private notes <h:a class="help">?<h:span class="comment">A container for annotations not to be published  
+					or shown in the HTML preview.</h:span></h:a></h:legend>
+				<xf:textarea ref=".[index('repeat-private_notes')]"/>								
+			</h:fieldset>
+		</xf:repeat>		
+		
+		<xf:group ref="instance('data-instance')/m:meihead/m:revisiondesc" id="group-revisiondesc">
+			<h:fieldset>
+				<h:legend>Changes</h:legend>
+				<xf:repeat nodeset="m:change" id="repeat-change">
+					<h:div>
+						<xf:input ref="m:date" class="short">
+							<xf:label>Date <h:a class="help">?<h:span class="comment">Use date format YYYY-MM-DD, e.g. 2011-04-30. 
+								A new row with today's date is automatically created when opening the document. 
+								Use "Add revision" button to add rows manually.</h:span></h:a></xf:label>
+						</xf:input>
+						<xf:input ref="m:changedesc/m:p" class="mediumlong">
+							<xf:label>Description </xf:label>
+						</xf:input>
+						<xf:input ref="m:respstmt/m:persname" class="short">
+							<xf:label>Responsible </xf:label>
+						</xf:input>
+						
+						<!-- edit buttons -->
+						<h:span class="editmenu">
+							<xf:trigger class="delete">								
+								<h:span class="node">m:change</h:span>
+								<h:span class="index">repeat-change</h:span>
+								<h:span class="model">instance('empty-instance')/m:meihead/m:revisiondesc/m:change</h:span>
+							</xf:trigger>								
+						</h:span>
+						<!-- end  buttons -->
+						
+					</h:div>
+				</xf:repeat>
+				<xf:trigger style="float:right">
+					<xf:label>
+						<h:img src="http:/editor/images/add.gif" alt="Add" style="vertical-align:text-top;"/> Add revision </xf:label>
+					<xf:action ev:event="DOMActivate">
+						<xf:insert 
+							nodeset="m:change" 
+							at="last()" 
+							position="after" 
+							origin="instance('empty-instance')/m:meihead/m:revisiondesc/m:change"/>
+						<xf:setvalue ref="instance('data-instance')/m:meihead/m:revisiondesc/m:change[last()]/m:date" value="substring-before(now(), 'T')"/>
+					</xf:action>
+				</xf:trigger>
+			</h:fieldset>
+		</xf:group>
+	</h:div>
+	<h:br clear="all"/>
+</h:div>

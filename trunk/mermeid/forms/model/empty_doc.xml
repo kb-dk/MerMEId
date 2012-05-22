@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mei meiversion="2012" 
+  xmlns="http://www.music-encoding.org/ns/mei" 
+  xmlns:xl="http://www.w3.org/1999/xlink" 
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:tei="http://www.tei-c.org/ns/1.0">
+  <meiHead>
+    <altId analog=""/>
+    <fileDesc>
+      <titleStmt>
+        <title/>
+      </titleStmt>
+      <pubStmt>
+        <respStmt>
+          <corpName/>
+        </respStmt>
+        <date reg="" notbefore="" notafter=""/>
+        <identifier type=""/>
+        <availability>
+          <acqSource/>
+          <accessRestrict/> 
+        </availability>
+      </pubStmt>      
+      <seriesStmt>
+        <title/>
+        <identifier/>
+        <seriesStmt label="File collection">
+          <title/>
+          <identifier/>
+        </seriesStmt>
+      </seriesStmt>
+      <notesStmt>
+        <annot type="bibliography">
+          <listBibl type="primary" xmlns="http://www.tei-c.org/ns/1.0">
+            <bibl type="Letter" xml:id="bibl1">
+              <author/>
+              <name role="recipient"/>
+              <date when-iso="" notBefore-iso="" notAfter-iso=""/>
+              <geogName/>
+              <msIdentifier>
+                <repository/>
+                <idno/>
+              </msIdentifier>
+              <note/>
+              <ref target=""/>
+              <ref type="editions">
+                <bibl>
+                  <title type="short_title"/>
+                  <biblScope/>
+                </bibl>
+              </ref>
+            </bibl>
+          </listBibl>
+          <listBibl type="secondary" xmlns="http://www.tei-c.org/ns/1.0">
+            <bibl type="Monograph" xml:id="bibl2">
+              <abbr/>
+              <author/>
+              <date when-iso="" notBefore-iso="" notAfter-iso=""/>
+              <title level="m"/>
+              <editor/>
+              <biblScope type="pages"/>
+              <pubPlace/>
+              <publisher/>
+              <ref/>
+            </bibl>
+          </listBibl>
+          <listBibl type="documentation" xmlns="http://www.tei-c.org/ns/1.0">
+            <bibl type="Concert_programme" xml:id="bibl3">
+              <abbr/>
+              <author/>
+              <date when-iso="" notBefore-iso="" notAfter-iso=""/>
+              <title level="m"/>
+              <biblScope type="pages"/>
+              <pubPlace/>
+              <publisher/>
+              <ref/>
+            </bibl>
+          </listBibl>
+        </annot>
+        <annot type="private_notes"/>
+      </notesStmt>
+      <sourceDesc>
+        <source xml:id="source1" analog="frbr:manifestation">
+          <titleStmt>
+            <title/>
+            <respStmt>
+              <persName role=""/>
+            </respStmt>
+          </titleStmt>
+          <pubStmt>
+            <respStmt>
+              <corpName role="publisher"/>
+            </respStmt>
+            <geogName/>
+            <date reg="" notbefore="" notafter=""/>
+            <identifier type="plate_no"/>
+            <identifier analog="RISM"/>
+          </pubStmt>
+          <physDesc>
+            <condition/>
+            <titlePage label="">
+              <p/>
+            </titlePage>
+            <extent unit="pages"/>
+            <dimensions unit="cm"/>
+            <watermark>
+              <ptr target="" mimetype="" xl:title=""/>
+            </watermark>
+            <physMedium/>
+          </physDesc>
+          <notesStmt>
+            <annot type="source_description"/>
+            <annot type="links">
+              <ptr target="" mimetype="" xl:title=""/>
+            </annot>
+          </notesStmt>
+          
+          <classification>
+            <termList>
+              <term classcode="DcmContentClass"/>
+              <term classcode="DcmPresentationClass"/>
+              <term classcode="DcmAuthorityClass"/>
+              <term classcode="DcmScoringClass"/>
+              <term classcode="DcmStateClass"/>
+              <term classcode="DcmCompletenessClass"/>
+            </termList>
+          </classification>
+          
+          <itemList>
+            <item target="">
+              <titleStmt>
+                <title/>
+              </titleStmt>
+              <pubStmt>
+                <date reg="" notbefore="" notafter=""/>
+              </pubStmt>
+              <physDesc>
+                <condition/>
+                <titlePage label="">
+                  <p/>
+                </titlePage>
+                <physLoc>
+                  <repository>
+                    <corpName/>
+                    <identifier/>
+                    <identifier analog="RISM"/>
+                    <ptr target="" mimetype="" xl:title="Library record"/>
+                  </repository>
+                </physLoc>
+                <provenance>
+                  <eventList>
+                    <event>
+                      <title/>
+                      <date reg="" notbefore="" notafter=""/>
+                      <geogName role=""/>
+                      <corpName role=""/>
+                      <persName role=""/>
+                    </event>
+                  </eventList>
+                </provenance>
+                <extent unit="pages"/>
+                <dimensions unit="cm"/>
+                <handList>
+                  <hand medium="" initial="false"/>
+                </handList>
+                <watermark>
+                  <ptr target="" mimetype="" xl:title=""/>
+                </watermark>
+                <physMedium/>
+              </physDesc>
+              <notesStmt>
+                <annot type="source_description"/>
+                <annot type="links">
+                  <ptr target="" mimetype="" xl:title=""/>
+                </annot>
+              </notesStmt>
+              <componentGrp>
+                <item>
+                  <titleStmt>
+                    <title/>
+                  </titleStmt>
+                  <pubStmt>
+                    <respStmt>
+                      <corpName role="publisher"/>
+                    </respStmt>
+                    <geogName/>
+                    <date reg="" notbefore="" notafter=""/>
+                    <identifier type="plate_no"/>
+                  </pubStmt>
+                  <physDesc>
+                    <condition/>
+                    <titlePage label="">
+                      <p/>
+                    </titlePage>
+                    <physLoc>
+                      <repository>
+                        <corpName/>
+                        <identifier analog=""/>
+                        <ptr target="" mimetype="" xl:title="Library record"/>
+                        <ptr target="" mimetype="" xl:title="Facsimile"/>
+                      </repository>
+                    </physLoc>
+                    <provenance>
+                      <eventList>
+                        <event>
+                          <title/>
+                          <date reg="" notbefore="" notafter=""/>
+                          <geogName role=""/>
+                          <corpName role=""/>
+                          <persName role=""/>
+                        </event>
+                      </eventList>
+                    </provenance>
+                    <extent unit="pages"/>
+                    <dimensions unit="cm"/>
+                    <handList>
+                      <hand medium="" initial="false"/>
+                    </handList>
+                    <watermark>
+                      <ptr target="" xl:title="" mimetype=""/>
+                    </watermark>
+                    <physMedium/>
+                  </physDesc>
+                  <notesStmt>
+                    <annot type="source_description"/>
+                    <annot type="links">
+                      <ptr target="" mimetype="" xl:title=""/>
+                    </annot>
+                  </notesStmt>
+                </item>                
+              </componentGrp>
+            </item> 
+          </itemList>
+          <relationList>
+            <relation rel="isManifestationOf" target="#version1"/>
+          </relationList>
+        </source>
+      </sourceDesc>
+    </fileDesc>
+    
+    <encodingDesc>
+      <projectDesc>
+        <p>Created using MerMEId 0.1</p>
+      </projectDesc>
+    </encodingDesc>
+    
+    <workDesc>
+      <work xml:id="work1" analog="frbr:work">
+        <titleStmt>
+          <title xml:lang="en" type="main"/>
+          <title type="alternative" xml:lang="en"/>
+          <title type="uniform" xml:lang="en"/>
+          <title type="original" xml:lang="en"/>
+          <title type="subordinate" xml:lang="en"/>
+          <title type="text_source" xml:lang="en"/>
+          <respStmt>
+            <persName role="composer"/>
+            <persName role="dedicatee"/>
+            <persName role="author"/>
+          </respStmt>
+        </titleStmt>        
+        <history>
+          <creation>
+            <date reg="" notbefore="" notafter=""/>
+            <geogName/>            
+          </creation>
+          <p/>
+          <eventList type="history">
+            <event evidence="">
+              <title/>
+              <date reg="" notbefore="" notafter=""/>
+              <geogName role="place"/>
+              <corpName role=""/>
+              <persName role=""/>
+              <bibl label="documentation"/>
+            </event>
+          </eventList>
+          <eventList type="performances">
+            <event evidence="">
+              <title/>
+              <date reg="" notbefore="" notafter=""/>
+              <geogName role="venue"/>
+              <geogName role="place"/>
+              <corpName role="ensemble"/>
+              <persName role="conductor"/>
+              <persName role="soloist"><ref target=""/></persName>
+              <bibl label="documentation"/>
+              <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0">
+                <bibl type="Journal_article">
+                  <author/>
+                  <date when-iso="" notBefore-iso="" notAfter-iso=""/>
+                  <title level="a"/>
+                  <title level="j"/>
+                  <editor/>
+                  <biblScope type="vol"/>
+                  <biblScope type="issue"/>
+                  <biblScope type="pp"/>
+                  <pubPlace/>
+                  <publisher/>
+                  <ref target=""/>
+                </bibl>
+              </listBibl>
+            </event>
+          </eventList>
+        </history>
+        
+        <langUsage>
+          <language xml:id="en">English</language>
+        </langUsage>
+        
+        <notesStmt>
+          <annot type="links">
+            <ptr target="" mimetype="" xl:title="External description"/> 
+          </annot>
+          <annot type="general_description"/> 
+        </notesStmt>        
+        
+        <classification>
+          <classCode xml:id="DcmContentClass"/>
+          <classCode xml:id="DcmPresentationClass"/>
+          <classCode xml:id="DcmAuthorityClass"/>
+          <classCode xml:id="DcmScoringClass"/>
+          <classCode xml:id="DcmStateClass"/>
+          <classCode xml:id="DcmCompletenessClass"/>
+          <termList>
+            <term></term>
+          </termList>
+        </classification>
+
+        <expressionList>
+          <expression xml:id="version1">
+            <titleStmt>
+              <title xml:lang="en"/>
+              <respStmt>
+                <persName role=""/>
+              </respStmt>
+            </titleStmt>
+            <history>
+              <creation>
+                <date reg="" notbefore="" notafter=""/>
+                <geogName/>            
+              </creation>
+              <p/>
+              <eventList type="history">
+                <event>
+                  <title/>
+                  <date reg="" notbefore="" notafter=""/>
+                  <geogName role=""/>
+                  <corpName role=""/>
+                  <persName role=""/>
+                  <bibl label="documentation"/>
+                </event>
+              </eventList>
+              <eventList type="performances">
+                <event>
+                  <title/>
+                  <date reg="" notbefore="" notafter=""/>
+                  <geogName role="venue"/>
+                  <geogName role="place"/>
+                  <corpName role="ensemble"/>
+                  <persName role="conductor"/>
+                  <persName role="soloist"><ref target=""/></persName>
+                  <bibl label="documentation"/>
+                  <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0">
+                    <bibl type="Journal_article">
+                      <author/>
+                      <date when-iso="" notBefore-iso="" notAfter-iso=""/>
+                      <title level="a"/>
+                      <title level="j"/>
+                      <editor/>
+                      <biblScope type="vol"/>
+                      <biblScope type="issue"/>
+                      <biblScope type="pp"/>
+                      <pubPlace/>
+                      <publisher/>
+                      <ref target=""/>
+                    </bibl>
+                  </listBibl>
+                </event>
+              </eventList>
+            </history>
+            <key pname="" accid="" mode=""/>
+            <tempo/>
+            <meter meter.count="" meter.unit="" meter.sym=""/>
+            <perfMedium analog="marc:048" authority="marcmusperf">
+              <ensemble xml:id="ensemble_1">
+                <instrVoice reg=""/>
+              </ensemble>
+              <performer xml:id="performer_1">
+                <instrVoice reg="" count="1" solo="false"/>
+              </performer>
+            </perfMedium>
+            <classification>
+              <termList>
+                <term/>
+              </termList>
+            </classification>
+            
+            <castList>
+              <castItem xml:id="cast1">
+                <role>
+                  <ref target="">
+                    <name xml:lang="en"/>  
+                  </ref>
+                </role>
+                <roleDesc xml:lang="en"/>
+              </castItem>
+            </castList>
+            
+            <contents/>
+            
+            <!-- top-level components -->            
+            <componentGrp>
+              <expression xml:id="level1_comp1" n=""> 
+                <titleStmt>
+                  <title xml:lang="en"/>
+                  <respStmt>
+                    <persName role=""/> 
+                  </respStmt>
+                </titleStmt>
+                <key pname="" accid="" mode=""/>
+                <tempo/>
+                <meter meter.count="" meter.unit="" meter.sym=""/>
+                <perfMedium analog="marc:048" authority="marcmusperf">
+                  <ensemble xml:id="ensemble_2">
+                    <instrVoice reg=""/>
+                  </ensemble>
+                  <performer xml:id="performer_2">
+                    <instrVoice reg="" count="1" solo="false"/>
+                  </performer>
+                </perfMedium>
+                <castList>
+                  <castItem xml:id="cast_1">
+                    <role>
+                      <ref target="">
+                        <name xml:lang="en"/>  
+                      </ref>
+                    </role>
+                    <roleDesc xml:lang="en"/>
+                  </castItem>
+                </castList>
+                <incip>     
+                  <incipText> 
+                    <p xml:lang="en"/>
+                  </incipText>
+                  <graphic target="" xl:title="" targettype="lowres"/>
+                  <graphic target="" xl:title="" targettype="hires"/>
+                  <score/>
+                </incip>
+
+                <!-- next sub-level components -->
+                <componentGrp/>
+                <relationList>
+                  <relation rel="hasReproduction" label="" targettype="edited_score"/> <!-- link to external edition -->
+                </relationList>
+              </expression>
+            </componentGrp>
+            <relationList>
+              <relation rel="hasReproduction" label="" targettype="edited_score"/> <!-- link to external edition -->
+            </relationList>
+          </expression>
+        </expressionList>
+       
+      </work>
+    </workDesc>
+    
+    <revisionDesc>
+      <change>
+        <respStmt>
+          <persName/>
+        </respStmt>
+        <changeDesc>
+          <p/>
+        </changeDesc>
+        <date reg=""/>
+      </change>
+    </revisionDesc>
+    
+  </meiHead>
+  <music>
+    
+  </music>
+</mei>

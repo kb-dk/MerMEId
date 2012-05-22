@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms" xmlns:exforms="http://www.exforms.org/exf/1-0"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner" xmlns:saxon="http://saxon.sf.net/"
+    xmlns:xbl="http://www.w3.org/ns/xbl" xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <!--
+        Component generating buttons to add, delete, copy or move elements.
+        
+        The component requires four attributes:
+        triggers:   a list (white space or comma separated) of buttons to display; 
+        recognized values are add, delete, remove, copy, up, down, and all.
+        "all" equals add, delete, copy, up and down. 
+        As opposed to "delete", "remove" also allows removing the last 
+        remaining row. 
+        nodeset:    the name and predicate of the repeated nodeset (the . selector will not work)
+        index:      the repeat's id  
+        origin:     the nodeset to use as a model when adding a new elements
+        
+        Example: 
+        <xf:repeat nodeset="m:titlestmt/m:title[@type='main']" id="main_titles">
+        <xf:input ref="."/>
+        <dcm:element-buttons 
+        triggers="add delete copy" 
+        nodeset="m:title[@type='main']" 
+        index="main_titles"
+        origin="instance('empty-instance')/m:meihead/m:filedesc/m:titlestmt/m:title[@type='main']"/>
+        </xf:repeat>
+        
+        Danish Centre for Music Publication (DCM) 
+        Axel Teich Geertinger, 2012
+        atge@kb.dk
+    -->
+    
+    <xbl:binding id="dcm-element-buttons-binding" element="dcm|element-buttons">
+        <!-- Orbeon Form Builder Component Metadata -->
+        <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+            <display-name lang="en">Add, delete, copy or move elements</display-name>
+        </metadata>
+        <xbl:resources>
+            <xbl:style> 
+                .xbl-dcm-element-buttons { 
+                    display:inline; 
+                    width: auto; 
+                    background-color: transparent;
+                    margin: 0 0 0 5px;
+                }
+                .xbl-dcm-element-buttons .editmenu .xforms-group {
+                    margin: 0 0 0 -8px;
+                }                        
+            </xbl:style>
+        </xbl:resources>
+        <xbl:template>
+            <xf:group xxbl:scope="outer">
+                
+                <xxf:variable name="index" xbl:attr="xbl:text=index"/>
+                <xxf:variable name="nodeset" xbl:attr="xbl:text=nodeset"/>
+                <xxf:variable name="attr_origin" xbl:attr="xbl:text=origin"/>
+                <xxf:variable name="triggers" xbl:attr="xbl:text=triggers"/>
+                <xxf:variable name="origin" as="node()?">
+                    <xxf:sequence select="xxf:evaluate($attr_origin)" xxbl:scope="outer"/>
+                </xxf:variable>
+                
+                <h:span class="editmenu">
+                    <xf:group ref=".[contains($triggers,'up') or contains($triggers,'all')]">
+                        <xf:repeat nodeset=".[empty(xxf:evaluate(concat('preceding-sibling::',$nodeset)))]">
+                            <h:img src="http:/editor/images/arrow_up_disabled.gif" class="button_patch"/>
+                        </xf:repeat>
+                        <xf:trigger appearance="minimal"
+                            ref=".[exists(xxf:evaluate(concat('preceding-sibling::',$nodeset)))]">
+                            <xf:label><h:img src="http:/editor/images/arrow_up.gif" alt="Up" title="Move up"/></xf:label>
+                            <xf:recalculate ev:event="DOMFocusIn"/>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:insert context="parent::node()"
+                                    origin="xxf:evaluate($nodeset)[index($index)]"
+                                    nodeset="xxf:evaluate($nodeset)[index($index)-2]"/>
+                                <xf:delete nodeset="." at="index($index)"/> 
+                            </xf:action>
+                        </xf:trigger>
+                    </xf:group>                    
+                    <xf:group ref=".[contains($triggers,'down') or contains($triggers,'all')]">
+                        <xf:repeat nodeset=".[empty(xxf:evaluate(concat('following-sibling::',$nodeset)))]">
+                            <h:img src="http:/editor/images/arrow_down_disabled.gif" class="button_patch"/>
+                        </xf:repeat>
+                        <xf:trigger appearance="minimal"
+                            ref=".[exists(xxf:evaluate(concat('following-sibling::',$nodeset)))]">
+                            <xf:label><h:img src="http:/editor/images/arrow_down.gif" alt="Down" title="Move down"/></xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:insert context="parent::node()" 
+                                    origin="xxf:evaluate($nodeset)[index($index)]"
+                                    nodeset="xxf:evaluate($nodeset)[index($index)+1]"/>
+                                <xf:delete nodeset="." at="index($index)-2"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </xf:group>                    
+                    <xf:group ref=".[contains($triggers,'copy') or contains($triggers,'all')]">
+                        <xf:trigger appearance="minimal">
+                            <xf:label><h:img src="http:/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:insert context="parent::node()" 
+                                    origin="xxf:evaluate($nodeset)[index($index)]"
+                                    nodeset="xxf:evaluate($nodeset)[index($index)]"/>
+                                <xf:setvalue ref="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)+1]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </xf:group> 
+                    <xf:group ref=".[contains($triggers,'add') or contains($triggers,'all')]">
+                        <xf:trigger appearance="minimal">
+                            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:insert context="parent::node()" origin="$origin"
+                                    nodeset="xxf:evaluate($nodeset)[index($index)]"/>
+                                <xf:setvalue ref="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)+1]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </xf:group>
+                    <xf:group ref=".[contains($triggers,'delete') or contains($triggers,'all') or contains($triggers,'remove')]">
+                        <xf:repeat nodeset=".[count(xxf:evaluate(concat('../',$nodeset)))=1 and not(contains($triggers,'remove'))]">
+                            <h:img src="http:/editor/images/remove_disabled.gif" class="button_patch"/>
+                        </xf:repeat>
+                        <xf:trigger appearance="minimal"
+                            ref=".[count(xxf:evaluate(concat('../',$nodeset)))&gt;1 or contains($triggers,'remove')]">
+                            <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:delete ev:event="DOMActivate" nodeset="."
+                                at="index($index)"/>
+                        </xf:trigger>
+                    </xf:group>    
+                </h:span>
+            </xf:group>
+        </xbl:template>
+    </xbl:binding>
+</xbl:xbl>

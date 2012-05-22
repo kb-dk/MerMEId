@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<perfMedium xmlns="http://www.music-encoding.org/ns/mei">
+    <!-- Pre-defined instrument groups for easy inserting. -->
+    <!-- Ensembles without a "reg" attribute in <instrVoice> are not shown in the 
+         list of pre-defined entire ensembles; instead, they are used for grouped insertion
+         at "performer" level, i.e. as part of a larger ensemble or stand-alone performers -->
+    <ensemble>
+        <instrVoice reg="on"></instrVoice>
+    </ensemble>
+    <ensemble xml:id="">
+        <instrVoice>Piano</instrVoice>
+        <performer xml:id="">
+            <instrVoice count="1" reg="ka">pno.</instrVoice>
+        </performer>    
+    </ensemble>
+    <ensemble xml:id="">
+        <instrVoice>Voice &amp; piano</instrVoice>
+        <performer xml:id="">
+            <instrVoice count="1" reg="vn">voice</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="1" reg="ka">pno.</instrVoice>
+        </performer>    
+    </ensemble>
+    <ensemble xml:id="">
+        <instrVoice reg="oa">Orchestra</instrVoice>
+        <performer xml:id="">
+            <instrVoice count="2" reg="wa">fl.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="2" reg="wb">ob.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="2" reg="wc">cl.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="2" reg="wd">fg.</instrVoice>
+        </performer>    
+        <performer xml:id="">
+            <instrVoice count="4" reg="ba">cor.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="2" reg="bb">tr.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="3." reg="bd">trb.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="1" reg="be">tb.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="1" reg="pa">timp.</instrVoice>
+        </performer>    
+        <performer xml:id="">
+            <instrVoice count="" reg="sn">str.</instrVoice>
+        </performer>        
+    </ensemble>
+    <ensemble xml:id="">
+        <instrVoice>Woodwinds 2.2.2.2</instrVoice>
+        <performer xml:id="">
+            <instrVoice count="2" reg="wa">fl.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="2" reg="wb">ob.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="2" reg="wc">cl.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="2" reg="wd">fg.</instrVoice>
+        </performer>    
+    </ensemble>
+    <ensemble xml:id="">
+        <instrVoice>Brass 4.2.3.1 + timp.</instrVoice>
+        <performer xml:id="">
+            <instrVoice count="4" reg="ba">cor.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="2" reg="bb">tr.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="3." reg="bd">trb.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="1" reg="be">tb.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="1" reg="pa">timp.</instrVoice>
+        </performer>    
+    </ensemble>
+    <ensemble xml:id="">
+        <instrVoice reg="oc">Strings (5-part)</instrVoice>
+        <performer xml:id="">
+            <instrVoice count="" reg="sa">vl.1</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="" reg="sa">vl.2</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="" reg="sb">va.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="" reg="sc">vc.</instrVoice>
+        </performer>        
+        <performer xml:id="">
+            <instrVoice count="" reg="sd">cb.</instrVoice>
+        </performer>    
+    </ensemble>
+    <ensemble xml:id="">
+        <instrVoice>Strings (unspec.)</instrVoice>
+        <performer xml:id="">
+            <instrVoice count="" reg="sn">str.</instrVoice>
+        </performer>    
+    </ensemble>
+    <ensemble xml:id="">
+        <instrVoice reg="oc">String quartet</instrVoice>
+        <performer xml:id="">
+            <instrVoice count="2" reg="sa">vl.</instrVoice>
+        </performer>   
+        <performer xml:id="">
+            <instrVoice count="1" reg="sb">va.</instrVoice>
+        </performer>   
+        <performer xml:id="">
+            <instrVoice count="1" reg="sc">vc.</instrVoice>
+        </performer>   
+    </ensemble>
+    <ensemble xml:id="">
+        <instrVoice reg="ca">Choir SATB</instrVoice>
+        <performer xml:id="">
+            <instrVoice count="1" reg="va">S.</instrVoice>
+        </performer>   
+        <performer xml:id="">
+            <instrVoice count="1" reg="vc">A.</instrVoice>
+        </performer>   
+        <performer xml:id="">
+            <instrVoice count="1" reg="vd">T.</instrVoice>
+        </performer>   
+        <performer xml:id="">
+            <instrVoice count="1" reg="vf">B.</instrVoice>
+        </performer>   
+    </ensemble>
+    <ensemble xml:id="">
+        <instrVoice reg="ca">Choir SSAATTBB</instrVoice>
+        <performer xml:id="">
+            <instrVoice count="2" reg="va">S.</instrVoice>
+        </performer>   
+        <performer xml:id="">
+            <instrVoice count="2" reg="vc">A.</instrVoice>
+        </performer>   
+        <performer xml:id="">
+            <instrVoice count="2" reg="vd">T.</instrVoice>
+        </performer>   
+        <performer xml:id="">
+            <instrVoice count="2" reg="vf">B.</instrVoice>
+        </performer>   
+    </ensemble>
+</perfMedium>

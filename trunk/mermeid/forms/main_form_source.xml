@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<h:div id="source-div" 
+  xmlns:xi="http://www.w3.org/2001/XInclude" 
+  xmlns:h="http://www.w3.org/1999/xhtml" 
+  xmlns:xf="http://www.w3.org/2002/xforms"
+  xmlns:ev="http://www.w3.org/2001/xml-events" 
+  xmlns:m="http://www.music-encoding.org/ns/mei">
+
+  <h:div class="inputdiv">
+    <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc">
+      <xf:repeat nodeset="m:source" id="repeat-source">
+        <xi:include href="source-contained-elements.xml" parse="xml"/>
+      </xf:repeat>
+    </xf:group>
+  </h:div>
+  
+  <h:br clear="all"/>
+</h:div>

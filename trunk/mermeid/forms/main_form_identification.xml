@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<h:div id="identification-div" xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:m="http://www.music-encoding.org/ns/mei"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xf="http://www.w3.org/2002/xforms"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:dcm="http://www.kb.dk/dcm">
+	
+	<h:div class="inputdiv">
+		<h:fieldset>
+			<h:legend>Titles and originators</h:legend>
+			<xf:group ref="instance('data-instance')/m:meihead/m:filedesc/m:titlestmt"
+				id="repeat-title">
+				<h:div class="blocklabel">Main title 
+					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+				</h:div>
+				<xf:repeat nodeset="m:title[@type='main']" id="main_titles" class="input_group">
+					<h:div>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+						<dcm:element-buttons 
+							triggers="all" 
+							nodeset="m:title[@type='main']" 
+							index="main_titles"
+							origin="instance('empty-instance')/m:meihead/m:filedesc/m:titlestmt/m:title[@type='main']"/>
+					</h:div>
+				</xf:repeat>
+				<h:div class="blocklabel">Alternative title
+					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+				</h:div>
+				<xf:repeat nodeset="m:title[@type='alternative']" id="alternative_titles" class="input_group">
+					<h:div>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+						
+						<!-- edit buttons -->
+						<h:span class="editmenu">
+							<h:span class="editmenu">
+								<xf:trigger class="all">								
+									<h:span class="node">m:title[@type='alternative']</h:span>
+									<h:span class="index">alternative_titles</h:span>
+									<h:span class="model">instance('empty-instance')/m:meihead/m:filedesc/m:titlestmt/m:title[@type='alternative']</h:span>
+								</xf:trigger>								
+							</h:span>
+						</h:span>
+						<!-- end buttons -->
+					</h:div>
+				</xf:repeat>			
+				
+				<h:div class="blocklabel">Subtitle
+					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+				</h:div>
+				<xf:repeat nodeset="m:title[@type='subordinate']" id="subtitles" class="input_group">
+					<h:div>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+						
+						<!-- edit buttons -->
+						<h:span class="editmenu">
+							<xf:trigger class="all">								
+								<h:span class="node">m:title[@type='subordinate']</h:span>
+								<h:span class="index">subtitles</h:span>
+								<h:span class="model">instance('empty-instance')/m:meihead/m:filedesc/m:titlestmt/m:title[@type='subordinate']</h:span>
+							</xf:trigger>								
+						</h:span>
+						<!-- end  buttons -->
+					</h:div>
+				</xf:repeat>
+				
+				<h:br clear="all"/>
+				
+				<!-- New persons editor -->
+				<xf:group ref="instance('data-instance')/m:meihead/m:filedesc/m:titlestmt/m:respstmt[m:persname[count(@role)&gt;0 and @role!='']]">
+					<h:div class="blocklabel">Persons</h:div>			
+					<xf:repeat nodeset="m:persname" id="relators-repeat">
+						<dcm:relator ref=".">
+							<xf:label>Name </xf:label>
+						</dcm:relator>
+						<!-- edit buttons -->
+						<h:span class="editmenu">
+							<xf:trigger class="add delete">								
+								<h:span class="node">m:persname</h:span>
+								<h:span class="index">relators-repeat</h:span>
+								<h:span class="model">instance('empty-instance')/m:meihead/m:filedesc/m:titlestmt/m:respstmt/m:persname[1]</h:span>
+							</xf:trigger>								
+						</h:span>
+						<!-- end  buttons -->
+						<h:br/>
+					</xf:repeat>
+				</xf:group>
+				<!-- end persons -->
+				<!-- old persons editor -->
+				<h:div>
+					<xf:group ref="m:respstmt[m:persname/@type='composer']">
+						<xf:input class="long" ref="m:persname[@type='composer']">
+							<xf:label class="fixed_width_long">Composer</xf:label>
+						</xf:input>
+					</xf:group>
+				</h:div>
+				
+				<h:div>
+					<xf:group ref="m:respstmt[m:persname/@type='dedicatee']">
+						<xf:input class="long" ref="m:persname[@type='dedicatee']">
+							<xf:label class="fixed_width_long">Dedicatee</xf:label>
+						</xf:input>
+					</xf:group>
+				</h:div>
+				
+				<h:div>
+					<xf:group ref="m:respstmt[m:persname/@type='text_author']">
+						<xf:input class="long" ref="m:persname[@type='text_author']">
+							<xf:label class="fixed_width_long">Text (author or title) <h:a class="help">?<h:span class="comment">E.g. "Ludvig Holstein" or "Psalms 23". If authors or textual sources vary 
+								across the work (e.g. in a collection of songs), they may be indicated at sub-work level under "Music"</h:span></h:a></xf:label>
+						</xf:input>
+					</xf:group>
+				</h:div>
+				<!-- end old persons editor -->
+			</xf:group>
+		</h:fieldset>
+		
+		<h:fieldset>
+			<h:legend>Work identification</h:legend>
+			<xf:repeat
+				nodeset="instance('data-instance')/m:meihead/m:filedesc/m:pubstmt/m:identifier"
+				id="pubstmt-identifiers">
+				<h:div>
+					
+					<xf:input ref="@type">
+						<xf:label>List name <h:a class="help">?<h:span class="comment">Reference to a
+							list or catalogue in which the work is identified (e.g. "opus",
+							"CNW", "CNU" etc.)</h:span></h:a></xf:label>
+						<xf:action ev:event="xforms-value-changed">
+							<xf:load resource="javascript:setPageTitle()"/> 
+						</xf:action>
+					</xf:input>
+					
+					<xf:input ref="." class="short">
+						<xf:label>No. <h:a class="help">?<h:span class="comment">The work's number and
+							signature in the list identifying it</h:span></h:a></xf:label>
+						<xf:action ev:event="xforms-value-changed">
+							<xf:load resource="javascript:setPageTitle()"/> 
+						</xf:action>
+					</xf:input>
+					<!-- edit buttons -->
+					<h:span class="editmenu">
+						<xf:trigger class="add delete">								
+							<h:span class="node">m:identifier</h:span>
+							<h:span class="index">pubstmt-identifiers</h:span>
+							<h:span class="model">instance('empty-instance')/m:meihead/m:filedesc/m:pubstmt/m:identifier</h:span>
+						</xf:trigger>								
+					</h:span>
+					<!-- end  buttons -->
+				</h:div>
+			</xf:repeat>
+		</h:fieldset>
+		
+		<h:fieldset>
+			<h:legend>File collections</h:legend>
+			
+			<xf:repeat
+				nodeset="instance('data-instance')/m:meihead/m:encodingdesc/m:projectdesc/m:p/m:list[@n='use']/m:item"
+				id="repeat-projectdesc-p">
+				<h:div>
+					<xf:input ref=".">
+						<xf:label>File collection <h:a class="help">?<h:span class="comment">Contexts (catalogues or collections) in
+							which this file is to be used - e.g. "CNW"</h:span></h:a></xf:label>
+						<xf:action ev:event="xforms-value-changed">
+							<xf:load resource="javascript:setPageTitle()"/> 
+						</xf:action>
+					</xf:input>
+					
+					<!-- edit buttons -->
+					<h:span class="editmenu">
+						<xf:trigger class="add delete">								
+							<h:span class="node">m:item</h:span>
+							<h:span class="index">repeat-projectdesc-p</h:span>
+							<h:span class="model">instance('empty-instance')/m:meihead/m:encodingdesc/m:projectdesc/m:p/m:list[@n='use']/m:item</h:span>
+						</xf:trigger>								
+					</h:span>
+					<!-- end  buttons -->
+				</h:div>
+			</xf:repeat>			
+		</h:fieldset>
+		
+		<h:fieldset>
+			<h:legend>File publication</h:legend>
+			<xf:group ref="instance('data-instance')/m:meihead/m:filedesc/m:pubstmt" id="group-publication">
+				<xf:input ref="m:respstmt/m:corpname">
+					<xf:label>Publisher <h:a class="help">?<h:span class="comment">The organisation
+						publishing this file (not the sources) - e.g. "DCM"</h:span></h:a>
+					</xf:label>
+				</xf:input>
+				
+				<xf:input ref="m:date" class="short">
+					<xf:label> Date </xf:label>
+				</xf:input>
+				<!--<dcm:attribute-editor ref="m:date"/>-->
+			</xf:group>
+		</h:fieldset>
+	</h:div>
+	
+	<h:br clear="all"/>
+	
+</h:div>

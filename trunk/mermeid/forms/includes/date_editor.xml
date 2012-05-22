@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xbl="http://www.w3.org/ns/xbl"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    xmlns:m="http://www.music-encoding.org/ns/mei"
+    xmlns:t="http://www.tei-c.org/ns/1.0"
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <xhtml:head>
+        
+        <xhtml:title>Date editor test</xhtml:title>
+        
+        <xhtml:meta http-equiv="Content-Type" content="application/xhtml+xml"/>
+        
+        <xhtml:style type="text/css" media="all">
+            
+        </xhtml:style>
+        
+        <xforms:model>
+            <xforms:instance id="data-instance">
+                <eventlist xmlns="http://www.music-encoding.org/ns/mei" >
+                    <event>
+                        <title>First performance</title>
+                        <date reg="" notbefore="2011-12-24" notafter="2012-01-05">Around new year's eve 2011/2012</date>
+                        <geogname type="venue">Gewandhaus</geogname>
+                        <geogname type="place">Leipzig</geogname>
+                        <corpname type="ensemble"/>
+                        <persname type="conductor">Gade</persname>
+                        <persname type="soloist">Fischer (Comala)</persname>
+                        <persname type="soloist">Franziska Schwarzbach</persname>
+                        <persname type="soloist">Starke</persname>
+                        <persname type="soloist">Kindermann (Fingal)</persname>
+                        <bibl xmlns="http://www.tei-c.org/ns/1.0" type="Journal Article">
+                            <author/>
+                            <date when-iso="1846-12-04" notBefore-iso="" notAfter-iso="">In december 1846</date>
+                            <title level="a"/>
+                            <title level="j">Neue Zeitschrift für Musik</title>
+                            <editor/>
+                            <biblScope type="volume">30</biblScope>
+                            <biblScope type="number"/>
+                            <biblScope type="pages">119-120</biblScope>
+                            <pubPlace/>
+                            <publisher/>
+                            <ref target=" "/>
+                        </bibl>
+                    </event>
+                </eventlist>
+            </xforms:instance>   
+            
+            <xforms:bind nodeset="instance('data-instance')">
+                <xforms:bind id="reg-bind" nodeset="date/@reg" type="xforms:date" name="date"/>
+                <xforms:bind id="notbefore-bind" nodeset="date/@notbefore" type="xforms:date" name="date"/>
+                <xforms:bind id="notafter-bind" nodeset="date/@notafter" type="xforms:date" name="date"/>
+            </xforms:bind>
+            
+        </xforms:model>
+        
+        <xbl:xbl xmlns:xhtml="http://www.w3.org/1999/xhtml"
+            xmlns:xforms="http://www.w3.org/2002/xforms"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:ev="http://www.w3.org/2001/xml-events"
+            xmlns:xi="http://www.w3.org/2001/XInclude"
+            xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+            xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+            xmlns:exforms="http://www.exforms.org/exf/1-0"
+            xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+            xmlns:saxon="http://saxon.sf.net/"
+            xmlns:xbl="http://www.w3.org/ns/xbl"
+            xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+            xmlns:dcm="http://www.kb.dk/dcm">
+            
+            <!--
+                Component to represent a date control based on separate fields.
+                Modified by Axel Geertinger 2012 to combine day and year fields with
+                dropdown month
+            -->
+            
+            <xbl:binding id="dcm-dropdown-month-date-binding" element="dcm|dropdown-month-date">
+                
+                <!-- Orbeon Form Builder Component Metadata -->
+                <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+                    <display-name lang="en">Fields date with dropdown month</display-name>
+                    <icon lang="en">
+                        <small-icon>/ops/images/xforms/calendar.png</small-icon>
+                        <large-icon>/ops/images/xforms/calendar.png</large-icon>
+                    </icon>
+                    <datatype>xforms:date</datatype>
+                    <template>
+                        <dcm:dropdown-month-date>
+                            <xforms:label ref=""/>
+                            <xforms:hint ref=""/>
+                            <xforms:help ref=""/>
+                            <xforms:alert ref=""/>
+                        </dcm:dropdown-month-date>
+                    </template>
+                </metadata>
+                
+                <xbl:resources>
+                    <xbl:style>
+                        .xbl-dcm-dropdown-month-date { display:inline; }
+                        .xbl-dcm-dropdown-month-date .fr-component-group .fr-width-2 input { width: 2em }
+                        .xbl-dcm-dropdown-month-date .fr-component-group .fr-width-4 input {width: 4em }
+                        .xbl-dcm-dropdown-month-date .fr-component-group select.xforms-select1-appearance-minimal,
+                        .xbl-dcm-dropdown-month-date .fr-component-group span.xforms-select1-appearance-minimal select { width: auto }
+                        
+                        <!-- Make hidden date picker invisible -->
+                        .fr-hidden-date-picker { position: relative }
+                        .fr-hidden-date-picker img { z-index: 1; position: 
+                        absolute; top: 0; left: 0; *top: 4px }
+                        .fr-hidden-date-picker input.xforms-type-date { width: 1px; opacity: 0; -moz-opacity: 0; *filter: alpha(opacity: 0) }
+                        .fr-hidden-date-picker span.xforms-type-date { display: inline; z-index: 2; position: relative  }
+                    </xbl:style>
+                </xbl:resources>
+                <xbl:implementation>
+                    <!-- Local model -->
+                    <xforms:model id="date-model">
+                        <xforms:instance id="date-instance">
+                            <date>
+                                <!-- Individual components of the date -->
+                                <year/>
+                                <month/>
+                                <day/>
+                                <!-- Whether the resulting date is valid -->
+                                <is-valid/>
+                                <!-- Whether the values are readonly -->
+                                <is-readonly/>
+                            </date>
+                        </xforms:instance>
+                        <!-- Set the validity on the whole instance -->
+                        <xforms:bind nodeset="." constraint="is-valid = 'true'"/>
+                        <!-- Make instance read-only when the form must be read-only -->
+                        <xforms:bind nodeset="." readonly="is-readonly = 'true'"/>
+                    </xforms:model>
+                </xbl:implementation>
+                <xbl:template>
+                    <!-- Local controls -->
+                    <xforms:group xbl:attr="model context ref bind" xxbl:scope="outer">
+                        <xbl:content includes="xforms|label,xforms|help,xforms|hint,xforms|alert"/>
+                        
+                        <!-- Inner group -->
+                        <xforms:group appearance="xxforms:internal" xxbl:scope="inner">
+                            <!-- Variable pointing to external single-node binding -->
+                            <xxforms:variable name="binding" as="node()?">
+                                <xxforms:sequence select="." xxbl:scope="outer"/>
+                            </xxforms:variable>
+                            <!--<xforms:output select="$binding"><xforms:label>Binding:</xforms:label></xforms:output>-->                    
+                            <!-- Read external value -->
+                            <xxforms:variable name="value" as="xs:string" select="$binding/string()">
+                                <!--<xforms:output select="$value"><xforms:label> Value:</xforms:label></xforms:output>          -->          
+                                
+                                <xforms:action ev:event="xforms-value-changed xforms-enabled">
+                                    <!-- Only set local values if the bound node is an xs:date -->
+                                    <xforms:action if="$binding castable as xs:date">
+                                        <xforms:setvalue ref="instance('date-instance')/year" value="year-from-date($binding)"/>
+                                        <xforms:setvalue ref="instance('date-instance')/month" value="month-from-date($binding)"/>
+                                        <xforms:setvalue ref="instance('date-instance')/day" value="day-from-date($binding)"/>
+                                    </xforms:action>
+                                    <xforms:action if="not($binding castable as xs:date) and normalize-space($binding) = ''">
+                                        <xforms:setvalue ref="instance('date-instance')/year"/>
+                                        <xforms:setvalue ref="instance('date-instance')/month"/>
+                                        <xforms:setvalue ref="instance('date-instance')/day"/>
+                                    </xforms:action>
+                                    <xforms:action if="not($binding castable as xs:date) and count(tokenize($binding, '-')) ge 3">
+                                        <xforms:action xxforms:iterate="tokenize($binding, '-')">
+                                            <xxforms:variable name="position" select="position()" as="xs:integer"/>
+                                            <xforms:setvalue ref="instance('date-instance')/*[$position]"
+                                                value="if (context() castable as xs:integer) then xs:integer(context()) else ''"/>
+                                        </xforms:action>
+                                    </xforms:action>
+                                </xforms:action>
+                            </xxforms:variable>
+                            <!-- Propagate readonly -->
+                            <xxforms:variable name="readonly" as="xs:boolean" select="exforms:readonly($binding)">
+                                <xforms:setvalue ev:event="xforms-enabled xforms-value-changed"
+                                    ref="instance('date-instance')/is-readonly" value="exforms:readonly($binding)"/>
+                            </xxforms:variable>
+                            
+                            <xforms:group class="fr-component-group">
+                                
+                                <xforms:group ref=".[not(is-readonly = 'true' and property('xxforms:readonly-appearance') = 'static')]">
+                                    <!-- Don't show fields at all in static readonly mode -->
+                                    <!-- NOTE: navindex is copied to first field, but need one for second field too! -->
+                                    
+                                    <xforms:input ref="day" class="fr-width-2" xbl:attr="navindex navindex=tabindex"/>
+                                    <xforms:select1 ref="month" class="xforms-select1-appearance-minimal">
+                                        <xforms:item>
+                                            <xforms:value></xforms:value>
+                                            <xforms:label> - </xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>1</xforms:value>
+                                            <xforms:label>January</xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>2</xforms:value>
+                                            <xforms:label>February</xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>3</xforms:value>
+                                            <xforms:label>March</xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>4</xforms:value>
+                                            <xforms:label>April</xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>5</xforms:value>
+                                            <xforms:label>May</xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>6</xforms:value>
+                                            <xforms:label>June</xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>7</xforms:value>
+                                            <xforms:label>July</xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>8</xforms:value>
+                                            <xforms:label>August</xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>9</xforms:value>
+                                            <xforms:label>September</xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>10</xforms:value>
+                                            <xforms:label>October</xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>11</xforms:value>
+                                            <xforms:label>November</xforms:label>
+                                        </xforms:item>
+                                        <xforms:item>
+                                            <xforms:value>12</xforms:value>
+                                            <xforms:label>December</xforms:label>
+                                        </xforms:item>
+                                    </xforms:select1>
+                                    
+                                    <xforms:input ref="year" class="fr-width-4"/>
+                                </xforms:group>
+                                
+                                <!-- React to update to local values -->
+                                <xforms:action ev:event="xforms-value-changed">
+                                    <xxforms:variable name="c" select="normalize-space(string-join((year, month, day), ''))" as="xs:string"/>
+                                    <xforms:action if="$c = ''">
+                                        <xforms:setvalue ref="is-valid" value="false()"/>
+                                        <xforms:setvalue ref="$binding"/>
+                                    </xforms:action>
+                                    <xforms:action if="$c != ''">
+                                        <!-- Compute date parts -->
+                                        <xxforms:variable name="y" select="if (year castable as xs:integer) then format-number(xs:integer(year), '0000') else '????'" as="xs:string"/>
+                                        <xxforms:variable name="m" select="if (month castable as xs:integer) then format-number(xs:integer(month), '00') else '??'" as="xs:string"/>
+                                        <xxforms:variable name="d" select="if (day castable as xs:integer) then format-number(xs:integer(day), '00') else '??'" as="xs:string"/>
+                                        
+                                        <!-- Create date string -->
+                                        <xxforms:variable name="date-string" select="string-join(($y, $m, $d), '-')" as="xs:string"/>
+                                        
+                                        <!-- Set value to format like 2008-02-31 or 0000-12-01 if parts are unknown -->
+                                        <xforms:setvalue ref="is-valid" value="$date-string castable as xs:date"/>
+                                        <xforms:setvalue ref="$binding" value="$date-string"/>
+                                    </xforms:action>
+                                </xforms:action>
+                                
+                                <!-- Date picker disabled -->
+                                <!-- <xforms:input ref="$binding" appearance="minimal"/> -->
+                            </xforms:group>
+                            
+                            <!-- Stop propagation of all UI events -->
+                            <xforms:action ev:event="#all" ev:propagate="stop"/>
+                        </xforms:group>
+                        
+                    </xforms:group>
+                </xbl:template>
+            </xbl:binding>
+        </xbl:xbl>
+        
+        <xbl:xbl xmlns:xhtml="http://www.w3.org/1999/xhtml"
+            xmlns:xforms="http://www.w3.org/2002/xforms"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:ev="http://www.w3.org/2001/xml-events"
+            xmlns:xi="http://www.w3.org/2001/XInclude"
+            xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+            xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+            xmlns:exforms="http://www.exforms.org/exf/1-0"
+            xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+            xmlns:saxon="http://saxon.sf.net/"
+            xmlns:xbl="http://www.w3.org/ns/xbl"
+            xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+            xmlns:dcm="http://www.kb.dk/dcm">
+            
+            <!--
+                Component to edit MEI and TEI dates and date ranges.
+                DCM / Axel Teich Geertinger 2012
+            -->
+            
+            <xbl:binding id="dcm-date-editor-binding" element="dcm|date-editor">
+                
+                <!-- Orbeon Form Builder Component Metadata -->
+                <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+                    <display-name lang="en">MEI/TEI Date and date range editor</display-name>
+                    <template>
+                        <dcm:date-editor>
+                            <xforms:label ref=""/>
+                            <xforms:hint ref=""/>
+                            <xforms:help ref=""/>
+                            <xforms:alert ref=""/>
+                        </dcm:date-editor>
+                    </template>
+                </metadata>
+                
+                <xbl:resources>
+                    <xbl:style>
+                        .xbl-dcm-date-editor .dcm-date-editor-box { 
+                            display:block; 
+                            position:absolute;
+                            margin-top: -30px;
+                            margin-left: 5px;
+                            padding: 0px; 
+                            width: auto; 
+                            border: 2px solid #cccc66; 
+                            background-color:#ffffcc; }
+                        .xbl-dcm-date-editor .dcm-date-editor-interval-select { 
+                            padding:2px 5px 2px 5px; 
+                            background-color: #cccc66;
+                            font-weight:bold;
+                            height: 18px;
+                            }
+                        .xbl-dcm-date-editor .dcm-date-editor-interval-select .xforms-select1-appearance-full input { 
+                            margin-top:-5px;
+                            }
+                        .xbl-dcm-date-editor .dcm-date-input-box { margin:2px 5px 2px 5px; }
+                        .xbl-dcm-date-editor .dcm-date-editor-display-label { display: block; font-weight:bold; }
+                        .dcm-date-editor-label { display: inline-block; width: 7em; font-weight: bold; }
+                        .xbl-dcm-date-editor .dcm-date-input-box .display_input input.xforms-input-input { width: 30em; } 
+                        .xbl-dcm-date-editor button.xforms-trigger { height: 22px; padding: 0px; }
+                        .xbl-dcm-date-editor .dcm-date-editor-error { font-weight:bold; color: red; }
+                        .xbl-dcm-date-editor .dcm-date-editor-close {
+                           display: block;
+                           float: right;
+                           width: 16px;
+                           height: 16px;
+                           padding:0px;
+                           }
+                    </xbl:style>
+                </xbl:resources>
+                <xbl:implementation>
+                    <!-- Local model -->
+                    <xforms:model id="editor-model">
+                        <xforms:instance id="editor-instance">
+                            <editor_date>
+                                <reg/>
+                                <notbefore/>
+                                <notafter/>
+                                <displayed_date/>
+                                <mode/>
+                                <month_days>
+                                    <month>31</month>
+                                    <month>28</month>
+                                    <month>31</month>
+                                    <month>30</month>
+                                    <month>31</month>
+                                    <month>30</month>
+                                    <month>31</month>
+                                    <month>31</month>
+                                    <month>30</month>
+                                    <month>31</month>
+                                    <month>30</month>
+                                    <month>31</month>
+                                </month_days>
+                                <is-valid/>
+                                <error_msg>Invalid date(s) entered</error_msg>
+                                <!-- attribute names vary with namespace; MEI names used as default -->
+                                <reg-name>reg</reg-name>
+                                <notafter-name>notafter</notafter-name>
+                                <notbefore-name>notbefore</notbefore-name>
+                            </editor_date>
+                        </xforms:instance>
+                        <xforms:bind nodeset="instance('editor-instance')">
+                            <xforms:bind id="reg-bind" nodeset="reg" type="xforms:date" name="date"/>
+                            <xforms:bind id="notafter-bind" nodeset="notafter" type="xforms:date" name="date"/>
+                            <xforms:bind id="notbefore-bind" nodeset="notbefore" type="xforms:date" name="date"/>
+                            <xforms:bind id="displayed-date-bind" nodeset="displayed_date" type="xforms:string" name="string"/>
+                        </xforms:bind>
+                    </xforms:model>
+                </xbl:implementation>
+                <xbl:template>
+                    <!-- Local controls -->
+                    <xforms:group xbl:attr="model context ref bind" xxbl:scope="outer">
+                        <xbl:content includes="xforms|label,xforms|help,xforms|hint,xforms|alert"/>
+                        
+                                                
+                        <!-- Inner group -->
+                        <xforms:group appearance="xxforms:internal" xxbl:scope="inner">
+                            
+                            <!-- Variables pointing to external single-node bindings -->
+                            <xxforms:variable name="binding" as="node()?">
+                                <xxforms:sequence select="." xxbl:scope="outer"/>
+                                <xforms:action ev:event="xforms-value-changed xforms-enabled">
+                                    <xforms:action>
+                                        <!-- use TEI attribute names if date is in TEI namespace -->
+                                        <xforms:action if="namespace-uri($binding)='http://www.tei-c.org/ns/1.0'">
+                                            <xforms:setvalue ref="instance('editor-instance')/reg-name" value="'when-iso'"/>
+                                            <xforms:setvalue ref="instance('editor-instance')/notbefore-name" value="'notBefore-iso'"/>
+                                            <xforms:setvalue ref="instance('editor-instance')/notafter-name" value="'notAfter-iso'"/>
+                                        </xforms:action>
+                                        <!-- copy external values to local instance -->
+                                        <xforms:setvalue ref="instance('editor-instance')/displayed_date" value="$binding/string()"/>
+                                        <xforms:setvalue ref="instance('editor-instance')/reg" value="$binding/@*[local-name() = instance('editor-instance')/reg-name]"/>
+                                        <xforms:setvalue ref="instance('editor-instance')/notbefore" value="$binding/@*[local-name() = instance('editor-instance')/notbefore-name]"/>
+                                        <xforms:setvalue ref="instance('editor-instance')/notafter" value="$binding/@*[local-name() = instance('editor-instance')/notafter-name]"/>
+                                        <xforms:setvalue ref="instance('editor-instance')/mode" value="'single'"/>
+                                    </xforms:action>
+                                    <xforms:action if="($binding/@notbefore castable as xs:date) and ($binding/@notafter castable as xs:date)">
+                                        <xforms:setvalue ref="instance('editor-instance')/mode" value="'interval'"/>
+                                    </xforms:action>
+                                </xforms:action>
+                            </xxforms:variable>
+
+                            <xforms:trigger>
+                                <xforms:label>Edit</xforms:label>
+                                <xforms:action  ev:event="DOMActivate">
+                                    <xforms:toggle case="date-editor-shown"/>
+                                </xforms:action>
+                            </xforms:trigger>
+                            
+                            
+                            <xforms:switch>
+                                <xforms:case id="date-editor-hidden">
+                                </xforms:case>
+                                <xforms:case id="date-editor-shown"  class="dcm-date-editor-box">
+                                    
+                                    <xforms:group class="dcm-component-group">
+                                        <xhtml:div class="dcm-date-editor-interval-select">
+                                            <xhtml:div class="dcm-date-editor-close">
+                                                <xforms:trigger appearance="minimal">
+                                                    <!-- REMEMBER MAKING IMAGE URLS RELATIVE ON IMPLEMENTATION -->
+                                                    <xforms:label><xhtml:img src="http://kb-cop.kb.dk/editor/images/close.gif" title="Cancel" alt="Cancel"/></xforms:label>
+                                                    <xforms:action ev:event="DOMActivate">
+                                                        <xforms:setvalue ref="instance('editor-instance')/displayed_date" value="$binding/string()"/>
+                                                        <xforms:setvalue ref="instance('editor-instance')/reg" value="$binding/@*[local-name() = instance('editor-instance')/reg-name]"/>
+                                                        <xforms:setvalue ref="instance('editor-instance')/notbefore" value="$binding/@*[local-name() = instance('editor-instance')/notbefore-name]"/>
+                                                        <xforms:setvalue ref="instance('editor-instance')/notafter" value="$binding/@*[local-name() = instance('editor-instance')/notafter-name]"/>
+                                                        <xforms:setvalue ref="instance('editor-instance')/mode" value="'single'"/>
+                                                        <xforms:action if="($binding/@*[local-name() = instance('editor-instance')/notbefore-name] castable as xs:date) and ($binding/@*[local-name() = instance('editor-instance')/notafter-name] castable as xs:date)">
+                                                            <xforms:setvalue ref="instance('editor-instance')/mode" value="'interval'"/>
+                                                        </xforms:action>
+                                                        <xforms:toggle case="hide_error"/>
+                                                        <xforms:toggle case="date-editor-hidden"/>
+                                                    </xforms:action>
+                                                </xforms:trigger>
+                                            </xhtml:div>
+                                            <xforms:select1 appearance="full" ref="mode">
+                                                <xforms:label>Date type: </xforms:label>
+                                                <xforms:item>
+                                                    <xforms:label>Single date</xforms:label>
+                                                    <xforms:value>single</xforms:value>
+                                                </xforms:item>
+                                                <xforms:item>
+                                                    <xforms:label>Date interval</xforms:label>
+                                                    <xforms:value>interval</xforms:value>
+                                                </xforms:item>
+                                            </xforms:select1>
+                                        </xhtml:div>
+                                        <xforms:group ref=".[instance('editor-instance')/mode='single']">
+                                            <xhtml:div class="dcm-date-input-box">
+                                                <!-- NOTE: navindex is copied to first field, but need one for second field too! -->
+                                                <dcm:dropdown-month-date ref="reg" xbl:attr="navindex navindex=tabindex">
+                                                    <xforms:label class="dcm-date-editor-label">Date: </xforms:label>
+                                                </dcm:dropdown-month-date>
+                                                <!-- show date picker -->
+                                                <xforms:input ref="reg" appearance="minimal"/> 
+                                                <xforms:trigger>
+                                                    <xforms:label><xhtml:img src="/editor/images/delete.gif" alt="Clear" title="Clear date"/></xforms:label>
+                                                    <xforms:action ev:event="DOMActivate">
+                                                        <xforms:setvalue ref="reg" value="''"/>
+                                                    </xforms:action>
+                                                </xforms:trigger>
+                                            </xhtml:div>
+                                            <xhtml:div class="dcm-date-input-box">
+                                                <xforms:input ref="displayed_date" class="display_input">
+                                                    <xforms:label class="dcm-date-editor-display-label">Displayed date or text: </xforms:label>
+                                                </xforms:input> 
+                                                <xforms:trigger>
+                                                    <xforms:label>Paste date</xforms:label>
+                                                    <xforms:action ev:event="DOMActivate">
+                                                        <xforms:setvalue ref="instance('editor-instance')/displayed_date" value="instance('editor-instance')/reg"/>
+                                                    </xforms:action>
+                                                </xforms:trigger>
+                                            </xhtml:div>
+                                        </xforms:group>
+                                        <xforms:group ref=".[instance('editor-instance')/mode='interval']">
+                                            <xhtml:div class="dcm-date-input-box" xbl:attr="navindex navindex=tabindex">
+                                                <dcm:dropdown-month-date ref="notbefore">
+                                                    <xforms:label class="dcm-date-editor-label">Not before: </xforms:label>
+                                                </dcm:dropdown-month-date>
+                                                <!-- show date picker -->
+                                                <xforms:input ref="notbefore" appearance="minimal"/> 
+                                                <xforms:trigger>
+                                                    <xforms:label><xhtml:img src="/editor/images/delete.gif" alt="Clear" title="Clear date"/></xforms:label>
+                                                    <xforms:action ev:event="DOMActivate">
+                                                        <xforms:setvalue ref="notbefore" value="''"/>
+                                                    </xforms:action>
+                                                </xforms:trigger>
+                                            </xhtml:div>
+                                            <xhtml:div class="dcm-date-input-box">
+                                                <dcm:dropdown-month-date ref="notafter">
+                                                    <xforms:label class="dcm-date-editor-label">Not after: </xforms:label>
+                                                </dcm:dropdown-month-date>
+                                                <!-- show date picker -->
+                                                <xforms:input ref="notafter" appearance="minimal"/> 
+                                                <xforms:trigger>
+                                                    <xforms:label><xhtml:img src="/editor/images/delete.gif" alt="Clear" title="Clear date"/></xforms:label>
+                                                    <xforms:action ev:event="DOMActivate">
+                                                        <xforms:setvalue ref="notafter" value="''"/>
+                                                    </xforms:action>
+                                                </xforms:trigger>
+                                            </xhtml:div>
+                                            <xhtml:div class="dcm-date-input-box">
+                                                <xforms:input ref="displayed_date" class="display_input">
+                                                    <xforms:label class="dcm-date-editor-display-label">Displayed date or text: </xforms:label>
+                                                </xforms:input> 
+                                                <xforms:trigger>
+                                                    <xforms:label>Paste dates</xforms:label>
+                                                    <xforms:action ev:event="DOMActivate">
+                                                        <xforms:setvalue ref="instance('editor-instance')/displayed_date" 
+                                                            value="concat('Between ',instance('editor-instance')/notbefore,' and ',instance('editor-instance')/notafter)"/>
+                                                    </xforms:action>
+                                                </xforms:trigger>
+                                            </xhtml:div>
+                                            
+                                        </xforms:group>
+                                        
+                                        <xhtml:div class="dcm-date-editor-error">
+                                            <xforms:switch>
+                                                <xforms:case id="hide_error"/>                                                
+                                                <xforms:case id="show_error">
+                                                    <xhtml:div class="dcm-date-input-box">
+                                                        <xforms:output value="instance('editor-instance')/error_msg"/>
+                                                    </xhtml:div>
+                                                </xforms:case>
+                                            </xforms:switch>
+                                        </xhtml:div>
+                                        
+                                        <!-- React to update to local values -->
+                                        <xforms:action ev:event="xforms-value-changed"/>
+                                        
+                                        
+                                        <!-- Editor OK/Reset/Cancel buttons -->
+                                        <xhtml:div class="dcm-date-input-box">
+                                            <xforms:trigger>
+                                                <xforms:label>OK</xforms:label>
+                                                <xforms:action ev:event="DOMActivate">
+                                                    <xforms:setvalue ref="instance('editor-instance')/is-valid" value="'false'"/>
+                                                    <xforms:setvalue ref="instance('editor-instance')/error_msg" value="'Invalid date(s) entered'"/>
+                                                    <!-- validate -->
+                                                    <xforms:action if="normalize-space(instance('editor-instance')/displayed_date)=''">
+                                                        <xforms:setvalue ref="instance('editor-instance')/error_msg" value="'A text or date to be displayed must be entered'"/>
+                                                    </xforms:action>    
+                                                    <xforms:action if="normalize-space(instance('editor-instance')/displayed_date)!=''">
+                                                        <!-- display value is OK, proceed checking the dates -->
+                                                        <xforms:action if="instance('editor-instance')/mode='single'">
+                                                            <xforms:action if="matches(instance('editor-instance')/reg,'^\d{4}-\d{1,2}-\d{1,2}')">
+                                                                <xforms:setvalue ref="instance('editor-instance')/is-valid" value="'true'"/>
+                                                                <xforms:setvalue ref="instance('editor-instance')/notafter" value="''"/>
+                                                                <xforms:setvalue ref="instance('editor-instance')/notbefore" value="''"/>
+                                                            </xforms:action>
+                                                            <xforms:action if="not(matches(instance('editor-instance')/reg,'^\d{4}-\d{1,2}-\d{1,2}'))">
+                                                                <xforms:action if="matches(instance('editor-instance')/reg,'^\d{4}-\d{1,2}-')">
+                                                                    <!-- only year and month entered -->
+                                                                    <xforms:setvalue ref="instance('editor-instance')/notbefore" value="concat(substring(instance('editor-instance')/reg,1,8),'01')"/>
+                                                                    <xforms:setvalue ref="instance('editor-instance')/notafter" value="concat(substring(instance('editor-instance')/reg,1,8),instance('editor-instance')/month_days/month[number(substring(instance('editor-instance')/reg,6,2))])"/>
+                                                                    <xforms:setvalue ref="instance('editor-instance')/reg" value="''"/>
+                                                                    <xforms:setvalue ref="instance('editor-instance')/is-valid" value="'true'"/>                                                                    
+                                                                </xforms:action>
+                                                                <xforms:action if="not(matches(instance('editor-instance')/reg,'^\d{4}-\d{1,2}-'))">
+                                                                    <xforms:action if="matches(instance('editor-instance')/reg,'^\d{4}-')">
+                                                                        <!-- only year entered -->
+                                                                        <xforms:setvalue ref="instance('editor-instance')/notbefore" value="concat(substring(instance('editor-instance')/reg,1,4),'-01-01')"/>
+                                                                        <xforms:setvalue ref="instance('editor-instance')/notafter" value="concat(substring(instance('editor-instance')/reg,1,4),'-12-31')"/>
+                                                                        <xforms:setvalue ref="instance('editor-instance')/reg" value="''"/>
+                                                                        <xforms:setvalue ref="instance('editor-instance')/is-valid" value="'true'"/>                                                                    
+                                                                    </xforms:action>
+                                                                </xforms:action>
+                                                            </xforms:action>
+                                                        </xforms:action>
+                                                        <xforms:action if="instance('editor-instance')/mode='interval'">
+                                                            <!-- check @notbefore -->
+                                                            <xforms:action if="matches(instance('editor-instance')/notbefore,'^\d{4}-\d{1,2}-\d{1,2}')">
+                                                                <xforms:setvalue ref="instance('editor-instance')/is-valid" value="'notbefore'"/> <!-- = partly valid -->
+                                                            </xforms:action>
+                                                            <xforms:action if="not(matches(instance('editor-instance')/notbefore,'^\d{4}-\d{1,2}-\d{1,2}'))">
+                                                                <xforms:action if="matches(instance('editor-instance')/notbefore,'^\d{4}-\d{1,2}-')">
+                                                                    <!-- if only year and month entered, change to beginning of month -->
+                                                                    <xforms:setvalue ref="instance('editor-instance')/notbefore" value="concat(substring(instance('editor-instance')/notbefore,1,8),'01')"/>
+                                                                    <xforms:setvalue ref="instance('editor-instance')/is-valid" value="'notbefore'"/> <!-- = partly valid -->                                                                    
+                                                                </xforms:action>
+                                                                <xforms:action if="not(matches(instance('editor-instance')/notbefore,'^\d{4}-\d{1,2}-'))">
+                                                                    <xforms:action if="matches(instance('editor-instance')/notbefore,'^\d{4}-')">
+                                                                        <!-- if only year entered, change to January 1 -->
+                                                                        <xforms:setvalue ref="instance('editor-instance')/notbefore" value="concat(substring(instance('editor-instance')/notbefore,1,4),'-01-01')"/>
+                                                                        <xforms:setvalue ref="instance('editor-instance')/is-valid" value="'notbefore'"/> <!-- = partly valid -->
+                                                                    </xforms:action>
+                                                                </xforms:action>
+                                                            </xforms:action>
+                                                            <xforms:action if="instance('editor-instance')/is-valid='notbefore'">
+                                                                <!-- first date OK, proceed to check @notafter -->
+                                                                <xforms:action if="matches(instance('editor-instance')/notafter,'^\d{4}-\d{1,2}-\d{1,2}')">
+                                                                    <xforms:setvalue ref="instance('editor-instance')/is-valid" value="'true'"/> 
+                                                                </xforms:action>
+                                                                <xforms:action if="not(matches(instance('editor-instance')/notafter,'^\d{4}-\d{1,2}-\d{1,2}'))">
+                                                                    <xforms:action if="matches(instance('editor-instance')/notafter,'^\d{4}-\d{1,2}-')">
+                                                                        <!-- if only year and month entered, change to last day of month -->
+                                                                        <xforms:setvalue ref="instance('editor-instance')/notafter" value="concat(substring(instance('editor-instance')/notafter,1,8),instance('editor-instance')/month_days/month[number(substring(instance('editor-instance')/notafter,6,2))])"/>
+                                                                        <xforms:setvalue ref="instance('editor-instance')/is-valid" value="'true'"/>                                                                     
+                                                                    </xforms:action>
+                                                                    <xforms:action if="not(matches(instance('editor-instance')/notafter,'^\d{4}-\d{1,2}-'))">
+                                                                        <xforms:action if="matches(instance('editor-instance')/notafter,'^\d{4}-')">
+                                                                            <!-- if only year entered, change to December 31 -->
+                                                                            <xforms:setvalue ref="instance('editor-instance')/notafter" value="concat(substring(instance('editor-instance')/notafter,1,4),'-12-31')"/>
+                                                                            <xforms:setvalue ref="instance('editor-instance')/is-valid" value="'true'"/>
+                                                                        </xforms:action>
+                                                                    </xforms:action>
+                                                                </xforms:action>
+                                                            </xforms:action>
+                                                            <xforms:action if="instance('editor-instance')/is-valid='true'">
+                                                                <xforms:setvalue ref="instance('editor-instance')/reg" value="''"/>
+                                                            </xforms:action>
+                                                        </xforms:action>
+                                                    </xforms:action>
+                                                    <xforms:action if="not(instance('editor-instance')/is-valid='true')">
+                                                        <xforms:toggle case="show_error"/>
+                                                    </xforms:action>
+                                                    <xforms:action if="instance('editor-instance')/is-valid='true'">
+                                                        <!-- copy values to external node -->
+                                                        <xforms:setvalue ref="$binding" value="instance('editor-instance')/displayed_date"/>
+                                                        <xforms:setvalue ref="$binding/@*[local-name() = instance('editor-instance')/reg-name]" value="instance('editor-instance')/reg"/>
+                                                        <xforms:setvalue ref="$binding/@*[local-name() = instance('editor-instance')/notbefore-name]" value="instance('editor-instance')/notbefore"/>
+                                                        <xforms:setvalue ref="$binding/@*[local-name() = instance('editor-instance')/notafter-name]" value="instance('editor-instance')/notafter"/>
+                                                        <!-- reset internal values -->
+                                                        <xforms:setvalue ref="instance('editor-instance')/displayed_date" value="$binding/string()"/>
+                                                        <xforms:setvalue ref="instance('editor-instance')/reg" value="$binding/@*[local-name() = instance('editor-instance')/reg-name]"/>
+                                                        <xforms:setvalue ref="instance('editor-instance')/notbefore" value="$binding/@*[local-name() = instance('editor-instance')/notbefore-name]"/>
+                                                        <xforms:setvalue ref="instance('editor-instance')/notafter" value="$binding/@*[local-name() = instance('editor-instance')/notafter-name]"/>
+                                                        <xforms:setvalue ref="instance('editor-instance')/mode" value="'single'"/>
+                                                        <xforms:action if="matches(instance('editor-instance')/notbefore,'^\d{4}-\d{1,2}-\d{1,2}') and matches(instance('editor-instance')/notafter,'^\d{4}-\d{1,2}-\d{1,2}')">
+                                                            <xforms:setvalue ref="instance('editor-instance')/mode" value="'interval'"/>
+                                                        </xforms:action>
+                                                        <xforms:toggle case="hide_error"/>
+                                                        <!-- close editor -->
+                                                        <xforms:toggle case="date-editor-hidden"/>
+                                                    </xforms:action>
+                                                </xforms:action>
+                                            </xforms:trigger>
+                                            <!-- re-read values from external node -->
+                                            <xforms:trigger>
+                                                <xforms:label>Reset</xforms:label>
+                                                <xforms:action ev:event="DOMActivate">
+                                                    <xforms:setvalue ref="instance('editor-instance')/displayed_date" value="$binding/string()"/>
+                                                    <xforms:setvalue ref="instance('editor-instance')/reg" value="$binding/@*[local-name() = instance('editor-instance')/reg-name]"/>
+                                                    <xforms:setvalue ref="instance('editor-instance')/notbefore" value="$binding/@*[local-name() = instance('editor-instance')/notbefore-name]"/>
+                                                    <xforms:setvalue ref="instance('editor-instance')/notafter" value="$binding/@*[local-name() = instance('editor-instance')/notafter-name]"/>
+                                                    <xforms:setvalue ref="instance('editor-instance')/mode" value="'single'"/>
+                                                    <xforms:action if="($binding/@*[local-name() = instance('editor-instance')/notbefore-name] castable as xs:date) and ($binding/@*[local-name() = instance('editor-instance')/notafter-name] castable as xs:date)">
+                                                        <xforms:setvalue ref="instance('editor-instance')/mode" value="'interval'"/>
+                                                    </xforms:action>
+                                                    <xforms:toggle case="hide_error"/>
+                                                </xforms:action>
+                                            </xforms:trigger>
+                                            <xforms:trigger>
+                                                <xforms:label>Cancel</xforms:label>
+                                                <xforms:action ev:event="DOMActivate">
+                                                    <xforms:setvalue ref="instance('editor-instance')/displayed_date" value="$binding/string()"/>
+                                                    <xforms:setvalue ref="instance('editor-instance')/reg" value="$binding/@*[local-name() = instance('editor-instance')/reg-name]"/>
+                                                    <xforms:setvalue ref="instance('editor-instance')/notbefore" value="$binding/@*[local-name() = instance('editor-instance')/notbefore-name]"/>
+                                                    <xforms:setvalue ref="instance('editor-instance')/notafter" value="$binding/@*[local-name() = instance('editor-instance')/notafter-name]"/>
+                                                    <xforms:setvalue ref="instance('editor-instance')/mode" value="'single'"/>
+                                                    <xforms:action if="($binding/@*[local-name() = instance('editor-instance')/notbefore-name] castable as xs:date) and ($binding/@*[local-name() = instance('editor-instance')/notafter-name] castable as xs:date)">
+                                                        <xforms:setvalue ref="instance('editor-instance')/mode" value="'interval'"/>
+                                                    </xforms:action>
+                                                    <xforms:toggle case="hide_error"/>
+                                                    <xforms:toggle case="date-editor-hidden"/>
+                                                </xforms:action>
+                                            </xforms:trigger>    
+                                            
+                                        </xhtml:div>
+                                        
+                                    </xforms:group>
+                                </xforms:case>
+                            </xforms:switch>
+                        </xforms:group>                            
+                    </xforms:group>
+                </xbl:template>
+            </xbl:binding>
+        </xbl:xbl>
+        
+    </xhtml:head>
+    
+    <xhtml:body>
+        <xhtml:h1>Testing date input with XBL component</xhtml:h1>
+        
+        <xforms:repeat nodeset="instance('data-instance')/m:event" id="event-repeat">
+            <xforms:group ref="m:date">
+                <div style="border:1px solid black; background-color:#cccccc; padding:10px;">
+                    <p><b>MEI namespace date</b></p>
+                    <xhtml:p>Date (string): <xforms:output ref="."/> 
+                        <br/>
+                        <xforms:output value="@reg"><xforms:label>@reg: </xforms:label></xforms:output><xhtml:br/>
+                        <xforms:output value="@notbefore"><xforms:label>@notbefore: </xforms:label></xforms:output><xhtml:br/>
+                        <xforms:output value="@notafter"><xforms:label>@notafter: </xforms:label></xforms:output><xhtml:br/>
+                        <dcm:date-editor ref="."/>
+                    </xhtml:p>
+                </div>
+            </xforms:group>
+            <xhtml:p>&#160;</xhtml:p>
+            <xforms:group ref="t:bibl/t:date">
+                <div style="border:1px solid black; background-color:#cccccc; padding:10px;">
+                    <p><b>TEI namespace date</b></p>
+                    <xhtml:p>Date (string): <xforms:output ref="."/> 
+                        <br/>
+                        <xforms:output value="@when-iso"><xforms:label>@when-iso: </xforms:label></xforms:output><xhtml:br/>
+                        <xforms:output value="@notBefore-iso"><xforms:label>@notBefore-iso: </xforms:label></xforms:output><xhtml:br/>
+                        <xforms:output value="@notAfter-iso"><xforms:label>@notAfter-iso: </xforms:label></xforms:output><xhtml:br/>
+                        <dcm:date-editor ref="."/>                        
+                    </xhtml:p>
+                </div>
+            </xforms:group>
+        </xforms:repeat>
+        
+    </xhtml:body>
+</xhtml:html>
+

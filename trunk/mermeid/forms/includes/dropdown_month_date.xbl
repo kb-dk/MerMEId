@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbl:xbl xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:exforms="http://www.exforms.org/exf/1-0"
+    xmlns:xbl="http://www.w3.org/ns/xbl"
+    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <!--
+        Component to represent a date control based on separate fields.
+        Modified to combine day and year fields with dropdown month
+        by 
+        Danish Centre for Music Publication (DCM)
+        Axel Geertinger (atge@kb.dk) 
+        2012 
+    -->
+    
+    <xbl:binding id="dcm-dropdown-month-date-binding" element="dcm|dropdown-month-date">
+        
+        <!-- Orbeon Form Builder Component Metadata -->
+        <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+            <display-name lang="en">Fields date with dropdown month</display-name>
+            <datatype>xforms:date</datatype>
+            <template>
+                <dcm:dropdown-month-date>
+                    <xforms:label ref=""/>
+                    <xforms:hint ref=""/>
+                    <xforms:help ref=""/>
+                    <xforms:alert ref=""/>
+                </dcm:dropdown-month-date>
+            </template>
+        </metadata>
+        <xbl:resources>
+            <xbl:style>
+                .xbl-dcm-dropdown-month-date { display:inline; }
+                .xbl-dcm-dropdown-month-date .dcm-component-group .dcm-width-2 input { width: 2em }
+                .xbl-dcm-dropdown-month-date .dcm-component-group .dcm-width-4 input {width: 4em }
+                .xbl-dcm-dropdown-month-date .dcm-component-group select.xforms-select1-appearance-minimal,
+                .xbl-dcm-dropdown-month-date .dcm-component-group span.xforms-select1-appearance-minimal select { width: auto }
+                <!-- Make hidden date picker invisible -->
+                .fr-hidden-date-picker { position: relative }
+                .fr-hidden-date-picker img { z-index: 1; position: 
+                absolute; top: 0; left: 0; *top: 4px }
+                .fr-hidden-date-picker input.xforms-type-date { width: 1px; opacity: 0; -moz-opacity: 0; *filter: alpha(opacity: 0) }
+                .fr-hidden-date-picker span.xforms-type-date { display: inline; z-index: 2; position: relative  }
+            </xbl:style>
+        </xbl:resources>
+        <xbl:implementation>
+            <!-- Local model -->
+            <xforms:model id="dcm-date-model">
+                <xforms:instance id="date-instance">
+                    <date>
+                        <!-- Individual components of the date -->
+                        <year/>
+                        <month/>
+                        <day/>
+                        <!-- Whether the resulting date is valid -->
+                        <is-valid/>
+                        <!-- Whether the values are readonly -->
+                        <is-readonly/>
+                    </date>
+                </xforms:instance>
+                <!-- Set the validity on the whole instance -->
+                <xforms:bind nodeset="." constraint="is-valid = 'true'"/>
+            </xforms:model>
+        </xbl:implementation>
+        <xbl:template>
+
+            <!-- Outer group -->
+            <xforms:group xbl:attr="model context ref bind" xxbl:scope="outer">
+                <xbl:content includes="xforms|label,xforms|help,xforms|hint,xforms|alert"/>
+                
+                <!-- Inner group -->
+                <xforms:group appearance="xxforms:internal" xxbl:scope="inner">
+                    <!-- Variable pointing to external single-node binding -->
+                    <xxforms:variable name="binding" as="node()?">
+                        <xxforms:sequence select="." xxbl:scope="outer"/>
+                    </xxforms:variable>
+                    <!--<xforms:output select="$binding"><xforms:label>Binding:</xforms:label></xforms:output>-->                    
+                    <!-- Read external value -->
+                    <xxforms:variable name="value" as="xs:string" select="$binding/string()">
+                        <xforms:action ev:event="xforms-value-changed xforms-enabled">
+                            <!-- Only set local values if the bound node is an xs:date -->
+                            <xforms:action if="$binding castable as xs:date">
+                                <xforms:setvalue ref="instance('date-instance')/year" value="year-from-date($binding)"/>
+                                <xforms:setvalue ref="instance('date-instance')/month" value="month-from-date($binding)"/>
+                                <xforms:setvalue ref="instance('date-instance')/day" value="day-from-date($binding)"/>
+                            </xforms:action>
+                            <xforms:action if="not($binding castable as xs:date) and normalize-space($binding) = ''">
+                                <xforms:setvalue ref="instance('date-instance')/year"/>
+                                <xforms:setvalue ref="instance('date-instance')/month"/>
+                                <xforms:setvalue ref="instance('date-instance')/day"/>
+                            </xforms:action>
+                            <xforms:action if="not($binding castable as xs:date) and count(tokenize($binding, '-')) ge 3">
+                                <xforms:action xxforms:iterate="tokenize($binding, '-')">
+                                    <xxforms:variable name="position" select="position()" as="xs:integer"/>
+                                    <xforms:setvalue ref="instance('date-instance')/*[$position]"
+                                        value="if (context() castable as xs:integer) then xs:integer(context()) else ''"/>
+                                </xforms:action>
+                            </xforms:action>
+                        </xforms:action>
+                    </xxforms:variable>
+                    
+                    <xforms:group class="dcm-component-group" model="dcm-date-model">
+                            <xforms:input ref="day" class="dcm-width-2" xbl:attr="navindex navindex=tabindex">
+                                <xforms:hint>Day</xforms:hint>
+                            </xforms:input>
+                            <xforms:select1 ref="month" class="xforms-select1-appearance-minimal">
+                                <xforms:hint>Month</xforms:hint>
+                                <xforms:item>
+                                    <xforms:value></xforms:value>
+                                    <xforms:label> - </xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>1</xforms:value>
+                                    <xforms:label>January</xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>2</xforms:value>
+                                    <xforms:label>February</xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>3</xforms:value>
+                                    <xforms:label>March</xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>4</xforms:value>
+                                    <xforms:label>April</xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>5</xforms:value>
+                                    <xforms:label>May</xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>6</xforms:value>
+                                    <xforms:label>June</xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>7</xforms:value>
+                                    <xforms:label>July</xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>8</xforms:value>
+                                    <xforms:label>August</xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>9</xforms:value>
+                                    <xforms:label>September</xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>10</xforms:value>
+                                    <xforms:label>October</xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>11</xforms:value>
+                                    <xforms:label>November</xforms:label>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:value>12</xforms:value>
+                                    <xforms:label>December</xforms:label>
+                                </xforms:item>
+                            </xforms:select1>
+                            <xforms:input ref="year" class="dcm-width-4">
+                                <xforms:hint>Year</xforms:hint>
+                            </xforms:input>
+                        
+                        <!-- React to update to local values -->
+                        <xforms:action ev:event="xforms-value-changed">
+                            <xxforms:variable name="c" select="normalize-space(string-join((year, month, day), ''))" as="xs:string"/>
+                            <xforms:action if="$c = ''">
+                                <xforms:setvalue ref="is-valid" value="false()"/>
+                                <xforms:setvalue ref="$binding"/>
+                            </xforms:action>
+                            <xforms:action if="$c != ''">
+                                <!-- Compute date parts -->
+                                <xxforms:variable name="y" select="if (year castable as xs:integer) then format-number(xs:integer(year), '0000') else '????'" as="xs:string"/>
+                                <xxforms:variable name="m" select="if (month castable as xs:integer) then format-number(xs:integer(month), '00') else '??'" as="xs:string"/>
+                                <xxforms:variable name="d" select="if (day castable as xs:integer) then format-number(xs:integer(day), '00') else '??'" as="xs:string"/>
+                                <!-- Create date string -->
+                                <xxforms:variable name="date-string" select="string-join(($y, $m, $d), '-')" as="xs:string"/>
+                                <!-- Set value to format like 2008-02-31 or 0000-12-01 if parts are unknown -->
+                                <xforms:setvalue ref="is-valid" value="$date-string castable as xs:date"/>
+                                <xforms:setvalue ref="$binding" value="$date-string"/>
+                            </xforms:action>
+                        </xforms:action>
+                        <!-- Date picker -->
+                        <!--<xforms:input ref="$binding" appearance="minimal"/>-->
+                    </xforms:group>
+                    <!-- Stop propagation of all UI events -->
+                    <xforms:action ev:event="#all" ev:propagate="stop"/>
+                </xforms:group>
+            </xforms:group>
+        </xbl:template>
+    </xbl:binding>
+</xbl:xbl>
+

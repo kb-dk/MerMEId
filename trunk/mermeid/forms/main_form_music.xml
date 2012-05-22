@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:div xmlns:h="http://www.w3.org/1999/xhtml" 
+	xmlns:xf="http://www.w3.org/2002/xforms" 
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" 
+	xmlns:dcm="http://www.kb.dk/dcm"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	id="music-div">
+	
+	<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList">
+		<h:div class="inputdiv">
+			
+			<xf:repeat nodeset="m:expression" id="repeat-expression">
+				<h:fieldset>
+					<h:legend>
+						<xf:group ref=".[count(../m:expression)=1]">
+							Work 
+						</xf:group>
+						<xf:group ref=".[count(../m:expression)&gt;1]">
+							Version
+						</xf:group>
+						<!--<xf:group ref=".[$parent='work' and number($num_ex)=1]">
+							Work 
+						</xf:group>
+						<xf:group ref=".[$parent='expression' or number($num_ex)&gt;1]">
+							<xf:group ref=".[$grandparent='expressionList' or $parent='work']">
+								Version
+							</xf:group>
+							<xf:group ref=".[$grandparent='componentGrp']">
+								Component
+							</xf:group>
+						</xf:group>-->
+						<h:a class="help">?<h:span class="comment">Information at work or version level.<h:br/> 
+							To create a new version, click the add- or copy-buttons on the right.<h:br/>
+							To indicate the individual pieces (movements, acts or any other subdivision) in this work 
+							or version, use "Components" below.<h:br/>
+							In FRBR terms, versions and components correspond to the "expression" level.</h:span></h:a>
+						<dcm:element-buttons 
+							triggers="all" 
+							nodeset="m:expression" 
+							index="repeat-expression"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]"/>
+						<h:br/>
+					</h:legend>
+					
+					
+					<dcm:expression-input ref="."/>
+					
+					<h:fieldset>
+						<!-- 1st level subdivision -->
+						<h:legend>Components <h:a class="help">?<h:span class="comment">Use components to list the individual 
+							pieces (movements, acts, scenes etc.) that constitute this 
+							<xf:group ref=".[count(../m:expression)=1]">
+								work.
+							</xf:group>
+							<xf:group ref=".[count(../m:expression)&gt;1]">
+								version.
+							</xf:group><h:br/>
+							If there is no subdivision at this level, no components should be defined.<h:br/>
+							Components may be nested to define several layers of components (e.g. a work 
+							divided into acts, each divided into scenes)
+						</h:span></h:a></h:legend>    
+						<xf:trigger ref=".[not(m:componentGrp)]">
+							<xf:label>Add components</xf:label>
+							<xf:insert nodeset="m:componentGrp" 
+								ev:event="DOMActivate" 
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp"/>
+						</xf:trigger>
+						<xf:trigger ref=".[m:componentGrp and not(m:componentGrp/m:expression)]">
+							<xf:label>Add components</xf:label>
+							<xf:insert context="m:componentGrp" 
+								nodeset="m:expression"
+								ev:event="DOMActivate"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
+						</xf:trigger>
+						<xf:group ref="m:componentGrp">
+							<xf:repeat nodeset="m:expression" id="repeat-component">
+								<h:fieldset>
+									<h:legend>Component
+										<h:a class="help">?<h:span class="comment">Information at component level,
+											i.e. movement, act, scene or other.</h:span></h:a>
+										<dcm:element-buttons 
+											triggers="up down add copy remove" 
+											nodeset="m:expression" 
+											index="repeat-component"
+											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression"/>
+										<h:br/>
+									</h:legend>
+									
+									<dcm:expression-input ref="."/>
+									
+									<h:fieldset>
+										<!-- 2nd level subdivision -->
+										<h:legend>2<h:sup>nd</h:sup> sub-level components <h:a class="help">?<h:span class="comment">Use components to list the individual 
+											pieces (movements, scenes etc.) that constitute this part of the work.<h:br/>
+											If there is no subdivision at this level, no components should be defined.
+										</h:span></h:a></h:legend>    
+										<xf:trigger ref=".[not(m:componentGrp)]">
+											<xf:label>Add components</xf:label>
+											<xf:insert nodeset="m:componentGrp" 
+												ev:event="DOMActivate" 
+												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp"/>
+										</xf:trigger>
+										<xf:trigger ref=".[m:componentGrp and not(m:componentGrp/m:expression)]">
+											<xf:label>Add components</xf:label>
+											<xf:insert context="m:componentGrp" 
+												nodeset="m:expression"
+												ev:event="DOMActivate"
+												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
+										</xf:trigger>
+										<xf:group ref="m:componentGrp">
+											<xf:repeat nodeset="m:expression" id="repeat-sublevel2-component">
+												<h:fieldset>
+													<h:legend>Component
+														<h:a class="help">?<h:span class="comment">Information at component level,
+															i.e. movement, act, scene or other.</h:span></h:a>
+														<dcm:element-buttons 
+															triggers="up down add copy remove" 
+															nodeset="m:expression" 
+															index="repeat-sublevel2-component"
+															origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression"/>
+														<h:br/>
+													</h:legend>
+													<dcm:expression-input ref="."/>
+												</h:fieldset>
+											</xf:repeat>
+										</xf:group>
+									</h:fieldset>
+									
+									
+								</h:fieldset>
+							</xf:repeat>
+							
+
+						</xf:group>
+					</h:fieldset>
+					
+				</h:fieldset>
+			</xf:repeat>
+		</h:div>
+	</xf:group>
+	<h:br clear="all"/>	
+</h:div>

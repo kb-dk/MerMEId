@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<h:div id="bibliography-div" 
+  xmlns:m="http://www.music-encoding.org/ns/mei" 
+  xmlns:xi="http://www.w3.org/2001/XInclude" 
+  xmlns:t="http://www.tei-c.org/ns/1.0"
+  xmlns:h="http://www.w3.org/1999/xhtml" 
+  xmlns:xf="http://www.w3.org/2002/xforms" 
+  xmlns:ev="http://www.w3.org/2001/xml-events"
+  xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" >
+  
+  <h:div class="inputdiv">
+    <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']">
+
+      <xf:repeat nodeset="t:listBibl" id="repeat-listbibl">
+        <h:fieldset>
+          <h:legend>
+            <xf:output value="concat(translate(substring(@type,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(@type,2,string-length(@type)-1))"/> 
+            <xf:output ref=".[count(@type)&lt;1]" value="'Secondary'"/>
+          </h:legend>
+              <xf:repeat nodeset="t:bibl" id="repeat-bibl">
+                <xi:include href="bibliography-entry-elements.xml" parse="xml"/>
+              </xf:repeat>        
+        </h:fieldset>
+      </xf:repeat>
+      
+      <!-- trigger adding a primary bibliography -->
+      <xf:trigger ref=".[not(t:listBibl[@type='primary'])]/t:listBibl">
+        <xf:label> Add a primary bibliography</xf:label>
+        <xf:action ev:event="DOMActivate">
+          <xf:insert nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl" at="1" position="before"
+            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='primary']"/>
+        </xf:action>
+      </xf:trigger>
+      
+      <!-- trigger adding a secondary bibliography -->
+      <xf:trigger ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography'][not(t:listBibl[@type='secondary'])]/t:listBibl">
+        <xf:label> Add a secondary bibliography</xf:label>
+        <xf:action ev:event="DOMActivate">
+          <xf:insert nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl" at="1" position="before"
+            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='primary']"/>
+        </xf:action>
+      </xf:trigger>
+      
+      <!-- trigger adding a section for documentary material -->
+      <xf:trigger ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography'][not(t:listBibl[@type='documentation'])]/t:listBibl">
+        <xf:label> Add documentary material</xf:label>
+        <xf:action ev:event="DOMActivate">
+          <xf:insert nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl" at="last()" position="after"
+            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='documentation']"/>
+        </xf:action>
+      </xf:trigger>
+      
+    </xf:group>
+    
+  </h:div>  
+  <h:br clear="all"/>  
+</h:div>
