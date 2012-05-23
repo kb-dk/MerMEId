@@ -1,3 +1,29 @@
+<%@page contentType="text/html;charset=UTF-8"%>
+<%@page import="java.io.*"%>
+<%@page import="org.apache.log4j.*"%>
+<%
+response.setContentType("text/xml");
+request.setCharacterEncoding("UTF-8");
+
+java.lang.Long start = System.currentTimeMillis();
+
+org.apache.commons.httpclient.HttpClient httpClient = 
+    new org.apache.commons.httpclient.HttpClient();
+
+httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
+
+httpClient.getParams().setParameter("http.protocol.single-cookie-header", true);
+httpClient.getParams().setCookiePolicy(
+	   org.apache.commons.httpclient.cookie.CookiePolicy.BROWSER_COMPATIBILITY );
+
+logger.debug("Sending request to URI: " + targetUri); 
+
+//create a method object
+org.apache.commons.httpclient.methods.DeleteMethod put_method =
+    new org.apache.commons.httpclient.methods.DeleteMethod();
+
+
+
 /*
 
 #!/usr/bin/perl -w
