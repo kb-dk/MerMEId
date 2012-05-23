@@ -78,7 +78,7 @@
                 from the drop-down list should be used.</h:span></h:a>
             </xf:group>
             
-          <xf:select1 ref="$binding/@role">
+          <xf:select1 ref="$binding/@role" class="mediumlong">
               <xf:itemset nodeset="instance('relators-instance')/role">
                 <xf:label><xf:output value="if (.!='') then . else '- Please select -'"/></xf:label>
                 <xf:value ref="."></xf:value>

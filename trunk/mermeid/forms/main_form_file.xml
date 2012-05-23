@@ -12,7 +12,7 @@
 			<h:fieldset>
 				<h:legend>Project or series</h:legend>
 				
-				<xf:input ref="m:title"><xf:label>Title <h:a class="help">?<h:span class="comment">E.g. 
+				<xf:input ref="m:title" class="maxlong"><xf:label>Title <h:a class="help">?<h:span class="comment">E.g. 
 					"Complete Edition of the Works of Carl Nielsen" or "Niels W. Gade Thematic Catalogue"</h:span></h:a></xf:label></xf:input>
 				
 					<h:span class="blocklabel">File collections <h:a class="help">?<h:span class="comment">Machine-readable 
@@ -75,7 +75,7 @@
 				</xf:repeat>
 				<xf:repeat nodeset="m:respStmt/m:corpName/m:address/m:addrLine[m:ptr]" id="repeat-addr-ptr">
 					<h:div>
-						<xf:input ref="m:ptr/@target" class="mediumlong">
+						<xf:input ref="m:ptr/@target" class="long">
 							<xf:label class="fixed_width">URI 
 								<h:a class="help">?<h:span class="comment">Link or mail address, e.g. 
 								"http://www.example.com" or "mailto://someone@example.com"</h:span></h:a>
@@ -171,17 +171,17 @@
 		
 		<xf:group ref="instance('data-instance')/m:meiHead/m:revisionDesc" id="group-revisiondesc">
 			<h:fieldset>
-				<h:legend>Changes</h:legend>
-				<h:span class="fixed_width">Date <h:a class="help">?<h:span class="comment">Use date
+				<h:legend>File change history</h:legend>
+				<h:span class="fixed_width">Date of change <h:a class="help">?<h:span class="comment">Use date
 					format YYYY-MM-DD, e.g. 2011-04-30. A new row with today's date is
-					automatically created when opening the document. Use "Add revision"
-					button to add rows manually.</h:span></h:a></h:span>
-				<h:span class="fixed_width_long">Description </h:span>
+					automatically created when opening the document. Use "Add change"-button 
+					to add rows manually.</h:span></h:a></h:span>
+				<h:span class="fixed_width_maxlong">Description </h:span>
 				<h:span class="fixed_width">Responsible </h:span>
 				<xf:repeat nodeset="m:change" id="repeat-change">
 					<h:div>
 						<xf:input ref="m:date" class="mediumshort"/>
-						<xf:input ref="m:changeDesc/m:p" class="long"/>
+						<xf:input ref="m:changeDesc/m:p" class="maxlong"/>
 						<xf:input ref="m:respStmt/m:persName" class="mediumshort"/>
 						<dcm:element-buttons triggers="delete" 
 							nodeset="m:change"
