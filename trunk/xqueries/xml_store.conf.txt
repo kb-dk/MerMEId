@@ -1,0 +1,15 @@
+#
+# This is how to configure stuff in Apache:
+#
+
+RewriteEngine on
+RewriteLogLevel 8
+RewriteLog /var/log/apache2/rewrite_log
+
+RewriteCond %{REQUEST_URI} ^/form/.*$
+RewriteRule ^/form/(.*)$     http://distest.kb.dk/editor/scripts/formulate-exist.cgi?file=http://distest.kb.dk/storage/$1 [P]
+
+ProxyPass /storage "ajp://distest.kb.dk:8009/exist/rest/db"
+ProxyPass /orbeon  "ajp://distest.kb.dk:8009/orbeon"
+
+
