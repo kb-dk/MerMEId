@@ -571,14 +571,13 @@
                                                 <!-- end buttons -->
                                                 <h:br/>
                                             </xf:repeat>
-                                            <h:span class="fixed_width">Performed by: 
-                                                <h:a class="help">?<h:span class="comment">To specify the vocalist(s) performing
-                                                    this character, select the appropriate performer or ensemble from the list.<h:br/>
-                                                    Use this to indicate that, for instance, King Erik is sung by a tenor soloist.
-                                                </h:span></h:a>
-                                            </h:span>
                                             <xf:select1 ref="m:role/m:ref/@target" xxf:refresh-items="true" id="cast-select">
-                                                <xf:label/>
+                                                <xf:label class="fixed_width">Performed by: 
+                                                    <h:a class="help">?<h:span class="comment">To specify the vocalist(s) performing
+                                                        this character, select the appropriate performer or ensemble from the list.<h:br/>
+                                                        Use this to indicate that, for instance, King Erik is sung by a tenor soloist.
+                                                    </h:span></h:a>
+                                                </xf:label>
                                                 <xf:item>
                                                     <xf:label>- Please select -</xf:label>
                                                     <xf:value/>

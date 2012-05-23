@@ -252,8 +252,8 @@
 			<!--<h:p class="menu"> </h:p>-->
 			<h:p id="view_menu">
 				<!-- POST test button -->
-				<xf:submit submission="post-to-exist">
-					<xf:label>POST</xf:label>
+				<xf:submit submission="post-to-exist" appearance="minimal">
+					<xf:label><h:small>POST</h:small></xf:label>
 					<xf:action ev:event="DOMActivate">
 						<xf:message>
 							Attempting to post to: 
@@ -402,8 +402,6 @@
 				</xf:switch>
 			</xf:group>
 		</h:div>
-		
-		<!--<h:div class="logo"><a href="/editor/about.html"><img alt="MerMEId - logo" title="About MerMEId" src="/editor/images/mermeid_12px.png" border="0"/></a></h:div>-->
 		
 		<h:div class="logo">
 			<xf:trigger appearance="minimal">
