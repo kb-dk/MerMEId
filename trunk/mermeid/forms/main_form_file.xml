@@ -1,58 +1,204 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<h:div id="revision-div" 
+<h:div id="file-div" 
 	xmlns:h="http://www.w3.org/1999/xhtml" 
 	xmlns:xf="http://www.w3.org/2002/xforms" 
-	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
 	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:dcm="http://www.kb.dk/dcm"
 	xmlns:m="http://www.music-encoding.org/ns/mei">
 	<h:div class="inputdiv">
-		<xf:repeat nodeset="instance('data-instance')/m:meihead/m:filedesc/m:notesstmt/m:annot[@type='private_notes']" id="repeat-private_notes">
-			<h:fieldset>
-				<h:legend>Private notes <h:a class="help">?<h:span class="comment">A container for annotations not to be published  
-					or shown in the HTML preview.</h:span></h:a></h:legend>
-				<xf:textarea ref=".[index('repeat-private_notes')]"/>								
-			</h:fieldset>
-		</xf:repeat>		
 		
-		<xf:group ref="instance('data-instance')/m:meihead/m:revisiondesc" id="group-revisiondesc">
+		<xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt">
 			<h:fieldset>
-				<h:legend>Changes</h:legend>
-				<xf:repeat nodeset="m:change" id="repeat-change">
+				<h:legend>Project or series</h:legend>
+				
+				<xf:input ref="m:title"><xf:label>Title <h:a class="help">?<h:span class="comment">E.g. 
+					"Complete Edition of the Works of Carl Nielsen" or "Niels W. Gade Thematic Catalogue"</h:span></h:a></xf:label></xf:input>
+				
+					<h:span class="blocklabel">File collections <h:a class="help">?<h:span class="comment">Machine-readable 
+						identifier of the contexts (catalogues or collections) in
+						which this file is to appear - e.g. "CNW" or "BWV"</h:span></h:a></h:span>
+					<xf:repeat
+						nodeset="m:seriesStmt[@label='File collection']/m:identifier"
+						id="repeat-collection">
+						<h:div>
+							<xf:group ref=".[normalize-space(.)='']">
+								<h:a class="help_plain"><h:img src="http:/editor/images/warning.png" 
+									alt="warning"/><h:span class="comment">If no collection is indicated, 
+										MerMEId will not display this file in any catalogue or collection.
+										For other purposes, or if you do not need to distinguish between   
+										different collections of files, this field may be left empty.
+									</h:span></h:a>
+							</xf:group>
+							<xf:input ref=".">
+								<xf:label>Collection identifier</xf:label>
+							</xf:input>
+							<dcm:element-buttons triggers="add delete" 
+								nodeset="m:identifier"
+								index="repeat-collection"
+								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:seriesStmt[@label='File collection']/m:identifier"/>
+						</h:div>
+					</xf:repeat>	
+			</h:fieldset>
+		</xf:group>
+		
+		<xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:pubStmt">
+			<h:fieldset>
+				<h:legend>File publication</h:legend>
+				<xf:input ref="m:respStmt/m:corpName/m:expan" class="maxlong">
+					<xf:label class="fixed_width">Publisher <h:a class="help">?<h:span class="comment">The organisation
+						publishing this file (not the sources) - e.g. "Danish Centre for Music Publication"</h:span></h:a>
+					</xf:label>
+				</xf:input>
+				<xf:input ref="m:respStmt/m:corpName/m:abbr" class="short"><xf:label> Short name</xf:label></xf:input>
+				<h:br/>
+				<xf:repeat nodeset="m:respStmt/m:corpName/m:address/m:addrLine[not(m:ptr)]" id="repeat-addrLine">
+					<xxf:variable name="pos" select="position()"/>
 					<h:div>
-						<xf:input ref="m:date" class="short">
-							<xf:label>Date <h:a class="help">?<h:span class="comment">Use date format YYYY-MM-DD, e.g. 2011-04-30. 
-								A new row with today's date is automatically created when opening the document. 
-								Use "Add revision" button to add rows manually.</h:span></h:a></xf:label>
+						<xf:input ref="." class="maxlong">
+							<xf:label class="fixed_width"><xf:output value="if ($pos=1) then 'Address' else ''"/></xf:label>
 						</xf:input>
-						<xf:input ref="m:changedesc/m:p" class="mediumlong">
-							<xf:label>Description </xf:label>
-						</xf:input>
-						<xf:input ref="m:respstmt/m:persname" class="short">
-							<xf:label>Responsible </xf:label>
-						</xf:input>
-						
-						<!-- edit buttons -->
-						<h:span class="editmenu">
-							<xf:trigger class="delete">								
-								<h:span class="node">m:change</h:span>
-								<h:span class="index">repeat-change</h:span>
-								<h:span class="model">instance('empty-instance')/m:meihead/m:revisiondesc/m:change</h:span>
-							</xf:trigger>								
-						</h:span>
-						<!-- end  buttons -->
-						
+						<xf:trigger appearance="minimal" class="non-standard_button">
+							<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+							<xf:action ev:event="DOMActivate">
+								<xf:insert context="parent::node()" 
+									origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[1]"
+									nodeset="m:addrLine[not(m:ptr)][index('repeat-addrLine')]"/>
+								<xf:setvalue ref="../m:addrLine[not(m:ptr)][index('repeat-addrLine')]" value="''"/>
+							</xf:action>
+						</xf:trigger>
+						<dcm:element-buttons triggers="delete" 
+							nodeset="m:addrLine"
+							index="repeat-addrLine"
+							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[1]"/>
 					</h:div>
 				</xf:repeat>
-				<xf:trigger style="float:right">
-					<xf:label>
-						<h:img src="http:/editor/images/add.gif" alt="Add" style="vertical-align:text-top;"/> Add revision </xf:label>
-					<xf:action ev:event="DOMActivate">
-						<xf:insert 
-							nodeset="m:change" 
-							at="last()" 
-							position="after" 
+				<xf:repeat nodeset="m:respStmt/m:corpName/m:address/m:addrLine[m:ptr]" id="repeat-addr-ptr">
+					<h:div>
+						<xf:input ref="m:ptr/@target" class="mediumlong">
+							<xf:label class="fixed_width">URI 
+								<h:a class="help">?<h:span class="comment">Link or mail address, e.g. 
+								"http://www.example.com" or "mailto://someone@example.com"</h:span></h:a>
+							</xf:label>
+						</xf:input>
+						<!-- input/select emulating selection="open" behaviour -->
+						<h:span class="selection_open_short">
+							<xf:input ref="m:ptr/@xl:title">
+								<xf:label>Link label 
+									<h:a class="help">?<h:span class="comment">A descriptive label for the link. 
+									Select from list or enter a custom text.</h:span></h:a></xf:label>
+							</xf:input>
+							<xf:select1 ref="m:ptr/@xl:title" tabindex="1000">
+								<xf:item>
+									<xf:label>WWW</xf:label>
+									<xf:value>WWW</xf:value>
+								</xf:item>
+								<xf:item>
+									<xf:label>E-mail</xf:label>
+									<xf:value>E-mail</xf:value>
+								</xf:item>
+							</xf:select1>
+						</h:span>
+						<xf:trigger appearance="minimal" class="non-standard_button">
+							<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+							<xf:action ev:event="DOMActivate">
+								<xf:insert context="parent::node()" 
+									origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr][1]"
+									nodeset="m:addrLine[m:ptr][index('repeat-addr-ptr')]"/>
+								<xf:setvalue ref="../m:addrLine[m:ptr][index('repeat-addr-ptr')]/m:ptr/@xl:title" value="''"/>
+								<xf:setvalue ref="../m:addrLine[m:ptr][index('repeat-addr-ptr')]/m:ptr/@target" value="''"/>
+							</xf:action>
+						</xf:trigger>
+						<dcm:element-buttons triggers="delete" 
+							nodeset="m:addrLine"
+							index="repeat-addr-ptr"
+							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr][1]"/>
+					</h:div>
+					<xf:group ref="m:identifier[@analog='RISM']">
+						<xf:input ref="." class="mediumlong">
+							<xf:label class="fixed_width">RISM no. <h:a class="help">?<h:span class="comment">Use 
+								with manuscripts only. RISM identifiers of prints should be entered 
+								under "Publication" at source level (above) rather than on individual copies.</h:span></h:a></xf:label>
+						</xf:input>
+						<h:br clear="all"/>
+					</xf:group>
+				</xf:repeat>				
+				<xf:input ref="m:date" class="mediumshort">
+					<xf:label class="fixed_width">Date </xf:label>
+				</xf:input>
+				
+				<h:hr/>
+				<h:div class="blocklabel strong">Persons</h:div>		
+				<h:div class="blocklabel">
+					<h:span class="fixed_width_long">Name</h:span>
+					<h:span class="fixed_width"> Role <h:a class="help">?<h:span class="comment">Specifies the 
+						person's role in the process of producing this file, e.g. "editor". 
+						The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+					</h:span>
+				</h:div>
+				<xf:repeat nodeset="m:respStmt/m:persName" id="repeat-file-publication-person">
+					<dcm:relator ref="."/>
+					<xf:trigger appearance="minimal" class="non-standard_button">
+						<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+						<xf:action ev:event="DOMActivate">
+							<xf:insert context="parent::node()" 
+								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName[1]"
+								nodeset="m:persName[index('repeat-file-publication-person')]"/>
+							<xf:setvalue ref="../m:persName[index('repeat-file-publication-person')]" value="''"/>
+						</xf:action>
+					</xf:trigger>
+					<dcm:element-buttons 
+						triggers="delete" 
+						nodeset="m:persName" 
+						index="repeat-file-publication-person"
+						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName[1]"/>
+					<h:br/>
+				</xf:repeat>
+				
+			</h:fieldset>
+		</xf:group>
+		
+		<xf:repeat
+			nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes']"
+			id="repeat-private_notes">
+			<h:fieldset>
+				<h:legend>Private notes <h:a class="help">?<h:span class="comment">A container for
+					annotations not to be published or shown in the HTML
+					preview.</h:span></h:a></h:legend>
+				<xf:textarea ref=".[index('repeat-private_notes')]" class="mediumheight"/>
+			</h:fieldset>
+		</xf:repeat>
+		
+		<xf:group ref="instance('data-instance')/m:meiHead/m:revisionDesc" id="group-revisiondesc">
+			<h:fieldset>
+				<h:legend>Changes</h:legend>
+				<h:span class="fixed_width">Date <h:a class="help">?<h:span class="comment">Use date
+					format YYYY-MM-DD, e.g. 2011-04-30. A new row with today's date is
+					automatically created when opening the document. Use "Add revision"
+					button to add rows manually.</h:span></h:a></h:span>
+				<h:span class="fixed_width_long">Description </h:span>
+				<h:span class="fixed_width">Responsible </h:span>
+				<xf:repeat nodeset="m:change" id="repeat-change">
+					<h:div>
+						<xf:input ref="m:date" class="mediumshort"/>
+						<xf:input ref="m:changeDesc/m:p" class="long"/>
+						<xf:input ref="m:respStmt/m:persName" class="mediumshort"/>
+						<dcm:element-buttons triggers="delete" 
+							nodeset="m:change"
+							index="repeat-change"
 							origin="instance('empty-instance')/m:meihead/m:revisiondesc/m:change"/>
-						<xf:setvalue ref="instance('data-instance')/m:meihead/m:revisiondesc/m:change[last()]/m:date" value="substring-before(now(), 'T')"/>
+					</h:div>
+				</xf:repeat>
+				<xf:trigger>
+					<xf:label>
+						<h:img src="http:/editor/images/add.gif" alt="Add"
+							style="vertical-align:text-top;"/> Add change </xf:label>
+					<xf:action ev:event="DOMActivate">
+						<xf:insert nodeset="m:change" at="last()" position="after"
+							origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
+						<xf:setvalue
+							ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
+							value="substring-before(now(), 'T')"/>
 					</xf:action>
 				</xf:trigger>
 			</h:fieldset>

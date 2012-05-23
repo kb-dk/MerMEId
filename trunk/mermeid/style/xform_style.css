@@ -205,83 +205,6 @@ legend .xforms-group img {
     vertical-align: baseline;
 }
 
-/* styling context menus for fast element adding */
-
-.embeddedElementMenu {
-    display:block;
-    border: 2px solid #d0d0a4;
-    background-color: #ffc !important;
-    margin: 2px 5px 2px 5px;
-    padding: 0px;
-    border-radius: 4px;
-    /* For non-CSS3 FireFox */
-    -moz-border-radius: 4px;
-}
-
-.popup_menu_container .embeddedElementMenu {
-    box-shadow: 7px 7px 10px 5px #333;
-    /* For non-CSS3 FireFox */
-    -moz-box-shadow: 7px 7px 10px 5px #333;
-}
-
-.popup_heading {
-    background-color: #d0d0a4;
-    padding: 3px;
-    margin-bottom: 5px;
-    font-weight: bold;
-    height: 18px;
-}
-
-.popup_body {
-    margin: 5px;
-    white-space:nowrap;
-}
-
-.embeddedElementMenu a.xforms-trigger {
-    margin: 2px 4px 2px 4px !important;
-    font-size: .9em;
-}
-
-.popup_menu_container a:hover {
-    border: 1px solid #999999;
-    padding: 1px 1px 0px 1px;
-}
-
-/* menu within the form */
-
-fieldset .embeddedElementMenu {
-    position:relative;
-    float:right;
-    width: auto;
-    display: inline-block;
-    margin-bottom: 4px;
-}
-
-
-/* pop-up menus */
-.popup_menu_container {
-    padding:0px;
-    margin: 0px -3px 0px -3px;
-}
-
-.popup_menu_container .embeddedElementMenu  {
-    z-index:20;
-}
-
-.popup_menu_container .close {
-    position: relative;
-    float:right;
-}
-
-.popup_menu_container .popup_menu_table {
-    display: inline;
-}
-
-.popup_menu_container .popup_menu_table td {
-    vertical-align: top;
-    padding-bottom: 5px;
-}
-
 /* inputs and labels */
 
 select.xforms-select1 {
@@ -351,12 +274,17 @@ select.long,
     width: 16em;
 }
 
-
 .fixed_width_maxlong, 
 select.maxlong,
 .maxlong input.xforms-input-input  {
     width: 22em;
 }
+
+span.fixed_width, span.minimal_length, span.fixed_width_short, span.fixed_width_mediumlong,
+span.fixed_width_long, span.fixed_width_maxlong, .blocklabel {
+    margin-right: 6px;
+    margin-left: 2px;
+}  
 
 span.label,
 label {
@@ -386,7 +314,8 @@ span.selection_open_short input {
     position:absolute;
     z-index:+1;
     margin: 0px;
-    padding: 1px 0px 1px 0px;
+    padding: 0px 0px 0px 0px; 
+    margin: 2px 0px 0px 4px;
 }
 
 span.selection_open select,
@@ -404,11 +333,11 @@ span.selection_open_short select {
 }
 
 span.selection_open input {
-    width: 250px;    
+    width: 246px;    
 }
 
 span.selection_open_short input {
-    width: 150px;    
+    width: 146px;    
 }
 
 /* fixed width for some elements for alignment */

@@ -70,11 +70,6 @@
                     
                     <xf:group ref="$binding" id="main-group">
                         
-                        <xf:action ev:event="xforms-value-changed">
-                            <!--<xf:dispatch name="xforms-refresh" target="cast-select"/>-->
-                            <!--<xf:setvalue ref="m:castList/m:castItem/m:role/m:ref/@target[not(.=$binding//@xml:id)]" value="''"/>-->
-                        </xf:action>
-                        
                         <h:fieldset>
                             <h:legend>Music metadata</h:legend>
                             <!-- display expression-specific details at top level only if more than one expression or not empty -->
@@ -158,39 +153,39 @@
                                     <xf:input ref="@n" class="minimal_length">
                                         <xf:label class="fixed_width_short">Number</xf:label>
                                     </xf:input> 
+                                    <h:br clear="all"/>
+                                    <xf:input ref="m:tempo" class="mediumlong">
+                                        <xf:label class="fixed_width_short">Tempo</xf:label>
+                                    </xf:input>
+                                    <h:br clear="all"/>                                    
+                                    <xf:input ref="m:meter/@meter.count" class="minimal_length">
+                                        <xf:label class="fixed_width_short">Metre</xf:label>
+                                    </xf:input> /<xf:input ref="m:meter/@meter.unit" class="minimal_length"/> or symbol: 
+                                    <xf:select1	ref="m:meter/@meter.sym" class="auto_length">
+                                        <xf:item>
+                                            <xf:label>-</xf:label>
+                                            <xf:value/>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:label>common time</xf:label>
+                                            <xf:value>common</xf:value>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:label>cut time</xf:label>
+                                            <xf:value>cut</xf:value>
+                                        </xf:item>
+                                    </xf:select1>
                                 </xf:group>
-                                <xf:input ref="m:tempo" class="mediumlong">
-                                    <xf:label class="fixed_width_short">Tempo</xf:label>
-                                </xf:input>
                             </h:div>                                    
-                            <h:br clear="all"/>
                             <xf:group ref="m:key">
                                 <h:span class="fixed_width_short">Key</h:span>
                                 <xi:include href="../includes/key_select.xml" parse="xml"/>
                             </xf:group>
-                            <h:br clear="all"/>                                    
-                            <xf:input ref="m:meter/@meter.count" class="minimal_length">
-                                <xf:label class="fixed_width_short">Metre</xf:label>
-                            </xf:input> /<xf:input ref="m:meter/@meter.unit" class="minimal_length"/> or symbol: 
-                            <xf:select1	ref="m:meter/@meter.sym" class="auto_length">
-                                <xf:item>
-                                    <xf:label>-</xf:label>
-                                    <xf:value/>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>common time</xf:label>
-                                    <xf:value>common</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>cut time</xf:label>
-                                    <xf:value>cut</xf:value>
-                                </xf:item>
-                            </xf:select1>
                             <h:br clear="all"/>
                             <h:span class="blocklabel">Music incipit graphics</h:span>
                             <xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
                                 <h:div>
-                                    <xf:input ref="@target" class="mediumlong">
+                                    <xf:input ref="@target" class="maxlong">
                                         <xf:label>URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
                                             "http://example.com/incipits/lowres/116.png"</h:span></h:a></xf:label>
                                     </xf:input>
@@ -238,7 +233,7 @@
                                     </xf:input>
                                     <xf:input ref="@label">
                                         <xf:label>Description <h:a class="help">?<h:span class="comment">Explanatory text for the link to the resource, 
-                                            e.g. "CNU full score"</h:span></h:a></xf:label>
+                                            e.g. "Carl Nielsen Edition, full score"</h:span></h:a></xf:label>
                                     </xf:input>
                                     <dcm:element-buttons
                                         triggers="add delete" 
@@ -260,35 +255,33 @@
                                     and may or may not list its individual performers.<h:br/>
                                     Both ensembles and performers should have a MARC standard code added to improve
                                     data compatibility and interchange. Codes are selected from the dropdown menus.							
-                                </h:span></h:a></h:legend>
-                                <!-- actions for adding IDs to ensembles and performers added groupwise. -->
-                                <xf:action ev:event="add-performer-id">
-                                    <xf:setvalue ref="instance('temp')/counter" value="0" />
-                                    <xf:setvalue ref="instance('temp')/max" value="count($binding//m:performer[@xml:id=''])"/>
-                                    <xf:action while="(instance('temp')/max) - (instance('temp')/counter) &gt; 0">
-                                        <xf:setvalue ref="instance('temp')/counter" value="instance('temp')/counter + 1" />
-                                        <xf:setvalue ref="$binding//m:performer[@xml:id=''][instance('temp')/counter]/@xml:id"
-                                            value="concat('performer_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>  
-                                    </xf:action>
-                                </xf:action>
-                                <!-- Action for adding a value to all empty @xml:id.
-                                    Used when ensembles and performers are added.  -->
-                                <xf:action ev:event="add-id">
-                                    <xf:setvalue ref="instance('temp')/counter" value="0" />
-
-<!--  Try: count($binding//*[local-name()='ensemble' or local-name()='performer'][count(@xml:id)=0])
-    and perhaps add the id using
-    <xf:insert context="." origin="instance('temp')/attributes/@xml:id"/>
-                                    -->
-                                    <xf:setvalue ref="instance('temp')/max" value="count($binding//*[@xml:id=''])"/>
-                                    <xf:action while="(instance('temp')/max) - (instance('temp')/counter) &gt; 0">
-                                        <xf:setvalue ref="instance('temp')/counter" value="instance('temp')/counter + 1" />
-                                        <xf:setvalue ref="$binding//*[@xml:id=''][instance('temp')/counter]/@xml:id"
-                                            value="concat(local-name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>  
-                                    </xf:action>
-                                </xf:action>
+                                </h:span></h:a>
+                                    <xf:trigger id="id-trigger" appearance="minimal">
+                                        <xf:label></xf:label>
+                                        <xf:action ev:event="DOMActivate add-id">
+                                            <!-- add value to empty IDs -->
+                                            <xf:setvalue ref="instance('temp')/counter" value="0" />
+                                            <xf:setvalue ref="instance('temp')/max" value="count($binding//*[@xml:id=''])"/>
+                                            <xf:action while="(instance('temp')/max) - (instance('temp')/counter) &gt; 0">
+                                                <xf:setvalue ref="instance('temp')/counter" value="instance('temp')/counter + 1" />
+                                                <xf:setvalue ref="$binding//*[@xml:id=''][instance('temp')/counter]/@xml:id"
+                                                    value="concat(local-name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>  
+                                            </xf:action>
+                                            <!-- add @xml:id and value to ensembles and performers without it -->
+                                            <xf:setvalue ref="instance('temp')/counter" value="0" />
+                                            <xf:setvalue ref="instance('temp')/max" value="count($binding//*[local-name()='ensemble' or local-name()='performer'][count(@xml:id)=0])"/>
+                                            <xf:action while="(instance('temp')/max) - (instance('temp')/counter) &gt; 0">
+                                                <xf:setvalue ref="instance('temp')/counter" value="instance('temp')/counter + 1" />
+                                                <xf:setvalue ref="instance('temp')/attributes/@xml:id"
+                                                    value="concat(local-name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>  
+                                                <xf:insert context="$binding//*[local-name()='ensemble' or local-name()='performer'][count(@xml:id)=0][instance('temp')/counter]" 
+                                                    origin="instance('temp')/attributes/@xml:id"/>
+                                            </xf:action>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    
+                                </h:legend>
                                 
-<!--ID='': <xf:output value="count($binding//m:perfMedium/*[@xml:id=''])"/>-->                                
                                 <xf:group ref="m:perfMedium">
                                     <h:div class="blocklabel strong">Ensembles 
                                         <xf:trigger ref=".[count($binding/m:perfMedium/m:ensemble)=0]">
@@ -313,7 +306,7 @@
                                                             position="after" 
                                                             origin="instance('instrumentation')/m:ensemble[m:instrVoice/@reg][index('ensemble-menu-repeat')]"/>
                                                         <!-- generate IDs for added performers -->
-                                                        <xf:dispatch name="add-id" target="main-group"/>
+                                                        <xf:dispatch name="add-id" target="id-trigger"/>
                                                         <xxf:hide dialog="ensemble-menu"/>
                                                     </xf:action>
                                                 </xf:trigger>
@@ -324,13 +317,13 @@
                                     <xf:repeat nodeset="m:ensemble" id="repeat-ensemble">
                                         <h:fieldset>
                                             <h:legend>
-                                                <xf:output value="if (m:instrVoice!='') then concat('Ensemble: ',m:instrVoice) else 'Ensemble'"/>
+                                                <xf:output value="if (m:instrVoice!='') then m:instrVoice else '[Ensemble]'"/>
                                                 <dcm:element-buttons 
                                                     triggers="up down" 
                                                     nodeset="m:ensemble" 
                                                     origin="instance('instrumentation')/m:ensemble[m:instrVoice/@reg][index('ensemble-menu-repeat')]"
                                                     index="repeat-ensemble"/><xf:trigger 
-                                                        appearance="minimal">
+                                                        appearance="minimal" class="non-standard_button">
                                                         <xf:label><img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xxf:show dialog="ensemble-menu"/>
@@ -381,7 +374,7 @@
                                                 <h:a class="help">?<h:span class="comment">Optional. An ensemble may be specified by name (above), 
                                                     by a list of performers, or both.</h:span></h:a></h:span>
                                                 <!-- dialog for adding performers to existing ensembles -->
-                                                <xxf:dialog id="ensemble-performer-menu" appearance="full" level="modeless"
+                                                <xxf:dialog id="ensemble-performer-menu" appearance="full" level="modal"
                                                     close="true" draggable="true" visible="false">
                                                     <xf:label>Performers</xf:label>
                                                     <xf:repeat nodeset="instance('instrumentation')/m:ensemble[m:performer]" id="ensemble-performer-menu-repeat">
@@ -396,14 +389,14 @@
                                                                     position="after" 
                                                                     origin="instance('instrumentation')/m:ensemble[m:performer][index('ensemble-performer-menu-repeat')]/m:performer"/>
                                                                 <!-- generate IDs for added performers -->
-                                                                <xf:dispatch name="add-id" target="main-group"/>
+                                                                <xf:dispatch name="add-id" target="id-trigger"/>
                                                                 <xxf:hide dialog="ensemble-performer-menu"/>
                                                             </xf:action>
                                                         </xf:trigger>
                                                         <h:br/>
                                                     </xf:repeat>
                                                 </xxf:dialog>			
-                                                <xf:trigger ref=".[count(m:performer)=0]">
+                                                <xf:trigger ref=".[count(m:performer)=0]" style="margin-left: 8px;">
                                                     <xf:label><img src="http:/editor/images/add.gif" alt="Add"/> Add performer(s)</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xxf:show dialog="ensemble-performer-menu"/>
@@ -431,14 +424,16 @@
                                                     triggers="up down add" 
                                                     nodeset="m:performer" 
                                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:performer[1]"
-                                                    index="repeat-ensemble-performer"/><xf:trigger appearance="minimal">
+                                                    index="repeat-ensemble-performer"/>
+                                                <xf:trigger appearance="minimal" class="non-standard_button">
                                                         <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:delete nodeset="." at="index('repeat-ensemble-performer')"/>
                                                             <!-- remove references to deleted items -->
                                                             <xf:setvalue ref="$binding/m:castList/m:castItem/m:role/m:ref/@target[not(.=$binding//@xml:id)]" value="''"/>
                                                         </xf:action>
-                                                    </xf:trigger><xf:trigger>
+                                                </xf:trigger>
+                                                <xf:trigger>
                                                         <xf:label><img src="http:/editor/images/add.gif" alt="Add" title="Add row"/> Add from list</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xxf:show dialog="ensemble-performer-menu"/>
@@ -462,7 +457,7 @@
                                         <xf:action ev:event="DOMActivate">
                                             <xf:insert context="." 
                                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:performer[1]"/>
-                                            <xf:dispatch name="add-id" target="main-group"/>
+                                            <xf:dispatch name="add-id" target="id-trigger"/>
                                         </xf:action>
                                     </xf:trigger>
                                     <xf:group ref=".[count(m:performer)&gt;0]">
@@ -514,8 +509,7 @@
                                         <h:a class="help">?<h:span class="comment">A list of characters 
                                             appearing in the piece. Names may be entered in more than one language, and each 
                                             characters may be linked to a performer listed above.                                        
-                                        </h:span></h:a>
-                                        
+                                        </h:span></h:a>                                        
                                     </h:div>
                                     <xf:trigger ref=".[count(m:castItem)=0]">
                                         <xf:label><img src="http:/editor/images/add.gif" alt="Add"/> Add character</xf:label>
@@ -530,14 +524,15 @@
                                         <xf:action ev:event="xforms-value-changed">
                                             <xf:dispatch name="add-id" target="main-group"/>
                                         </xf:action>
-                                        <h:fieldset class="compact">
-                                            <h:div class="blocklabel">Character
+                                        <h:fieldset>
+                                            <h:legend>
+                                                <xf:output value="if (m:role/m:ref/m:name[1]!='') then m:role/m:ref/m:name[1] else '[Character]'"/>
                                                 <dcm:element-buttons
                                                     triggers="add remove up down" 
                                                     nodeset="m:castItem" 
                                                     index="repeat-cast"
                                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]"/>
-                                            </h:div>
+                                            </h:legend>
                                             <xf:repeat nodeset="m:role/m:ref/m:name" id="repeat-role">
                                                 <xxf:variable name="pos" select="position()"/>
                                                 <xf:input ref="."><xf:label class="fixed_width">Name: <h:a class="help">?<h:span
@@ -557,8 +552,7 @@
                                                     </xf:action>
                                                 </xf:select1>
                                                 <!-- edit buttons --> 
-                                                <h:span> </h:span>
-                                                <h:span class="editmenu">
+                                                <h:span class="editmenu" style="margin-left: 8px;">
                                                     <xf:trigger appearance="minimal" class="element-button">
                                                         <xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
                                                         <xf:action ev:event="DOMActivate">
@@ -602,6 +596,7 @@
                                 </xf:group>
                                 
                             </h:fieldset>
+                     
                         </xf:group>
                     </xf:group>
                 </xf:group>            

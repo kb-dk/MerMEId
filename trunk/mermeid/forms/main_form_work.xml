@@ -98,7 +98,6 @@
 				<h:span class="fixed_width"> List name <h:a class="help">?<h:span class="comment">Reference to a
 					list or catalogue in which the work is identified (e.g. "opus",
 					"CNW", "CNU" etc.)</h:span></h:a></h:span>
-				<h:div class="horiz_spacer"/>
 				<h:span class="fixed_width"> No. <h:a class="help">?<h:span class="comment">The work's number and
 					signature in the list identifying it</h:span></h:a>
 				</h:span>
@@ -123,7 +122,6 @@
 			<h:legend>Persons</h:legend>		
 			<h:div class="blocklabel">
 				<h:span class="fixed_width_long">Name</h:span>
-				<h:div class="horiz_spacer"/><h:div class="horiz_spacer"/>
 				<h:span class="fixed_width"> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
 					or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
 				</h:span>
@@ -277,10 +275,10 @@
 					</h:div>
 				</xxf:dialog>					
 				
-				<h:div class="blocklabel">Term <h:a class="help">?<h:span class="comment">Keywords for searching, 
+				<h:span class="blocklabel">Term <h:a class="help">?<h:span class="comment">Keywords for searching, 
 					grouping and indexing, e.g.	"Symphony", "Chamber music", or "Song".
 					Pre-defined categories and keywords may be selected from a menu by clicking the add-button to the right.
-				</h:span></h:a></h:div>
+				</h:span></h:a></h:span>
 				<h:div style="float:right">
 					<xf:trigger>
 						<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> Add from list</xf:label>

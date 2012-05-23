@@ -106,14 +106,14 @@
 				<!-- load XML data -->
 				<xf:send submission="load-data-submission"/>
 				<!-- automatically add change entry in revisionDesc -->
-				<xf:action if="instance('data-instance')/m:meihead/m:revisiondesc/m:change[last()]/m:date!=''">
-					<xf:insert nodeset="instance('data-instance')/m:meihead/m:revisiondesc/m:change" at="last()"
-						position="after" origin="instance('empty-instance')/m:meihead/m:revisiondesc/m:change"/>
-					<xf:setvalue ref="instance('data-instance')/m:meihead/m:revisiondesc/m:change[last()]/m:date"
+				<xf:action if="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date!=''">
+					<xf:insert nodeset="instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
+						position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
+					<xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
 						value="substring-before(now(), 'T')"/>
 				</xf:action>
-				<xf:action if="instance('data-instance')/m:meihead/m:revisiondesc/m:change[last()]/m:date=''">
-					<xf:setvalue ref="instance('data-instance')/m:meihead/m:revisiondesc/m:change[last()]/m:date"
+				<xf:action if="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date=''">
+					<xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
 						value="substring-before(now(), 'T')"/>
 				</xf:action>
 				<!-- check list of language declarations -->
@@ -396,7 +396,7 @@
 						<h:div class="top-bar-container">
 							<h:div id="file-border"> </h:div>
 						</h:div>
-						<!--<xi:include href="main_form_file.xml" parse="xml"/>-->
+						<xi:include href="main_form_file.xml" parse="xml"/>
 					</xf:case>
 					
 				</xf:switch>

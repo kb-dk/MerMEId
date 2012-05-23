@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="../../../../schema/MEI%202012/mei-schema/mei-FRBR_with_tei_listbibl.rng" type="xml"?>
 <mei meiversion="2012" 
   xmlns="http://www.music-encoding.org/ns/mei" 
   xmlns:xl="http://www.w3.org/1999/xlink" 
@@ -13,7 +14,19 @@
       </titleStmt>
       <pubStmt>
         <respStmt>
-          <corpName/>
+          <corpName authURI="http://www.kb.dk/dcm">
+            <abbr>DCM</abbr>
+            <expan>Danish Centre for Music Publication</expan>
+            <address>
+              <addrLine>The Royal Library</addrLine>
+              <addrLine>Søren Kierkegaards Plads 1</addrLine>
+              <addrLine>P.O. Box 2149</addrLine>
+              <addrLine>DK - 1016 Copenhagen K</addrLine>
+              <addrLine><ptr target="http://www.kb.dk/dcm" xl:title="WWW"/></addrLine>
+              <addrLine><ptr target="mailto://dcm@kb.dk" xl:title="E-mail"/></addrLine>
+            </address>
+          </corpName>
+          <persName role="editor"/>
         </respStmt>
         <date reg="" notbefore="" notafter=""/>
         <identifier type=""/>
@@ -32,51 +45,9 @@
       </seriesStmt>
       <notesStmt>
         <annot type="bibliography">
-          <listBibl type="primary" xmlns="http://www.tei-c.org/ns/1.0">
-            <bibl type="Letter" xml:id="bibl1">
-              <author/>
-              <name role="recipient"/>
-              <date when-iso="" notBefore-iso="" notAfter-iso=""/>
-              <geogName/>
-              <msIdentifier>
-                <repository/>
-                <idno/>
-              </msIdentifier>
-              <note/>
-              <ref target=""/>
-              <ref type="editions">
-                <bibl>
-                  <title type="short_title"/>
-                  <biblScope/>
-                </bibl>
-              </ref>
-            </bibl>
-          </listBibl>
-          <listBibl type="secondary" xmlns="http://www.tei-c.org/ns/1.0">
-            <bibl type="Monograph" xml:id="bibl2">
-              <abbr/>
-              <author/>
-              <date when-iso="" notBefore-iso="" notAfter-iso=""/>
-              <title level="m"/>
-              <editor/>
-              <biblScope type="pages"/>
-              <pubPlace/>
-              <publisher/>
-              <ref/>
-            </bibl>
-          </listBibl>
-          <listBibl type="documentation" xmlns="http://www.tei-c.org/ns/1.0">
-            <bibl type="Concert_programme" xml:id="bibl3">
-              <abbr/>
-              <author/>
-              <date when-iso="" notBefore-iso="" notAfter-iso=""/>
-              <title level="m"/>
-              <biblScope type="pages"/>
-              <pubPlace/>
-              <publisher/>
-              <ref/>
-            </bibl>
-          </listBibl>
+          <listBibl type="primary" xmlns="http://www.tei-c.org/ns/1.0"/>          
+          <listBibl type="secondary" xmlns="http://www.tei-c.org/ns/1.0"/>          
+          <listBibl type="documentation" xmlns="http://www.tei-c.org/ns/1.0"/>          
         </annot>
         <annot type="private_notes"/>
       </notesStmt>
@@ -256,8 +227,6 @@
           <title type="text_source" xml:lang="en"/>
           <respStmt>
             <persName role="composer"/>
-            <persName role="dedicatee"/>
-            <persName role="author"/>
           </respStmt>
         </titleStmt>        
         <history>
@@ -407,8 +376,14 @@
                 <roleDesc xml:lang="en"/>
               </castItem>
             </castList>
-            
-            <contents/>
+            <incip>     
+              <incipText> 
+                <p xml:lang="en"/>
+              </incipText>
+              <graphic target="" xl:title="" targettype="lowres"/>
+              <graphic target="" xl:title="" targettype="hires"/>
+              <score/>
+            </incip>
             
             <!-- top-level components -->            
             <componentGrp>
@@ -452,12 +427,12 @@
                 <!-- next sub-level components -->
                 <componentGrp/>
                 <relationList>
-                  <relation rel="hasReproduction" label="" targettype="edited_score"/> <!-- link to external edition -->
+                  <relation rel="hasReproduction" label="Edited score" targettype="edited_score" target=""/> <!-- link to external edition -->
                 </relationList>
               </expression>
             </componentGrp>
             <relationList>
-              <relation rel="hasReproduction" label="" targettype="edited_score"/> <!-- link to external edition -->
+              <relation rel="hasReproduction" label="Edited score" targettype="edited_score" target=""/> <!-- link to external edition -->
             </relationList>
           </expression>
         </expressionList>
