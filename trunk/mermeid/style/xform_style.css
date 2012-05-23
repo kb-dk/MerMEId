@@ -1,0 +1,485 @@
+/* CSS for MerMEId XForms */
+
+/* DISABLE SOME ORBEON-SPECIFIC STYLING */
+/* override highlighting of selected nodes */
+.xforms-repeat-selected-item-1,
+.xforms-repeat-selected-item-2,
+.xforms-repeat-selected-item-3,
+.xforms-repeat-selected-item-4 {
+    background-color: inherit;
+}
+
+.xforms-loading-loading {
+    margin-top: 15px;
+}
+
+/* override controls style */
+.xforms-input, .xforms-textarea, .xforms-select1 {
+    width: inherit;
+    height: inherit;
+    margin: inherit;
+    padding: inherit;
+}
+
+.xforms-input {
+    background-color: inherit;
+}
+
+.xforms-textarea, .xforms-select1 {
+    background-color: #ffffff;
+}
+
+.xbl-component{
+    display:inline;
+}
+
+.yui-dialog {
+    z-index: 2000 !important;
+}
+
+.yui-panel-container {
+    box-shadow: 7px 7px 10px 5px #333;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 7px 7px 15px 0px #333;
+}
+
+.yui-skin-sam .yui-panel .hd {
+    font-size: 1em;
+}
+
+.yui-calcontainer {
+    font-size: .85em;
+}
+
+.yui-calcontainer .selector {
+    width: 2em;
+}
+
+.mask {
+    z-index: 1001 !important;
+}
+
+.xforms-case-deselected .addElementMenu {
+    /* Orbeon-related hack to hide fixed position context menu on opening */
+    display:none;
+}
+/* END DISABLE ORBEON STYLING */
+
+
+div.inputdiv {
+    margin: 4px 8px 24px 8px;
+    padding: 0px;
+    padding-top: 10px;
+    margin-top:0px;
+}
+
+fieldset {
+    padding: 0px 5px 5px 5px;
+    margin: 26px 0px 5px 0px;
+    background-color: #e8e8e8 !important; 
+    border: 1px solid #999999;
+}
+
+fieldset .compact {
+    margin: 2px 0 2px 0;
+}
+
+fieldset fieldset {
+    margin: 26px 2px 0px 0px;
+}
+
+fieldset fieldset, fieldset fieldset legend,
+fieldset fieldset fieldset fieldset fieldset, fieldset fieldset fieldset fieldset fieldset legend {
+    background-color: #cccccc !important;
+}
+
+fieldset fieldset fieldset, fieldset fieldset fieldset legend,
+fieldset fieldset fieldset fieldset fieldset fieldset, 
+fieldset fieldset fieldset fieldset fieldset fieldset legend {
+    background-color: #dddddd !important;
+}
+
+fieldset fieldset fieldset fieldset, fieldset fieldset fieldset fieldset legend {
+    background-color: #e8e8e8 !important;
+}
+
+.input_block {
+    border: 1px solid #999;
+    padding: 5px;
+}
+
+legend {
+    position:relative;
+    background-color: #e8e8e8; 
+    font-weight: bold;
+    border: #999999 solid 1px;
+    border-bottom: none;
+    height: 18px;
+    padding: 3px 4px 0px 4px;
+    margin: -21px 0px 0px -6px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+}
+ 
+table, tr, td {
+    margin: 0px;
+    padding: 0px;
+    border: none;    
+}
+
+hr {
+    margin: 4px 0px;
+    padding: 0px;
+    height: 1px;
+    border: none;
+    border-bottom: 1px solid #999999;
+    background: transparent;
+}
+
+div.vertical_spacer {
+    height: 3px;
+}
+
+div.horiz_spacer {
+    width: 5px;
+    display: inline;
+    display: inline-block;
+}
+
+/* buttons and triggers */
+
+button, button.detail_button, button[type], .xforms-button {
+    margin: 0px;
+    padding: 0px 4px 0px 4px;
+    width: auto;
+    height: 22px;
+    font-family: arial, helvetica, sans-serif;
+    font-size: .9em;
+    overflow:visible;
+}
+
+a.non-standard_button {
+    margin: 0px -6px !important;
+}
+
+a.xforms-trigger {
+    text-decoration: none;
+    padding: 1px;
+    margin: 0 1px;
+}
+
+a.xforms-trigger img:hover,
+a.xforms-submit img:hover {
+    border:1px solid #999999;
+    padding: 1px;
+}
+
+button img {
+    border: none;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+a.xforms-trigger img,
+a.xforms-submit img,
+.xforms-group img {
+    border: none;
+    padding: 2px;
+    vertical-align: baseline;
+}
+
+img.button_patch {
+    padding: 2px 4px 2px 4px;
+}
+
+a.element-button {
+    margin-left: -8px;
+}
+
+legend .xforms-trigger img,
+legend .xforms-group img {
+    margin-top: 1px;
+    vertical-align: baseline;
+}
+
+/* styling context menus for fast element adding */
+
+.embeddedElementMenu {
+    display:block;
+    border: 2px solid #d0d0a4;
+    background-color: #ffc !important;
+    margin: 2px 5px 2px 5px;
+    padding: 0px;
+    border-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-border-radius: 4px;
+}
+
+.popup_menu_container .embeddedElementMenu {
+    box-shadow: 7px 7px 10px 5px #333;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 7px 7px 10px 5px #333;
+}
+
+.popup_heading {
+    background-color: #d0d0a4;
+    padding: 3px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    height: 18px;
+}
+
+.popup_body {
+    margin: 5px;
+    white-space:nowrap;
+}
+
+.embeddedElementMenu a.xforms-trigger {
+    margin: 2px 4px 2px 4px !important;
+    font-size: .9em;
+}
+
+.popup_menu_container a:hover {
+    border: 1px solid #999999;
+    padding: 1px 1px 0px 1px;
+}
+
+/* menu within the form */
+
+fieldset .embeddedElementMenu {
+    position:relative;
+    float:right;
+    width: auto;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+
+/* pop-up menus */
+.popup_menu_container {
+    padding:0px;
+    margin: 0px -3px 0px -3px;
+}
+
+.popup_menu_container .embeddedElementMenu  {
+    z-index:20;
+}
+
+.popup_menu_container .close {
+    position: relative;
+    float:right;
+}
+
+.popup_menu_container .popup_menu_table {
+    display: inline;
+}
+
+.popup_menu_container .popup_menu_table td {
+    vertical-align: top;
+    padding-bottom: 5px;
+}
+
+/* inputs and labels */
+
+select.xforms-select1 {
+    display: inline;
+    margin: 0 0 0 -3px;
+    padding: 0px;
+    width: 10em;
+}
+
+.xforms-input,
+.xforms-input-input {
+    display: inline;
+    margin: 2px 0px 0px 0px;
+    padding: 1px;
+}
+
+textarea.xforms-textarea {
+    text-align:left;
+    display: inline;
+    height: 150px;
+    width: 95%;
+    margin: 5px 0px 0px 0px;
+    padding: 2px;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 1em;
+    background-color: #ffffff;
+}
+
+.inputdiv fieldset textarea.mediumheight {
+    height: 60px;
+}
+
+textarea > value {
+    padding:2px;
+}
+
+select.auto_length {
+    width: auto;
+}
+
+select.minimal_length,
+.minimal_length input.xforms-input-input {
+    width: 1.5em;
+}
+
+.fixed_width_short, 
+select.short,
+.short input.xforms-input-input {
+    width: 4em;
+}
+
+.fixed_width,
+select.mediumshort,
+.mediumshort input.xforms-input-input {
+    width: 8em;
+}
+
+.fixed_width_mediumlong,
+.mediumlong input.xforms-input-input,
+select.mediumlong {
+    width: 12em;
+}
+
+.fixed_width_long, 
+select.long,
+.long input.xforms-input-input  {
+    width: 16em;
+}
+
+
+.fixed_width_maxlong, 
+select.maxlong,
+.maxlong input.xforms-input-input  {
+    width: 22em;
+}
+
+span.label,
+label {
+    margin: 0px 5px 0px 0px;
+    padding: 0px;
+}
+
+.blocklabel {
+    margin: 5px 0px 0px 0px;
+    padding: 0px;
+    text-align:left;
+    display:block;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+/* css for emulating <xforms:select1 selection="open"> */
+span.selection_open,
+span.selection_open_short {
+    white-space: nowrap; 
+}
+
+span.selection_open input,
+span.selection_open_short input {
+    position:absolute;
+    z-index:+1;
+    margin: 0px;
+    padding: 1px 0px 1px 0px;
+}
+
+span.selection_open select,
+span.selection_open_short select {
+    position: relative;
+    height: 20px;
+}
+
+span.selection_open select {
+    width: 268px;  
+}
+
+span.selection_open_short select {
+    width: 168px;    
+}
+
+span.selection_open input {
+    width: 250px;    
+}
+
+span.selection_open_short input {
+    width: 150px;    
+}
+
+/* fixed width for some elements for alignment */
+.fixed_width, .fixed_width_short,
+.fixed_width_mediumlong, .fixed_width_long {
+    display:inline-block;
+    text-align:left;
+    margin: 0;
+}
+
+/* css for help and warning pop-ups */
+
+a.help, a.help_plain, a.warning {
+    text-decoration: none;
+    text-align: left;
+    vertical-align:text-top;
+    color: #888888;
+    background-color: #ffffcc;
+    border: 1px solid #888888;
+    font-weight: bold;
+    padding-top: 0px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 1px;
+    font-size:.8em;   
+    cursor: help;
+    border-radius: 2px;
+    /* For non-CSS3 FireFox */
+    -moz-border-radius: 2px;    
+}
+
+a.help_plain {
+    background-color:transparent;
+    border: none;
+    color: black;
+    padding: 2px;
+}
+
+a.help_plain img {
+    margin-bottom: -3px;
+}
+
+a.help span.comment, a.help_plain span.comment, a.warning span.comment {
+    display:inline;
+    position: absolute;
+    visibility:hidden;
+    white-space: normal;
+    text-decoration:none;
+    color: black;
+    background-color:#dbd9ba;
+    padding: 1px;
+    z-index:250;
+    padding: 8px 4px 4px 4px;
+    width: 200px;
+    margin-top: 20px;
+    margin-left: -5px;
+    border: 1px solid #ddd;
+    font-weight:normal;
+    font-size: 1.2em;
+    box-shadow: 7px 7px 10px 5px #333;
+    border-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 7px 7px 10px 5px #333;
+    -moz-border-radius: 4px;
+}
+
+a:hover.help span.comment, a:hover.help_plain span.comment, a:hover.warning span.comment {
+    visibility:visible;
+}
+
+/* About box */
+div.about_header, div.about_footer {
+    text-align: center;
+}

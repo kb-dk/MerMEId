@@ -1,0 +1,208 @@
+body {
+    text-align : left;
+    margin : 20px;
+    line-height : 1.1em;
+    font-family: cambria, verdana, arial, helvetica, sans-serif;
+    
+}
+
+p {
+    margin-top : 8px;
+    margin-bottom : 0px;
+}
+
+table {
+    font-size: 1em;
+}
+
+table td {
+    vertical-align: top;
+    line-height: 1.5em;
+    padding-right: 1em;
+}
+
+h1, h2, h3, p {
+    line-height: 1.25em;
+}
+
+.p_heading, .p_subheading, .movement_heading {
+    font-weight : bold;
+    margin-top : .5em;
+}
+
+.p_subheading {
+    margin-bottom: 0em;
+}
+
+.movement_heading {
+    margin-top: 1em;  
+    margin-bottom: -.75em;
+}
+
+.bibl_record_short {
+    margin-top:0em;
+}
+
+.cat_number {
+    background-color : #046344;
+    padding:2px;
+    color : white;
+    font-weight : bold;
+    font-size : 1.5em;
+}
+
+.fold_icon {
+    cursor : pointer;
+    margin-top:.5em;
+}
+
+.folded_content {
+    padding-left : 18px;
+}
+
+.incipit_lowres {
+    margin-top : 5px;
+    margin-bottom : 10px;
+}
+
+.invisible {
+    color: transparent;
+}
+
+.alternative_language, .classification, .latest_revision {
+    font-size : .9em;
+    color: #888888;
+}
+
+table.performances tr td, table.letters tr td {
+    padding: 0 0 .4em 0;
+    margin: 0px;
+    line-height: 1.1em;
+}
+
+div.source {
+    padding-bottom : 10px;
+}
+
+div.source p {
+    margin-top : 0px;
+}
+
+/* SPECIAL SYMBOLS */
+
+/* Embedded fonts */
+/* time signature (common/cut time) font */
+@font-face {
+	font-family: 'Rhythms';
+	src: url('fonts/Rhythms.eot');
+	src: local('Rhythms Regular'), local('Rhythms'), url('fonts/Rhythms.ttf') format('truetype');
+} 
+
+/* Runes font */
+@font-face {
+	font-family: 'Hnias';
+	src: url('fonts/Hnias.eot');
+	src: local('Hnias Regular'), local('Hnias'), url('fonts/Hnias.ttf') format('truetype');
+} 
+
+
+/* End embedded font */
+
+.accidental {
+    position: relative;
+    top: 0em;
+    font-family: "Arial Unicode MS", sans-serif; 
+    font-size:1em;
+    padding-left:.0em;
+    padding-right:.1em;
+    padding-top: 0em;
+    padding-bottom: .3em;
+}
+
+.meter {
+    font-family: 'times new roman', times, serif; 
+    font-weight: bold;
+}
+
+.timesig {
+    font-family: Rhythms, Opus, Helsinki, Petrucci; 
+    font-size: 1.2em;
+}
+
+.runes {
+    font-family: Hnias, Junicode, sans-serif, serif;
+}
+
+
+/* css for help pop-ups */
+a.help {
+    text-decoration : none;
+    text-align : left;
+    vertical-align : text-top;
+    color : #339933;
+    background-color : #ffffff;
+    border : 1px solid #226622;
+    font-weight : bold;
+    padding-top : 0px;
+    padding-left : 2px;
+    padding-right : 2px;
+    padding-bottom : 1px;
+    font-size : .8em;
+    -moz-border-radius : .3em .3em .3em .3em;
+    border-radius-topright : .3em;
+    border-radius-topleft : .3em;
+    border-radius-bottomright : .3em;
+    border-radius-bottomleft : .3em;
+}
+a.help span.comment {
+    display : inline;
+    position : absolute;
+    visibility : hidden;
+    white-space : normal;
+    text-decoration : none;
+    color : black;
+    background-color : #eeffee;
+    padding : 1px;
+    z-index : 10;
+    padding : 4px;
+    width : 200px;
+    margin-top : -10px;
+    margin-left : 5px;
+    border : 1px solid #226622;
+    font-weight : normal;
+    font-size : 1.2em;
+    -moz-border-radius : .3em .3em .3em .3em;
+    border-radius-topright : .3em;
+    border-radius-topleft : .3em;
+    border-radius-bottomright : .3em;
+    border-radius-bottomleft : .3em;
+}
+a:hover.help span.comment {
+    visibility : visible;
+}
+
+
+@media print {
+
+    .noprint {
+        display : none;
+    }
+    p {
+        margin-top : 0.2em;
+        margin-bottom : 0em;
+    }
+    .p_heading {
+        margin-top : 0.2em;
+    }
+    .cnw_number {
+        background-color: white;
+        color : black;
+    }
+    div.source {
+        padding-bottom : 0.2em;
+    }
+    div.source p {
+        margin-top : 0.2em;
+    }
+
+}

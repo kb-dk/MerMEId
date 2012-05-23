@@ -1,0 +1,166 @@
+body {   
+    font-size: .8em;
+    font-family: arial, helvetica, sans-serif;
+    background-color: #f6f6f6;
+    background-image: url('/editor/images/gradient-dark800.png'); 
+    background-repeat: repeat-x;
+    background-attachment: fixed;
+    padding:20px;
+    margin:0px;
+}
+
+h1 {
+    margin:0px;
+}
+
+a {
+    color:black;
+}
+
+
+table {
+    width: 100%;
+}
+
+th {
+    font-size: .8em;
+    font-weight: bold;
+    padding: .2em;
+    padding-left: .3em;
+    margin: 0em;
+    text-align: left;
+}
+
+td {
+    font-size: .8em;
+    padding: .2em;
+    padding-left: .3em;
+    margin: 0em;
+}
+
+td.buttons {
+    white-space: nowrap;
+}
+
+td.buttons form {
+    padding: 0em;
+    margin: 0em;
+}
+
+td.buttons input, td.buttons img {
+    padding:3px;
+    margin:0em;
+}
+
+td.buttons input:hover, td.buttons img:hover {
+    border: 1px solid #999999;
+    padding: 2px;
+}
+
+tbody tr:hover {
+    background-color: #ffffff;
+}
+
+form.search {
+    width:auto;
+    float:right;
+}
+
+form.search fieldset {
+    display: inline;
+    border: none;
+    text-align: right;
+}
+
+.odd {
+    background-color: #c0ccf0;
+    background-image: url('/editor/images/gradient-white.png'); 
+    background-repeat: repeat-x;
+    background-attachment: fixed;
+}
+
+.selectedCollection {
+    background-color: #ffffff;
+}
+
+.collectionLink {
+    display:inline-block;
+    margin-right:1em;
+    padding:.2em;
+}
+
+
+/* css for help pop-ups */
+
+
+a.help {
+    text-decoration: none;
+    text-align: left;
+    vertical-align:text-top;
+    color: #888888;
+    background-color: #ffffcc;
+    border: 1px solid #888888;
+    font-weight: bold;
+    padding-top: 0px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 1px;
+    font-size:.8em;   
+    cursor: help;
+    border-radius: 2px;
+    /* For non-CSS3 FireFox */
+    -moz-border-radius: 2px;    
+}
+
+a.help span.comment {
+    display:inline;
+    position: absolute;
+    visibility:hidden;
+    white-space: normal;
+    text-decoration:none;
+    color: black;
+    background-color:#dbd9ba;
+    padding: 1px;
+    z-index:250;
+    padding: 4px;
+    width: 200px;
+    margin-top: 20px;
+    margin-left: -5px;
+    border: 1px solid #ddd;
+    font-weight:normal;
+    font-size: 1.2em;
+    box-shadow: 10px 10px 10px #333;
+    border-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 10px 10px 10px #333;
+    -moz-border-radius: 4px;
+}
+
+a:hover.help span.comment  {
+    visibility:visible;
+}
+
+form.search a.help span.comment {
+    width: 250px;
+    margin-left:-250px;
+}
+
+
+a.help .help_table {
+    display: table;
+}
+
+a.help .help_example {
+    display: table-row;
+}
+
+a.help .help_label, a.help .help_value {
+    padding-top: 6px;
+    display: table-cell;
+}
+
+form.search a.help .help_label {
+    padding-right: 8px;
+    white-space: nowrap;
+    font-family: courier, fixed, monospace;
+}

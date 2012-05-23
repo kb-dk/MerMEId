@@ -18,17 +18,6 @@
 						<xf:group ref=".[count(../m:expression)&gt;1]">
 							Version
 						</xf:group>
-						<!--<xf:group ref=".[$parent='work' and number($num_ex)=1]">
-							Work 
-						</xf:group>
-						<xf:group ref=".[$parent='expression' or number($num_ex)&gt;1]">
-							<xf:group ref=".[$grandparent='expressionList' or $parent='work']">
-								Version
-							</xf:group>
-							<xf:group ref=".[$grandparent='componentGrp']">
-								Component
-							</xf:group>
-						</xf:group>-->
 						<h:a class="help">?<h:span class="comment">Information at work or version level.<h:br/> 
 							To create a new version, click the add- or copy-buttons on the right.<h:br/>
 							To indicate the individual pieces (movements, acts or any other subdivision) in this work 

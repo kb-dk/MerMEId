@@ -5,19 +5,89 @@
   xmlns:t="http://www.tei-c.org/ns/1.0"
   xmlns:h="http://www.w3.org/1999/xhtml" 
   xmlns:xf="http://www.w3.org/2002/xforms" 
+  xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
   xmlns:ev="http://www.w3.org/2001/xml-events"
   xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" >
   
   <h:div class="inputdiv">
     <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']">
 
+      <!-- reference types menu -->
+      <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
+        close="true" draggable="true" visible="false">
+        <h:div class="blocklabel">Add new reference:</h:div>
+        <h:br clear="all"/>
+        <xf:repeat nodeset="instance('bibl-type-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]/@type]/t:bibl" 
+          id="ref-type-menu-repeat">
+          <xf:output value="concat('listbibltype: ',instance('data-instance')/m:music/m:front/t:div/t:listBibl[index('repeat-listbibl')]/@type"/>
+          <xf:trigger submission="replace-form-with" appearance="minimal" class="non-standard_trigger">
+            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="translate(@type,'_',' ')"/></xf:label>
+            <xf:action ev:event="DOMActivate">
+              <xf:toggle case="hide_ref_types"/>
+              <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]" 
+                nodeset="t:bibl" 
+                at="index('repeat-bibl')"
+                position="after" 
+                origin="instance('bibl-type-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]/@type]/t:bibl[index('ref-type-menu-repeat')]"/>
+              <xxf:hide dialog="add-ref-dialog"/>
+            </xf:action>
+          </xf:trigger>
+          <h:br clear="all"/>
+        </xf:repeat>
+        <xf:repeat nodeset="instance('bibl-type-instance')/t:listBibl[not(@type)]/t:bibl" id="ref-type-menu-repeat2">
+          <xf:output value="concat('listbibltype: ',instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]/@type"/>
+          <xf:trigger submission="replace-form-with" appearance="minimal">
+            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="translate(@type,'_',' ')"/></xf:label>
+            <xf:action ev:event="DOMActivate">
+              <xf:toggle case="hide_ref_types"/>
+              <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]" 
+                nodeset="t:bibl" 
+                at="index('repeat-bibl')"
+                position="after" 
+                origin="instance('bibl-type-instance')/t:listBibl[not(@type)]/t:bibl[index('ref-type-menu-repeat2')]"/>
+              <xxf:hide dialog="add-ref-dialog"/>
+            </xf:action>
+          </xf:trigger>
+          <h:br clear="all"/>
+        </xf:repeat>
+        <!-- standard references quick-add menu -->
+        <xf:group ref=".[count(instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:seriesStmt[@label='File collection']/m:identifier])&gt;0]">
+          <h:hr style="margin:10px 0px;"/>
+          <h:div class="blocklabel">Standard references:</h:div>
+          <h:br clear="all"/>
+          <xf:repeat nodeset="instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:seriesStmt[@label='File collection']/m:identifier]" id="std-bibl-repeat">
+            <xf:repeat nodeset="t:bibl" id="std-bibl-menu-repeat">
+              <xf:trigger submission="replace-form-with" appearance="minimal">
+                <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="t:abbr"/></xf:label>
+                <xf:action ev:event="DOMActivate">
+                  <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]"
+                    nodeset="t:bibl"
+                    at="index('repeat-bibl')" 
+                    position="after" 
+                    origin="instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:seriesStmt[@label='File collection']/m:identifier][index('std-bibl-repeat')]/t:bibl[index('std-bibl-menu-repeat')]"/>
+                  <xxf:hide dialog="add-ref-dialog"/>
+                </xf:action>
+              </xf:trigger>
+              <h:br clear="all"/>
+            </xf:repeat>
+          </xf:repeat>
+        </xf:group>
+      </xxf:dialog>
+      <!-- end menu -->
+      
       <xf:repeat nodeset="t:listBibl" id="repeat-listbibl">
         <h:fieldset>
           <h:legend>
             <xf:output value="concat(translate(substring(@type,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(@type,2,string-length(@type)-1))"/> 
-            <xf:output ref=".[count(@type)&lt;1]" value="'Secondary'"/>
+            <xf:output ref=".[count(@type)&lt;1]" value="'Bibliography'"/>
           </h:legend>
-              <xf:repeat nodeset="t:bibl" id="repeat-bibl">
+          <xf:trigger ref=".[not(t:bibl)]">
+            <xf:label> Add reference</xf:label>
+            <xf:action ev:event="DOMActivate">
+              <xxf:show dialog="add-ref-dialog"/>
+            </xf:action>
+          </xf:trigger>
+          <xf:repeat nodeset="t:bibl" id="repeat-bibl">
                 <xi:include href="bibliography-entry-elements.xml" parse="xml"/>
               </xf:repeat>        
         </h:fieldset>
