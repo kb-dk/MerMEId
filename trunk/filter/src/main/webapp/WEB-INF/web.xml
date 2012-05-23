@@ -1,0 +1,25 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" 
+                         "http://java.sun.com/dtd/web-app_2_3.dtd">
+<!--
+  Author: Sigfrid Lundberg (slu@kb.dk)
+  $Revision: 1.3 $ last modified $Date: 2008-04-28 10:05:21 $ by $Author: slu $
+-->
+<web-app>
+  <description>web.xml file for the HttpFilter eXist proxy</description>
+  <session-config>
+    <session-timeout>35</session-timeout>
+  </session-config>
+ 
+  <servlet>
+    <servlet-name>HttpFilter</servlet-name>
+    <servlet-class>dk.kb.mermeid.filter.HttpFilter</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>HttpFilter</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+
+
+</web-app>

@@ -1,0 +1,20 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <comment>HTTP Filter parameters</comment>
+
+  <entry key="exist.host">kb-cop.kb.dk</entry>
+  <entry key="exist.port">8080</entry>
+  <entry key="exist.realm">exist</entry>
+  <entry key="exist.context">/exist/rest/db/dcm</entry>
+  <entry key="exist.user">admin</entry>
+  <entry key="exist.password">florsocker</entry>
+
+  <entry key="get">http://distest.kb.dk/editor/transforms/mei/mei_to_html.xsl</entry>
+  <entry key="get.mime">text/html</entry>
+  <entry key="get.charset">UTF-8</entry>
+
+  <entry key="put">http://distest.kb.dk/editor/transforms/mei/nop_transform.xsl</entry>
+  <entry key="put.mime">application/xml</entry>
+  <entry key="put.charset">UTF-8</entry>
+
+</properties>
