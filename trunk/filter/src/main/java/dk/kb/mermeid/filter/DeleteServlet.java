@@ -46,6 +46,8 @@ public class DeleteServlet extends javax.servlet.http.HttpServlet {
 	org.apache.commons.httpclient.methods.DeleteMethod delete_method =
 	    new org.apache.commons.httpclient.methods.DeleteMethod(targetUri);
 
+	this.utilities.setCredentials(request,httpClient);
+
 	httpClient.executeMethod(delete_method);
 
 	org.apache.commons.httpclient.Header[] clientResponseHeaders = 
@@ -67,6 +69,7 @@ public class DeleteServlet extends javax.servlet.http.HttpServlet {
 	response.sendRedirect(redirect_to);
 	java.io.PrintWriter out   = response.getWriter();
 	out.println(text);
+	logger.debug(text);
 
     }
 }
