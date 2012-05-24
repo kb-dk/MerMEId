@@ -3,11 +3,12 @@
 	xmlns:h="http://www.w3.org/1999/xhtml" 
 	xmlns:xl="http://www.w3.org/1999/xlink"
 	xmlns:xf="http://www.w3.org/2002/xforms" 
+	xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events" 
 	xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:dcm="http://www.kb.dk/dcm">
 	
-	<h:legend>Source 
+	<h:legend>Source <dcm:id/> 
 		<h:a class="help">?<h:span class="comment">A source corresponds to the FRBR "manifestation" level. At this level, therefore, 
 		only information common to all copies of this source should be entered. <h:br/>
 		Information about individual copies (including their location) should be given at "Item" level below.</h:span></h:a>
@@ -20,6 +21,23 @@
 			edition", "Printed part, John Fiddler's copy" or "Part, autograph, draft"</h:span></h:a>
 		</xf:label>
 	</xf:input>
+	
+	<xf:group ref=".[count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
+		<xf:select1 ref="m:relationList/m:relation[@rel='isEmbodimentOf'][1]" xxf:refresh-items="true" id="cast-select">
+			<xf:label class="fixed_width">Represents: 
+				<h:a class="help">?<h:span class="comment">Indicates which version of the work 
+					is embodied by the source</h:span></h:a>
+			</xf:label>
+			<xf:item>
+				<xf:label>- Please select -</xf:label>
+				<xf:value/>
+			</xf:item>
+			<xf:itemset nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression">
+				<xf:label><xf:output value="m:titleStmt/m:title"/> (ID: <xf:output value="@xml:id"/>)</xf:label>
+				<xf:value ref="@xml:id"></xf:value>
+			</xf:itemset>
+		</xf:select1>	
+	</xf:group>
 	
 	<xf:switch>
 		<xf:case selected="true()" id="hide_source_details">
@@ -221,7 +239,7 @@
 					</h:span></h:a></h:legend>
 				<xf:repeat nodeset="m:itemList/m:item" id="repeat-item">
 					<h:fieldset>
-						<h:legend>Item
+						<h:legend>Item <dcm:id/> 
 							<dcm:element-buttons 
 								triggers="all" 
 								nodeset="m:item" 
@@ -234,7 +252,7 @@
 								constitute a composite source</h:span></h:a></h:legend>
 							<xf:repeat nodeset="m:componentGrp/m:item" id="repeat-item-component">
 								<h:fieldset>
-									<h:legend>Component
+									<h:legend>Component <dcm:id/> 
 										<dcm:element-buttons 
 											triggers="all" 
 											nodeset="m:item" 

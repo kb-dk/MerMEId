@@ -201,7 +201,7 @@ a.element-button {
 
 legend .xforms-trigger img,
 legend .xforms-group img {
-    margin-top: 1px;
+    margin-top: 0px;
     vertical-align: baseline;
 }
 
@@ -380,7 +380,8 @@ a.help_plain img {
     margin-bottom: -3px;
 }
 
-a.help span.comment, a.help_plain span.comment, a.warning span.comment {
+a.help span.comment, a.help_plain span.comment, 
+a.warning span.comment, a.dcm_id span.comment {
     display:inline;
     position: absolute;
     visibility:hidden;
@@ -389,6 +390,7 @@ a.help span.comment, a.help_plain span.comment, a.warning span.comment {
     color: black;
     background-color:#dbd9ba;
     padding: 1px;
+    padding-bottom: 5px;
     z-index:250;
     padding: 8px 4px 4px 4px;
     width: 200px;
@@ -404,7 +406,8 @@ a.help span.comment, a.help_plain span.comment, a.warning span.comment {
     -moz-border-radius: 4px;
 }
 
-a:hover.help span.comment, a:hover.help_plain span.comment, a:hover.warning span.comment {
+a:hover.help span.comment, a:hover.help_plain span.comment, 
+a:hover.warning span.comment, a:hover.dcm_id span.comment  {
     visibility:visible;
 }
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <h:div xmlns:h="http://www.w3.org/1999/xhtml" 
 	xmlns:xf="http://www.w3.org/2002/xforms" 
-	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" 
 	xmlns:dcm="http://www.kb.dk/dcm"
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	id="music-div">
@@ -18,6 +17,7 @@
 						<xf:group ref=".[count(../m:expression)&gt;1]">
 							Version
 						</xf:group>
+						<dcm:id/>
 						<h:a class="help">?<h:span class="comment">Information at work or version level.<h:br/> 
 							To create a new version, click the add- or copy-buttons on the right.<h:br/>
 							To indicate the individual pieces (movements, acts or any other subdivision) in this work 
@@ -65,6 +65,7 @@
 							<xf:repeat nodeset="m:expression" id="repeat-component">
 								<h:fieldset>
 									<h:legend>Component
+										<dcm:id/>
 										<h:a class="help">?<h:span class="comment">Information at component level,
 											i.e. movement, act, scene or other.</h:span></h:a>
 										<dcm:element-buttons 
@@ -100,6 +101,7 @@
 											<xf:repeat nodeset="m:expression" id="repeat-sublevel2-component">
 												<h:fieldset>
 													<h:legend>Component
+														<dcm:id/>
 														<h:a class="help">?<h:span class="comment">Information at component level,
 															i.e. movement, act, scene or other.</h:span></h:a>
 														<dcm:element-buttons 

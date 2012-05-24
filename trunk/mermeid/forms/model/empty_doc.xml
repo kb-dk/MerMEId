@@ -52,7 +52,7 @@
         <annot type="private_notes"/>
       </notesStmt>
       <sourceDesc>
-        <source xml:id="source1" analog="frbr:manifestation">
+        <source xml:id="" analog="frbr:manifestation">
           <titleStmt>
             <title/>
             <respStmt>
@@ -99,7 +99,7 @@
           </classification>
           
           <itemList>
-            <item target="">
+            <item target="" xml:id="">
               <titleStmt>
                 <title/>
               </titleStmt>
@@ -204,7 +204,7 @@
             </item> 
           </itemList>
           <relationList>
-            <relation rel="isManifestationOf" target="#version1"/>
+            <relation rel="isEmbodimentOf" target=""/>
           </relationList>
         </source>
       </sourceDesc>
@@ -217,7 +217,7 @@
     </encodingDesc>
     
     <workDesc>
-      <work xml:id="work1" analog="frbr:work">
+      <work xml:id="" analog="frbr:work">
         <titleStmt>
           <title xml:lang="en" type="main"/>
           <title type="alternative" xml:lang="en"/>
@@ -298,7 +298,7 @@
         </classification>
 
         <expressionList>
-          <expression xml:id="version1">
+          <expression xml:id="">
             <titleStmt>
               <title xml:lang="en"/>
               <respStmt>
@@ -353,10 +353,10 @@
             <tempo/>
             <meter meter.count="" meter.unit="" meter.sym=""/>
             <perfMedium analog="marc:048" authority="marcmusperf">
-              <ensemble xml:id="ensemble_1">
+              <ensemble xml:id="">
                 <instrVoice reg=""/>
               </ensemble>
-              <performer xml:id="performer_1">
+              <performer xml:id="">
                 <instrVoice reg="" count="1" solo="false"/>
               </performer>
             </perfMedium>
@@ -367,7 +367,7 @@
             </classification>
             
             <castList>
-              <castItem xml:id="cast1">
+              <castItem xml:id="">
                 <role>
                   <ref target="">
                     <name xml:lang="en"/>  
@@ -387,7 +387,7 @@
             
             <!-- top-level components -->            
             <componentGrp>
-              <expression xml:id="level1_comp1" n=""> 
+              <expression xml:id="" n=""> 
                 <titleStmt>
                   <title xml:lang="en"/>
                   <respStmt>
@@ -398,10 +398,10 @@
                 <tempo/>
                 <meter meter.count="" meter.unit="" meter.sym=""/>
                 <perfMedium analog="marc:048" authority="marcmusperf">
-                  <ensemble xml:id="ensemble_2">
+                  <ensemble xml:id="">
                     <instrVoice reg=""/>
                   </ensemble>
-                  <performer xml:id="performer_2">
+                  <performer xml:id="">
                     <instrVoice reg="" count="1" solo="false"/>
                   </performer>
                 </perfMedium>
