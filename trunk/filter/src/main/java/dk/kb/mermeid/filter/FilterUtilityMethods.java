@@ -327,9 +327,7 @@ public class FilterUtilityMethods  {
 	
 
 	String uri = path +  queryString;
-
 	logger.info("constructed: " + uri + " based on " + basedOn); 
-
 	return uri;
 
     }

@@ -2,6 +2,12 @@
 <properties>
   <comment>HTTP Filter parameters</comment>
 
+<!--
+
+The filter is meant to operate on top of an eXist XML database
+
+-->
+
   <entry key="exist.host">disdev-01.kb.dk</entry>
   <entry key="exist.port">8080</entry>
   <entry key="exist.realm">exist</entry>
@@ -9,12 +15,32 @@
   <entry key="exist.user">admin</entry>
   <entry key="exist.password">flormelis</entry>
 
+<!--
+
+get is the retrieval filter
+
+-->
+
   <entry key="get">http://disdev-01.kb.dk/editor/transforms/mei/mei_to_html_mei2012.xsl</entry>
   <entry key="get.mime">text/html</entry>
   <entry key="get.charset">UTF-8</entry>
 
+<!--
+
+put is for updating
+
+-->
+
   <entry key="put">http://distest.kb.dk/editor/transforms/mei/nop_transform.xsl</entry>
   <entry key="put.mime">application/xml</entry>
   <entry key="put.charset">UTF-8</entry>
+
+<!--
+
+del is for removing stuff
+
+-->
+
+  <entry key="del.redirect">http://disdev-01.kb.dk/storage/list_files_mei2012.xq</entry>
 
 </properties>

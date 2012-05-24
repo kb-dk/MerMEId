@@ -26,11 +26,7 @@ public class DeleteServlet extends javax.servlet.http.HttpServlet {
 	throws javax.servlet.ServletException, java.io.IOException 
     {        
 	this.start = System.currentTimeMillis();
-
-	response.setContentType("text/xml");
 	request.setCharacterEncoding("UTF-8");
-
-	java.lang.Long start = System.currentTimeMillis();
 
 	org.apache.commons.httpclient.HttpClient httpClient = 
 	    new org.apache.commons.httpclient.HttpClient();
@@ -47,8 +43,30 @@ public class DeleteServlet extends javax.servlet.http.HttpServlet {
 	logger.debug("Sending request to URI: " + targetUri); 
 
 	//create a method object
-	org.apache.commons.httpclient.methods.DeleteMethod put_method =
-	    new org.apache.commons.httpclient.methods.DeleteMethod();
+	org.apache.commons.httpclient.methods.DeleteMethod delete_method =
+	    new org.apache.commons.httpclient.methods.DeleteMethod(targetUri);
+
+	httpClient.executeMethod(delete_method);
+
+	org.apache.commons.httpclient.Header[] clientResponseHeaders = 
+	    delete_method.getResponseHeaders();
+
+	int status = delete_method.getStatusLine().getStatusCode();
+
+	java.lang.String text = "response status:\t" + status + 
+		    " (" + delete_method.getStatusLine().toString()  + ")"; 
+	
+	for(int i=0;i<clientResponseHeaders.length;i++) {
+	     text = text + "response:\t" + clientResponseHeaders[i].toExternalForm(); 
+	}
+
+	java.lang.String redirect_to = this.props.getProperty("del.redirect");
+
+	response.setContentType("text/plain");
+	response.setCharacterEncoding("UTF-8");
+	response.sendRedirect(redirect_to);
+	java.io.PrintWriter out   = response.getWriter();
+	out.println(text);
 
     }
 }
