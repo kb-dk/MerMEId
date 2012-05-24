@@ -16,6 +16,16 @@
     <servlet-class>dk.kb.mermeid.filter.HttpFilter</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>DeleteServlet</servlet-name>
+    <servlet-class>dk.kb.mermeid.filter.DeleteServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>DeleteServlet</servlet-name>
+    <url-pattern>/delete/*</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>HttpFilter</servlet-name>
     <url-pattern>/*</url-pattern>
