@@ -137,7 +137,6 @@ public class FilterUtilityMethods  {
 
 	put_method.setRequestEntity(entity);
 	put_method.setRequestHeader("Content-Type",contentType);
-	//	put_method.setRequestHeader("Accept",      contentType);
 
 	put_method.setPath(targetUri);
 	logger.debug("creating object: " + put_method.getPath());
@@ -157,18 +156,13 @@ public class FilterUtilityMethods  {
 	int status = put_method.getStatusLine().getStatusCode();
 
 	response.sendError(status, put_method.getStatusLine().toString());
-	//if(logger.isInfoEnabled()) {
-        logger.info("response status:\t" + 
-		    status + 
-		    " (" + put_method.getStatusLine().toString()  + ")"); 
-	//}
+	if(logger.isInfoEnabled()) {
+	    logger.info("response status:\t" + 
+			status + 
+			" (" + put_method.getStatusLine().toString()  + ")"); 
+	}
 
 	for(int i=0;i<responseHeaders.length;i++) {
-
-	    /*    
-		  response.setHeader(responseHeaders[i].getName(),
-		  responseHeaders[i].getValue());	    
-	    */
 
 	    if(logger.isInfoEnabled()) {
 		logger.info("response:\t" + responseHeaders[i].toExternalForm()); 
