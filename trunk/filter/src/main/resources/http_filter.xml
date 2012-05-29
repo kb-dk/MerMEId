@@ -43,4 +43,19 @@ del is for removing stuff
 
   <entry key="del.redirect">http://disdev-01.kb.dk/storage/list_files_mei2012.xq</entry>
 
+<!-- 
+
+Create is for what it seems to be. A URI that is good to use for creating new
+documents. We're doing that using uri templates (RFC6570). The URI should look like
+
+http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://disdev-01.kb.dk/form/dcm/&dir=http://disdev-01.kb.dk/storage/dcm/&doc=cnw0361.xml
+
+when ready
+
+-->
+
+   <entry key="create">http://disdev-01.kb.dk:80/xforms-jsp/mei-form/{?uri,dir,doc}</entry>
+   <entry key="create.uri">http://disdev-01.kb.dk/form/dcm/></entry>
+   <entry key="create.dir">http://disdev-01.kb.dk/storage/dcm/</entry>
+
 </properties>

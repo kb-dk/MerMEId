@@ -38,4 +38,24 @@ public class Configuration {
         return this.props;
     }
 
+    public java.util.Enumeration<String> propertyNames() {
+        return (java.util.Enumeration<String>)this.props.propertyNames();
+    }
+
+    java.util.Map<String,Object> propertyMap(java.lang.String keyBase) {
+	java.util.HashMap<String,Object> map = new java.util.HashMap();
+	
+	java.util.Enumeration<String> enumeration = this.propertyNames();
+
+	while(enumeration.hasMoreElements()) {
+	    String element = enumeration.nextElement();
+	    if(element.startsWith(keyBase) ) {
+		java.lang.String newKey   = element.replaceAll("^"+keyBase+"\\\\.", "");
+		java.lang.String newValue = this.props.getProperty(element);
+		map.put(newKey,newValue);
+	    }
+	}
+	return map;
+    }
+
 }
