@@ -41,8 +41,6 @@ public class FilterUtilityMethods  {
 	java.lang.String    charset = this.props.getProperty("get.charset");
 
 	request.setCharacterEncoding("UTF-8");
-	response.setContentType(mime);
-	response.setCharacterEncoding(charset);
 
 	String newRequest  = this.uriConstructor(request,response);
 
@@ -76,11 +74,22 @@ public class FilterUtilityMethods  {
 	}
 
 	java.io.InputStream in      = get_method.getResponseBodyAsStream();
-	java.io.Writer out          = response.getWriter();
 
-	this.doTransform(this.props.getProperty("get"),in,out);
+	if(status == 200) {
+	    java.io.Writer out          = response.getWriter();
+	    response.setContentType(mime);
+	    response.setCharacterEncoding(charset);
+	    this.doTransform(this.props.getProperty("get"),in,out);
+	    out.flush();
+	} else {
+	    java.io.PrintWriter out          = response.getWriter();
+	    response.setContentType("text/plain");
+	    response.setCharacterEncoding(charset);
+	    response.setStatus(status);
+	    out.println("We've got problems");
+	    out.flush();
+	}
 
-	out.flush();
 	in.close();
 
 	this.workDone();
