@@ -18,7 +18,7 @@ String newRequest  = queryString;
 httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
 
 //if(logger.isInfoEnabled()){ 
-//System.out.println("Sending request: " + newRequest); 
+logger.info("Sending request: " + uri); 
 //}
 
 //create a method object
@@ -32,7 +32,7 @@ org.apache.commons.httpclient.Header[] responseHeaders = method.getResponseHeade
 
 int status = method.getStatusLine().getStatusCode();
 //if(logger.isInfoEnabled()) {
-        System.out.println("response status:\t" + 
+        logger.debug("response status:\t" + 
 		status + 
 	" (" + method.getStatusLine().toString()  + ")"); 
 //}
@@ -44,10 +44,26 @@ for(int i=0;i<responseHeaders.length;i++) {
 }
         
 java.io.InputStream in  = method.getResponseBodyAsStream();
-java.io.PrintWriter responseOut = response.getWriter();
-int length;
-while((length = in.read()) != -1){
-    responseOut.write(length);
+
+org.w3c.dom.Document form = null;
+javax.xml.parsers.DocumentBuilder dBuilder = null;
+
+javax.xml.parsers.DocumentBuilderFactory dfactory  =
+    javax.xml.parsers.DocumentBuilderFactory.newInstance();
+
+//java.io.PrintWriter out = response.getPrintWriter();
+
+try {
+    dfactory.setNamespaceAware(true);
+    dfactory.setXIncludeAware(true);
+    dBuilder = dfactory.newDocumentBuilder();
+    form = dBuilder.parse(in);
+    String formAsString = serialize(form);
+    out.println(formAsString);
+} catch (javax.xml.parsers.ParserConfigurationException parserPrblm) {
+    logger.error(parserPrblm.getMessage());
+} catch (org.xml.sax.SAXException xmlPrblm) {
+    logger.error(xmlPrblm.getMessage());
 }
 
 java.lang.Long completed = System.currentTimeMillis() - start;
@@ -56,10 +72,37 @@ if(logger.isInfoEnabled()){
     logger.info(".. work done in " + completed + " ms"); 
 }
 
-responseOut.flush();
-responseOut.close();
 in.close();
 
+
+
+%>
+
+
+
+<%!
+
+String serialize(org.w3c.dom.Document doc) {
+    Logger logger = Logger.getLogger("mei_form.jsp");
+    try {
+	org.w3c.dom.bootstrap.DOMImplementationRegistry registry =
+	    org.w3c.dom.bootstrap.DOMImplementationRegistry.newInstance();
+
+	org.w3c.dom.ls.DOMImplementationLS impl =
+	    (org.w3c.dom.ls.DOMImplementationLS) registry.getDOMImplementation("LS");
+
+	org.w3c.dom.ls.LSSerializer serializer = impl.createLSSerializer();
+	return serializer.writeToString(doc);
+
+    } catch (java.lang.ClassNotFoundException classNotFound) {
+	logger.fatal(classNotFound.getMessage());
+    } catch (java.lang.InstantiationException instantiationPrblm) {
+	logger.fatal(instantiationPrblm.getMessage());
+    } catch (java.lang.IllegalAccessException accessPrblm) {
+	logger.fatal(accessPrblm.getMessage());
+    }
+    return "";
+  }
 
 
 %>
