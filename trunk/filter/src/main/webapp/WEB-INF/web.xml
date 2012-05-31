@@ -21,6 +21,16 @@
     <servlet-class>dk.kb.mermeid.filter.DeleteServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>NewFileServlet</servlet-name>
+    <servlet-class>dk.kb.mermeid.filter.NewFileServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>NewFileServlet</servlet-name>
+    <url-pattern>/new/*</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>DeleteServlet</servlet-name>
     <url-pattern>/delete/*</url-pattern>

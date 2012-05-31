@@ -49,10 +49,17 @@ public class Configuration {
 
 	while(enumeration.hasMoreElements()) {
 	    String element = enumeration.nextElement();
-	    if(element.startsWith(keyBase) ) {
-		java.lang.String newKey   = element.replaceAll("^"+keyBase+"\\\\.", "");
-		java.lang.String newValue = this.props.getProperty(element);
-		map.put(newKey,newValue);
+	    if(element.startsWith(keyBase + ".") ) {
+		logger.debug("found element " + element);
+		java.lang.String newKey =
+		    element.substring(keyBase.length()+1,element.length());
+		java.lang.String value  = this.props.getProperty(element);
+
+		logger.debug(element + 
+			     " gives new key " + 
+			     newKey + " with value " + value);
+
+		map.put(newKey,value);
 	    }
 	}
 	return map;

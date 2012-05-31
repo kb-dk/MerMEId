@@ -12,11 +12,18 @@
 	      omit-xml-declaration="yes" />
 
   <xsl:template match="/">
-    <mei>
-      <xsl:apply-templates />
-    </mei>
+    <xsl:apply-templates />
+    <xsl:comment>
+      A comment added by the transform
+    </xsl:comment>
   </xsl:template>
-  
+
+  <xsl:template match="@xml:id">
+    <xsl:if test="string-length(.)">
+      <xsl:copy-of select="."/>
+    </xsl:if>
+  </xsl:template>
+    
   <xsl:template match="@*|node()">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
