@@ -1,8 +1,8 @@
 body {   
     font-size: .8em;
     font-family: arial, helvetica, sans-serif;
-    background-color: #f6f6f6;
-    background-image: url('/editor/images/gradient-dark800.png'); 
+    background-color: #dedbca;
+/*    background-image: url('/editor/images/gradient-dark800.png');*/ 
     background-repeat: repeat-x;
     background-attachment: fixed;
     padding:20px;
@@ -19,7 +19,7 @@ a {
 
 
 table {
-    width: 100%;
+    width: auto;
 }
 
 th {
@@ -36,6 +36,7 @@ td {
     padding: .2em;
     padding-left: .3em;
     margin: 0em;
+    border-top: 1px dotted #666;
 }
 
 td.buttons {
@@ -58,7 +59,7 @@ td.buttons input:hover, td.buttons img:hover {
 }
 
 tbody tr:hover {
-    background-color: #ffffff;
+    background-color: #ffffcc;
 }
 
 form.search {
@@ -73,7 +74,7 @@ form.search fieldset {
 }
 
 .odd {
-    background-color: #c0ccf0;
+    background-color: #f6f6f6;
     background-image: url('/editor/images/gradient-white.png'); 
     background-repeat: repeat-x;
     background-attachment: fixed;

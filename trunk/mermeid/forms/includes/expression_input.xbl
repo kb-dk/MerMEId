@@ -285,7 +285,7 @@
                                 <xf:group ref="m:perfMedium">
                                     <h:div class="blocklabel strong">Ensembles 
                                         <xf:trigger ref=".[count($binding/m:perfMedium/m:ensemble)=0]">
-                                            <xf:label><img src="http:/editor/images/add.gif" alt="Add"/> Add ensemble</xf:label>
+                                            <xf:label><img src="http:/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
                                             <xf:action ev:event="DOMActivate">
                                                 <xxf:show dialog="ensemble-menu"/>
                                             </xf:action>
@@ -297,7 +297,7 @@
                                             <xf:repeat nodeset="instance('instrumentation')/m:ensemble[m:instrVoice/@reg]" id="ensemble-menu-repeat">
                                                 <xf:trigger submission="replace-form-with" appearance="minimal">
                                                     <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/>
-                                                        <xf:output ref="if (m:instrVoice!='') then m:instrVoice else '[Empty ensemble]'"/>
+                                                        <xf:output ref="if (m:instrVoice!='') then m:instrVoice else '[empty ensemble]'"/>
                                                     </xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xf:insert context="$binding/m:perfMedium" 
@@ -380,7 +380,7 @@
                                                     <xf:repeat nodeset="instance('instrumentation')/m:ensemble[m:performer]" id="ensemble-performer-menu-repeat">
                                                         <xf:trigger submission="replace-form-with" appearance="minimal">
                                                             <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/>
-                                                                <xf:output ref="if (m:instrVoice!='') then m:instrVoice else '[New performer]'"/>
+                                                                <xf:output ref="if (m:instrVoice!='') then m:instrVoice else '[single performer]'"/>
                                                             </xf:label>
                                                             <xf:action ev:event="DOMActivate">
                                                                 <xf:insert context="$binding/m:perfMedium/m:ensemble[index('repeat-ensemble')]" 
@@ -397,7 +397,7 @@
                                                     </xf:repeat>
                                                 </xxf:dialog>			
                                                 <xf:trigger ref=".[count(m:performer)=0]" style="margin-left: 8px;">
-                                                    <xf:label><img src="http:/editor/images/add.gif" alt="Add"/> Add performer(s)</xf:label>
+                                                    <xf:label><img src="http:/editor/images/list.png" alt="Add from list"/> Add performer(s)</xf:label>
                                                     <xf:action ev:event="DOMActivate">
                                                         <xxf:show dialog="ensemble-performer-menu"/>
                                                     </xf:action>
@@ -434,7 +434,7 @@
                                                         </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger>
-                                                        <xf:label><img src="http:/editor/images/add.gif" alt="Add" title="Add row"/> Add from list</xf:label>
+                                                        <xf:label><img src="http:/editor/images/list.png" alt="Add" title="Add from list"/> Add from list</xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xxf:show dialog="ensemble-performer-menu"/>
                                                         </xf:action>

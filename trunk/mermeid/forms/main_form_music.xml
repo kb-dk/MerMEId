@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <h:div xmlns:h="http://www.w3.org/1999/xhtml" 
 	xmlns:xf="http://www.w3.org/2002/xforms" 
+	xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
 	xmlns:dcm="http://www.kb.dk/dcm"
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	id="music-div">
@@ -8,7 +9,36 @@
 	<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList">
 		<h:div class="inputdiv">
 			
+			<!-- outline work structure - not working yet
+			<h:div class="outline" style="position:fixed; float:right; background-color: #f0f0c0; z-index:+1;">
+				<xf:output value="instance('temp')/music_outline/exp"/>:
+				<xf:output value="instance('temp')/music_outline/comp1"/>:
+				<xf:output value="instance('temp')/music_outline/comp2"/>
+				<xf:repeat nodeset="m:expression" id="outline-expression">
+					<xxf:variable name="top_level_name" select="if (count(../m:expression)=1) then 'Work' else 'Version'"/>
+					<h:div class="level1">
+						<xf:output value="if (position()=instance('temp')/music_outline/exp) then '##' else ''"/>
+						<xf:output value="position()"/>. 
+						<xf:output value="$top_level_name"/> 
+					</h:div>
+					<xf:repeat nodeset="m:componentGrp/m:expression" id="outline-expression-component1">
+						<h:div class="level2">
+							<xf:output value="position()"/>. 							
+							Component level 1</h:div> 
+						<xf:repeat nodeset="m:componentGrp/m:expression" id="outline-expression-component2">
+							<h:div class="level3">
+								<xf:output value="position()"/>. 
+								Component level 2</h:div> 
+						</xf:repeat>
+					</xf:repeat>
+				</xf:repeat>
+			</h:div>
+			-->
+			
 			<xf:repeat nodeset="m:expression" id="repeat-expression">
+				<xf:action ev:event="DOMFocusIn">
+					<xf:setvalue ref="instance('temp')/music_outline/exp" value="index('repeat-expression')"/>
+				</xf:action>
 				<h:fieldset>
 					<h:legend>
 						<xf:group ref=".[count(../m:expression)=1]">
@@ -30,7 +60,6 @@
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]"/>
 						<h:br/>
 					</h:legend>
-					
 					
 					<dcm:expression-input ref="."/>
 					
@@ -63,6 +92,9 @@
 						</xf:trigger>
 						<xf:group ref="m:componentGrp">
 							<xf:repeat nodeset="m:expression" id="repeat-component">
+								<xf:action ev:event="DOMFocusIn">
+									<xf:setvalue ref="instance('temp')/music_outline/comp1" value="index('repeat-component')"/>
+								</xf:action>
 								<h:fieldset>
 									<h:legend>Component
 										<dcm:id/>
@@ -99,6 +131,9 @@
 										</xf:trigger>
 										<xf:group ref="m:componentGrp">
 											<xf:repeat nodeset="m:expression" id="repeat-sublevel2-component">
+												<xf:action ev:event="DOMFocusIn">
+													<xf:setvalue ref="instance('temp')/music_outline/comp2" value="index('repeat-sublevel2-component')"/>
+												</xf:action>
 												<h:fieldset>
 													<h:legend>Component
 														<dcm:id/>
@@ -121,7 +156,7 @@
 								</h:fieldset>
 							</xf:repeat>
 							
-
+							
 						</xf:group>
 					</h:fieldset>
 					

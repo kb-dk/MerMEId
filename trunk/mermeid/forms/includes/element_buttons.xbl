@@ -103,7 +103,8 @@
                                 <xf:insert context="parent::node()" 
                                     origin="xxf:evaluate($nodeset)[index($index)]"
                                     nodeset="xxf:evaluate($nodeset)[index($index)]"/>
-                                <xf:setvalue ref="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)+1]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                                <!--<xf:setvalue ref="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)+1]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>-->
+                                <!--<xf:dispatch name="id-update" target="dcm-element-buttons-binding"/>-->
                             </xf:action>
                         </xf:trigger>
                     </xf:group> 
@@ -113,7 +114,8 @@
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert context="parent::node()" origin="$origin"
                                     nodeset="xxf:evaluate($nodeset)[index($index)]"/>
-                                <xf:setvalue ref="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                                <!--<xf:setvalue ref="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>-->
+                                <!--<xf:dispatch name="id-update" target="dcm-element-buttons-binding"/>-->
                             </xf:action>
                         </xf:trigger>
                     </xf:group>
