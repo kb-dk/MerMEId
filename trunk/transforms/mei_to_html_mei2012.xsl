@@ -309,7 +309,9 @@ Last modified $Date$ by $Author$
 	  </xsl:if>
 	  <xsl:for-each select="m:performer">
 	    <xsl:for-each select="m:instrVoice[text()]">
-	      <xsl:apply-templates select="@count"/>
+	    	<xsl:if test="@count!='1'">
+	    		<xsl:apply-templates select="@count"/>
+	    	</xsl:if>
 	      <xsl:text> </xsl:text>
 	      <xsl:apply-templates/></xsl:for-each><xsl:if test="position()&lt;last()"><xsl:text>, </xsl:text></xsl:if>
 	  </xsl:for-each>
