@@ -240,7 +240,8 @@ Last modified $Date$ by $Author$
 
     <xsl:for-each 
 	select="m:meiHead/
-		m:fileDesc/
+		m:workDesc/
+		m:work/
 		m:notesStmt">
 
       <xsl:if test="m:annot[@type='general_description']">
@@ -249,18 +250,18 @@ Last modified $Date$ by $Author$
 	</p>
       </xsl:if>
 
-      <xsl:for-each select="m:annot[@type='links']">
-	<p><xsl:text>See also: </xsl:text>
-	<xsl:for-each select="m:ptr">
-	  <xsl:element name="a">
-	    <xsl:attribute name="href">
-	      <xsl:apply-templates select="@target"/>
-	    </xsl:attribute>
-	    <xsl:apply-templates select="@xl:title"/>
-	  </xsl:element>
-	</xsl:for-each>
-	</p>
-      </xsl:for-each>
+    	<xsl:for-each select="m:annot[@type='links'][m:ptr[@target!='']]">
+    		<p><xsl:text>See also: </xsl:text>
+    			<xsl:for-each select="m:ptr[@target!='']">
+    				<xsl:element name="a">
+    					<xsl:attribute name="href">
+    						<xsl:apply-templates select="@target"/>
+    					</xsl:attribute>
+    					<xsl:apply-templates select="@xl:title"/>
+    				</xsl:element>
+    			</xsl:for-each>
+    		</p>
+    	</xsl:for-each>
 
     </xsl:for-each>
 
@@ -273,12 +274,13 @@ Last modified $Date$ by $Author$
 		m:history">
 
       <xsl:for-each select="m:creation/m:date[text()]">
-	<xsl:if test="position()=1">
-	  <span class="p_heading">
-	    Date of composition: 
-	  </span>
-	</xsl:if>
-	<xsl:apply-templates/>
+      	<xsl:if test="position()=1">
+      		<p><span class="p_heading">
+      			Date of composition: 
+      		</span>
+      			<xsl:apply-templates/>
+      		</p>
+      	</xsl:if>
       </xsl:for-each>
 
       <xsl:for-each select="m:p[text()]">
@@ -309,7 +311,7 @@ Last modified $Date$ by $Author$
 	  </xsl:if>
 	  <xsl:for-each select="m:performer">
 	    <xsl:for-each select="m:instrVoice[text()]">
-	    	<xsl:if test="@count!='1'">
+	    	<xsl:if test="@count &gt; 1">
 	    		<xsl:apply-templates select="@count"/>
 	    	</xsl:if>
 	      <xsl:text> </xsl:text>
@@ -320,8 +322,10 @@ Last modified $Date$ by $Author$
 
 	<xsl:for-each select="m:performer">
 	  <xsl:for-each select="m:instrVoice[text()]">
-	    <xsl:apply-templates select="@count"/>
-	    <xsl:text> </xsl:text>
+	  	<xsl:if test="@count &gt; 1">
+	  		<xsl:apply-templates select="@count"/>
+	  	</xsl:if>
+	  	<xsl:text> </xsl:text>
 	    <xsl:apply-templates/></xsl:for-each><xsl:if 
 	    test="position()&lt;last()"><xsl:text>, 
 	  </xsl:text></xsl:if>
