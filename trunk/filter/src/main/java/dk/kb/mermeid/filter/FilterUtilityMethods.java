@@ -86,7 +86,6 @@ public class FilterUtilityMethods  {
 	    response.setContentType("text/plain");
 	    response.setCharacterEncoding(charset);
 	    response.setStatus(status);
-	    out.println("We've got problems");
 	    out.flush();
 	}
 
