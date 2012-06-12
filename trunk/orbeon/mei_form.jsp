@@ -2,11 +2,17 @@
 <%@page import="java.io.*"%>
 <%@page import="org.apache.log4j.*"%>
 <%
-response.setContentType("text/xml");
 request.setCharacterEncoding("UTF-8");
 
+response.setContentType("text/xml");
+response.setCharacterEncoding("UTF-8");
+
+java.io.PrintWriter printout = response.getWriter();
+
 java.lang.Long start = System.currentTimeMillis();
-Logger logger = Logger.getLogger("mei_form.jsp");
+Logger logger = Logger.getLogger("jsp.mei_form.log");
+logger.setLevel(Level.DEBUG);
+
 
 org.apache.commons.httpclient.HttpClient httpClient = 
     new org.apache.commons.httpclient.HttpClient();
@@ -51,15 +57,13 @@ javax.xml.parsers.DocumentBuilder dBuilder = null;
 javax.xml.parsers.DocumentBuilderFactory dfactory  =
     javax.xml.parsers.DocumentBuilderFactory.newInstance();
 
-//java.io.PrintWriter out = response.getPrintWriter();
-
 try {
     dfactory.setNamespaceAware(true);
     dfactory.setXIncludeAware(true);
     dBuilder = dfactory.newDocumentBuilder();
     form = dBuilder.parse(in);
-    String formAsString = serialize(form);
-    out.println(formAsString);
+    serialize(form,printout);
+
 } catch (javax.xml.parsers.ParserConfigurationException parserPrblm) {
     logger.error(parserPrblm.getMessage());
 } catch (org.xml.sax.SAXException xmlPrblm) {
@@ -82,9 +86,13 @@ in.close();
 
 <%!
 
-String serialize(org.w3c.dom.Document doc) {
-    Logger logger = Logger.getLogger("mei_form.jsp");
+    void serialize(org.w3c.dom.Document doc, java.io.PrintWriter out) {
+
+    Logger logger = Logger.getLogger("jsp.mei_form_serialize.log");
+    logger.setLevel(Level.DEBUG);
+
     try {
+
 	org.w3c.dom.bootstrap.DOMImplementationRegistry registry =
 	    org.w3c.dom.bootstrap.DOMImplementationRegistry.newInstance();
 
@@ -92,7 +100,14 @@ String serialize(org.w3c.dom.Document doc) {
 	    (org.w3c.dom.ls.DOMImplementationLS) registry.getDOMImplementation("LS");
 
 	org.w3c.dom.ls.LSSerializer serializer = impl.createLSSerializer();
-	return serializer.writeToString(doc);
+
+	org.w3c.dom.ls.LSOutput output = impl.createLSOutput( );
+	output.setEncoding("UTF-8");
+	output.setCharacterStream( out ); 
+	logger.debug("after setting character stream " + output.getEncoding());
+	serializer.write(doc,output);
+
+	return;
 
     } catch (java.lang.ClassNotFoundException classNotFound) {
 	logger.fatal(classNotFound.getMessage());
@@ -101,7 +116,7 @@ String serialize(org.w3c.dom.Document doc) {
     } catch (java.lang.IllegalAccessException accessPrblm) {
 	logger.fatal(accessPrblm.getMessage());
     }
-    return "";
+    return;
   }
 
 
