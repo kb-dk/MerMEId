@@ -76,21 +76,18 @@ public class FilterUtilityMethods  {
 	java.io.InputStream in      = get_method.getResponseBodyAsStream();
 
 	if(status == 200) {
-	    java.io.Writer out          = response.getWriter();
 	    response.setContentType(mime);
 	    response.setCharacterEncoding(charset);
+	    java.io.Writer out      = response.getWriter();
 	    this.doTransform(this.props.getProperty("get"),in,out);
 	    out.flush();
 	} else {
-	    java.io.PrintWriter out          = response.getWriter();
 	    response.setContentType("text/plain");
 	    response.setCharacterEncoding(charset);
 	    response.setStatus(status);
-	    out.flush();
 	}
 
 	in.close();
-
 	this.workDone();
 
     }    
@@ -123,7 +120,7 @@ public class FilterUtilityMethods  {
 
 	java.io.InputStream  in      = request.getInputStream();
 	java.io.StringWriter outdata = new java.io.StringWriter();
-	java.io.PrintWriter  out     = response.getWriter();
+	java.io.Writer  out          = response.getWriter();
 
 	this.doTransform(this.props.getProperty("put"),in,outdata);
 
@@ -179,10 +176,6 @@ public class FilterUtilityMethods  {
 	}
 
 	String responseBody = put_method.getResponseBodyAsString();
-
-	out.println("<!-- this is the answer from exist -->");
-	out.println(responseBody);
-
 	this.workDone();
 
     }    
@@ -274,8 +267,11 @@ public class FilterUtilityMethods  {
             org.w3c.dom.ls.LSSerializer serializer = impl.createLSSerializer();
 
 	    org.w3c.dom.ls.LSOutput output = impl.createLSOutput( );
+	    logger.debug("before setting encoding " + output.getEncoding());
 	    output.setEncoding("UTF-8");
+	    logger.debug("after setting encoding " + output.getEncoding());
 	    output.setCharacterStream( out ); 
+	    logger.debug("after setting character stream " + output.getEncoding());
 	    serializer.write(doc,output);
 	} catch (java.lang.ClassNotFoundException classNotFound) {
             logger.error(classNotFound.getMessage());
