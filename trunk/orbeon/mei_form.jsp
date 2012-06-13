@@ -14,26 +14,31 @@ Logger logger = Logger.getLogger("jsp.mei_form.log");
 logger.setLevel(Level.DEBUG);
 
 
+/*
+
 org.apache.commons.httpclient.HttpClient httpClient = 
     new org.apache.commons.httpclient.HttpClient();
+
+*/
 
 String pathInfo    = request.getPathInfo(); 
 String uri         = request.getParameter("uri");
 String queryString = request.getQueryString();
 String newRequest  = queryString;
-httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
+//httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
 
 //if(logger.isInfoEnabled()){ 
 logger.info("Sending request: " + uri); 
 //}
 
 //create a method object
-org.apache.commons.httpclient.HttpMethod method = 
-    new org.apache.commons.httpclient.methods.GetMethod(uri);
+//org.apache.commons.httpclient.HttpMethod method = 
+//    new org.apache.commons.httpclient.methods.GetMethod(uri);
 
-method.setFollowRedirects(true);
-httpClient.executeMethod(method);
+//method.setFollowRedirects(true);
+// httpClient.executeMethod(method);
 
+/*
 org.apache.commons.httpclient.Header[] responseHeaders = method.getResponseHeaders();
 
 int status = method.getStatusLine().getStatusCode();
@@ -50,25 +55,21 @@ for(int i=0;i<responseHeaders.length;i++) {
 }
         
 java.io.InputStream in  = method.getResponseBodyAsStream();
-
+*/
 org.w3c.dom.Document form = null;
 javax.xml.parsers.DocumentBuilder dBuilder = null;
 
 javax.xml.parsers.DocumentBuilderFactory dfactory  =
     javax.xml.parsers.DocumentBuilderFactory.newInstance();
+logger.debug("created dfactory");
 
-try {
-    dfactory.setNamespaceAware(true);
-    dfactory.setXIncludeAware(true);
-    dBuilder = dfactory.newDocumentBuilder();
-    form = dBuilder.parse(in);
-    serialize(form,printout);
-
-} catch (javax.xml.parsers.ParserConfigurationException parserPrblm) {
-    logger.error(parserPrblm.getMessage());
-} catch (org.xml.sax.SAXException xmlPrblm) {
-    logger.error(xmlPrblm.getMessage());
-}
+dfactory.setNamespaceAware(true);
+dfactory.setXIncludeAware(true);
+dBuilder = dfactory.newDocumentBuilder();
+//form = dBuilder.parse(in);
+form = dBuilder.parse(uri);
+logger.debug("done parsing");
+serialize(form,printout);
 
 java.lang.Long completed = System.currentTimeMillis() - start;
       
@@ -76,7 +77,7 @@ if(logger.isInfoEnabled()){
     logger.info(".. work done in " + completed + " ms"); 
 }
 
-in.close();
+//in.close();
 
 
 
