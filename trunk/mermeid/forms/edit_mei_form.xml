@@ -12,6 +12,8 @@
 	xmlns:m="http://www.music-encoding.org/ns/mei"
 	xmlns:t="http://www.tei-c.org/ns/1.0" 
 	xmlns:dcm="http://www.kb.dk/dcm">
+
+  <!-- We will need an xml:base attribute -->
 	
 	<!-- 
 		Created by the Danish Centre for Music Publication
@@ -50,6 +52,10 @@
 			<xf:instance id="data-instance" xmlns="http://www.music-encoding.org/ns/mei">
 				<mei/>
 			</xf:instance>
+
+
+			<!-- We will need instances without these /..  -->
+
 			<xf:instance xmlns="http://www.music-encoding.org/ns/mei" id="empty-instance"
 				src="/../editor/forms/mei/model/empty_doc.xml" xxf:readonly="true"/>
 			<xf:instance xmlns="http://www.music-encoding.org/ns/mei" id="keywords-instance" 

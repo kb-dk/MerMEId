@@ -69,7 +69,7 @@ declare function app:edit-form-reference($doc as node()) as node() {
   (:http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?http://disdev-01.kb.dk/form/dcm&dir=http://disdev-01.kb.dk/storage/dcm&doc=cnw0292.xml:)
   let $ref := 
       <a  title="edit" 
-          href="/orbeon/xforms-jsp/mei-form/?uri=http://{request:get-header('HOST')}/form/dcm/&amp;dir=http://{request:get-header('HOST')}/storage/dcm/&amp;doc={util:document-name($doc)}">
+          href="/orbeon/xforms-jsp/mei-form/?uri=http://{request:get-header('HOST')}/editor/forms/mei/edit_mei_form.xml&amp;dir=http://{request:get-header('HOST')}/filter/&amp;doc={util:document-name($doc)}">
 	<img border="0" src="/editor/images/edit.gif" alt="edit" />
       </a>
   return $ref
@@ -210,7 +210,7 @@ declare function app:list-title() {
   <p>
     {
     <button type="submit" title="New file" 
-        onclick="location.href='/editor/scripts/new_file_exist.cgi'; return false;"><img 
+        onclick="location.href='/filter/new/'; return false;"><img 
         src="/editor/images/new.gif" alt="New file" border="0" /> Add new file
     </button>
     }

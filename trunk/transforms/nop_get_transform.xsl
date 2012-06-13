@@ -12,9 +12,7 @@
 	      omit-xml-declaration="yes" />
 
   <xsl:template match="/">
-    <mei>
-      <xsl:apply-templates />
-    </mei>
+    <xsl:apply-templates />
   </xsl:template>
   
   <xsl:template match="@*|node()">
