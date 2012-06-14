@@ -58,15 +58,19 @@ declare function app:view-document-reference($doc as node()) as node() {
   let $ref := 
       <a  target="_blank"
           title="view" 
-          href="/editor/scripts/get-exist.cgi?file=http://{request:get-header('HOST')}/storage/dcm/{util:document-name($doc)}">
+          href="/storage/present.xq?doc={util:document-name($doc)}">
 	  {$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:title[1]/string()}
       </a>
   return $ref
 };
 
 declare function app:edit-form-reference($doc as node()) as node() {
-  (: Beware: Hard coded reference here!!! :)
-  (:http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?http://disdev-01.kb.dk/form/dcm&dir=http://disdev-01.kb.dk/storage/dcm&doc=cnw0292.xml:)
+  (: 
+   Beware: Partly hard coded reference here!!!
+   It still assumes that the document resides on the same host as this
+   xq script but on port 80
+  :)
+
   let $ref := 
       <a  title="edit" 
           href="/orbeon/xforms-jsp/mei-form/?uri=http://{request:get-header('HOST')}/editor/forms/mei/edit_mei_form.xml&amp;dir=http://{request:get-header('HOST')}/filter/&amp;doc={util:document-name($doc)}">
@@ -79,8 +83,8 @@ declare function app:delete-document-reference($doc as node()) as node() {
   let $form-id := util:document-name($doc)
   let $form := 
   <form id="del{$form-id}" 
-        action="/editor/scripts/deletion-exist.cgi"  
-	method="post" 
+        action="http://{request:get-header('HOST')}/filter/delete/{util:document-name($doc)}"
+	method="get" 
 	style="display:inline;">
 	
 	<input 
