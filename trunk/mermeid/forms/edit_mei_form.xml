@@ -11,6 +11,7 @@
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 	xmlns:m="http://www.music-encoding.org/ns/mei"
 	xmlns:t="http://www.tei-c.org/ns/1.0" 
+	xml:base="http://disdev-01.kb.dk/editor/forms/mei/"
 	xmlns:dcm="http://www.kb.dk/dcm">
 
   <!-- We will need an xml:base attribute -->
@@ -38,16 +39,11 @@
       
       <!--
 	  To construct model, call with url like: 
-	  http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://disdev-01.kb.dk/form/dcm&dir=http://disdev-01.kb.dk/storage/dcm&doc=cnw0292.xml
-	  This does not work yet:
 	  http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://disdev-01.kb.dk/editor/forms/mei/edit_mei_form.xml?&dir=http://disdev-01.kb.dk/storage/dcm&doc=cnw0292.xml
 	  - XInclude fails because the base url for relative paths is something like [...]/home/tomcat6/ 
       -->
       <xf:instance id="parameters" xmlns="http://www.kb.dk/dcm">
-	<parameters>
-	  <storage_dir/>
-	  <xml_file/>
-	</parameters>
+	<xi:include href="mermeid_configuration.xml" parse="xml"/>
       </xf:instance>
       
       <!-- prepare instances -->
@@ -57,7 +53,7 @@
 
 
       <!-- We will need instances without these /..  
-	   Removed 14/6 by SLU -->
+	   Removed the /..s 14/6. SLU -->
 
       <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
 		   id="empty-instance"
@@ -106,15 +102,25 @@
 
       <!-- test submissions -->
       <!-- load empty instance -->
-      <xf:submission id="load-empty-submission" method="get" serialization="none" validate="false"
-		     resource="/../editor/forms/mei/model/empty_doc.xml"
+      <xf:submission id="load-empty-submission"
+		     method="get" serialization="none" validate="false"
+		     resource="/editor/forms/mei/model/empty_doc.xml"
 		     replace="instance" instance="data-instance"/>
-      <xf:submission id="load-data-submission" method="get" serialization="none" validate="false"
+
+      <xf:submission id="load-data-submission" 
+		     method="get" 
+		     serialization="none" 
+		     validate="false"
 		     resource="{instance('parameters')/dcm:storage_dir}{instance('parameters')/dcm:xml_file}"
 		     replace="instance" instance="data-instance"/>
-      <xf:submission id="save-to-file" ref="instance('data-instance')" validate="false" relevant="false"
+
+      <xf:submission id="save-to-file"
+		     ref="instance('data-instance')"
+		     validate="false"
+		     relevant="false"
 		     xxf:calculate="false"
-		     resource="{instance('parameters')/dcm:storage_dir}{instance('parameters')/dcm:xml_file}" method="put"
+		     resource="{instance('parameters')/dcm:storage_dir}{instance('parameters')/dcm:xml_file}" 
+		     method="put"
 		     replace="instance">
       </xf:submission>
       
@@ -236,7 +242,7 @@
 	<xf:trigger>
 	  <xf:label>Yes</xf:label>
 	  <xf:action ev:event="DOMActivate">
-	    <xf:load resource="{instance('parameters')/dcm:storage_dir}/../list_files.xq" show="replace"/>
+	    <xf:load resource="{instance('parameters')/dcm:exist_dir}/list_files.xq" show="replace"/>
 	    <xxf:hide dialog="file-list-dialog"/>
 	  </xf:action>
 	</xf:trigger>
@@ -271,7 +277,7 @@
 	      <xxf:show dialog="file-list-dialog"/>
 	    </xf:action>	
 	    <xf:action if="instance('temp')/changed='false'">
-	      <xf:load resource="{instance('parameters')/dcm:storage_dir}/../list_files.xq" show="replace"/>
+	      <xf:load resource="{instance('parameters')/dcm:exist_dir}/list_files.xq" show="replace"/>
 	    </xf:action>
 	  </xf:action>
 	</xf:trigger>
