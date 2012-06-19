@@ -106,7 +106,7 @@
               <addrLine>P.O. Box 2149</addrLine>
               <addrLine>DK - 1016 Copenhagen K</addrLine>
               <addrLine><ptr target="http://www.kb.dk/dcm" xl:title="WWW"/></addrLine>
-              <addrLine><ptr target="mailto://dcm@kb.dk" xl:title="E-mail"/></addrLine>
+              <addrLine><ptr target="mailto://foa-dcm@kb.dk" xl:title="E-mail"/></addrLine>
             </address>                        
             </corpName>
             <!-- add names of editors involved -->
