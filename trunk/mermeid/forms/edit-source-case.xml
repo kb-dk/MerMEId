@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" 
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+	xmlns:xf="http://www.w3.org/2002/xforms" 
+	xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+	xmlns:oxf="http://www.orbeon.com/oxf/processors"
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:ev="http://www.w3.org/2001/xml-events" 
+	xmlns:xl="http://www.w3.org/1999/xlink"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:m="http://www.music-encoding.org/ns/mei"
+	xmlns:t="http://www.tei-c.org/ns/1.0" 
+	xml:base="http://disdev-01.kb.dk/editor/forms/mei/"
+	xmlns:dcm="http://www.kb.dk/dcm">
+
+  <!-- We will need an xml:base attribute -->
+  
+  <!-- 
+       Created by the Danish Centre for Music Publication
+       The Royal Library, Copenhagen 2012
+       Authors: Sigfrid Lundberg, Axel Teich Geertinger
+  -->
+  
+  <h:head>
+    
+    <h:title id="PageTitle">MerMEId - Editing MEI metadata</h:title>
+    
+    <h:meta http-equiv="Content-Type" content="application/xhtml+xml"/>
+    
+    <h:script type="text/javascript" src="http:/editor/js/editor.js">
+      //<!-- should'nt really be empty -->
+    </h:script>
+    
+    <h:style type="text/css" media="all"> 
+      @import "/editor/style/tab_style.css"; 
+      @import "/editor/style/xform_style.css";
+    </h:style>
+    
+    <xf:model>
+      
+      <!--
+	  To construct model, call with url like: 
+	  http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://disdev-01.kb.dk/editor/forms/mei/edit_mei_form.xml?&dir=http://disdev-01.kb.dk/storage/dcm&doc=cnw0292.xml
+	  - XInclude fails because the base url for relative paths is something like [...]/home/tomcat6/ 
+      -->
+      <xf:instance id="parameters" xmlns="http://www.kb.dk/dcm">
+	<xi:include href="mermeid_configuration.xml" parse="xml"/>
+      </xf:instance>
+      
+      <!-- prepare instances -->
+      <xf:instance id="data-instance" xmlns="http://www.music-encoding.org/ns/mei">
+	<mei/>
+      </xf:instance>
+
+
+      <!-- We will need instances without these /..  
+	   Removed the /..s 14/6. SLU -->
+
+      <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+		   id="empty-instance"
+		   src="/editor/forms/mei/model/empty_doc.xml" 
+		   xxf:readonly="true"/>
+
+      <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+		   id="keywords-instance" 
+		   src="/editor/forms/mei/model/keywords.xml" 
+		   xxf:readonly="true"/>
+
+      <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+		   id="languages" 
+		   src="/editor/forms/mei/model/languages.xml" 
+		   xxf:readonly="true"/>
+
+      <xf:instance xmlns="http://www.tei-c.org/ns/1.0" 
+		   id="bibl-type-instance" 
+		   src="/editor/forms/mei/model/bibl_reference_types.xml" 
+		   xxf:readonly="true"/>
+
+      <xf:instance xmlns="http://www.tei-c.org/ns/1.0" 
+		   id="bibliography-instance" 
+		   src="/editor/forms/mei/model/standard_bibliography.xml" 
+		   xxf:readonly="true"/>
+
+      <xf:instance xmlns="http://www.kb.dk/dcm" id="conf"
+		   src="/editor/forms/mei/model/settings.xml" />
+
+      <xf:instance id="temp">
+	<temp-values>
+	  <changed>false</changed>
+	  <change_marker>*</change_marker>
+	  <etc>...</etc>
+	  <counter/>
+	  <max/>
+	  <music_outline>
+	    <exp>0</exp>
+	    <comp1>0</comp1>
+	    <comp2>0</comp2>
+	  </music_outline>
+	</temp-values>
+      </xf:instance>
+      
+      <!-- submissions - loading and saving data -->
+
+      <!-- test submissions -->
+      <!-- load empty instance -->
+      <xf:submission id="load-empty-submission"
+		     method="get" serialization="none" validate="false"
+		     resource="/editor/forms/mei/model/empty_doc.xml"
+		     replace="instance" instance="data-instance"/>
+
+      <xf:submission id="load-data-submission" 
+		     method="get" 
+		     serialization="none" 
+		     validate="false"
+		     resource="{instance('parameters')/dcm:storage_dir}{instance('parameters')/dcm:xml_file}"
+		     replace="instance" instance="data-instance"/>
+
+      <xf:submission id="save-to-file"
+		     ref="instance('data-instance')"
+		     validate="false"
+		     relevant="false"
+		     xxf:calculate="false"
+		     resource="{instance('parameters')/dcm:storage_dir}{instance('parameters')/dcm:xml_file}" 
+		     method="put"
+		     replace="instance">
+      </xf:submission>
+      
+      <!-- "onload" xforms actions -->
+      <xf:action ev:event="xforms-model-construct-done">
+	<!-- store XML data storage server and directory name -->
+	<xf:setvalue ref="instance('parameters')/dcm:storage_dir" value="xxf:get-request-parameter('dir')"/>
+	<!-- store XML data file name -->
+	<xf:setvalue ref="instance('parameters')/dcm:xml_file" value="xxf:get-request-parameter('doc')"/>
+	<!-- load XML data -->
+	<xf:send submission="load-data-submission"/>
+	<!-- automatically add change entry in revisionDesc -->
+	<xf:action if="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date!=''">
+	  <xf:insert nodeset="instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
+		     position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
+	  <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
+		       value="substring-before(now(), 'T')"/>
+	</xf:action>
+	<xf:action if="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date=''">
+	  <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
+		       value="substring-before(now(), 'T')"/>
+	</xf:action>
+	<!-- check list of language declarations -->
+	<xf:dispatch name="language-update" target="form-group"/>
+      </xf:action>
+      
+      <xf:action ev:event="xforms-submit-done">
+	<!-- set instance state to unchanged on saving -->
+	<xf:setvalue ref="instance('temp')/changed" value="'false'"/>
+      </xf:action>
+      
+      <xf:action ev:event="xforms-submit-error">
+	<xxf:variable name="code" select="event('response-status-code')"/>
+	<xf:action if="$code!=404">
+	  <xf:message>An error occurred (<xf:output value="$code"/>)</xf:message>
+	</xf:action>
+	<!-- Load empty instance if loading fails (i.e. document does not exist yet) -->
+	<xf:action if="$code=404">
+	  <xf:send submission="load-empty-submission"/>
+	</xf:action>
+      </xf:action>
+      
+      <xf:bind nodeset="instance('conf')/dcm:attr" type="xs:boolean"/>
+      <xf:bind nodeset="instance('data-instance')//m:instrVoice/@solo" type="xs:boolean"/>
+      
+    </xf:model>
+    
+    <!-- XBL components -->
+    <xi:include href="includes/element_buttons.xbl" parse="xml"/>
+    <!--<xi:include href="includes/attribute_editor.xbl" parse="xml"/>-->
+    <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
+    <xi:include href="includes/date_editor.xbl" parse="xml"/>
+    <xi:include href="includes/tei_date_editor.xbl" parse="xml"/>
+    <xi:include href="includes/relator.xbl" parse="xml"/>
+    <xi:include href="includes/performance_list.xbl" parse="xml"/>
+    <xi:include href="includes/expression_input.xbl" parse="xml"/>
+    <xi:include href="includes/item.xbl" parse="xml"/>
+    <xi:include href="includes/id.xbl" parse="xml"/>
+    
+  </h:head>
+  
+  <!-- set page title on load -->
+  <h:body id="editor-body" class="editor_body" onload="initialize();">
+    
+    <h:div id="top-bar">
+      
+      <h:div id="tab-menu">
+	
+	<xf:trigger id="work-tab" appearance="minimal">
+	  <xf:label>Work</xf:label>
+	  <xf:action ev:event="DOMActivate">
+	    <xf:toggle case="work-case"/>
+	  </xf:action>
+	  </xf:trigger><xf:trigger id="history-tab" appearance="minimal">
+	  <xf:label>History</xf:label>
+	  <xf:action ev:event="DOMActivate">
+	    <xf:toggle case="history-case"/>
+	  </xf:action>
+	  </xf:trigger><xf:trigger id="source-tab" appearance="minimal">
+	  <xf:label>Sources</xf:label>
+	  <xf:action ev:event="DOMActivate">
+	    <xf:toggle case="source-case"/>
+	  </xf:action>
+	  </xf:trigger><xf:trigger id="music-tab" appearance="minimal">
+	  <xf:label>Music</xf:label>
+	  <xf:action ev:event="DOMActivate">
+	    <xf:toggle case="music-case"/>
+	  </xf:action>
+	  </xf:trigger><xf:trigger id="bibliography-tab" appearance="minimal">
+	  <xf:label>Bibliography</xf:label>
+	  <xf:action ev:event="DOMActivate">
+	    <xf:toggle case="bibliography-case"/>
+	  </xf:action>
+	  </xf:trigger><xf:trigger id="file-tab" appearance="minimal">
+	  <xf:label>File </xf:label>
+	  <xf:action ev:event="DOMActivate">
+	    <xf:toggle case="file-case"/>
+	  </xf:action>
+	</xf:trigger>
+	
+      </h:div>
+      
+      <h:fieldset id="top_status_bar">
+	<xf:group id="editing_status"
+		  ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[1]">
+	  <xf:output value="concat(substring(.,1,20), instance('temp')/etc[string-length(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[1])&gt;20], instance('temp')[changed='true']/change_marker)" id="work_identifier">
+	    <xf:label/> 
+	    <xf:action ev:event="xforms-value-changed">
+	      <xf:load resource="javascript:setPageTitle()"/>
+	    </xf:action>
+	  </xf:output>
+	</xf:group>
+      </h:fieldset>
+      
+      <xxf:dialog id="file-list-dialog" appearance="full">
+	<xf:label>Warning</xf:label>
+	<h:p>You have unsaved changes. 
+	Do you want to proceed?</h:p>
+	<xf:trigger>
+	  <xf:label>Yes</xf:label>
+	  <xf:action ev:event="DOMActivate">
+	    <xf:load resource="{instance('parameters')/dcm:exist_dir}/list_files.xq" show="replace"/>
+	    <xxf:hide dialog="file-list-dialog"/>
+	  </xf:action>
+	</xf:trigger>
+	<xf:trigger>
+	  <xf:label>No</xf:label>
+	  <xf:action ev:event="DOMActivate">
+	    <xxf:hide dialog="file-list-dialog"/>
+	  </xf:action>
+	</xf:trigger>
+      </xxf:dialog>
+      
+      <!--<h:p class="menu"> </h:p>-->
+      <h:p id="view_menu">
+	<xf:submit submission="save-to-file" appearance="minimal">
+	  <xf:label><h:img src="http:/editor/images/save.gif" alt="Save" title="Save file"/></xf:label>
+	  <xf:action ev:event="DOMActivate">
+	    <xf:dispatch name="language-update" target="form-group"/>
+	  </xf:action>
+	</xf:submit>
+	<h:a href="http:/editor/scripts/get-exist.cgi?file={instance('parameters')/dcm:storage_dir}/{instance('parameters')/dcm:xml_file}"
+	     class="xforms-trigger" target="view_{instance('parameters')/dcm:xml_file}"><h:img 
+	     src="http:/editor/images/html.gif" alt="HTML" title="View as HTML" border="0"/></h:a>
+	<h:a href="{instance('parameters')/dcm:storage_dir}{instance('parameters')/dcm:xml_file}"
+	     class="xforms-trigger" target="xml_{instance('parameters')/dcm:xml_file}"><h:img 
+	     src="http:/editor/images/xml.gif" alt="XML" title="View XML data" border="0"/></h:a>
+	<xf:trigger appearance="minimal">
+	  <xf:label><h:img 
+	  src="http:/editor/images/home.gif" alt="File list" 
+	  title="Close editor and return to file list" border="0"/></xf:label>
+	  <xf:action ev:event="DOMActivate">
+	    <xf:action if="instance('temp')/changed='true'">
+	      <xxf:show dialog="file-list-dialog"/>
+	    </xf:action>	
+	    <xf:action if="instance('temp')/changed='false'">
+	      <xf:load resource="{instance('parameters')/dcm:exist_dir}/list_files.xq" show="replace"/>
+	    </xf:action>
+	  </xf:action>
+	</xf:trigger>
+	
+	<!-- settings menu -->          
+	<!--<xf:trigger appearance="minimal">
+	    <xf:label><h:img src="http:/editor/images/tools.gif" alt="Settings" title="Editor settings"/></xf:label>
+	    <xf:toggle case="show_settings" ev:event="DOMActivate"/>
+	    </xf:trigger>
+	    <xf:switch>
+	    <xf:case id="hide_settings" selected="true()"/>
+	    <xf:case id="show_settings" selected="false()">
+	    <h:div class="popup_menu_container" id="settings-menu">
+	    <xf:group id="settings-menu-group">
+	    <xf:action ev:event="DOMFocusOut" observer="settings-menu-group">
+	    <xf:toggle case="hide_settings"/>
+	    </xf:action>-->
+	<!-- adjust position -->
+	<!--<h:div style="position:absolute; margin-left: 100px;">
+	    <h:div class="embeddedElementMenu">
+	    <h:div class="popup_heading">
+	    Editor settings
+	    <h:div class="close">
+	    <xf:trigger appearance="minimal">
+	    <xf:label><h:img src="http:/editor/images/close.gif" alt="Close" title="Close"/></xf:label>
+	    <xf:toggle case="hide_settings" ev:event="DOMActivate"/>
+	    </xf:trigger>
+	    </h:div>
+	    </h:div>
+	    <h:div class="popup_body">
+	    <xf:input ref="instance('conf')/dcm:attr">
+	    <xf:label/>
+	    </xf:input>
+	    <h:span class="label"> Enable attribute editing 
+	    <h:a class="help_plain"><h:img src="http:/editor/images/warning.png" alt="warning"/><h:span 
+	    class="comment" style="margin-left:-200px;">
+	    Allows adding and editing all possible attributes according to the MEI schema. <h:br/>
+	    CAUTION: Use this only if you know what you are doing. Changing attributes may cause
+	    some of your data to become unusable in his editor.
+	    </h:span></h:a>
+	    </h:span>
+	    </h:div>
+	    </h:div>
+	    </h:div>
+	    </xf:group>
+	    </h:div>
+	    </xf:case>
+	    </xf:switch>-->
+	<!-- end settings menu -->		
+	
+      </h:p>
+      
+    </h:div>
+    
+    <h:div id="form-body">
+      <xf:group id="form-group">
+	
+	<!-- global event handlers -->
+	<!-- "on change" xforms actions -->
+	<xf:action ev:event="xforms-value-changed">
+	  <xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+	</xf:action>
+	<xf:action ev:event="language-update">
+	  <!-- add missing language declarations -->
+	  <xf:insert nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:langUsage/m:language"
+		     origin="instance('languages')/language[@xml:id=instance('data-instance')//@xml:lang[not(.=instance('data-instance')//m:langUsage/m:language/@xml:id)]]"/>
+	  <!-- delete unused language declarations -->
+	  <xf:delete nodeset="instance('data-instance')//m:langUsage/m:language[not(@xml:id=instance('data-instance')//@xml:lang)]"/>
+	  <!-- delete duplicate language declarations -->
+	  <xf:delete nodeset="instance('data-instance')//m:langUsage/m:language[. = preceding-sibling::m:language]"/>
+	</xf:action>
+	<!--
+	    <xf:trigger>
+	    <xf:label>Update IDs</xf:label>
+	    <xf:action ev:event="DOMActivate id-update">
+	    <xf:message>Updating ID</xf:message>
+	    <xf:action while="count(instance('data-instance')//*[@xml:id=''] &gt; 0)">
+	    <xf:message>Adding value to empty IDs: <xf:output value="count(instance('data-instance')//*[@xml:id='']"/></xf:message>
+	    <xf:setvalue ref="instance('data-instance')//*[@xml:id=''][1]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+	    </xf:action>
+	    <xf:action while="count(instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id]) &gt; 0">
+	    <xf:message>Changing non-unique IDs: <xf:output value="count(instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id])"/></xf:message>
+	    <xf:setvalue ref="instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id][1]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+	    </xf:action>							
+	    </xf:action>
+	    </xf:trigger>-->
+	
+	<!-- Something wrong with the list of languages. The instance is apparently not updated when 
+	     languages are added manually or on saving.
+	     Repeated saving after choosing a new language results in one more language declaration 
+	     on each save.
+	     Checking and updating the languages list could be moved to the XSL filter instead.
+	     <h:div style="position:absolute; z-index:+1; left:+600px; top:100px;">
+	     <h:div>LANGUAGES TEST MONITOR</h:div>
+	     <xf:repeat nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:langUsage/m:language">
+	     <xf:output value="."><xf:label><xf:output value="@xml:id"/></xf:label></xf:output><br/>
+	     </xf:repeat>
+	     <xf:output value="count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:langUsage/m:language)">
+	     <xf:label>Total:</xf:label>
+	     </xf:output>
+	     </h:div>-->
+	
+	
+	<xf:switch>
+	  
+	  <xf:case id="work-case" selected="true()">
+	    <h:div class="top-bar-container">
+	      <h:div id="work-border"> </h:div>
+	    </h:div>
+	    <xi:include href="main_form_work.xml" parse="xml"/>
+	  </xf:case>
+	  
+	  <xf:case id="history-case">
+	    <h:div class="top-bar-container">
+	      <h:div id="history-border"> </h:div>
+	    </h:div>
+	    <xi:include href="main_form_history.xml" parse="xml"/>
+	  </xf:case>
+	  
+	  <xf:case id="music-case">
+	    <h:div class="top-bar-container">
+	      <h:div id="music-border"> </h:div>
+	    </h:div>
+	    <xi:include href="main_form_music.xml" parse="xml"/>
+	  </xf:case>
+	  
+	  <xf:case id="source-case">
+	    <h:div class="top-bar-container">
+	      <h:div id="source-border"> </h:div>
+	    </h:div>
+	    <xi:include href="main_form_source.xml" parse="xml"/>
+	  </xf:case>
+	  
+	  <xf:case id="bibliography-case">
+	    <h:div class="top-bar-container">
+	      <h:div id="bibliography-border"> </h:div>
+	    </h:div>
+	    <xi:include href="main_form_bibliography.xml" parse="xml"/>
+	  </xf:case>
+	  
+	  <xf:case id="file-case">
+	    <h:div class="top-bar-container">
+	      <h:div id="file-border"> </h:div>
+	    </h:div>
+	    <xi:include href="main_form_file.xml" parse="xml"/>
+	  </xf:case>
+	  
+	</xf:switch>
+      </xf:group>
+    </h:div>
+    
+    <h:div class="logo">
+      <xf:trigger appearance="minimal">
+	<xf:label>
+	  <img alt="MerMEId - logo" title="About MerMEId" src="http:/editor/images/mermeid_12px.png"
+	       border="0"/>
+	</xf:label>
+	<xxf:show dialog="about-dialog" ev:event="DOMActivate"/>
+      </xf:trigger>
+    </h:div>
+    
+    <xxf:dialog id="about-dialog" appearance="full" level="modal" close="true" draggable="false" visible="false">
+      <div class="about_header"><img src="/editor/images/mermeid_30px.png" alt="MerMEId logo" border="0"/></div>
+      <div class="about_main">
+	<p>MerMEId (Metadata Editor and Repository for MEI Data) is written and distributed by:</p>
+	<p><a href="http://www.kb.dk/en/kb/nb/mta/dcm/">Danish Centre for Music Publication (DCM)</a><br/> The
+	Royal Library<br/> P.O.Box 2149<br/> DK - 1016 Copenhagen<br/>
+	</p>
+	<p>Authors: Sigfrid Lundberg (<a href="mailto:slu@kb.dk">slu@kb.dk</a>) &amp; Axel Teich Geertinger (<a
+	href="mailto:atge@kb.dk">atge@kb.dk</a>)</p>
+	<p>This version released: 30 September 2011</p>
+	<p>MerMEId is open-source software released under the <a
+	href="http://www.apache.org/licenses/LICENSE-2.0" title="See Apache License 2.0" target="_blank"
+	>Apache License version 2.0</a></p>
+      </div>
+      <div class="about_footer">
+	<a href="http://www.kb.dk/en/kb/nb/mta/dcm/" title="Danish Centre for Music Publication"><img
+	src="/editor/images/dcm_logo_long_text_dark.png" alt="DCM logo" border="0"
+	style="margin-right:30px;"/></a>
+	<a href="http://www.kb.dk/en/" title="The Royal Library"><img src="/editor/images/kb.png"
+	alt="Royal Library logo" border="0"/></a>
+      </div>
+    </xxf:dialog>
+    
+	</h:body>
+</h:html>
