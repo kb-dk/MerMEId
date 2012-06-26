@@ -520,14 +520,16 @@ Last modified $Date$ by $Author$
 	<xsl:when test="position()&gt;1">
 	  <span class="alternative_language">
 	    <xsl:text>[</xsl:text><xsl:value-of select="@xml:lang"/><xsl:text>] </xsl:text>
-	    <xsl:apply-templates/><xsl:text> </xsl:text>
+	    <xsl:apply-templates/>
+	  	<xsl:if test=".!='' and $tempo!=''">.</xsl:if><xsl:text> </xsl:text>
 	    <xsl:value-of select="$tempo"/>
 	  </span>
 	</xsl:when>
 	<xsl:otherwise>
 	  <strong>
-	    <xsl:apply-templates/><xsl:text> </xsl:text>
-	    <xsl:value-of select="$tempo"/>
+	    <xsl:apply-templates/>
+	  	<xsl:if test=".!='' and $tempo!=''">.</xsl:if><xsl:text> </xsl:text>
+	  	<xsl:value-of select="$tempo"/>
 	  </strong>
 	</xsl:otherwise>
       </xsl:choose>
@@ -536,53 +538,59 @@ Last modified $Date$ by $Author$
   </xsl:template>
 
   <xsl:template match="m:expression">
-
     <p>
-      <xsl:apply-templates select="m:titleStmt[m:title/text()]">
-	<xsl:with-param name="tempo">
-	  <xsl:apply-templates select="m:tempo"/>
-	</xsl:with-param>
-      </xsl:apply-templates>
+    	<xsl:apply-templates select="m:titleStmt[m:title/text()]">
+    		<xsl:with-param name="tempo">
+    			<xsl:apply-templates select="m:tempo"/>
+    		</xsl:with-param>
+    	</xsl:apply-templates>
     </p>
-
-    <xsl:for-each select="m:meter">
-      <xsl:if test="position() = 1">Metre: </xsl:if>
-
-      <xsl:choose>
-	<xsl:when test="@meter.count|@meter.unit">
-	  <xsl:value-of select="concat(@meter.count,'/',@meter.unit)"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <span class="timesig">
-	    <xsl:choose>
-	      <xsl:when test="@meter.sym='common'">c</xsl:when>
-	      <xsl:when test="@meter.sym='cut'">C</xsl:when>
-	    </xsl:choose>
-	  </span>
-	</xsl:otherwise>
-      </xsl:choose>
-      <xsl:if test="position()=last()"><br/></xsl:if>
-    </xsl:for-each>
-
-    <xsl:for-each select="m:key[text()]">
-      <xsl:apply-templates select="."/>
-      <xsl:if test="position()=last()"><br/></xsl:if>
-    </xsl:for-each>
-
+  	<xsl:if test="normalize-space(concat(m:meter/@meter.count,m:meter/@meter.unit,m:meter/@meter.sym))">
+  		<p class="movement_details">
+  			<xsl:for-each select="m:meter">
+  				<xsl:if test="position() = 1">Metre: </xsl:if>
+  				<xsl:choose>
+  					<xsl:when test="@meter.count!='' and @meter.unit!=''">
+  						<span class="meter"><xsl:value-of select="concat(@meter.count,'/',@meter.unit)"/></span>
+  					</xsl:when>
+  					<xsl:otherwise>
+  						<span class="timesig">
+  							<xsl:choose>
+  								<xsl:when test="@meter.sym='common'">c</xsl:when>
+  								<xsl:when test="@meter.sym='cut'">C</xsl:when>
+  							</xsl:choose>
+  						</span>
+  					</xsl:otherwise>
+  				</xsl:choose>
+  				<xsl:if test="position()=last()"><br/></xsl:if>
+  			</xsl:for-each>
+  		</p>
+  	</xsl:if>
+  	<xsl:if test="normalize-space(concat(m:key/@pname,m:key/@accid,m:key/@mode))">
+  		<p class="movement_details">
+  			<xsl:for-each select="m:key">
+  				<xsl:apply-templates select="."/>
+  			</xsl:for-each>
+  		</p>
+  	</xsl:if>
     <!-- perfMedium & castList not supported here, yet. -->
     <xsl:apply-templates select="m:incip"/>
-
   </xsl:template>
 
   <xsl:template match="m:incip">
-    <xsl:for-each select="m:incipText/m:p[text()]">
-      <xsl:if test="position() = 1"><xsl:text>Text incipit: </xsl:text></xsl:if>
-      <xsl:if test="position() &gt; 1">
-	[<xsl:value-of select="@xml:lang"/>]
-      </xsl:if>
-      <xsl:apply-templates select="."/>
-      <xsl:if test="position() &lt; last()"><br/></xsl:if>
-    </xsl:for-each>
+  	<xsl:variable name="text_incipit"><xsl:value-of select="m:incipText"/></xsl:variable>
+  	<xsl:if test="normalize-space($text_incipit)">
+  		<p class="movement_details">
+  			<xsl:for-each select="m:incipText/m:p[text()]">
+  				<xsl:if test="position() = 1"><xsl:text>Text incipit: </xsl:text></xsl:if>
+  				<xsl:if test="position() &gt; 1">
+  					[<xsl:value-of select="@xml:lang"/>]
+  				</xsl:if>
+  				<xsl:apply-templates select="."/>
+  				<xsl:if test="position() &lt; last()"><br/></xsl:if>
+  			</xsl:for-each>
+  		</p>
+  	</xsl:if>
 
     <p>
       <xsl:choose>
@@ -1548,217 +1556,237 @@ Last modified $Date$ by $Author$
 	right now.
     -->
 
-    <xsl:template  match="text()">
-      <xsl:call-template name="replace_nodes">
-	<xsl:with-param
-	    name="text"
-	    select="."/>
-      </xsl:call-template>
-    </xsl:template>
+	<xsl:template  match="text()">
+		<xsl:call-template name="replace_nodes">
+			<xsl:with-param
+				name="text"
+				select="."/>
+		</xsl:call-template>
+	</xsl:template>
 
-    <xsl:template name="replace_nodes">
-      <xsl:param name="text"><xsl:value-of select="."/></xsl:param>
-
-      <xsl:choose>
-	<xsl:when test="contains($text,'&lt;') and 
-			contains(substring-after($text,'&lt;'),'&gt;')">
-
-	  <!-- If there is an &lt; and after that character there is &gt;,
-	       then we have found an escaped element. Now tell us the name of
-	       that element -->
-
-	  <xsl:variable name="element">
-	    <xsl:value-of 
-		select="substring-before(substring-after($text,'&lt;'),'&gt;')"/>
-	  </xsl:variable>
-
-	  <xsl:choose>
-
-	    <!-- Now we know its name. Let's check if there is an end element -->
-
-	    <xsl:when test="contains($text,concat('&lt;/',$element,'&gt;'))">
-	      
-	      <xsl:variable name="begin" select="concat('&lt;', $element,'&gt;')"/>
-	      <xsl:variable name="end"   select="concat('&lt;/',$element,'&gt;')"/>
-
-	      <!-- we have to process the string before $start further to see
-		   if there is someting else than escaped XML -->
-
-	      <xsl:call-template name="replace_strings">
-		<xsl:with-param name="input_text" 
-				select="substring-before($text,$begin)"/>
-	      </xsl:call-template>
-
-	      <!-- The runes are special -->
-
-	      <xsl:choose>
-		<xsl:when test="$element = 'runes'">
-		  <span class="runes">
-		    <xsl:call-template name="replace_strings">
-		      <xsl:with-param name="input_text"> 
-			<!-- xsl:value-of
-			    disable-output-escaping="yes"
-			    select="substring-before(substring-after($text,$begin),$end)"/ -->
-			<xsl:value-of 
-			    select="java:org.apache.commons.lang.StringEscapeUtils.unescapeXml(substring-before(substring-after($text,$begin),$end))"/>
-
-
-
-		      </xsl:with-param>
-		    </xsl:call-template>
-		  </span>
-		</xsl:when>
-
-		<!--
-		    Otherwise we just create the element without further ado.
-		    No questions asked.
-		-->
-
-		<xsl:otherwise>
-		  <xsl:element name="{$element}">
-		    <xsl:if test="not($element = 'br')">
-		      <xsl:text>
-		      </xsl:text>
-		    </xsl:if>
-		    <!-- There could be more escaped elements inside our element -->
-
-		    <xsl:call-template name="replace_nodes">
-		      <xsl:with-param
-			  name="text"
-			  select="substring-before(substring-after($text,$begin),$end)"/>
-		    </xsl:call-template>
-		  </xsl:element>
-		</xsl:otherwise>
-	      </xsl:choose>
-
-	      <!-- The we use recursion to treat the string after the end tag -->
-
-	      <xsl:call-template name="replace_nodes">
-		<xsl:with-param 
-		    name="text"    
-		    select="substring-after($text,$end)"/>
-	      </xsl:call-template>
-
-	    </xsl:when>
-	    <xsl:otherwise>
-
-	      <!-- OK, there was no end element. This usually implies something like
-		   &lt;br/&gt;, &lt;br&gt; or &lt;img src=""/&gt; -->
-
-	      <xsl:call-template name="replace_strings">
-		<xsl:with-param name="input_text"
-				select="substring-before($text,'&lt;')"/>
-	      </xsl:call-template>
-
-	      <xsl:variable name="element_name">
+	<xsl:template name="replace_nodes">
+		<xsl:param name="text"><xsl:value-of select="."/></xsl:param>
+		
 		<xsl:choose>
-		  <xsl:when test="contains($element,'/')">
-		    <xsl:value-of select="substring-before($element,'/')"/>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:value-of select="$element"/>
-		  </xsl:otherwise>
+			<xsl:when test="contains($text,'&lt;') and 
+				contains(substring-after($text,'&lt;'),'&gt;')">
+
+				<!-- If there is an &lt; and after that character there is &gt;,
+					then we have found an escaped element. Now tell us the name of
+					that element -->
+				<xsl:variable name="element_with_attr">
+					<!-- This gets the name and any attributes -->
+					<xsl:value-of select="substring-before(substring-after($text,'&lt;'),'&gt;')"/>
+				</xsl:variable>
+				<!-- Now separate them into element name and attributes -->
+				<xsl:variable name="element">
+					<xsl:choose>
+						<xsl:when test="contains($element_with_attr,' ')">
+							<xsl:value-of select="substring-before($element_with_attr,' ')"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$element_with_attr"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:variable name="attributes">
+					<xsl:choose>
+						<xsl:when test="contains($element_with_attr,' ')">
+							<xsl:value-of select="substring-after($element_with_attr,' ')"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:text></xsl:text>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				
+				<xsl:choose>
+					
+					<!-- Now we know its name. Let's check if there is an end element -->
+					
+					<xsl:when test="contains($text,concat('&lt;/',$element,'&gt;'))">
+						
+						<xsl:variable name="begin" select="concat('&lt;',$element_with_attr,'&gt;')"/>
+						<xsl:variable name="end"   select="concat('&lt;/',$element,'&gt;')"/>
+						
+						<!-- we have to process the string before $start further to see
+							if there is someting else than escaped XML -->
+						
+						<xsl:call-template name="replace_strings">
+							<xsl:with-param name="input_text" 
+								select="substring-before($text,$begin)"/>
+						</xsl:call-template>
+						
+						<!-- The runes are special -->
+						<xsl:choose>
+							<xsl:when test="$element='span' and contains($attributes,'runes')">
+								<span class="runes">
+									<xsl:call-template name="replace_strings">
+										<xsl:with-param name="input_text"> 
+											<!-- xsl:value-of
+												disable-output-escaping="yes"
+												select="substring-before(substring-after($text,$begin),$end)"/ -->
+											<xsl:value-of 
+												select="java:org.apache.commons.lang.StringEscapeUtils.unescapeXml(substring-before(substring-after($text,$begin),$end))"/>
+										</xsl:with-param>
+									</xsl:call-template>
+								</span>
+							</xsl:when>
+							
+							<!--
+								Otherwise we just create the element without further ado.
+								No questions asked.
+							-->
+							
+							<xsl:otherwise>
+								<xsl:element name="{$element}">
+									
+									<!-- To do: Here, the attributes contained in the 
+										$attributes string should be added /atge -->
+									
+									<xsl:if test="not($element = 'br')">
+										<xsl:text>
+										</xsl:text>
+									</xsl:if>
+									<!-- There could be more escaped elements inside our element -->
+									
+									<xsl:call-template name="replace_nodes">
+										<xsl:with-param
+											name="text"
+											select="substring-before(substring-after($text,$begin),$end)"/>
+									</xsl:call-template>
+								</xsl:element>
+							</xsl:otherwise>
+						</xsl:choose>
+						
+						<!-- Then we use recursion to treat the string after the end tag -->
+						
+						<xsl:call-template name="replace_nodes">
+							<xsl:with-param 
+								name="text"    
+								select="substring-after($text,$end)"/>
+						</xsl:call-template>
+						
+					</xsl:when>
+					<xsl:otherwise>
+						
+						<!-- OK, there was no end element. This usually implies something like
+							&lt;br/&gt;, &lt;br&gt; or &lt;img src=""/&gt; -->
+						
+						<xsl:call-template name="replace_strings">
+							<xsl:with-param name="input_text"
+								select="substring-before($text,'&lt;')"/>
+						</xsl:call-template>
+						
+						<xsl:variable name="element_name">
+							<xsl:choose>
+								<xsl:when test="contains($element,'/')">
+									<xsl:value-of select="substring-before($element,'/')"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$element"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						
+						<xsl:if test="$element = 'br' or $element = 'img'">
+							<xsl:element name="{$element_name}"/>
+						</xsl:if>
+						
+						<xsl:call-template name="replace_nodes">
+							<xsl:with-param name="text" select="substring-after($text,'&gt;')"/>
+						</xsl:call-template>
+						
+						
+					</xsl:otherwise>
+				</xsl:choose>
+				
+			</xsl:when>
+			
+			<!-- Now we have found a text not having a &lt; in it -->
+			
+			<xsl:otherwise>
+				<xsl:call-template name="replace_strings">
+					<xsl:with-param name="input_text" select="$text"/>
+				</xsl:call-template>
+			</xsl:otherwise>
+			
 		</xsl:choose>
-	      </xsl:variable>
-
-	      <xsl:if test="$element = 'br' or $element = 'img'">
-		<xsl:element name="{$element_name}"/>
-	      </xsl:if>
-
-	      <xsl:call-template name="replace_nodes">
-		<xsl:with-param name="text" select="substring-after($text,'&gt;')"/>
-	      </xsl:call-template>
-
-
-	    </xsl:otherwise>
-	  </xsl:choose>
-
-	</xsl:when>
-
-	<!-- Now we have found a text not having a &lt; in it -->
-
-	<xsl:otherwise>
-	  <xsl:call-template name="replace_strings">
-	    <xsl:with-param name="input_text" select="$text"/>
-	  </xsl:call-template>
-	</xsl:otherwise>
-
-      </xsl:choose>
-
-    </xsl:template>
-
-
+		
+	</xsl:template>
+	
+	
     <xsl:param name="replacements" select="exsl:node-set($replacement_nodes_doc)" />
 
     <!-- replace all items in replacement list -->
-    <xsl:template name="replace_strings">
-      <xsl:param name="input_text" select="."/>
-      <xsl:param name="search">1</xsl:param>
-      <xsl:variable name="replaced_text">
-	<xsl:call-template name="string_replace">
-	  <xsl:with-param name="input_text" 
-			  select="$input_text"/>
-	  <xsl:with-param name="find" 
-			  select="$replacements//foo:search[$search]/foo:find"/>
-	  <xsl:with-param name="replace" 
-			  select="$replacements//foo:search[$search]/foo:replace/*"/>
-	</xsl:call-template>
-      </xsl:variable>
-      <xsl:choose>
-	<xsl:when test="$search &lt; count(document($replacements)//foo:search)">
-	  <xsl:call-template name="replace_strings">
-	    <xsl:with-param name="input_text" select="$replaced_text"/>
-	    <xsl:with-param name="search" select="$search + 1"/>
-	  </xsl:call-template>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:copy-of select="$replaced_text"/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:template>
+	<xsl:template name="replace_strings">
+		<xsl:param name="input_text" select="."/>
+		<xsl:param name="search">1</xsl:param>
+		<xsl:variable name="replaced_text">
+			<xsl:call-template name="string_replace">
+				<xsl:with-param name="input_text" 
+					select="$input_text"/>
+				<xsl:with-param name="find" 
+					select="$replacements//foo:search[$search]/foo:find"/>
+				<xsl:with-param name="replace" 
+					select="$replacements//foo:search[$search]/foo:replace/*"/>
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:choose>
+			<xsl:when test="$search &lt; count(document($replacements)//foo:search)">
+				<xsl:call-template name="replace_strings">
+					<xsl:with-param name="input_text" select="$replaced_text"/>
+					<xsl:with-param name="search" select="$search + 1"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:copy-of select="$replaced_text"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 
     <!-- standard string replace returning node sets -->
-    <xsl:template name="string_replace">
-      <xsl:param name="input_text"/>
-      <xsl:param name="find"/>
-      <xsl:param name="replace"/>
-      <xsl:choose>
-	<xsl:when test="contains($input_text, $find)">
-	  <xsl:value-of select="substring-before($input_text, $find)"/>
-	  <xsl:value-of select="$replace"/>
-	  <xsl:call-template name="string_replace">
-	    <xsl:with-param name="input_text" 
-			    select="substring-after($input_text, $find)"/>
-	    <xsl:with-param name="find" select="$find"/>
-	    <xsl:with-param name="replace" select="$replace"/>
-	  </xsl:call-template>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:copy-of select="$input_text"/>
-	</xsl:otherwise>
-      </xsl:choose>
+	<xsl:template name="string_replace">
+		<xsl:param name="input_text"/>
+		<xsl:param name="find"/>
+		<xsl:param name="replace"/>
+		<xsl:choose>
+			<xsl:when test="contains($input_text, $find)">
+				<xsl:value-of select="substring-before($input_text, $find)"/>
+				<xsl:value-of select="$replace"/>
+				<xsl:call-template name="string_replace">
+					<xsl:with-param name="input_text" 
+						select="substring-after($input_text, $find)"/>
+					<xsl:with-param name="find" select="$find"/>
+					<xsl:with-param name="replace" select="$replace"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:copy-of select="$input_text"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+
+	<xsl:template name="maybe_print_lang">
+		<xsl:attribute name="xml:lang">
+			<xsl:value-of select="@xml:lang"/>
+		</xsl:attribute>
+		<xsl:choose>
+			<xsl:when test="position()&gt;1">
+				<xsl:attribute name="class">alternative_language</xsl:attribute>
+				[<xsl:value-of select="concat(@xml:lang,':')"/>]
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:attribute name="class">preferred_language</xsl:attribute>
+			</xsl:otherwise>
+		</xsl:choose>
     </xsl:template>
 
-
-    <xsl:template name="maybe_print_lang">
-      <xsl:attribute name="xml:lang">
-	<xsl:value-of select="@xml:lang"/>
-      </xsl:attribute>
-      <xsl:choose>
-	<xsl:when test="position()&gt;1">
-	  <xsl:attribute name="class">alternative_language</xsl:attribute>
-	  [<xsl:value-of select="concat(@xml:lang,':')"/>]
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:attribute name="class">preferred_language</xsl:attribute>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:template>
-
-    <xsl:template name="maybe_print_br">
-      <xsl:if test="position()&lt;last()">
-	<xsl:element name="br"/>
-      </xsl:if>
+	<xsl:template name="maybe_print_br">
+		<xsl:if test="position()&lt;last()">
+			<xsl:element name="br"/>
+		</xsl:if>
     </xsl:template>
 
 
