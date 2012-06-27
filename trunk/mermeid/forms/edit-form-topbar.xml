@@ -60,6 +60,45 @@
       </xf:output>
     </xf:group>
   </h:fieldset>
+
+  <xxf:dialog id="edit-work-dialog" appearance="full">
+    <xf:label>Warning</xf:label>
+    <h:p>You have unsaved changes. 
+    Do you want to proceed?</h:p>
+    <xf:trigger>
+      <xf:label>Yes</xf:label>
+      <xf:action ev:event="DOMActivate">
+	<xf:load resource="{instance('parameters')/dcm:exist_dir}/list_files.xq" show="replace"/>
+	<xxf:hide dialog="edit-work-dialog"/>
+      </xf:action>
+    </xf:trigger>
+    <xf:trigger>
+      <xf:label>No</xf:label>
+      <xf:action ev:event="DOMActivate">
+	<xxf:hide dialog="edit-work-dialog"/>
+      </xf:action>
+    </xf:trigger>
+  </xxf:dialog>
+
+  <xxf:dialog id="edit-history-dialog" appearance="full">
+    <xf:label>Warning</xf:label>
+    <h:p>You have unsaved changes. 
+    Do you want to proceed?</h:p>
+    <xf:trigger>
+      <xf:label>Yes</xf:label>
+      <xf:action ev:event="DOMActivate">
+	<xf:load resource="{instance('parameters')/dcm:exist_dir}/list_files.xq" show="replace"/>
+	<xxf:hide dialog="edit-history-dialog"/>
+      </xf:action>
+    </xf:trigger>
+    <xf:trigger>
+      <xf:label>No</xf:label>
+      <xf:action ev:event="DOMActivate">
+	<xxf:hide dialog="edit-history-dialog"/>
+      </xf:action>
+    </xf:trigger>
+  </xxf:dialog>
+
   
   <xxf:dialog id="file-list-dialog" appearance="full">
     <xf:label>Warning</xf:label>
@@ -107,6 +146,81 @@
 	</xf:action>
       </xf:action>
     </xf:trigger>
+
+    <xf:trigger appearance="minimal">
+      <xf:label>Work</xf:label>
+      <xf:action ev:event="DOMActivate">
+	<xf:action if="instance('temp')/changed='true'">
+	  <xxf:show dialog="edit-work-dialog"/>
+	</xf:action>	
+	<xf:action if="instance('temp')/changed='false'">
+	  <xf:load resource="{instance('parameters')/dcm:edit-work}{instance('parameters')/dcm:xml_file}" show="replace"/>
+	</xf:action>
+      </xf:action>
+    </xf:trigger>
+
+    <xf:trigger appearance="minimal">
+      <xf:label>History</xf:label>
+      <xf:action ev:event="DOMActivate">
+	<xf:action if="instance('temp')/changed='true'">
+	  <xxf:show dialog="edit-history-dialog"/>
+	</xf:action>	
+	<xf:action if="instance('temp')/changed='false'">
+	  <xf:load resource="{instance('parameters')/dcm:edit-history}{instance('parameters')/dcm:xml_file}" show="replace"/>
+	</xf:action>
+      </xf:action>
+    </xf:trigger>
+
+    <xf:trigger appearance="minimal">
+      <xf:label>Sources</xf:label>
+      <xf:action ev:event="DOMActivate">
+	<xf:action if="instance('temp')/changed='true'">
+	  <xxf:show dialog="edit-sources-dialog"/>
+	</xf:action>	
+	<xf:action if="instance('temp')/changed='false'">
+	  <xf:load resource="{instance('parameters')/dcm:edit-sources}{instance('parameters')/dcm:xml_file}" show="replace"/>
+	</xf:action>
+      </xf:action>
+    </xf:trigger>
+
+
+    <xf:trigger appearance="minimal">
+      <xf:label>Music</xf:label>
+      <xf:action ev:event="DOMActivate">
+	<xf:action if="instance('temp')/changed='true'">
+	  <xxf:show dialog="edit-music-dialog"/>
+	</xf:action>	
+	<xf:action if="instance('temp')/changed='false'">
+	  <xf:load resource="{instance('parameters')/dcm:edit-music}{instance('parameters')/dcm:xml_file}" show="replace"/>
+	</xf:action>
+      </xf:action>
+    </xf:trigger>
+
+    <xf:trigger appearance="minimal">
+      <xf:label>Bibliography</xf:label>
+      <xf:action ev:event="DOMActivate">
+	<xf:action if="instance('temp')/changed='true'">
+	  <xxf:show dialog="edit-bibliography-dialog"/>
+	</xf:action>	
+	<xf:action if="instance('temp')/changed='false'">
+	  <xf:load resource="{instance('parameters')/dcm:edit-bibliography}{instance('parameters')/dcm:xml_file}" show="replace"/>
+	</xf:action>
+      </xf:action>
+    </xf:trigger>
+
+    <xf:trigger appearance="minimal">
+      <xf:label>File</xf:label>
+      <xf:action ev:event="DOMActivate">
+	<xf:action if="instance('temp')/changed='true'">
+	  <xxf:show dialog="edit-file-dialog"/>
+	</xf:action>	
+	<xf:action if="instance('temp')/changed='false'">
+	  <xf:load resource="{instance('parameters')/dcm:edit-file}{instance('parameters')/dcm:xml_file}" show="replace"/>
+	</xf:action>
+      </xf:action>
+    </xf:trigger>
+
+
     
     <!-- settings menu -->          
     <!--<xf:trigger appearance="minimal">
