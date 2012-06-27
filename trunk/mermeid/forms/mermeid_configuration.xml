@@ -1,5 +1,17 @@
+<!DOCTYPE parameters [
+<!ENTITY orbeon "http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/">
+<!ENTITY form_home "http://disdev-01.kb.dk/editor/forms/mei/">
+<!ENTITY crud_home "http://disdev-01.kb.dk/filter/">
+]>
 <parameters xmlns="http://www.kb.dk/dcm">
   <storage_dir/>
   <exist_dir>/storage/</exist_dir>
   <xml_file/>
+  <edit-work>&orbeon;?uri=&form_home;edit-work-case.xml&amp;dir=&crud_home;&amp;doc=</edit-work>
+  <edit-history>&orbeon;?uri=&form_home;edit-history-case.xml&amp;dir=&crud_home;&amp;doc=</edit-history>
+  <edit-sources>&orbeon;?uri=&form_home;edit-source-case.xml&amp;dir=&crud_home;&amp;doc=</edit-sources>
+  <edit-music>&orbeon;?uri=&form_home;edit-music-case.xml&amp;dir=&crud_home;&amp;doc=</edit-music>
+  <edit-bibliography>&orbeon;?uri=&form_home;edit-bibliography-case.xml&amp;dir=&crud_home;&amp;doc=</edit-bibliography>
+  <edit-file>&orbeon;?uri=&form_home;edit-file-case.xml&amp;dir=&crud_home;&amp;doc=</edit-file>
+
 </parameters>
