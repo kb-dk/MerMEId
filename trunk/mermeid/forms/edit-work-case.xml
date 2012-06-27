@@ -48,51 +48,13 @@
 	  <xf:delete nodeset="instance('data-instance')//m:langUsage/m:language[. = preceding-sibling::m:language]"/>
 	</xf:action>
 	
-	<xf:switch>
+	<h:div id="work-case">
+	  <h:div class="top-bar-container">
+	    <h:div id="work-border"> </h:div>
+	  </h:div>
+	  <xi:include href="main_form_work.xml" parse="xml"/>
+	</h:div>
 	  
-	  <xf:case id="work-case" selected="true()">
-	    <h:div class="top-bar-container">
-	      <h:div id="work-border"> </h:div>
-	    </h:div>
-	    <xi:include href="main_form_work.xml" parse="xml"/>
-	  </xf:case>
-	  
-	  <xf:case id="history-case">
-	    <h:div class="top-bar-container">
-	      <h:div id="history-border"> </h:div>
-	    </h:div>
-	    <xi:include href="main_form_history.xml" parse="xml"/>
-	  </xf:case>
-	  
-	  <xf:case id="music-case">
-	    <h:div class="top-bar-container">
-	      <h:div id="music-border"> </h:div>
-	    </h:div>
-	    <xi:include href="main_form_music.xml" parse="xml"/>
-	  </xf:case>
-	  
-	  <xf:case id="source-case">
-	    <h:div class="top-bar-container">
-	      <h:div id="source-border"> </h:div>
-	    </h:div>
-	    <xi:include href="main_form_source.xml" parse="xml"/>
-	  </xf:case>
-	  
-	  <xf:case id="bibliography-case">
-	    <h:div class="top-bar-container">
-	      <h:div id="bibliography-border"> </h:div>
-	    </h:div>
-	    <xi:include href="main_form_bibliography.xml" parse="xml"/>
-	  </xf:case>
-	  
-	  <xf:case id="file-case">
-	    <h:div class="top-bar-container">
-	      <h:div id="file-border"> </h:div>
-	    </h:div>
-	    <xi:include href="main_form_file.xml" parse="xml"/>
-	  </xf:case>
-	  
-	</xf:switch>
       </xf:group>
     </h:div>
     
