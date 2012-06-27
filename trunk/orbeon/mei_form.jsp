@@ -13,49 +13,15 @@ java.lang.Long start = System.currentTimeMillis();
 Logger logger = Logger.getLogger("jsp.mei_form.log");
 logger.setLevel(Level.DEBUG);
 
-
-/*
-
-org.apache.commons.httpclient.HttpClient httpClient = 
-    new org.apache.commons.httpclient.HttpClient();
-
-*/
-
 String pathInfo    = request.getPathInfo(); 
 String uri         = request.getParameter("uri");
 String queryString = request.getQueryString();
 String newRequest  = queryString;
-//httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
 
 //if(logger.isInfoEnabled()){ 
 logger.info("Sending request: " + uri); 
 //}
 
-//create a method object
-//org.apache.commons.httpclient.HttpMethod method = 
-//    new org.apache.commons.httpclient.methods.GetMethod(uri);
-
-//method.setFollowRedirects(true);
-// httpClient.executeMethod(method);
-
-/*
-org.apache.commons.httpclient.Header[] responseHeaders = method.getResponseHeaders();
-
-int status = method.getStatusLine().getStatusCode();
-//if(logger.isInfoEnabled()) {
-        logger.debug("response status:\t" + 
-		status + 
-	" (" + method.getStatusLine().toString()  + ")"); 
-//}
-
-for(int i=0;i<responseHeaders.length;i++) {
-    if(logger.isInfoEnabled()) {
-	logger.info("response:\t" + responseHeaders[i].toExternalForm()); 
-    }
-}
-        
-java.io.InputStream in  = method.getResponseBodyAsStream();
-*/
 org.w3c.dom.Document form = null;
 javax.xml.parsers.DocumentBuilder dBuilder = null;
 
@@ -66,7 +32,6 @@ logger.debug("created dfactory");
 dfactory.setNamespaceAware(true);
 dfactory.setXIncludeAware(true);
 dBuilder = dfactory.newDocumentBuilder();
-//form = dBuilder.parse(in);
 form = dBuilder.parse(uri);
 logger.debug("done parsing");
 serialize(form,printout);
@@ -76,10 +41,6 @@ java.lang.Long completed = System.currentTimeMillis() - start;
 if(logger.isInfoEnabled()){ 
     logger.info(".. work done in " + completed + " ms"); 
 }
-
-//in.close();
-
-
 
 %>
 
