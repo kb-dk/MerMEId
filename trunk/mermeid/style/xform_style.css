@@ -348,6 +348,35 @@ span.selection_open_short input {
     margin: 0;
 }
 
+/* element list tables */
+table.element_list {
+    border: 0;
+    border-bottom: 1px solid #333;
+}
+
+table.element_list td {
+    border: 0;
+    border-top: 1px solid #333;
+    margin: 0px;
+    padding: 2px;
+}
+
+table.element_list tr {
+    margin: 2px 0 2px 0;
+}
+
+table.element_list td.number_cell {
+    color: white;
+    background-color: #333;
+    font-weight: bold;
+    font-size: .9em;
+    text-align: center;
+}
+
+table.element_list .xbl-dcm-element-buttons {
+    display:block;
+}
+
 /* css for help and warning pop-ups */
 
 a.help, a.help_plain, a.warning {

@@ -6,6 +6,9 @@
 <parameters xmlns="http://www.kb.dk/dcm">
   <storage_dir/>
   <exist_dir>/storage/</exist_dir>
+  <orbeon_dir>&orbeon;</orbeon_dir>
+  <form_home>&form_home;</form_home>
+  <crud_home>&crud_home;</crud_home>
   <xml_file/>
   <edit-work>&orbeon;?uri=&form_home;edit-work-case.xml&amp;dir=&crud_home;&amp;doc=</edit-work>
   <edit-history>&orbeon;?uri=&form_home;edit-history-case.xml&amp;dir=&crud_home;&amp;doc=</edit-history>
@@ -13,5 +16,5 @@
   <edit-music>&orbeon;?uri=&form_home;edit-music-case.xml&amp;dir=&crud_home;&amp;doc=</edit-music>
   <edit-bibliography>&orbeon;?uri=&form_home;edit-bibliography-case.xml&amp;dir=&crud_home;&amp;doc=</edit-bibliography>
   <edit-file>&orbeon;?uri=&form_home;edit-file-case.xml&amp;dir=&crud_home;&amp;doc=</edit-file>
-
+  <edit-performance>&orbeon;?uri=&form_home;performance_editor.xml&amp;doc=</edit-performance>
 </parameters>
