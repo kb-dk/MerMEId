@@ -169,7 +169,7 @@
       </xf:action>
     </xf:submit>
 
-    <h:a href="http:/storage/present.xq?doc={instance('parameters')/dcm:storage_dir}/{instance('parameters')/dcm:xml_file}"
+    <h:a href="http:/storage/present.xq?doc={instance('parameters')/dcm:xml_file}"
 	 class="xforms-trigger" target="view_{instance('parameters')/dcm:xml_file}"><h:img 
 	 src="http:/editor/images/html.gif" alt="HTML" title="View as HTML" border="0"/></h:a>
     <h:a href="{instance('parameters')/dcm:storage_dir}{instance('parameters')/dcm:xml_file}"

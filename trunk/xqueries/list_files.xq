@@ -69,11 +69,13 @@ declare function app:edit-form-reference($doc as node()) as node() {
    Beware: Partly hard coded reference here!!!
    It still assumes that the document resides on the same host as this
    xq script but on port 80
-  :)
+
+   The old form is called edit_mei_form.xml the refactored one starts on
+   edit-work-case.xml :)
 
   let $ref := 
       <a  title="edit" 
-          href="/orbeon/xforms-jsp/mei-form/?uri=http://{request:get-header('HOST')}/editor/forms/mei/edit_mei_form.xml&amp;dir=http://{request:get-header('HOST')}/filter/&amp;doc={util:document-name($doc)}">
+          href="/orbeon/xforms-jsp/mei-form/?uri=http://{request:get-header('HOST')}/editor/forms/mei/edit-work-case.xml&amp;dir=http://{request:get-header('HOST')}/filter/&amp;doc={util:document-name($doc)}">
 	<img border="0" src="/editor/images/edit.gif" alt="edit" />
       </a>
   return $ref
