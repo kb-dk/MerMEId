@@ -351,12 +351,11 @@ span.selection_open_short input {
 /* element list tables */
 table.element_list {
     border: 0;
-    border-bottom: 1px solid #333;
 }
 
 table.element_list td {
     border: 0;
-    border-top: 1px solid #333;
+    border-top: 1px dotted #999;
     margin: 0px;
     padding: 2px;
 }
@@ -366,10 +365,7 @@ table.element_list tr {
 }
 
 table.element_list td.number_cell {
-    color: white;
-    background-color: #333;
     font-weight: bold;
-    font-size: .9em;
     text-align: center;
 }
 

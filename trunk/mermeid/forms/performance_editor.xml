@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+    xmlns:xf="http://www.w3.org/2002/xforms" 
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:oxf="http://www.orbeon.com/oxf/processors"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:m="http://www.music-encoding.org/ns/mei"
+    xmlns:t="http://www.tei-c.org/ns/1.0" 
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <!--
+        Performance data editor
+        Danish Centre for Music Publication (DCM) 
+        Axel Teich Geertinger, 2012
+        atge@kb.dk
+    -->
+    
+    <h:head>
+        
+        <h:title id="PageTitle">MerMEId - Editing performance metadata</h:title>
+        
+        <h:meta http-equiv="Content-Type" content="application/xhtml+xml"/>
+        
+        <h:script type="text/javascript" src="http:/editor/js/editor.js"/>
+        
+        <h:style type="text/css" media="all"> 
+            @import "/editor/style/tab_style.css"; 
+            @import "/editor/style/xform_style.css";
+            @import "/editor/style/model_editor_style.css";
+        </h:style>
+        
+        <xf:model>
+            
+            <xf:instance id="data-instance" xmlns="http://www.music-encoding.org/ns/mei">
+                <mei/>
+            </xf:instance>
+
+            <xf:instance id="empty-instance" xmlns="http://www.music-encoding.org/ns/mei">
+                <mei/>
+            </xf:instance>
+            
+            <xf:instance id="temp">
+                <temp>
+                    <id/>
+                    <counter/>
+                    <changed>false</changed>
+                    <change_marker>*</change_marker>
+                    <etc>...</etc>
+                    <target_uri/>
+                </temp>
+            </xf:instance> 
+            
+            <xf:bind nodeset="instance('temp')">
+                <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
+            </xf:bind>               
+            
+            <xf:instance id="parameters" xmlns="http://www.kb.dk/dcm">
+                <xi:include href="mermeid_configuration.xml" parse="xml"/>
+            </xf:instance>
+            
+            <!-- submissions - loading and saving data -->            
+
+            <xf:submission id="load-data-submission" 
+                method="get" 
+                serialization="none" 
+                validate="false"
+                resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
+                replace="instance" instance="data-instance"/>
+
+            <xf:submission id="load-empty-submission"
+                method="get" 
+                serialization="none" 
+                validate="false"
+                resource="{instance('temp')/target_uri}"
+                replace="instance" instance="empty-instance"/>
+               
+            <xf:submission id="save-to-file"
+                ref="instance('data-instance')"
+                validate="false"
+                relevant="false"
+                xxf:calculate="false"
+                resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
+                method="put"
+                replace="instance">
+            </xf:submission>
+            
+            <!-- "onload" xforms actions -->
+            <xf:action ev:event="xforms-model-construct-done">
+                <!-- store requested ID -->
+                <xf:setvalue ref="instance('temp')/id" value="xxf:get-request-parameter('id')"/>
+                <!-- store XML data file name -->
+                <xf:setvalue ref="instance('parameters')/dcm:xml_file" value="xxf:get-request-parameter('doc')"/>
+                <!-- load XML data -->
+                <xf:send submission="load-data-submission"/>
+                <!-- load empty model XML data -->
+                <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:form_home,'model/empty_doc.xml')"/>
+                <xf:send submission="load-empty-submission"/>
+            </xf:action>
+            
+            <xf:action ev:event="xforms-submit-done">
+                <!-- set instance state to unchanged on saving -->
+                <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
+            </xf:action>
+            
+            <xf:action ev:event="xforms-submit-error">
+                <xxf:variable name="code" select="event('response-status-code')"/>
+                <xf:action>
+                    <xf:message>An error occurred (<xf:output value="$code"/>)</xf:message>
+                </xf:action>
+            </xf:action>
+            
+        </xf:model>
+        
+        <!-- XBL components -->
+        <xi:include href="includes/element_buttons.xbl" parse="xml"/>
+        <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
+        <xi:include href="includes/date_editor.xbl" parse="xml"/>
+        <xi:include href="includes/tei_date_editor.xbl" parse="xml"/>
+        <xi:include href="includes/relator.xbl" parse="xml"/>
+        <xi:include href="includes/id.xbl" parse="xml"/>
+        
+    </h:head>
+    
+    <h:body class="history">
+        
+        <xf:group ref="instance('data-instance')//m:event[@xml:id=instance('temp')/id]">
+            <h:div style="float:right;">ID:<xf:output value="instance('temp')/id"/></h:div>
+            <h:h3>
+                <xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
+                <xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
+                <xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
+            </h:h3>                
+            
+            <h:fieldset>
+                <h:legend>Performance</h:legend>
+                <h:div class="vertical_spacer"> </h:div>
+                <h:div class="perf_body">
+                    <!-- input+select emulating selection="open" behaviour -->
+                    <h:span class="selection_open">
+                        <xf:input ref="m:title">
+                            <xf:label class="fixed_width">Description <h:a class="help">?<h:span class="comment">Optional. 
+                                Other values than the ones on the list may be entered, e.g. "First
+                                known performance" or "First performance in Denmark"</h:span></h:a></xf:label>
+                        </xf:input>
+                        <!-- set tabindex to 1000 to skip the select on tabbing -->
+                        <xf:select1 ref="m:title" tabindex="1000">
+                            <xf:item>
+                                <xf:label> </xf:label>
+                                <xf:value/>
+                            </xf:item>
+                            <xf:item>
+                                <xf:value>First performance</xf:value>
+                                <xf:label>First performance</xf:label>
+                            </xf:item>
+                            <xf:item>
+                                <xf:value>First public performance</xf:value>
+                                <xf:label>First public performance</xf:label>
+                            </xf:item>
+                            <xf:item>
+                                <xf:value>Other performance</xf:value>
+                                <xf:label>Other performance</xf:label>
+                            </xf:item>
+                        </xf:select1>
+                    </h:span>
+                    <!-- end selection="open" -->
+
+                    <h:br clear="all"/>
+
+                    <dcm:date-editor ref="m:date">
+                        <xf:label class="fixed_width">Date</xf:label>
+                    </dcm:date-editor>
+
+                    <xf:input ref="m:geogName[@role='venue']" class="long">
+                        <xf:label class="fixed_width">Venue</xf:label>
+                    </xf:input>
+                    <h:br clear="all"/>
+
+                    <xf:input ref="m:geogName[@role='place']" class="long">
+                        <xf:label class="fixed_width">Place</xf:label>
+                    </xf:input>
+                    <h:br clear="all"/>
+
+                    <xf:input ref="m:corpName[@role='ensemble']" class="long">
+                        <xf:label class="fixed_width">Ensemble</xf:label>
+                    </xf:input>
+                    <h:div class="persname-box">
+                        <h:div class="strong">Persons</h:div>
+                        <h:div class="blocklabel">
+                            <h:span class="fixed_width_long">Name</h:span>
+                            <h:div class="horiz_spacer"/>
+                            <h:span> Relation <h:a class="help">?<h:span class="comment">The person's relation to this
+                                        performance, e.g. "conductor" or "vocalist".<h:br/> The list is based on MARC
+                                        relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+                            </h:span>
+                        </h:div>
+                        
+                        <xf:repeat nodeset="m:persName" id="performance-relators-repeat">
+                            <dcm:relator ref="."/>
+                            <dcm:element-buttons triggers="add delete" nodeset="m:persName" index="performance-relators-repeat"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:persName[1]"/>
+                            <h:br/>
+                        </xf:repeat>
+                    </h:div>
+
+                    <h:div class="reviews-box">
+                        <xf:repeat nodeset="t:listBibl[@type='reviews']/t:bibl" id="repeat-review">
+                            <h:fieldset>
+                                <h:legend>Review <dcm:element-buttons triggers="all" nodeset="t:bibl"
+                                        index="repeat-review"
+                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']/t:bibl[1]"/>
+                                </h:legend>
+                                <xf:input ref="t:title[@level='a']" class="long">
+                                    <xf:label class="fixed_width">Title <h:a class="help">?<h:span class="comment">The
+                                                article's heading (often omitted with newspaper
+                                        articles)</h:span></h:a></xf:label>
+                                </xf:input>
+                                <h:br clear="both"/>
+                                <xf:input ref="t:title[@level='j']" class="long">
+                                    <xf:label class="fixed_width">Journal <h:a class="help">?<h:span class="comment"
+                                                >Name of the journal or newspaper</h:span></h:a></xf:label>
+                                </xf:input>
+                                <h:br clear="both"/>
+                                <xf:input ref="t:biblScope[@type='vol']" class="short">
+                                    <xf:label class="fixed_width">Vol.</xf:label>
+                                </xf:input>
+
+                                <xf:input ref="t:biblScope[@type='issue']" class="short">
+                                    <xf:label>No. </xf:label>
+                                </xf:input>
+
+                                <xf:input ref="t:biblScope[@type='pp']" class="short">
+                                    <xf:label>Pages</xf:label>
+                                </xf:input>
+                                <h:br clear="both"/>
+
+                                <dcm:date-editor ref="t:date">
+                                    <xf:label class="fixed_width">Date</xf:label>
+                                </dcm:date-editor>
+
+                                <xf:input ref="t:author" class="medium_long">
+                                    <xf:label class="fixed_width">Author</xf:label>
+                                </xf:input>
+
+                                <h:br clear="both"/>
+                                <xf:input ref="t:ref/@target" class="long">
+                                    <xf:label class="fixed_width">URI to fulltext</xf:label>
+                                </xf:input>
+                            </h:fieldset>
+                        </xf:repeat>
+                    </h:div>
+                </h:div>
+            </h:fieldset>
+            <h:div style="float:right">
+                <xf:submit submission="save-to-file">
+                    <xf:label>Save</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                            <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-history,instance('parameters')/dcm:xml_file)"/>
+                            <xf:load resource="{$uri}" show="replace"/>
+                    </xf:action>
+                </xf:submit>
+                <xf:trigger>
+                    <xf:label>Cancel</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-history,instance('parameters')/dcm:xml_file)"/>
+                        <xf:load resource="{$uri}" show="replace"/>
+                    </xf:action>
+                </xf:trigger>
+            </h:div>
+        </xf:group>
+    </h:body>
+</h:html>

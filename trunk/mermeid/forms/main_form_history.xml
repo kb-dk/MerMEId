@@ -3,10 +3,12 @@
 	xmlns:h="http://www.w3.org/1999/xhtml" 
 	xmlns:t="http://www.tei-c.org/ns/1.0" 
 	xmlns:xf="http://www.w3.org/2002/xforms"
+	xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
 	xmlns:xi="http://www.w3.org/2001/XInclude" 
 	xmlns:ev="http://www.w3.org/2001/xml-events" 
 	xmlns:m="http://www.music-encoding.org/ns/mei"
 	xmlns:dcm="http://www.kb.dk/dcm">
+
 	
 	<h:div class="inputdiv">
 		
@@ -60,13 +62,109 @@
 					</h:fieldset>					
 				</xf:repeat>
 			</h:fieldset>
-			<dcm:performance-list ref="m:eventList[@type='performances']"/>		
+			
+			<!-- List work level performances -->
+			<xf:group ref="m:eventList[@type='performances']">
+				<h:fieldset>
+					<h:legend>Performances</h:legend>
+					<h:br/>
+					<h:div class="strong">
+							Level: Work 
+						<h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
+							Listing performances of individual versions requires that versions  
+							have been defined (on the Music tab) and that they have been given a title 
+							in order to make them recognizable as versions.</h:span></h:a>
+					</h:div>
+					<h:br/>
+					<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
+						<xf:repeat nodeset="m:event" id="repeat-work-performance">
+							<h:tr>
+								<h:td class="number_cell">
+									<xf:output value="position()"/>
+								</h:td>
+								<h:td>
+									<xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
+									<xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
+									<xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
+								</h:td>
+								<h:td>
+									<xf:trigger>
+										<xf:label>Edit</xf:label>
+										<xf:action ev:event="DOMActivate">
+											<xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-performance,instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
+											<xf:action if="instance('temp')/changed='true'">
+												<xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+												<xxf:show dialog="exit-warning-dialog"/>
+											</xf:action>	
+											<xf:action if="instance('temp')/changed='false'">
+												<xf:load resource="{$uri}" show="replace"/>
+											</xf:action>
+										</xf:action>
+									</xf:trigger>
+								</h:td>
+								<h:td><dcm:element-buttons triggers="all" nodeset="m:event" index="repeat-work-performance" 
+										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/></h:td>
+							</h:tr>
+						</xf:repeat>
+					</h:table>
+				</h:fieldset>
+			</xf:group>
+			
+
 		</xf:group>
 		
 		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">			
 			<!-- list performances for versions with a title only (i.e. expressions marked as not being the only one) -->
-			<xf:repeat nodeset="m:expressionList/m:expression[m:titleStmt/m:title[normalize-space(.)]]" id="repeat-expression-performances">
-				<dcm:performance-list ref="m:history/m:eventList[@type='performances']"/>		
+			<xf:repeat nodeset="m:expressionList/m:expression[m:titleStmt/m:title[normalize-space(.)]]" id="repeat-expression-performances">				
+				<xf:group ref="m:history/m:eventList[@type='performances']">
+					<h:fieldset>
+						<!-- get expression title -->
+						<xxf:variable name="title" select="../../m:titleStmt/m:title[1]"/>
+						<h:legend>Performances
+							<xf:group ref=".[normalize-space($title)!='']">
+								<xf:output value="concat(' - ',$title)"/>
+							</xf:group>
+						</h:legend>
+						<h:p class="blocklabel">
+							Level: Version 
+							<h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
+								Listing performances of individual versions requires that versions  
+								have been defined (on the Music tab) and that they have been given a title 
+								in order to make them recognizable as versions.</h:span></h:a>
+						</h:p>
+						<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
+							<xf:repeat nodeset="m:event" id="repeat-expression-performance">
+								<h:tr>
+									<h:td class="number_cell">
+										<xf:output value="position()"/>
+									</h:td>
+									<h:td>
+										<xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
+										<xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
+										<xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
+									</h:td>
+									<h:td>
+										<xf:trigger>
+											<xf:label>Edit</xf:label>
+											<xf:action ev:event="DOMActivate">
+												<xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-performance,instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
+												<xf:action if="instance('temp')/changed='true'">
+													<xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+													<xxf:show dialog="exit-warning-dialog"/>
+												</xf:action>	
+												<xf:action if="instance('temp')/changed='false'">
+													<xf:load resource="{$uri}" show="replace"/>
+												</xf:action>
+											</xf:action>
+										</xf:trigger>
+									</h:td>
+									<h:td><dcm:element-buttons triggers="all" nodeset="m:event" index="repeat-expression-performance" 
+										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/></h:td>
+								</h:tr>
+							</xf:repeat>
+						</h:table>
+					</h:fieldset>
+				</xf:group>
 			</xf:repeat>
 		</xf:group>
 		

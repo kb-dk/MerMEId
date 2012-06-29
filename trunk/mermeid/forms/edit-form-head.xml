@@ -31,22 +31,16 @@
     
     <!--
       To construct model, call with url like: 
-      http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://disdev-01.kb.dk/editor/forms/mei/edit_mei_form.xml?&dir=http://disdev-01.kb.dk/storage/dcm&doc=cnw0292.xml
-      - XInclude fails because the base url for relative paths is something like [...]/home/tomcat6/ 
+      http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://disdev-01.kb.dk/editor/forms/mei/edit_mei_form.xml?&doc=cnw0292.xml
     -->
     <xf:instance id="parameters" xmlns="http://www.kb.dk/dcm">
       <xi:include href="mermeid_configuration.xml" parse="xml"/>
     </xf:instance>
     
-    <!-- prepare instances -->
     <xf:instance id="data-instance" xmlns="http://www.music-encoding.org/ns/mei">
       <mei/>
     </xf:instance>
-    
-    
-    <!-- We will need instances without these /..  
-      Removed the /..s 14/6. SLU -->
-    
+        
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
       id="empty-instance"
       src="/editor/forms/mei/model/empty_doc.xml" 
@@ -83,17 +77,11 @@
         <target_uri/>
         <counter/>
         <max/>
-        <music_outline>
-          <exp>0</exp>
-          <comp1>0</comp1>
-          <comp2>0</comp2>
-        </music_outline>
       </temp-values>
     </xf:instance>
     
     <!-- submissions - loading and saving data -->
     
-    <!-- test submissions -->
     <!-- load empty instance -->
     <xf:submission id="load-empty-submission"
       method="get" serialization="none" validate="false"
@@ -104,7 +92,7 @@
       method="get" 
       serialization="none" 
       validate="false"
-      resource="{instance('parameters')/dcm:storage_dir}{instance('parameters')/dcm:xml_file}"
+      resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
       replace="instance" instance="data-instance"/>
     
     <xf:submission id="save-to-file"
@@ -112,16 +100,13 @@
       validate="false"
       relevant="false"
       xxf:calculate="false"
-      resource="{instance('parameters')/dcm:storage_dir}{instance('parameters')/dcm:xml_file}" 
+      resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
       method="put"
       replace="instance">
     </xf:submission>
     
     <!-- "onload" xforms actions -->
     <xf:action ev:event="xforms-model-construct-done">
-      <!-- store XML data storage server and directory name --> 
-      <!-- THIS ONE IS OBSOLETE - SAME VALUE IS STORED IN <dcm:crud_home> -->
-      <xf:setvalue ref="instance('parameters')/dcm:storage_dir" value="xxf:get-request-parameter('dir')"/>
       <!-- store XML data file name -->
       <xf:setvalue ref="instance('parameters')/dcm:xml_file" value="xxf:get-request-parameter('doc')"/>
       <!-- load XML data -->
@@ -164,7 +149,6 @@
   
   <!-- XBL components -->
   <xi:include href="includes/element_buttons.xbl" parse="xml"/>
-  <!--<xi:include href="includes/attribute_editor.xbl" parse="xml"/>-->
   <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
   <xi:include href="includes/date_editor.xbl" parse="xml"/>
   <xi:include href="includes/tei_date_editor.xbl" parse="xml"/>

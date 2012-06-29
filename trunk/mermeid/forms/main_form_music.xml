@@ -9,32 +9,6 @@
 	<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList">
 		<h:div class="inputdiv">
 			
-			<!-- outline work structure - not working yet
-			<h:div class="outline" style="position:fixed; float:right; background-color: #f0f0c0; z-index:+1;">
-				<xf:output value="instance('temp')/music_outline/exp"/>:
-				<xf:output value="instance('temp')/music_outline/comp1"/>:
-				<xf:output value="instance('temp')/music_outline/comp2"/>
-				<xf:repeat nodeset="m:expression" id="outline-expression">
-					<xxf:variable name="top_level_name" select="if (count(../m:expression)=1) then 'Work' else 'Version'"/>
-					<h:div class="level1">
-						<xf:output value="if (position()=instance('temp')/music_outline/exp) then '##' else ''"/>
-						<xf:output value="position()"/>. 
-						<xf:output value="$top_level_name"/> 
-					</h:div>
-					<xf:repeat nodeset="m:componentGrp/m:expression" id="outline-expression-component1">
-						<h:div class="level2">
-							<xf:output value="position()"/>. 							
-							Component level 1</h:div> 
-						<xf:repeat nodeset="m:componentGrp/m:expression" id="outline-expression-component2">
-							<h:div class="level3">
-								<xf:output value="position()"/>. 
-								Component level 2</h:div> 
-						</xf:repeat>
-					</xf:repeat>
-				</xf:repeat>
-			</h:div>
-			-->
-			
 			<xf:repeat nodeset="m:expression" id="repeat-expression">
 				<xf:action ev:event="DOMFocusIn">
 					<xf:setvalue ref="instance('temp')/music_outline/exp" value="index('repeat-expression')"/>
@@ -152,10 +126,8 @@
 										</xf:group>
 									</h:fieldset>
 									
-									
 								</h:fieldset>
 							</xf:repeat>
-							
 							
 						</xf:group>
 					</h:fieldset>

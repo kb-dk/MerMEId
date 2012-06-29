@@ -19,68 +19,69 @@
       <xf:label>Work</xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:show dialog="edit-work-dialog"/>
+          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-work,instance('parameters')/dcm:xml_file)"/>
+          <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+          <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
           <xf:load resource="{instance('parameters')/dcm:edit-work}{instance('parameters')/dcm:xml_file}" show="replace"/>
         </xf:action>
       </xf:action>
-    </xf:trigger>
-    
-    <xf:trigger id="history-tab" appearance="minimal">
+    </xf:trigger><xf:trigger id="history-tab" appearance="minimal">
       <xf:label>History</xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:show dialog="edit-history-dialog"/>
+          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-history,instance('parameters')/dcm:xml_file)"/>
+          <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+          <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
           <xf:load resource="{instance('parameters')/dcm:edit-history}{instance('parameters')/dcm:xml_file}" show="replace"/>
         </xf:action>
       </xf:action>
-    </xf:trigger>
-    
-    <xf:trigger id="source-tab" appearance="minimal">
+    </xf:trigger><xf:trigger id="source-tab" appearance="minimal">
       <xf:label>Sources</xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:show dialog="edit-sources-dialog"/>
+          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-sources,instance('parameters')/dcm:xml_file)"/>
+          <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+          <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
           <xf:load resource="{instance('parameters')/dcm:edit-sources}{instance('parameters')/dcm:xml_file}" show="replace"/>
         </xf:action>
       </xf:action>
-    </xf:trigger>
-    
-    
-    <xf:trigger id="music-tab" appearance="minimal">
+    </xf:trigger><xf:trigger id="music-tab" appearance="minimal">
       <xf:label>Music</xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:show dialog="edit-music-dialog"/>
+          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-music,instance('parameters')/dcm:xml_file)"/>
+          <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+          <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
           <xf:load resource="{instance('parameters')/dcm:edit-music}{instance('parameters')/dcm:xml_file}" show="replace"/>
         </xf:action>
       </xf:action>
-    </xf:trigger>
-    
-    <xf:trigger  id="bibliography-tab" appearance="minimal">
+    </xf:trigger><xf:trigger  id="bibliography-tab" appearance="minimal">
       <xf:label>Bibliography</xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:show dialog="edit-bibliography-dialog"/>
+          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-bibliography,instance('parameters')/dcm:xml_file)"/>
+          <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+          <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
           <xf:load resource="{instance('parameters')/dcm:edit-bibliography}{instance('parameters')/dcm:xml_file}" show="replace"/>
         </xf:action>
       </xf:action>
-    </xf:trigger>
-    
-    <xf:trigger  id="file-tab"   appearance="minimal">
+    </xf:trigger><xf:trigger  id="file-tab"   appearance="minimal">
       <xf:label>File</xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:show dialog="edit-file-dialog"/>
+          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-file,instance('parameters')/dcm:xml_file)"/>
+          <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+          <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
           <xf:load resource="{instance('parameters')/dcm:edit-file}{instance('parameters')/dcm:xml_file}" show="replace"/>
@@ -106,7 +107,11 @@
     <!-- The requested URI must be stored in instance('temp')/target_uri prior to opening the dialog -->
     <xf:label>Warning</xf:label>
     <h:p>You have unsaved changes. 
-      Do you want to proceed?</h:p>
+      Do you want to proceed?
+    </h:p>
+    <h:p>Changes will be lost if you answer "Yes". <h:br/>
+      To keep changes, choose "No" and save your work.
+    </h:p>    
     <xf:trigger>
       <xf:label>Yes</xf:label>
       <xf:action ev:event="DOMActivate">
@@ -123,65 +128,6 @@
   </xxf:dialog>
   
   
-  <xxf:dialog id="edit-work-dialog" appearance="full">
-    <xf:label>Warning</xf:label>
-    <h:p>You have unsaved changes. 
-      Do you want to proceed?</h:p>
-    <xf:trigger>
-      <xf:label>Yes</xf:label>
-      <xf:action ev:event="DOMActivate">
-        <xf:load resource="{instance('parameters')/dcm:exist_dir}/list_files.xq" show="replace"/>
-        <xxf:hide dialog="edit-work-dialog"/>
-      </xf:action>
-    </xf:trigger>
-    <xf:trigger>
-      <xf:label>No</xf:label>
-      <xf:action ev:event="DOMActivate">
-        <xxf:hide dialog="edit-work-dialog"/>
-      </xf:action>
-    </xf:trigger>
-  </xxf:dialog>
-  
-  <xxf:dialog id="edit-history-dialog" appearance="full">
-    <xf:label>Warning</xf:label>
-    <h:p>You have unsaved changes. 
-      Do you want to proceed?</h:p>
-    <xf:trigger>
-      <xf:label>Yes</xf:label>
-      <xf:action ev:event="DOMActivate">
-        <xf:load resource="{instance('parameters')/dcm:exist_dir}/list_files.xq" show="replace"/>
-        <xxf:hide dialog="edit-history-dialog"/>
-      </xf:action>
-    </xf:trigger>
-    <xf:trigger>
-      <xf:label>No</xf:label>
-      <xf:action ev:event="DOMActivate">
-        <xxf:hide dialog="edit-history-dialog"/>
-      </xf:action>
-    </xf:trigger>
-  </xxf:dialog>
-  
-  
-  <xxf:dialog id="file-list-dialog" appearance="full">
-    <xf:label>Warning</xf:label>
-    <h:p>You have unsaved changes. 
-      Do you want to proceed?</h:p>
-    <xf:trigger>
-      <xf:label>Yes</xf:label>
-      <xf:action ev:event="DOMActivate">
-        <xf:load resource="{instance('parameters')/dcm:exist_dir}/list_files.xq" show="replace"/>
-        <xxf:hide dialog="file-list-dialog"/>
-      </xf:action>
-    </xf:trigger>
-    <xf:trigger>
-      <xf:label>No</xf:label>
-      <xf:action ev:event="DOMActivate">
-        <xxf:hide dialog="file-list-dialog"/>
-      </xf:action>
-    </xf:trigger>
-  </xxf:dialog>
-  
-  <!--<h:p class="menu"> </h:p>-->
   <h:p id="view_menu">
     <xf:submit submission="save-to-file" appearance="minimal">
       <xf:label><h:img src="http:/editor/images/save.gif" alt="Save" title="Save file"/></xf:label>
@@ -202,7 +148,9 @@
         title="Close editor and return to file list" border="0"/></xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:show dialog="file-list-dialog"/>
+          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:exist_dir,'/list_files.xq')"/>
+          <xf:load resource="{$uri}" show="replace"/>
+          <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
           <xf:load resource="{instance('parameters')/dcm:exist_dir}/list_files.xq" show="replace"/>
