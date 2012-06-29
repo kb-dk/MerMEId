@@ -7,22 +7,35 @@
     xmlns:m="http://www.music-encoding.org/ns/mei"
     xmlns:t="http://www.tei-c.org/ns/1.0" 
     xmlns:dcm="http://www.kb.dk/dcm">
-    <!-- global event handlers -->
-
-<xf:action ev:event="xforms-value-changed">
-    <xf:setvalue ref="instance('temp')/changed" value="'true'"/>
-</xf:action>
-
-<xf:action ev:event="language-update">
-    <!-- add missing language declarations -->
-    <xf:insert 
-        nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:langUsage/m:language"
-        origin="instance('languages')/language[@xml:id=instance('data-instance')//@xml:lang[not(.=instance('data-instance')//m:langUsage/m:language/@xml:id)]]"/>
-    <!-- delete unused language declarations -->
     
-    <xf:delete nodeset="instance('data-instance')//m:langUsage/m:language[not(@xml:id=instance('data-instance')//@xml:lang)]"/>
-    <!-- delete duplicate language declarations -->
-    <xf:delete nodeset="instance('data-instance')//m:langUsage/m:language[. = preceding-sibling::m:language]"/>
-</xf:action>
-
+    <!-- global event handlers -->
+    
+    <xf:action ev:event="xforms-value-changed id-update">
+        <xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+    </xf:action>
+    
+    <xf:action ev:event="id-update">
+        <xf:message>id-update dispatched</xf:message>
+        <xf:action while="count(instance('data-instance')//*[@xml:id='']) &gt; 0">
+            <xf:message>Adding value to empty IDs: <xf:output value="count(instance('data-instance')//*[@xml:id=''])"/></xf:message>
+            <xf:setvalue ref="instance('data-instance')//*[@xml:id=''][1]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+        </xf:action>
+        <xf:action while="count(instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id]) &gt; 0">
+            <xf:message>Changing non-unique IDs: <xf:output value="count(instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id])"/></xf:message>
+            <xf:setvalue ref="instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id][1]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+        </xf:action>
+    </xf:action>
+    
+    <xf:action ev:event="language-update">
+        <!-- add missing language declarations -->
+        <xf:insert 
+            nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:langUsage/m:language"
+            origin="instance('languages')/language[@xml:id=instance('data-instance')//@xml:lang[not(.=instance('data-instance')//m:langUsage/m:language/@xml:id)]]"/>
+        <!-- delete unused language declarations -->
+        
+        <xf:delete nodeset="instance('data-instance')//m:langUsage/m:language[not(@xml:id=instance('data-instance')//@xml:lang)]"/>
+        <!-- delete duplicate language declarations -->
+        <xf:delete nodeset="instance('data-instance')//m:langUsage/m:language[. = preceding-sibling::m:language]"/>
+    </xf:action>
+    
 </h:span>

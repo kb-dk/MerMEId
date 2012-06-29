@@ -139,7 +139,7 @@
     <h:a href="http:/storage/present.xq?doc={instance('parameters')/dcm:xml_file}"
       class="xforms-trigger" target="view_{instance('parameters')/dcm:xml_file}"><h:img 
         src="http:/editor/images/html.gif" alt="HTML" title="View as HTML" border="0"/></h:a>
-    <h:a href="{instance('parameters')/dcm:storage_dir}{instance('parameters')/dcm:xml_file}"
+    <h:a href="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:document_root}{instance('parameters')/dcm:xml_file}"
       class="xforms-trigger" target="xml_{instance('parameters')/dcm:xml_file}"><h:img 
         src="http:/editor/images/xml.gif" alt="XML" title="View XML data" border="0"/></h:a>
     <xf:trigger appearance="minimal">
@@ -148,12 +148,12 @@
         title="Close editor and return to file list" border="0"/></xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:exist_dir,'/list_files.xq')"/>
+          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:exist_dir,'list_files.xq')"/>
           <xf:load resource="{$uri}" show="replace"/>
           <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
-          <xf:load resource="{instance('parameters')/dcm:exist_dir}/list_files.xq" show="replace"/>
+          <xf:load resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}list_files.xq" show="replace"/>
         </xf:action>
       </xf:action>
     </xf:trigger>

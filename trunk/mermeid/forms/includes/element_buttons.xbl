@@ -103,8 +103,29 @@
                                 <xf:insert context="parent::node()" 
                                     origin="xxf:evaluate($nodeset)[index($index)]"
                                     nodeset="xxf:evaluate($nodeset)[index($index)]"/>
-                                <!--<xf:setvalue ref="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)+1]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>-->
-                                <!--<xf:dispatch name="id-update" target="dcm-element-buttons-binding"/>-->
+                                <xxf:variable name="added_nodeset" select="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)]"/>
+
+                                <xf:message>deleting <xf:output value="count($added_nodeset//@xml:id)"/> IDs from
+                                    <xf:output value="$added_nodeset/m:title"/>
+                                </xf:message>
+                                <!--<xf:setvalue ref="$added_nodeset//@xml:id" value="''"/>-->
+
+                                <xf:setvalue ref="instance('temp')/counter" value="1"/>
+                                <xf:action while="instance('temp')/counter &lt; count($added_nodeset//@xml:id)+1">
+                                    <xf:message><xf:output value="instance('temp')/counter"/>: 
+                                        <xf:output value="$added_nodeset//@xml:id[instance('temp')/counter]"/></xf:message>
+                                    <xf:setvalue ref="$added_nodeset//@xml:id[instance('temp')/counter]" value="''"/>
+                                    <xf:setvalue ref="instance('temp')/counter" value=". + 1"/>
+                                </xf:action>                                  
+                                
+                                <!-- <xf:action while="count($added_nodeset//@xml:id) &gt; 0">
+                                    <xf:message>Changing <xf:output value="count($added_nodeset//@xml:id)"/> IDs</xf:message>
+                                    <xf:setvalue ref="$added_nodeset//@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                                </xf:action>-->
+                                
+
+                                <xf:dispatch name="id-update" target="form-group"/>
+
                             </xf:action>
                         </xf:trigger>
                     </xf:group> 
@@ -115,7 +136,7 @@
                                 <xf:insert context="parent::node()" origin="$origin"
                                     nodeset="xxf:evaluate($nodeset)[index($index)]"/>
                                 <!--<xf:setvalue ref="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>-->
-<xf:dispatch name="id-update" target="form-group"/>
+                                <xf:dispatch name="id-update" target="form-group"/>
                             </xf:action>
                         </xf:trigger>
                     </xf:group>
