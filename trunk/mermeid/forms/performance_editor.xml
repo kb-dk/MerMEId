@@ -129,11 +129,11 @@
     <h:body class="history">
         
         <xf:group ref="instance('data-instance')//m:event[@xml:id=instance('temp')/id]">
-            <h:div style="float:right;">ID:<xf:output value="instance('temp')/id"/></h:div>
             <h:h3>
                 <xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
                 <xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
                 <xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
+                <dcm:id ref="."/>
             </h:h3>                
             
             <h:fieldset>

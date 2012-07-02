@@ -75,6 +75,7 @@
         <change_marker>*</change_marker>
         <etc>...</etc>
         <target_uri/>
+        <file_exists>true</file_exists>
         <counter/>
         <max/>
       </temp-values>
@@ -129,6 +130,7 @@
     <xf:action ev:event="xforms-submit-done">
       <!-- set instance state to unchanged on saving -->
       <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
+      <xf:setvalue ref="instance('temp')/file_exists" value="'true'"/>
     </xf:action>
     
     <xf:action ev:event="xforms-submit-error">
@@ -139,6 +141,7 @@
       <!-- Load empty instance if loading fails (i.e. document does not exist yet) -->
       <xf:action if="$code=404">
         <xf:send submission="load-empty-submission"/>
+        <xf:setvalue ref="instance('temp')/file_exists" value="'false'"/>
         <!-- generate values for empty @xml:id -->
         <xf:action while="instance('data-instance')//*[@xml:id='']">
           <xf:setvalue ref="instance('data-instance')//*[@xml:id='']/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
