@@ -90,7 +90,7 @@
 								<h:td>
 									<dcm:id ref="."/>
 									<xf:trigger>
-										<xf:label>Edit</xf:label>
+										<xf:label><h:img src="http:/editor/images/edit.gif" title="Open performance editor"/> Edit</xf:label>
 										<xf:action ev:event="DOMActivate">
 											<xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-performance,instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
 											<xf:action if="instance('temp')/changed='true'">
@@ -103,8 +103,8 @@
 										</xf:action>
 									</xf:trigger>
 								</h:td>
-								<h:td><dcm:element-buttons triggers="all" nodeset="m:event" index="repeat-work-performance" 
-										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/></h:td>
+								<h:td class="buttons_cell"><dcm:element-buttons triggers="all" nodeset="m:event" index="repeat-work-performance" 
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/></h:td>
 							</h:tr>
 						</xf:repeat>
 					</h:table>
@@ -147,7 +147,7 @@
 									<h:td>
 										<dcm:id ref="."/>
 										<xf:trigger>
-											<xf:label>Edit</xf:label>
+											<xf:label><h:img src="http:/editor/images/edit.gif" title="Open performance editor"/> Edit</xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-performance,instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
 												<xf:action if="instance('temp')/changed='true'">
@@ -160,7 +160,7 @@
 											</xf:action>
 										</xf:trigger>
 									</h:td>
-									<h:td><dcm:element-buttons triggers="all" nodeset="m:event" index="repeat-expression-performance" 
+									<h:td class="buttons_cell"><dcm:element-buttons triggers="all" nodeset="m:event" index="repeat-expression-performance" 
 										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/></h:td>
 								</h:tr>
 							</xf:repeat>

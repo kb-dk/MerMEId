@@ -5,7 +5,8 @@
   xmlns:xl="http://www.w3.org/1999/xlink" 
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns:tei="http://www.tei-c.org/ns/1.0">
+  xmlns:tei="http://www.tei-c.org/ns/1.0"
+  xml:id="">
   <meiHead>
     <altId analog=""/>
     <fileDesc>
@@ -13,8 +14,8 @@
         <title/>
       </titleStmt>
       <pubStmt>
-        <respStmt>
-          <corpName authURI="http://www.kb.dk/dcm">
+        <respStmt xml:id="">
+          <corpName authURI="http://www.kb.dk/dcm" xml:id="">
             <abbr>DCM</abbr>
             <expan>Danish Centre for Music Publication</expan>
             <address>
@@ -26,64 +27,64 @@
               <addrLine><ptr target="mailto://dcm@kb.dk" xl:title="E-mail"/></addrLine>
             </address>
           </corpName>
-          <persName role="editor"/>
+          <persName role="editor" xml:id=""/>
         </respStmt>
         <date reg="" notbefore="" notafter=""/>
-        <identifier type=""/>
+        <identifier type="" xml:id=""/>
         <availability>
           <acqSource/>
           <accessRestrict/> 
         </availability>
       </pubStmt>      
       <seriesStmt>
-        <title/>
-        <identifier/>
-        <seriesStmt label="File collection">
-          <title/>
-          <identifier/>
+        <title xml:id=""/>
+        <identifier xml:id=""/>
+        <seriesStmt label="File collection" xml:id="">
+          <title xml:id=""/>
+          <identifier xml:id=""/>
         </seriesStmt>
       </seriesStmt>
       <notesStmt>
-        <annot type="bibliography">
-          <listBibl type="primary" xmlns="http://www.tei-c.org/ns/1.0"/>          
-          <listBibl type="secondary" xmlns="http://www.tei-c.org/ns/1.0"/>          
-          <listBibl type="documentation" xmlns="http://www.tei-c.org/ns/1.0"/>          
+        <annot type="bibliography" xml:id="">
+          <listBibl type="primary" xmlns="http://www.tei-c.org/ns/1.0" xml:id=""/>          
+          <listBibl type="secondary" xmlns="http://www.tei-c.org/ns/1.0" xml:id=""/>          
+          <listBibl type="documentation" xmlns="http://www.tei-c.org/ns/1.0" xml:id=""/>          
         </annot>
-        <annot type="private_notes"/>
+        <annot type="private_notes" xml:id=""/>
       </notesStmt>
       <sourceDesc>
         <source xml:id="" analog="frbr:manifestation">
           <titleStmt>
-            <title/>
+            <title xml:id=""/>
             <respStmt>
-              <persName role=""/>
+              <persName role="" xml:id=""/>
             </respStmt>
           </titleStmt>
           <pubStmt>
             <respStmt>
-              <corpName role="publisher"/>
+              <corpName role="publisher" xml:id=""/>
             </respStmt>
-            <geogName/>
+            <geogName xml:id=""/>
             <date reg="" notbefore="" notafter=""/>
-            <identifier type="plate_no"/>
-            <identifier analog="RISM"/>
+            <identifier type="plate_no" xml:id=""/>
+            <identifier analog="RISM" xml:id=""/>
           </pubStmt>
           <physDesc>
             <condition/>
-            <titlePage label="">
+            <titlePage label="" xml:id="">
               <p/>
             </titlePage>
             <extent unit="pages"/>
             <dimensions unit="cm"/>
-            <watermark>
-              <ptr target="" mimetype="" xl:title=""/>
+            <watermark xml:id="">
+              <ptr target="" mimetype="" xl:title="" xml:id=""/>
             </watermark>
             <physMedium/>
           </physDesc>
           <notesStmt>
-            <annot type="source_description"/>
-            <annot type="links">
-              <ptr target="" mimetype="" xl:title=""/>
+            <annot type="source_description" xml:id=""/>
+            <annot type="links" xml:id="">
+              <ptr target="" mimetype="" xl:title="" xml:id=""/>
             </annot>
           </notesStmt>
           
@@ -101,102 +102,102 @@
           <itemList>
             <item target="" xml:id="">
               <titleStmt>
-                <title/>
+                <title xml:id=""/>
               </titleStmt>
               <pubStmt>
                 <date reg="" notbefore="" notafter=""/>
               </pubStmt>
               <physDesc>
-                <condition/>
-                <titlePage label="">
+                <condition xml:id=""/>
+                <titlePage label="" xml:id="">
                   <p/>
                 </titlePage>
                 <physLoc>
                   <repository>
-                    <corpName/>
-                    <identifier/>
-                    <identifier analog="RISM"/>
-                    <ptr target="" mimetype="" xl:title="Library record"/>
+                    <corpName xml:id=""/>
+                    <identifier xml:id=""/>
+                    <identifier analog="RISM" xml:id=""/>
+                    <ptr target="" mimetype="" xl:title="Library record" xml:id=""/>
                   </repository>
                 </physLoc>
                 <provenance>
-                  <eventList>
-                    <event>
-                      <title/>
+                  <eventList xml:id="">
+                    <event xml:id="">
+                      <title xml:id=""/>
                       <date reg="" notbefore="" notafter=""/>
-                      <geogName role=""/>
-                      <corpName role=""/>
-                      <persName role=""/>
+                      <geogName role="" xml:id=""/>
+                      <corpName role="" xml:id=""/>
+                      <persName role="" xml:id=""/>
                     </event>
                   </eventList>
                 </provenance>
                 <extent unit="pages"/>
                 <dimensions unit="cm"/>
-                <handList>
-                  <hand medium="" initial="false"/>
+                <handList xml:id="">
+                  <hand medium="" initial="false" xml:id=""/>
                 </handList>
-                <watermark>
-                  <ptr target="" mimetype="" xl:title=""/>
+                <watermark xml:id="">
+                  <ptr target="" mimetype="" xl:title="" xml:id=""/>
                 </watermark>
                 <physMedium/>
               </physDesc>
               <notesStmt>
-                <annot type="source_description"/>
-                <annot type="links">
-                  <ptr target="" mimetype="" xl:title=""/>
+                <annot type="source_description" xml:id=""/>
+                <annot type="links" xml:id="">
+                  <ptr target="" mimetype="" xl:title="" xml:id=""/>
                 </annot>
               </notesStmt>
               <componentGrp>
                 <item>
                   <titleStmt>
-                    <title/>
+                    <title xml:id=""/>
                   </titleStmt>
                   <pubStmt>
                     <respStmt>
-                      <corpName role="publisher"/>
+                      <corpName role="publisher" xml:id=""/>
                     </respStmt>
-                    <geogName/>
+                    <geogName xml:id=""/>
                     <date reg="" notbefore="" notafter=""/>
-                    <identifier type="plate_no"/>
+                    <identifier type="plate_no" xml:id=""/>
                   </pubStmt>
                   <physDesc>
                     <condition/>
-                    <titlePage label="">
+                    <titlePage label="" xml:id="">
                       <p/>
                     </titlePage>
                     <physLoc>
                       <repository>
-                        <corpName/>
-                        <identifier analog=""/>
-                        <ptr target="" mimetype="" xl:title="Library record"/>
-                        <ptr target="" mimetype="" xl:title="Facsimile"/>
+                        <corpName xml:id=""/>
+                        <identifier analog="" xml:id=""/>
+                        <ptr target="" mimetype="" xl:title="Library record" xml:id=""/>
+                        <ptr target="" mimetype="" xl:title="Facsimile" xml:id=""/>
                       </repository>
                     </physLoc>
                     <provenance>
-                      <eventList>
-                        <event>
-                          <title/>
+                      <eventList xml:id="">
+                        <event xml:id="">
+                          <title xml:id=""/>
                           <date reg="" notbefore="" notafter=""/>
-                          <geogName role=""/>
-                          <corpName role=""/>
-                          <persName role=""/>
+                          <geogName role="" xml:id=""/>
+                          <corpName role="" xml:id=""/>
+                          <persName role="" xml:id=""/>
                         </event>
                       </eventList>
                     </provenance>
                     <extent unit="pages"/>
                     <dimensions unit="cm"/>
-                    <handList>
-                      <hand medium="" initial="false"/>
+                    <handList xml:id="">
+                      <hand medium="" initial="false" xml:id=""/>
                     </handList>
-                    <watermark>
-                      <ptr target="" xl:title="" mimetype=""/>
+                    <watermark xml:id="">
+                      <ptr target="" xl:title="" mimetype="" xml:id=""/>
                     </watermark>
                     <physMedium/>
                   </physDesc>
                   <notesStmt>
-                    <annot type="source_description"/>
-                    <annot type="links">
-                      <ptr target="" mimetype="" xl:title=""/>
+                    <annot type="source_description" xml:id=""/>
+                    <annot type="links" xml:id="">
+                      <ptr target="" mimetype="" xl:title="" xml:id=""/>
                     </annot>
                   </notesStmt>
                 </item>                
@@ -204,14 +205,14 @@
             </item> 
           </itemList>
           <relationList>
-            <relation rel="isEmbodimentOf" target=""/>
+            <relation rel="isEmbodimentOf" target="" xml:id=""/>
           </relationList>
         </source>
       </sourceDesc>
     </fileDesc>
     
     <encodingDesc>
-      <projectDesc>
+      <projectDesc xml:id="">
         <p>Created using MerMEId 0.1</p>
       </projectDesc>
     </encodingDesc>
@@ -219,43 +220,43 @@
     <workDesc>
       <work xml:id="" analog="frbr:work">
         <titleStmt>
-          <title xml:lang="en" type="main"/>
-          <title type="alternative" xml:lang="en"/>
-          <title type="uniform" xml:lang="en"/>
-          <title type="original" xml:lang="en"/>
-          <title type="subordinate" xml:lang="en"/>
-          <title type="text_source" xml:lang="en"/>
+          <title xml:lang="en" type="main" xml:id=""/>
+          <title type="alternative" xml:lang="en" xml:id=""/>
+          <title type="uniform" xml:lang="en" xml:id=""/>
+          <title type="original" xml:lang="en" xml:id=""/>
+          <title type="subordinate" xml:lang="en" xml:id=""/>
+          <title type="text_source" xml:lang="en" xml:id=""/>
           <respStmt>
-            <persName role="composer"/>
+            <persName role="composer" xml:id=""/>
           </respStmt>
         </titleStmt>        
-        <history>
-          <creation>
+        <history xml:id="">
+          <creation xml:id="">
             <date reg="" notbefore="" notafter=""/>
-            <geogName/>            
+            <geogName xml:id=""/>            
           </creation>
           <p/>
-          <eventList type="history">
-            <event evidence="">
-              <title/>
+          <eventList type="history" xml:id="">
+            <event evidence="" xml:id="">
+              <title xml:id=""/>
               <date reg="" notbefore="" notafter=""/>
-              <geogName role="place"/>
-              <corpName role=""/>
-              <persName role=""/>
-              <bibl label="documentation"/>
+              <geogName role="place" xml:id=""/>
+              <corpName role="" xml:id=""/>
+              <persName role="" xml:id=""/>
+              <bibl label="documentation" xml:id=""/>
             </event>
           </eventList>
-          <eventList type="performances">
+          <eventList type="performances" xml:id="">
             <event evidence="" xml:id="">
-              <title/>
+              <title xml:id=""/>
               <date reg="" notbefore="" notafter=""/>
-              <geogName role="venue"/>
-              <geogName role="place"/>
-              <corpName role="ensemble"/>
-              <persName role="conductor"/>
-              <persName role="soloist"><ref target=""/></persName>
-              <bibl label="documentation"/>
-              <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0">
+              <geogName role="venue" xml:id=""/>
+              <geogName role="place" xml:id=""/>
+              <corpName role="ensemble" xml:id=""/>
+              <persName role="conductor" xml:id=""/>
+              <persName role="soloist" xml:id=""><ref target=""/></persName>
+              <bibl label="documentation" xml:id=""/>
+              <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0" xml:id="">
                 <bibl type="Journal_article" xml:id="">
                   <author/>
                   <date when-iso="" notBefore-iso="" notAfter-iso=""/>
@@ -279,10 +280,10 @@
         </langUsage>
         
         <notesStmt>
-          <annot type="links">
-            <ptr target="" mimetype="" xl:title="External description"/> 
+          <annot type="links" xml:id="">
+            <ptr target="" mimetype="" xl:title="External description" xml:id=""/> 
           </annot>
-          <annot type="general_description"/> 
+          <annot type="general_description" xml:id=""/> 
         </notesStmt>        
         
         <classification>
@@ -298,41 +299,41 @@
         </classification>
 
         <expressionList>
-          <expression xml:id="">
+          <expression xml:id="" analog="frbr:expression" n="">
             <titleStmt>
-              <title xml:lang="en"/>
+              <title xml:lang="en" xml:id=""/>
               <respStmt>
-                <persName role=""/>
+                <persName role="" xml:id=""/>
               </respStmt>
             </titleStmt>
-            <history>
-              <creation>
+            <history xml:id="">
+              <creation xml:id="">
                 <date reg="" notbefore="" notafter=""/>
-                <geogName/>            
+                <geogName xml:id=""/>            
               </creation>
               <p/>
-              <eventList type="history">
-                <event>
-                  <title/>
+              <eventList type="history" xml:id="">
+                <event xml:id="">
+                  <title xml:id=""/>
                   <date reg="" notbefore="" notafter=""/>
-                  <geogName role=""/>
-                  <corpName role=""/>
-                  <persName role=""/>
-                  <bibl label="documentation"/>
+                  <geogName role="" xml:id=""/>
+                  <corpName role="" xml:id=""/>
+                  <persName role="" xml:id=""/>
+                  <bibl label="documentation" xml:id=""/>
                 </event>
               </eventList>
-              <eventList type="performances">
-                <event>
-                  <title/>
+              <eventList type="performances" xml:id="">
+                <event xml:id="">
+                  <title xml:id=""/>
                   <date reg="" notbefore="" notafter=""/>
-                  <geogName role="venue"/>
-                  <geogName role="place"/>
-                  <corpName role="ensemble"/>
-                  <persName role="conductor"/>
-                  <persName role="soloist"><ref target=""/></persName>
-                  <bibl label="documentation"/>
-                  <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0">
-                    <bibl type="Journal_article">
+                  <geogName role="venue" xml:id=""/>
+                  <geogName role="place" xml:id=""/>
+                  <corpName role="ensemble" xml:id=""/>
+                  <persName role="conductor" xml:id=""/>
+                  <persName role="soloist" xml:id=""><ref target=""/></persName>
+                  <bibl label="documentation" xml:id=""/>
+                  <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0" xml:id="">
+                    <bibl type="Journal_article" xml:id="">
                       <author/>
                       <date when-iso="" notBefore-iso="" notAfter-iso=""/>
                       <title level="a"/>
@@ -352,12 +353,12 @@
             <key pname="" accid="" mode=""/>
             <tempo/>
             <meter meter.count="" meter.unit="" meter.sym=""/>
-            <perfMedium analog="marc:048" authority="marcmusperf">
+            <perfMedium analog="marc:048" authority="marcmusperf" xml:id="">
               <ensemble xml:id="">
-                <instrVoice reg=""/>
+                <instrVoice reg="" xml:id=""/>
               </ensemble>
               <performer xml:id="">
-                <instrVoice reg="" count="1" solo="false"/>
+                <instrVoice reg="" count="1" solo="false" xml:id=""/>
               </performer>
             </perfMedium>
             <classification>
@@ -368,30 +369,30 @@
             
             <castList>
               <castItem xml:id="">
-                <role>
+                <role xml:id="">
                   <ref target="">
-                    <name xml:lang="en"/>  
+                    <name xml:lang="en" xml:id=""/>  
                   </ref>
                 </role>
-                <roleDesc xml:lang="en"/>
+                <roleDesc xml:lang="en" xml:id=""/>
               </castItem>
             </castList>
-            <incip>     
-              <incipText> 
+            <incip xml:id="">     
+              <incipText xml:id=""> 
                 <p xml:lang="en"/>
               </incipText>
-              <graphic target="" xl:title="" targettype="lowres"/>
-              <graphic target="" xl:title="" targettype="hires"/>
-              <score/>
+              <graphic target="" xl:title="" targettype="lowres" xml:id=""/>
+              <graphic target="" xl:title="" targettype="hires" xml:id=""/>
+              <score xml:id=""/>
             </incip>
             
             <!-- top-level components -->            
             <componentGrp>
               <expression xml:id="" n=""> 
                 <titleStmt>
-                  <title xml:lang="en"/>
+                  <title xml:lang="en" xml:id=""/>
                   <respStmt>
-                    <persName role=""/> 
+                    <persName role="" xml:id=""/> 
                   </respStmt>
                 </titleStmt>
                 <key pname="" accid="" mode=""/>
@@ -399,40 +400,40 @@
                 <meter meter.count="" meter.unit="" meter.sym=""/>
                 <perfMedium analog="marc:048" authority="marcmusperf">
                   <ensemble xml:id="">
-                    <instrVoice reg=""/>
+                    <instrVoice reg="" xml:id=""/>
                   </ensemble>
                   <performer xml:id="">
-                    <instrVoice reg="" count="1" solo="false"/>
+                    <instrVoice reg="" count="1" solo="false" xml:id=""/>
                   </performer>
                 </perfMedium>
                 <castList>
-                  <castItem xml:id="cast_1">
+                  <castItem xml:id="">
                     <role>
                       <ref target="">
-                        <name xml:lang="en"/>  
+                        <name xml:lang="en" xml:id=""/>  
                       </ref>
                     </role>
-                    <roleDesc xml:lang="en"/>
+                    <roleDesc xml:lang="en" xml:id=""/>
                   </castItem>
                 </castList>
-                <incip>     
-                  <incipText> 
+                <incip xml:id="">     
+                  <incipText xml:id=""> 
                     <p xml:lang="en"/>
                   </incipText>
-                  <graphic target="" xl:title="" targettype="lowres"/>
-                  <graphic target="" xl:title="" targettype="hires"/>
-                  <score/>
+                  <graphic target="" xl:title="" targettype="lowres" xml:id=""/>
+                  <graphic target="" xl:title="" targettype="hires" xml:id=""/>
+                  <score xml:id=""/>
                 </incip>
 
                 <!-- next sub-level components -->
                 <componentGrp/>
                 <relationList>
-                  <relation rel="hasReproduction" label="Edited score" targettype="edited_score" target=""/> <!-- link to external edition -->
+                  <relation rel="hasReproduction" label="Edited score" targettype="edited_score" target="" xml:id=""/> <!-- link to external edition -->
                 </relationList>
               </expression>
             </componentGrp>
             <relationList>
-              <relation rel="hasReproduction" label="Edited score" targettype="edited_score" target=""/> <!-- link to external edition -->
+              <relation rel="hasReproduction" label="Edited score" targettype="edited_score" target="" xml:id=""/> <!-- link to external edition -->
             </relationList>
           </expression>
         </expressionList>
@@ -441,9 +442,9 @@
     </workDesc>
     
     <revisionDesc>
-      <change>
+      <change xml:id="">
         <respStmt>
-          <persName/>
+          <persName xml:id=""/>
         </respStmt>
         <changeDesc>
           <p/>

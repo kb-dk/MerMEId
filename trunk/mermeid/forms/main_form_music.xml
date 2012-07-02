@@ -53,16 +53,20 @@
 						</h:span></h:a></h:legend>    
 						<xf:trigger ref=".[not(m:componentGrp)]">
 							<xf:label>Add components</xf:label>
-							<xf:insert nodeset="m:componentGrp" 
-								ev:event="DOMActivate" 
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp"/>
+							<xf:action ev:event="DOMActivate">
+								<xf:insert nodeset="m:componentGrp" 
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp"/>
+								<xf:dispatch name="id-update" target="form-group"/>
+							</xf:action>
 						</xf:trigger>
 						<xf:trigger ref=".[m:componentGrp and not(m:componentGrp/m:expression)]">
 							<xf:label>Add components</xf:label>
-							<xf:insert context="m:componentGrp" 
+							<xf:action ev:event="DOMActivate">
+								<xf:insert context="m:componentGrp" 
 								nodeset="m:expression"
-								ev:event="DOMActivate"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
+								<xf:dispatch name="id-update" target="form-group"/>
+							</xf:action>
 						</xf:trigger>
 						<xf:group ref="m:componentGrp">
 							<xf:repeat nodeset="m:expression" id="repeat-component">
@@ -98,10 +102,13 @@
 										</xf:trigger>
 										<xf:trigger ref=".[m:componentGrp and not(m:componentGrp/m:expression)]">
 											<xf:label>Add components</xf:label>
-											<xf:insert context="m:componentGrp" 
-												nodeset="m:expression"
-												ev:event="DOMActivate"
-												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
+											<xf:action ev:event="DOMActivate">
+												<xf:insert context="m:componentGrp" 
+													nodeset="m:expression"
+													ev:event="DOMActivate"
+													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
+												<xf:dispatch name="id-update" target="form-group"/>
+											</xf:action>
 										</xf:trigger>
 										<xf:group ref="m:componentGrp">
 											<xf:repeat nodeset="m:expression" id="repeat-sublevel2-component">

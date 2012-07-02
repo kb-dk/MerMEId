@@ -78,6 +78,7 @@
                                     origin="xxf:evaluate($nodeset)[index($index)]"
                                     nodeset="xxf:evaluate($nodeset)[index($index)-2]"/>
                                 <xf:delete nodeset="." at="index($index)"/> 
+                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
                             </xf:action>
                         </xf:trigger>
                     </xf:group>                    
@@ -93,6 +94,7 @@
                                     origin="xxf:evaluate($nodeset)[index($index)]"
                                     nodeset="xxf:evaluate($nodeset)[index($index)+1]"/>
                                 <xf:delete nodeset="." at="index($index)-2"/>
+                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
                             </xf:action>
                         </xf:trigger>
                     </xf:group>                    
@@ -104,28 +106,12 @@
                                     origin="xxf:evaluate($nodeset)[index($index)]"
                                     nodeset="xxf:evaluate($nodeset)[index($index)]"/>
                                 <xxf:variable name="added_nodeset" select="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)]"/>
-
-                                <xf:message>deleting <xf:output value="count($added_nodeset//@xml:id)"/> IDs from
-                                    <xf:output value="$added_nodeset/m:title"/>
-                                </xf:message>
-                                <!--<xf:setvalue ref="$added_nodeset//@xml:id" value="''"/>-->
-
-                                <xf:setvalue ref="instance('temp')/counter" value="1"/>
-                                <xf:action while="instance('temp')/counter &lt; count($added_nodeset//@xml:id)+1">
-                                    <xf:message><xf:output value="instance('temp')/counter"/>: 
-                                        <xf:output value="$added_nodeset//@xml:id[instance('temp')/counter]"/></xf:message>
-                                    <xf:setvalue ref="$added_nodeset//@xml:id[instance('temp')/counter]" value="''"/>
-                                    <xf:setvalue ref="instance('temp')/counter" value=". + 1"/>
+                                <xf:setvalue ref="instance('temp')/counter" value="count($added_nodeset//@xml:id)"/>
+                                <xf:action while="instance('temp')/counter &gt; 0">
+                                    <xf:setvalue ref="$added_nodeset//@xml:id[.!='']" value="''"/>
+                                    <xf:setvalue ref="instance('temp')/counter" value=". - 1"/>
                                 </xf:action>                                  
-                                
-                                <!-- <xf:action while="count($added_nodeset//@xml:id) &gt; 0">
-                                    <xf:message>Changing <xf:output value="count($added_nodeset//@xml:id)"/> IDs</xf:message>
-                                    <xf:setvalue ref="$added_nodeset//@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-                                </xf:action>-->
-                                
-
                                 <xf:dispatch name="id-update" target="form-group"/>
-
                             </xf:action>
                         </xf:trigger>
                     </xf:group> 
@@ -135,7 +121,6 @@
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert context="parent::node()" origin="$origin"
                                     nodeset="xxf:evaluate($nodeset)[index($index)]"/>
-                                <!--<xf:setvalue ref="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)]/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>-->
                                 <xf:dispatch name="id-update" target="form-group"/>
                             </xf:action>
                         </xf:trigger>
@@ -147,8 +132,11 @@
                         <xf:trigger appearance="minimal"
                             ref=".[count(xxf:evaluate(concat('../',$nodeset)))&gt;1 or contains($triggers,'remove')]">
                             <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-                            <xf:delete ev:event="DOMActivate" nodeset="."
-                                at="index($index)"/>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:delete ev:event="DOMActivate" nodeset="."
+                                    at="index($index)"/>
+                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                            </xf:action>
                         </xf:trigger>
                     </xf:group>    
                 </h:span>

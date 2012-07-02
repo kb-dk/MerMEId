@@ -155,7 +155,7 @@ button, button.detail_button, button[type], .xforms-button {
     margin: 0px;
     padding: 0px 4px 0px 4px;
     width: auto;
-    height: 22px;
+    height: 23px;
     font-family: arial, helvetica, sans-serif;
     font-size: .9em;
     overflow:visible;
@@ -177,10 +177,12 @@ a.xforms-submit img:hover {
     padding: 1px;
 }
 
+button.xforms-trigger img,
 button img {
     border: none;
     padding: 0;
-    vertical-align: baseline;
+    vertical-align: middle;
+    margin-top: -2px;
 }
 
 a.xforms-trigger img,
@@ -358,6 +360,11 @@ table.element_list td {
     border-top: 1px dotted #999;
     margin: 0px;
     padding: 2px;
+}
+
+table.element_list td.buttons_cell {
+    width: 100px;
+    text-align: right;
 }
 
 table.element_list tr {

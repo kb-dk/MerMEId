@@ -139,6 +139,10 @@
       <!-- Load empty instance if loading fails (i.e. document does not exist yet) -->
       <xf:action if="$code=404">
         <xf:send submission="load-empty-submission"/>
+        <!-- generate values for empty @xml:id -->
+        <xf:action while="instance('data-instance')//*[@xml:id='']">
+          <xf:setvalue ref="instance('data-instance')//*[@xml:id='']/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+        </xf:action>
       </xf:action>
     </xf:action>
     

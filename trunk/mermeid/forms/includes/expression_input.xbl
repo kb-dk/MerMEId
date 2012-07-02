@@ -260,23 +260,25 @@
                                         <xf:label></xf:label>
                                         <xf:action ev:event="DOMActivate add-id">
                                             <!-- add value to empty IDs -->
+                                            <!-- using global handler instead
                                             <xf:setvalue ref="instance('temp')/counter" value="0" />
                                             <xf:setvalue ref="instance('temp')/max" value="count($binding//*[@xml:id=''])"/>
                                             <xf:action while="(instance('temp')/max) - (instance('temp')/counter) &gt; 0">
-                                                <xf:setvalue ref="instance('temp')/counter" value="instance('temp')/counter + 1" />
+                                                <xf:setvalue ref="instance('temp')/counter" value=". + 1" />
                                                 <xf:setvalue ref="$binding//*[@xml:id=''][instance('temp')/counter]/@xml:id"
                                                     value="concat(local-name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>  
-                                            </xf:action>
+                                            </xf:action>-->
                                             <!-- add @xml:id and value to ensembles and performers without it -->
                                             <xf:setvalue ref="instance('temp')/counter" value="0" />
                                             <xf:setvalue ref="instance('temp')/max" value="count($binding//*[local-name()='ensemble' or local-name()='performer'][count(@xml:id)=0])"/>
                                             <xf:action while="(instance('temp')/max) - (instance('temp')/counter) &gt; 0">
-                                                <xf:setvalue ref="instance('temp')/counter" value="instance('temp')/counter + 1" />
+                                                <xf:setvalue ref="instance('temp')/counter" value=". + 1" />
                                                 <xf:setvalue ref="instance('temp')/attributes/@xml:id"
                                                     value="concat(local-name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>  
                                                 <xf:insert context="$binding//*[local-name()='ensemble' or local-name()='performer'][count(@xml:id)=0][instance('temp')/counter]" 
                                                     origin="instance('temp')/attributes/@xml:id"/>
                                             </xf:action>
+                                            <xf:dispatch name="id-update" target="form-group"/>
                                         </xf:action>
                                     </xf:trigger>
                                     
@@ -431,6 +433,7 @@
                                                             <xf:delete nodeset="." at="index('repeat-ensemble-performer')"/>
                                                             <!-- remove references to deleted items -->
                                                             <xf:setvalue ref="$binding/m:castList/m:castItem/m:role/m:ref/@target[not(.=$binding//@xml:id)]" value="''"/>
+                                                            <xf:dispatch name="xforms-value-changed" target="form-group"/>
                                                         </xf:action>
                                                 </xf:trigger>
                                                 <xf:trigger>
@@ -497,6 +500,7 @@
                                                             <xf:delete nodeset="." at="index('repeat-performer')"/>
                                                             <!-- remove references to deleted items -->
                                                             <xf:setvalue ref="$binding/m:castList/m:castItem/m:role/m:ref/@target[not(.=$binding//@xml:id)]" value="''"/>
+                                                            <xf:dispatch name="xforms-value-changed" target="form-group"/>
                                                         </xf:action>
                                                     </xf:trigger>
                                                 <h:br/>
@@ -518,6 +522,7 @@
                                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]"/>
                                             <xf:setvalue ref="m:castItem[last()]/@xml:id"
                                                 value="concat('castItem_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                                            <xf:dispatch name="id-update" target="form-group"/>
                                         </xf:action>
                                     </xf:trigger>
                                     <xf:repeat nodeset="m:castItem" id="repeat-cast">
@@ -560,12 +565,14 @@
                                                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]/m:role/m:ref/m:name"/>
                                                             <xf:insert context="../../.." nodeset="m:roleDesc[index('repeat-role')]"
                                                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]/m:roleDesc"/>
+                                                            <xf:dispatch name="id-update" target="form-group"/>
                                                         </xf:action>
                                                     </xf:trigger>
                                                     <xf:trigger appearance="minimal" class="element-button">
                                                         <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                                                         <xf:delete ev:event="DOMActivate" nodeset="../m:name" at="index('repeat-role')"/>
                                                         <xf:delete ev:event="DOMActivate" nodeset="../../../m:roleDesc" at="index('repeat-role')"/>
+                                                        <xf:dispatch name="xforms-value-changed" target="form-group"/>
                                                     </xf:trigger>
                                                 </h:span>
                                                 <!-- end buttons -->
