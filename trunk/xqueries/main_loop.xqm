@@ -6,31 +6,33 @@ declare namespace m="http://www.music-encoding.org/ns/mei";
 declare namespace ft="http://exist-db.org/xquery/lucene";
 
 declare function loop:getlist (
-  $coll  as xs:string,
-  $query as xs:string) as node()* {
+	$coll  as xs:string,
+	$query as xs:string) as node()* 
+{
 
-  let $list  := 
-    if(fn:string-length($coll)>0 and not($coll='all') ) then 
-      if($query) then
-	for $doc in collection("/db/dcm")/m:mei[m:meihead/m:encodingdesc/m:projectdesc/m:p/m:list[@n='use']/m:item/string()=$coll and ft:query(.,$query)] 
-	order by $doc/m:meihead/m:filedesc/m:titlestmt/m:respstmt/m:persname[@type='composer'][1],$doc/m:meihead/m:filedesc/m:titlestmt/m:title[@type='main'][1]
+	let $list  := 
+	if($coll) then 
+	if($query) then
+	for $doc in collection("/db/dcm")/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:seriesStmt[@label="File collection"]/m:identifier/string()=$coll  and ft:query(.,$query)] 
+
+	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:title[1]/string()
 	return $doc 
-      else
-	for $doc in collection("/db/dcm")/m:mei[m:meihead/m:encodingdesc/m:projectdesc/m:p/m:list[@n='use']/m:item/string()=$coll] 
-	order by $doc/m:meihead/m:filedesc/m:titlestmt/m:respstmt/m:persname[@type='composer'][1],$doc/m:meihead/m:filedesc/m:titlestmt/m:title[@type='main'][1]
+	else
+	for $doc in collection("/db/dcm")/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:seriesStmt[@label="File collection"]/m:identifier/string()=$coll] 
+	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:title[1]/string()
 	return $doc 
-    else
-      if($query) then
+        else
+	if($query) then
         for $doc in collection("/db/dcm")/m:mei[ft:query(.,$query)]
-	order by $doc/m:meihead/m:filedesc/m:titlestmt/m:respstmt/m:persname[@type='composer'][1],$doc/m:meihead/m:filedesc/m:titlestmt/m:title[@type='main'][1]
+	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:title[1]/string()
 	return $doc
-      else
+        else
         for $doc in collection("/db/dcm")/m:mei
-	order by $doc/m:meihead/m:filedesc/m:titlestmt/m:respstmt/m:persname[@type='composer'][1],$doc/m:meihead/m:filedesc/m:titlestmt/m:title[@type='main'][1]
+	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:title[1]/string()
 	return $doc
-
-   return $list
+	
+	return $list
 
 };
 
-		 
+
