@@ -189,7 +189,48 @@ declare function app:navigation(
 	else
 	("") 
 
-	let $links := <p>{$previous,$next}</p>
+	let $page_nav := for $p in 1 to 1 + ($total idiv $number)
+	return 
+	(if(not($page = $p)) then
+		element a {
+			attribute title {"Goto page ",xs:string($p)},
+			attribute href {
+       				fn:string-join(
+					($uri,"?",
+						"page=",xs:string($p),
+						$perpage,
+						$collection,
+						$querypart),"")},
+			($p)
+		}
+          else 
+		element span {
+			attribute style {"color:red;"},
+			($p)
+                }
+	)
+
+	let $links := ( 
+		element table {
+			attribute style {"width:100%;"},
+			element tr {
+				element td {
+					attribute style {"width:15%;text-align:left;"},
+					$previous},
+				element td {
+					attribute style {"width:70%;text-align:center;"},
+					element p {
+						element strong {
+							$total," hits"
+						}
+					},
+					element p {$page_nav}},
+				element td {
+					attribute style {"width:15%;text-align:right;"},
+					$next}
+			}
+		}
+	)
 	return $links
 
 };
