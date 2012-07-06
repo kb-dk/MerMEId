@@ -34,9 +34,9 @@ declare function app:format-reference(
 	"even"
 
 	let $ref   := 
-	<tr class="{$class}">
-	<td>
-	{$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:respStmt/m:persName[1]}
+	<tr class="result {$class}">
+	<td nowrap="nowrap">
+	{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']}
 	</td>
 	<td>{app:view-document-reference($doc)}</td>
 	<td nowrap="nowrap">{app:get-edition-and-number($doc)}</td>
@@ -86,7 +86,7 @@ declare function app:edit-form-reference($doc as node()) as node() {
 
 	let $ref := 
 	<a  title="edit" 
-        href="/orbeon/xforms-jsp/mei-form/?uri=http://{request:get-header('HOST')}/editor/forms/mei/edit-work-case.xml&amp;dir=http://{request:get-header('HOST')}/filter/&amp;doc={util:document-name($doc)}">
+        href="/orbeon/xforms-jsp/mei-form/?uri=http://{request:get-header('HOST')}/editor/forms/mei/edit-work-case.xml&amp;doc={util:document-name($doc)}">
 	<img border="0" src="/editor/images/edit.gif" alt="edit" />
 	</a>
 	return $ref
@@ -166,7 +166,7 @@ declare function app:navigation(
 						$collection,
 						$querypart),"")
 			},
-			("next")
+			("Next page")
 		},
 		(" &gt;"))
 	else
@@ -183,7 +183,7 @@ declare function app:navigation(
 			attribute href {
        				fn:string-join(
 					($uri,"?","page=",$prevpage,$perpage,$collection,$querypart),"")},
-			("prev")
+			("Previous page")
 		}
 	)
 	else
@@ -212,11 +212,10 @@ declare function app:navigation(
 
 	let $links := ( 
 		element table {
-			attribute style {"width:100%;"},
 			element tr {
 				element td {
 					attribute style {"width:15%;text-align:left;"},
-					$previous},
+					$previous,"&#160;"},
 				element td {
 					attribute style {"width:70%;text-align:center;"},
 					element p {
@@ -227,7 +226,7 @@ declare function app:navigation(
 					element p {$page_nav}},
 				element td {
 					attribute style {"width:15%;text-align:right;"},
-					$next}
+					$next,"&#160;"}
 			}
 		}
 	)
@@ -341,7 +340,7 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	<div>
 	{app:navigation($list)}
 
-	<table border='0' cellpadding='0' cellspacing='0'>
+	<table border='0' cellpadding='0' cellspacing='0' class='result_table'>
 	<tr><th>Composer</th><th>Title</th><th></th><th></th></tr>
 	{
 		
