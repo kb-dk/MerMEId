@@ -154,28 +154,28 @@
                                         <xf:label class="fixed_width_short">Number</xf:label>
                                     </xf:input> 
                                     <h:br clear="all"/>
-                                    <xf:input ref="m:tempo" class="mediumlong">
-                                        <xf:label class="fixed_width_short">Tempo</xf:label>
-                                    </xf:input>
-                                    <h:br clear="all"/>                                    
-                                    <xf:input ref="m:meter/@meter.count" class="minimal_length">
-                                        <xf:label class="fixed_width_short">Metre</xf:label>
-                                    </xf:input> /<xf:input ref="m:meter/@meter.unit" class="minimal_length"/> or symbol: 
-                                    <xf:select1	ref="m:meter/@meter.sym" class="auto_length">
-                                        <xf:item>
-                                            <xf:label>-</xf:label>
-                                            <xf:value/>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:label>common time</xf:label>
-                                            <xf:value>common</xf:value>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:label>cut time</xf:label>
-                                            <xf:value>cut</xf:value>
-                                        </xf:item>
-                                    </xf:select1>
                                 </xf:group>
+                                <xf:input ref="m:tempo" class="mediumlong">
+                                    <xf:label class="fixed_width_short">Tempo</xf:label>
+                                </xf:input>
+                                <h:br clear="all"/>                                    
+                                <xf:input ref="m:meter/@meter.count" class="minimal_length">
+                                    <xf:label class="fixed_width_short">Metre</xf:label>
+                                </xf:input> /<xf:input ref="m:meter/@meter.unit" class="minimal_length"/> or symbol: 
+                                <xf:select1	ref="m:meter/@meter.sym" class="auto_length">
+                                    <xf:item>
+                                        <xf:label>-</xf:label>
+                                        <xf:value/>
+                                    </xf:item>
+                                    <xf:item>
+                                        <xf:label>common time</xf:label>
+                                        <xf:value>common</xf:value>
+                                    </xf:item>
+                                    <xf:item>
+                                        <xf:label>cut time</xf:label>
+                                        <xf:value>cut</xf:value>
+                                    </xf:item>
+                                </xf:select1>
                             </h:div>                                    
                             <xf:group ref="m:key">
                                 <h:span class="fixed_width_short">Key</h:span>
