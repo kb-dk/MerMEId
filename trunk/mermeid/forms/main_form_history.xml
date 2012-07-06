@@ -80,9 +80,9 @@
 						<xf:repeat nodeset="m:event" id="repeat-work-performance">
 							<h:tr>
 								<h:td class="number_cell">
-									<xf:output value="position()"/>
+									<xf:output value="position()"/>&#160;
 								</h:td>
-								<h:td>
+								<h:td>&#160;
 									<xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
 									<xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
 									<xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
@@ -93,7 +93,8 @@
 										<xf:trigger>
 											<xf:label><h:img src="http:/editor/images/edit.gif" title="Open performance editor"/> Edit</xf:label>
 											<xf:action ev:event="DOMActivate">
-												<xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-performance,instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
+												<xxf:variable name="uri" 
+													select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'performance_editor.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
 												<xf:action if="instance('temp')/changed='true'">
 													<xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
 													<xxf:show dialog="exit-warning-dialog"/>
@@ -142,9 +143,9 @@
 							<xf:repeat nodeset="m:event" id="repeat-expression-performance">
 								<h:tr>
 									<h:td class="number_cell">
-										<xf:output value="position()"/>
+										<xf:output value="position()"/>&#160;
 									</h:td>
-									<h:td>
+									<h:td>&#160;
 										<xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
 										<xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
 										<xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
@@ -154,7 +155,8 @@
 										<xf:trigger>
 											<xf:label><h:img src="http:/editor/images/edit.gif" title="Open performance editor"/> Edit</xf:label>
 											<xf:action ev:event="DOMActivate">
-												<xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-performance,instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
+												<xxf:variable name="uri" 
+													select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'performance_editor.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
 												<xf:action if="instance('temp')/changed='true'">
 													<xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
 													<xxf:show dialog="exit-warning-dialog"/>
