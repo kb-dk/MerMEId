@@ -21,7 +21,7 @@
 	<xf:repeat nodeset="m:title[@type='main']" id="main_titles" class="input_group">
 	  <h:div>
 	    <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
-	    <dcm:element-buttons 
+	    <dcm:element-buttons-typed 
 		triggers="all" 
 		nodeset="m:title[@type='main']" 
 		index="main_titles"
@@ -35,7 +35,7 @@
 	<xf:repeat nodeset="m:title[@type='alternative']" id="alternative_titles" class="input_group">
 	  <h:div>
 	    <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
-	    <dcm:element-buttons 
+	    <dcm:element-buttons-typed 
 		triggers="all" 
 		nodeset="m:title[@type='alternative']" 
 		index="alternative_titles"
@@ -49,7 +49,7 @@
 	<xf:repeat nodeset="m:title[@type='subordinate']" id="subtitles" class="input_group">
 	  <h:div>
 	    <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
-	    <dcm:element-buttons 
+	  	<dcm:element-buttons-typed 
 		triggers="all" 
 		nodeset="m:title[@type='subordinate']" 
 		index="subtitles"
@@ -64,7 +64,7 @@
 	  <xf:repeat nodeset="m:title[@type='uniform']" id="uniform_titles" class="input_group">
 	    <h:div>
 	      <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
-	      <dcm:element-buttons 
+	    	<dcm:element-buttons-typed 
 		  triggers="all" 
 		  nodeset="m:title[@type='uniform']" 
 		  index="uniform_titles"
@@ -81,7 +81,7 @@
 	<xf:repeat nodeset="m:title[@type='text_source']" id="text_sources" class="input_group">
 	  <h:div>
 	    <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
-	    <dcm:element-buttons 
+	  	<dcm:element-buttons-typed 
 		triggers="all" 
 		nodeset="m:title[@type='text_source']" 
 		index="text_sources"

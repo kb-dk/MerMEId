@@ -8,10 +8,9 @@
     xmlns:dcm="http://www.kb.dk/dcm">
     
     <!--
-        Component generating buttons to add, delete, copy or move elements.
-        Please note: If the repeated element has siblings not included in the repeat, this component will
-        not work as expected - i.e. if the repeated element has a predicate (like m:title[@type='main'])
-        or siblings with other element names. In that case, use <dcm:element_buttons_typed> instead.
+        Component generating buttons to add, delete, copy or move repeated elements HAVING SIBLINGS NOT INCLUDED IN THE REPEAT.
+        This means: Use this component only when the repeated element has a predicate (like m:title[@type='main'])
+        or sibling elements with other names. In that case, use <dcm:element-buttons> instead.
         
         The component requires four attributes:
         triggers:   a list (white space or comma separated) of buttons to display; 
@@ -19,18 +18,18 @@
         "all" equals add, delete, copy, up and down. 
         As opposed to "delete", "remove" also allows removing the last 
         remaining row. 
-        nodeset:    The name of the repeated nodeset (the . selector will not work).
-        index:      The repeat's id  
-        origin:     The nodeset to use as a model when adding a new elements
+        nodeset:    the name and predicate of the repeated nodeset (the . selector will not work)
+        index:      the repeat's id  
+        origin:     the nodeset to use as a model when adding a new elements
         
         Example: 
-        <xf:repeat nodeset="m:sourceDesc/m:source" id="repeat-sources">
-        ...
-        <dcm:element-buttons 
-        triggers="add delete copy" 
-        nodeset="m:source" 
-        index="repeat-sources"
-        origin="instance('empty-instance')/m:meiHead/m:sourceDesc/m:source"/>
+        <xf:repeat nodeset="m:titlestmt/m:title[@type='main']" id="main_titles">
+            <xf:input ref="."/>
+            <dcm:element-buttons 
+                triggers="add delete copy" 
+                nodeset="m:title[@type='main']" 
+                index="main_titles"
+                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:titleStmt/m:title[@type='main']"/>
         </xf:repeat>
         
         Danish Centre for Music Publication (DCM) 
@@ -38,7 +37,7 @@
         atge@kb.dk
     -->
     
-    <xbl:binding id="dcm-element-buttons-binding" element="dcm|element-buttons">
+    <xbl:binding id="dcm-element-buttons-typed-binding" element="dcm|element-buttons-typed">
         <!-- Orbeon Form Builder Component Metadata -->
         <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
             <display-name lang="en">Add, delete, copy or move elements</display-name>
@@ -51,7 +50,7 @@
                     background-color: transparent;
                     margin: 0 0 0 5px;
                 }
-                .xbl-dcm-element-buttons .editmenu .button_group {
+                .xbl-dcm-element-buttons-typed .editmenu .button_group {
                     margin: 0 0 0 -8px;
                 }                        
             </xbl:style>
@@ -69,39 +68,36 @@
                 
                 <h:span class="editmenu">
                     <xf:group ref=".[contains($triggers,'up') or contains($triggers,'all')]" class="button_group">
-                        <xf:group ref=".[count(preceding-sibling::*) = 0]">
-                            <h:img src="http:/editor/images/arrow_up_disabled.gif" class="button_patch"/><xf:output value="''"/>
-                        </xf:group>
-                        <xf:group ref=".[count(preceding-sibling::*) &gt; 0]">
-                            <xf:trigger appearance="minimal">
-                                <xf:label><h:img src="http:/editor/images/arrow_up.gif" alt="Up" title="Move up"/></xf:label>
-                                <xf:recalculate ev:event="DOMFocusIn"/>
-                                <xf:action ev:event="DOMActivate">
-                                    <xf:insert context="parent::node()"
-                                        origin="xxf:evaluate($nodeset)[index($index)]"
-                                        nodeset="xxf:evaluate($nodeset)[index($index)-2]"/>
-                                    <xf:delete nodeset="." at="index($index)"/> 
-                                    <xf:dispatch name="xforms-value-changed" target="form-group"/>
-                                </xf:action>
-                            </xf:trigger>
-                        </xf:group>
+                        <xf:repeat nodeset=".[empty(xxf:evaluate(concat('preceding-sibling::',$nodeset)))]">
+                            <h:img src="http:/editor/images/arrow_up_disabled.gif" class="button_patch"/>
+                        </xf:repeat>
+                        <xf:trigger appearance="minimal"
+                            ref=".[exists(xxf:evaluate(concat('preceding-sibling::',$nodeset)))]">
+                            <xf:label><h:img src="http:/editor/images/arrow_up.gif" alt="Up" title="Move up"/></xf:label>
+                            <xf:recalculate ev:event="DOMFocusIn"/>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:insert context="parent::node()"
+                                    origin="xxf:evaluate($nodeset)[index($index)]"
+                                    nodeset="xxf:evaluate($nodeset)[index($index)-2]"/>
+                                <xf:delete nodeset="." at="index($index)"/> 
+                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                            </xf:action>
+                        </xf:trigger>
                     </xf:group>                    
                     <xf:group ref=".[contains($triggers,'down') or contains($triggers,'all')]" class="button_group">
-                        <xf:group ref=".[count(following-sibling::*) = 0]">
-                            <h:img src="http:/editor/images/arrow_down_disabled.gif" class="button_patch"/><xf:output value="''"/>
-                        </xf:group>
-                        <xf:group ref=".[count(following-sibling::*) &gt; 0]">
-                            <xf:trigger appearance="minimal">
-                                <xf:label><h:img src="http:/editor/images/arrow_down.gif" alt="Down" title="Move down"/></xf:label>
-                                <xf:action ev:event="DOMActivate">
-                                    <xf:insert context="parent::node()" 
-                                        origin="xxf:evaluate($nodeset)[index($index)]"
-                                        nodeset="xxf:evaluate($nodeset)[index($index)+1]"/>
-                                    <xf:delete nodeset="." at="index($index)-2"/>
-                                    <xf:dispatch name="xforms-value-changed" target="form-group"/>
-                                </xf:action>
-                            </xf:trigger>
-                        </xf:group>
+                        <xf:repeat nodeset=".[empty(xxf:evaluate(concat('following-sibling::',$nodeset)))]">
+                                <h:img src="http:/editor/images/arrow_down_disabled.gif" class="button_patch"/>
+                        </xf:repeat>
+                        <xf:trigger appearance="minimal" ref=".[exists(xxf:evaluate(concat('following-sibling::',$nodeset)))]">
+                            <xf:label><h:img src="http:/editor/images/arrow_down.gif" alt="Down" title="Move down"/></xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:insert context="parent::node()" 
+                                    origin="xxf:evaluate($nodeset)[index($index)]"
+                                    nodeset="xxf:evaluate($nodeset)[index($index)+1]"/>
+                                <xf:delete nodeset="." at="index($index)-2"/>
+                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                            </xf:action>
+                        </xf:trigger>
                     </xf:group>                    
                     <xf:group ref=".[contains($triggers,'copy') or contains($triggers,'all')]" class="button_group">
                         <xf:trigger appearance="minimal">
@@ -131,19 +127,18 @@
                         </xf:trigger>
                     </xf:group>
                     <xf:group ref=".[contains($triggers,'delete') or contains($triggers,'all') or contains($triggers,'remove')]" class="button_group">
-                        <xf:group ref=".[count(../*[name()=substring-after($nodeset,':')])=1 and not(contains($triggers,'remove'))]">
+                        <xf:repeat nodeset=".[count(xxf:evaluate(concat('../',$nodeset)))=1 and not(contains($triggers,'remove'))]">
                             <h:img src="http:/editor/images/remove_disabled.gif" class="button_patch"/>
-                        </xf:group>
-                        <xf:group ref=".[count(../*[name()=substring-after($nodeset,':')])&gt;1 or contains($triggers,'remove')]">
-                            <xf:trigger appearance="minimal">
-                                <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-                                <xf:action ev:event="DOMActivate">
-                                    <xf:delete ev:event="DOMActivate" nodeset="."
-                                        at="index($index)"/>
-                                    <xf:dispatch name="xforms-value-changed" target="form-group"/>
-                                </xf:action>
-                            </xf:trigger>
-                        </xf:group>
+                        </xf:repeat>
+                        <xf:trigger appearance="minimal"
+                            ref=".[count(xxf:evaluate(concat('../',$nodeset)))&gt;1 or contains($triggers,'remove')]">
+                            <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:delete ev:event="DOMActivate" nodeset="."
+                                    at="index($index)"/>
+                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                            </xf:action>
+                        </xf:trigger>
                     </xf:group>    
                 </h:span>
             </xf:group>

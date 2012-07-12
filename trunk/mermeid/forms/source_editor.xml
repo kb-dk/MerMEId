@@ -118,6 +118,7 @@
         
         <!-- XBL components -->
         <xi:include href="includes/element_buttons.xbl" parse="xml"/>
+        <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
         <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
         <xi:include href="includes/date_editor.xbl" parse="xml"/>
         <xi:include href="includes/relator.xbl" parse="xml"/>
@@ -427,7 +428,7 @@
                                             Especially, a label should be given to if more than one title page is quoted.</h:span></h:a>
                                     </xf:label>
                                 </xf:input>
-                                <dcm:element-buttons 
+                                <dcm:element-buttons-typed 
                                     triggers="all" 
                                     nodeset="m:titlePage" 
                                     index="physdesc-titlepage"

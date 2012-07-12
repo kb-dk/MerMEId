@@ -319,7 +319,7 @@
                                     <h:fieldset>
                                         <h:legend>
                                             <xf:output value="if (m:instrVoice!='') then m:instrVoice else '[Ensemble]'"/>
-                                            <dcm:element-buttons 
+                                            <dcm:element-buttons-typed 
                                                 triggers="up down" 
                                                 nodeset="m:ensemble" 
                                                 origin="instance('instrumentation')/m:ensemble[m:instrVoice/@reg][index('ensemble-menu-repeat')]"
