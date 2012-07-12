@@ -19,7 +19,7 @@ Last modified 2011-08-25
     xmlns:foo="http://www.kb.dk"	
     exclude-result-prefixes="m xsl foo">
 
-  <xsl:import href="http://distest.kb.dk/editor/transforms/mei/mei_to_html.xsl" />
+  <xsl:import href="http://disdev-01.kb.dk/editor/transforms/mei/mei_to_html.xsl" />
 
   <xsl:output method="xml" encoding="UTF-8"/>
 
