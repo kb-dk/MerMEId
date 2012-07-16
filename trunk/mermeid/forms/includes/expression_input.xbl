@@ -68,7 +68,9 @@
                         <xxf:sequence select="if (local-name(..)='componentGrp') then 'true' else 'false'" xxbl:scope="outer"/>
                     </xxf:variable>
                     
-                    <xf:group ref="$binding" id="main-group">
+                    <xf:group ref="$binding" id="form-group">
+                        
+                        <xi:include href="../edit-form-event-handlers.xml" parse="xml"/>
                         
                         <!-- display expression-specific details at top level only if more than one expression or not empty -->
                         <xf:group ref=".[$is_component='true' or number($num_ex)&gt;1 or m:titleStmt/m:title[normalize-space(.)!='']]">
@@ -527,7 +529,7 @@
                                 </xf:trigger>
                                 <xf:repeat nodeset="m:castItem" id="repeat-cast">
                                     <xf:action ev:event="xforms-value-changed">
-                                        <xf:dispatch name="add-id" target="main-group"/>
+                                        <xf:dispatch name="add-id" target="form-group"/>
                                     </xf:action>
                                     <h:fieldset>
                                         <h:legend>
