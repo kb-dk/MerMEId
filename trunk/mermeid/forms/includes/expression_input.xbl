@@ -243,11 +243,12 @@
                             </xf:repeat>
                         </xf:group>
                         
+                       
                         <!-- Instrumentation editable at top level only (or if not empty) -->
                         <!-- Remove the group condition to enable instrumentation editing at component levels -->
                         <xf:group ref=".[$is_component='false' or $binding//m:instrVoice[.!='']]">
-                            <h:hr/>                                                     
-                            <h:label class="blocklabel strong">Instrumentation, singers and characters <h:a class="help">?<h:span 
+                            <h:fieldset>                                                     
+                            <h:legend>Instrumentation, singers and characters <h:a class="help">?<h:span 
                                 class="comment">Instruments and singers may be grouped into ensembles or specified
                                 as "stand-alone" performers. A group of performers acting as an ensemble (including choirs)
                                 should be defined as such. Each ensemble may or may not have a name (label) for display, 
@@ -281,7 +282,7 @@
                                     </xf:action>
                                 </xf:trigger>
                                 
-                            </h:label>
+                            </h:legend>
                             
                             <xf:group ref="m:perfMedium">
                                 <h:div class="blocklabel strong">Ensembles 
@@ -600,6 +601,7 @@
                                 </xf:repeat>
                             </xf:group>
                             
+                            </h:fieldset>
                             
                         </xf:group>
                     </xf:group>

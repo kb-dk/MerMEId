@@ -78,7 +78,7 @@
 							
 							<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
 								<xf:repeat nodeset="m:expression" id="component-list1">
-									<h:tr>
+									<h:tr class="hoverclass">
 										<h:td class="number_cell">
 											<xf:group ref=".[string-length(@n)]"><xf:output value="@n"/>.&#160;</xf:group>
 										</h:td>
@@ -116,12 +116,13 @@
 											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/></h:td>
 									</h:tr>
 									
-									<!-- 2nd sub-level -->
+									<!-- 1st sub-level -->
 									<h:tr>
-										<h:td></h:td>
+										<h:td/>
+										
 										<h:td colspan="3">
 											<xf:group ref=".[not(m:componentGrp)]">
-												&#160;∟&#160;
+												<h:img src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
 												<xf:trigger>
 													<xf:label>Add sub-component group</xf:label>
 													<xf:action ev:event="DOMActivate">
@@ -135,7 +136,7 @@
 											<xf:group ref="m:componentGrp">
 												
 												<xf:group ref=".[not(m:expression)]">
-													&#160;∟&#160;
+													<h:img src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
 													<xf:trigger>
 														<xf:label>Add sub-components</xf:label>
 														<xf:action ev:event="DOMActivate">
@@ -149,7 +150,7 @@
 												
 												<h:table class="sub_element_list" cellspacing="0" cellpadding="0" border="0">
 													<xf:repeat nodeset="m:expression" id="component-list2">
-														<h:tr>
+														<h:tr class="hoverclass">
 															<h:td class="number_cell">
 																<xf:group ref=".[count(following-sibling::*)=0]">
 																	<h:img src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
@@ -190,13 +191,107 @@
 															<h:td class="buttons_cell" style="text-align:right;"><dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list2" 
 																origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/></h:td>
 														</h:tr>
+														
+														
+														<!-- 2nd sub-level -->
+														<h:tr>
+															<h:td>
+																<xf:group ref=".[count(following-sibling::*)!=0]">
+																	<xf:repeat nodeset="m:componentGrp/m:expression">
+																		<h:img src="http:/editor/images/tree-3.png" alt="sub-element"></h:img>&#160;<h:br/>
+																	</xf:repeat>
+																	<!--<h:img src="http:/editor/images/tree-3.png" alt="sub-element"></h:img>&#160;-->
+																</xf:group>
+															</h:td>
+															<h:td colspan="3">
+																<xf:group ref=".[not(m:componentGrp)]">
+																	&#160;<h:img src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
+																	<xf:trigger>
+																		<xf:label>Add sub-component group</xf:label>
+																		<xf:action ev:event="DOMActivate">
+																			<xf:insert nodeset="m:componentGrp" 
+																				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp"/>
+																			<xf:dispatch name="id-update" target="form-group"/>
+																		</xf:action>
+																	</xf:trigger>
+																</xf:group>
+																
+																<xf:group ref="m:componentGrp">
+																	
+																	<xf:group ref=".[not(m:expression)]">
+																		&#160;<h:img src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
+																		<xf:trigger>
+																			<xf:label>Add sub-components</xf:label>
+																			<xf:action ev:event="DOMActivate">
+																				<xf:insert context="."
+																					nodeset="m:expression"
+																					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
+																				<xf:dispatch name="id-update" target="form-group"/>
+																			</xf:action>
+																		</xf:trigger>
+																	</xf:group>
+																	
+																	<h:table class="sub_element_list" cellspacing="0" cellpadding="0" border="0">
+																		<xf:repeat nodeset="m:expression" id="component-list3">
+																			<h:tr class="hoverclass">
+																				<h:td class="number_cell">
+																					<xf:group ref=".[count(following-sibling::*)=0]">
+																						<h:img src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
+																					</xf:group>
+																					<xf:group ref=".[count(following-sibling::*)!=0]">
+																						<h:img src="http:/editor/images/tree-2.png" alt="sub-element"></h:img>&#160;
+																					</xf:group>
+																					<xf:group ref=".[string-length(@n)]"><xf:output value="@n"/>.&#160;</xf:group>
+																				</h:td>
+																				<h:td> 
+																					<xf:output value="m:titleStmt/m:title"/>
+																					<xf:group ref=".[normalize-space(m:titleStmt/m:title) and normalize-space(m:tempo)]">. </xf:group>
+																					<xf:output value="m:tempo"/>
+																					<xf:group ref=".[normalize-space(concat(@n,m:titleStmt/m:title,m:tempo))='']"> [No number, title or tempo] </xf:group>
+																				</h:td>
+																				<h:td style="text-align:right;">
+																					<dcm:id ref="."/>
+																					<xf:group ref=".[instance('temp')/file_exists='true']">
+																						<xf:trigger>
+																							<xf:label><h:img src="http:/editor/images/edit.gif" title="Open component editor"/> Edit</xf:label>
+																							<xf:action ev:event="DOMActivate">
+																								<xxf:variable name="uri" 
+																									select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'expression_component_editor.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
+																								<xf:action if="instance('temp')/changed='true'">
+																									<xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+																									<xxf:show dialog="exit-warning-dialog"/>
+																								</xf:action>	
+																								<xf:action if="instance('temp')/changed='false'">
+																									<xf:load resource="{$uri}" show="replace"/>
+																								</xf:action>
+																							</xf:action>
+																						</xf:trigger>
+																					</xf:group>
+																					<xf:group ref=".[instance('temp')/file_exists!='true']">
+																						<h:small>File must be saved before components can be edited</h:small>
+																					</xf:group>
+																				</h:td>
+																				<h:td class="buttons_cell" style="text-align:right;"><dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list3" 
+																					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/></h:td>
+																			</h:tr>
+																		</xf:repeat>
+																	</h:table>
+																</xf:group>
+															</h:td>
+														</h:tr>
+														
+														<!-- end 2nd sub-level -->
+														
+														
+														
+														
 													</xf:repeat>
 												</h:table>
 											</xf:group>
 										</h:td>
 									</h:tr>
 									
-									<!-- end 2nd sub-level -->
+									<!-- end 1st sub-level -->
 									
 									
 								</xf:repeat>

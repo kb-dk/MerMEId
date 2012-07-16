@@ -359,6 +359,14 @@ table.element_list {
     border: 0;
 }
 
+table.sub_element_list {
+    width: 100%;
+}
+
+table.element_list tr.hoverclass:hover,
+table.sub_element_list tr.hoverclass:hover {
+    background-color:#ffffcc;
+}
 table.element_list td {
     border: 0;
     border-top: 1px dotted #999;
@@ -366,6 +374,10 @@ table.element_list td {
     padding: 2px;
 }
 
+table.sub_element_list td {
+    border-top:none;
+    padding: 0 0 0 2px;
+}
 table.element_list td.buttons_cell {
     width: 100px;
     text-align: right;
@@ -377,17 +389,12 @@ table.element_list tr {
 
 table.element_list td.number_cell {
     font-weight: bold;
-    text-align: center;
 }
 
 table.element_list .xbl-dcm-element-buttons {
     display:block;
 }
 
-table.sub_element_list td {
-    border-top:none;
-    padding: 0 0 0 2px;
-}
 
 /* css for help and warning pop-ups */
 
@@ -440,6 +447,7 @@ a.warning span.comment, a.dcm_id span.comment {
     border: 1px solid #ddd;
     font-weight:normal;
     font-size: 1.2em;
+    text-align: left;
     box-shadow: 7px 7px 10px 5px #333;
     border-radius: 4px;
     /* For non-CSS3 FireFox */
