@@ -20,5 +20,5 @@ where util:document-name($doc)=$document
 return $doc
 
 for $doc in $list
-return transform:transform($doc,xs:anyURI("http://disdev-01.kb.dk/editor/transforms/mei/mei_to_html_mei2012.xsl"),())
+return transform:transform($doc,xs:anyURI("http://{request:get-header('HOST')}/editor/transforms/mei/mei_to_html.xsl"),())
  

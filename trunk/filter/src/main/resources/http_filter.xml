@@ -21,7 +21,7 @@ get is the retrieval filter
 
 -->
 
-  <entry key="get">http://disdev-01.kb.dk/editor/transforms/mei/get_transform.xsl</entry>
+  <entry key="get">http://disdev-01.kb.dk/editor/transforms/mei/filter_get.xsl</entry>
   <entry key="get.mime">application/xml</entry>
   <entry key="get.charset">UTF-8</entry>
 
@@ -31,7 +31,7 @@ put is for updating
 
 -->
 
-  <entry key="put">http://disdev-01.kb.dk/editor/transforms/mei/put_transform.xsl</entry>
+  <entry key="put">http://disdev-01.kb.dk/editor/transforms/mei/filter_put.xsl</entry>
   <entry key="put.mime">application/xml</entry>
   <entry key="put.charset">UTF-8</entry>
 
@@ -55,7 +55,7 @@ when ready
 -->
 
    <entry key="create">http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}</entry>
-   <entry key="create.uri">http://disdev-01.kb.dk/editor/forms/mei/edit_mei_form.xml</entry>
+   <entry key="create.uri">http://disdev-01.kb.dk/editor/forms/mei/edit-work-case.xml</entry>
    <entry key="create.dir">http://disdev-01.kb.dk/filter/</entry>
 
 </properties>

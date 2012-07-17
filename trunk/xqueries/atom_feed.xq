@@ -41,7 +41,9 @@ declare function app:format-document(
   let $ref   := 
   <entry>
     <author>
-      <name>{$doc/m:meihead/m:filedesc/m:titlestmt/m:respstmt/m:persname[@type='composer']/string()}</name>
+	<name>
+	{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/string()}
+	</name>
     </author>
     <title>
     {$doc//m:title[@type="main"][1]/string()}
@@ -50,7 +52,7 @@ declare function app:format-document(
     href="{request:get-effective-uri()}?document={util:document-name($doc)}" />
     <content type="xhtml">
     {transform:transform($doc, 
-    xs:anyURI("http://distest.kb.dk/editor/transforms/mei/mei_to_html_div.xsl"), ())}
+    xs:anyURI("http://disdev-01.kb.dk/editor/transforms/mei/mei_to_html_div.xsl"), ())}
     </content>
   </entry>
   return $ref
@@ -75,19 +77,22 @@ declare function app:format-reference(
 	 fn:concat($term/string(),", ")
 
   let $ref   := 
-  <entry>
-    <author>
-      <name>{$doc/m:meihead/m:filedesc/m:titlestmt/m:respstmt/m:persname[@type='composer']/string()}</name>
-    </author>
-    <title>
-    {$doc//m:title[@type="main"][1]/string()}
-    </title>
-    <link 
-    href="http://{$host_port_context}/data/biblio/2012/jan/dcm/da/?document={util:document-name($doc)}" />
-    <content type="xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-    <p>
-      <h2>{$doc/m:meihead/m:filedesc/m:titlestmt/m:respstmt/m:persname[@type='composer']/string()}
+	<entry>
+	<author>
+	<name>
+        {$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/string()}
+	</name>
+	</author>
+	<title>
+	{$doc//m:title[@type="main"][1]/string()}
+	</title>
+	<link 
+	href="http://{$host_port_context}/data/biblio/2012/jan/dcm/da/?document={util:document-name($doc)}" />
+	<content type="xhtml">
+	<div xmlns="http://www.w3.org/1999/xhtml">
+	<p>
+	<h2>
+        {$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/string()}
       {" "}
       <a href="http://{$host_port_context}/data/biblio/2012/jan/dcm/da/?document={util:document-name($doc)}">
       {$doc//m:title[@type="main"][1]/string()}</a></h2>

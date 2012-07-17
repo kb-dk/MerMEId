@@ -37,17 +37,17 @@ declare option exist:serialize "method=xml media-type=text/xml";
 	    ""
 
 	for $c in distinct-values(
-	  collection("/db/dcm")/m:mei/m:meihead/m:encodingdesc/m:projectdesc/m:p/m:list[@n='use']/m:item/string())
-	  where fn:string-length($c)>0
-	  return
-	  <outline
-          xmlUrl="http://distest.kb.dk/storage/atom_feed.xq?page=1{$itemsarg}&amp;subject={$c}" text="{$c}" 
-	  htmlUrl="http://{$host_port_context}/data/biblio/2012/jan/dcm/en/?subject={$c}{$itemsarg}"
-	  id="{$c}"
-	  nodeId="{$c}"
-	  />
+		collection("/db/dcm")//m:seriesStmt/m:seriesStmt[@label="File collection"]/m:identifier/string())
+	where string-length($c) > 0
+	return
+	<outline
+        xmlUrl="http://distest.kb.dk/storage/atom_feed.xq?page=1{$itemsarg}&amp;subject={$c}" text="{$c}" 
+	htmlUrl="http://{$host_port_context}/data/biblio/2012/jan/dcm/en/?subject={$c}{$itemsarg}"
+	id="{$c}"
+	nodeId="{$c}"
+	/>
 
-      }
-    </outline>
-  </body>
+}
+</outline>
+</body>
 </opml>
