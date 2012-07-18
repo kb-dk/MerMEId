@@ -17,7 +17,7 @@
 	<xsl:variable name="empty_doc" select="document('/editor/forms/mei/model/empty_doc.xml')" />
 	
 	<xsl:template match="m:mei">
-		<!-- make a copy with an extra meiHead from the empty model document -->
+		<!-- make a copy with an extra header from the empty model document -->
 		<xsl:variable name="janus">
 			<mei xmlns="http://www.music-encoding.org/ns/mei"
 				xmlns:xl="http://www.w3.org/1999/xlink">
@@ -60,9 +60,62 @@
 				<xsl:variable name="this_att" select="local-name()"/>
 				<xsl:if test="not($data_node/@*[local-name()=$this_att])"><xsl:attribute name="{name()}"/></xsl:if>
 			</xsl:for-each>
-			<xsl:apply-templates mode="header"/>
+			<xsl:choose>
+				<!-- component expressions need special treatment -->
+				<xsl:when test="local-name()='componentGrp'">
+					<xsl:apply-templates mode="component"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:apply-templates mode="header"/>
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:element>
 	</xsl:template>    
+	
+	<!-- special case: expressions may occur nested in data, but not in the empty model -->
+	<xsl:template match="*" mode="component">
+		<!-- build an xpath string to locate the corresponding node in the model header -->
+		<xsl:variable name="complete_path"><xsl:for-each 
+			select="ancestor-or-self::*">/<xsl:if 
+				test="namespace-uri()='http://www.music-encoding.org/ns/mei'">m:</xsl:if><xsl:if 
+					test="namespace-uri()='http://www.tei-c.org/ns/1.0'">t:</xsl:if><xsl:value-of 
+						select="name()"/></xsl:for-each>
+		</xsl:variable>
+		<!-- always copy from the model's top-level expression -->
+		<xsl:variable 
+			name="path">/m:mei/m:meiHead[1]/m:workDesc/m:work/m:expressionList/m:expression/<xsl:call-template name="substring-after-last">
+				<xsl:with-param name="string" select="$complete_path"/>
+				<xsl:with-param name="delimiter" select="'m:expression/'"/>
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:element name="{name()}" namespace="{namespace-uri()}">
+			<xsl:copy-of select="@*"/>
+			<xsl:variable name="model" select="dyn:evaluate($path)"/>
+			<xsl:variable name="data_node" select="."/>
+			<!-- Add all missing empty attributes.  -->
+			<xsl:for-each select="$model/@*">
+				<xsl:variable name="this_att" select="local-name()"/>
+				<xsl:if test="not($data_node/@*[local-name()=$this_att])"><xsl:attribute name="{name()}"/></xsl:if>
+			</xsl:for-each>
+			<xsl:apply-templates mode="component"/>
+		</xsl:element>
+	</xsl:template>    
+	
+	<xsl:template name="substring-after-last">
+		<xsl:param name="string" />
+		<xsl:param name="delimiter" />
+		<xsl:choose>
+			<xsl:when test="contains($string, $delimiter)">
+				<xsl:call-template name="substring-after-last">
+					<xsl:with-param name="string"
+						select="substring-after($string, $delimiter)" />
+					<xsl:with-param name="delimiter" select="$delimiter" />
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise><xsl:value-of select="$string" /></xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
 	
 	<xsl:template match="@*|node()">
 		<xsl:copy>

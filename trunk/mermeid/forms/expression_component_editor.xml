@@ -234,15 +234,16 @@
                         <h:legend>Component</h:legend>
                         <h:div>
                             <xf:input ref="@n" class="short">
-                                <xf:label>No. <h:a class="help">?<h:span 
+                                <xf:label class="fixed_width_short">No. <h:a class="help">?<h:span 
                                     class="comment">Movement, section or scene numbers may be entered either here 
-                                    or as part of the title above</h:span></h:a></xf:label>
+                                    or as part of the title</h:span></h:a></xf:label>
                             </xf:input>
                         </h:div>
                         <xf:group ref="m:titleStmt">
                                 <xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
                                     <h:div>
-                                        <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+                                        <h:label class="fixed_width_short">Title</h:label><xi:include 
+                                            href="includes/input_with_xmllang.xml" parse="xml"/>
                                         <dcm:element-buttons 
                                             triggers="all" 
                                             nodeset="m:title" 
@@ -276,7 +277,7 @@
                             </xf:select1>
                         </h:div>                                    
                         <xf:group ref="m:key">
-                            <h:span class="fixed_width_short">Key</h:span>
+                            <h:label class="fixed_width_short">Key</h:label>
                             <xi:include href="includes/key_select.xml" parse="xml"/>
                         </xf:group>
                         <h:br clear="all"/>
