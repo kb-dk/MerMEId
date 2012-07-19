@@ -153,10 +153,10 @@
 														<h:tr class="hoverclass">
 															<h:td class="number_cell">
 																<xf:group ref=".[count(following-sibling::*)=0]">
-																	<h:img src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
+																	<h:img class="tree" src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
 																</xf:group>
 																<xf:group ref=".[count(following-sibling::*)!=0]">
-																	<h:img src="http:/editor/images/tree-2.png" alt="sub-element"></h:img>&#160;
+																	<h:img class="tree" src="http:/editor/images/tree-2.png" alt="sub-element"></h:img>&#160;
 																</xf:group>
 																<xf:group ref=".[string-length(@n)]"><xf:output value="@n"/>.&#160;</xf:group>
 															</h:td>
@@ -198,9 +198,11 @@
 															<h:td>
 																<xf:group ref=".[count(following-sibling::*)!=0]">
 																	<xf:repeat nodeset="m:componentGrp/m:expression">
-																		<h:img src="http:/editor/images/tree-3.png" alt="sub-element"></h:img>&#160;<h:br/>
+																		<h:img class="tree" src="http:/editor/images/tree-3.png"></h:img>&#160;<h:br/>
 																	</xf:repeat>
-																	<!--<h:img src="http:/editor/images/tree-3.png" alt="sub-element"></h:img>&#160;-->
+																	<xf:group ref=".[not(m:componentGrp/m:expression)]">
+																		<h:img class="tree" src="http:/editor/images/tree-3.png"></h:img>&#160;<h:br/>
+																	</xf:group>
 																</xf:group>
 															</h:td>
 															<h:td colspan="3">
@@ -219,7 +221,7 @@
 																<xf:group ref="m:componentGrp">
 																	
 																	<xf:group ref=".[not(m:expression)]">
-																		&#160;<h:img src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
+																		&#160;<h:img class="tree" src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
 																		<xf:trigger>
 																			<xf:label>Add sub-components</xf:label>
 																			<xf:action ev:event="DOMActivate">
@@ -236,10 +238,10 @@
 																			<h:tr class="hoverclass">
 																				<h:td class="number_cell">
 																					<xf:group ref=".[count(following-sibling::*)=0]">
-																						<h:img src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
+																						<h:img class="tree" src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
 																					</xf:group>
 																					<xf:group ref=".[count(following-sibling::*)!=0]">
-																						<h:img src="http:/editor/images/tree-2.png" alt="sub-element"></h:img>&#160;
+																						<h:img class="tree" src="http:/editor/images/tree-2.png" alt="sub-element"></h:img>&#160;
 																					</xf:group>
 																					<xf:group ref=".[string-length(@n)]"><xf:output value="@n"/>.&#160;</xf:group>
 																				</h:td>

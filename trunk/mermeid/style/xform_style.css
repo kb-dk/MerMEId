@@ -374,8 +374,16 @@ table.element_list td {
     padding: 2px;
 }
 
+#music-case table.element_list td {
+    border-top: none;
+    padding: 0 0 0 2px;
+}
+
+img.tree {
+    padding: 0;
+}
+
 table.sub_element_list td {
-    border-top:none;
     padding: 0 0 0 2px;
 }
 table.element_list td.buttons_cell {
@@ -393,6 +401,7 @@ table.element_list td.number_cell {
 
 table.element_list .xbl-dcm-element-buttons {
     display:block;
+    height: 22px;
 }
 
 
