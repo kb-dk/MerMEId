@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+    xmlns:xf="http://www.w3.org/2002/xforms" 
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:oxf="http://www.orbeon.com/oxf/processors"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:m="http://www.music-encoding.org/ns/mei"
+    xmlns:t="http://www.tei-c.org/ns/1.0" 
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <!--
+        Bibliographic reference editor 
+        Danish Centre for Music Publication (DCM) 
+        Axel Teich Geertinger, 2012
+        atge@kb.dk
+    -->
+    
+    <h:head>
+        
+        <h:title id="PageTitle">MerMEId - Editing bibliographic reference</h:title>
+        
+        <h:meta http-equiv="Content-Type" content="application/xhtml+xml"/>
+        
+        <h:script type="text/javascript" src="http:/editor/js/editor.js"/>
+        
+        <h:style type="text/css" media="all"> 
+            @import "/editor/style/tab_style.css"; 
+            @import "/editor/style/xform_style.css";
+            @import "/editor/style/model_editor_style.css";
+        </h:style>
+        
+        <xf:model>
+            
+            <xf:instance id="data-instance" xmlns="http://www.music-encoding.org/ns/mei">
+                <mei/>
+            </xf:instance>
+            
+            <xf:instance id="empty-instance" xmlns="http://www.music-encoding.org/ns/mei">
+                <mei/>
+            </xf:instance>
+            
+            <xf:instance id="temp">
+                <temp>
+                    <id/>
+                    <counter/>
+                    <changed>false</changed>
+                    <change_marker>*</change_marker>
+                    <etc>...</etc>
+                    <target_uri/>
+                </temp>
+            </xf:instance> 
+            
+            <xf:bind nodeset="instance('temp')">
+                <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
+            </xf:bind>               
+            
+            <xf:instance id="parameters" xmlns="http://www.kb.dk/dcm">
+                <xi:include href="mermeid_configuration.xml" parse="xml"/>
+            </xf:instance>
+            
+            <!-- submissions - loading and saving data -->            
+            
+            <xf:submission id="load-data-submission" 
+                method="get" 
+                serialization="none" 
+                validate="false"
+                resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
+                replace="instance" instance="data-instance"/>
+            
+            <xf:submission id="load-empty-submission"
+                method="get" 
+                serialization="none" 
+                validate="false"
+                resource="{instance('temp')/target_uri}"
+                replace="instance" instance="empty-instance"/>
+            
+            <xf:submission id="save-to-file"
+                ref="instance('data-instance')"
+                validate="false"
+                relevant="false"
+                xxf:calculate="false"
+                resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
+                method="put"
+                replace="instance">
+            </xf:submission>
+            
+            <!-- "onload" xforms actions -->
+            <xf:action ev:event="xforms-model-construct-done">
+                <!-- store requested ID -->
+                <xf:setvalue ref="instance('temp')/id" value="xxf:get-request-parameter('id')"/>
+                <!-- store XML data file name -->
+                <xf:setvalue ref="instance('parameters')/dcm:xml_file" value="xxf:get-request-parameter('doc')"/>
+                <!-- load XML data -->
+                <xf:send submission="load-data-submission"/>
+                <!-- load empty model XML data -->
+                <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:form_home,'model/empty_doc.xml')"/>
+                <xf:send submission="load-empty-submission"/>
+            </xf:action>
+            
+            <xf:action ev:event="xforms-submit-done">
+                <!-- set instance state to unchanged on saving -->
+                <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
+            </xf:action>
+            
+            <xf:action ev:event="xforms-submit-error">
+                <xxf:variable name="code" select="event('response-status-code')"/>
+                <xf:action>
+                    <xf:message>An error occurred (<xf:output value="$code"/>)</xf:message>
+                </xf:action>
+            </xf:action>
+            
+        </xf:model>
+        
+        <!-- XBL components -->
+        <xi:include href="includes/element_buttons.xbl" parse="xml"/>
+        <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
+        <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
+        <xi:include href="includes/tei_date_editor.xbl" parse="xml"/>
+        <xi:include href="includes/id.xbl" parse="xml"/>
+    </h:head>
+    
+    <h:body class="bibliography">
+        
+        <xf:group id="form-group">
+            
+            <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+            
+            <h:div class="inputdiv">
+                
+                <h:div style="float:right">
+                    <xf:submit submission="save-to-file">
+                        <xf:label>Save</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-bibliography,instance('parameters')/dcm:xml_file)"/>
+                            <xf:load resource="{$uri}" show="replace"/>
+                        </xf:action>
+                    </xf:submit>
+                    <xf:trigger>
+                        <xf:label>Cancel</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-bibliography,instance('parameters')/dcm:xml_file)"/>
+                            <xf:load resource="{$uri}" show="replace"/>
+                        </xf:action>
+                    </xf:trigger>
+                </h:div>
+                
+                
+                <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl/t:bibl[@xml:id=instance('temp')/id]">
+                    <h:h3>
+                        <xf:output value="t:author"/>
+                        <xf:output value="if (normalize-space(t:author) and not normalize-space(t:name[@role='recipient'])) then ': ' else '')"/>
+                        <xf:output value="if (normalize-space(t:name[@role='recipient'])) then concat(' to ',t:name[@role='recipient']) else '')"/>
+                        <xf:output value="t:title[@level='a']"/>
+                        <h:i><xf:output value="t:title[@level='j']"/></h:i>
+                        <xf:output value="t:title[@level='m']"/>
+                        <xf:output value="if (normalize-space(t:date)) then ', ' else '')"/>
+                        <xf:output value="t:date"/>
+                        <xf:group ref=".[normalize-space(concat(t:author,t:name[@role='recipient'],t:title[@level='a'],t:title[@level='j'],t:title[@level='m'],t:date))='']"> [No description] </xf:group>
+                        <dcm:id ref="."/>
+                    </h:h3>                
+                    
+                    <h:fieldset>
+                        
+                        
+                        <h:legend>
+                            <xf:output value="translate(concat(translate(substring(@type,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(@type,2)),'_',' ')"/> 
+                        </h:legend>
+                        <h:div class="vertical_spacer"> </h:div>
+                        
+                        <xf:group ref=".[@type!='Letter' and translate(@type,' ','_')!='Diary_entry' and translate(@type,' ','_')!='Concert_programme']">
+                            
+                            <xf:group ref="t:author[../translate(@type,' ','_')!='Newspaper_article']">
+                                <!-- authors are listed elsewhere if newspaper article -->
+                                <h:fieldset>
+                                    <h:legend>Authors</h:legend>
+                                    <xf:repeat nodeset="." id="repeat-bibl-author">
+                                        <h:div>
+                                            <xf:input ref="." class="long">
+                                                <xf:label class="fixed_width_short">Name</xf:label>
+                                            </xf:input>
+                                            <dcm:element-buttons 
+                                                triggers="add delete" 
+                                                nodeset="t:author" 
+                                                index="repeat-bibl-author"
+                                                origin="instance('bibl-type-instance')/t:listBibl/t:bibl[t:author]/t:author"/>
+                                        </h:div>
+                                    </xf:repeat>
+                                </h:fieldset>
+                            </xf:group>
+                            
+                            <h:fieldset>
+                                <h:legend>Title</h:legend>
+                                <xf:repeat nodeset="t:title" id="repeat-bibl-title">
+                                    <h:div>
+                                        <xf:input ref="." class="long">
+                                            <xf:label class="fixed_width">
+                                                <xf:output value="if (@level='a') then 'Article' else ''"/>
+                                                <xf:output value="if (@level='j') then tokenize(translate(../@type,' ','_'),'_')[1] else ''"/>
+                                                <xf:output value="if (@level='m') then 'Monograph' else ''"/>
+                                                <xf:output value="if (@level='s') then 'Series' else ''"/>
+                                            </xf:label>
+                                        </xf:input>
+                                    </h:div>
+                                </xf:repeat>
+                            </h:fieldset>
+                            
+                            <xf:group ref="t:date[../translate(@type,' ','_')='Newspaper_article']">
+                                <!-- newspaper article date here -->
+                                <h:div>
+                                    <dcm:tei-date-editor ref=".">
+                                        <xf:label class="fixed_width">Date </xf:label>
+                                    </dcm:tei-date-editor>
+                                </h:div>
+                            </xf:group>
+                            
+                            
+                            <xf:group ref="t:author[../translate(@type,' ','_')='Newspaper_article']">
+                                <!-- newspaper article author here -->
+                                <h:fieldset>
+                                    <h:legend>Authors</h:legend>
+                                    <xf:repeat nodeset="." id="repeat-bibl-newspaper-author">
+                                        <h:div>
+                                            <xf:input ref="." class="long">
+                                                <xf:label class="fixed_width_short">Name</xf:label>
+                                            </xf:input>
+                                            <dcm:element-buttons 
+                                                triggers="add delete" 
+                                                nodeset="t:author" 
+                                                index="repeat-bibl-author"
+                                                origin="instance('bibl-type-instance')/t:listBibl/t:bibl[t:author]/t:author"/>
+                                        </h:div>
+                                    </xf:repeat>
+                                </h:fieldset>
+                            </xf:group>				
+                            
+                            <h:fieldset>
+                                <h:legend>Volume etc. <h:a class="help">?<h:span class="comment">Volume and issue no. to be displayed as vol./no. For journal articles, 
+                                    the year displayed will be taken from publication date below. For example, a reference to The Musical Quarterly 88/3 (2005), pp.339-341 should be divided as follows: <h:br/>
+                                    "88" goes in <h:em>Volume</h:em>, "3" in <h:em>No.</h:em>, "339-341" in <h:em>Pages</h:em> and "2005" in <h:em>Date</h:em> (under "Publication", see below).<h:br/>
+                                    For references to more than one volume, additional sets of volume/no./pages can be added.
+                                </h:span></h:a> 
+                                    <xf:trigger appearance="minimal">
+                                        <xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add volume, number, and pages" style="vertical-align:text-top;"/></xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xxf:variable name="ref_type" select="@type"/>
+                                            <xf:insert nodeset="t:biblScope" at="last()" position="after"
+                                                origin="instance('bibl-type-instance')/t:listBibl/t:bibl[@type=$ref_type]/t:biblScope"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </h:legend>
+                                <xf:repeat nodeset="t:biblScope" id="repeat-bibl-biblscope">
+                                    <h:div>
+                                        <xf:input ref=".">
+                                            <xf:label class="fixed_width_short">
+                                                <xf:output value="if (@type='vol') then 'Volume' else ''"/>
+                                                <xf:output value="if (@type='issue') then 'No.' else ''"/>
+                                                <xf:output value="if (@type='pp') then 'Pages' else ''"/>
+                                            </xf:label>
+                                        </xf:input>
+                                        <xf:trigger ref="../t:biblScope[last()&gt;1]" appearance="minimal">
+                                            <xf:label>
+                                                <h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete"/>
+                                            </xf:label>
+                                            <xf:delete nodeset="../t:biblScope" at="index('repeat-bibl-biblscope')" ev:event="DOMActivate"/>
+                                        </xf:trigger>
+                                    </h:div>
+                                </xf:repeat>
+                            </h:fieldset>
+                            
+                            <xf:group ref="t:editor">
+                                <h:fieldset>
+                                    <h:legend>Editors</h:legend>
+                                    <xf:repeat nodeset="." id="repeat-bibl-editor">
+                                        <h:div>
+                                            <xf:input ref="." class="long">
+                                                <xf:label class="fixed_width_short">Name</xf:label>
+                                            </xf:input>
+                                            <dcm:element-buttons 
+                                                triggers="add delete" 
+                                                nodeset="t:editor" 
+                                                index="repeat-bibl-editor"
+                                                origin="instance('bibl-type-instance')/t:listBibl/t:bibl[t:editor]/t:editor"/>
+                                        </h:div>
+                                    </xf:repeat>
+                                </h:fieldset>
+                            </xf:group>
+                            
+                            
+                            <xf:group ref=".[translate(@type,' ','_')!='Newspaper_article']">
+                                <!-- publication date etc. listed elsewhere if newspaper article -->
+                                <h:fieldset>
+                                    <h:legend>Publication</h:legend>
+                                    <h:div>
+                                        <xf:input ref="t:publisher">
+                                            <xf:label class="fixed_width">Publisher</xf:label>
+                                        </xf:input>
+                                    </h:div>
+                                    <h:div>
+                                        <xf:input ref="t:pubPlace">
+                                            <xf:label class="fixed_width">Place</xf:label>
+                                        </xf:input>
+                                    </h:div>
+                                    <h:div>
+                                        <dcm:tei-date-editor ref="t:date">
+                                            <xf:label class="fixed_width">Date </xf:label>
+                                        </dcm:tei-date-editor>
+                                    </h:div>
+                                </h:fieldset>
+                            </xf:group>
+                            
+                            <xf:repeat nodeset="t:ref[@type!='editions' or count(@type)=0]">
+                                <h:div>
+                                    <xf:input ref="@target" class="long">
+                                        <xf:label>URI (link to fulltext)</xf:label>
+                                    </xf:input>
+                                </h:div>
+                            </xf:repeat>
+                            
+                            <xf:group ref="t:ref[@type='editions']">
+                                <h:fieldset>
+                                    <h:legend>Editions</h:legend>
+                                    <xf:repeat nodeset="t:bibl" id="repeat-bibl-editions">
+                                        <h:div>
+                                            <xf:input ref="t:title[@type='short_title']">
+                                                <xf:label>Short title <h:a class="help">?<h:span class="comment">A short-hand reference to the publication quoting this item, e.g.
+                                                    "CNB" or "Mozart: Briefe"</h:span></h:a></xf:label>
+                                            </xf:input> <xf:input ref="t:biblScope">
+                                                <xf:label>Page or No. <h:a class="help">?<h:span class="comment">The number of this item in the edition or the relevant pages, e.g. "IV/345" </h:span></h:a></xf:label>
+                                            </xf:input>
+                                            <dcm:element-buttons 
+                                                triggers="add delete" 
+                                                nodeset="t:bibl" 
+                                                index="repeat-letter-editions"
+                                                origin="instance('bibl-type-instance')/t:listBibl/t:bibl/t:ref[@type='editions']/t:bibl[1]"/>
+                                        </h:div>
+                                    </xf:repeat>
+                                </h:fieldset>
+                            </xf:group>
+                            
+</xf:group>
+                        
+                            <xf:group ref=".[@type='Letter' or translate(@type,' ','_')='Diary_entry']">
+                                <xf:input ref="t:author" class="long">
+                                    <xf:label class="fixed_width">Author <h:a class="help">?<h:span class="comment">For diary entries, leave empty if author is the composer</h:span></h:a></xf:label>
+                                </xf:input>
+                                <h:br clear="all"/>
+                                <xf:group ref=".[@type='Letter']">
+                                    <xf:input ref="t:name[@role='recipient']" class="long">
+                                        <xf:label class="fixed_width">Recipient</xf:label>
+                                    </xf:input>
+                                    <h:br clear="all"/>
+                                </xf:group>
+                                <dcm:tei-date-editor ref="t:date">
+                                    <xf:label class="fixed_width">Date </xf:label>
+                                </dcm:tei-date-editor>
+                                
+                                <h:fieldset>
+                                    <h:legend>Location</h:legend>
+                                    <xf:input ref="t:msIdentifier/t:repository">
+                                        <xf:label class="fixed_width_long">Repository name <h:a class="help">?<h:span class="comment">The library, archive or other repository holding this item,
+                                            e.g. "DK-Kk"</h:span></h:a></xf:label>
+                                    </xf:input>
+                                    <xf:input ref="t:msIdentifier/t:idno">
+                                        <xf:label>Shelfmark <h:a class="help">?<h:span class="comment">The shelfmark or other signature identfying the item in the
+                                            repository</h:span></h:a></xf:label>
+                                    </xf:input>
+                                    <xf:repeat nodeset="t:ref[@type!='editions' or count(@type)=0]">
+                                        <h:div>
+                                            <xf:input ref="@target" class="long">
+                                                <xf:label class="fixed_width_long">URI <h:a class="help">?<h:span class="comment">Link to fulltext or facsimile,
+                                                    e.g. http://example.org/document.html</h:span></h:a></xf:label>
+                                            </xf:input>
+                                        </h:div>
+                                    </xf:repeat>
+                                </h:fieldset>
+                                
+                                <h:fieldset>
+                                    <h:legend>Editions</h:legend>
+                                    <xf:repeat nodeset="t:ref[@type='editions']/t:bibl" id="repeat-letter-editions">
+                                        <h:div>
+                                            <xf:input ref="t:title[@type='short_title']">
+                                                <xf:label>Short title <h:a class="help">?<h:span class="comment">A short-hand reference to the publication quoting this item, e.g.
+                                                    "CNB" or "Mozart: Briefe"</h:span></h:a></xf:label>
+                                            </xf:input> <xf:input ref="t:biblScope">
+                                                <xf:label>Page or No. <h:a class="help">?<h:span class="comment">The number of this item in the edition or the relevant pages, e.g. "IV/345" </h:span></h:a></xf:label>
+                                            </xf:input>
+                                            <dcm:element-buttons 
+                                                triggers="add delete" 
+                                                nodeset="t:bibl" 
+                                                index="repeat-letter-editions"
+                                                origin="instance('bibl-type-instance')/t:listBibl/t:bibl/t:ref[@type='editions']/t:bibl[1]"/>
+                                        </h:div>
+                                    </xf:repeat>
+                                </h:fieldset>
+                            </xf:group>
+                            
+                            <xf:group ref=".[translate(@type,' ','_')='Concert_programme']">
+                                <h:div>
+                                    <xf:input ref="t:title" class="long">
+                                        <xf:label class="fixed_width">Title </xf:label>
+                                    </xf:input>
+                                </h:div>
+                                <h:div>
+                                    <xf:input ref="t:date">
+                                        <xf:label class="fixed_width">Date <h:a class="help">?<h:span class="comment">Date is given (if possible) as yyyy-mm-dd, e.g.
+                                            "1918-02-28"</h:span></h:a></xf:label>
+                                    </xf:input>
+                                </h:div>			
+                                <h:div>
+                                    <xf:input ref="t:geogName">
+                                        <xf:label class="fixed_width">Place</xf:label>
+                                    </xf:input>
+                                    
+                                    <h:fieldset>
+                                        <h:legend>Location</h:legend>
+                                        <xf:input ref="t:msIdentifier/t:repository">
+                                            <xf:label class="fixed_width_long">Repository name <h:a class="help">?<h:span class="comment">The library, archive or other repository holding this item,
+                                                e.g. "DK-Kk"</h:span></h:a></xf:label>
+                                        </xf:input>
+                                        <xf:input ref="t:msIdentifier/t:idno">
+                                            <xf:label>Shelfmark <h:a class="help">?<h:span class="comment">The shelfmark or other signature identfying the item in the
+                                                repository</h:span></h:a></xf:label>
+                                        </xf:input>
+                                        <xf:repeat nodeset="t:ref[@type='' or count(@type)=0]">
+                                            <h:div>
+                                                <xf:input ref="@target" class="long">
+                                                    <xf:label class="fixed_width_long">URI <h:a class="help">?<h:span class="comment">Link to fulltext or facsimile,
+                                                        e.g. http://example.org/document.html</h:span></h:a></xf:label>
+                                                </xf:input>
+                                            </h:div>
+                                        </xf:repeat>
+                                    </h:fieldset>						
+                                </h:div>
+                            </xf:group>
+                        
+                    </h:fieldset>
+                    
+                    </xf:group>
+                
+            </h:div>
+            
+        </xf:group>
+        <h:br clear="all"/>
+        
+        <xi:include href="edit-form-footer.xml" parse="xml"/>
+    </h:body>
+</h:html>

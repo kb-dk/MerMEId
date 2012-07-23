@@ -27,7 +27,7 @@
             <dcm:id ref="."/>
             <xf:group ref=".[instance('temp')/file_exists='true']">
               <xf:trigger>
-                <xf:label><h:img src="http:/editor/images/edit.gif" title="Open performance editor"/> Edit</xf:label>
+                <xf:label><h:img src="http:/editor/images/edit.gif" title="Open the source editor"/> Edit</xf:label>
                 <xf:action ev:event="DOMActivate">
                   <xxf:variable name="uri" 
                     select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'source_editor.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>

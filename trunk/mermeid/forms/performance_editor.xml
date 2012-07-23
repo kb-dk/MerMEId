@@ -212,24 +212,6 @@
                                 <xf:label class="fixed_width">Ensemble</xf:label>
                             </xf:input>
                             
-                            <h:br clear="all"/>
-                            <h:br clear="all"/>
-                            
-                            <xf:select1 ref="@evidence" class="maxlong">
-                                <xf:label class="fixed_width">Evidence <h:a class="help">?<h:span class="comment">Pointer to a bibliographic 
-                                reference serving as main evidence for this performance.</h:span></h:a> </xf:label>
-                                <xf:item>
-                                    <xf:label/>
-                                    <xf:value/>
-                                </xf:item>
-                                <xf:itemset nodeset="/m:mei/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl/t:bibl">
-                                    <xf:label><xf:output value="concat('[',@type,'] ', t:author,': ',t:name[@role='recipient'],' ',t:title[@level='a'],' ',t:title[@level='j'],' ',t:title[@level='m'],' ',t:date)"/></xf:label>
-                                    <xf:value ref="@xml:id"/>
-                                </xf:itemset>
-                            </xf:select1>
-                            <h:br clear="all"/>
-                            <h:br clear="all"/>
-                            
                             <h:div class="persname-box">
                                 <h:div class="strong">Persons</h:div>
                                 <h:div class="blocklabel">
@@ -247,7 +229,24 @@
                                     <h:br/>
                                 </xf:repeat>
                             </h:div>
+
+                            <h:br clear="all"/>
                             
+                            <xf:select1 ref="@evidence" class="maxlong">
+                                <xf:label class="fixed_width">Evidence <h:a class="help">?<h:span class="comment">Pointer to a bibliographic 
+                                    reference serving as main evidence for this performance.</h:span></h:a> </xf:label>
+                                <xf:item>
+                                    <xf:label/>
+                                    <xf:value/>
+                                </xf:item>
+                                <xf:itemset nodeset="/m:mei/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl/t:bibl">
+                                    <xf:label><xf:output value="concat('[',translate(@type,'_',' '),'] ', t:author,': ',t:name[@role='recipient'],' ',t:title[@level='a'],' ',t:title[@level='j'],' ',t:title[@level='m'],' ',t:date)"/></xf:label>
+                                    <xf:value ref="@xml:id"/>
+                                </xf:itemset>
+                            </xf:select1>
+                            <h:br clear="all"/>
+
+
                             <h:div class="reviews-box">
                                 <xf:repeat nodeset="t:listBibl[@type='reviews']/t:bibl" id="repeat-review">
                                     <h:fieldset>

@@ -7,11 +7,13 @@
   xmlns:xf="http://www.w3.org/2002/xforms" 
   xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
   xmlns:ev="http://www.w3.org/2001/xml-events"
-  xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" >
+  xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+  xmlns:dcm="http://www.kb.dk/dcm">
   
   <h:div class="inputdiv">
+    
     <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']">
-
+      
       <!-- reference types menu -->
       <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
         close="true" draggable="true" visible="false">
@@ -26,9 +28,10 @@
               <xf:toggle case="hide_ref_types"/>
               <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]" 
                 nodeset="t:bibl" 
-                at="index('repeat-bibl')"
+                at="index('repeat-references')"
                 position="after" 
                 origin="instance('bibl-type-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]/@type]/t:bibl[index('ref-type-menu-repeat')]"/>
+              <xf:dispatch name="id-update" target="form-group"/>
               <xxf:hide dialog="add-ref-dialog"/>
             </xf:action>
           </xf:trigger>
@@ -42,7 +45,7 @@
               <xf:toggle case="hide_ref_types"/>
               <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]" 
                 nodeset="t:bibl" 
-                at="index('repeat-bibl')"
+                at="index('repeat-references')"
                 position="after" 
                 origin="instance('bibl-type-instance')/t:listBibl[not(@type)]/t:bibl[index('ref-type-menu-repeat2')]"/>
               <xxf:hide dialog="add-ref-dialog"/>
@@ -62,7 +65,7 @@
                 <xf:action ev:event="DOMActivate">
                   <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]"
                     nodeset="t:bibl"
-                    at="index('repeat-bibl')" 
+                    at="index('repeat-references')" 
                     position="after" 
                     origin="instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:seriesStmt[@label='File collection']/m:identifier][index('std-bibl-repeat')]/t:bibl[index('std-bibl-menu-repeat')]"/>
                   <xxf:hide dialog="add-ref-dialog"/>
@@ -75,23 +78,7 @@
       </xxf:dialog>
       <!-- end menu -->
       
-      <xf:repeat nodeset="t:listBibl" id="repeat-listbibl">
-        <h:fieldset>
-          <h:legend>
-            <xf:output value="concat(translate(substring(@type,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(@type,2,string-length(@type)-1))"/> 
-            <xf:output ref=".[count(@type)&lt;1]" value="'Bibliography'"/>
-          </h:legend>
-          <xf:trigger ref=".[not(t:bibl)]">
-            <xf:label> Add reference</xf:label>
-            <xf:action ev:event="DOMActivate">
-              <xxf:show dialog="add-ref-dialog"/>
-            </xf:action>
-          </xf:trigger>
-          <xf:repeat nodeset="t:bibl" id="repeat-bibl">
-                <xi:include href="bibliography-entry-elements.xml" parse="xml"/>
-              </xf:repeat>        
-        </h:fieldset>
-      </xf:repeat>
+      <h:br/>
       
       <!-- trigger adding a primary bibliography -->
       <xf:trigger ref=".[not(t:listBibl[@type='primary'])]/t:listBibl">
@@ -106,8 +93,8 @@
       <xf:trigger ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography'][not(t:listBibl[@type='secondary'])]/t:listBibl">
         <xf:label> Add a secondary bibliography</xf:label>
         <xf:action ev:event="DOMActivate">
-          <xf:insert nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl" at="1" position="before"
-            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='primary']"/>
+          <xf:insert nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl" at="1" position="after"
+            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='secondary']"/>
         </xf:action>
       </xf:trigger>
       
@@ -119,6 +106,88 @@
             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='documentation']"/>
         </xf:action>
       </xf:trigger>
+      
+      
+      <xf:repeat nodeset="t:listBibl" id="repeat-listbibl">
+        <h:fieldset>
+          <h:legend>
+            <xf:output value="concat(translate(substring(@type,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(@type,2,string-length(@type)-1))"/> 
+            <xf:output ref=".[count(@type)&lt;1]" value="'Bibliography'"/>
+            <dcm:element-buttons triggers="remove" 
+              nodeset="t:listBibl" 
+              origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[1]" 
+              index="repeat-listbibl"/>
+          </h:legend>
+          <h:br/>
+          <h:span class="blocklabel strong">References</h:span>
+          <xf:trigger ref=".[not(t:bibl)]">
+            <xf:label> Add reference</xf:label>
+            <xf:action ev:event="DOMActivate">
+              <xxf:show dialog="add-ref-dialog"/>
+            </xf:action>
+          </xf:trigger>
+          <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
+            <xf:repeat nodeset="t:bibl" id="repeat-references">
+              <h:tr>
+                <h:td class="number_cell">
+                  <xf:output value="position()"/>&#160;
+                </h:td>
+                <h:td>&#160;  
+                  <xf:output value="concat('[',translate(@type,'_',' '),'] ')"/>
+                </h:td>
+                <h:td>&#160;  
+                  <xf:output value="t:author"/><xf:output value="if (normalize-space(t:author) and not(normalize-space(t:name[@role='recipient']))) then ': ' else ''"/>
+                  <xf:output value="if (normalize-space(t:name[@role='recipient'])) then concat(' to ',t:name[@role='recipient']) else ''"/>
+                  <xf:output value="t:title[@level='a']"/>
+                  <h:i><xf:output value="t:title[@level='j']"/></h:i>
+                  <xf:output value="t:title[@level='m']"/>
+                  <xf:output value="if (normalize-space(t:date)) then concat('(',normalize-space(t:date),')') else ''"/>
+                  <xf:group ref=".[normalize-space(concat(t:author,t:name[@role='recipient'],t:title[@level='a'],t:title[@level='j'],t:title[@level='m'],t:date))='']"> [No description] </xf:group>
+                </h:td>
+                <h:td nowrap="nowrap">
+                  <dcm:id ref="."/>
+                  <xf:group ref=".[instance('temp')/file_exists='true']">
+                    <xf:trigger>
+                      <xf:label><h:img src="http:/editor/images/edit.gif" title="Open reference editor"/> Edit</xf:label>
+                      <xf:action ev:event="DOMActivate">
+                        <xxf:variable name="uri" 
+                          select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'reference_editor.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
+                        <xf:action if="instance('temp')/changed='true'">
+                          <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+                          <xxf:show dialog="exit-warning-dialog"/>
+                        </xf:action>	
+                        <xf:action if="instance('temp')/changed='false'">
+                          <xf:load resource="{$uri}" show="replace"/>
+                        </xf:action>
+                      </xf:action>
+                    </xf:trigger>
+                  </xf:group>
+                  <xf:group ref=".[instance('temp')/file_exists!='true']">
+                    <h:small>File must be saved before references can be edited</h:small>
+                  </xf:group>
+                </h:td>
+                <h:td class="buttons_cell" nowrap="nowrap"><dcm:element-buttons 
+                  triggers="up down copy" 
+                  nodeset="t:bibl" 
+                  index="repeat-references"
+                  origin="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[1]/t:bibl[1]"/><xf:trigger appearance="minimal"
+                    class="non-standard_button">
+                    <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/></xf:label>
+                    <xf:action ev:event="DOMActivate">
+                      <xxf:show dialog="add-ref-dialog"/>
+                    </xf:action>
+                  </xf:trigger><dcm:element-buttons 
+                    triggers="remove" 
+                    nodeset="t:bibl" 
+                    index="repeat-references"
+                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[1]/t:bibl[1]"/>
+                </h:td>
+              </h:tr>
+            </xf:repeat>
+          </h:table>
+          
+        </h:fieldset>
+      </xf:repeat>
       
     </xf:group>
     

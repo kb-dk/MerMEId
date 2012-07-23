@@ -17,7 +17,10 @@
 				
 					<h:span class="blocklabel">File collections <h:a class="help">?<h:span class="comment">Machine-readable 
 						identifier of the contexts (catalogues or collections) in
-						which this file is to appear - e.g. "CNW" or "BWV"</h:span></h:a></h:span>
+						which this file is to appear - e.g. "CNW" or "BWV".<h:br/>
+						The collection name will also appear on a collection button on the file list. 
+						Use the button to find all files belonging to this collection.
+					</h:span></h:a></h:span>
 					<xf:repeat
 						nodeset="m:seriesStmt[@label='File collection']/m:identifier"
 						id="repeat-collection">

@@ -13,82 +13,37 @@
 	xmlns:t="http://www.tei-c.org/ns/1.0" 
 	xml:base="http://disdev-01.kb.dk/editor/forms/mei/"
 	xmlns:dcm="http://www.kb.dk/dcm">
-
-  <!-- We will need an xml:base attribute -->
-  
-  <!-- 
-       Created by the Danish Centre for Music Publication
-       The Royal Library, Copenhagen 2012
-       Authors: Sigfrid Lundberg, Axel Teich Geertinger
-  -->
-
-  <xi:include href="edit-form-head.xml" parse="xml"/>
-  
-  <!-- set page title on load -->
-  <h:body id="editor-body" class="editor_body" onload="initialize();">
-
-    <xi:include href="edit-form-topbar.xml" parse="xml"/>
-    
-    <h:div id="form-body">
-      <xf:group id="form-group">
 	
-	<!-- global event handlers -->
-	<!-- "on change" xforms actions -->
-	<xf:action ev:event="xforms-value-changed">
-	  <xf:setvalue ref="instance('temp')/changed" value="'true'"/>
-	</xf:action>
-	<xf:action ev:event="language-update">
-	  <!-- add missing language declarations -->
-	  <xf:insert nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:langUsage/m:language"
-		     origin="instance('languages')/language[@xml:id=instance('data-instance')//@xml:lang[not(.=instance('data-instance')//m:langUsage/m:language/@xml:id)]]"/>
-	  <!-- delete unused language declarations -->
-	  <xf:delete nodeset="instance('data-instance')//m:langUsage/m:language[not(@xml:id=instance('data-instance')//@xml:lang)]"/>
-	  <!-- delete duplicate language declarations -->
-	  <xf:delete nodeset="instance('data-instance')//m:langUsage/m:language[. = preceding-sibling::m:language]"/>
-	</xf:action>
-
-	<h:div id="bibliography-case">
-	  <h:div class="top-bar-container">
-	    <h:div id="bibliography-border"> </h:div>
-	  </h:div>
-	  <xi:include href="main_form_bibliography.xml" parse="xml"/>
-	</h:div>
-
-      </xf:group>
-    </h:div>
-    
-    <h:div class="logo">
-      <xf:trigger appearance="minimal">
-	<xf:label>
-	  <img alt="MerMEId - logo" title="About MerMEId" src="http:/editor/images/mermeid_12px.png"
-	       border="0"/>
-	</xf:label>
-	<xxf:show dialog="about-dialog" ev:event="DOMActivate"/>
-      </xf:trigger>
-    </h:div>
-    
-    <xxf:dialog id="about-dialog" appearance="full" level="modal" close="true" draggable="false" visible="false">
-      <div class="about_header"><img src="/editor/images/mermeid_30px.png" alt="MerMEId logo" border="0"/></div>
-      <div class="about_main">
-	<p>MerMEId (Metadata Editor and Repository for MEI Data) is written and distributed by:</p>
-	<p><a href="http://www.kb.dk/en/kb/nb/mta/dcm/">Danish Centre for Music Publication (DCM)</a><br/> The
-	Royal Library<br/> P.O.Box 2149<br/> DK - 1016 Copenhagen<br/>
-	</p>
-	<p>Authors: Sigfrid Lundberg (<a href="mailto:slu@kb.dk">slu@kb.dk</a>) &amp; Axel Teich Geertinger (<a
-	href="mailto:atge@kb.dk">atge@kb.dk</a>)</p>
-	<p>This version released: 30 September 2011</p>
-	<p>MerMEId is open-source software released under the <a
-	href="http://www.apache.org/licenses/LICENSE-2.0" title="See Apache License 2.0" target="_blank"
-	>Apache License version 2.0</a></p>
-      </div>
-      <div class="about_footer">
-	<a href="http://www.kb.dk/en/kb/nb/mta/dcm/" title="Danish Centre for Music Publication"><img
-	src="/editor/images/dcm_logo_long_text_dark.png" alt="DCM logo" border="0"
-	style="margin-right:30px;"/></a>
-	<a href="http://www.kb.dk/en/" title="The Royal Library"><img src="/editor/images/kb.png"
-	alt="Royal Library logo" border="0"/></a>
-      </div>
-    </xxf:dialog>
-    
+	<!-- We will need an xml:base attribute -->
+	
+	<!-- 
+		Created by the Danish Centre for Music Publication
+		The Royal Library, Copenhagen 2012
+		Authors: Sigfrid Lundberg, Axel Teich Geertinger
+	-->
+	
+	<xi:include href="edit-form-head.xml" parse="xml"/>
+	
+	<!-- set page title on load -->
+	<h:body id="editor-body" class="editor_body" onload="initialize();">
+		
+		<xi:include href="edit-form-topbar.xml" parse="xml"/>
+		
+		<h:div id="form-body">
+			<xf:group id="form-group">
+				
+				<xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+				
+				<h:div id="bibliography-case">
+					<h:div class="top-bar-container">
+						<h:div id="bibliography-border"> </h:div>
+					</h:div>
+					<xi:include href="main_form_bibliography.xml" parse="xml"/>
+				</h:div>
+				
+			</xf:group>
+		</h:div>
+		
+		<xi:include href="edit-form-footer.xml" parse="xml"/>
 	</h:body>
 </h:html>
