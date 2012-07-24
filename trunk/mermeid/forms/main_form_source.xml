@@ -15,7 +15,7 @@
     <h:br/>
     <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
       <xf:repeat nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source" id="repeat-sources">
-        <h:tr>
+        <h:tr class="hoverclass">
           <h:td class="number_cell">
             <xf:output value="position()"/>&#160;
           </h:td>

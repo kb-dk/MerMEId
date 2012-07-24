@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
-  <!-- DCM 2012   -->
-  <!-- atge@kb.dk   -->
-  
+  <!-- Bibliographic reference type definitions -->
+  <!-- DCM 2012 -->
   
 
   <!-- special reference types for primary texts-->
   <listBibl type="primary">
     
-    <bibl type="Letter">
+    <bibl type="Letter" xml:id="">
       <author/>
       <name role="recipient"/>
       <date/>
@@ -27,7 +26,7 @@
       </ref>
     </bibl>
     
-    <bibl type="Diary_entry">
+    <bibl type="Diary_entry" xml:id="">
       <author/>
       <date/>
       <geogName/>
@@ -51,7 +50,7 @@
   <!-- special reference types for secondary texts -->
   <listBibl type="secondary">
         
-    <bibl type="Web_resource">
+    <bibl type="Web_resource" xml:id="">
       <author/>
       <date/>
       <title level="a"/>
@@ -68,7 +67,7 @@
   </listBibl>
   
   <!-- special reference types for documentational material -->
-  <listBibl type="documentation">
+  <listBibl type="documentation" xml:id="">
     
     <bibl type="Letter">
       <author/>
@@ -89,7 +88,7 @@
       </ref>
     </bibl>
     
-    <bibl type="Diary_entry">
+    <bibl type="Diary_entry" xml:id="">
       <author/>
       <date/>
       <geogName/>
@@ -107,7 +106,7 @@
       </ref>
     </bibl>
     
-    <bibl type="Concert_programme">
+    <bibl type="Concert_programme" xml:id="">
       <date/>
       <title/>
       <geogName/>
@@ -123,7 +122,7 @@
   <!-- general reference types -->
   <listBibl>
     
-    <bibl type="Journal_article">
+    <bibl type="Journal_article" xml:id="">
       <author/>
       <date/>
       <title level="a"/>
@@ -143,7 +142,7 @@
       </ref>
     </bibl>
     
-    <bibl type="Monograph">
+    <bibl type="Monograph" xml:id="">
       <author/>
       <date/>
       <title level="m"/>
@@ -157,7 +156,7 @@
       <ref target=""/>
     </bibl>
     
-    <bibl type="Article_in_book">
+    <bibl type="Article_in_book" xml:id="">
       <author/>
       <date/>
       <title level="a"/>
@@ -178,7 +177,7 @@
       </ref>
     </bibl>
     
-    <bibl type="Newspaper_article">
+    <bibl type="Newspaper_article" xml:id="">
       <author/>
       <date/>
       <title level="a"/>

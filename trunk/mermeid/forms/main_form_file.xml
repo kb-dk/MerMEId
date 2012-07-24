@@ -17,9 +17,12 @@
 				
 					<h:span class="blocklabel">File collections <h:a class="help">?<h:span class="comment">Machine-readable 
 						identifier of the contexts (catalogues or collections) in
-						which this file is to appear - e.g. "CNW" or "BWV".<h:br/>
-						The collection name will also appear on a collection button on the file list. 
+						which this file is to appear - e.g. "CNW" or "BWV". The collection names enables
+						the co-existence of several	catalogues or collections in MerMEId.<h:br/>
+						A button with the collection's name will appear on the file list. 
 						Use the button to find all files belonging to this collection.
+						The collection name also makes the corresponding list of standard references
+						(if any) available on the bibliography tab when adding a reference.
 					</h:span></h:a></h:span>
 					<xf:repeat
 						nodeset="m:seriesStmt[@label='File collection']/m:identifier"
@@ -54,6 +57,7 @@
 					</xf:label>
 				</xf:input>
 				<xf:input ref="m:respStmt/m:corpName/m:abbr" class="short"><xf:label> Short name</xf:label></xf:input>
+				<h:br/> 
 				<h:br/>
 				<xf:repeat nodeset="m:respStmt/m:corpName/m:address/m:addrLine[not(m:ptr)]" id="repeat-addrLine">
 					<xxf:variable name="pos" select="position()"/>
@@ -175,12 +179,13 @@
 		<xf:group ref="instance('data-instance')/m:meiHead/m:revisionDesc" id="group-revisiondesc">
 			<h:fieldset>
 				<h:legend>File change history</h:legend>
-				<h:span class="fixed_width">Date of change <h:a class="help">?<h:span class="comment">Use date
+				<h:div class="vertical_spacer"/>
+				<h:span class="fixed_width">Date <h:a class="help">?<h:span class="comment">Use date
 					format YYYY-MM-DD, e.g. 2011-04-30. A new row with today's date is
 					automatically created when opening the document. Use "Add change"-button 
 					to add rows manually.</h:span></h:a></h:span>
-				<h:span class="fixed_width_maxlong">Description </h:span>
-				<h:span class="fixed_width">Responsible </h:span>
+				<h:span class="fixed_width_maxlong" style="display:inline-block;">Description </h:span>
+				<h:span class="fixed_width">&#160;Responsible </h:span>
 				<xf:repeat nodeset="m:change" id="repeat-change">
 					<h:div>
 						<xf:input ref="m:date" class="mediumshort"/>

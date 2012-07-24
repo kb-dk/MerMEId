@@ -48,6 +48,7 @@
                 at="index('repeat-references')"
                 position="after" 
                 origin="instance('bibl-type-instance')/t:listBibl[not(@type)]/t:bibl[index('ref-type-menu-repeat2')]"/>
+              <xf:dispatch name="id-update" target="form-group"/>
               <xxf:hide dialog="add-ref-dialog"/>
             </xf:action>
           </xf:trigger>
@@ -56,7 +57,7 @@
         <!-- standard references quick-add menu -->
         <xf:group ref=".[count(instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:seriesStmt[@label='File collection']/m:identifier])&gt;0]">
           <h:hr style="margin:10px 0px;"/>
-          <h:div class="blocklabel">Standard references:</h:div>
+          <h:div class="blocklabel">Add from this collections's standard references:</h:div>
           <h:br clear="all"/>
           <xf:repeat nodeset="instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:seriesStmt[@label='File collection']/m:identifier]" id="std-bibl-repeat">
             <xf:repeat nodeset="t:bibl" id="std-bibl-menu-repeat">
@@ -68,6 +69,7 @@
                     at="index('repeat-references')" 
                     position="after" 
                     origin="instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:seriesStmt[@label='File collection']/m:identifier][index('std-bibl-repeat')]/t:bibl[index('std-bibl-menu-repeat')]"/>
+                  <xf:dispatch name="id-update" target="form-group"/>
                   <xxf:hide dialog="add-ref-dialog"/>
                 </xf:action>
               </xf:trigger>
@@ -86,6 +88,7 @@
         <xf:action ev:event="DOMActivate">
           <xf:insert nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl" at="1" position="before"
             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='primary']"/>
+          <xf:dispatch name="id-update" target="form-group"/>
         </xf:action>
       </xf:trigger>
       
@@ -95,6 +98,7 @@
         <xf:action ev:event="DOMActivate">
           <xf:insert nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl" at="1" position="after"
             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='secondary']"/>
+          <xf:dispatch name="id-update" target="form-group"/>
         </xf:action>
       </xf:trigger>
       
@@ -104,6 +108,7 @@
         <xf:action ev:event="DOMActivate">
           <xf:insert nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl" at="last()" position="after"
             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='documentation']"/>
+          <xf:dispatch name="id-update" target="form-group"/>
         </xf:action>
       </xf:trigger>
       
@@ -128,21 +133,24 @@
           </xf:trigger>
           <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
             <xf:repeat nodeset="t:bibl" id="repeat-references">
-              <h:tr>
+              <h:tr class="hoverclass">
                 <h:td class="number_cell">
                   <xf:output value="position()"/>&#160;
                 </h:td>
-                <h:td>&#160;  
-                  <xf:output value="concat('[',translate(@type,'_',' '),'] ')"/>
+                <h:td nowrap="nowrap">&#160;  
+                  <xf:output value="concat('[',translate(@type,'_',' '),'] ')"/>&#160;
                 </h:td>
-                <h:td>&#160;  
-                  <xf:output value="t:author"/><xf:output value="if (normalize-space(t:author) and not(normalize-space(t:name[@role='recipient']))) then ': ' else ''"/>
+                <h:td>  
+                  <xf:repeat nodeset="t:author"><xf:output 
+                    value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
+                      value="."/></xf:repeat><xf:output 
+                        value="if (normalize-space(t:author[1]) and not(normalize-space(t:name[@role='recipient']))) then ': ' else ''"/>
                   <xf:output value="if (normalize-space(t:name[@role='recipient'])) then concat(' to ',t:name[@role='recipient']) else ''"/>
-                  <xf:output value="t:title[@level='a']"/>
-                  <h:i><xf:output value="t:title[@level='j']"/></h:i>
-                  <xf:output value="t:title[@level='m']"/>
+                  <h:i><xf:output value="t:title[@level='a']"/></h:i><xf:output 
+                    value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='j'])) then concat('. ',t:title[@level='j']) else t:title[@level='j']"/>
+                  <xf:output value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='m'])) then concat('. ',t:title[@level='m']) else t:title[@level='m']"/>
                   <xf:output value="if (normalize-space(t:date)) then concat('(',normalize-space(t:date),')') else ''"/>
-                  <xf:group ref=".[normalize-space(concat(t:author,t:name[@role='recipient'],t:title[@level='a'],t:title[@level='j'],t:title[@level='m'],t:date))='']"> [No description] </xf:group>
+                  <xf:group ref=".[normalize-space(concat(t:author[1],t:name[@role='recipient'],t:title[@level='a'],t:title[@level='j'],t:title[@level='m'],t:date))='']"> [No description] </xf:group>
                 </h:td>
                 <h:td nowrap="nowrap">
                   <dcm:id ref="."/>

@@ -2,6 +2,7 @@
 <xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns="http://www.music-encoding.org/ns/mei" 
 	xmlns:m="http://www.music-encoding.org/ns/mei" 
+	xmlns:t="http://www.tei-c.org/ns/1.0"
 	xmlns:xl="http://www.w3.org/1999/xlink"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:exsl="http://exslt.org/common"
@@ -72,6 +73,15 @@
 		</xsl:element>
 	</xsl:template>    
 	
+	<xsl:template match="t:ref" mode="header">
+		<!-- TEI bibl elements are not included in the empty model, so special handling is needed -->
+		<xsl:element name="ref" namespace="{namespace-uri()}">
+			<xsl:copy-of select="@*"/>
+			<xsl:if test="not(@target)"><xsl:attribute name="target"/></xsl:if>
+			<xsl:apply-templates/>
+		</xsl:element>
+	</xsl:template>
+	
 	<!-- special case: expressions may occur nested in data, but not in the empty model -->
 	<xsl:template match="*" mode="component">
 		<!-- build an xpath string to locate the corresponding node in the model header -->
@@ -114,8 +124,7 @@
 			</xsl:when>
 			<xsl:otherwise><xsl:value-of select="$string" /></xsl:otherwise>
 		</xsl:choose>
-	</xsl:template>
-	
+	</xsl:template>	
 	
 	<xsl:template match="@*|node()">
 		<xsl:copy>

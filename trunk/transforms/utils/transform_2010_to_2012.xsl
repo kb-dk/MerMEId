@@ -518,6 +518,9 @@
                             <xsl:value-of select="concat('listBibl_primary_',generate-id(.))"/>
                         </xsl:attribute>
                         <bibl type="Letter">
+                            <xsl:attribute name="xml:id">
+                                <xsl:value-of select="concat('bibl_',generate-id(.))"/>
+                            </xsl:attribute>
                             <author/>
                             <name role="recipient"/>
                             <date/>
@@ -545,6 +548,9 @@
                             <xsl:value-of select="concat('listBibl_documentary_',generate-id(.))"/>
                         </xsl:attribute>
                         <bibl type="Concert_programme">
+                            <xsl:attribute name="xml:id">
+                                <xsl:value-of select="concat('bibl_',generate-id(.))"/>
+                            </xsl:attribute>
                             <date/>
                             <title/>
                             <geogName/>
