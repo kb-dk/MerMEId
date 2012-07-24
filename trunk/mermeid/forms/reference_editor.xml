@@ -234,7 +234,7 @@
                                 <!-- newspaper article author here -->
                                 <h:fieldset>
                                     <h:legend>Authors</h:legend>
-                                    <xf:repeat nodeset="." id="repeat-bibl-newspaper-author">
+                                    <xf:repeat nodeset="../t:author" id="repeat-bibl-newspaper-author">
                                         <h:div>
                                             <xf:input ref="." class="long">
                                                 <xf:label class="fixed_width_short">Name</xf:label>
@@ -286,7 +286,7 @@
                             <xf:group ref="t:editor">
                                 <h:fieldset>
                                     <h:legend>Editors</h:legend>
-                                    <xf:repeat nodeset="." id="repeat-bibl-editor">
+                                    <xf:repeat nodeset="../t:editor" id="repeat-bibl-editor">
                                         <h:div>
                                             <xf:input ref="." class="long">
                                                 <xf:label class="fixed_width_short">Name</xf:label>
@@ -295,7 +295,7 @@
                                                 triggers="add delete" 
                                                 nodeset="t:editor" 
                                                 index="repeat-bibl-editor"
-                                                origin="instance('bibl-type-instance')/t:listBibl/t:bibl[t:editor]/t:editor"/>
+                                                origin="instance('bibl-type-instance')/t:listBibl[t:bibl/t:editor][1]/t:bibl[1]/t:editor[1]"/>
                                         </h:div>
                                     </xf:repeat>
                                 </h:fieldset>

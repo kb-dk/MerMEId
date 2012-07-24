@@ -137,7 +137,8 @@
                 <h:td class="number_cell">
                   <xf:output value="position()"/>&#160;
                 </h:td>
-                <h:td nowrap="nowrap">&#160;  
+                <h:td nowrap="nowrap">
+                  <dcm:id ref="."/>&#160;  
                   <xf:output value="concat('[',translate(@type,'_',' '),'] ')"/>&#160;
                 </h:td>
                 <h:td>  
@@ -153,7 +154,6 @@
                   <xf:group ref=".[normalize-space(concat(t:author[1],t:name[@role='recipient'],t:title[@level='a'],t:title[@level='j'],t:title[@level='m'],t:date))='']"> [No description] </xf:group>
                 </h:td>
                 <h:td nowrap="nowrap">
-                  <dcm:id ref="."/>
                   <xf:group ref=".[instance('temp')/file_exists='true']">
                     <xf:trigger>
                       <xf:label><h:img src="http:/editor/images/edit.gif" title="Open reference editor"/> Edit</xf:label>

@@ -82,13 +82,14 @@
 								<h:td class="number_cell">
 									<xf:output value="position()"/>&#160;
 								</h:td>
-								<h:td>&#160;
+								<h:td>
+									<dcm:id ref="."/>&#160;
 									<xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
 									<xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
 									<xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
+									&#160;
 								</h:td>
 								<h:td>
-									<dcm:id ref="."/>
 									<xf:group ref=".[instance('temp')/file_exists='true']">
 										<xf:trigger>
 											<xf:label><h:img src="http:/editor/images/edit.gif" title="Open performance editor"/> Edit</xf:label>
@@ -145,13 +146,14 @@
 									<h:td class="number_cell">
 										<xf:output value="position()"/>&#160;
 									</h:td>
-									<h:td>&#160;
+									<h:td>
+										<dcm:id ref="."/>&#160;
 										<xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
 										<xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
 										<xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
+										&#160;
 									</h:td>
 									<h:td>
-										<dcm:id ref="."/>
 										<xf:trigger>
 											<xf:label><h:img src="http:/editor/images/edit.gif" title="Open performance editor"/> Edit</xf:label>
 											<xf:action ev:event="DOMActivate">

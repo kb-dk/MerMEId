@@ -83,13 +83,14 @@
 											<xf:group ref=".[string-length(@n)]"><xf:output value="@n"/>.&#160;</xf:group>
 										</h:td>
 										<h:td> 
+											<dcm:id ref="."/>
 											<xf:output value="m:titleStmt/m:title"/>
 											<xf:group ref=".[normalize-space(m:titleStmt/m:title) and normalize-space(m:tempo)]">. </xf:group>
 											<xf:output value="m:tempo"/>
 											<xf:group ref=".[normalize-space(concat(@n,m:titleStmt/m:title,m:tempo))='']"> [No number, title or tempo] </xf:group>
+											&#160;
 										</h:td>
 										<h:td style="text-align:right;">
-											<dcm:id ref="."/>
 											<xf:group ref=".[instance('temp')/file_exists='true']">
 												<xf:trigger>
 													<xf:label><h:img src="http:/editor/images/edit.gif" title="Open component editor"/> Edit</xf:label>
@@ -160,14 +161,19 @@
 																</xf:group>
 																<xf:group ref=".[string-length(@n)]"><xf:output value="@n"/>.&#160;</xf:group>
 															</h:td>
-															<h:td> 
+															<h:td>
+																<dcm:id ref="."/>
 																<xf:output value="m:titleStmt/m:title"/>
-																<xf:group ref=".[normalize-space(m:titleStmt/m:title) and normalize-space(m:tempo)]">. </xf:group>
+																<xf:group
+																	ref=".[normalize-space(m:titleStmt/m:title) and normalize-space(m:tempo)]"
+																	>. </xf:group>
 																<xf:output value="m:tempo"/>
-																<xf:group ref=".[normalize-space(concat(@n,m:titleStmt/m:title,m:tempo))='']"> [No number, title or tempo] </xf:group>
+																<xf:group
+																	ref=".[normalize-space(concat(@n,m:titleStmt/m:title,m:tempo))='']"
+																	> [No number, title or tempo] </xf:group>
+																&#160;
 															</h:td>
 															<h:td style="text-align:right;">
-																<dcm:id ref="."/>
 																<xf:group ref=".[instance('temp')/file_exists='true']">
 																	<xf:trigger>
 																		<xf:label><h:img src="http:/editor/images/edit.gif" title="Open component editor"/> Edit</xf:label>
@@ -245,14 +251,19 @@
 																					</xf:group>
 																					<xf:group ref=".[string-length(@n)]"><xf:output value="@n"/>.&#160;</xf:group>
 																				</h:td>
-																				<h:td> 
+																				<h:td>
+																					<dcm:id ref="."/>
 																					<xf:output value="m:titleStmt/m:title"/>
-																					<xf:group ref=".[normalize-space(m:titleStmt/m:title) and normalize-space(m:tempo)]">. </xf:group>
+																					<xf:group
+																						ref=".[normalize-space(m:titleStmt/m:title) and normalize-space(m:tempo)]"
+																						>. </xf:group>
 																					<xf:output value="m:tempo"/>
-																					<xf:group ref=".[normalize-space(concat(@n,m:titleStmt/m:title,m:tempo))='']"> [No number, title or tempo] </xf:group>
+																					<xf:group
+																						ref=".[normalize-space(concat(@n,m:titleStmt/m:title,m:tempo))='']"
+																						> [No number, title or tempo] </xf:group>
+																					&#160;
 																				</h:td>
 																				<h:td style="text-align:right;">
-																					<dcm:id ref="."/>
 																					<xf:group ref=".[instance('temp')/file_exists='true']">
 																						<xf:trigger>
 																							<xf:label><h:img src="http:/editor/images/edit.gif" title="Open component editor"/> Edit</xf:label>

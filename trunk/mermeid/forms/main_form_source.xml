@@ -19,12 +19,13 @@
           <h:td class="number_cell">
             <xf:output value="position()"/>&#160;
           </h:td>
-          <h:td>&#160;  
+          <h:td>
+            <dcm:id ref="."/>&#160;
             <xf:output value="m:titleStmt/m:title"/>
             <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
+            &#160;
           </h:td>
           <h:td>
-            <dcm:id ref="."/>
             <xf:group ref=".[instance('temp')/file_exists='true']">
               <xf:trigger>
                 <xf:label><h:img src="http:/editor/images/edit.gif" title="Open the source editor"/> Edit</xf:label>
