@@ -124,6 +124,7 @@
         <xi:include href="includes/relator.xbl" parse="xml"/>
         <xi:include href="includes/item.xbl" parse="xml"/>
         <xi:include href="includes/id.xbl" parse="xml"/>
+        <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
     </h:head>
     
     <h:body class="source">
@@ -157,6 +158,7 @@
                         <xf:output value="m:titleStmt/m:title"/>
                         <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
                         <dcm:id ref="."/>
+                        <dcm:attribute-editor ref="."/>
                     </h:h3>                
                     
                     <h:fieldset>

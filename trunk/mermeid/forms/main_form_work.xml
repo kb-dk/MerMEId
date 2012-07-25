@@ -26,7 +26,7 @@
 		nodeset="m:title[@type='main']" 
 		index="main_titles"
 		origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='main']"/>
-	    <!--<dcm:attribute-editor ref=".[instance('conf')/dcm:attr='true']" id="attr_main_titles"/>-->
+	  	<dcm:attribute-editor ref="."/>
 	  </h:div>
 	</xf:repeat>
 	<h:div class="blocklabel">Alternative title
@@ -40,7 +40,7 @@
 		nodeset="m:title[@type='alternative']" 
 		index="alternative_titles"
 		origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='alternative']"/>
-	    <!--<dcm:attribute-editor ref=".[instance('conf')/dcm:attr='true']"/>-->
+	  	<dcm:attribute-editor ref="."/>
 	  </h:div>
 	</xf:repeat>		
 	<h:div class="blocklabel">Subtitle
@@ -54,7 +54,7 @@
 		nodeset="m:title[@type='subordinate']" 
 		index="subtitles"
 		origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='subordinate']"/>
-	    <!--<dcm:attribute-editor ref=".[instance('conf')/dcm:attr='true']"/>-->
+	  	<dcm:attribute-editor ref="."/>
 	  </h:div>
 	</xf:repeat>
 	<xf:group ref=".[m:title[@type='uniform']]">
@@ -69,7 +69,7 @@
 		  nodeset="m:title[@type='uniform']" 
 		  index="uniform_titles"
 		  origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"/>
-	      <!--<dcm:attribute-editor ref=".[instance('conf')/dcm:attr='true']"/>-->
+	    	<dcm:attribute-editor ref="."/>
 	    </h:div>
 	  </xf:repeat>
 	</xf:group>
@@ -86,7 +86,7 @@
 		nodeset="m:title[@type='text_source']" 
 		index="text_sources"
 		origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"/>
-	    <!--<dcm:attribute-editor ref=".[instance('conf')/dcm:attr='true']"/>-->
+	  	<dcm:attribute-editor ref="."/>
 	  </h:div>
 	</xf:repeat>
       </xf:group>
@@ -113,7 +113,7 @@
 	      nodeset="m:altId" 
 	      index="alt-id-repeat"
 	      origin="instance('empty-instance')/m:meiHead/m:altId"/>
-	  <!--<dcm:attribute-editor ref=".[instance('conf')/dcm:attr='true']"/>-->
+		<dcm:attribute-editor ref="."/>
 	</h:div>
       </xf:repeat>
     </h:fieldset>
@@ -127,16 +127,16 @@
 	</h:span>
       </h:div>
       <xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt[m:persName[count(@role)&gt;0 and @role!='']]">				
-	<xf:repeat nodeset="m:persName" id="relators-repeat">
-	  <dcm:relator ref="."/>
-	  <dcm:element-buttons 
-	      triggers="add delete" 
-	      nodeset="m:persName" 
-	      index="relators-repeat"
-	      origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
-	  <!--<dcm:attribute-editor ref=".[instance('conf')/dcm:attr='true']"/>-->
-	  <h:br/>
-	</xf:repeat>
+      	<xf:repeat nodeset="m:persName" id="relators-repeat">
+      		<dcm:relator ref="."/>
+      		<dcm:element-buttons 
+      			triggers="add delete" 
+      			nodeset="m:persName" 
+      			index="relators-repeat"
+      			origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
+      		<dcm:attribute-editor ref="."/>
+      		<h:br/>
+      	</xf:repeat>
       </xf:group>
     </h:fieldset>
     
@@ -150,8 +150,8 @@
 	  class="comment">HTML markup and special characters allowed</h:span></h:a>
 	  </xf:label>
 	</xf:textarea>
-	<!--<dcm:attribute-editor ref="m:annot[@type='general_description'][instance('conf')/dcm:attr='true']"/>-->
-	<h:div class="blocklabel">External descriptions <h:a class="help">?<h:span class="comment"
+      	<dcm:attribute-editor ref="m:annot[@type='general_description']"/>
+      	<h:div class="blocklabel">External descriptions <h:a class="help">?<h:span class="comment"
 	>Links to external resources (web pages, PDF files etc.) about
 	the work in general - not about a particular
 	source</h:span></h:a></h:div>
@@ -173,7 +173,7 @@
 		  nodeset="m:ptr" 
 		  index="general-notesstmt-annot-repeat-ptr"
 		  origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']/m:ptr"/>
-	      <!--<dcm:attribute-editor ref=".[instance('conf')/dcm:attr='true']"/>-->
+	    	<dcm:attribute-editor ref="."/>
 	    </h:div>
 	  </xf:repeat>
 	</xf:group>
@@ -293,7 +293,7 @@
 		nodeset="m:term" 
 		index="repeat-work-terms"
 		origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term"/>
-	    <!--<dcm:attribute-editor ref=".[instance('conf')/dcm:attr='true']"/>-->
+	  	<dcm:attribute-editor ref="."/>
 	  </h:div>
 	</xf:repeat>
       </h:fieldset>

@@ -157,8 +157,50 @@
         </xf:action>
       </xf:action>
     </xf:trigger>
-    
+    <xf:trigger appearance="minimal">
+      <xf:label><h:img 
+        src="http:/editor/images/settings.png" alt="Settings" 
+        title="Change settings and edit template data" border="0"/></xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xxf:show dialog="settings-dialog"/>
+      </xf:action>
+    </xf:trigger>
+
   </h:p>
+  
+  <!-- Dialog for editing session settings and opening standard (template) data editors -->
+  <xxf:dialog id="settings-dialog" appearance="full" level="modal">
+    <xf:label>MerMEId settings</xf:label>
+    <xf:select appearance="full" ref="instance('parameters')/dcm:show_id">
+      <xf:action ev:event="xforms-value-changed">
+        <xf:insert context="." origin="xxf:set-session-attribute('show_id',instance('parameters')/dcm:show_id)"/>
+      </xf:action>
+      <xf:item>
+        <xf:label>Show xml:id values <h:a class="help">?<h:span class="comment">Displays an ID icon 
+          (<h:img src="http:/editor/images/id.png" border="0" alt="ID Icon"/>) next to selected elements.
+          The element's xml:id attribute value is displayed when moving the cursor over the icon.
+        </h:span></h:a></xf:label>
+        <xf:value>true</xf:value>
+      </xf:item>      
+    </xf:select>
+    <h:br/>
+    <xf:select appearance="full" ref="instance('parameters')/dcm:attr_editor">
+      <xf:action ev:event="xforms-value-changed">
+        <xf:insert context="." origin="xxf:set-session-attribute('attr_editor',instance('parameters')/dcm:attr_editor)"/>
+      </xf:action>
+      <xf:item>
+        <xf:label>Enable attribute editor <h:a class="help_plain"><h:img 
+          src="http:/editor/images/warning.png" alt="warning"/><h:span class="comment">This enables changing or adding
+            all possible attributes according to the XML schema. Changing attributes may compromise the validity 
+            of your data and affect the way MerMEId displays them. 
+            Use the attribute editor only if you what you are doing.<h:br/>
+            To optimize performance, the attribute editor should normally be disabled.
+          </h:span></h:a></xf:label>
+        <xf:value>true</xf:value>
+      </xf:item>      
+    </xf:select>
+  </xxf:dialog>
+  
   
 </h:div>
 

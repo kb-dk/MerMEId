@@ -138,7 +138,9 @@
                   <xf:output value="position()"/>&#160;
                 </h:td>
                 <h:td nowrap="nowrap">
-                  <dcm:id ref="."/>&#160;  
+                  <dcm:id ref="."/>
+                  <dcm:attribute-editor ref="."/>
+                  &#160;  
                   <xf:output value="concat('[',translate(@type,'_',' '),'] ')"/>&#160;
                 </h:td>
                 <h:td>  

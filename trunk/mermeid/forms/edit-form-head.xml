@@ -65,10 +65,7 @@
       id="bibliography-instance" 
       src="/editor/forms/mei/model/standard_bibliography.xml" 
       xxf:readonly="true"/>
-    
-    <xf:instance xmlns="http://www.kb.dk/dcm" id="conf"
-      src="/editor/forms/mei/model/settings.xml" />
-    
+        
     <xf:instance id="temp">
       <temp-values>
         <changed>false</changed>
@@ -123,6 +120,9 @@
         <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
           value="substring-before(now(), 'T')"/>
       </xf:action>
+      <!-- get settings from session variables -->
+      <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
+      <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
       <!-- check list of language declarations -->
       <xf:dispatch name="language-update" target="form-group"/>
     </xf:action>
@@ -149,7 +149,8 @@
       </xf:action>
     </xf:action>
     
-    <xf:bind nodeset="instance('conf')/dcm:attr" type="xs:boolean"/>
+    <xf:bind nodeset="instance('conf')/attr" type="xs:boolean"/>
+    <xf:bind nodeset="instance('conf')/id" type="xs:boolean"/>
     <xf:bind nodeset="instance('data-instance')//m:instrVoice/@solo" type="xs:boolean"/>
     
   </xf:model>
@@ -165,5 +166,6 @@
   <xi:include href="includes/expression_input.xbl" parse="xml"/>
   <xi:include href="includes/item.xbl" parse="xml"/>
   <xi:include href="includes/id.xbl" parse="xml"/>
+  <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
   
 </h:head>
