@@ -135,14 +135,7 @@
                     <xxforms:variable name="reg" as="node()?" select="$binding/@when-iso"/>
                     <xxforms:variable name="notbefore" as="node()?" select="$binding/@notBefore-iso"/>
                     <xxforms:variable name="notafter" as="node()?" select="$binding/@notAfter-iso"/>
-                    
-                    <!-- get editor settings -->
-                    <!--<xxforms:variable name="settings" as="node()?">
-                        <xxforms:sequence select="instance('conf')" xxbl:scope="outer"/>
-                        </xxforms:variable>-->
-                    <!-- display attribute editor if activated -->
-                    <!--<dcm:attribute-editor ref="$binding[$settings/dcm:attr='true']"/>-->
-                    
+                                        
                     <!-- The on-form visible part -->
                     <xhtml:div class="dcm-date-editor-onform">
                         
@@ -172,7 +165,6 @@
                             </xforms:action>
                         </xforms:trigger>
                     </xhtml:div>
-                    <xhtml:br/>
                     
                     <xxforms:dialog id="date-editor-dialog" appearance="full" level="modal"
                         close="true" draggable="true" visible="false">
@@ -421,6 +413,10 @@
                     </xxforms:dialog>
                     
                 </xforms:group>
+                
+                <dcm:attribute-editor ref="."/>
+                <xhtml:br/>
+                
             </xforms:group>
         </xbl:template>
     </xbl:binding>

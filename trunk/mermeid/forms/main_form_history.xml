@@ -23,7 +23,7 @@
 				<xf:input ref="m:creation/m:geogName" class="long">
 					<xf:label class="fixed_width_mediumlong">Place of composition </xf:label>
 				</xf:input>
-				<!--<dcm:attribute-editor ref="m:creation/m:geogName[instance('conf')/dcm:attr='true']"/>-->
+				<dcm:attribute-editor ref="."/>
 				<xf:textarea ref="m:p" class="notes">
 					<xf:label class="blocklabel">Creation note <h:a class="help">?<h:span class="comment">Text
 						explaining details and circumstances concerning the work's genesis and history</h:span></h:a>
@@ -31,13 +31,13 @@
 						/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
 					</xf:label>
 				</xf:textarea>
-				<!--<dcm:attribute-editor ref="m:p[instance('conf')/dcm:attr='true']"/>-->
+				<dcm:attribute-editor ref="m:p"/>
 			</h:fieldset>
 			<h:fieldset>
 				<h:legend>Time line <h:a class="help">?<h:span class="comment">A list of events related to the work. The list
 					may contain all kinds of events, whether related the compositional process, 
 					the work's transmission, its reception or other aspects of its history</h:span></h:a>
-					<!--<dcm:attribute-editor ref="m:eventList[@type='history'][instance('conf')/dcm:attr='true']"/>-->
+					<dcm:attribute-editor ref="m:eventList[@type='history']"/>
 				</h:legend>
 				<xf:repeat nodeset="m:eventList[@type='history']/m:event" id="repeat-work-history">
 					<h:fieldset>
@@ -46,7 +46,7 @@
 							nodeset="m:event" 
 							index="repeat-work-history"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event"/>
-							<!--<dcm:attribute-editor ref=".[instance('conf')/dcm:attr='true']"/>-->
+							<dcm:attribute-editor ref="."/>
 							<h:br clear="all"/>
 						</h:legend>
 						<xf:group ref="m:date">
@@ -58,7 +58,7 @@
 							<xf:label class="fixed_width">Description <h:a class="help">?<h:span class="comment">A description of the 
 								event, e.g. "Third movement finished" or "Arranged for piano by NN"</h:span></h:a></xf:label>
 						</xf:input>
-						<!--<dcm:attribute-editor ref="m:title[instance('conf')/dcm:attr='true']"/>-->
+						<dcm:attribute-editor ref="m:title"/>
 					</h:fieldset>					
 				</xf:repeat>
 			</h:fieldset>
@@ -66,7 +66,9 @@
 			<!-- List work level performances -->
 			<xf:group ref="m:eventList[@type='performances']">
 				<h:fieldset>
-					<h:legend>Performances</h:legend>
+					<h:legend>Performances
+						<dcm:attribute-editor ref="."/>
+					</h:legend>
 					<h:br/>
 					<h:div class="strong">
 						Level: Work 
@@ -111,7 +113,9 @@
 									</xf:group>
 								</h:td>
 								<h:td class="buttons_cell"><dcm:element-buttons triggers="all" nodeset="m:event" index="repeat-work-performance" 
-									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/></h:td>
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+									<dcm:attribute-editor ref="."/>
+								</h:td>
 							</h:tr>
 						</xf:repeat>
 					</h:table>
@@ -132,6 +136,7 @@
 							<xf:group ref=".[normalize-space($title)!='']">
 								<xf:output value="concat(' - ',$title)"/>
 							</xf:group>
+							<dcm:attribute-editor ref="."/>
 						</h:legend>
 						<h:p class="blocklabel">
 							Level: Version 
@@ -170,7 +175,9 @@
 										</xf:trigger>
 									</h:td>
 									<h:td class="buttons_cell"><dcm:element-buttons triggers="all" nodeset="m:event" index="repeat-expression-performance" 
-										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/></h:td>
+										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+										<dcm:attribute-editor ref="."/>
+									</h:td>
 								</h:tr>
 							</xf:repeat>
 						</h:table>

@@ -100,6 +100,9 @@
                 <!-- load empty model XML data -->
                 <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:form_home,'model/empty_doc.xml')"/>
                 <xf:send submission="load-empty-submission"/>
+                <!-- get settings from session variables -->
+                <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
+                <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
             </xf:action>
             
             <xf:action ev:event="xforms-submit-done">

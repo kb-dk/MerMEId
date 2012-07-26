@@ -100,6 +100,9 @@
                 <!-- load empty model XML data -->
                 <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:form_home,'model/empty_doc.xml')"/>
                 <xf:send submission="load-empty-submission"/>
+                <!-- get settings from session variables -->
+                <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
+                <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
             </xf:action>
             
             <xf:action ev:event="xforms-submit-done">
@@ -161,7 +164,9 @@
                     </h:h3>                
                     
                     <h:fieldset>
-                        <h:legend>Performance</h:legend>
+                        <h:legend>Performance
+                            <dcm:attribute-editor ref="."/>
+                        </h:legend>
                         <h:div class="vertical_spacer"> </h:div>
                         <h:div class="perf_body">
                             <!-- input+select emulating selection="open" behaviour -->
@@ -192,6 +197,7 @@
                                 </xf:select1>
                             </h:span>
                             <!-- end selection="open" -->
+                            <dcm:attribute-editor ref="m:title"/>
                             
                             <h:br clear="all"/>
                             
@@ -202,16 +208,19 @@
                             <xf:input ref="m:geogName[@role='venue']" class="long">
                                 <xf:label class="fixed_width">Venue</xf:label>
                             </xf:input>
+                            <dcm:attribute-editor ref="m:geogName[@role='venue']"/>
                             <h:br clear="all"/>
                             
                             <xf:input ref="m:geogName[@role='place']" class="long">
                                 <xf:label class="fixed_width">Place</xf:label>
                             </xf:input>
+                            <dcm:attribute-editor ref="m:geogName[@role='place']"/>
                             <h:br clear="all"/>
                             
                             <xf:input ref="m:corpName[@role='ensemble']" class="long">
                                 <xf:label class="fixed_width">Ensemble</xf:label>
                             </xf:input>
+                            <dcm:attribute-editor ref="m:corpName[@role='ensemble']"/>
                             
                             <h:div class="persname-box">
                                 <h:div class="strong">Persons</h:div>
@@ -227,6 +236,7 @@
                                     <dcm:relator ref="."/>
                                     <dcm:element-buttons triggers="add delete" nodeset="m:persName" index="performance-relators-repeat"
                                         origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:persName[1]"/>
+                                    <dcm:attribute-editor ref="."/>
                                     <h:br/>
                                 </xf:repeat>
                             </h:div>
@@ -254,29 +264,36 @@
                                         <h:legend>Review <dcm:element-buttons triggers="all" nodeset="t:bibl"
                                             index="repeat-review"
                                             origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']/t:bibl[1]"/>
+                                            <dcm:id ref="."/>
+                                            <dcm:attribute-editor ref="."/>
                                         </h:legend>
                                         <xf:input ref="t:title[@level='a']" class="long">
                                             <xf:label class="fixed_width">Title <h:a class="help">?<h:span class="comment">The
                                                 article's heading (often omitted with newspaper
                                                 articles)</h:span></h:a></xf:label>
                                         </xf:input>
+                                        <dcm:attribute-editor ref="t:title[@level='a']"/>
                                         <h:br clear="both"/>
                                         <xf:input ref="t:title[@level='j']" class="long">
                                             <xf:label class="fixed_width">Journal <h:a class="help">?<h:span class="comment"
                                                 >Name of the journal or newspaper</h:span></h:a></xf:label>
                                         </xf:input>
+                                        <dcm:attribute-editor ref="t:title[@level='j']"/>
                                         <h:br clear="both"/>
                                         <xf:input ref="t:biblScope[@type='vol']" class="short">
                                             <xf:label class="fixed_width">Vol.</xf:label>
                                         </xf:input>
+                                        <dcm:attribute-editor ref="t:biblScope[@type='vol']"/>
                                         
                                         <xf:input ref="t:biblScope[@type='issue']" class="short">
                                             <xf:label>No. </xf:label>
                                         </xf:input>
+                                        <dcm:attribute-editor ref="t:biblScope[@type='issue']"/>
                                         
                                         <xf:input ref="t:biblScope[@type='pp']" class="short">
                                             <xf:label>Pages</xf:label>
                                         </xf:input>
+                                        <dcm:attribute-editor ref="t:biblScope[@type='pp']"/>
                                         <h:br clear="both"/>
                                         
                                         <dcm:date-editor ref="t:date">
@@ -286,11 +303,13 @@
                                         <xf:input ref="t:author" class="medium_long">
                                             <xf:label class="fixed_width">Author</xf:label>
                                         </xf:input>
+                                        <dcm:attribute-editor ref="t:author"/>
                                         
                                         <h:br clear="both"/>
                                         <xf:input ref="t:ref/@target" class="long">
                                             <xf:label class="fixed_width">URI to fulltext</xf:label>
                                         </xf:input>
+                                        <dcm:attribute-editor ref="t:ref"/>
                                     </h:fieldset>
                                 </xf:repeat>
                             </h:div>
