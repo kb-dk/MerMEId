@@ -21,7 +21,6 @@
           </h:td>
           <h:td>
             <dcm:id ref="."/>
-            <dcm:attribute-editor ref="."/>
             &#160;
             <xf:output value="m:titleStmt/m:title"/>
             <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
@@ -49,7 +48,9 @@
             </xf:group>
           </h:td>
           <h:td class="buttons_cell"><dcm:element-buttons triggers="all" nodeset="m:source" index="repeat-sources" 
-            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source"/></h:td>
+            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source"/>
+            <dcm:attribute-editor ref="."/>
+          </h:td>
         </h:tr>
       </xf:repeat>
     </h:table>

@@ -154,8 +154,7 @@
                         </xf:action>
                     </xf:trigger>
                 </h:div>
-                
-                
+                     
                 <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=instance('temp')/id]">
                     <h:h3>
                         <xf:output value="m:titleStmt/m:title"/>
@@ -177,6 +176,7 @@
                                 edition", "Autograph score, draft" or "Source A"</h:span></h:a>
                             </xf:label>
                         </xf:input>
+                        <dcm:attribute-editor ref="m:titleStmt/m:title"/>
                         
                         <!-- Point to relevant version if more than one available -->
                         <xf:group ref=".[count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
@@ -194,11 +194,16 @@
                                     <xf:value ref="@xml:id"></xf:value>
                                 </xf:itemset>
                             </xf:select1>	
+                            <dcm:attribute-editor ref="m:relationList/m:relation[@rel='isEmbodimentOf'][1]"/>
                         </xf:group>
                         
                         <!-- Source classification -->
                         <h:fieldset>
-                            <h:legend>Classification</h:legend>
+                            <h:legend>Classification
+                                <dcm:attribute-editor ref="m:classification/m:termList"/>
+                            </h:legend>
+                            <h:div class="vertical_spacer"> </h:div>
+                            <h:div class="vertical_spacer"> </h:div>
                             <xf:repeat nodeset="m:classification/m:termList">
                                 <xf:select1 ref="m:term[@classcode='DcmContentClass']">
                                     <xf:label class="fixed_width">Content</xf:label>
@@ -215,6 +220,7 @@
                                         <xf:label>Text</xf:label>
                                     </xf:item>
                                 </xf:select1>
+                                <dcm:attribute-editor ref="m:term[@classcode='DcmContentClass']"/>
                                 <h:br clear="both"/>
                                 <xf:select1 ref="m:term[@classcode='DcmPresentationClass']">
                                     <xf:label class="fixed_width">Presentation <h:a class="help">?<h:span class="comment">Describes
@@ -237,6 +243,7 @@
                                         <xf:label>Print, specific copy</xf:label>
                                     </xf:item>
                                 </xf:select1>
+                                <dcm:attribute-editor ref="m:term[@classcode='DcmPresentationClass']"/>
                                 <h:br clear="both"/>
                                 <xf:select1 ref="m:term[@classcode='DcmAuthorityClass']">
                                     <xf:label class="fixed_width">Authority <h:a class="help">?<h:span class="comment">For 
@@ -265,6 +272,7 @@
                                         <xf:label>Copy</xf:label>
                                     </xf:item>
                                 </xf:select1>
+                                <dcm:attribute-editor ref="m:term[@classcode='DcmAuthorityClass']"/>
                                 <h:br clear="both"/>                        
                                 <xf:select1 ref="m:term[@classcode='DcmScoringClass']">
                                     <xf:label class="fixed_width">Scoring</xf:label>
@@ -297,6 +305,7 @@
                                         <xf:label>Score and parts</xf:label>
                                     </xf:item>
                                 </xf:select1>
+                                <dcm:attribute-editor ref="m:term[@classcode='DcmScoringClass']"/>
                                 <h:br clear="both"/>
                                 <xf:select1 ref="m:term[@classcode='DcmStateClass']">
                                     <xf:label class="fixed_width">State</xf:label>
@@ -329,6 +338,7 @@
                                         <xf:label>Later edition</xf:label>
                                     </xf:item>
                                 </xf:select1>
+                                <dcm:attribute-editor ref="m:term[@classcode='DcmStateClass']"/>
                                 <h:br clear="both"/>
                                 <xf:select1 ref="m:term[@classcode='DcmCompletenessClass']">
                                     <xf:label class="fixed_width">Completeness <h:a class="help">?<h:span class="comment">Describes 
@@ -363,6 +373,7 @@
                                         <xf:label>Fragment(s)</xf:label>
                                     </xf:item>
                                 </xf:select1>
+                                <dcm:attribute-editor ref="m:term[@classcode='DcmCompletenessClass']"/>
                             </xf:repeat>
                         </h:fieldset>
                         <!-- End source classification -->
@@ -372,7 +383,10 @@
                                 <h:legend>Contributors <h:a class="help">?<h:span class="comment">Lists persons other than the composer or a scribe, 
                                     contributing to the intellectual contents of this source, e.g. an arranger or editor; 
                                     the composer is usually specified under "Identification" and need not be specified here.
-                                    Scribes are identified below under "List of hands".</h:span></h:a></h:legend>
+                                    Scribes are identified below under "List of hands".</h:span></h:a>
+                                    <dcm:attribute-editor ref="."/>
+                                </h:legend>
+                                <h:div class="vertical_spacer"> </h:div>
                                 <xf:repeat nodeset="m:persName" id="repeat-source-respstmt-person">
                                     <dcm:relator ref="."/>
                                     <dcm:element-buttons 
@@ -380,6 +394,7 @@
                                         nodeset="m:persName" 
                                         index="repeat-source-respstmt-person"
                                         origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
+                                    <dcm:attribute-editor ref="."/>
                                     <h:br/>
                                 </xf:repeat>
                             </h:fieldset>
@@ -392,8 +407,8 @@
                                     "physical description" area below.
                                 </h:span></h:a> 
                                     <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a></h:legend>
-                                <xf:textarea ref="m:annot[@type='source_description']">
-                                </xf:textarea>
+                                <xf:textarea ref="m:annot[@type='source_description']"/>
+                                <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
                                 <xf:group ref="m:annot[@type='links']">
                                     <h:span class="blocklabel">External source descriptions <h:a class="help">?<h:span class="comment">Links to external resources (texts) about 
                                         this particular source.</h:span></h:a>
@@ -415,7 +430,7 @@
                                                 nodeset="m:ptr" 
                                                 index="source-notesstmt-annot-repeat-extptr"
                                                 origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
-                                            <!--<dcm:attribute-editor ref=".[instance('conf')/dcm:attr='true']"/>-->
+                                            <dcm:attribute-editor ref="."/>
                                         </h:div>
                                     </xf:repeat>
                                 </xf:group>
@@ -429,6 +444,7 @@
                                         may be added if necessary</h:span></h:a>
                                     <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                                 </h:legend>
+                                <h:div class="vertical_spacer"> </h:div>
                                 <xf:repeat nodeset="m:titlePage" id="physdesc-titlepage">
                                     <xf:input ref="@label">
                                         <xf:label>Label 
@@ -442,6 +458,7 @@
                                         nodeset="m:titlePage" 
                                         index="physdesc-titlepage"
                                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
+                                    <dcm:attribute-editor ref="."/>
                                     <h:br/>
                                     <xf:textarea ref="m:p" class="mediumheight"/>
                                     <h:hr/> 
@@ -452,7 +469,9 @@
                                 <h:legend>Physical description 
                                     <h:a class="help">?<h:span class="comment">Describes features shared by all copies of this source. <h:br/>
                                         For details on a specific item (a specific copy, or a manuscript), use the "Items" section below.</h:span></h:a>
+                                    <dcm:attribute-editor ref="."/>
                                 </h:legend>
+                                <h:div class="vertical_spacer"> </h:div>
                                 <xf:repeat nodeset="m:extent" id="physdesc-extent">
                                     <h:div>
                                         <h:span class="fixed_width">Extent:</h:span>
@@ -468,6 +487,7 @@
                                             nodeset="m:extent" 
                                             index="physdesc-extent"
                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:extent"/>
+                                        <dcm:attribute-editor ref="."/>
                                     </h:div>
                                 </xf:repeat>
                                 <xf:repeat nodeset="m:dimensions" id="physdesc-dimensions">
@@ -485,6 +505,7 @@
                                             nodeset="m:dimensions" 
                                             index="physdesc-dimensions"
                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:dimensions"/>
+                                        <dcm:attribute-editor ref="."/>
                                     </h:div>
                                 </xf:repeat>
                                 <xf:textarea ref="m:physMedium" class="mediumheight">
@@ -492,6 +513,7 @@
                                         paper, number of staves on page, printing technique etc.
                                     </h:span></h:a></xf:label>
                                 </xf:textarea>
+                                <dcm:attribute-editor ref="m:physMedium"/>
                             </h:fieldset>
                         </xf:group>
                         
@@ -500,17 +522,22 @@
                                 <h:a class="help">?<h:span class="comment">If the source is a manuscript, date and place of 
                                     its creation may be entered here.<h:br/>
                                     Otherwise enter publication data.
-                                </h:span></h:a></h:legend>
+                                </h:span></h:a>
+                                <dcm:attribute-editor ref="m:pubStmt"/>
+                            </h:legend>
+                            <h:div class="vertical_spacer"> </h:div>
                             <xf:repeat nodeset="m:pubStmt" id="repeat-source-publication">
                                 <h:div>
                                     <xf:input ref="m:respStmt/m:corpName" class="mediumlong">
                                         <xf:label class="fixed_width">Publisher </xf:label>
                                     </xf:input>
+                                    <dcm:attribute-editor ref="m:respStmt/m:corpName"/>
                                 </h:div>
                                 <h:div>
                                     <xf:input ref="m:geogName" class="mediumlong">
                                         <xf:label class="fixed_width">Place </xf:label>
                                     </xf:input>
+                                    <dcm:attribute-editor ref="m:geogName"/>
                                 </h:div>
                                 <dcm:date-editor ref="m:date">
                                     <xf:label class="fixed_width">Date 
@@ -526,6 +553,7 @@
                                         nodeset="m:pubstmt" 
                                         index="repeat-source-publication"
                                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt"/>
+                                    <dcm:attribute-editor ref="m:identifier[@type='plate_no']"/>
                                 </h:div>
                                 <xf:group ref="m:identifier[@analog='RISM']">
                                     <xf:input ref="." class="mediumlong">
@@ -533,18 +561,23 @@
                                             prints only. With manuscripts, the RISM identifier should be given as part of a 
                                             specific item's location information (below).</h:span></h:a></xf:label>
                                     </xf:input>
+                                    <dcm:attribute-editor ref="."/>
                                     <h:br clear="all"/>
                                 </xf:group>
                             </xf:repeat>
                         </h:fieldset>
                         
-                        <h:fieldset class="items">
+                        <!-- Items and components -->
+                        <h:fieldset class="items" id="items">
                             <h:legend class="items">Items
                                 <h:a class="help">?<h:span class="comment">A list of individual copies of the source. 
                                     Manuscript sources will only have one such item.<h:br/>
                                     If the item consists of several components with different physical appearance, 
                                     the distinct features of each component may be specified using the item's "Components" section.<h:br/>
-                                </h:span></h:a></h:legend>
+                                </h:span></h:a>
+                                <dcm:attribute-editor ref="m:itemList"/>
+                            </h:legend>
+                            <h:div class="vertical_spacer"> </h:div>
                             <xf:repeat nodeset="m:itemList/m:item" id="repeat-item">
                                 <h:fieldset>
                                     <h:legend>Item <dcm:id/> 
@@ -553,11 +586,17 @@
                                             nodeset="m:item" 
                                             index="repeat-item"
                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item[1]"/>
+                                        <dcm:attribute-editor ref="."/>
                                     </h:legend>
-                                    <dcm:item ref="."/>
+                                    <h:div class="vertical_spacer"> </h:div>
+                                    <h:div class="vertical_spacer"> </h:div>
+                                    <dcm:item ref="." id="item-1"/>
                                     <h:fieldset class="item-components">
                                         <h:legend class="item-components">Components <h:a class="help">?<h:span class="comment">Descriptions of the individual parts that 
-                                            constitute a composite source</h:span></h:a></h:legend>
+                                            constitute a composite source</h:span></h:a>
+                                            <dcm:attribute-editor ref="m:componentGrp"/>
+                                        </h:legend>
+                                        <h:div class="vertical_spacer"> </h:div>
                                         <xf:repeat nodeset="m:componentGrp/m:item" id="repeat-item-component">
                                             <h:fieldset>
                                                 <h:legend>Component <dcm:id/> 
@@ -566,8 +605,10 @@
                                                         nodeset="m:item" 
                                                         index="repeat-item-component"
                                                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item[1]/m:componentGrp/m:item[1]"/>
+                                                    <dcm:attribute-editor ref="."/>
                                                 </h:legend>
-                                                <dcm:item ref="."/>
+                                                <h:div class="vertical_spacer"> </h:div>
+                                                <dcm:item ref="." id="item-2"/>
                                             </h:fieldset>
                                         </xf:repeat>
                                     </h:fieldset>

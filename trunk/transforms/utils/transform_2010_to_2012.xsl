@@ -315,7 +315,7 @@
                 </item> 
             </itemList>
             <relationList>
-                <relation rel="isEmbodimentOf" target="#version1"/>
+                <relation rel="isEmbodimentOf" target="#expression_id1"/>
             </relationList>
         </source>
         <xsl:if test="count(m:pubstmt)&gt;1">
@@ -672,7 +672,7 @@
                     <xsl:apply-templates select="m:classification/m:keywords" mode="work"/>
                 </classification>
                 <expressionList>
-                    <expression analog="frbr:expression" xml:id="version_1">
+                    <expression analog="frbr:expression" xml:id="expression_id1">
                         <xsl:attribute name="n" select="@n"/>
                         <titleStmt>
                             <!-- show movement-level title at this level if there is only one movement -->
