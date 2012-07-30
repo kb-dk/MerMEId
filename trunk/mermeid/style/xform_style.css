@@ -339,12 +339,20 @@ span.selection_open_short select {
     width: 168px;    
 }
 
+span.selection_open_long select {
+    width: 418px;    
+}
+
 span.selection_open input {
     width: 246px;    
 }
 
 span.selection_open_short input {
     width: 146px;    
+}
+
+span.selection_open_long input {
+    width: 396px;    
 }
 
 /* fixed width for some elements for alignment */
@@ -382,6 +390,7 @@ table.element_list td {
 
 img.tree {
     padding: 0;
+    vertical-align: middle;
 }
 
 table.sub_element_list td {

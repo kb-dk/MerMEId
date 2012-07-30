@@ -172,7 +172,7 @@
                         <h:div class="vertical_spacer"> </h:div>
                         
                         <xf:input ref="m:titleStmt/m:title" class="maxlong">
-                            <xf:label>Short description or title <h:a class="help">?<h:span class="comment">A heading identifying the source, e.g. "Printed score, first
+                            <xf:label class="fixed_width_long">Short description or title <h:a class="help">?<h:span class="comment">A heading identifying the source, e.g. "Printed score, first
                                 edition", "Autograph score, draft" or "Source A"</h:span></h:a>
                             </xf:label>
                         </xf:input>
@@ -180,21 +180,24 @@
                         
                         <!-- Point to relevant version if more than one available -->
                         <xf:group ref=".[count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
-                            <xf:select1 ref="m:relationList/m:relation[@rel='isEmbodimentOf'][1]" xxf:refresh-items="true" id="cast-select">
-                                <xf:label class="fixed_width">Represents: 
-                                    <h:a class="help">?<h:span class="comment">Indicates which version of the work 
-                                        is embodied by the source</h:span></h:a>
-                                </xf:label>
-                                <xf:item>
-                                    <xf:label>- Please select -</xf:label>
-                                    <xf:value/>
-                                </xf:item>
-                                <xf:itemset nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression">
-                                    <xf:label><xf:output value="m:titleStmt/m:title"/> (ID: <xf:output value="@xml:id"/>)</xf:label>
-                                    <xf:value ref="@xml:id"></xf:value>
-                                </xf:itemset>
-                            </xf:select1>	
-                            <dcm:attribute-editor ref="m:relationList/m:relation[@rel='isEmbodimentOf'][1]"/>
+                            <h:div class="vertical_spacer"/>
+                            <h:div>
+                                <xf:select1 ref="m:relationList/m:relation[@rel='isEmbodimentOf'][1]" xxf:refresh-items="true" id="cast-select" class="maxlong">
+                                    <xf:label class="fixed_width_long">Represents: 
+                                        <h:a class="help">?<h:span class="comment">Indicates which version of the work 
+                                            is embodied by the source</h:span></h:a>
+                                    </xf:label>
+                                    <xf:item>
+                                        <xf:label>- Please select -</xf:label>
+                                        <xf:value/>
+                                    </xf:item>
+                                    <xf:itemset nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression">
+                                        <xf:label><xf:output value="m:titleStmt/m:title"/> (ID: <xf:output value="@xml:id"/>)</xf:label>
+                                        <xf:value ref="@xml:id"></xf:value>
+                                    </xf:itemset>
+                                </xf:select1>	
+                                <dcm:attribute-editor ref="m:relationList/m:relation[@rel='isEmbodimentOf'][1]"/>
+                            </h:div>
                         </xf:group>
                         
                         <!-- Source classification -->
