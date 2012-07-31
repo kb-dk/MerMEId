@@ -350,7 +350,7 @@
     <xsl:template match="m:repository/m:identifier">
         <xsl:apply-templates select="@*"/>
         <xsl:choose>
-            <xsl:when test="normalize-space(substring-before(.,'['))!=''">
+            <xsl:when test="contains(.,'[')">
                 <!-- put CNU Source references in [] (like "[CNU Source A]")into their own <identifier> -->
                 <identifier>
                     <xsl:value-of select="normalize-space(substring-before(.,'['))"/>

@@ -25,6 +25,10 @@ h1, h2, h3, p {
     line-height: 1.25em;
 }
 
+h3 {
+    margin: .3em 0 0 0;
+}
+
 sup {
     line-height: .5em;
 }
@@ -61,13 +65,14 @@ sup {
     font-size : 1.5em;
 }
 
-.fold_icon {
+.fold {
     cursor : pointer;
     margin-top:.5em;
 }
 
 .folded_content {
-    padding-left : 18px;
+    padding-left : 14px;
+    cursor: default;
 }
 
 .incipit_lowres {
