@@ -37,8 +37,6 @@
 					
 					<dcm:expression-input ref="."/>
 					
-					
-					
 					<h:fieldset>
 						<h:legend>Components <h:a class="help">?<h:span class="comment">Use components to list the individual 
 							pieces (movements, acts, scenes, sections etc.) that constitute this 
@@ -55,26 +53,16 @@
 						
 						
 						<!-- Components  -->
-						<xf:trigger ref=".[not(m:componentGrp)]">
-							<xf:label>Add component group</xf:label>
-							<xf:action ev:event="DOMActivate">
-								<xf:insert nodeset="m:componentGrp" 
-									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp"/>
-								<xf:dispatch name="id-update" target="form-group"/>
-							</xf:action>
-						</xf:trigger>
-						
+						<dcm:create 
+							nodeset="m:componentGrp"
+							label="Add component group"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp"/>
+
 						<xf:group ref="m:componentGrp">
-							<xf:trigger ref=".[not(m:expression)]">
-								<xf:label>Add components</xf:label>
-								<xf:action ev:event="DOMActivate">
-									<xf:insert  context="."
-										nodeset="m:expression"
-										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
-									<xf:dispatch name="id-update" target="form-group"/>
-								</xf:action>
-							</xf:trigger>
-							
+							<dcm:create
+								nodeset="m:expression"
+								label="Add components"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
 							
 							<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
 								<xf:repeat nodeset="m:expression" id="component-list1">

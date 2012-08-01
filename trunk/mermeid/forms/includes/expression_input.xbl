@@ -111,7 +111,7 @@
                                             origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
                                     </h:div>
                                 </xf:repeat>
-                            </xf:group>                                    
+                            </xf:group>                                   
                             <xf:group ref=".[$is_component='true' or @n!='']">
                                 <!-- use numbering with components only -->
                                 <xf:group ref=".[$is_component='false']">
@@ -131,96 +131,95 @@
                             </xf:group>
                         </xf:group>
                         
-                        <h:div>                               
-                            <xf:input ref="m:tempo" class="maxlong">
-                                <xf:label class="fixed_width_short">Tempo</xf:label>
-                            </xf:input>
-                            <h:br clear="all"/>  
-                            <xf:input ref="m:meter/@meter.count" class="minimal_length">
-                                <xf:label class="fixed_width_short">Metre</xf:label>
-                            </xf:input>/ <xf:input ref="m:meter/@meter.unit" class="minimal_length"/> or symbol: 
-                            <xf:select1	ref="m:meter/@meter.sym" class="auto_length">
-                                <xf:item>
-                                    <xf:label>-</xf:label>
-                                    <xf:value/>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>common time</xf:label>
-                                    <xf:value>common</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>cut time</xf:label>
-                                    <xf:value>cut</xf:value>
-                                </xf:item>
-                            </xf:select1>
-                        </h:div>                                    
-                        <xf:group ref="m:key">
-                            <h:span class="fixed_width_short">Key</h:span>
-                            <xi:include href="../includes/key_select.xml" parse="xml"/>
-                        </xf:group>
-                        <h:br clear="all"/>
-                        <h:span class="blocklabel">Music incipit graphics</h:span>
-                        <xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
-                            <h:div>
-                                <xf:input ref="@target" class="maxlong">
-                                    <xf:label>URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
-                                        "http://example.com/incipits/lowres/116.png"</h:span></h:a></xf:label>
+                        
+                        <h:fieldset>
+                            <h:legend>Music metadata
+                                <xf:group ref=".[$is_component='false']">
+                                    <h:a class="help">?<h:span class="comment">Use at this level only with single-movement works, 
+                                        or to specify the main key of a work or version.  
+                                    </h:span></h:a>
+                                </xf:group>
+                            </h:legend>
+                            
+                            <h:div>                               
+                                <xf:input ref="m:tempo" class="maxlong">
+                                    <xf:label class="fixed_width_short">Tempo</xf:label>
                                 </xf:input>
-                                <xf:select1 ref="@targettype" class="auto_length">
+                                <h:br clear="all"/>  
+                                <xf:input ref="m:meter/@meter.count" class="minimal_length">
+                                    <xf:label class="fixed_width_short">Metre</xf:label>
+                                </xf:input>/ <xf:input ref="m:meter/@meter.unit" class="minimal_length"/> or symbol: 
+                                <xf:select1	ref="m:meter/@meter.sym" class="auto_length">
                                     <xf:item>
-                                        <xf:value>lowres</xf:value>
-                                        <xf:label>Low resolution</xf:label>
+                                        <xf:label>-</xf:label>
+                                        <xf:value/>
                                     </xf:item>
                                     <xf:item>
-                                        <xf:value>hires</xf:value>
-                                        <xf:label>High resolution</xf:label>
+                                        <xf:label>common time</xf:label>
+                                        <xf:value>common</xf:value>
                                     </xf:item>
                                     <xf:item>
-                                        <xf:value>print</xf:value>
-                                        <xf:label>Print quality</xf:label>
+                                        <xf:label>cut time</xf:label>
+                                        <xf:value>cut</xf:value>
                                     </xf:item>
                                 </xf:select1>
-                                <h:a class="help">?<h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
-                                    web graphics, or "Print quality" for print quality graphics</h:span></h:a>
+                            </h:div>                                    
+                            <xf:group ref="m:key">
+                                <h:span class="fixed_width_short">Key</h:span>
+                                <xi:include href="../includes/key_select.xml" parse="xml"/>
+                            </xf:group>
+                            <h:br clear="all"/>
+                            <h:span class="blocklabel">Music incipit graphics</h:span>
+                            <xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
+                                <h:div>
+                                    <xf:input ref="@target" class="maxlong">
+                                        <xf:label>URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
+                                            "http://example.com/incipits/lowres/116.png"</h:span></h:a></xf:label>
+                                    </xf:input>
+                                    <xf:select1 ref="@targettype" class="auto_length">
+                                        <xf:item>
+                                            <xf:value>lowres</xf:value>
+                                            <xf:label>Low resolution</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>hires</xf:value>
+                                            <xf:label>High resolution</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>print</xf:value>
+                                            <xf:label>Print quality</xf:label>
+                                        </xf:item>
+                                    </xf:select1>
+                                    <h:a class="help">?<h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
+                                        web graphics, or "Print quality" for print quality graphics</h:span></h:a>
+                                    <dcm:element-buttons
+                                        triggers="add delete" 
+                                        nodeset="m:graphic" 
+                                        index="incipit-repeat"
+                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>
+                                </h:div>
+                            </xf:repeat>
+                            <h:span class="blocklabel">Text incipit
+                                <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                            </h:span>
+                            <xf:repeat nodeset="m:incip/m:incipText" id="text-incipit-repeat" class="input_group">
+                                <xf:input ref="m:p" class="maxlong"><xf:label/></xf:input> 
+                                <xf:select1 ref="@xml:lang" xxf:refresh-items="false">
+                                    <xf:label/>
+                                    <xf:itemset nodeset="instance('languages')/language">
+                                        <xf:label><xf:output value="."/></xf:label>
+                                        <xf:value ref="@xml:id"></xf:value>
+                                    </xf:itemset>
+                                </xf:select1>                                
                                 <dcm:element-buttons
                                     triggers="add delete" 
-                                    nodeset="m:graphic" 
-                                    index="incipit-repeat"
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>
-                            </h:div>
-                        </xf:repeat>
-                        <h:span class="blocklabel">Text incipit
-                            <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
-                        </h:span>
-                        <xf:repeat nodeset="m:incip/m:incipText/m:p" id="text-incipit-repeat" class="input_group">
-                            <xi:include href="../includes/input_with_xmllang.xml" parse="xml"/>
-                            <dcm:element-buttons
-                                triggers="add delete" 
-                                nodeset="m:p" 
-                                index="text-incipit-repeat"
-                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
-                            <h:br/>
-                        </xf:repeat>
-                        <h:span class="blocklabel">Edited score</h:span>
-                        <xf:repeat nodeset="m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']" id="edited_score-repeat">
-                            <h:div>
-                                <xf:input ref="@target" class="long">
-                                    <xf:label>URI <h:a class="help">?<h:span class="comment">Location of an external, edited score (this movement only).
-                                        Not for digital representations of items listed as "Sources"</h:span></h:a></xf:label>
-                                </xf:input>
-                                <xf:input ref="@label">
-                                    <xf:label>Description <h:a class="help">?<h:span class="comment">Explanatory text for the link to the resource, 
-                                        e.g. "Carl Nielsen Edition, full score"</h:span></h:a></xf:label>
-                                </xf:input>
-                                <dcm:element-buttons
-                                    triggers="add delete" 
-                                    nodeset="m:relation" 
-                                    index="edited_score-repeat"
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']"/>
-                            </h:div>
-                        </xf:repeat>
-                        <h:br/> 
-                        
+                                    nodeset="m:incipText" 
+                                    index="text-incipit-repeat"
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>
+                                <h:br/>
+                            </xf:repeat>
+                        </h:fieldset>
+
                         <xf:group ref="m:titleStmt">
                             <h:div class="blocklabel strong">Persons <h:a class="help">?<h:span 
                                 class="comment">Persons with connection to this particular 
@@ -245,7 +244,28 @@
                             </xf:repeat>
                         </xf:group>
                         
-                       
+                        <xf:group ref="m:relationList[m:relation[@rel='hasReproduction' and @targettype='edited_score']]">
+                            <h:span class="blocklabel">Edited score</h:span>
+                            <xf:repeat nodeset="m:relation[@rel='hasReproduction' and @targettype='edited_score']" id="edited_score-repeat">
+                                <h:div>
+                                    <xf:input ref="@target" class="long">
+                                        <xf:label>URI <h:a class="help">?<h:span class="comment">Location of an external, edited score (this movement only).
+                                            Not for digital representations of items listed as "Sources"</h:span></h:a></xf:label>
+                                    </xf:input>
+                                    <xf:input ref="@label">
+                                        <xf:label>Description <h:a class="help">?<h:span class="comment">Explanatory text for the link to the resource, 
+                                            e.g. "Carl Nielsen Edition, full score"</h:span></h:a></xf:label>
+                                    </xf:input>
+                                    <dcm:element-buttons
+                                        triggers="add delete" 
+                                        nodeset="m:relation" 
+                                        index="edited_score-repeat"
+                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']"/>
+                                </h:div>
+                            </xf:repeat>
+                            <h:br/> 
+                        </xf:group>
+                        
                         <!-- Instrumentation editable at top level only (or if not empty) -->
                         <!-- Remove the group condition to enable instrumentation editing at component levels -->
                         <xf:group ref=".[$is_component='false' or $binding//m:instrVoice[.!='']]">
@@ -258,19 +278,9 @@
                                 Both ensembles and performers should have a MARC standard code added to improve
                                 data compatibility and interchange. Codes are selected from the dropdown menus.							
                             </h:span></h:a>
-                                <xf:trigger id="id-trigger" appearance="minimal">
+                                <!--<xf:trigger id="id-trigger" appearance="minimal">
                                     <xf:label></xf:label>
                                     <xf:action ev:event="DOMActivate add-id">
-                                        <!-- add value to empty IDs -->
-                                        <!-- using global handler instead
-                                            <xf:setvalue ref="instance('temp')/counter" value="0" />
-                                            <xf:setvalue ref="instance('temp')/max" value="count($binding//*[@xml:id=''])"/>
-                                            <xf:action while="(instance('temp')/max) - (instance('temp')/counter) &gt; 0">
-                                            <xf:setvalue ref="instance('temp')/counter" value=". + 1" />
-                                            <xf:setvalue ref="$binding//*[@xml:id=''][instance('temp')/counter]/@xml:id"
-                                            value="concat(local-name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>  
-                                            </xf:action>-->
-                                        <!-- add @xml:id and value to ensembles and performers without it -->
                                         <xf:setvalue ref="instance('temp')/counter" value="0" />
                                         <xf:setvalue ref="instance('temp')/max" value="count($binding//*[local-name()='ensemble' or local-name()='performer'][count(@xml:id)=0])"/>
                                         <xf:action while="(instance('temp')/max) - (instance('temp')/counter) &gt; 0">
@@ -282,7 +292,7 @@
                                         </xf:action>
                                         <xf:dispatch name="id-update" target="form-group"/>
                                     </xf:action>
-                                </xf:trigger>
+                                </xf:trigger>-->
                                 
                             </h:legend>
                             
@@ -294,6 +304,7 @@
                                             <xxf:show dialog="ensemble-menu"/>
                                         </xf:action>
                                     </xf:trigger>
+                                    
                                     <!-- dialog for adding ensembles -->
                                     <xxf:dialog id="ensemble-menu" appearance="full" level="modal"
                                         close="true" draggable="true" visible="false">
@@ -310,18 +321,19 @@
                                                         position="after" 
                                                         origin="instance('instrumentation')/m:ensemble[m:instrVoice/@reg][index('ensemble-menu-repeat')]"/>
                                                     <!-- generate IDs for added performers -->
-                                                    <xf:dispatch name="add-id" target="id-trigger"/>
+                                                    <xf:dispatch name="id-update" target="form-group"/>
                                                     <xxf:hide dialog="ensemble-menu"/>
                                                 </xf:action>
                                             </xf:trigger>
                                             <h:br/>
                                         </xf:repeat>
                                     </xxf:dialog>			
+                                    
                                 </h:div>
                                 <xf:repeat nodeset="m:ensemble" id="repeat-ensemble">
                                     <h:fieldset>
                                         <h:legend>
-                                            <xf:output value="if (m:instrVoice!='') then m:instrVoice else '[Ensemble]'"/>
+                                            <xf:output value="if (m:instrVoice!='') then m:instrVoice else '[Ensemble]'"/> &#160;
                                             <dcm:element-buttons-typed 
                                                 triggers="up down" 
                                                 nodeset="m:ensemble" 
@@ -373,8 +385,9 @@
                                                 </xf:action>
                                             </xf:select1>
                                         </h:div>
+                                        <h:div class="vertical_spacer"/>
                                         <!-- performers within an ensemble -->
-                                        <h:div><h:span class="fixed_width">Performers 
+                                        <h:div><h:span class="strong">Performers in this ensemble
                                             <h:a class="help">?<h:span class="comment">Optional. An ensemble may be specified by name (above), 
                                                 by a list of performers, or both.</h:span></h:a></h:span>
                                             <!-- dialog for adding performers to existing ensembles -->
@@ -393,7 +406,7 @@
                                                                 position="after" 
                                                                 origin="instance('instrumentation')/m:ensemble[m:performer][index('ensemble-performer-menu-repeat')]/m:performer"/>
                                                             <!-- generate IDs for added performers -->
-                                                            <xf:dispatch name="add-id" target="id-trigger"/>
+                                                            <xf:dispatch name="id-update" target="form-group"/>
                                                             <xxf:hide dialog="ensemble-performer-menu"/>
                                                         </xf:action>
                                                     </xf:trigger>

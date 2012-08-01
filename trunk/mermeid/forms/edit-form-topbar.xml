@@ -148,8 +148,8 @@
         title="Close editor and return to file list" border="0"/></xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:exist_dir,'list_files.xq')"/>
-          <xf:load resource="{$uri}" show="replace"/>
+          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:server_name,instance('parameters')/dcm:exist_dir,'list_files.xq')"/>
+          <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">

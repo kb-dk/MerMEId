@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
-    xmlns:xxf="http://orbeon.org/oxf/xml/xforms" xmlns:exforms="http://www.exforms.org/exf/1-0"
-    xmlns:fr="http://orbeon.org/oxf/xml/form-runner" xmlns:saxon="http://saxon.sf.net/"
-    xmlns:xbl="http://www.w3.org/ns/xbl" xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
+    xmlns:xbl="http://www.w3.org/ns/xbl" 
+    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
     xmlns:dcm="http://www.kb.dk/dcm">
     
     <!--
@@ -61,6 +61,7 @@
                 
                 <xxf:variable name="index" xbl:attr="xbl:text=index"/>
                 <xxf:variable name="nodeset" xbl:attr="xbl:text=nodeset"/>
+                <xxf:variable name="local-name" select="substring-after($nodeset,':')"/>
                 <xxf:variable name="attr_origin" xbl:attr="xbl:text=origin"/>
                 <xxf:variable name="triggers" xbl:attr="xbl:text=triggers"/>
                 <xxf:variable name="origin" as="node()?">
@@ -69,10 +70,10 @@
                 
                 <h:span class="editmenu">
                     <xf:group ref=".[contains($triggers,'up') or contains($triggers,'all')]" class="button_group">
-                        <xf:group ref=".[count(preceding-sibling::*) = 0]">
+                        <xf:group ref=".[count(preceding-sibling::*[local-name()=$local-name]) = 0]">
                             <h:img src="http:/editor/images/arrow_up_disabled.gif" class="button_patch"/><xf:output value="''"/>
                         </xf:group>
-                        <xf:group ref=".[count(preceding-sibling::*) &gt; 0]">
+                        <xf:group ref=".[count(preceding-sibling::*[local-name()=$local-name]) &gt; 0]">
                             <xf:trigger appearance="minimal">
                                 <xf:label><h:img src="http:/editor/images/arrow_up.gif" alt="Up" title="Move up"/></xf:label>
                                 <xf:recalculate ev:event="DOMFocusIn"/>
@@ -87,10 +88,10 @@
                         </xf:group>
                     </xf:group>                    
                     <xf:group ref=".[contains($triggers,'down') or contains($triggers,'all')]" class="button_group">
-                        <xf:group ref=".[count(following-sibling::*) = 0]">
+                        <xf:group ref=".[count(following-sibling::*[local-name()=$local-name]) = 0]">
                             <h:img src="http:/editor/images/arrow_down_disabled.gif" class="button_patch"/><xf:output value="''"/>
                         </xf:group>
-                        <xf:group ref=".[count(following-sibling::*) &gt; 0]">
+                        <xf:group ref=".[count(following-sibling::*[local-name()=$local-name]) &gt; 0]">
                             <xf:trigger appearance="minimal">
                                 <xf:label><h:img src="http:/editor/images/arrow_down.gif" alt="Down" title="Move down"/></xf:label>
                                 <xf:action ev:event="DOMActivate">

@@ -132,6 +132,7 @@
         
         <!-- XBL components -->
         <xi:include href="includes/element_buttons.xbl" parse="xml"/>
+        <xi:include href="includes/create.xbl" parse="xml"/>
         <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
         <xi:include href="includes/date_editor.xbl" parse="xml"/>
         <xi:include href="includes/relator.xbl" parse="xml"/>
@@ -284,7 +285,7 @@
                             <h:label class="fixed_width_short">Key</h:label>
                             <xi:include href="includes/key_select.xml" parse="xml"/>
                         </xf:group>
-                        <h:br clear="all"/>
+                        <h:div class="vertical_spacer"/>
                         <h:span class="blocklabel">Music incipit graphics</h:span>
                         <xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
                             <h:div>
@@ -318,13 +319,20 @@
                         <h:span class="blocklabel">Text incipit
                             <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                         </h:span>
-                        <xf:repeat nodeset="m:incip/m:incipText/m:p" id="text-incipit-repeat" class="input_group">
-                            <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+                        <xf:repeat nodeset="m:incip/m:incipText" id="text-incipit-repeat" class="input_group">
+                            <xf:input ref="m:p" class="maxlong"><xf:label/></xf:input> 
+                            <xf:select1 ref="@xml:lang" xxf:refresh-items="false">
+                                <xf:label/>
+                                <xf:itemset nodeset="instance('languages')/language">
+                                    <xf:label><xf:output value="."/></xf:label>
+                                    <xf:value ref="@xml:id"></xf:value>
+                                </xf:itemset>
+                            </xf:select1>                                
                             <dcm:element-buttons
                                 triggers="add delete" 
-                                nodeset="m:p" 
+                                nodeset="m:incipText" 
                                 index="text-incipit-repeat"
-                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>
                             <h:br/>
                         </xf:repeat>
                         <h:span class="blocklabel">Edited score</h:span>
@@ -367,10 +375,16 @@
                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
                                 <h:br/>
                             </xf:repeat>
+                            <dcm:create 
+                                nodeset="m:respStmt"
+                                label="Add list of persons"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt"/>
+                            <dcm:create ref="m:respStmt"
+                                nodeset="m:persName"
+                                label="Add person"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
                         </xf:group>
-                        
-                    </h:fieldset>                        
-                    
+                    </h:fieldset>               
                     
                 </xf:group>
                 
