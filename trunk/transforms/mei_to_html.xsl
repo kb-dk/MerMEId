@@ -816,16 +816,12 @@
 				<xsl:comment> physical description </xsl:comment>				
 				<xsl:for-each select="m:physDesc">
 					<xsl:apply-templates select="."/>
-					<xsl:text> 
-					</xsl:text>
 				</xsl:for-each>
 				
 				<xsl:for-each select="m:notesStmt">
-					<xsl:for-each select="m:annot[m:p[text()]]">
+					<xsl:for-each select="m:annot[//text()]">
 						<p>
 							<xsl:apply-templates select="."/>	    
-							<xsl:text> 
-							</xsl:text>
 						</p>
 					</xsl:for-each>
 					<xsl:for-each select="m:annot[@type='links'][m:ptr[@target!='']]">
@@ -842,43 +838,58 @@
 					</xsl:for-each>
 				</xsl:for-each>
 				
+				
 				<!-- source location and identifiers -->				
 				<xsl:for-each 
 					select="m:physDesc/m:physLoc">					
-					<xsl:for-each select="m:repository">						
-						<xsl:for-each select="m:corpName[text()]|m:identifier[text() and (not(@analog) or @analog='')]">
-							<xsl:choose>
-								<xsl:when test="name(.)='corpName'">
-									<em><xsl:apply-templates select="."/></em>
-									<xsl:text> </xsl:text>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:apply-templates select="."/>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:if test="position()=last()"><xsl:text>. </xsl:text></xsl:if>
-						</xsl:for-each>
-
-						<xsl:for-each select="m:ptr[normalize-space(@target)]">
-							<xsl:element name="a">
-								<xsl:attribute name="href">
-									<xsl:value-of select="@target"/>
-								</xsl:attribute>  
-								<xsl:value-of select="@xl:title"/>
-							</xsl:element>
-							<xsl:choose>
-								<xsl:when test="position()=last()"><xsl:text>. </xsl:text></xsl:when>
-								<xsl:otherwise><xsl:text>, </xsl:text></xsl:otherwise>
-							</xsl:choose>
-						</xsl:for-each>
-
-						<xsl:for-each select="m:identifier[text() and @analog!='']">
-							<xsl:if test="position()&gt;1"><br/></xsl:if>
-							<xsl:apply-templates select="@analog"/>
-							<xsl:apply-templates select="."/>.
-						</xsl:for-each>
-						
+					<xsl:for-each select="m:repository[m:corpName[text()]|m:identifier[text()]]">
+						<div>						
+							<xsl:for-each select="m:corpName[text()]|m:identifier[text() and (not(@analog) or @analog='')]">
+								<xsl:choose>
+									<xsl:when test="name(.)='corpName'">
+										<em><xsl:apply-templates select="."/></em>
+										<xsl:text> </xsl:text>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:apply-templates select="."/>
+									</xsl:otherwise>
+								</xsl:choose>
+								<xsl:if test="position()=last()"><xsl:text>. </xsl:text></xsl:if>
+							</xsl:for-each>
+							
+							<xsl:for-each select="m:ptr[normalize-space(@target)]">
+								<xsl:element name="a">
+									<xsl:attribute name="href">
+										<xsl:value-of select="@target"/>
+									</xsl:attribute>  
+									<xsl:value-of select="@xl:title"/>
+								</xsl:element>
+								<xsl:choose>
+									<xsl:when test="position()=last()"><xsl:text>. </xsl:text></xsl:when>
+									<xsl:otherwise><xsl:text>, </xsl:text></xsl:otherwise>
+								</xsl:choose>
+							</xsl:for-each>
+							
+							<xsl:for-each select="m:identifier[text() and @analog!='']">
+								<xsl:if test="position()&gt;1"><br/></xsl:if>
+								<xsl:apply-templates select="@analog"/>
+								<xsl:apply-templates select="."/>.
+							</xsl:for-each>
+						</div>					
 					</xsl:for-each>
+				</xsl:for-each>
+				
+				<xsl:for-each select="m:physDesc/m:provenance[*//text()]">
+					<div>
+						<xsl:text>Provenance: </xsl:text>
+						<xsl:for-each select="m:eventList/m:event[*/text()]">
+							<xsl:apply-templates select="m:title"/>
+							<xsl:for-each select="m:date[text()]">
+								<xsl:text> </xsl:text>
+								<xsl:apply-templates select="."/>
+							</xsl:for-each>.
+						</xsl:for-each>
+					</div>
 				</xsl:for-each>
 				
 				<xsl:apply-templates select="m:componentGrp|m:itemList"/>
@@ -946,11 +957,11 @@
 	</xsl:template>
 	
 	<!-- format scribe's name and medium -->
-	<xsl:template match="m:hand[text()]" mode="scribe">
+	<xsl:template match="m:hand" mode="scribe">
 		<xsl:call-template name="lowercase">
 			<xsl:with-param name="str" select="translate(@medium,'_',' ')"/>
 		</xsl:call-template>
-		(<xsl:apply-templates select="."/>)</xsl:template>
+		<xsl:if test="./text()"> (<xsl:apply-templates select="."/>)</xsl:if></xsl:template>
 	
 	<!-- list scribes -->
 	<xsl:template match="m:handList">
@@ -1696,13 +1707,15 @@
 									
 									<!-- To do: Here, the attributes contained in the 
 										$attributes string should be added /atge -->
+									<xsl:call-template name="add_attributes_from_string">
+										<xsl:with-param name="inputString" select="$attributes"/>
+									</xsl:call-template>									
 									
 									<xsl:if test="not($element = 'br')">
 										<xsl:text>
 										</xsl:text>
 									</xsl:if>
 									<!-- There could be more escaped elements inside our element -->
-									
 									<xsl:call-template name="replace_nodes">
 										<xsl:with-param
 											name="text"
@@ -1743,7 +1756,11 @@
 						</xsl:variable>
 						
 						<xsl:if test="$element = 'br' or $element = 'img'">
-							<xsl:element name="{$element_name}"/>
+							<xsl:element name="{$element_name}">
+								<xsl:call-template name="add_attributes_from_string">
+									<xsl:with-param name="inputString" select="$attributes"/>
+								</xsl:call-template>
+							</xsl:element>
 						</xsl:if>
 						
 						<xsl:call-template name="replace_nodes">
@@ -1840,6 +1857,30 @@
 		<xsl:if test="position()&lt;last()">
 			<xsl:element name="br"/>
 		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template name="add_attributes_from_string">
+		<!-- To fix: attribute values including spaces are lost... /atge -->
+		<xsl:param name="inputString"/>
+		<xsl:choose>
+			<xsl:when test="contains($inputString, ' ')">
+				<xsl:variable name="this_attr" select="substring-before($inputString,' ')"/>
+				<xsl:variable name="attr_name" select="substring-before($this_attr,'=')"/>
+				<xsl:variable name="attr_value" select="substring-before(substring-after($this_attr,'&quot;'),'&quot;')"></xsl:variable>
+				<xsl:attribute name="{$attr_name}"><xsl:value-of select="$attr_value"/></xsl:attribute>
+				<xsl:variable name="remainder" select="substring-after($inputString, ' ')"></xsl:variable>
+				<xsl:call-template name="add_attributes_from_string">
+					<xsl:with-param name="inputString" select="$remainder"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:if test="$inputString!=''">
+					<xsl:variable name="attr_name" select="substring-before($inputString,'=')"/>
+					<xsl:variable name="attr_value" select="substring-before(substring-after($inputString,'&quot;'),'&quot;')"></xsl:variable>
+					<xsl:attribute name="{$attr_name}"><xsl:value-of select="$attr_value"/></xsl:attribute>
+				</xsl:if>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 	

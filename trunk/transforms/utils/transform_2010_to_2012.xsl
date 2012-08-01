@@ -4,13 +4,11 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:xl="http://www.w3.org/1999/xlink" 
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
     xmlns:m="http://www.music-encoding.org/ns/mei" 
     xmlns:t="http://www.tei-c.org/ns/1.0" 
     exclude-result-prefixes="m xsl">
     
     <xsl:output method="xml" encoding="UTF-8" indent="yes" xml:space="default"/>
-
     <xsl:strip-space elements="*"/>
         
     <xsl:template match="@*|*">
@@ -22,13 +20,11 @@
     <xsl:template match="m:mei">
         <mei>
             <xsl:attribute name="meiversion">2012</xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="not(@xml:id)">
-                    <xsl:attribute name="xml:id">
-		      <xsl:value-of select="concat('mei_',generate-id(.))"/>
-		    </xsl:attribute>
-                </xsl:when>
-            </xsl:choose>            
+            <xsl:if test="count(@xml:id)=0">
+                <xsl:attribute name="xml:id">
+                    <xsl:value-of select="concat('mei_',generate-id())"/>
+                </xsl:attribute>
+            </xsl:if>
             <xsl:apply-templates select="@*|node()"/>
         </mei>
     </xsl:template>
@@ -387,32 +383,47 @@
             <title><xsl:value-of select="."/></title>
             <!-- move dates from <event> to <date> -->
             <date>
+                <xsl:variable name="notbefore" select="normalize-space(@notbefore)"/>
+                <xsl:variable name="notafter" select="normalize-space(@notafter)"/>
                 <xsl:choose>
-                    <xsl:when test="normalize-space(@notbefore) and normalize-space(@notafter) and @notbefore=@notafter">
+                    <xsl:when test="$notbefore!='' and $notbefore=$notafter">
                         <xsl:choose>
-                            <xsl:when test="normalize-space(@notbefore) castable as xs:date">
-                                <xsl:attribute name="reg"><xsl:value-of select="normalize-space(@notbefore)"/></xsl:attribute>
+                            <xsl:when test="$notbefore castable as xs:date">
+                                <xsl:attribute name="reg"><xsl:value-of select="$notbefore"/></xsl:attribute>
+                                <xsl:attribute name="notbefore" select="''"/>
+                                <xsl:attribute name="notafter" select="''"/>
+                            </xsl:when>
+                            <xsl:when test="$notbefore castable as xs:integer and string-length($notbefore)=4">
+                                <xsl:attribute name="notbefore" select="xs:date(concat($notbefore,'-01-01'))"/>
+                                <xsl:attribute name="notafter" select="xs:date(concat($notafter,'-12-31'))"/>
+                                <xsl:attribute name="reg" select="''"/>
                             </xsl:when>
                             <xsl:otherwise>
+                                <xsl:attribute name="notbefore" select="''"/>
+                                <xsl:attribute name="notafter" select="''"/>
                                 <xsl:attribute name="reg" select="''"/>
                             </xsl:otherwise>
                         </xsl:choose>
-                        <xsl:attribute name="notbefore" select="''"/>
-                        <xsl:attribute name="notafter" select="''"/>
-                        <xsl:value-of select="normalize-space(@notbefore)"></xsl:value-of>
+                        <xsl:value-of select="$notbefore"></xsl:value-of>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:choose>
-                            <xsl:when test="normalize-space(@notbefore) castable as xs:date">
-                                <xsl:attribute name="notbefore"><xsl:value-of select="normalize-space(@notbefore)"/></xsl:attribute>
+                            <xsl:when test="$notbefore castable as xs:date">
+                                <xsl:attribute name="notbefore"><xsl:value-of select="$notbefore"/></xsl:attribute>
+                            </xsl:when>
+                            <xsl:when test="$notbefore castable as xs:integer and string-length($notbefore)=4">
+                                <xsl:attribute name="notbefore" select="xs:date(concat($notbefore,'-01-01'))"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:attribute name="notbefore" select="''"/>
                             </xsl:otherwise>
                         </xsl:choose>
                         <xsl:choose>
-                            <xsl:when test="normalize-space(@notbefore) castable as xs:date">
-                                <xsl:attribute name="notbefore"><xsl:value-of select="normalize-space(@notbefore)"/></xsl:attribute>
+                            <xsl:when test="$notafter castable as xs:date">
+                                <xsl:attribute name="notafter"><xsl:value-of select="$notafter"/></xsl:attribute>
+                            </xsl:when>
+                            <xsl:when test="$notafter castable as xs:integer and string-length($notafter)=4">
+                                <xsl:attribute name="notafter" select="xs:date(concat($notafter,'-12-31'))"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:attribute name="notafter" select="''"/>
@@ -420,18 +431,17 @@
                         </xsl:choose>
                         <xsl:attribute name="reg" select="''"/>
                         <xsl:variable name="date_value">
-                            <xsl:value-of select="@notbefore"/>
-                            <xsl:if test="normalize-space(@notbefore) and normalize-space(@notafter)"> - </xsl:if>
-                            <xsl:value-of select="@notafter"/> 
+                            <xsl:value-of select="$notbefore"/>
+                            <xsl:if test="$notbefore!='' and $notafter!=''"> - </xsl:if>
+                            <xsl:value-of select="$notafter"/> 
                         </xsl:variable>
-                        <xsl:value-of select="normalize-space($date_value)"/>
+                        <xsl:value-of select="$date_value"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </date>
             <geogName role=""/>
             <corpName role=""/>
             <persName role=""/>
-            <bibl label="documentation"/>
         </event>                        
     </xsl:template>
 
