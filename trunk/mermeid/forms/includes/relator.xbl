@@ -40,7 +40,10 @@
       <!-- Local model --> 
       <xf:model id="relator-model">                                
         <!-- Read list of relations from external file -->
-        <xf:instance id="relators-instance" src="/../editor/forms/mei/model/relators.xml"/>         
+        <xf:instance 
+          id="relators-instance" 
+          src="/../editor/forms/mei/model/relators.xml"
+          xxforms:readonly="true"/>         
       </xf:model>
     </xbl:implementation>
     
@@ -52,7 +55,6 @@
         <!-- Inner group -->
         <xf:group appearance="xxforms:internal" xxbl:scope="inner">
           
-          <!-- Variables pointing to external single-node bindings -->
           <xxforms:variable name="binding" as="node()?">
             <xxforms:sequence select="." xxbl:scope="outer"/>
             <!-- initialization -->
@@ -60,15 +62,11 @@
           </xxforms:variable>
                     
             <xf:input class="long" ref="$binding">
-              <!--<xf:label class="fixed_width">Name </xf:label>-->
               <xf:action ev:event="xforms-value-changed xforms-enabled" if="count(@binding/@role)!=1">
                 <!-- add role attribute -->
               </xf:action>
             </xf:input>
             <xxforms:variable name="role" select="$binding/@role"/>
-            <!--<h:span class="label"> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
-              or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
-            </h:span>-->
             
             <!-- display a warning if role is not on standard relators list -->
             <xf:group ref=".[not(instance('relators-instance')/role[.=$role])]">
@@ -80,7 +78,7 @@
             
           <xf:select1 ref="$binding/@role" class="mediumlong">
               <xf:itemset nodeset="instance('relators-instance')/role">
-                <xf:label><xf:output value="if (.!='') then . else '- Please select -'"/></xf:label>
+                <xf:label><xf:output value="if (.!='') then . else '- Select relation -'"/></xf:label>
                 <xf:value ref="."></xf:value>
               </xf:itemset>
             </xf:select1>

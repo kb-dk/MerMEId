@@ -56,6 +56,21 @@
       src="/editor/forms/mei/model/languages.xml" 
       xxf:readonly="true"/>
     
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+      id="instrumentation"
+      src="/editor/forms/mei/model/standard_instrumentation.xml" 
+      xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+      id="ensembles" 
+      src="/editor/forms/mei/model/ensembles.xml" 
+      xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+      id="instruments" 
+      src="/editor/forms/mei/model/instruments.xml" 
+      xxf:readonly="true"/>
+    
     <xf:instance xmlns="http://www.tei-c.org/ns/1.0" 
       id="bibl-type-instance" 
       src="/editor/forms/mei/model/bibl_reference_types.xml" 
@@ -164,7 +179,6 @@
   <xi:include href="includes/tei_date_editor.xbl" parse="xml"/>
   <xi:include href="includes/relator.xbl" parse="xml"/>
   <xi:include href="includes/performance_list.xbl" parse="xml"/>
-  <xi:include href="includes/expression_input.xbl" parse="xml"/>
   <xi:include href="includes/item.xbl" parse="xml"/>
   <xi:include href="includes/id.xbl" parse="xml"/>
   <xi:include href="includes/attribute_editor.xbl" parse="xml"/>

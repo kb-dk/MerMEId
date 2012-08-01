@@ -119,7 +119,7 @@
                         </xf:trigger>
                         
                         <!-- the pop-up editor -->
-                        <xxforms:dialog id="attr-dialog" appearance="full" level="modeless"
+                        <xxforms:dialog id="attr-dialog" appearance="full" level="modal"
                             close="true" draggable="true" visible="false">
                             <xf:label>&lt;<xf:output value="local-name($binding)"/>&gt; attributes</xf:label>                        
                             <xf:repeat ref="$attributes">

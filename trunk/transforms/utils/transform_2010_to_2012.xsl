@@ -811,14 +811,14 @@
                                             <xsl:apply-templates select="//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]" mode="castList"/>
                                         </xsl:when>
                                         <xsl:otherwise>
-                                            <castItem>
+                                            <!--<castItem>
                                                 <role>
                                                     <ref target="">
                                                         <name xml:lang="en"/>  
                                                     </ref>
                                                 </role>
                                                 <roleDesc xml:lang="en"/>
-                                            </castItem>
+                                            </castItem>-->
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:otherwise>
