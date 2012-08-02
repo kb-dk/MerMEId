@@ -135,6 +135,12 @@
         <xf:group id="form-group">
             
             <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+            <xxf:variable name="uri" 
+                select="concat(instance('parameters')/dcm:orbeon_dir,
+                '?uri=',
+                instance('parameters')/dcm:form_home,
+                'edit-source-case.xml&amp;doc=',
+                instance('parameters')/dcm:xml_file)"/>
             
             <h:div class="inputdiv">
                 
@@ -142,14 +148,12 @@
                     <xf:submit submission="save-to-file">
                         <xf:label>Save</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-sources,instance('parameters')/dcm:xml_file)"/>
                             <xf:load resource="{$uri}" show="replace"/>
                         </xf:action>
                     </xf:submit>
                     <xf:trigger>
                         <xf:label>Cancel</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-sources,instance('parameters')/dcm:xml_file)"/>
                             <xf:load resource="{$uri}" show="replace"/>
                         </xf:action>
                     </xf:trigger>
@@ -593,7 +597,7 @@
                                     </h:legend>
                                     <h:div class="vertical_spacer"> </h:div>
                                     <h:div class="vertical_spacer"> </h:div>
-                                    <dcm:item ref="." id="item-1"/>
+                                    <dcm:item ref="."/>
                                     <h:fieldset class="item-components">
                                         <h:legend class="item-components">Components <h:a class="help">?<h:span class="comment">Descriptions of the individual parts that 
                                             constitute a composite source</h:span></h:a>

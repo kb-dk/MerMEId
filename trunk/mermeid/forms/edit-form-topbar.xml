@@ -18,73 +18,103 @@
     <xf:trigger id="work-tab"  appearance="minimal">
       <xf:label>Work</xf:label>
       <xf:action ev:event="DOMActivate">
+        <xxf:variable name="uri" 
+          select="concat(instance('parameters')/dcm:orbeon_dir,
+          '?uri=',
+          instance('parameters')/dcm:form_home,
+          'edit-work-case.xml&amp;doc=',
+          instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-work,instance('parameters')/dcm:xml_file)"/>
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
-          <xf:load resource="{instance('parameters')/dcm:edit-work}{instance('parameters')/dcm:xml_file}" show="replace"/>
+          <xf:load resource="{$uri}" show="replace"/>
         </xf:action>
       </xf:action>
     </xf:trigger><xf:trigger id="history-tab" appearance="minimal">
       <xf:label>History</xf:label>
       <xf:action ev:event="DOMActivate">
+        <xxf:variable name="uri" 
+          select="concat(instance('parameters')/dcm:orbeon_dir,
+          '?uri=',
+          instance('parameters')/dcm:form_home,
+          'edit-history-case.xml&amp;doc=',
+          instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-history,instance('parameters')/dcm:xml_file)"/>
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
-          <xf:load resource="{instance('parameters')/dcm:edit-history}{instance('parameters')/dcm:xml_file}" show="replace"/>
+          <xf:load resource="{$uri}" show="replace"/>
         </xf:action>
       </xf:action>
     </xf:trigger><xf:trigger id="source-tab" appearance="minimal">
       <xf:label>Sources</xf:label>
       <xf:action ev:event="DOMActivate">
+        <xxf:variable name="uri" 
+          select="concat(instance('parameters')/dcm:orbeon_dir,
+          '?uri=',
+          instance('parameters')/dcm:form_home,
+          'edit-source-case.xml&amp;doc=',
+          instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-sources,instance('parameters')/dcm:xml_file)"/>
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
-          <xf:load resource="{instance('parameters')/dcm:edit-sources}{instance('parameters')/dcm:xml_file}" show="replace"/>
+          <xf:load resource="{$uri}" show="replace"/>
         </xf:action>
       </xf:action>
     </xf:trigger><xf:trigger id="music-tab" appearance="minimal">
       <xf:label>Music</xf:label>
       <xf:action ev:event="DOMActivate">
+        <xxf:variable name="uri" 
+          select="concat(instance('parameters')/dcm:orbeon_dir,
+          '?uri=',
+          instance('parameters')/dcm:form_home,
+          'edit-music-case.xml&amp;doc=',
+          instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-music,instance('parameters')/dcm:xml_file)"/>
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
-          <xf:load resource="{instance('parameters')/dcm:edit-music}{instance('parameters')/dcm:xml_file}" show="replace"/>
+          <xf:load resource="{$uri}" show="replace"/>
         </xf:action>
       </xf:action>
     </xf:trigger><xf:trigger  id="bibliography-tab" appearance="minimal">
       <xf:label>Bibliography</xf:label>
       <xf:action ev:event="DOMActivate">
+        <xxf:variable name="uri" 
+          select="concat(instance('parameters')/dcm:orbeon_dir,
+          '?uri=',
+          instance('parameters')/dcm:form_home,
+          'edit-bibliography-case.xml&amp;doc=',
+          instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-bibliography,instance('parameters')/dcm:xml_file)"/>
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
-          <xf:load resource="{instance('parameters')/dcm:edit-bibliography}{instance('parameters')/dcm:xml_file}" show="replace"/>
+          <xf:load resource="{$uri}" show="replace"/>
         </xf:action>
       </xf:action>
     </xf:trigger><xf:trigger  id="file-tab"   appearance="minimal">
       <xf:label>File</xf:label>
       <xf:action ev:event="DOMActivate">
+        <xxf:variable name="uri" 
+          select="concat(instance('parameters')/dcm:orbeon_dir,
+          '?uri=',
+          instance('parameters')/dcm:form_home,
+          'edit-file-case.xml&amp;doc=',
+          instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-file,instance('parameters')/dcm:xml_file)"/>
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
         <xf:action if="instance('temp')/changed='false'">
-          <xf:load resource="{instance('parameters')/dcm:edit-file}{instance('parameters')/dcm:xml_file}" show="replace"/>
+          <xf:load resource="{$uri}" show="replace"/>
         </xf:action>
       </xf:action>
     </xf:trigger>

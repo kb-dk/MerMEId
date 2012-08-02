@@ -209,17 +209,6 @@
                                     <xf:toggle case="hide_details" ev:event="DOMActivate"/>
                                 </xf:trigger>					
                                 
-                                <!--<xf:group ref="m:pubStmt">
-                                    <h:div>
-                                    <dcm:date-editor ref="m:date">
-                                    <xf:label class="fixed_width">Date <h:a class="help">?<h:span class="comment">Use only 
-                                    if the dating of this particular item or component differs from that of the source as 
-                                    a whole (e.g. a if more specific date is known for this item).</h:span></h:a> 
-                                    </xf:label>
-                                    </dcm:date-editor>
-                                    </h:div>
-                                    </xf:group>-->
-                               
                                 <xf:group ref="m:physDesc">
                                     
                                     <xf:group ref="m:provenance/m:eventList[$parent='itemList']">

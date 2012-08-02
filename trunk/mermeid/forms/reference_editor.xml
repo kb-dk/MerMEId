@@ -143,6 +143,12 @@
         <xf:group id="form-group">
             
             <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+            <xxf:variable name="uri" 
+                select="concat(instance('parameters')/dcm:orbeon_dir,
+                '?uri=',
+                instance('parameters')/dcm:form_home,
+                'edit-bibliography-case.xml&amp;doc=',
+                instance('parameters')/dcm:xml_file)"/>
             
             <h:div class="inputdiv">
                 
@@ -150,14 +156,12 @@
                     <xf:submit submission="save-to-file">
                         <xf:label>Save</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-bibliography,instance('parameters')/dcm:xml_file)"/>
                             <xf:load resource="{$uri}" show="replace"/>
                         </xf:action>
                     </xf:submit>
                     <xf:trigger>
                         <xf:label>Cancel</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xxf:variable name="uri" select="concat(instance('parameters')/dcm:edit-bibliography,instance('parameters')/dcm:xml_file)"/>
                             <xf:load resource="{$uri}" show="replace"/>
                         </xf:action>
                     </xf:trigger>
