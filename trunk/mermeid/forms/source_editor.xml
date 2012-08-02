@@ -122,6 +122,7 @@
         <!-- XBL components -->
         <xi:include href="includes/element_buttons.xbl" parse="xml"/>
         <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
+        <xi:include href="includes/create.xbl" parse="xml"/>
         <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
         <xi:include href="includes/date_editor.xbl" parse="xml"/>
         <xi:include href="includes/relator.xbl" parse="xml"/>
@@ -598,27 +599,6 @@
                                     <h:div class="vertical_spacer"> </h:div>
                                     <h:div class="vertical_spacer"> </h:div>
                                     <dcm:item ref="."/>
-                                    <h:fieldset class="item-components">
-                                        <h:legend class="item-components">Components <h:a class="help">?<h:span class="comment">Descriptions of the individual parts that 
-                                            constitute a composite source</h:span></h:a>
-                                            <dcm:attribute-editor ref="m:componentGrp"/>
-                                        </h:legend>
-                                        <h:div class="vertical_spacer"> </h:div>
-                                        <xf:repeat nodeset="m:componentGrp/m:item" id="repeat-item-component">
-                                            <h:fieldset>
-                                                <h:legend>Component <dcm:id/> 
-                                                    <dcm:element-buttons 
-                                                        triggers="all" 
-                                                        nodeset="m:item" 
-                                                        index="repeat-item-component"
-                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item[1]/m:componentGrp/m:item[1]"/>
-                                                    <dcm:attribute-editor ref="."/>
-                                                </h:legend>
-                                                <h:div class="vertical_spacer"> </h:div>
-                                                <dcm:item ref="." id="item-2"/>
-                                            </h:fieldset>
-                                        </xf:repeat>
-                                    </h:fieldset>
                                 </h:fieldset>
                             </xf:repeat>
                         </h:fieldset>

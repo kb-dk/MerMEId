@@ -757,9 +757,6 @@
 																		<xf:repeat nodeset="m:expression" id="component-list3">
 																			<h:tr class="hoverclass">
 																				<h:td class="number_cell">
-																					<!--<xf:group ref=".[count(../../following-sibling::*)!=0]">
-																						<h:img class="tree" src="http:/editor/images/tree-3.png" alt="sub-element"></h:img>&#160;
-																					</xf:group>-->
 																					<xf:group ref=".[count(following-sibling::*)=0]">
 																						<h:img class="tree" src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
 																					</xf:group>

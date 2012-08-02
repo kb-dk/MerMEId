@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
-    xmlns:xxf="http://orbeon.org/oxf/xml/xforms" xmlns:exforms="http://www.exforms.org/exf/1-0"
-    xmlns:fr="http://orbeon.org/oxf/xml/form-runner" xmlns:saxon="http://saxon.sf.net/"
-    xmlns:xbl="http://www.w3.org/ns/xbl" xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xi="http://www.w3.org/2001/XInclude" 
+    xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
+    xmlns:xbl="http://www.w3.org/ns/xbl" 
+    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
     xmlns:dcm="http://www.kb.dk/dcm">
     
     <!--
@@ -76,7 +78,7 @@
                     <xxf:variable name="parent" as="string">
                         <xxf:sequence select="name(..)" xxbl:scope="outer"/>
                     </xxf:variable>
-
+                    
                     <xf:group ref="$binding">
                         <xf:input ref="m:titleStmt/m:title" class="maxlong">
                             <xf:label>Short description <h:a class="help">?<h:span 
@@ -85,28 +87,7 @@
                         </xf:input>
                         <dcm:attribute-editor ref="m:titleStmt/m:title"/>
                         
-                        <xf:group ref="m:titleStmt/m:respStmt" id="repeat-source-respstmt">
-                            <h:fieldset>
-                                <h:legend>Contributors <h:a class="help">?<h:span class="comment">Lists persons other than the composer or a scribe, 
-                                    contributing to the intellectual contents of this source, e.g. an arranger or editor; 
-                                    the composer is usually specified under "Identification" and need not be specified here.
-                                    Scribes are identified below under "List of hands".</h:span></h:a>
-                                    <dcm:attribute-editor ref="."/>
-                                </h:legend>
-                                <xf:repeat nodeset="m:persName" id="repeat-source-respstmt-person">
-                                    <dcm:relator ref="."/>
-                                    <dcm:element-buttons 
-                                        triggers="add delete" 
-                                        nodeset="m:persName" 
-                                        index="repeat-source-respstmt-person"
-                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
-                                    <dcm:attribute-editor ref="."/>
-                                    <h:br/>
-                                </xf:repeat>
-                            </h:fieldset>
-                        </xf:group>
-             
-                        <xf:group ref="m:physDesc/m:physLoc[$parent='itemList']">
+                        <xf:group ref="m:physDesc/m:physLoc">
                             <h:hr/>
                             <xf:repeat nodeset="m:repository" id="physdesc-physloc">
                                 <h:span class="blocklabel strong">Location </h:span>
@@ -126,8 +107,12 @@
                                 <dcm:attribute-editor ref="m:identifier"/>
                                 <h:br clear="all"/>
                                 <xf:label class="blocklabel">External links 
-                                    <h:a class="help">?<h:span class="comment">External links to representations (facsimile,
-                                        transcription, library catalogue etc.) of this particular source</h:span></h:a></xf:label>
+                                    <h:a class="help">?<h:span class="comment">Links pointing to representations (facsimile,
+                                        transcription, library catalogue etc.) of this particular item</h:span></h:a></xf:label>
+                                <dcm:create 
+                                    nodeset="m:ptr"
+                                    label="Add link"
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:physDesc/m:physLoc/m:repository/m:ptr"/>                                            
                                 <xf:repeat nodeset="m:ptr" id="physdesc-physloc-extptr">
                                     <h:div>
                                         <xf:input ref="@target" class="mediumlong">
@@ -135,9 +120,7 @@
                                                 <h:a class="help">?<h:span class="comment">Link address</h:span></h:a>
                                             </xf:label>
                                         </xf:input>
-                                        
                                         <!-- input/select emulating selection="open" behaviour -->
-                                        <!-- (apparently not implemented by Orbeon on <select1>) -->
                                         <h:span class="selection_open_short">
                                             <xf:input ref="@xl:title">
                                                 <xf:label class="fixed_width">Resource type <h:a class="help">?<h:span class="comment">A descriptive label for the link to the resource. 
@@ -160,7 +143,7 @@
                                             </xf:select1>
                                         </h:span>
                                         <dcm:element-buttons 
-                                            triggers="add delete" 
+                                            triggers="add remove" 
                                             nodeset="m:ptr" 
                                             index="physdesc-physloc-extptr"
                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:ptr[1]"/>
@@ -207,21 +190,57 @@
                                 <xf:trigger class="detail_button">
                                     <xf:label>Hide details</xf:label>
                                     <xf:toggle case="hide_details" ev:event="DOMActivate"/>
-                                </xf:trigger>					
+                                </xf:trigger>	
                                 
-                                <xf:group ref="m:physDesc">
-                                    
-                                    <xf:group ref="m:provenance/m:eventList[$parent='itemList']">
+                                <h:fieldset>
+                                    <h:legend>Persons <h:a class="help">?<h:span class="comment">Lists persons with 
+                                        connection to this item, e.g. a former owner.  
+                                        Scribes are identified below under "List of hands" 
+                                        and should not be listed here.</h:span></h:a>
+                                        <dcm:attribute-editor ref="m:titleStmt/m:respStmt"/>
+                                    </h:legend>
+                                    <dcm:create ref="m:titleStmt"
+                                        nodeset="m:respStmt"
+                                        label="Add list of persons"
+                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt"/>
+                                    <xf:group ref="m:titleStmt/m:respStmt">
+                                        <dcm:create 
+                                            nodeset="m:persName"
+                                            label="Add person"
+                                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt"/>
+                                        <xf:repeat nodeset="m:persName" id="repeat-component-respstmt-person">
+                                            <dcm:relator ref="."/>
+                                            <dcm:element-buttons 
+                                                triggers="add remove" 
+                                                nodeset="m:persName" 
+                                                index="repeat-component-respstmt-person"
+                                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
+                                            <dcm:attribute-editor ref="."/>
+                                            <h:br/>
+                                        </xf:repeat>
+                                    </xf:group>
+                                </h:fieldset>
+                                
+                                <xf:group ref="m:physDesc">                                    
+                                    <dcm:create 
+                                        nodeset="m:provenance"
+                                        label="Add provenance list"
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance"/>                                            
+                                    <xf:group ref="m:provenance/m:eventList">
                                         <h:fieldset>
                                             <h:legend>Provenance
                                                 <dcm:attribute-editor ref="."/>
                                             </h:legend>
+                                            <dcm:create 
+                                                nodeset="m:event"
+                                                label="Add event"
+                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>                                            
                                             <xf:repeat nodeset="m:event" id="physdesc-provenance">
                                                 <h:fieldset>
                                                     <h:legend>
                                                         Event
                                                         <dcm:element-buttons 
-                                                            triggers="all" 
+                                                            triggers="up down copy add remove" 
                                                             nodeset="m:event" 
                                                             index="physdesc-provenance"
                                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>
@@ -276,8 +295,8 @@
                                             <h:div>
                                                 <h:span class="fixed_width">Extent:</h:span>
                                                 <xf:input ref=".">
-                                                    <xf:label>Value <h:a class="help">?<h:span class="comment">The number of pages or folios, e.g. "48", "12 + 236", "XII + 36"
-                                                        + VIII"</h:span></h:a></xf:label>
+                                                    <xf:label>Value <h:a class="help">?<h:span class="comment">The number of pages or folios, e.g. "48", "XII + 36" or
+                                                        "VIII"</h:span></h:a></xf:label>
                                                 </xf:input>
                                                 <xf:input ref="@unit">
                                                     <xf:label>Unit <h:a class="help">?<h:span class="comment">Usually "pages" or "folios"</h:span></h:a></xf:label>
@@ -290,8 +309,7 @@
                                                 <h:span class="fixed_width">Dimensions:</h:span>
                                                 <xf:input ref=".">
                                                     <xf:label>Value <h:a class="help">?<h:span class="comment">Numbers describing the physical dimensions 
-                                                        of the source given as height x width, e.g.
-                                                        "23.5x34"</h:span></h:a></xf:label>
+                                                        of the source, usually given as height x width, e.g. "23.5x34"</h:span></h:a></xf:label>
                                                 </xf:input>
                                                 <xf:input ref="@unit">
                                                     <xf:label>Unit <h:a class="help">?<h:span class="comment">Unit of measurement, usually "cm" or "inches"</h:span></h:a></xf:label>
@@ -306,87 +324,8 @@
                                             </h:span>
                                             <xf:repeat nodeset="m:hand" id="repeat-source-physdesc-handlist" class="nowrap">
                                                 <h:div>
-                                                    <xf:input ref=".">
-                                                        <xf:label>Name <h:a class="help">?<h:span class="comment">The scribe's name, e.g. "Carl Nielsen"; 
-                                                            leave empty if scribe is unidentified</h:span></h:a></xf:label>
-                                                    </xf:input>
-                                                    <!-- input/select emulating selection="open" behaviour -->
-                                                    <!-- (apparently not implemented by Orbeon on <select1>) -->
-                                                    <h:span class="selection_open_short">
-                                                        <xf:input ref="@medium">
-                                                            <xf:label>Medium <h:a class="help">?<h:span class="comment">The medium used for writing. 
-                                                                Select from list or enter a custom text.</h:span></h:a></xf:label>
-                                                        </xf:input>
-                                                        <!-- set tabindex to 1000 to skip the select on tabbing -->
-                                                        <xf:select1 ref="@medium" tabindex="1000">
-                                                            <xf:item>
-                                                                <xf:label></xf:label>
-                                                                <xf:value/>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>ink</xf:label>
-                                                                <xf:value>ink</xf:value>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>black ink</xf:label>
-                                                                <xf:value>black ink</xf:value>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>brown ink</xf:label>
-                                                                <xf:value>brown ink</xf:value>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>blue ink</xf:label>
-                                                                <xf:value>blue ink</xf:value>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>red ink</xf:label>
-                                                                <xf:value>red ink</xf:value>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>pencil</xf:label>
-                                                                <xf:value>pencil</xf:value>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>red crayon</xf:label>
-                                                                <xf:value>red crayon</xf:value>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>blue crayon</xf:label>
-                                                                <xf:value>blue crayon</xf:value>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>ball pen</xf:label>
-                                                                <xf:value>ball pen</xf:value>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>black pen</xf:label>
-                                                                <xf:value>black pen</xf:value>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>blue pen</xf:label>
-                                                                <xf:value>blue pen</xf:value>
-                                                            </xf:item>
-                                                            <xf:item>
-                                                                <xf:label>red pen</xf:label>
-                                                                <xf:value>red pen</xf:value>
-                                                            </xf:item>
-                                                        </xf:select1>
-                                                    </h:span>
-                                                    <!-- end selection="open" -->
-                                                    <xf:select1 ref="@initial" class="auto_length">
-                                                        <xf:label> Represents: <h:a class="help">?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
-                                                            set to "additions" otherwise. For manuscript annotations in printed sources use "additions"</h:span></h:a></xf:label>
-                                                        <xf:item>
-                                                            <xf:label>original contents</xf:label>
-                                                            <xf:value>true</xf:value>
-                                                        </xf:item>
-                                                        <xf:item>
-                                                            <xf:label>additions</xf:label>
-                                                            <xf:value>false</xf:value>
-                                                        </xf:item>
-                                                    </xf:select1>
-                                                    <dcm:element-buttons 
+                                                    <xi:include href="hand-input.xml" parse="xml"/>
+                                                    <dcm:element-buttons  
                                                         triggers="all" 
                                                         nodeset="m:hand" 
                                                         index="repeat-source-physdesc-handlist"
@@ -447,6 +386,219 @@
                                     </xf:group>
                                     
                                 </xf:group>
+                                
+                                <!-- Components -->
+                                <h:fieldset class="item-components">
+                                    <h:legend class="item-components">Components <h:a 
+                                        class="help">?<h:span class="comment">Descriptions of the individual parts that 
+                                            constitute a composite source</h:span></h:a>
+                                        <dcm:attribute-editor ref="m:componentGrp"/>
+                                    </h:legend>
+                                    <h:div class="vertical_spacer"> </h:div>
+                                    <xf:group ref=".[m:componentGrp]">
+                                    <h:table class="component_list" cellpadding="0" cellspacing="0" border="0">
+                                        <xf:repeat nodeset="m:componentGrp/m:item" id="repeat-item-component">
+                                            <h:tr class="component">
+                                                <h:td class="index_cell">
+                                                    <h:img src="http:/editor/images/tree-1.png" alt="component" border="0"/>
+                                                </h:td>
+                                                <h:td>
+                                                    <h:fieldset class="compact">
+                                                        <h:span class="blocklabel strong">Component <dcm:id/> 
+                                                            <dcm:element-buttons 
+                                                                triggers="up down copy add remove" 
+                                                                nodeset="m:item" 
+                                                                index="repeat-item-component"
+                                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item[1]/m:componentGrp/m:item[1]"/>
+                                                            <dcm:attribute-editor ref="."/>
+                                                        </h:span>
+                                                        <h:div class="vertical_spacer"> </h:div>
+                                                        
+                                                        
+                                                        <xf:input ref="m:titleStmt/m:title" class="maxlong">
+                                                            <xf:label>Label <h:a class="help">?<h:span 
+                                                                class="comment">An optional label for this component, e.g. "First gathering" or "f.1r-2v"</h:span></h:a>
+                                                            </xf:label>
+                                                        </xf:input>
+                                                        <dcm:attribute-editor ref="m:titleStmt/m:title"/>
+                                                        
+                                                        <xf:switch>
+                                                            <xf:case id="hide_component_details" selected="true()">
+                                                                <xf:trigger class="detail_button">
+                                                                    <xf:label>Show details</xf:label>
+                                                                    <xf:toggle case="show_component_details" ev:event="DOMActivate"/>
+                                                                </xf:trigger>
+                                                            </xf:case>
+                                                            
+                                                            <xf:case id="show_component_details" selected="false()">
+                                                                <xf:trigger class="detail_button">
+                                                                    <xf:label>Hide details</xf:label>
+                                                                    <xf:toggle case="hide_component_details" ev:event="DOMActivate"/>
+                                                                </xf:trigger>	
+                                                                
+                                                                
+                                                                <xf:group ref="m:physDesc">
+                                                                    
+                                                                    <xf:group ref=".[m:titlePage]">
+                                                                        <h:fieldset>
+                                                                            <h:legend>Title page 
+                                                                                <h:a class="help">?<h:span class="comment">Transcription of the item's title page. Multiple title pages
+                                                                                    may be added if necessary</h:span></h:a>
+                                                                                <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                                                                            </h:legend>
+                                                                            <xf:repeat nodeset="m:titlePage" id="component-physdesc-titlepage">
+                                                                                <xf:input ref="@label">
+                                                                                    <xf:label class="fixed_width">Label 
+                                                                                        <h:a class="help">?<h:span class="comment">Optional label overriding the default "Title page" label, 
+                                                                                            e.g. "Secondary title page" or "title page after first fly leaf". 
+                                                                                            Especially, a label should be given to if more than one title page is quoted.</h:span></h:a>
+                                                                                    </xf:label>
+                                                                                </xf:input>
+                                                                                <dcm:element-buttons 
+                                                                                    triggers="all" 
+                                                                                    nodeset="m:titlePage" 
+                                                                                    index="component-physdesc-titlepage"
+                                                                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
+                                                                                <dcm:attribute-editor ref="."/>
+                                                                                <h:br/>
+                                                                                <xf:textarea ref="m:p"  class="mediumheight"/>
+                                                                                <h:br/>
+                                                                            </xf:repeat>
+                                                                        </h:fieldset>
+                                                                    </xf:group>
+                                                                    
+                                                                    <h:fieldset>
+                                                                        <h:legend>Physical description
+                                                                            <dcm:attribute-editor ref="."/>
+                                                                        </h:legend>
+                                                                        <xf:repeat nodeset="m:extent" id="component-physdesc-extent">
+                                                                            <h:div>
+                                                                                <h:span class="fixed_width">Extent:</h:span>
+                                                                                <xf:input ref=".">
+                                                                                    <xf:label>Value <h:a class="help">?<h:span class="comment">The number of pages or folios, 
+                                                                                        e.g. "48", "XII + 36" or "VIII"</h:span></h:a></xf:label>
+                                                                                </xf:input>
+                                                                                <xf:input ref="@unit">
+                                                                                    <xf:label>Unit <h:a class="help">?<h:span class="comment">Usually "pages" or "folios"</h:span></h:a></xf:label>
+                                                                                </xf:input>
+                                                                                <dcm:attribute-editor ref="."/>                                                    
+                                                                            </h:div>
+                                                                        </xf:repeat>
+                                                                        <xf:repeat nodeset="m:dimensions" id="component-physdesc-dimensions">
+                                                                            <h:div>
+                                                                                <h:span class="fixed_width">Dimensions:</h:span>
+                                                                                <xf:input ref=".">
+                                                                                    <xf:label>Value <h:a class="help">?<h:span class="comment">Numbers describing the physical dimensions 
+                                                                                        of the source, usually given as height x width, e.g. "23.5x34"</h:span></h:a></xf:label>
+                                                                                </xf:input>
+                                                                                <xf:input ref="@unit">
+                                                                                    <xf:label>Unit <h:a class="help">?<h:span class="comment">Unit of measurement, usually "cm" or "inches"</h:span></h:a></xf:label>
+                                                                                </xf:input>
+                                                                                <dcm:attribute-editor ref="."/>                                                    
+                                                                            </h:div>
+                                                                        </xf:repeat>
+                                                                        <xf:group ref="m:handList">
+                                                                            <h:hr/>
+                                                                            <h:span class="blocklabel">List of hands
+                                                                                <dcm:attribute-editor ref="."/>                                                    
+                                                                            </h:span>
+                                                                            <xf:repeat nodeset="m:hand" id="repeat-component-physdesc-handlist" class="nowrap">
+                                                                                <h:div>
+                                                                                    <xi:include href="hand-input.xml" parse="xml"/>
+                                                                                    <dcm:element-buttons 
+                                                                                        triggers="all" 
+                                                                                        nodeset="m:hand" 
+                                                                                        index="repeat-component-physdesc-handlist"
+                                                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
+                                                                                    <dcm:attribute-editor ref="."/>                                                    
+                                                                                </h:div>
+                                                                            </xf:repeat>
+                                                                            <h:hr/>
+                                                                        </xf:group>
+                                                                        <xf:textarea ref="m:physMedium" class="mediumheight">
+                                                                            <xf:label class="blocklabel">Physical medium <h:a class="help">?<h:span class="comment">Description of 
+                                                                                paper, number of staves on page, printing technique etc.
+                                                                            </h:span></h:a></xf:label>
+                                                                        </xf:textarea>
+                                                                        <dcm:attribute-editor ref="m:physMedium"/>                                                    
+                                                                        <h:br/>						
+                                                                        <xf:textarea ref="m:condition" class="mediumheight">
+                                                                            <xf:label class="blocklabel">Condition</xf:label>
+                                                                        </xf:textarea>
+                                                                        <dcm:attribute-editor ref="m:condition"/>                                                    
+                                                                    </h:fieldset>
+                                                                    
+                                                                    <xf:group ref="m:notesStmt">
+                                                                        <h:span class="blocklabel">General description <h:a class="help">?<h:span class="comment">Text 
+                                                                            describing or introducing to the item, its history, its significance etc.<br/>
+                                                                            Information on the item's physical appearance and condition should be given in the 
+                                                                            "physical description" area below.
+                                                                        </h:span></h:a> 
+                                                                            <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                                                                        </h:span>
+                                                                        <xf:textarea ref="m:annot[@type='source_description']"/>
+                                                                        <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
+                                                                        <xf:group ref="m:annot[@type='links']">
+                                                                            <h:span class="blocklabel">External source descriptions <h:a class="help">?<h:span class="comment">Links to external resources (texts) about 
+                                                                                this particular source.</h:span></h:a>
+                                                                            </h:span>
+                                                                            <xf:repeat nodeset="m:ptr" id="component-notesstmt-annot-repeat-extptr">
+                                                                                <h:div>
+                                                                                    <xf:input ref="@target" class="long">
+                                                                                        <xf:label>URI <h:a class="help">?<h:span class="comment">Link to the
+                                                                                            resource, e.g. "http://example.com/source_description.pdf"</h:span></h:a>
+                                                                                        </xf:label>
+                                                                                    </xf:input>
+                                                                                    <xf:input ref="@xl:title">
+                                                                                        <xf:label>Label <h:a class="help">?<h:span class="comment">A short, 
+                                                                                            descriptive text which may serve
+                                                                                            as the link text, e.g. "The Carl Nielsen Edition's source description"</h:span></h:a></xf:label>
+                                                                                    </xf:input>
+                                                                                    <dcm:element-buttons 
+                                                                                        triggers="all" 
+                                                                                        nodeset="m:ptr" 
+                                                                                        index="component-notesstmt-annot-repeat-extptr"
+                                                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+                                                                                    <dcm:attribute-editor ref="."/>
+                                                                                </h:div>
+                                                                            </xf:repeat>
+                                                                        </xf:group>
+                                                                    </xf:group>
+                                                                    
+                                                                </xf:group>
+                                                            </xf:case>
+                                                        </xf:switch>
+                                                    </h:fieldset>
+                                                </h:td>
+                                            </h:tr>
+                                        </xf:repeat>
+                                        <h:tr>
+                                            <h:td>
+                                                <xf:group ref="m:componentGrp">
+                                                    <xf:trigger appearance="minimal" ref=".[m:item]">
+                                                        <xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add component"/></xf:label>
+                                                        <xf:action ev:event="DOMActivate">
+                                                            <xf:insert origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item[1]/m:componentGrp/m:item[1]"
+                                                                nodeset="m:item" at="last()" position="after"/>
+                                                            <xf:dispatch name="id-update" target="form-group"/>
+                                                        </xf:action>
+                                                    </xf:trigger>
+                                                </xf:group>
+                                            </h:td>
+                                        </h:tr>
+                                    </h:table>
+                                    </xf:group>
+                                    <dcm:create 
+                                        nodeset="m:componentGrp"
+                                        label="Add component list"
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item[1]/m:componentGrp"/>                                            
+                                    <dcm:create ref="m:componentGrp"
+                                        nodeset="m:item"
+                                        label="Add component"
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item[1]/m:componentGrp/m:item[1]"/>                                            
+                                </h:fieldset>
+                                
+                                <!-- End components -->
                             </xf:case>
                             
                         </xf:switch>

@@ -9,6 +9,7 @@
     
     <!--
         Component for creating new child elements using empty_doc.xml as a template.
+        Displays an add button, if the element specified does not exist.
         
         The component takes four attributes:
         ref:        The reference node, i.e. the parent node of the node to be created (optional). 
@@ -16,6 +17,14 @@
         nodeset:    The name of the nodeset to be added
         label:      The label to be shown on the add button   
         origin:     The nodeset to use as a model
+        
+        Example:
+        <dcm:create 
+            ref="m:respStmt"
+            nodeset="m:persName"
+            label="Add person"
+            origin="instance('empty-instance')//m:respStmt[1]/m:persName[1]"
+        />
         
         
         Danish Centre for Music Publication (DCM) 
