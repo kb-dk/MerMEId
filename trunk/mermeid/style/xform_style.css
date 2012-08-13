@@ -385,7 +385,7 @@ table.element_list td {
 
 #music-case table.element_list td {
     border-top: none;
-    padding: 0 0 0 2px;
+    padding: 0;
 }
 
 img.tree {
@@ -393,9 +393,6 @@ img.tree {
     vertical-align: middle;
 }
 
-table.sub_element_list td {
-    padding: 0 0 0 2px;
-}
 table.element_list td.buttons_cell {
     width: 135px;
     text-align: right;
@@ -409,8 +406,10 @@ table.element_list tr {
     margin: 2px 0 2px 0;
 }
 
-table.element_list td.number_cell {
-    font-weight: bold;
+#music-case table.sub_element_list td.tree_cell {
+    padding: 0 0 0 8px;
+    width: 30px;
+    white-space: nowrap;
 }
 
 table.element_list .xbl-dcm-element-buttons {

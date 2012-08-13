@@ -517,20 +517,35 @@
 										<!-- edit buttons --> 
 										<h:span class="editmenu" style="margin-left: 8px;">
 											<xf:trigger appearance="minimal" class="element-button">
+												<xf:label><h:img src="http:/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
+												<xf:action ev:event="DOMActivate">
+													<xxf:variable name="idx" select="index('repeat-role')"/>
+													<xf:insert context="parent::node()" nodeset="m:name" at="$idx"
+														origin="m:name[$idx]"/>
+													<xf:insert context="../../.." nodeset="m:roleDesc" at="$idx"
+														origin="m:roleDesc[$idx]"/>
+													<xf:dispatch name="id-update" target="form-group"/>
+												</xf:action>
+											</xf:trigger>
+											<xf:trigger appearance="minimal" class="element-button">
 												<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
 												<xf:action ev:event="DOMActivate">
-													<xf:insert context="parent::node()" nodeset="m:name[index('repeat-role')]"
+													<xxf:variable name="idx" select="index('repeat-role')"/>
+													<xf:insert context="parent::node()" nodeset="m:name" at="$idx"
 														origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]/m:role/m:ref/m:name"/>
-													<xf:insert context="../../.." nodeset="m:roleDesc[index('repeat-role')]"
+													<xf:insert context="../../.." nodeset="m:roleDesc" at="$idx"
 														origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]/m:roleDesc"/>
 													<xf:dispatch name="id-update" target="form-group"/>
 												</xf:action>
 											</xf:trigger>
 											<xf:trigger appearance="minimal" class="element-button">
 												<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-												<xf:delete ev:event="DOMActivate" nodeset="../m:name" at="index('repeat-role')"/>
-												<xf:delete ev:event="DOMActivate" nodeset="../../../m:roleDesc" at="index('repeat-role')"/>
-												<xf:dispatch name="xforms-value-changed" target="form-group"/>
+												<xf:action ev:event="DOMActivate">
+													<xxf:variable name="idx" select="index('repeat-role')"/>
+													<xf:delete nodeset="../m:name" at="$idx"/>
+													<xf:delete nodeset="../../../m:roleDesc" at="$idx"/>
+													<xf:dispatch name="xforms-value-changed" target="form-group"/>
+												</xf:action>
 											</xf:trigger>
 										</h:span>
 										<!-- end buttons -->
@@ -565,10 +580,10 @@
 					<h:fieldset>
 						<h:legend>Components <h:a class="help">?<h:span class="comment">Use components to list the individual 
 							pieces (movements, acts, scenes, sections etc.) that constitute this 
-							<xf:group ref=".[count(../../m:expression)=1]">
+							<xf:group ref=".[count(../m:expression)=1]">
 								work.
 							</xf:group>
-							<xf:group ref=".[count(../../m:expression)&gt;1]">
+							<xf:group ref=".[count(../m:expression)&gt;1]">
 								version.
 							</xf:group><h:br/>
 							If there is no subdivision at this level, no components should be defined.<h:br/>
@@ -594,10 +609,8 @@
 							<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
 								<xf:repeat nodeset="m:expression" id="component-list1">
 									<h:tr class="hoverclass">
-										<h:td class="number_cell">
-											<xf:group ref=".[string-length(@n)]"><xf:output value="@n"/>.&#160;</xf:group>
-										</h:td>
-										<h:td> 
+										<h:td>
+											<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
 											<dcm:id ref="."/>
 											<xf:output value="m:titleStmt/m:title"/>
 											<xf:group ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
@@ -661,22 +674,21 @@
 									
 									<!-- 1st sub-level -->
 									<h:tr>
-										<h:td/>
 										<h:td colspan="3">
 											<xf:group ref="m:componentGrp">
 												<h:table class="sub_element_list" cellspacing="0" cellpadding="0" border="0">
 													<xf:repeat nodeset="m:expression" id="component-list2">
 														<h:tr class="hoverclass">
-															<h:td class="number_cell">
+															<h:td class="tree_cell">
 																<xf:group ref=".[count(following-sibling::*)=0]">
 																	<h:img class="tree" src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
 																</xf:group>
 																<xf:group ref=".[count(following-sibling::*)!=0]">
 																	<h:img class="tree" src="http:/editor/images/tree-2.png" alt="sub-element"></h:img>&#160;
 																</xf:group>
-																<xf:group ref=".[string-length(@n)]"><xf:output value="@n"/>.&#160;</xf:group>
 															</h:td>
 															<h:td>
+																<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
 																<dcm:id ref="."/>
 																<xf:output value="m:titleStmt/m:title[1]"/>
 																<xf:group
@@ -744,28 +756,29 @@
 														
 														<!-- 2nd sub-level -->
 														<h:tr>
-															<h:td>
-																<xf:group ref=".[count(../../following-sibling::*)!=0]">
-																	<xf:repeat nodeset="m:componentGrp/m:expression">
-																		<h:img class="tree" src="http:/editor/images/tree-3.png"></h:img>&#160;<h:br/>
-																	</xf:repeat>
-																</xf:group>
-															</h:td>
-															<h:td colspan="3">
+															<h:td colspan="4">
 																<xf:group ref="m:componentGrp">
 																	<h:table class="sub_element_list" cellspacing="0" cellpadding="0" border="0">
 																		<xf:repeat nodeset="m:expression" id="component-list3">
 																			<h:tr class="hoverclass">
-																				<h:td class="number_cell">
+																				<h:td class="tree_cell">
+																					<xf:group ref=".[count(../../following-sibling::*)!=0]">
+																						<h:img class="tree" src="http:/editor/images/tree-3.png" alt="sub-element"/>
+																					</xf:group>
+																					<xf:group ref=".[count(../../following-sibling::*)=0]">
+																						<h:img class="tree" src="http:/editor/images/spacer.png" width="22" alt="spacer"/>
+																					</xf:group>
+																				</h:td>
+																				<h:td class="tree_cell">
 																					<xf:group ref=".[count(following-sibling::*)=0]">
-																						<h:img class="tree" src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
+																						<h:img class="tree" src="http:/editor/images/tree-1.png" alt="sub-element"/>
 																					</xf:group>
 																					<xf:group ref=".[count(following-sibling::*)!=0]">
-																						<h:img class="tree" src="http:/editor/images/tree-2.png" alt="sub-element"></h:img>&#160;
+																						<h:img class="tree" src="http:/editor/images/tree-2.png" alt="sub-element"/>
 																					</xf:group>
-																					<xf:group ref=".[string-length(@n)]"><xf:output value="@n"/>.&#160;</xf:group>
 																				</h:td>
 																				<h:td>
+																					<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
 																					<dcm:id ref="."/>
 																					<xf:output value="m:titleStmt/m:title[1]"/>
 																					<xf:group
