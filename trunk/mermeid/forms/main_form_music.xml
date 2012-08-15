@@ -653,6 +653,7 @@
 											</xf:group>
 											
 											<xf:group ref="m:componentGrp">
+												
 												<xf:group ref=".[not(m:expression)]">
 													<xf:trigger appearance="minimal">
 														<xf:label><h:img src="http:/editor/images/sub-element.png" alt="sub-element" title="Add sub-component"/></xf:label>
@@ -660,6 +661,17 @@
 															<xf:insert context="."
 																nodeset="m:expression"
 																origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
+															<xf:dispatch name="id-update" target="form-group"/>
+														</xf:action>
+													</xf:trigger>
+													<xf:trigger appearance="minimal">
+														<xf:label><h:img src="http:/editor/images/copy-to-sub-element.png" alt="copy to sub-element" title="Copy to sub-component"/></xf:label>
+														<xf:action ev:event="DOMActivate">
+															<xf:insert context="." nodeset="m:expression" origin=".."/>
+															<xf:setvalue ref="m:expression/@xml:id" value="''"/>
+															<xf:action while="count(m:expression//@xml:id[.!='']) &gt; 0">
+																<xf:setvalue ref="m:expression//@xml:id[.!='']" value="''"/>
+															</xf:action>                                  
 															<xf:dispatch name="id-update" target="form-group"/>
 														</xf:action>
 													</xf:trigger>
@@ -742,6 +754,19 @@
 																				<xf:insert context="."
 																					nodeset="m:expression"
 																					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
+																				<xf:dispatch name="id-update" target="form-group"/>
+																			</xf:action>
+																		</xf:trigger>
+																		<xf:trigger appearance="minimal">
+																			<xf:label><h:img src="http:/editor/images/copy-to-sub-element.png" alt="copy to sub-element" title="Copy to sub-component"/></xf:label>
+																			<xf:action ev:event="DOMActivate">
+																				<xf:insert context="."
+																					nodeset="m:expression"
+																					origin=".."/>
+																				<xf:setvalue ref="m:expression/@xml:id" value="''"/>
+																				<xf:action while="count(m:expression//@xml:id[.!='']) &gt; 0">
+																					<xf:setvalue ref="m:expression//@xml:id[.!='']" value="''"/>
+																				</xf:action>                                  
 																				<xf:dispatch name="id-update" target="form-group"/>
 																			</xf:action>
 																		</xf:trigger>

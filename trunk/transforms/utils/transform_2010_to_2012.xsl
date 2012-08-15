@@ -825,18 +825,18 @@
                             </xsl:choose>		
                         </castList>
                         <incip>     
+                            <incipText>
+                                <xsl:choose>
+                                    <xsl:when test="$num_movements=1 and //m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p">
+                                        <xsl:apply-templates select="//m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <p xml:lang="en"></p>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </incipText>
                             <xsl:choose>
-                                <xsl:when test="$num_movements=1">
-                                    <xsl:apply-templates select="//m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <incipText xml:lang="en">
-                                        <p/>
-                                    </incipText>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            <xsl:choose>
-                                <xsl:when test="$num_movements=1">
+                                <xsl:when test="$num_movements=1 and //m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr">
                                     <xsl:apply-templates select="//m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr"/>
                                 </xsl:when>
                                 <xsl:otherwise>
@@ -1108,18 +1108,18 @@
                 </xsl:choose>
             </castList>                        
             <incip>     
+                <incipText>
+                    <xsl:choose>
+                        <xsl:when test="m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p">
+                            <xsl:apply-templates select="m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <p xml:lang="en"></p>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </incipText>
                 <xsl:choose>
-                    <xsl:when test="$num_movements&gt;1">
-                        <xsl:apply-templates select="m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <incipText xml:lang="en">
-                            <p/>
-                        </incipText>
-                    </xsl:otherwise>
-                </xsl:choose>
-                <xsl:choose>
-                    <xsl:when test="$num_movements&gt;1">
+                    <xsl:when test="m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr">
                         <xsl:apply-templates select="m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr"/>
                     </xsl:when>
                     <xsl:otherwise>
@@ -1145,12 +1145,6 @@
                 </relation> 
             </relationList>
         </expression>
-    </xsl:template>
-
-    <xsl:template match="m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']">
-        <incipText>
-            <xsl:apply-templates/>
-        </incipText>
     </xsl:template>
 
     <xsl:template match="m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr">

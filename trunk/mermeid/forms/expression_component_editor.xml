@@ -295,61 +295,79 @@
                             <dcm:attribute-editor ref="."/>
                         </xf:group>
                         <h:div class="vertical_spacer"/>
-                        <h:span class="blocklabel">Music incipit graphics</h:span>
-                        <xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
-                            <h:div>
-                                <xf:input ref="@target" class="maxlong">
-                                    <xf:label>URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
-                                        "http://example.com/incipits/lowres/116.png"</h:span></h:a></xf:label>
-                                </xf:input>
-                                <xf:select1 ref="@targettype" class="auto_length">
+                        <dcm:create 
+                            nodeset="m:incip"
+                            label="Add incipits"
+                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip"/>                        
+                        <xf:group ref=".[m:incip]">
+                            <h:span class="blocklabel">Music incipit graphics</h:span>
+                            <dcm:create ref="m:incip"
+                                nodeset="m:graphic"
+                                label="Add music incipit graphics"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>                        
+                            <xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
+                                <h:div>
+                                    <xf:input ref="@target" class="maxlong">
+                                        <xf:label>URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
+                                            "http://example.com/incipits/lowres/116.png"</h:span></h:a></xf:label>
+                                    </xf:input>
+                                    <xf:select1 ref="@targettype" class="auto_length">
+                                        <xf:item>
+                                            <xf:value>lowres</xf:value>
+                                            <xf:label>Low resolution</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>hires</xf:value>
+                                            <xf:label>High resolution</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>print</xf:value>
+                                            <xf:label>Print quality</xf:label>
+                                        </xf:item>
+                                    </xf:select1>
+                                    <h:a class="help">?<h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
+                                        web graphics, or "Print quality" for print quality graphics</h:span></h:a>
+                                    <dcm:element-buttons
+                                        triggers="add remove" 
+                                        nodeset="m:graphic" 
+                                        index="incipit-repeat"
+                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>
+                                    <dcm:attribute-editor ref="."/>
+                                </h:div>
+                            </xf:repeat>
+                            <h:span class="blocklabel">Text incipit
+                                <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                            </h:span>
+                            <dcm:create ref="m:incip/m:incipText"
+                                nodeset="m:p"
+                                label="Add text incipit"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>                        
+                            <dcm:create ref="m:incip"
+                                nodeset="m:incipText"
+                                label="Add text incipit"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>                        
+                            <xf:repeat nodeset="m:incip/m:incipText/m:p" id="text-incipit-repeat" class="input_group">
+                                <xf:input ref="." class="maxlong"><xf:label/></xf:input> 
+                                <xf:select1 ref="@xml:lang" xxf:refresh-items="false" class="mediumlong">
+                                    <xf:label/>
                                     <xf:item>
-                                        <xf:value>lowres</xf:value>
-                                        <xf:label>Low resolution</xf:label>
+                                        <xf:label>- Select language -</xf:label>
+                                        <xf:value/>
                                     </xf:item>
-                                    <xf:item>
-                                        <xf:value>hires</xf:value>
-                                        <xf:label>High resolution</xf:label>
-                                    </xf:item>
-                                    <xf:item>
-                                        <xf:value>print</xf:value>
-                                        <xf:label>Print quality</xf:label>
-                                    </xf:item>
-                                </xf:select1>
-                                <h:a class="help">?<h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
-                                    web graphics, or "Print quality" for print quality graphics</h:span></h:a>
+                                    <xf:itemset nodeset="instance('languages')/language">
+                                        <xf:label><xf:output value="."/></xf:label>
+                                        <xf:value ref="@xml:id"></xf:value>
+                                    </xf:itemset>
+                                </xf:select1>                                
                                 <dcm:element-buttons
-                                    triggers="add delete" 
-                                    nodeset="m:graphic" 
-                                    index="incipit-repeat"
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>
+                                    triggers="add remove" 
+                                    nodeset="m:p" 
+                                    index="text-incipit-repeat"
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
                                 <dcm:attribute-editor ref="."/>
-                            </h:div>
-                        </xf:repeat>
-                        <h:span class="blocklabel">Text incipit
-                            <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
-                        </h:span>
-                        <xf:repeat nodeset="m:incip/m:incipText" id="text-incipit-repeat" class="input_group">
-                            <xf:input ref="m:p" class="maxlong"><xf:label/></xf:input> 
-                            <xf:select1 ref="@xml:lang" xxf:refresh-items="false" class="mediumlong">
-                                <xf:label/>
-                                <xf:item>
-                                    <xf:label>- Select language -</xf:label>
-                                    <xf:value/>
-                                </xf:item>
-                                <xf:itemset nodeset="instance('languages')/language">
-                                    <xf:label><xf:output value="."/></xf:label>
-                                    <xf:value ref="@xml:id"></xf:value>
-                                </xf:itemset>
-                            </xf:select1>                                
-                            <dcm:element-buttons
-                                triggers="add delete" 
-                                nodeset="m:incipText" 
-                                index="text-incipit-repeat"
-                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>
-                            <dcm:attribute-editor ref="."/>
-                            <h:br/>
-                        </xf:repeat>
+                                <h:br/>
+                            </xf:repeat>
+                        </xf:group>
                         <h:span class="blocklabel">Edited score</h:span>
                         <xf:repeat nodeset="m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']" id="edited_score-repeat">
                             <h:div>
