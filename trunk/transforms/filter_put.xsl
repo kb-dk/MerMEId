@@ -19,7 +19,11 @@
   
   <!-- Generate a value for empty @xml:id -->
   <xsl:template match="@xml:id[.='']">
-    <xsl:attribute name="xml:id"><xsl:value-of select="concat(name(..),'_id',generate-id())"/></xsl:attribute>
+    <xsl:variable name="generated_id" select="generate-id()"/>
+    <xsl:variable name="no_of_nodes" select="count(//*)"/>
+    <xsl:attribute name="xml:id">
+      <xsl:value-of select="concat(name(..),'_',$no_of_nodes,$generated_id)"/>
+    </xsl:attribute>
   </xsl:template>
   
   <!-- Remove empty attributes -->

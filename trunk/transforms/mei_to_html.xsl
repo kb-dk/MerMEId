@@ -451,8 +451,7 @@
 			m:fileDesc/
 			m:notesStmt/
 			m:annot[@type='bibliography']/
-			t:listBibl[t:bibl/*[text()]]"/>
-		
+			t:listBibl[t:bibl/*[text()]]"/>		
 		<xsl:apply-templates select="m:meiHead/m:revisionDesc"/>
 		
 	</xsl:template>
@@ -929,10 +928,10 @@
 		</xsl:choose>
 	</xsl:template>
 	
-	<xsl:template match="m:componentGrp">
+	<xsl:template match="m:source/m:componentGrp">
 		<xsl:element name="div">
 			<xsl:attribute name="style">margin-left: +1.5em;</xsl:attribute>
-			<xsl:apply-templates select="m:item|m:expression"/>
+			<xsl:apply-templates select="m:item"/>
 			<xsl:text>
 			</xsl:text>
 		</xsl:element>
