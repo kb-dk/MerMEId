@@ -96,9 +96,9 @@
     <!-- submissions - loading and saving data -->
     
     <!-- load empty instance -->
-    <xf:submission id="load-empty-submission"
+    <xf:submission id="load-new-submission"
       method="get" serialization="none" validate="false"
-      resource="/editor/forms/mei/model/empty_doc.xml"
+      resource="/editor/forms/mei/model/new_file.xml"
       replace="instance" instance="data-instance"/>
     
     <xf:submission id="load-data-submission" 
@@ -155,7 +155,7 @@
       </xf:action>
       <!-- Load empty instance if loading fails (i.e. document does not exist yet) -->
       <xf:action if="$code=404">
-        <xf:send submission="load-empty-submission"/>
+        <xf:send submission="load-new-submission"/>
         <xf:setvalue ref="instance('temp')/file_exists" value="'false'"/>
         <!-- generate values for empty @xml:id -->
         <xf:action while="instance('data-instance')//*[@xml:id='']">

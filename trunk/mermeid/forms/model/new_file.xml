@@ -3,15 +3,6 @@
   xmlns="http://www.music-encoding.org/ns/mei" 
   xmlns:xl="http://www.w3.org/1999/xlink" 
   xml:id="">
-  <!-- 
-    This file serves as a template defining all possible elements and attributes editable in MerMEId. 
-    Elements added using the editor interface are copied from this file.
-    The template for NEW files created with MerMEId is the file named new_file.xml, which may be simplified
-    to reduce the amount of empty elements when starting a new document.
-
-    Danish Centre for Music Publication
-    The Royal Library, Copenhagen 2012
-  -->
   <meiHead>
     <altId analog=""/>
     <fileDesc>
@@ -50,11 +41,7 @@
         </seriesStmt>
       </seriesStmt>
       <notesStmt>
-        <annot type="bibliography" xml:id="">
-          <listBibl type="primary" xmlns="http://www.tei-c.org/ns/1.0" xml:id=""/>          
-          <listBibl type="secondary" xmlns="http://www.tei-c.org/ns/1.0" xml:id=""/>          
-          <listBibl type="documentation" xmlns="http://www.tei-c.org/ns/1.0" xml:id=""/>          
-        </annot>
+        <annot type="bibliography" xml:id=""/>        
         <annot type="private_notes" xml:id=""/>
       </notesStmt>
       <sourceDesc>
@@ -104,111 +91,7 @@
             </termList>
           </classification>
           
-          <itemList>
-            <item target="" xml:id="">
-              <titleStmt>
-                <title xml:id=""/>
-              </titleStmt>
-              <pubStmt>
-                <date reg="" notbefore="" notafter=""/>
-              </pubStmt>
-              <physDesc>
-                <condition xml:id=""/>
-                <titlePage label="" xml:id="">
-                  <p/>
-                </titlePage>
-                <physLoc>
-                  <repository>
-                    <corpName xml:id=""/>
-                    <identifier xml:id=""/>
-                    <identifier analog="RISM" xml:id=""/>
-                    <ptr target="" mimetype="" xl:title="Library record" xml:id=""/>
-                  </repository>
-                </physLoc>
-                <provenance>
-                  <eventList xml:id="">
-                    <event xml:id="" evidence="">
-                      <title xml:id=""/>
-                      <date reg="" notbefore="" notafter=""/>
-                      <geogName role="" xml:id=""/>
-                      <corpName role="" xml:id=""/>
-                      <persName role="" xml:id=""/>
-                    </event>
-                  </eventList>
-                </provenance>
-                <extent unit="pages"/>
-                <dimensions unit="cm"/>
-                <handList xml:id="">
-                  <hand medium="" initial="true" xml:id=""/>
-                </handList>
-                <watermark xml:id="">
-                  <ptr target="" mimetype="" xl:title="" xml:id=""/>
-                </watermark>
-                <physMedium/>
-              </physDesc>
-              <notesStmt>
-                <annot type="source_description" xml:id=""/>
-                <annot type="links" xml:id="">
-                  <ptr target="" mimetype="" xl:title="" xml:id=""/>
-                </annot>
-              </notesStmt>
-              <componentGrp>
-                <item>
-                  <titleStmt>
-                    <title xml:id=""/>
-                  </titleStmt>
-                  <pubStmt>
-                    <respStmt>
-                      <corpName role="publisher" xml:id=""/>
-                    </respStmt>
-                    <geogName xml:id=""/>
-                    <date reg="" notbefore="" notafter=""/>
-                    <identifier type="plate_no" xml:id=""/>
-                  </pubStmt>
-                  <physDesc>
-                    <condition/>
-                    <titlePage label="" xml:id="">
-                      <p/>
-                    </titlePage>
-                    <physLoc>
-                      <repository>
-                        <corpName xml:id=""/>
-                        <identifier analog="" xml:id=""/>
-                        <ptr target="" mimetype="" xl:title="Library record" xml:id=""/>
-                        <ptr target="" mimetype="" xl:title="Facsimile" xml:id=""/>
-                      </repository>
-                    </physLoc>
-                    <provenance>
-                      <eventList xml:id="">
-                        <event xml:id="" evidence="">
-                          <title xml:id=""/>
-                          <date reg="" notbefore="" notafter=""/>
-                          <geogName role="" xml:id=""/>
-                          <corpName role="" xml:id=""/>
-                          <persName role="" xml:id=""/>
-                        </event>
-                      </eventList>
-                    </provenance>
-                    <extent unit="pages"/>
-                    <dimensions unit="cm"/>
-                    <handList xml:id="">
-                      <hand medium="" initial="true" xml:id=""/>
-                    </handList>
-                    <watermark xml:id="">
-                      <ptr target="" xl:title="" mimetype="" xml:id=""/>
-                    </watermark>
-                    <physMedium/>
-                  </physDesc>
-                  <notesStmt>
-                    <annot type="source_description" xml:id=""/>
-                    <annot type="links" xml:id="">
-                      <ptr target="" mimetype="" xl:title="" xml:id=""/>
-                    </annot>
-                  </notesStmt>
-                </item>                
-              </componentGrp>
-            </item> 
-          </itemList>
+          <itemList/>
           <relationList>
             <relation rel="isEmbodimentOf" target="" xml:id=""/>
           </relationList>
@@ -393,53 +276,7 @@
               <graphic target="" xl:title="" targettype="hires" xml:id=""/>
               <score xml:id=""/>
             </incip>
-            
-            <!-- top-level components -->            
-            <componentGrp>
-              <expression xml:id="" n=""> 
-                <titleStmt>
-                  <title xml:lang="en" xml:id=""/>
-                  <respStmt>
-                    <persName role="" xml:id=""/> 
-                  </respStmt>
-                </titleStmt>
-                <key pname="" accid="" mode=""/>
-                <tempo/>
-                <meter meter.count="" meter.unit="" meter.sym=""/>
-                <perfMedium analog="marc:048" authority="marcmusperf">
-                  <ensemble xml:id="">
-                    <instrVoice reg="" xml:id=""/>
-                  </ensemble>
-                  <performer xml:id="">
-                    <instrVoice reg="" count="1" solo="false" xml:id=""/>
-                  </performer>
-                </perfMedium>
-                <castList>
-                  <castItem xml:id="">
-                    <role>
-                      <ref target="">
-                        <name xml:lang="en" xml:id=""/>  
-                      </ref>
-                    </role>
-                    <roleDesc xml:lang="en" xml:id=""/>
-                  </castItem>
-                </castList>
-                <incip xml:id="">     
-                  <incipText xml:id=""> 
-                    <p xml:lang="en"/>
-                  </incipText>
-                  <graphic target="" xl:title="" targettype="lowres" xml:id=""/>
-                  <graphic target="" xl:title="" targettype="hires" xml:id=""/>
-                  <score xml:id=""/>
-                </incip>
-
-                <!-- next sub-level components -->
-                <componentGrp/>
-                <relationList>
-                  <relation rel="hasReproduction" label="Edited score" targettype="edited_score" target="" xml:id=""/> <!-- link to external edition -->
-                </relationList>
-              </expression>
-            </componentGrp>
+            <componentGrp/>
             <relationList>
               <relation rel="hasReproduction" label="Edited score" targettype="edited_score" target="" xml:id=""/> <!-- link to external edition -->
             </relationList>

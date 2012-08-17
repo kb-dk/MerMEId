@@ -41,8 +41,8 @@
     <xsl:template name="id">
         <xsl:variable name="generated_id" select="generate-id()"/>
         <xsl:variable name="no_of_nodes" select="count(//*)"/>
-        <xsl:variable name="milliseconds" select="translate(string(seconds-from-time(current-time())),'.','')"/>
-        <xsl:value-of select="concat(local-name(),'_',$no_of_nodes,$milliseconds,$generated_id)"/>
+        <xsl:variable name="milliseconds" select="number(translate(string(seconds-from-time(current-time())),'.',''))"/>
+        <xsl:value-of select="concat(local-name(),'_',number($no_of_nodes+$milliseconds),$generated_id)"/>
     </xsl:template>
     
 </xsl:stylesheet>

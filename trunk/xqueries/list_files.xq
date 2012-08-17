@@ -39,7 +39,7 @@ declare function app:format-reference(
 	{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']}
 	</td>
 	<td>{app:view-document-reference($doc)}</td>
-	<td nowrap="nowrap">{app:get-edition-and-number($doc)}</td>
+	<td nowrap="nowrap">{app:get-edition-and-number($doc)} &#160;</td>
 	<td>
 	<a target="_blank"
         title="view XML source" 
