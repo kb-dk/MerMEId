@@ -181,6 +181,7 @@
                         <xf:output value="if (normalize-space(t:date)) then concat('(',normalize-space(t:date),')') else ''"/>
                         <xf:group ref=".[normalize-space(concat(t:author[1],t:name[@role='recipient'],t:title[@level='a'],t:title[@level='j'],t:title[@level='m'],t:date))='']"> [No description] </xf:group>
                         <dcm:id ref="."/>
+                        <dcm:attribute-editor ref="."/>
                     </h:h3>                
                     
                     <h:fieldset>
@@ -207,6 +208,7 @@
                                                 nodeset="t:author" 
                                                 index="repeat-bibl-author"
                                                 origin="instance('bibl-type-instance')/t:listBibl[1]/t:bibl[t:author][1]/t:author[1]"/>
+                                            <dcm:attribute-editor ref="."/>
                                         </h:div>
                                     </xf:repeat>
                                 </h:fieldset>
@@ -216,7 +218,7 @@
                                 <h:legend>Title</h:legend>
                                 <xf:repeat nodeset="t:title" id="repeat-bibl-title">
                                     <h:div>
-                                        <xf:input ref="." class="long">
+                                        <xf:input ref="." class="maxlong">
                                             <xf:label class="fixed_width">
                                                 <xf:output value="if (@level='a') then 'Article' else ''"/>
                                                 <xf:output value="if (@level='j') then tokenize(translate(../@type,' ','_'),'_')[1] else ''"/>
@@ -224,6 +226,7 @@
                                                 <xf:output value="if (@level='s') then 'Series' else ''"/>
                                             </xf:label>
                                         </xf:input>
+                                        <dcm:attribute-editor ref="."/>
                                     </h:div>
                                 </xf:repeat>
                             </h:fieldset>
@@ -252,6 +255,7 @@
                                                 nodeset="t:author" 
                                                 index="repeat-bibl-author"
                                                 origin="instance('bibl-type-instance')/t:listBibl/t:bibl[t:author]/t:author"/>
+                                            <dcm:attribute-editor ref="."/>
                                         </h:div>
                                     </xf:repeat>
                                 </h:fieldset>
@@ -287,6 +291,7 @@
                                             </xf:label>
                                             <xf:delete nodeset="../t:biblScope" at="index('repeat-bibl-biblscope')" ev:event="DOMActivate"/>
                                         </xf:trigger>
+                                        <dcm:attribute-editor ref="."/>
                                     </h:div>
                                 </xf:repeat>
                             </h:fieldset>
@@ -305,6 +310,7 @@
                                                 index="repeat-bibl-editor"
                                                 origin="instance('bibl-type-instance')/t:listBibl[t:bibl/t:editor][1]/t:bibl[1]/t:editor[1]"/>
                                         </h:div>
+                                        <dcm:attribute-editor ref="."/>
                                     </xf:repeat>
                                 </h:fieldset>
                             </xf:group>
@@ -315,14 +321,16 @@
                                 <h:fieldset>
                                     <h:legend>Publication</h:legend>
                                     <h:div>
-                                        <xf:input ref="t:publisher">
+                                        <xf:input ref="t:publisher" class="maxlong">
                                             <xf:label class="fixed_width">Publisher</xf:label>
                                         </xf:input>
+                                        <dcm:attribute-editor ref="t:publisher"/>
                                     </h:div>
                                     <h:div>
-                                        <xf:input ref="t:pubPlace">
+                                        <xf:input ref="t:pubPlace" class="maxlong">
                                             <xf:label class="fixed_width">Place</xf:label>
                                         </xf:input>
+                                        <dcm:attribute-editor ref="t:pubPlace"/>
                                     </h:div>
                                     <h:div>
                                         <dcm:tei-date-editor ref="t:date">
@@ -337,6 +345,7 @@
                                     <xf:input ref="@target" class="long">
                                         <xf:label>URI (link to fulltext)</xf:label>
                                     </xf:input>
+                                    <dcm:attribute-editor ref="."/>
                                 </h:div>
                             </xf:repeat>
                             
@@ -348,7 +357,8 @@
                                             <xf:input ref="t:title[@type='short_title']">
                                                 <xf:label>Short title <h:a class="help">?<h:span class="comment">A short-hand reference to the publication quoting this item, e.g.
                                                     "CNB" or "Mozart: Briefe"</h:span></h:a></xf:label>
-                                            </xf:input> <xf:input ref="t:biblScope">
+                                            </xf:input>
+                                            <xf:input ref="t:biblScope">
                                                 <xf:label>Page or No. <h:a class="help">?<h:span class="comment">The number of this item in the edition or the relevant pages, e.g. "IV/345" </h:span></h:a></xf:label>
                                             </xf:input>
                                             <dcm:element-buttons 
@@ -356,6 +366,7 @@
                                                 nodeset="t:bibl" 
                                                 index="repeat-letter-editions"
                                                 origin="instance('bibl-type-instance')/t:listBibl/t:bibl/t:ref[@type='editions']/t:bibl[1]"/>
+                                            <dcm:attribute-editor ref="."/>
                                         </h:div>
                                     </xf:repeat>
                                 </h:fieldset>
@@ -367,11 +378,13 @@
                             <xf:input ref="t:author" class="long">
                                 <xf:label class="fixed_width">Author <h:a class="help">?<h:span class="comment">For diary entries, leave empty if author is the composer</h:span></h:a></xf:label>
                             </xf:input>
+                            <dcm:attribute-editor ref="t:author"/>
                             <h:br clear="all"/>
                             <xf:group ref=".[@type='Letter']">
                                 <xf:input ref="t:name[@role='recipient']" class="long">
                                     <xf:label class="fixed_width">Recipient</xf:label>
                                 </xf:input>
+                                <dcm:attribute-editor ref="t:name[@role='recipient']"/>
                                 <h:br clear="all"/>
                             </xf:group>
                             <dcm:tei-date-editor ref="t:date">
@@ -384,16 +397,19 @@
                                     <xf:label class="fixed_width_mediumlong">Repository name <h:a class="help">?<h:span class="comment">The library, archive or other repository holding this item,
                                         e.g. "DK-Kk"</h:span></h:a></xf:label>
                                 </xf:input>
+                                <dcm:attribute-editor ref="t:msIdentifier/t:repository"/>
                                 <xf:input ref="t:msIdentifier/t:idno">
                                     <xf:label>Shelfmark <h:a class="help">?<h:span class="comment">The shelfmark or other signature identfying the item in the
                                         repository</h:span></h:a></xf:label>
                                 </xf:input>
+                                <dcm:attribute-editor ref="t:msIdentifier/t:idno"/>
                                 <xf:repeat nodeset="t:ref[@type!='editions' or count(@type)=0]">
                                     <h:div>
                                         <xf:input ref="@target" class="long">
                                             <xf:label class="fixed_width_mediumlong">URI <h:a class="help">?<h:span class="comment">Link to fulltext or facsimile,
                                                 e.g. http://example.org/document.html</h:span></h:a></xf:label>
                                         </xf:input>
+                                        <dcm:attribute-editor ref="."/>
                                     </h:div>
                                 </xf:repeat>
                             </h:fieldset>
@@ -405,7 +421,8 @@
                                         <xf:input ref="t:title[@type='short_title']">
                                             <xf:label>Short title <h:a class="help">?<h:span class="comment">A short-hand reference to the publication quoting this item, e.g.
                                                 "CNB" or "Mozart: Briefe"</h:span></h:a></xf:label>
-                                        </xf:input> <xf:input ref="t:biblScope">
+                                        </xf:input>
+                                        <xf:input ref="t:biblScope">
                                             <xf:label>Page or No. <h:a class="help">?<h:span class="comment">The number of this item in the edition or the relevant pages, e.g. "IV/345" </h:span></h:a></xf:label>
                                         </xf:input>
                                         <dcm:element-buttons 
@@ -413,6 +430,7 @@
                                             nodeset="t:bibl" 
                                             index="repeat-letter-editions"
                                             origin="instance('bibl-type-instance')/t:listBibl/t:bibl/t:ref[@type='editions']/t:bibl[1]"/>
+                                        <dcm:attribute-editor ref="."/>
                                     </h:div>
                                 </xf:repeat>
                             </h:fieldset>
@@ -420,20 +438,21 @@
                         
                         <xf:group ref=".[translate(@type,' ','_')='Concert_programme']">
                             <h:div>
-                                <xf:input ref="t:title" class="long">
+                                <xf:input ref="t:title" class="maxlong">
                                     <xf:label class="fixed_width">Title </xf:label>
                                 </xf:input>
+                                <dcm:attribute-editor ref="t:title"/>
                             </h:div>
                             <h:div>
-                                <xf:input ref="t:date">
-                                    <xf:label class="fixed_width">Date <h:a class="help">?<h:span class="comment">Date is given (if possible) as yyyy-mm-dd, e.g.
-                                        "1918-02-28"</h:span></h:a></xf:label>
-                                </xf:input>
+                                <dcm:tei-date-editor ref="t:date">
+                                    <xf:label class="fixed_width">Date </xf:label>
+                                </dcm:tei-date-editor>
                             </h:div>			
                             <h:div>
-                                <xf:input ref="t:geogName">
+                                <xf:input ref="t:geogName" class="maxlong">
                                     <xf:label class="fixed_width">Place</xf:label>
                                 </xf:input>
+                                <dcm:attribute-editor ref="t:geogName"/>
                                 
                                 <h:fieldset>
                                     <h:legend>Location</h:legend>
@@ -441,16 +460,19 @@
                                         <xf:label class="fixed_width_long">Repository name <h:a class="help">?<h:span class="comment">The library, archive or other repository holding this item,
                                             e.g. "DK-Kk"</h:span></h:a></xf:label>
                                     </xf:input>
+                                    <dcm:attribute-editor ref="t:msIdentifier/t:repository"/>
                                     <xf:input ref="t:msIdentifier/t:idno">
                                         <xf:label>Shelfmark <h:a class="help">?<h:span class="comment">The shelfmark or other signature identfying the item in the
                                             repository</h:span></h:a></xf:label>
                                     </xf:input>
+                                    <dcm:attribute-editor ref="t:msIdentifier/t:idno"/>
                                     <xf:repeat nodeset="t:ref[@type='' or count(@type)=0]">
                                         <h:div>
                                             <xf:input ref="@target" class="long">
                                                 <xf:label class="fixed_width_long">URI <h:a class="help">?<h:span class="comment">Link to fulltext or facsimile,
                                                     e.g. http://example.org/document.html</h:span></h:a></xf:label>
                                             </xf:input>
+                                            <dcm:attribute-editor ref="."/>
                                         </h:div>
                                     </xf:repeat>
                                 </h:fieldset>						

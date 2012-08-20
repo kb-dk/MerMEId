@@ -667,12 +667,38 @@
 	<xsl:template match="m:castList[m:castItem/m:role/m:ref/m:name[normalize-space(.)]]">
 		<p>
 			<span class="label">Characters: </span>
-			<xsl:for-each 
+<!--			<xsl:for-each 
 				select="m:castItem/m:role/m:ref/m:name">
 				<xsl:apply-templates select="."/><xsl:if test="position() &lt; last()"><xsl:text>, </xsl:text></xsl:if>
+			</xsl:for-each>-->
+			<xsl:for-each select="m:castItem/m:role//m:name[count(@xml:lang[.=ancestor-or-self::m:castItem/preceding-sibling::*//@xml:lang])=0 or not(@xml:lang)]">
+				<!-- iterate over languages -->
+				<xsl:variable name="lang" select="@xml:lang"/>
+				<xsl:element name="span">
+					<xsl:call-template name="maybe_print_lang"/>
+					<xsl:apply-templates select="ancestor-or-self::m:castList" mode="castlist">
+						<xsl:with-param name="lang" select="$lang"/>
+					</xsl:apply-templates>
+				</xsl:element>
+				<xsl:if test="position() &lt; last()"><br/></xsl:if>
 			</xsl:for-each>
 		</p>
 	</xsl:template>
+	
+	<xsl:template match="m:castList" mode="castlist">
+		<xsl:param name="lang" select="'en'"/>
+		<xsl:for-each 
+			select="m:castItem/m:role/m:ref/m:name[@xml:lang=$lang]">
+			<xsl:apply-templates select="."/><xsl:apply-templates select="ancestor-or-self::m:castItem//m:roleDesc[@xml:lang=$lang]"></xsl:apply-templates><xsl:if test="position() &lt; last()"><xsl:text>; </xsl:text></xsl:if>
+		</xsl:for-each>
+	</xsl:template>
+	
+	<xsl:template match="m:roleDesc">
+		<xsl:if test="normalize-space(.)"> (<xsl:value-of select="."/>)</xsl:if>
+	</xsl:template>
+	
+	
+	
 	
 	<!-- performance-related templates -->
 	

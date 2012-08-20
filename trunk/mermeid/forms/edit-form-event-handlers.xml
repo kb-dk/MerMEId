@@ -16,9 +16,11 @@
     </xf:action>
     
     <xf:action ev:event="id-update">
+        <!-- add missing IDs -->
         <xf:action while="instance('data-instance')//*[@xml:id='']">
             <xf:setvalue ref="instance('data-instance')//*[@xml:id='']/@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
         </xf:action>
+        <!-- change duplicate IDs -->
         <xf:action while="instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id]">
             <xf:setvalue ref="instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id]/@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
         </xf:action>

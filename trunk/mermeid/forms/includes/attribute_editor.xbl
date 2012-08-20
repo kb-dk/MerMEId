@@ -94,8 +94,9 @@
                                 then instance('tei_attr_list')/*[local-name()=local-name($binding)]/@*
                                 else instance('mei_attr_list')/*[local-name()=local-name($binding)]/@*" xxbl:scope="inner"/>
                         </xxforms:variable>
+                                                
                         <xf:trigger appearance="minimal" id="open_button">
-                            <xf:label><h:img src="http:/editor/images/attribute.png" title="Edit attributes" alt="Edit attributes"/></xf:label>
+                            <xf:label><h:img id="attr_editor_id" src="http:/editor/images/attribute.png" title="Edit attributes" alt="Edit attributes"/></xf:label>
                             <xf:action ev:event="DOMActivate OpenAndInitialize">
                                 <xxforms:show dialog="attr-dialog"/>                                    
                                 <!-- initialization -->
