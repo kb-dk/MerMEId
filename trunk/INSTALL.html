@@ -1,0 +1,391 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Installing and configuring the MerMEId editor</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+  </head>
+  <body>
+
+    <h1 style="margin-left:10%;">Installing and configuring the MerMEId editor</h1>
+
+    <div style="text-align: center; margin-left:20%;">
+      <div style="width:30%;float: left;text-align: right;">
+	<em>
+	  Sigfrid Lundberg<br/>
+	  Digital Infrastruktur og Service,<br/>
+	  The Royal Library,<br/>
+	  Copenhagen<br/>
+	  slu@kb.dk
+	</em>
+      </div>
+
+      <div style="float: left; text-align:center;">
+	<pre>
+
+	</pre>
+      </div>
+
+      <div style="width:30%; float: left; text-align: left;">
+	<em>
+	  Axel Teich Geertinger<br/>
+	  Dansk Center for Musikudgivelse<br/>
+	  The Royal Library,<br/>
+	  Copenhagen<br/>
+	  atge@kb.dk
+	</em>
+      </div>
+    </div>
+
+    <div style="clear:both;">
+      <pre>
+
+      </pre>
+    </div>
+
+    <div id="sect0">
+      <h2>0. Table of Contents</h2>
+
+      <ol>
+	<li><a href="#sect1">System requirements</a></li>
+	<li><a href="#sect2">Installation</a></li>
+	<li><a href="#sect3">Configuration</a></li>
+	<li><a href="#testing">Testing and Getting Started</a></li>
+	<li><a href="#appendix">Appendix A. Configuration file</a></li>
+      </ol>
+
+    </div>
+
+    <div id="sect1">
+      <h2>1. System requirements</h2>
+
+      <p>This system is lightweight. It is only tested under Apache2 HTTPD with
+      Tomcat6 servlet container under Red Hat and SUSE Linux. It requires the
+      following readily available software on the server:</p>
+
+      <ul>
+	<li><a href="http://httpd.apache.org/">Apache HTTPD</a></li>
+	<li>
+	  <a href="http://tomcat.apache.org/">Apache Tomcat 6</a> running 
+	  <ul>
+	    <li><a href="http://www.orbeon.com/">Orbeon forms</a></li>
+	    <li><a href="http://exist.sourceforge.net/">eXist-db</a></li>
+	  </ul>
+	</li>
+	<li><a href="http://search.cpan.org/">perl</a></li>
+	<li>
+	  <a href="http://xmlsoft.org/XMLinfo.html">LibXML</a> and 
+	  <a href="http://xmlsoft.org/XSLT.html">LibXSLT</a>
+	  with the corresponding perl modules.
+	</li>
+      </ul>
+
+      <p>All of these packages (except possibly perl XSLT, which isn't available
+      on RedHat) tend to be available on all linux distributions and
+      everything are standard modules available through the Linux
+      distribution.</p>
+
+      <p>Software can run on a modest system. We have it on a virtual server
+      with 4GB of internal memory. 80GB of hard-disk would be a lot.</p>
+    </div>
+
+    <div id="sect2">
+      <h2>2. Installation</h2>
+
+      <ol>
+	<li><strong>Unpack and install the MerMEId:</strong> We suggest that you create a
+	directory called <kbd>/home/xml-store</kbd> and unpack it there. There
+	would then appear a directory <kbd>/home/xml-store/editor</kbd>.</li>
+
+	<li>
+	  <p>
+	    <strong>Install Apache-Tomcat:</strong> We have recently run it on
+	    versions 6.0.20 to 6.0.24 of Apache-Tomcat. If the one provided in
+	    your Linux distribution is 6.0.20 or better I suggest that you use
+	    that. The advantage is that you get all the java needed without
+	    further ado.
+	  </p>
+	  <p>
+	    In the following we assume that tomcat lives in <kbd>/&lt;PATH
+	    TO&gt;/tomcat6</kbd>
+	  </p>
+	  <ol type="i">
+	    <li>
+	      <strong>Install orbeon:</strong> We are using version 3.9.0. 
+	      <pre>
+		cp orbeon.war /&lt;PATH TO&gt;/tomcat6/webapps/
+	      </pre>
+	      We are using some extra files, among those is a jsp script for
+	      connecting our form to orbeon. They need to be installed inside
+	      the orboen webapp
+	      <pre>
+		cd /home/xml-store/editor
+		mkdir /&lt;PATH TO&gt;/tomcat6/webapps/orbeon/xforms-jsp/mei-form
+		cp xquery/mei_form.jsp /&lt;PATH TO&gt;/tomcat6/webapps/orbeon/xforms-jsp/mei-form/index.jsp
+	      </pre>
+	      The jsp is dependent on a package called commons-httpclient. We've
+	      added it in the distribution.
+	      <pre>
+		cd /home/xml-store/editor
+		cp some_jars/commons-httpclient-3.1.jar /&lt;PATH TO&gt;/tomcat6/webapps/orbeon/WEB-INF/lib/
+	      </pre>
+	    </li>
+	    <li>
+	      <strong>Install eXist:</strong> We're using version 1.4.1 Prepare
+	      the code and build the application by first running the installer
+	      <pre>
+		java -jar eXist-1.4.1-rev15155.jar
+	      </pre>
+	      This will unpack the distribution into a directory of your
+	      choice. Let's call it eXist. In that directory you can repack it
+	      as a *.war file which can be installed in you tomcat6.
+	      <pre>
+		cd eXist
+		./build.sh dist-war
+	      </pre>
+	      That will create a file called
+	      <kbd>dist/exist-1.4.1*.war</kbd>. This file should be installed as
+	      exist.war in you tomcat6.
+	      <pre>
+		cp dist/exist-1.4.1*.war /&lt;PATH TO&gt;/tomcat6/webapps/	    
+	      </pre>
+	    </li>
+	  </ol>
+
+	  <p style="float: right; width:50%">
+	    <a href="mermeid/images/exist_annotated.png" 
+	       title="exist interface">
+	      <img src="mermeid/images/exist_annotated.png" 
+		   style="width: 80%"
+		   border="0"
+		   alt="exist interface"/>
+	    </a>
+	    <br style="clear: both"/><br/>
+	    <small>Figure 1. eXist interface. The Admin functions are down to
+	    the left. </small>
+	  </p>
+	</li>
+
+	<li>
+	  <strong>Install apache httpd:</strong> If it isn't installed
+	  already. We're using the one that came with the distribution
+	  <kbd>Apache/2.2.3</kbd> Ensure that you have <kbd>mod_proxy</kbd> and
+	  <kbd>mod_proxy_ajp</kbd> installed.
+	</li>
+	<li>
+	  <strong>Install perl programming language:</strong> You should be able
+	  to use the version that comes with your distribution. We need packages
+	  called XML::LibXML and XML::LibXSLT. The shopping list under Red Hat
+	  would be: <kbd>libxml2-devel</kbd>, <kbd>perl-XML-LibXML</kbd>
+	  <kbd>libxslt-devel</kbd> and
+	  <kbd>perl-XML-LibXML-Common</kbd>. Unfortunately you won't get a perl
+	  api for libxslt. Get one from <a
+	  href="http://search.cpan.org/~msergeant/XML-LibXSLT-1.58/">cpan.org</a>. We
+	  are forced to use a very old version since Red Hat only support very
+	  old versions of the other packages. Choose a newer one if your
+	  system supports it!
+	</li>
+      </ol>
+    </div>
+
+    <div id="sect3">
+      <h2>3. Configuration</h2>
+
+      <p>Ensure that Apache HTTPD and Apache Tomcat6 both starts with the
+      operating system. A requisite for the following is that they are healthy,
+      up and running. I assume they are are running on port numbers 80 and 8080
+      respectively on a server called <kbd>mei.example.org</kbd>.</p>
+
+      <ol>
+	<li>
+
+	<p style="float: left; width:50%">
+	  <a href="mermeid/images/icedtea.png" 
+	     title="exist interface">
+	    <img src="mermeid/images/icedtea.png" 
+		 style="width: 80%"
+		 border="0"
+		 alt="exist interface"/>
+	  </a>
+	  <br style="clear: both"/><br/>
+	  <small>Figure 2. eXist admin client. What you see is the situation
+	  after eXist is installed and configured. You see the dcm collection
+	  owned by the dcm user, and also the XQuery <kbd>list_files.xq</kbd>
+	  which is used for many tasks. See main text.</small>
+	</p>
+
+	<p><strong>Configure eXist:</strong> The database engine is entirely
+	web based, and all work of it can be done via an ordinary browser or a
+	web service client bundled with the eXist. Please not that the Royal
+	Library cannot not provide support for this or indeed any other
+	software we haven't authored in house. </p>
+
+	<p>Direct your browser to
+	<kbd>http://mei.example.org:8080/exist/</kbd> (i.e., <strong>to where
+	you installed exist</strong>). You will get a page as in Figure 1.</p>
+
+	<ol type="i">
+
+	  <li><strong>Set a password for the database admin.</strong> This is
+	  done under Admin &lt; User management.</li>
+
+	  <li><strong>Create the dcm collection and the user
+	  dcm</strong>. We do all the adminstrative tasks using the JNLP
+	  based client IcedTea. It should work on all platforms. Click on
+	  "Web Start Client" and log on as admin with the user credentials
+	  you just created. The admin's credentials should be put into the
+	  <a href="#appendix">configuration file
+	  <kbd>editor-config.xml</kbd>.</a> Figure 2 shows the client after
+	  installation and configuration.</li>
+
+	  <li><strong>Load some content:</strong>
+
+	  After configuring eXist, it is just to populate the database
+	  with some content. You can do that using the client, or a command
+	  line tool, xquery/load_exist.pl
+
+	  <pre>
+	    cd xquery
+	    ./load_exist.pl --user admin \
+	    --password your_own_very_secret_password \
+	    --host-port mei.example.org:8080 \
+	    --load examples \
+	    --context /exist/rest/db/dcm \
+	    --suffix xml
+	  </pre>
+
+	  Please note that we've folded the command line using '\' just for
+	  typographical reasons.
+
+	  </li>
+	  <li>
+	    <strong>Load the query/queries</strong>. While still in xquery,
+	    do on the command line.
+	    <pre>
+	      ./load_exist.pl --user admin \
+	      --password your_own_very_secret_password \
+	      --host-port mei.example.org:80 \
+	      --load . \
+	      --context "/exist/rest/db" \
+	      --suffix xq
+	    </pre>
+	  </li>
+	</ol>
+	</li>
+	<li>
+	  <strong>Configure Apache HTTPD </strong>
+	  <pre>
+
+# This is how to configure stuff in Apache:
+
+Alias "/editor" "/home/xml-store/editor
+&lt;Location "/editor">
+        Options Indexes Includes FollowSymLinks ExecCGI
+        AddHandler cgi-script .cgi
+        Order allow,deny
+        Allow from all
+&lt;/Location>
+
+RewriteEngine on
+RewriteLogLevel 8
+RewriteLog /var/log/apache2/rewrite_log
+
+RewriteCond %{REQUEST_URI} ^/form/.*$
+RewriteRule ^/form/(.*)$     http://mei.example.org/editor/scripts/formulate-exist.cgi?file=http://mei.example.org/storage/$1 [P]
+
+ProxyPass /storage "ajp://mei.example.org:8009/exist/rest/db"
+ProxyPass /orbeon  "ajp://mei.example.org:8009/orbeon"
+
+	  </pre>
+	</li>
+      </ol>
+    </div>
+    <br style="clear:both;"/>
+    <div id="testing">
+
+      <h2>Testing and Getting Started</h2>
+
+      <p>The main component in the user interface is the
+      <kbd>list_files.xq</kbd> which directs the editorial staff to all the
+      other components. That script should have the URI:</p>
+
+      <pre>
+	http://mei.example.org/storage/list_files.xq
+      </pre>
+
+      <p><strong>NB:</strong> In the current version there is a hard-coded
+      hostname in that file. This will be fixed in a future release. Identify
+      the functions <kbd>app:view-document-reference</kbd> and
+      <kbd>app:edit-form-reference</kbd> and replace the hostname
+      <kbd>kb-cop.kb.dk</kbd> with whatever is relavant in your
+      installation.</p>
+
+      <p>If everything is up and running you should be able to get an HTML
+      version, a form and a raw XML version for each object in the
+      xml_store.</p>
+
+    </div>
+
+    <div id="appendix">
+      <h2>Appendix A. Configuration file</h2>
+      <pre>
+&lt;properties>
+  &lt;comment>Configuration for the MEI metadata editor&lt;/comment>
+
+  &lt;!-- 
+
+       If the editor is using records in exist, then this file should be
+       directly in SERVER_ROOT/editor
+
+       If the editor is using records i a file system this file should be put
+       in the directory above the editor's work area. I.e., in the area for
+       documents records. If it is in
+
+       'SERVER_ROOT/editor/data'
+
+       a copy of this file should be put in
+
+       'SERVER_ROOT/editor'
+  --&gt;
+
+  &lt;!-- 
+       the editor lives somewhere else, which is not necessarily the same place as  
+       the SERVER_ROOT mentioned above. Here you give that place
+   --&gt;
+
+  &lt;entry key="editor.base">/home/xml-store&lt;/entry>
+
+  &lt;!-- the path to a style sheet which transforms an XML form to an XML
+       form. the path should be given relative to editor.base --&gt;
+
+  &lt;entry key="editor.sheet">/editor/transforms/mei/formulate.xsl&lt;/entry>
+
+  &lt;!-- the path to an XML Form relative to editor.base --&gt;
+  &lt;entry key="editor.form">/editor/forms/mei/edit_mei_form.xml&lt;/entry>
+
+  &lt;!-- the path to a style sheet which renders the data in html. the should be
+       given relative to editor.base --&gt;
+  &lt;entry key="editor.render">/editor/transforms/mei/cnw_to_html.xsl&lt;/entry>
+
+  &lt;!-- the name and path to an empty instance given relative to editor.base --&gt;
+  &lt;entry key="editor.empty">/editor/forms/mei/empty_doc.xml&lt;/entry>
+
+  &lt;!-- the exist user name  --&gt;
+  &lt;entry key="exist.user">admin&lt;/entry>
+
+  &lt;!-- the exist user password  --&gt;
+  &lt;entry key="exist.password">your_own_very_secret_password&lt;/entry>
+
+  &lt;!-- The configurations below are irrelevant if you use eXist --&gt;
+
+  &lt;!-- the name and path to an xsl style sheet generating update sql --&gt;
+  &lt;entry key="editor.sql_update_sheet">/editor/sql/mei-update.xsl&lt;/entry>
+
+  &lt;!-- the name and path to an xsl style sheet generating insert sql --&gt;
+  &lt;entry key="editor.sql_insert_sheet">/editor/sql/mei-insert.xsl&lt;/entry>
+  
+&lt;/properties>
+
+      </pre>
+    </div>
+  </body>
+
+</html>
