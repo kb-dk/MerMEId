@@ -82,14 +82,30 @@
       }
 
       function show(id) {
-	  var e = document.getElementById(id);
-	  e.style.display = 'block';
+	  	var e = document.getElementById(id);
+	  	e.style.display = 'block';
       }
       
       function hide(id) {
-	  var e = document.getElementById(id);
-	  e.style.display = 'none';
+	  	var e = document.getElementById(id);
+	  	e.style.display = 'none';
       }
+      
+      function loadcssfile(filename){
+ 		var fileref=document.createElement("link");
+  		fileref.setAttribute("rel", "stylesheet");
+  		fileref.setAttribute("type", "text/css");
+  		fileref.setAttribute("href", filename);
+ 		if (typeof fileref!="undefined") document.getElementsByTagName("head")[0].appendChild(fileref);
+	  }
+
+	  function removecssfile(filename){
+ 		var allsuspects=document.getElementsByTagName("link");
+ 		for (var i=allsuspects.length; i>=0; i--){ //search backwards within nodelist for matching elements to remove
+  			if (allsuspects[i] && allsuspects[i].getAttribute("href")!=null && allsuspects[i].getAttribute("href").indexOf(filename)!=-1)
+			   allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
+ 		}
+	  }
 
       ]]>
       // </xsl:comment>
@@ -120,6 +136,11 @@
 				</a>
 			</div>
 		</xsl:if>
+
+		<div class="settings">
+			<a href="javascript:loadcssfile('/editor/style/html_hide_languages.css'); hide('load_alt_lang_css'); show('remove_alt_lang_css')" id="load_alt_lang_css">Hide alternative languages</a>
+			<a style="display:none" href="javascript:removecssfile('/editor/style/html_hide_languages.css'); hide('remove_alt_lang_css'); show('load_alt_lang_css')" id="remove_alt_lang_css">Show alternative languages</a>
+		</div>
 		
 		<xsl:for-each 
 			select="m:meiHead/
@@ -134,6 +155,13 @@
 			</xsl:for-each>
 		</xsl:for-each>
 		
+		<xsl:for-each select="m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes' and text()]">
+			<div class="private">
+				<div class="private_heading">[Private notes]</div>
+				<div class="private_content"><xsl:apply-templates select="."/></div>
+			</div>
+		</xsl:for-each>
+
 		<xsl:for-each 
 			select="m:meiHead/
 			m:workDesc/
@@ -141,7 +169,7 @@
 			m:titleStmt">
 			
 			<xsl:if test="m:title[@type='main'][text()]">
-				<h2>
+				<h1>
 					<xsl:for-each select="m:title[@type='main'][text()]">
 						<xsl:element name="span">
 							<xsl:call-template name="maybe_print_lang"/>
@@ -150,7 +178,7 @@
 						<xsl:call-template name="maybe_print_br" />
 						
 					</xsl:for-each>
-				</h2>
+				</h1>
 			</xsl:if>
 			
 			<xsl:if 
@@ -159,7 +187,7 @@
 				m:title[@type='original'][text()]    |
 				m:title[@type='subordinate'][text()]">
 				
-				<xsl:element name="h4">
+				<xsl:element name="h2">
 					
 					<xsl:for-each select="m:title[@type='uniform'][text()]">
 						<xsl:element name="span">
@@ -370,7 +398,7 @@
 			select="m:meiHead/
 			m:workDesc/
 			m:work/
-			m:history[m:eventList[@type='performances']/m:event[m:date/text() | m:title/text()]]">
+			m:history[m:eventList[@type='performances']/m:event[*//text()]]">
 			
 			<xsl:variable 
 				name="eventdiv_id" 
@@ -470,11 +498,8 @@
 	
 	<xsl:template match="m:expression">
 		<!-- display title etc. only with components or versions -->
-		<xsl:apply-templates select="m:titleStmt[ancestor-or-self::*[local-name()='componentGrp'] or count(../m:expression)&gt;1]">
-			<xsl:with-param name="tempo">
-				<xsl:apply-templates select="m:tempo"/>
-			</xsl:with-param>
-		</xsl:apply-templates>
+		<xsl:apply-templates select="m:titleStmt[ancestor-or-self::*[local-name()='componentGrp'] or count(../m:expression)&gt;1]"/>
+		<xsl:apply-templates select="m:tempo[text()]"/>		
 		<xsl:apply-templates select="m:meter[normalize-space(concat(@meter.count,@meter.unit,@meter.sym))]"/>
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
 		<xsl:apply-templates select="m:perfMedium[*//m:instrVoice/text()]"/>
@@ -483,7 +508,6 @@
 	</xsl:template>
 	
 	<xsl:template match="m:expression/m:titleStmt">
-		<xsl:param name="tempo" select="''"/>
 		<xsl:variable name="level">
 			<!-- expression headings start with <H3>, decreasing in size with each level -->
 			<xsl:choose>
@@ -494,44 +518,34 @@
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="element" select="concat('h',$level)"/>
-		<xsl:if test="concat(../@n,m:title,$tempo)!=''">
+		<xsl:if test="concat(../@n,m:title)!=''">
 			<xsl:element name="{$element}">
 				<xsl:choose>
-					<xsl:when test="../@n!='' and concat(m:title,$tempo)=''">
+					<xsl:when test="../@n!='' and m:title=''">
 						<strong><xsl:value-of select="../@n"/></strong>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:choose>
-							<xsl:when test="m:title/text()">
-								<xsl:for-each select="m:title[text()]">
-									<xsl:choose>
-										<xsl:when test="position()&gt;1">
-											<span class="alternative_language">
-												<xsl:text>[</xsl:text><xsl:value-of select="@xml:lang"/><xsl:text>] </xsl:text>
-												<xsl:apply-templates/>
-											</span>
-										</xsl:when>
-										<xsl:otherwise>
-											<strong>
-												<xsl:value-of select="../@n"/>
-												<xsl:if test="../@n!=''"><xsl:text>. </xsl:text></xsl:if>
-												<xsl:apply-templates/>
-											</strong>
-										</xsl:otherwise>
-									</xsl:choose>
-									<xsl:if test="position()&lt;last()"><br/></xsl:if>
-								</xsl:for-each>
-							</xsl:when>
-							<xsl:otherwise>
-								<!-- Use tempo as heading if no title is given -->
-								<xsl:if test="$tempo!=''">
-									<strong>
-										<xsl:value-of select="../@n"/>
-										<xsl:if test="../@n!=''"><xsl:text>. </xsl:text></xsl:if>
-										<xsl:value-of select="$tempo"/></strong>
-								</xsl:if>
-							</xsl:otherwise>
-						</xsl:choose>
+						<xsl:if test="m:title/text()">
+							<xsl:for-each select="m:title[text()]">
+								<xsl:choose>
+									<xsl:when test="position()&gt;1">
+										<span class="alternative_language">
+											<xsl:text>[</xsl:text><xsl:value-of select="@xml:lang"/><xsl:text>] </xsl:text>
+											<xsl:apply-templates/>
+											<xsl:if test="position()&lt;last()"><br/></xsl:if>
+										</span>
+									</xsl:when>
+									<xsl:otherwise>
+										<strong>
+											<xsl:value-of select="../@n"/>
+											<xsl:if test="../@n!=''"><xsl:text>. </xsl:text></xsl:if>
+											<xsl:apply-templates/>
+											<xsl:if test="position()&lt;last()"><br/></xsl:if>
+										</strong>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:for-each>
+						</xsl:if>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:element>
@@ -620,9 +634,26 @@
 	</xsl:template>
 	
 	<xsl:template match="m:tempo">
-		<p>
-			<span class="label">Tempo: </span><xsl:apply-templates/>
-		</p>
+		<xsl:variable name="level">
+			<!-- expression headings start with <H3>, decreasing in size with each level -->
+			<xsl:choose>
+				<xsl:when test="ancestor-or-self::*[local-name()='componentGrp']">
+					<xsl:value-of select="count(ancestor-or-self::*[local-name()='componentGrp'])+2"/>
+				</xsl:when>
+				<xsl:otherwise>3</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="element" select="concat('h',$level)"/>
+		<xsl:choose>
+			<xsl:when test="../@n!='' or ../m:titleStmt/m:title!=''">
+				<p><span class="label">Tempo: </span><xsl:apply-templates/></p>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:element name="{$element}">
+					<xsl:apply-templates/>
+				</xsl:element>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 	<!-- work-related templates -->
@@ -839,11 +870,21 @@
 						<xsl:otherwise><xsl:value-of select="generate-id(.)"/></xsl:otherwise>
 					</xsl:choose>
 				</xsl:attribute>
+				<!-- generate decreasing headings -->
+				<xsl:variable name="level">
+					<xsl:choose>
+						<xsl:when test="count(ancestor-or-self::*[name()='componentGrp' or name()='itemList']) &gt; 0">
+							<xsl:value-of select="count(ancestor-or-self::*[name()='componentGrp' or name()='itemList'])+3"/>
+						</xsl:when>
+						<xsl:otherwise>3</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:variable name="heading_element" select="concat('h',$level)"></xsl:variable>
 				<xsl:for-each select="m:titleStmt[m:title/text()]">
-					<h3>
+					<xsl:element name="{$heading_element}">
 						<!-- source or item title -->
 						<xsl:apply-templates select="m:title"/>
-					</h3>
+					</xsl:element>
 				</xsl:for-each>
 
 				<xsl:call-template name="list_agents"/>
@@ -954,11 +995,32 @@
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template match="m:itemList">		
+	<xsl:template match="m:itemList|m:expression/m:componentGrp">		
 		<xsl:choose>
-			<xsl:when test="count(m:item)&gt;1">
-				<ul>
-					<xsl:for-each select="m:item">
+			<xsl:when test="count(m:item|m:expression)&gt;1">
+				<xsl:element name="ul">
+					<xsl:attribute name="class">movement_list</xsl:attribute>
+					<xsl:if test="count(m:item|m:expression)=1">
+						<xsl:attribute name="class">single_movement</xsl:attribute>
+					</xsl:if>
+					<xsl:for-each select="m:item|m:expression">
+						<li>
+							<xsl:apply-templates select="."/>
+						</li>
+					</xsl:for-each>
+				</xsl:element>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:apply-templates select="m:item|m:expression"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template match="m:source/m:componentGrp">		
+		<xsl:choose>
+			<xsl:when test="count(m:item|m:expression)&gt;1">
+				<ul class="item_list">
+					<xsl:for-each select="m:item|m:expression">
 						<li>
 							<xsl:apply-templates select="."/>
 						</li>
@@ -971,14 +1033,6 @@
 		</xsl:choose>
 	</xsl:template>
 	
-	<xsl:template match="m:source/m:componentGrp">
-		<xsl:element name="div">
-			<xsl:attribute name="style">margin-left: +1.5em;</xsl:attribute>
-			<xsl:apply-templates select="m:item"/>
-			<xsl:text>
-			</xsl:text>
-		</xsl:element>
-	</xsl:template>
 	
 	
 	<xsl:template match="m:physDesc">
