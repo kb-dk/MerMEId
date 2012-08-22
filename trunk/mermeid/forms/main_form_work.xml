@@ -1,305 +1,309 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <h:div id="work-div" 
-       xmlns:h="http://www.w3.org/1999/xhtml"
-       xmlns:xf="http://www.w3.org/2002/xforms" 
-       xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
-       xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-       xmlns:ev="http://www.w3.org/2001/xml-events"
-       xmlns:m="http://www.music-encoding.org/ns/mei" 
-       xmlns:xi="http://www.w3.org/2001/XInclude"
-       xmlns:dcm="http://www.kb.dk/dcm">
-  
-  <h:div class="inputdiv">
-    
-    <h:fieldset>
-      <h:legend>Titles</h:legend>
-      <xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt"
-		id="repeat-title">
-	<h:div class="blocklabel">Main title 
-	<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
-	</h:div>
-	<xf:repeat nodeset="m:title[@type='main']" id="main_titles" class="input_group">
-	  <h:div>
-	    <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
-	    <dcm:element-buttons-typed 
-		triggers="all" 
-		nodeset="m:title[@type='main']" 
-		index="main_titles"
-		origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='main']"/>
-	  	<dcm:attribute-editor ref="."/>
-	  </h:div>
-	</xf:repeat>
-	<h:div class="blocklabel">Alternative title
-	<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
-	</h:div>
-	<xf:repeat nodeset="m:title[@type='alternative']" id="alternative_titles" class="input_group">
-	  <h:div>
-	    <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
-	    <dcm:element-buttons-typed 
-		triggers="all" 
-		nodeset="m:title[@type='alternative']" 
-		index="alternative_titles"
-		origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='alternative']"/>
-	  	<dcm:attribute-editor ref="."/>
-	  </h:div>
-	</xf:repeat>		
-	<h:div class="blocklabel">Subtitle
-	<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
-	</h:div>
-	<xf:repeat nodeset="m:title[@type='subordinate']" id="subtitles" class="input_group">
-	  <h:div>
-	    <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
-	  	<dcm:element-buttons-typed 
-		triggers="all" 
-		nodeset="m:title[@type='subordinate']" 
-		index="subtitles"
-		origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='subordinate']"/>
-	  	<dcm:attribute-editor ref="."/>
-	  </h:div>
-	</xf:repeat>
-	<xf:group ref=".[m:title[@type='uniform']]">
-	  <h:div class="blocklabel">Uniform title
-	  <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
-	  </h:div>
-	  <xf:repeat nodeset="m:title[@type='uniform']" id="uniform_titles" class="input_group">
-	    <h:div>
-	      <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
-	    	<dcm:element-buttons-typed 
-		  triggers="all" 
-		  nodeset="m:title[@type='uniform']" 
-		  index="uniform_titles"
-		  origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"/>
-	    	<dcm:attribute-editor ref="."/>
-	    </h:div>
-	  </xf:repeat>
-	</xf:group>
-	<h:div class="blocklabel">Text source
-	<h:a class="help">?<h:span class="comment">The title of a textual source for a sung or 
-	recited text used in the work, e.g. "Psalm 101"</h:span></h:a>
-	<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
-	</h:div>
-	<xf:repeat nodeset="m:title[@type='text_source']" id="text_sources" class="input_group">
-	  <h:div>
-	    <xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
-	  	<dcm:element-buttons-typed 
-		triggers="all" 
-		nodeset="m:title[@type='text_source']" 
-		index="text_sources"
-		origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"/>
-	  	<dcm:attribute-editor ref="."/>
-	  </h:div>
-	</xf:repeat>
-      </xf:group>
-    </h:fieldset>
-    
-    <h:fieldset>
-      <h:legend>Identification</h:legend>
-      <h:div class="blocklabel">
-	<h:span class="fixed_width"> List name <h:a class="help">?<h:span class="comment">Reference to a
-	list or catalogue in which the work is identified (e.g. "opus",
-	"CNW", "CNU" etc.)</h:span></h:a></h:span>
-	<h:span class="fixed_width"> No. <h:a class="help">?<h:span class="comment">The work's number and
-	signature in the list identifying it</h:span></h:a>
-	</h:span>
-      </h:div>
-      <xf:repeat
-	  nodeset="instance('data-instance')/m:meiHead/m:altId"
-	  id="alt-id-repeat">
-	<h:div>					
-	  <xf:input ref="@analog" class="mediumshort"/>
-	  <xf:input ref="." class="mediumshort"/>
-	  <dcm:element-buttons 
-	      triggers="add delete" 
-	      nodeset="m:altId" 
-	      index="alt-id-repeat"
-	      origin="instance('empty-instance')/m:meiHead/m:altId"/>
-		<dcm:attribute-editor ref="."/>
-	</h:div>
-      </xf:repeat>
-    </h:fieldset>
-    
-    <h:fieldset>
-      <h:legend>Persons</h:legend>		
-      <h:div class="blocklabel">
-	<h:span class="fixed_width_long">Name</h:span>
-	<h:span class="fixed_width"> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
-	or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
-	</h:span>
-      </h:div>
-      <xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt[m:persName[count(@role)&gt;0 and @role!='']]">				
-      	<xf:repeat nodeset="m:persName" id="relators-repeat">
-      		<dcm:relator ref="."/>
-      		<dcm:element-buttons 
-      			triggers="add delete" 
-      			nodeset="m:persName" 
-      			index="relators-repeat"
-      			origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
-      		<dcm:attribute-editor ref="."/>
-      		<h:br/>
-      	</xf:repeat>
-      </xf:group>
-    </h:fieldset>
-    
-    <xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt">
-      <h:fieldset>
-	<h:legend>Work notes</h:legend>
-	<xf:textarea ref="m:annot[@type='general_description']" class="notes">
-	  <xf:label class="blocklabel">General work description 
-	  <h:a class="help">?<h:span class="comment">A general description of or introduction to the work</h:span></h:a>
-	  <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span 
-	  class="comment">HTML markup and special characters allowed</h:span></h:a>
-	  </xf:label>
-	</xf:textarea>
-      	<dcm:attribute-editor ref="m:annot[@type='general_description']"/>
-      	<h:div class="blocklabel">External descriptions <h:a class="help">?<h:span class="comment"
-	>Links to external resources (web pages, PDF files etc.) about
-	the work in general - not about a particular
-	source</h:span></h:a></h:div>
-	<xf:group ref="m:annot[@type='links']">
-	  <xf:repeat nodeset="m:ptr" id="general-notesstmt-annot-repeat-ptr">
-	    <h:div>
-	      <xf:input ref="@target" class="long">
-		<xf:label>URI <h:a class="help">?<h:span class="comment">Link to the
-		resource, e.g. "http://example.com/preface.pdf"</h:span></h:a>
-		</xf:label>
-	      </xf:input>
-	      <xf:input ref="@xl:title">
-		<xf:label>Label <h:a class="help">?<h:span class="comment">A short, 
-		descriptive text which may serve
-		as the link text, e.g. "CNU preface"</h:span></h:a></xf:label>
-	      </xf:input>
-	      <dcm:element-buttons 
-		  triggers="all" 
-		  nodeset="m:ptr" 
-		  index="general-notesstmt-annot-repeat-ptr"
-		  origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']/m:ptr"/>
-	    	<dcm:attribute-editor ref="."/>
-	    </h:div>
-	  </xf:repeat>
-	</xf:group>
-      </h:fieldset>
-    </xf:group>
-    
-    <xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList">
-      <h:fieldset>
-	<h:legend>Classification and keywords</h:legend>
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xf="http://www.w3.org/2002/xforms" 
+	xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:m="http://www.music-encoding.org/ns/mei" 
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:dcm="http://www.kb.dk/dcm">
 	
-	<!-- pre-defined keywords menu -->
-	<xxf:dialog id="keywords_menu" appearance="full" level="modeless"
-		    close="true" draggable="true" visible="false">
-	  <xf:label>Keywords</xf:label>
-	  <h:div style="height:100%">
-	    <h:div class="strong">
-	      Systematic keywords
-	    </h:div>										
-	    <h:table class="popup_menu_table">
-	      <xf:repeat nodeset="instance('keywords-instance')/m:termList[@label='level1']" id="level1_keywords-repeat">
-		<tr>
-		  <td>
-		    <!-- level 1 keywords  -->
-		    <xf:trigger submission="replace-form-with" appearance="minimal">
-		      <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="m:term"/></xf:label>
-		      <xf:action ev:event="DOMActivate">
-			<!-- insert new node -->
-			<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.!='']">
-			  <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList" 
-				     nodeset="m:term" 
-				     at="last()"
-				     position="after" 
-				     origin="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/m:term"/>
-			</xf:action>
-			<!-- or write values to existing, empty node -->
-			<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.='']">
-			  <xf:setvalue ref="." 
-				       value="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/m:term"/>
-			</xf:action>
-		      </xf:action>
-		    </xf:trigger>
-		  </td>
-		  <td>
-		    <!-- level 2 keywords --> 
-		    <xf:repeat nodeset="following-sibling::m:termList[1]/m:term" id="level2_keywords-repeat">
-		      <xf:trigger submission="replace-form-with" appearance="minimal">
-			<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="."/></xf:label>
-			<xf:action ev:event="DOMActivate">
-			  <xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.!='']">
-			    <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList" 
-				       nodeset="m:term" 
-				       at="last()"
-				       position="after" 
-				       origin="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/following-sibling::m:termList[1]/m:term[index('level2_keywords-repeat')]"/>
-			  </xf:action>														
-			  <xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.='']">
-			    <xf:setvalue ref="." 
-					 value="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/following-sibling::m:termList[1]/m:term[index('level2_keywords-repeat')]"/>
-			  </xf:action>
-			</xf:action>
-		      </xf:trigger>
-		      <h:br clear="all"/>
-		    </xf:repeat>
-		  </td>
-		</tr>
-	      </xf:repeat>
-	    </h:table>
-	    <h:hr/>
-	    <h:div class="strong">
-	      Other keywords
-	    </h:div>
-	    <h:table style="width:370px;">
-	      <h:tr>
-		<h:td>
-		  <xf:repeat nodeset="instance('keywords-instance')/m:termList[@label='keywords']/m:term" id="additional_keywords-repeat">
-		    <span style="float:left; width: 120px;">
-		      <xf:trigger submission="replace-form-with" appearance="minimal">
-			<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="."/></xf:label>
-			<xf:action ev:event="DOMActivate">
-			  <xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.!='']">
-			    <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList" 
-				       nodeset="m:term" 
-				       at="last()"
-				       position="after" 
-				       origin="instance('keywords-instance')/m:termList[@label='keywords']/m:term[index('additional_keywords-repeat')]"/>
-			  </xf:action>
-			  <xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.='']">
-			    <xf:setvalue ref="." 
-					 value="instance('keywords-instance')/m:termList[@label='keywords']/m:term[index('additional_keywords-repeat')]"/>
-			  </xf:action>
-			</xf:action>
-		      </xf:trigger>
-		    </span>
-		  </xf:repeat>
-		  
-		</h:td>
-	      </h:tr>
-	    </h:table>
-	  </h:div>
-	</xxf:dialog>					
-	
-	<h:span class="blocklabel">Term <h:a class="help">?<h:span class="comment">Keywords for searching, 
-	grouping and indexing, e.g.	"Symphony", "Chamber music", or "Song".
-	Pre-defined categories and keywords may be selected from a menu by clicking the add-button to the right.
-	</h:span></h:a></h:span>
-	<h:div style="float:right">
-	  <xf:trigger>
-	    <xf:label><h:img src="http:/editor/images/list.png" alt="Add"/> Add from list</xf:label>
-	    <xxf:show dialog="keywords_menu" ev:event="DOMActivate"/>
-	  </xf:trigger>
+	<h:div class="inputdiv">
+		
+		<h:fieldset>
+			<h:legend>Titles</h:legend>
+			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt"
+				id="repeat-title">
+				<h:div class="blocklabel">Main title 
+					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+				</h:div>
+				<xf:repeat nodeset="m:title[@type='main']" id="main_titles" class="input_group">
+					<h:div>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+						<dcm:element-buttons-typed 
+							triggers="all" 
+							nodeset="m:title[@type='main']" 
+							index="main_titles"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='main']"/>
+						<dcm:attribute-editor ref="."/>
+					</h:div>
+				</xf:repeat>
+				<h:div class="blocklabel">Alternative title
+					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+				</h:div>
+				<xf:repeat nodeset="m:title[@type='alternative']" id="alternative_titles" class="input_group">
+					<h:div>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+						<dcm:element-buttons-typed 
+							triggers="all" 
+							nodeset="m:title[@type='alternative']" 
+							index="alternative_titles"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='alternative']"/>
+						<dcm:attribute-editor ref="."/>
+					</h:div>
+				</xf:repeat>		
+				<h:div class="blocklabel">Subtitle
+					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+				</h:div>
+				<xf:repeat nodeset="m:title[@type='subordinate']" id="subtitles" class="input_group">
+					<h:div>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+						<dcm:element-buttons-typed 
+							triggers="all" 
+							nodeset="m:title[@type='subordinate']" 
+							index="subtitles"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='subordinate']"/>
+						<dcm:attribute-editor ref="."/>
+					</h:div>
+				</xf:repeat>
+				<xf:group ref=".[m:title[@type='uniform']]">
+					<h:div class="blocklabel">Uniform title
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+					</h:div>
+					<xf:repeat nodeset="m:title[@type='uniform']" id="uniform_titles" class="input_group">
+						<h:div>
+							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+							<dcm:element-buttons-typed 
+								triggers="all" 
+								nodeset="m:title[@type='uniform']" 
+								index="uniform_titles"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"/>
+							<dcm:attribute-editor ref="."/>
+						</h:div>
+					</xf:repeat>
+				</xf:group>
+				<h:div class="blocklabel">Text source
+					<h:a class="help">?<h:span class="comment">The title of a textual source for a sung or 
+						recited text used in the work, e.g. "Psalm 101"</h:span></h:a>
+					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+				</h:div>
+				<xf:repeat nodeset="m:title[@type='text_source']" id="text_sources" class="input_group">
+					<h:div>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+						<dcm:element-buttons-typed 
+							triggers="all" 
+							nodeset="m:title[@type='text_source']" 
+							index="text_sources"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"/>
+						<dcm:attribute-editor ref="."/>
+					</h:div>
+				</xf:repeat>
+			</xf:group>
+		</h:fieldset>
+		
+		<h:fieldset>
+			<h:legend>Identification</h:legend>
+			<h:div class="blocklabel">
+				<h:span class="fixed_width"> List name <h:a class="help">?<h:span class="comment">Reference to a
+					list or catalogue in which the work is identified (e.g. "opus",
+					"CNW", "CNU" etc.)</h:span></h:a></h:span>
+				<h:span class="fixed_width"> No. <h:a class="help">?<h:span class="comment">The work's number and
+					signature in the list identifying it</h:span></h:a>
+				</h:span>
+			</h:div>
+			<xf:repeat
+				nodeset="instance('data-instance')/m:meiHead/m:altId"
+				id="alt-id-repeat">
+				<h:div>					
+					<xf:input ref="@analog" class="mediumshort"/>
+					<xf:input ref="." class="mediumshort"/>
+					<dcm:element-buttons 
+						triggers="add delete" 
+						nodeset="m:altId" 
+						index="alt-id-repeat"
+						origin="instance('empty-instance')/m:meiHead/m:altId"/>
+					<dcm:attribute-editor ref="."/>
+				</h:div>
+			</xf:repeat>
+		</h:fieldset>
+		
+		<h:fieldset>
+			<h:legend>Persons</h:legend>		
+			<h:div class="blocklabel">
+				<h:span class="fixed_width_long">Name</h:span>
+				<h:span class="fixed_width"> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
+					or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+				</h:span>
+			</h:div>
+			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt[m:persName[count(@role)&gt;0 and @role!='']]">				
+				<xf:repeat nodeset="m:persName" id="relators-repeat">
+					<dcm:relator ref="."/>
+					<dcm:element-buttons 
+						triggers="add delete" 
+						nodeset="m:persName" 
+						index="relators-repeat"
+						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
+					<dcm:attribute-editor ref="."/>
+					<h:br/>
+				</xf:repeat>
+			</xf:group>
+		</h:fieldset>
+		
+		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt">
+			<h:fieldset>
+				<h:legend>Work notes</h:legend>
+				<xf:textarea ref="m:annot[@type='general_description']" class="notes">
+					<xf:label class="blocklabel">General work description 
+						<h:a class="help">?<h:span class="comment">A general description of or introduction to the work</h:span></h:a>
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span 
+							class="comment">HTML markup and special characters allowed</h:span></h:a>
+					</xf:label>
+				</xf:textarea>
+				<dcm:attribute-editor ref="m:annot[@type='general_description']"/>
+				<h:div class="blocklabel">External descriptions <h:a class="help">?<h:span class="comment"
+					>Links to external resources (web pages, PDF files etc.) about
+					the work in general - not about a particular
+					source</h:span></h:a></h:div>
+				<xf:group ref="m:annot[@type='links']">
+					<xf:repeat nodeset="m:ptr" id="general-notesstmt-annot-repeat-ptr">
+						<h:div>
+							<xf:input ref="@target" class="long">
+								<xf:label>URI <h:a class="help">?<h:span class="comment">Link to the
+									resource, e.g. "http://example.com/preface.pdf"</h:span></h:a>
+								</xf:label>
+							</xf:input>
+							<xf:input ref="@xl:title">
+								<xf:label>Label <h:a class="help">?<h:span class="comment">A short, 
+									descriptive text which may serve
+									as the link text, e.g. "CNU preface"</h:span></h:a></xf:label>
+							</xf:input>
+							<dcm:element-buttons 
+								triggers="all" 
+								nodeset="m:ptr" 
+								index="general-notesstmt-annot-repeat-ptr"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+							<dcm:attribute-editor ref="."/>
+						</h:div>
+					</xf:repeat>
+				</xf:group>
+			</h:fieldset>
+		</xf:group>
+		
+		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList">
+			<h:fieldset>
+				<h:legend>Classification and keywords</h:legend>
+				
+				<!-- pre-defined keywords menu -->
+				<xxf:dialog id="keywords_menu" appearance="full" level="modeless"
+					close="true" draggable="true" visible="false">
+					<xf:label>Keywords</xf:label>
+					<h:div style="height:100%">
+						<h:div class="strong">
+							Systematic keywords
+						</h:div>										
+						<h:table class="popup_menu_table">
+							<xf:repeat nodeset="instance('keywords-instance')/m:termList[@label='level1']" id="level1_keywords-repeat">
+								<tr>
+									<td>
+										<!-- level 1 keywords  -->
+										<xf:trigger submission="replace-form-with" appearance="minimal">
+											<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="m:term"/></xf:label>
+											<xf:action ev:event="DOMActivate">
+												<!-- insert new node -->
+												<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.!='']">
+													<xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList" 
+														nodeset="m:term" 
+														at="last()"
+														position="after" 
+														origin="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/m:term"/>
+												</xf:action>
+												<!-- or write values to existing, empty node -->
+												<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.='']">
+													<xf:setvalue ref="." 
+														value="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/m:term"/>
+												</xf:action>
+											</xf:action>
+										</xf:trigger>
+									</td>
+									<td>
+										<!-- level 2 keywords --> 
+										<xf:repeat nodeset="following-sibling::m:termList[1]/m:term" id="level2_keywords-repeat">
+											<xf:trigger submission="replace-form-with" appearance="minimal">
+												<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="."/></xf:label>
+												<xf:action ev:event="DOMActivate">
+													<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.!='']">
+														<xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList" 
+															nodeset="m:term" 
+															at="last()"
+															position="after" 
+															origin="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/following-sibling::m:termList[1]/m:term[index('level2_keywords-repeat')]"/>
+													</xf:action>														
+													<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.='']">
+														<xf:setvalue ref="." 
+															value="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/following-sibling::m:termList[1]/m:term[index('level2_keywords-repeat')]"/>
+													</xf:action>
+												</xf:action>
+											</xf:trigger>
+											<h:br clear="all"/>
+										</xf:repeat>
+									</td>
+								</tr>
+							</xf:repeat>
+						</h:table>
+						<h:hr/>
+						<h:div class="strong">
+							Other keywords
+						</h:div>
+						<h:table style="width:370px;">
+							<h:tr>
+								<h:td>
+									<xf:repeat nodeset="instance('keywords-instance')/m:termList[@label='keywords']/m:term" id="additional_keywords-repeat">
+										<span style="float:left; width: 120px;">
+											<xf:trigger submission="replace-form-with" appearance="minimal">
+												<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="."/></xf:label>
+												<xf:action ev:event="DOMActivate">
+													<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.!='']">
+														<xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList" 
+															nodeset="m:term" 
+															at="last()"
+															position="after" 
+															origin="instance('keywords-instance')/m:termList[@label='keywords']/m:term[index('additional_keywords-repeat')]"/>
+													</xf:action>
+													<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.='']">
+														<xf:setvalue ref="." 
+															value="instance('keywords-instance')/m:termList[@label='keywords']/m:term[index('additional_keywords-repeat')]"/>
+													</xf:action>
+												</xf:action>
+											</xf:trigger>
+										</span>
+									</xf:repeat>
+									
+								</h:td>
+							</h:tr>
+						</h:table>
+					</h:div>
+				</xxf:dialog>					
+				
+				<h:span class="blocklabel">Term <h:a class="help">?<h:span class="comment">Keywords for searching, 
+					grouping and indexing, e.g.	"Symphony", "Chamber music", or "Song".
+					Pre-defined categories and keywords may be selected from a menu by clicking the add-button to the right.
+				</h:span></h:a></h:span>
+				<h:div style="float:right">
+					<xf:trigger>
+						<xf:label><h:img src="http:/editor/images/list.png" alt="Add"/> Add from list</xf:label>
+						<xxf:show dialog="keywords_menu" ev:event="DOMActivate"/>
+					</xf:trigger>
+				</h:div>
+				<xf:repeat nodeset="m:term" id="repeat-work-terms">
+					<h:div>
+						<xf:input ref="." class="long"/>
+						<dcm:element-buttons 
+							triggers="add delete" 
+							nodeset="m:term" 
+							index="repeat-work-terms"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term"/>
+						<dcm:attribute-editor ref="."/>
+					</h:div>
+				</xf:repeat>
+			</h:fieldset>
+			
+		</xf:group>
 	</h:div>
-	<xf:repeat nodeset="m:term" id="repeat-work-terms">
-	  <h:div>
-	    <xf:input ref="." class="long"/>
-	    <dcm:element-buttons 
-		triggers="add delete" 
-		nodeset="m:term" 
-		index="repeat-work-terms"
-		origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term"/>
-	  	<dcm:attribute-editor ref="."/>
-	  </h:div>
-	</xf:repeat>
-      </h:fieldset>
-      
-    </xf:group>
-  </h:div>
-  <h:br clear="all"/>
-  
+	
+	<xf:group ref=".[instance('parameters')/dcm:code_inspector='true']">
+		<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+	</xf:group>
+	<h:br clear="all"/>
+	
 </h:div>

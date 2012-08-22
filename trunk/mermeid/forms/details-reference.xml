@@ -393,6 +393,10 @@
             </h:div>
             
         </xf:group>
+
+        <xf:group ref=".[instance('parameters')/dcm:code_inspector='true']">
+            <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+        </xf:group>
         <h:br clear="all"/>
         
         <xi:include href="edit-form-footer.xml" parse="xml"/>
