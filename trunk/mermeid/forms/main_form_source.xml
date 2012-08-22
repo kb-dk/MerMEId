@@ -32,7 +32,7 @@
                 <xf:label><h:img src="http:/editor/images/edit.gif" title="Open the source editor"/> Edit</xf:label>
                 <xf:action ev:event="DOMActivate">
                   <xxf:variable name="uri" 
-                    select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'source_editor.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
+                    select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-source.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
                   <xf:action if="instance('temp')/changed='true'">
                     <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
                     <xxf:show dialog="exit-warning-dialog"/>

@@ -33,102 +33,8 @@
             @import "/editor/style/xform_style.css";
             @import "/editor/style/model_editor_style.css";
         </h:style>
-        
-        <xf:model>
-            
-            <xf:instance id="data-instance" xmlns="http://www.music-encoding.org/ns/mei">
-                <mei/>
-            </xf:instance>
-            
-            <xf:instance id="empty-instance" xmlns="http://www.music-encoding.org/ns/mei">
-                <mei/>
-            </xf:instance>
-            
-            <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
-                id="languages" 
-                src="/../editor/forms/mei/model/languages.xml" 
-                xxf:readonly="true"/>
-            
-            <xf:instance id="temp">
-                <temp>
-                    <id/>
-                    <counter/>
-                    <changed>false</changed>
-                    <change_marker>*</change_marker>
-                    <etc>...</etc>
-                    <target_uri/>
-                    <path/>
-                    <element/>
-                </temp>
-            </xf:instance> 
-            
-            <xf:bind nodeset="instance('temp')">
-                <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
-            </xf:bind>               
-            
-            <xf:instance id="parameters" xmlns="http://www.kb.dk/dcm">
-                <xi:include href="mermeid_configuration.xml" parse="xml"/>
-            </xf:instance>
-            
-            <!-- submissions - loading and saving data -->            
-            
-            <xf:submission id="load-data-submission" 
-                method="get" 
-                serialization="none" 
-                validate="false"
-                resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
-                replace="instance" instance="data-instance"/>
-            
-            <xf:submission id="load-empty-submission"
-                method="get" 
-                serialization="none" 
-                validate="false"
-                resource="{instance('temp')/target_uri}"
-                replace="instance" instance="empty-instance"/>
-            
-            <xf:submission id="save-to-file"
-                ref="instance('data-instance')"
-                validate="false"
-                relevant="false"
-                xxf:calculate="false"
-                resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
-                method="put"
-                replace="instance">
-            </xf:submission>
-            
-            <!-- "onload" xforms actions -->
-            <xf:action ev:event="xforms-model-construct-done">
-                <!-- store requested ID -->
-                <xf:setvalue ref="instance('temp')/id" value="xxf:get-request-parameter('id')"/>
-                <!-- store XML data file name -->
-                <xf:setvalue ref="instance('parameters')/dcm:xml_file" value="xxf:get-request-parameter('doc')"/>
-                <!-- load XML data -->
-                <xf:send submission="load-data-submission"/>
-                <!-- load empty model XML data -->
-                <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:form_home,'model/empty_doc.xml')"/>
-                <xf:send submission="load-empty-submission"/>
-                <!-- get settings from session variables -->
-                <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
-                <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
-                <!-- construct "music component path" -->
-                <!-- to do: combine movement numbers, titles, or tempos to identify components -->
-                <xf:setvalue ref="instance('temp')/path" 
-                    value="string-join(instance('data-instance')//m:expression[descendant-or-self::m:expression/@xml:id=instance('temp')/id]//m:title,'/')"/>
-            </xf:action>
-            
-            <xf:action ev:event="xforms-submit-done">
-                <!-- set instance state to unchanged on saving -->
-                <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
-            </xf:action>
-            
-            <xf:action ev:event="xforms-submit-error">
-                <xxf:variable name="code" select="event('response-status-code')"/>
-                <xf:action>
-                    <xf:message>An error occurred (<xf:output value="$code"/>)</xf:message>
-                </xf:action>
-            </xf:action>
-            
-        </xf:model>
+
+        <xi:include href="details-form-model.xml" parse="xml"/>
         
         <!-- XBL components -->
         <xi:include href="includes/element_buttons.xbl" parse="xml"/>
@@ -450,13 +356,12 @@
             </h:div>
             
         </xf:group>
-
-        <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
         
+        <xf:group ref=".[instance('parameters')/dcm:code_inspector='true']">
+            <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+        </xf:group>
+        <h:br clear="all"/>   
         
-        
-
-        <h:br clear="all"/>        
         <xi:include href="edit-form-footer.xml" parse="xml"/>
         
     </h:body>

@@ -214,6 +214,8 @@
       </xf:item>      
     </xf:select>
     <h:br/>
+    <h:hr/>
+    <h:p><b>Advanced settings</b></h:p>
     <xf:select appearance="full" ref="instance('parameters')/dcm:attr_editor">
       <xf:action ev:event="xforms-value-changed">
         <xf:insert context="." origin="xxf:set-session-attribute('attr_editor',instance('parameters')/dcm:attr_editor)"/>
@@ -223,8 +225,23 @@
           src="http:/editor/images/warning.png" alt="warning"/><h:span class="comment">This enables changing or adding
             all possible attributes according to the XML schema. Changing attributes may compromise the validity 
             of your data and affect the way MerMEId displays them. 
-            Use the attribute editor only if you what you are doing.<h:br/>
-            To optimize performance, the attribute editor should normally be disabled.
+            Use the attribute editor only if you what you are doing.
+          </h:span></h:a></xf:label>
+        <xf:value>true</xf:value>
+      </xf:item>      
+    </xf:select>
+    <h:div class="vertical_spacer"/>
+    <xf:select appearance="full" ref="instance('parameters')/dcm:code_inspector">
+      <xf:action ev:event="xforms-value-changed">
+        <xf:insert context="." origin="xxf:set-session-attribute('code_inspector',instance('parameters')/dcm:code_inspector)"/>
+      </xf:action>
+      <xf:item>
+        <xf:label>Enable code inspector <h:a class="help">?<h:span class="comment">The
+          code inspector allows you to inspect your XML data as you edit.<h:br/>
+          The code inspector will be displayed at the bottom of the page.<h:br/>
+          Please note: The code inspector also displays data used internally by MerMEId.
+          To view your data, select <em>data-instance</em> from the menu labeled <em>Instance:</em> 
+          (and <em>xf-1</em> from the <em>Model</em> menu, if necessary).  
           </h:span></h:a></xf:label>
         <xf:value>true</xf:value>
       </xf:item>      

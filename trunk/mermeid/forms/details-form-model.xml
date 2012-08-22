@@ -1,0 +1,136 @@
+<xf:model xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:ev="http://www.w3.org/2001/xml-events" >
+    
+    <xf:instance id="data-instance" xmlns="http://www.music-encoding.org/ns/mei">
+        <mei/>
+    </xf:instance>
+    
+    <xf:instance id="empty-instance" xmlns="http://www.music-encoding.org/ns/mei">
+        <mei/>
+    </xf:instance>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+        id="keywords-instance" 
+        src="/../editor/forms/mei/model/keywords.xml" 
+        xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+        id="languages" 
+        src="/../editor/forms/mei/model/languages.xml" 
+        xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+        id="instrumentation"
+        src="/../editor/forms/mei/model/standard_instrumentation.xml" 
+        xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+        id="ensembles" 
+        src="/../editor/forms/mei/model/ensembles.xml" 
+        xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+        id="instruments" 
+        src="/../editor/forms/mei/model/instruments.xml" 
+        xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.tei-c.org/ns/1.0" 
+        id="bibl-type-instance" 
+        src="/../editor/forms/mei/model/bibl_reference_types.xml" 
+        xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.tei-c.org/ns/1.0" 
+        id="bibliography-instance" 
+        src="/../editor/forms/mei/model/standard_bibliography.xml" 
+        xxf:readonly="true"/>
+    
+    <xf:instance id="mei_attr_list" 
+        src="/../editor/forms/mei/model/MEI_attr_list.xml"/>
+    
+    <xf:instance id="tei_attr_list" 
+        src="/../editor/forms/mei/model/TEI_attr_list.xml"/>    
+    
+    <xf:instance id="parameters" 
+        xmlns="http://www.kb.dk/dcm"
+        src="/../editor/forms/mei/mermeid_configuration.xml" parse="xml"/>
+    
+    <xf:instance id="temp">
+        <temp>
+            <id/>
+            <counter/>
+            <changed>false</changed>
+            <change_marker>*</change_marker>
+            <etc>...</etc>
+            <target_uri/>
+            <path/>
+            <element/>
+        </temp>
+    </xf:instance> 
+    
+    <xf:bind nodeset="instance('temp')">
+        <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
+    </xf:bind>               
+    
+    <!-- submissions - loading and saving data -->            
+    
+    <xf:submission id="load-data-submission" 
+        method="get" 
+        serialization="none" 
+        validate="false"
+        resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
+        replace="instance" instance="data-instance"/>
+    
+    <xf:submission id="load-empty-submission"
+        method="get" 
+        serialization="none" 
+        validate="false"
+        resource="{instance('temp')/target_uri}"
+        replace="instance" instance="empty-instance"/>
+    
+    <xf:submission id="save-to-file"
+        ref="instance('data-instance')"
+        validate="false"
+        relevant="false"
+        xxf:calculate="false"
+        resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
+        method="put"
+        replace="instance">
+    </xf:submission>
+    
+    <!-- "onload" xforms actions -->
+    <xf:action ev:event="xforms-model-construct-done">
+        <!-- store requested ID -->
+        <xf:setvalue ref="instance('temp')/id" value="xxf:get-request-parameter('id')"/>
+        <!-- store XML data file name -->
+        <xf:setvalue ref="instance('parameters')/dcm:xml_file" value="xxf:get-request-parameter('doc')"/>
+        <!-- load XML data -->
+        <xf:send submission="load-data-submission"/>
+        <!-- load empty model XML data -->
+        <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:form_home,'model/empty_doc.xml')"/>
+        <xf:send submission="load-empty-submission"/>
+        <!-- get settings from session variables -->
+        <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
+        <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
+        <xf:setvalue ref="instance('parameters')/dcm:code_inspector" value="xxf:get-session-attribute('code_inspector')"/> 
+        <!-- construct "music component path" -->
+        <!-- to do: combine movement numbers, titles, or tempos to identify components -->
+        <xf:setvalue ref="instance('temp')/path" 
+            value="string-join(instance('data-instance')//m:expression[descendant-or-self::m:expression/@xml:id=instance('temp')/id]//m:title,'/')"/>
+    </xf:action>
+    
+    <xf:action ev:event="xforms-submit-done">
+        <!-- set instance state to unchanged on saving -->
+        <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
+    </xf:action>
+    
+    <xf:action ev:event="xforms-submit-error">
+        <xxf:variable name="code" select="event('response-status-code')"/>
+        <xf:action>
+            <xf:message>An error occurred (<xf:output value="$code"/>)</xf:message>
+        </xf:action>
+    </xf:action>
+    
+</xf:model>
+
