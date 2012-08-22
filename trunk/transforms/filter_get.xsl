@@ -4,11 +4,10 @@
 	xmlns:m="http://www.music-encoding.org/ns/mei" 
 	xmlns:t="http://www.tei-c.org/ns/1.0"
 	xmlns:xl="http://www.w3.org/1999/xlink"
-	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:exsl="http://exslt.org/common"
 	xmlns:dyn="http://exslt.org/dynamic"
 	extension-element-prefixes="dyn exsl"
-	exclude-result-prefixes="xl xlink xsl m"
+	exclude-result-prefixes="xsl m t"
 	version="1.0">
 	
 	<xsl:output method="xml"

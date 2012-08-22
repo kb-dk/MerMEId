@@ -1,15 +1,18 @@
 <xf:model xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:ev="http://www.w3.org/2001/xml-events" >
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xl="http://www.w3.org/1999/xlink">
     
-    <xf:instance id="data-instance" xmlns="http://www.music-encoding.org/ns/mei">
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+        id="data-instance">
         <mei/>
     </xf:instance>
     
-    <xf:instance id="empty-instance" xmlns="http://www.music-encoding.org/ns/mei">
-        <mei/>
-    </xf:instance>
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+        id="empty-instance" 
+        src="/../editor/forms/mei/model/empty_doc.xml"
+        xxf:readonly="true"/>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
         id="keywords-instance" 

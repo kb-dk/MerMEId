@@ -34,14 +34,11 @@
       http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://disdev-01.kb.dk/editor/forms/mei/edit-work-case.xml?&doc=cnw0292.xml
     -->
     
-    <xf:instance id="data-instance" xmlns="http://www.music-encoding.org/ns/mei">
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+      id="data-instance">
       <mei/>
     </xf:instance>
         
-    <xf:instance id="parameters" 
-      xmlns="http://www.kb.dk/dcm"
-      src="/editor/forms/mei/mermeid_configuration.xml"/>
-
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
       id="empty-instance"
       src="/editor/forms/mei/model/empty_doc.xml" 
@@ -87,6 +84,10 @@
     
     <xf:instance id="tei_attr_list" 
       src="/editor/forms/mei/model/TEI_attr_list.xml"/>    
+    
+    <xf:instance id="parameters" 
+      xmlns="http://www.kb.dk/dcm"
+      src="/editor/forms/mei/mermeid_configuration.xml"/>
     
     <xf:instance id="temp">
       <temp-values>

@@ -3,8 +3,8 @@
   xmlns="http://www.music-encoding.org/ns/mei" 
   xmlns:m="http://www.music-encoding.org/ns/mei" 
   xmlns:xl="http://www.w3.org/1999/xlink"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  exclude-result-prefixes="xl xlink xsl m"
+  xmlns:t="http://www.tei-c.org/ns/1.0"
+  exclude-result-prefixes="xsl m t"
   version="1.0">
   
   <xsl:output method="xml"
