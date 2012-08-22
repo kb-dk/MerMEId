@@ -18,7 +18,7 @@
     </xsl:template>
     
     <xsl:template match="m:mei">
-        <mei>
+        <mei xmlns:xl="http://www.w3.org/1999/xlink">
             <xsl:attribute name="meiversion">2012</xsl:attribute>
             <xsl:if test="count(@xml:id)=0">
                 <xsl:attribute name="xml:id">
