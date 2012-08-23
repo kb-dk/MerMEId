@@ -58,7 +58,7 @@ if ( open($in,"$find |") ) {
 	}
 
 	system "mv $out $source";
-	system 'rm '.$source."[0..9]";
+	system 'rm '.$source."[0-9]";
     }
 
 }
