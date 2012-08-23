@@ -635,10 +635,13 @@
 										<h:td>
 											<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
 											<dcm:id ref="."/>
-											<xf:output value="m:titleStmt/m:title"/>
-											<xf:group ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
+											<xf:output 
+												value="m:titleStmt/m:title"/><xf:group 
+													ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
 											<xf:output value="m:tempo"/>
-											<xf:group ref=".[normalize-space(concat(@n,m:titleStmt/m:title[1],m:tempo))='']"> [No number, title or tempo] </xf:group>
+											<xf:group ref=".[normalize-space(concat(@n,m:titleStmt/m:title[1],m:tempo))='']"> 
+												[No number, title or tempo] 
+											</xf:group>
 											&#160;
 										</h:td>
 										<h:td style="text-align:right;">
@@ -726,14 +729,12 @@
 															<h:td>
 																<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
 																<dcm:id ref="."/>
-																<xf:output value="m:titleStmt/m:title[1]"/>
-																<xf:group
-																	ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]"
-																	>. </xf:group>
+																<xf:output value="m:titleStmt/m:title[1]"/><xf:group
+																	ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
 																<xf:output value="m:tempo"/>
-																<xf:group
-																	ref=".[normalize-space(concat(@n,m:titleStmt/m:title[1],m:tempo))='']"
-																	> [No number, title or tempo] </xf:group>
+																<xf:group ref=".[normalize-space(concat(@n,m:titleStmt/m:title[1],m:tempo))='']"> 
+																	[No number, title or tempo] 
+																</xf:group>
 																&#160;
 															</h:td>
 															<h:td style="text-align:right;">
@@ -830,14 +831,12 @@
 																				<h:td>
 																					<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
 																					<dcm:id ref="."/>
-																					<xf:output value="m:titleStmt/m:title[1]"/>
-																					<xf:group
-																						ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]"
-																						>. </xf:group>
+																					<xf:output value="m:titleStmt/m:title[1]"/><xf:group
+																						ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
 																					<xf:output value="m:tempo"/>
-																					<xf:group
-																						ref=".[normalize-space(concat(@n,m:titleStmt/m:title[1],m:tempo))='']"
-																						> [No number, title or tempo] </xf:group>
+																					<xf:group ref=".[normalize-space(concat(@n,m:titleStmt/m:title[1],m:tempo))='']">
+																						[No number, title or tempo] 
+																					</xf:group>
 																					&#160;
 																				</h:td>
 																				<h:td style="text-align:right;">

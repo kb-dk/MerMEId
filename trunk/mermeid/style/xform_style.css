@@ -57,6 +57,10 @@
 
 .mask {
     z-index: 1001 !important;
+    -moz-opacity:.50; 
+    filter:alpha(opacity=50); 
+    opacity:.50;
+    background-color: #000;
 }
 
 .xbl-fr-xforms-inspector table {
@@ -321,8 +325,10 @@ span.selection_open_short input {
     position:absolute;
     z-index:+1;
     margin: 0px;
-    padding: 0px 0px 0px 0px; 
-    margin: 2px 0px 0px 4px;
+    padding: 1px 0px 0px 1px; 
+    margin: 5px 0px 0px 4px;
+    height: 16px;
+    border:none;
 }
 
 span.selection_open select,
@@ -428,14 +434,16 @@ table.component_list td {
     vertical-align: top;
 }
 
-table.component_list td.index_cell {
-    background-image: url(http:/editor/images/tree-3.png);
-    background-position: 10px 0;
-    background-repeat: repeat-y;
+table.component_list td.index_cell, table.component_list td.last_cell {
     width: 30px;
     padding-left: 8px;
 }
 
+table.component_list td.index_cell {
+    background-image: url(http:/editor/images/tree-3.png);
+    background-position: 10px 0;
+    background-repeat: repeat-y;
+}
 
 /* css for help and warning pop-ups */
 

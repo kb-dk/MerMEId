@@ -44,12 +44,13 @@
             </titleStmt>
             <xsl:apply-templates select="m:pubstmt"/>
             <seriesStmt>
-                <title/>
+                <title>
+                    <xsl:if test="normalize-space(//m:encodingdesc/m:projectdesc/m:p/m:list[@n='use'])='CNW'">
+                        <xsl:text>Carl Nielsen Works</xsl:text>
+                    </xsl:if>
+                </title>
                 <!-- put in file context identifiers here (= the MerMEId collection) -->
-                <seriesStmt label="File collection">
-                    <title/>
-                    <identifier><xsl:value-of select="normalize-space(//m:encodingdesc/m:projectdesc/m:p/m:list[@n='use'])"/></identifier>
-                </seriesStmt>
+                <identifier><xsl:value-of select="normalize-space(//m:encodingdesc/m:projectdesc/m:p/m:list[@n='use'])"/></identifier>
             </seriesStmt>
             <xsl:apply-templates select="m:notesstmt"/>
             <xsl:apply-templates select="m:sourcedesc"/>

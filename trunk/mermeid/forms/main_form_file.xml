@@ -30,7 +30,7 @@
 						<dcm:attribute-editor ref="."/>
 					</h:span>
 					<xf:repeat
-						nodeset="m:seriesStmt[@label='File collection']/m:identifier"
+						nodeset="m:identifier"
 						id="repeat-collection">
 						<h:div>
 							<xf:group ref=".[normalize-space(.)='']">
@@ -47,7 +47,7 @@
 							<dcm:element-buttons triggers="add delete" 
 								nodeset="m:identifier"
 								index="repeat-collection"
-								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:seriesStmt[@label='File collection']/m:identifier"/>
+								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>

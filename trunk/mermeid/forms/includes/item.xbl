@@ -407,7 +407,7 @@
                                         <h:table class="component_list" cellpadding="0" cellspacing="0" border="0">
                                             <xf:repeat nodeset="m:componentGrp/m:item" id="repeat-item-component">
                                                 <h:tr class="component">
-                                                    <h:td class="index_cell">
+                                                    <h:td class="{if(position()=last()) then 'last_cell' else 'index_cell'}">
                                                         <h:img src="http:/editor/images/tree-1.png" alt="component" border="0"/>
                                                     </h:td>
                                                     <h:td>
@@ -580,24 +580,9 @@
                                                     </h:td>
                                                 </h:tr>
                                             </xf:repeat>
-                                            <h:tr>
-                                                <h:td>
-                                                    <xf:group ref="m:componentGrp">
-                                                        <xf:trigger appearance="minimal" ref=".[m:item]">
-                                                            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add component"/></xf:label>
-                                                            <xf:action ev:event="DOMActivate">
-                                                                <xf:insert origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item[1]/m:componentGrp/m:item[1]"
-                                                                    nodeset="m:item" at="last()" position="after"/>
-                                                                <xf:dispatch name="id-update" target="form-group"/>
-                                                            </xf:action>
-                                                        </xf:trigger>
-                                                    </xf:group>
-                                                </h:td>
-                                            </h:tr>
                                         </h:table>
                                     </xf:group>
                                 </h:fieldset>
-                                
                                 <!-- End components -->
                             </xf:case>
                             

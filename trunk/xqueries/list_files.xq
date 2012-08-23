@@ -59,7 +59,7 @@ declare function app:format-reference(
 declare function app:get-edition-and-number($doc as node() ) as xs:string* {
 
 	let $c := 
-	$doc//m:seriesStmt/m:seriesStmt[@label="File collection"]/m:identifier/string()
+	$doc//m:seriesStmt/m:identifier/string()
 	return ($c,$doc//m:meiHead/m:altId[@analog=$c]/string())
 
 };
@@ -291,7 +291,7 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 {
 
 	for $c in distinct-values(
-		collection("/db/dcm")//m:seriesStmt/m:seriesStmt[@label="File collection"]/m:identifier/string()[string-length(.) > 0])
+		collection("/db/dcm")//m:seriesStmt/m:identifier/string()[string-length(.) > 0])
 	let $querystring  := 
 	if($query) then
 	fn:string-join(
