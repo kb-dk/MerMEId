@@ -232,6 +232,7 @@
             <physDesc>
                 <!-- <physloc>, <provenance> and <handlist> are moved to <item> -->
                 <xsl:apply-templates select="@*|m:physdesc/*[name()!='physloc' and name()!='provenance' and name()!='handlist']"/>
+                <plateNum><xsl:value-of select="m:pubstmt/m:identifier[@type='plate_no']"/></plateNum>
             </physDesc>
             <xsl:apply-templates select="m:notesstmt|m:classification"/>
             <!-- add item level -->
@@ -258,59 +259,10 @@
                             <ptr target="" mimetype="" xl:title=""/>
                         </annot>
                     </notesStmt>
-                    <componentGrp>
-                        <item>
-                            <titleStmt>
-                                <title></title>
-                            </titleStmt>
-                            <pubStmt>
-                                <date/>
-                            </pubStmt>
-                            <physDesc>
-                                <condition/>
-                                <titlePage>
-                                    <p/>
-                                </titlePage>
-                                <physLoc>
-                                    <repository>
-                                        <corpName/>
-                                        <identifier/>
-                                        <identifier analog="RISM"/>
-                                        <ptr target="" xl:title="Library record" mimetype=""/>
-                                        <ptr target="" xl:title="Facsimile" mimetype=""/>
-                                    </repository>
-                                </physLoc>
-                                <provenance>
-                                    <eventList>
-                                        <event>
-                                            <title/>
-                                            <date/>
-                                            <geogName role=""/>
-                                            <corpName role=""/>
-                                            <persName role=""/>
-                                        </event>
-                                    </eventList>
-                                </provenance>
-                                <extent unit="pages"/>
-                                <dimensions unit="cm"/>
-                                <handList>
-                                    <hand medium="" initial="false"/>
-                                </handList>
-                                <watermark>
-                                    <ptr target="" xl:title="" mimetype=""/>
-                                </watermark>
-                                <physMedium/>
-                            </physDesc>
-                            <notesStmt>
-                                <annot type="source_description"/>
-                                <annot type="links">
-                                    <ptr target="" mimetype="" xl:title=""/>
-                                </annot>
-                            </notesStmt>
-                        </item>                
-                    </componentGrp>
+                    <componentGrp/>
                 </item> 
             </itemList>
+            <componentGrp/>
             <relationList>
                 <relation rel="isEmbodimentOf" target="#expression_1"/>
             </relationList>
@@ -332,6 +284,9 @@
                 </respStmt>
             </titleStmt>
             <xsl:apply-templates select="."/>
+            <physDesc>
+                <plateNum><xsl:value-of select="m:identifier[@type='plate_no']"/></plateNum>
+            </physDesc>
             <notesStmt>
                 <annot type="source_description"/>                     
             </notesStmt>
@@ -342,6 +297,9 @@
             </relationList>
         </source>        
     </xsl:template>
+    
+    <!-- Plate numbers are moved to <physDesc>  -->
+    <xsl:template match="m:pubstmt/m:identifier[@type='plate_no']"/>
 
 
     <xsl:template match="m:repository/m:identifier">

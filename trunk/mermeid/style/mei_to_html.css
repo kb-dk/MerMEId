@@ -76,14 +76,6 @@ ul {
     margin-top:0em;
 }
 
-.cat_number {
-    background-color : #046344;
-    padding:2px;
-    color : white;
-    font-weight : bold;
-    font-size : 1.5em;
-}
-
 .fold {
     cursor : pointer;
     margin-top:.5em;
@@ -172,6 +164,18 @@ div.source {
 
 div.source p {
     margin-top : 0px;
+}
+
+/* Styling the series-specific header with the catalogue's name 
+   and the works's number in it. 
+   Use the series identifier as the class name. */
+
+.CNW {
+    background-color : #046344;
+    padding:2px;
+    color : white;
+    font-weight : bold;
+    font-size : 1.5em;
 }
 
 /* SPECIAL SYMBOLS */

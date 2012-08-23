@@ -120,7 +120,7 @@
 		
 		<xsl:variable name="file_context">
 			<xsl:value-of 
-				select="//m:seriesStmt[@label='File collection']/m:identifier"/>
+				select="//m:seriesStmt/m:identifier[1]"/>
 		</xsl:variable>
 		
 		<xsl:variable name="catalogue_no">
@@ -128,7 +128,7 @@
 		</xsl:variable>
 		
 		<xsl:if test="m:meiHead/m:altId[@analog=$file_context]/text()">
-			<div class="cat_number">
+			<div class="{$file_context}">
 				<a>
 					<xsl:value-of select="$file_context"/>
 					<xsl:text> </xsl:text>

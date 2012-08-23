@@ -78,6 +78,7 @@
               <ptr target="" mimetype="" xl:title="" xml:id=""/>
             </watermark>
             <physMedium/>
+            <plateNum/>
           </physDesc>
           <notesStmt>
             <annot type="source_description" xml:id=""/>
@@ -85,7 +86,6 @@
               <ptr target="" mimetype="" xl:title="" xml:id=""/>
             </annot>
           </notesStmt>
-          
           <classification>
             <termList>
               <term classcode="DcmContentClass"/>
@@ -96,7 +96,6 @@
               <term classcode="DcmCompletenessClass"/>
             </termList>
           </classification>
-          
           <itemList>
             <item target="" xml:id="">
               <titleStmt>
@@ -202,6 +201,21 @@
               </componentGrp>
             </item> 
           </itemList>
+          <componentGrp>
+            <item label="" target="" xml:id="" analog="frbr:manifestation">
+              <titleStmt>
+                <title xml:id=""/>
+              </titleStmt>
+              <physDesc>
+                <extent unit="pages"/>
+                <dimensions unit="cm"/>
+                <physMedium/>
+              </physDesc>
+              <notesStmt>
+                <annot type="source_description" xml:id=""/>
+              </notesStmt>
+            </item> 
+          </componentGrp>
           <relationList>
             <relation rel="isEmbodimentOf" target="" xml:id=""/>
           </relationList>

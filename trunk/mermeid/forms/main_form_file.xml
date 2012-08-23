@@ -14,43 +14,41 @@
 				<dcm:attribute-editor ref="."/>
 				</h:legend>
 				
-				<xf:input ref="m:title" class="maxlong"><xf:label>Series title <h:a class="help">?<h:span class="comment">E.g. 
-					"Complete Edition of the Works of Carl Nielsen" or "Niels W. Gade Thematic Catalogue"</h:span></h:a></xf:label></xf:input>
+				<xf:input ref="m:title" class="maxlong">
+					<xf:label class="fixed_width">Series title <h:a class="help">?<h:span class="comment">E.g. 
+					"Complete Edition of the Works of Carl Nielsen" or "Niels W. Gade Thematic Catalogue"</h:span></h:a>
+					</xf:label>
+				</xf:input>
 				<dcm:attribute-editor ref="m:title"/>
-				
-					<h:span class="blocklabel">File collections <h:a class="help">?<h:span class="comment">Machine-readable 
-						identifier of the contexts (catalogues or collections) in
-						which this file is to appear - e.g. "CNW" or "BWV". The collection names enables
-						the co-existence of several	catalogues or collections in MerMEId.<h:br/>
-						A button with the collection's name will appear on the file list. 
-						Use the button to find all files belonging to this collection.
-						The collection name also makes the corresponding list of standard references
-						(if any) available on the bibliography tab when adding a reference.
-						</h:span></h:a>
+				<xf:repeat
+					nodeset="m:identifier"
+					id="repeat-collection">
+					<h:div>
+						<xf:group ref=".[count(../m:identifier[normalize-space(.)!=''])=0]">
+							<h:a class="help_plain"><h:img src="http:/editor/images/warning.png" 
+								alt="warning"/><h:span class="comment">If no identifier is indicated, 
+									MerMEId will not display this file as belonging to any series.
+									For other purposes, or if you do not need to distinguish between   
+									different collections of files, this field may be left empty.
+								</h:span></h:a>
+						</xf:group>
+						<xf:input ref=".">
+							<xf:label class="fixed_width">Identifier <h:a class="help">?<h:span class="comment">Machine-readable 
+								identifier of the series, e.g. "CNW" or "BWV". The series identifier enables
+								the co-existence of several	catalogues or collections in MerMEId.<h:br/>
+								A button with the series' identifier will appear on the file list. 
+								Use the button to find all files belonging to this series.
+								The series identifier also makes the corresponding list of standard references
+								(if any) available on the bibliography tab when adding a reference.
+							</h:span></h:a></xf:label>
+						</xf:input>
+						<dcm:element-buttons triggers="add delete" 
+							nodeset="m:identifier"
+							index="repeat-collection"
+							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier"/>
 						<dcm:attribute-editor ref="."/>
-					</h:span>
-					<xf:repeat
-						nodeset="m:identifier"
-						id="repeat-collection">
-						<h:div>
-							<xf:group ref=".[normalize-space(.)='']">
-								<h:a class="help_plain"><h:img src="http:/editor/images/warning.png" 
-									alt="warning"/><h:span class="comment">If no collection is indicated, 
-										MerMEId will not display this file in any catalogue or collection.
-										For other purposes, or if you do not need to distinguish between   
-										different collections of files, this field may be left empty.
-									</h:span></h:a>
-							</xf:group>
-							<xf:input ref=".">
-								<xf:label>Collection identifier</xf:label>
-							</xf:input>
-							<dcm:element-buttons triggers="add delete" 
-								nodeset="m:identifier"
-								index="repeat-collection"
-								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier"/>
-							<dcm:attribute-editor ref="."/>
-						</h:div>
-					</xf:repeat>
+					</h:div>
+				</xf:repeat>
 			</h:fieldset>
 		</xf:group>
 		
