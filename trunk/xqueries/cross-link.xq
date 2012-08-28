@@ -34,16 +34,16 @@ declare function app:format-doc($doc  as node()) as node() {
 
     let $ref   := 
     <file>
-        <series>{$doc//m:fileDesc/m:seriesStmt/m:title}</series>
-        <seriesId>{$doc//m:fileDesc/m:seriesStmt/m:identifier}</seriesId>
-        <composer>{$doc//m:workDesc/m:work/m:respStmt/m:persName[@role='composer']}</composer>
-        <title>{$doc//m:workDesc/m:work/m:titleStmt/m:title[text()][1]}</title>
+        <series>{$doc/m:meiHead/m:fileDesc/m:seriesStmt/m:title/text()}</series>
+        <seriesId>{$doc/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier/text()}</seriesId>
+        <composer>{$doc/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}</composer>
+        <title>{$doc/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[text()][1]/text()}</title>
 	<link 
-	href="{request:get-effective-uri()}?document={util:document-name($doc)}" />
+	href="{util:document-name($doc)}" />
 
         <sources>
-            <source xml:id="{$doc//m:fileDesc/m:sourceDesc/m:source/@xml:id}">
-                <title>{$doc//m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title[text()][1]}</title>
+            <source xml:id="{$doc/m:meiHead/m:fileDesc/m:sourceDesc/m:source/@xml:id}">
+                <title>{$doc/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title[text()][1]/text()}</title>
             </source>
         </sources>
     </file>

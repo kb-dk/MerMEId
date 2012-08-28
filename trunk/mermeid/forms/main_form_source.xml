@@ -44,7 +44,7 @@
                 <xf:output value="m:titleStmt/m:title"/>
                 <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
               </xf:group>
-              <xf:group ref=".[*]">
+              <xf:group ref=".[not(*)]">
                 <!-- external source data -->
                 <xf:output value="@label"/>
                 <xf:group ref=".[normalize-space(@label)='']"> [No description] </xf:group>
@@ -70,25 +70,49 @@
                     </xf:action>
                   </xf:trigger>
                 </xf:group>
-                <xf:group ref=".[instance('temp')/file_exists!='true']">
-                  <h:small>File must be saved before sources can be edited</h:small>
-                </xf:group>
               </xf:group>
               <xf:group ref=".[not(*)]">
                 <!-- external source data -->
-                [Edit]
+                <xf:trigger>
+                  <xf:label><h:img src="http:/editor/images/edit.gif" title="Go to external source"/> Edit</xf:label>
+                  <xf:action ev:event="DOMActivate">
+                    <xxf:variable name="uri" 
+                      select="concat(
+                      instance('parameters')/dcm:orbeon_dir,
+                      '?uri=',
+                      instance('parameters')/dcm:form_home,
+                      'details-source.xml&amp;doc=',
+                      substring-before(@target,'#'),
+                      '&amp;id=',
+                      substring-after(@target,'#'))"/>
+                    <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+                    <xxf:show dialog="leave-warning-dialog"></xxf:show>
+                  </xf:action>
+                </xf:trigger>
+              </xf:group>
+              <xf:group ref=".[instance('temp')/file_exists!='true']">
+                <h:small>File must be saved before sources can be edited</h:small>
               </xf:group>
             </h:td>
-            <h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add remove" nodeset="m:source" index="repeat-sources" 
-              origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/><xf:trigger
+            <h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy" nodeset="m:source" index="repeat-sources" 
+              origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/><xf:trigger 
+                appearance="minimal">
+                <xf:label><h:img src="http:/editor/images/add.gif" title="Add source"/></xf:label>
+                <xf:action ev:event="DOMActivate">
+                    <xxf:show dialog="add_source_dialog"/>
+                  </xf:action>
+              </xf:trigger><dcm:element-buttons triggers="remove" nodeset="m:source" index="repeat-sources" 
+                origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/>
+              
+              <!--<xf:trigger
                 appearance="minimal"><xf:label><h:img 
                   src="http:/editor/images/add_link.png" title="Create source as link to external description after this source"></h:img></xf:label><xf:action 
                     ev:event="DOMActivate">
-                    <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?page=1&amp;itemsPerPage=999999')"/>
+                    <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq')"/>
                     <xf:send submission="load-fileList"/>
                     <xxf:show dialog="source_reference_dialog"/>
                   </xf:action>
-              </xf:trigger>
+              </xf:trigger>-->
               <dcm:attribute-editor ref="."/>
             </h:td>
           </h:tr>
@@ -102,36 +126,153 @@
   </xf:group>
   <h:br clear="all"/>
   
+  <xxf:dialog id="leave-warning-dialog" appearance="full">
+    <!-- The requested URI must be stored in instance('temp')/target_uri prior to opening the dialog -->
+    <xf:label>Warning – Editing external source</xf:label>
+    <h:p>Editing an external source means that this file will be closed and another one opened
+      for editing.<h:br/>
+      Before you continue, make sure you are entitled to make changes in the file you are about to open.<h:br/>
+      If you need to update the title of this source reference after editing, return to this file and 
+      click the "Update" button next to the reference to get the updated title.
+    </h:p>
+    <h:p>Do you want to proceed?</h:p>    
+    <xf:trigger>
+      <xf:label>Yes</xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xxf:hide dialog="leave-warning-dialog"/>
+        <xf:action if="instance('temp')/changed='true'">
+          <xxf:show dialog="exit-warning-dialog"/>
+        </xf:action>	
+        <xf:action if="instance('temp')/changed='false'">
+          <xf:load resource="{instance('temp')/target_uri}" show="replace"/>
+        </xf:action>
+      </xf:action>
+    </xf:trigger>
+    <xf:trigger>
+      <xf:label>No</xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xxf:hide dialog="leave-warning-dialog"/>
+      </xf:action>
+    </xf:trigger>
+  </xxf:dialog>
+  
+  <xxf:dialog id="add_source_dialog">
+    <xf:label>Add source</xf:label>
+    <h:p>Sources may be added either by entering new data in this file<h:br/>
+    or by linking to an existing source in another file.</h:p>
+    <xf:trigger>
+      <xf:label><h:img src="http:/editor/images/add.gif" title="Add new source"/> Add new source &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc" 
+          nodeset="m:source[index('repeat-sources')]"
+          origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/>
+        <xf:dispatch name="id-update" target="form-group"/>
+        <xxf:hide dialog="add_source_dialog"></xxf:hide>
+      </xf:action>
+    </xf:trigger>
+    <h:br/>
+    <xf:trigger>
+      <xf:label><h:img src="http:/editor/images/add_link.png" 
+        title="Add source as link to an external description"/> Add link to external source</xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xxf:hide dialog="add_source_dialog"></xxf:hide>
+        <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq')"/>
+        <xf:send submission="load-fileList"/>
+        <xxf:show dialog="source_reference_dialog"/>
+      </xf:action>
+    </xf:trigger> 
+  </xxf:dialog>
+  
+  
   <xxf:dialog id="source_reference_dialog" appearance="full">
     <xf:label>External source description</xf:label>
+    <xf:input ref="instance('temp')/query">
+      <xf:label>Keywords <h:a class="help">?<span class="comment search" 
+        style="width: 350px">
+        Narrow your search by adding keywords, e.g. series identifier, composer name or part of the title.<h:br/>
+        To filter out a particular series of files, use the series' identifier (e.g. 'CNW' or 'BWV') as 
+        specified on the 'File' tab in MerMEId.<h:br/>
+        Search is case insensitive. 
+        Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<br/>
+        <span class="help_table">
+          <span class="help_example">
+            <span class="help_label">carl or nielsen</span>
+            <span class="help_value">Boolean OR (default)</span>
+          </span>                        
+          <span class="help_example">
+            <span class="help_label">carl and nielsen</span>
+            <span class="help_value">Boolean AND</span>
+          </span>
+          <span class="help_example">
+            <span class="help_label">"carl nielsen"</span>
+            <span class="help_value">Exact phrase</span>
+          </span>
+          <span class="help_example">
+            <span class="help_label">niels*</span>
+            <span class="help_value">Match any number of characters. Finds Niels, Nielsen and Nielsson</span>
+          </span>
+          <span class="help_example">
+            <span class="help_label">niels?n</span>
+            <span class="help_value">Match 1 character. Finds Nielsen and Nielson, but not Nielsson</span>
+          </span>
+        </span>
+      </span>
+      </h:a></xf:label>
+    </xf:input>
+    <xf:trigger>
+      <xf:label>Search</xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?query=',instance('temp')/query)"/>
+        <xf:send submission="load-fileList"/>
+      </xf:action>
+    </xf:trigger>
+    <h:p>Found ?? records</h:p>
+    <h:p>[Navigation here]</h:p>
     <h:div class="file_ref_list">
-      <xf:repeat nodeset="instance('XMLfiles')/dcm:file[dcm:sources/dcm:source/dcm:title/text()]">
-        <h:p>
-          <xf:trigger appearance="minimal"> 
-            <xf:label><xf:output value="dcm:title"/></xf:label>
-            <xf:action>
-              <xf:toggle case="show_source_refs"/>
-            </xf:action>
-          </xf:trigger>
+      <xf:repeat nodeset="instance('XMLfiles')/dcm:file" id="repeat-ref-files">
+        <h:div>
           <xf:switch>
-<!--            <xf:case id="hide_source_refs"/>-->
-            <xf:case id="show_source_refs" selected="true()">
+            <xf:case id="hide_source_refs" selected="true()">
+              <xf:trigger appearance="minimal">
+                <xf:label><xf:output value="concat(dcm:composer,': ',dcm:title)"/></xf:label>
+                <xf:action ev:event="DOMActivate">
+                  <xf:toggle case="show_source_refs"/>
+                </xf:action>
+              </xf:trigger>
+            </xf:case>
+            <xf:case id="show_source_refs">
+              <xf:trigger appearance="minimal">
+                <xf:label><xf:output value="concat(dcm:composer,': ',dcm:title)"/></xf:label>
+                <xf:action ev:event="DOMActivate">
+                  <xf:toggle case="hide_source_refs"/>
+                </xf:action>
+              </xf:trigger>
               <h:ul>
-                <xf:repeat nodeset="dcm:sources/dcm:source[@xml:id!='']">
+                <xf:repeat nodeset="dcm:sources/dcm:source" id="repeat-refs">
                   <h:li>
                     <xf:trigger appearance="minimal">
-                      <xf:label><xf:output value="dcm:title"/>
+                      <xf:label><xf:output value="dcm:title"/></xf:label>
                         <xf:action ev:event="DOMActivate">
+                          <xf:insert nodeset="m:source[index('repeat-sources')]" 
+                            context="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc" 
+                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[2]"/>
+                          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[index('repeat-sources')]/@target"
+                            value="concat(
+                            instance('XMLfiles')/dcm:file[index('repeat-ref-files')]/dcm:link/@href,
+                            '#',
+                            instance('XMLfiles')/dcm:file[index('repeat-ref-files')]/dcm:sources/dcm:source[index('repeat-refs')]/@xml:id)"/>
+                          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[index('repeat-sources')]/@label"
+                            value="instance('XMLfiles')/dcm:file[index('repeat-ref-files')]/dcm:sources/dcm:source[index('repeat-refs')]/dcm:title"/>
+                          <xf:dispatch name="id-update" target="form-group"/>
                           <xxf:hide dialog="source_reference_dialog"/>
                         </xf:action>
-                      </xf:label>
                     </xf:trigger>
                   </h:li>
                 </xf:repeat>
               </h:ul>
             </xf:case>
           </xf:switch>
-        </h:p>
+        </h:div>
       </xf:repeat>
     </h:div>
   </xxf:dialog>

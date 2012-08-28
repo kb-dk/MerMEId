@@ -157,6 +157,12 @@ div.horiz_spacer {
     display: inline-block;
 }
 
+.code {
+    font-family:courier, fixed, monospace;
+    padding-right: 8px;
+    white-space: nowrap;
+}
+
 /* buttons and triggers */
 
 button, button.detail_button, button[type], .xforms-button {
@@ -425,11 +431,19 @@ table.element_list .xbl-dcm-element-buttons {
 
 /* file reference list*/
 .file_ref_list {
-    width: 650px; 
-    height: 500px; 
+    width: 700px; 
+    height: 450px; 
     overflow:scroll;
+    line-height: 1.3em;
 }
 
+.file_ref_list ul {
+    margin: 0 0 5px 0;
+}
+
+.file_ref_list ul li {
+    margin: 0;
+}
 
 /* component list */
 table.component_list {
@@ -451,6 +465,11 @@ table.component_list td.index_cell {
     background-image: url(http:/editor/images/tree-3.png);
     background-position: 10px 0;
     background-repeat: repeat-y;
+}
+
+/* About box */
+div.about_header, div.about_footer {
+    text-align: center;
 }
 
 /* css for help and warning pop-ups */
@@ -517,7 +536,27 @@ a:hover.warning span.comment, a:hover.dcm_id span.comment  {
     visibility:visible;
 }
 
-/* About box */
-div.about_header, div.about_footer {
-    text-align: center;
+form.search a.help span.comment {
+    width: 250px;
+    margin-left:-250px;
+}
+
+
+a.help .help_table {
+    display: table;
+}
+
+a.help .help_example {
+    display: table-row;
+}
+
+a.help .help_label, a.help .help_value {
+    padding-top: 6px;
+    display: table-cell;
+}
+
+.search .help_label {
+    padding-right: 8px;
+    white-space: nowrap;
+    font-family: courier, fixed, monospace;
 }
