@@ -136,8 +136,8 @@
 				</a>
 			</div>
 		</xsl:if>
-
-		<div class="settings">
+		
+		<div class="settings colophon">
 			<a href="javascript:loadcssfile('/editor/style/html_hide_languages.css'); hide('load_alt_lang_css'); show('remove_alt_lang_css')" id="load_alt_lang_css">Hide alternative languages</a>
 			<a style="display:none" href="javascript:removecssfile('/editor/style/html_hide_languages.css'); hide('remove_alt_lang_css'); show('load_alt_lang_css')" id="remove_alt_lang_css">Show alternative languages</a>
 		</div>
@@ -155,13 +155,6 @@
 			</xsl:for-each>
 		</xsl:for-each>
 		
-		<xsl:for-each select="m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes' and text()]">
-			<div class="private">
-				<div class="private_heading">[Private notes]</div>
-				<div class="private_content"><xsl:apply-templates select="."/></div>
-			</div>
-		</xsl:for-each>
-
 		<xsl:for-each 
 			select="m:meiHead/
 			m:workDesc/
@@ -482,14 +475,81 @@
 		</xsl:for-each>
 		
 		<!-- bibliography -->
-		
 		<xsl:apply-templates 
 			select="m:meiHead/
 			m:fileDesc/
 			m:notesStmt/
 			m:annot[@type='bibliography']/
 			t:listBibl[t:bibl/*[text()]]"/>		
-		<xsl:apply-templates select="m:meiHead/m:revisionDesc"/>
+		
+		<!-- colophon -->
+		<div class="colophon">
+			<br/>
+			<hr/>
+			<br/>
+			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt//text()">
+				<p><em>Series:</em><br/></p> 
+				<p>
+					<xsl:for-each select="m:meiHead/m:fileDesc/m:seriesStmt/m:title">
+						<xsl:value-of select="."/>
+						<xsl:for-each select="../identifier">
+							<xsl:text> (</xsl:text><xsl:value-of select="."/><xsl:text>)</xsl:text>
+						</xsl:for-each>
+						<xsl:if test="position()!=last()"><br/></xsl:if>
+					</xsl:for-each>
+				</p>
+			</xsl:if>
+			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt//text()">
+				<p><em>Publication:</em></p>
+				<p>
+					<xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:expan"/>
+					<xsl:choose>
+						<xsl:when test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:expan/text()">
+							(<xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:abbr"/>)
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:abbr"/>
+						</xsl:otherwise>
+					</xsl:choose>
+					<br/>
+					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr/@target or text()]">
+						<xsl:choose>
+							<xsl:when test="m:ptr/@target">
+								<xsl:choose>
+									<xsl:when test="m:ptr/text()"><xsl:value-of select="m:ptr/text()"/></xsl:when>
+									<xsl:otherwise><xsl:value-of select="m:ptr/@xl:title"/></xsl:otherwise>
+								</xsl:choose>
+								<xsl:text>: </xsl:text>
+								<xsl:element name="a">
+									<xsl:attribute name="href"><xsl:value-of select="m:ptr/@target"/></xsl:attribute>
+									<xsl:value-of select="m:ptr/@target"/>
+								</xsl:element>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="."/>
+							</xsl:otherwise>
+						</xsl:choose>
+						<br/>
+					</xsl:for-each>
+					<xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:date"/>
+				</p>
+				<p>
+					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName[text()]">
+						<xsl:value-of select="."/>
+						<xsl:if test="@role/text()">(<xsl:value-of select="@role"/>)</xsl:if>
+						<xsl:if test="position()!=last()"><br/></xsl:if>
+					</xsl:for-each>
+				</p>
+			</xsl:if>
+			<xsl:apply-templates select="m:meiHead/m:revisionDesc"/>
+		</div>
+
+		<xsl:for-each select="m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes' and text()]">
+			<div class="private">
+				<div class="private_heading">[Private notes]</div>
+				<div class="private_content"><xsl:apply-templates select="."/></div>
+			</div>
+		</xsl:for-each>
 		
 	</xsl:template>
 	
@@ -552,6 +612,27 @@
 		</xsl:if>
 	</xsl:template>
 	
+	<xsl:template match="m:expression/m:componentGrp">		
+		<xsl:choose>
+			<xsl:when test="count(m:expression)&gt;1">
+				<xsl:element name="ul">
+					<xsl:attribute name="class">movement_list</xsl:attribute>
+					<xsl:if test="count(m:item|m:expression)=1">
+						<xsl:attribute name="class">single_movement</xsl:attribute>
+					</xsl:if>
+					<xsl:for-each select="m:expression">
+						<li>
+							<xsl:apply-templates select="."/>
+						</li>
+					</xsl:for-each>
+				</xsl:element>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:apply-templates select="m:expression"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>	
+	
 	<xsl:template match="m:incip">
 		<xsl:variable name="text_incipit"><xsl:value-of select="m:incipText"/></xsl:variable>
 		<xsl:if test="normalize-space($text_incipit)">
@@ -602,6 +683,12 @@
 				</xsl:choose>
 			</p>
 		</xsl:if>
+		<xsl:for-each select="m:incipCode[text()]">
+			<p>
+				<xsl:if test="@analog"><xsl:value-of select="@analog"/>: </xsl:if>
+				<xsl:value-of select="."/>
+			</p>
+		</xsl:for-each>
 		<xsl:apply-templates select="m:score"/>
 	</xsl:template>
 	
@@ -814,7 +901,6 @@
 			<p>
 				<xsl:for-each select="m:respStmt/m:persName[text()] |
 					m:respStmt/m:corpName[text()]">
-					
 					<xsl:if test="string-length(@role) &gt; 0">
 						<xsl:call-template name="capitalize">
 							<xsl:with-param name="str" select="@role"/>
@@ -830,25 +916,14 @@
 				<xsl:for-each select="m:geogName[text()] | 
 					m:date[text()] |
 					m:identifier[text()]">
-					
 					<xsl:if test="string-length(@type) &gt; 0">
-						<xsl:choose>
-							<xsl:when test="@type = 'plate_no'">
-								<xsl:text>Plate no. </xsl:text>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="@type"/><xsl:text>: </xsl:text>
-							</xsl:otherwise>
-						</xsl:choose>
+						<xsl:value-of select="@type"/><xsl:text>: </xsl:text>
 					</xsl:if>
-					
 					<xsl:value-of select="."/>
-					
 					<xsl:choose>
 						<xsl:when test="position() &lt; last()"><xsl:text>, </xsl:text></xsl:when>
 						<xsl:otherwise><xsl:text>. </xsl:text></xsl:otherwise>
 					</xsl:choose>
-					
 				</xsl:for-each>
 				<xsl:text>
 				</xsl:text>
@@ -888,7 +963,7 @@
 				</xsl:for-each>
 
 				<xsl:call-template name="list_agents"/>
-				
+								
 				<xsl:for-each select="m:classification/m:termList[m:term[text()]]">
 					<div class="classification">
 						<xsl:for-each select="m:term[text()]">
@@ -995,32 +1070,11 @@
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template match="m:itemList|m:expression/m:componentGrp">		
+	<xsl:template match="m:itemList">		
 		<xsl:choose>
-			<xsl:when test="count(m:item|m:expression)&gt;1">
-				<xsl:element name="ul">
-					<xsl:attribute name="class">movement_list</xsl:attribute>
-					<xsl:if test="count(m:item|m:expression)=1">
-						<xsl:attribute name="class">single_movement</xsl:attribute>
-					</xsl:if>
-					<xsl:for-each select="m:item|m:expression">
-						<li>
-							<xsl:apply-templates select="."/>
-						</li>
-					</xsl:for-each>
-				</xsl:element>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:apply-templates select="m:item|m:expression"/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-	
-	<xsl:template match="m:source/m:componentGrp">		
-		<xsl:choose>
-			<xsl:when test="count(m:item|m:expression)&gt;1">
+			<xsl:when test="count(m:item)&gt;1 or m:item/m:titleStmt/m:title/text()">
 				<ul class="item_list">
-					<xsl:for-each select="m:item|m:expression">
+					<xsl:for-each select="m:item">
 						<li>
 							<xsl:apply-templates select="."/>
 						</li>
@@ -1033,7 +1087,32 @@
 		</xsl:choose>
 	</xsl:template>
 	
-	
+
+	<xsl:template match="m:source/m:componentGrp | m:item/m:componentGrp">
+		<xsl:variable name="labels" select="count(m:item[@label!=''])"/>
+		<xsl:choose>
+			<xsl:when test="count(m:item)&gt;1">
+				<table cellpadding="0" cellspacing="0" border="0" class="source_component_list">
+					<xsl:for-each select="m:item">
+						<tr>
+							<xsl:if test="$labels &gt; 0">
+								<td class="label_cell">
+									<xsl:for-each select="@label">
+										<p><xsl:value-of select="."/><xsl:text>: </xsl:text></p>
+									</xsl:for-each>
+								</td>
+							</xsl:if>
+							<td><xsl:apply-templates select="."/></td>
+						</tr>
+					</xsl:for-each>
+				</table>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:apply-templates select="m:item"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+		
 	
 	<xsl:template match="m:physDesc">
 		<xsl:if test="m:dimensions[text()] | m:extent[text()]">
@@ -1060,6 +1139,10 @@
 				<xsl:text>
 				</xsl:text>
 			</p>
+		</xsl:for-each>
+		
+		<xsl:for-each select="m:plateNum[text()]">
+			<p>Plate No. <xsl:apply-templates select="."/>.</p>
 		</xsl:for-each>
 		
 		<xsl:apply-templates select="m:handList[m:hand/@medium!='' or m:hand/text()]"/>

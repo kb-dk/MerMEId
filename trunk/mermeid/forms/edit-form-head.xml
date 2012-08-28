@@ -43,6 +43,11 @@
       id="empty-instance"
       src="/editor/forms/mei/model/empty_doc.xml" 
       xxf:readonly="true"/>
+
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+      id="reduced-template"
+      src="/editor/forms/mei/model/new_file.xml" 
+      xxf:readonly="true"/>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
       id="keywords-instance" 
@@ -89,6 +94,11 @@
       xmlns="http://www.kb.dk/dcm"
       src="/editor/forms/mei/mermeid_configuration.xml"/>
     
+    <xf:instance id="XMLfiles" 
+      xmlns="http://www.kb.dk/dcm">
+      <fileList/>
+    </xf:instance>
+    
     <xf:instance id="temp">
       <temp-values>
         <changed>false</changed>
@@ -125,6 +135,14 @@
       method="put"
       replace="instance">
     </xf:submission>
+
+    <xf:submission id="load-fileList"
+      method="get" 
+      serialization="none" 
+      validate="false"
+      resource="{instance('temp')/target_uri}"
+      replace="instance" 
+      instance="XMLfiles"/>
     
     <!-- "onload" xforms actions -->
     <xf:action ev:event="xforms-model-construct-done">

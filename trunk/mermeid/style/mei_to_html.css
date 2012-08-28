@@ -26,7 +26,8 @@ h1, h2, h3, h4, h5, p {
 }
 
 h3, h4, h5 {
-    margin: .3em 0 0 0;
+    padding: 10px 0 0 0;
+    margin: 0;
 }
 
 h1 {
@@ -119,8 +120,12 @@ ul.single_movement {
     margin: 0;
 }
 
-.alternative_language, .classification, .latest_revision {
+.alternative_language, .classification, .colophon {
     font-size : .9em;
+    color: #888888;
+}
+
+.colophon a:link, .colophon a:visited, .colophon a:active {
     color: #888888;
 }
 
@@ -164,6 +169,15 @@ div.source {
 
 div.source p {
     margin-top : 0px;
+}
+
+table.source_component_list td {
+    vertical-align: top;
+}
+
+table.source_component_list td.label_cell {
+    /* padding-top must match that of H3, H4, H5 for alignment */
+    padding-top: 10px;
 }
 
 /* Styling the series-specific header with the catalogue's name 
