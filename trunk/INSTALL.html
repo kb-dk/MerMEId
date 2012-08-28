@@ -70,18 +70,9 @@
 	    <li><a href="http://exist.sourceforge.net/">eXist-db</a></li>
 	  </ul>
 	</li>
-	<li><a href="http://search.cpan.org/">perl</a></li>
-	<li>
-	  <a href="http://xmlsoft.org/XMLinfo.html">LibXML</a> and 
-	  <a href="http://xmlsoft.org/XSLT.html">LibXSLT</a>
-	  with the corresponding perl modules.
-	</li>
+	<li><a href="http://xerces.apache.org/xerces2-j/">xerces2-j (i.e., the java version)</a></li>
+	<li><a href="http://xml.apache.org/xalan-j/">xalan-j (xslt processor, java version)</a></li>
       </ul>
-
-      <p>All of these packages (except possibly perl XSLT, which isn't available
-      on RedHat) tend to be available on all linux distributions and
-      everything are standard modules available through the Linux
-      distribution.</p>
 
       <p>Software can run on a modest system. We have it on a virtual server
       with 4GB of internal memory. 80GB of hard-disk would be a lot.</p>
@@ -91,9 +82,17 @@
       <h2>2. Installation</h2>
 
       <ol>
-	<li><strong>Unpack and install the MerMEId:</strong> We suggest that you create a
-	directory called <kbd>/home/xml-store</kbd> and unpack it there. There
-	would then appear a directory <kbd>/home/xml-store/editor</kbd>.</li>
+	<li><strong>Unpack and install the MerMEId:</strong> We suggest that
+	you create a directory called <kbd>/home/xml-store</kbd> and unpack it
+	there. There should then appear a the following directories:
+	<pre>
+	  MerMEId/filter/
+	  MerMEId/orbeon/
+	  MerMEId/documents/
+	  MerMEId/mermeid/
+	  MerMEId/xqueries/
+	  MerMEId/transforms/
+	</pre></li>
 
 	<li>
 	  <p>
