@@ -180,16 +180,20 @@ table.source_component_list td.label_cell {
     padding-top: 10px;
 }
 
-/* Styling the series-specific header with the catalogue's name 
+/* Styling the header with the catalogue's name 
    and the works's number in it. 
-   Use the series identifier as the class name. */
-
-.CNW {
-    background-color : #046344;
+   For series specific styling, use the series identifier as a class name. */
+.series_header {
+    /* shared by all series */
+    background-color : #84a48a;
     padding:2px;
     color : white;
     font-weight : bold;
     font-size : 1.5em;
+}
+
+.CNW {
+    background-color : #046344;
 }
 
 /* SPECIAL SYMBOLS */

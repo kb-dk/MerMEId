@@ -133,7 +133,7 @@
 		</xsl:variable>
 		
 		<xsl:if test="m:meiHead/m:altId[@analog=$file_context]/text()">
-			<div class="{$file_context}">
+			<div class="series_header {$file_context}">
 				<a>
 					<xsl:value-of select="$file_context"/>
 					<xsl:text> </xsl:text>

@@ -6,6 +6,7 @@
   xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
   xmlns:ev="http://www.w3.org/2001/xml-events" 
   xmlns:m="http://www.music-encoding.org/ns/mei"
+  xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
   xmlns:dcm="http://www.kb.dk/dcm">
   
   <h:div class="inputdiv">
@@ -187,15 +188,27 @@
     </h:div>
   </xxf:dialog>
   
-  
   <xxf:dialog id="source_reference_dialog" appearance="full">
     <xf:label>External source description</xf:label>
+    <xf:select1 ref="instance('temp')/series" class="mediumshort">
+      <xf:label>Series:</xf:label>
+      <xf:action ev:event="DOMActivate xforms-value-changed">
+        <xf:setvalue ref="instance('temp')/page" value="1"/>
+        <xf:dispatch name="send-query" target="source_search"></xf:dispatch>
+      </xf:action>
+      <xf:item>
+        <xf:label>[ All ]</xf:label>
+        <xf:value/>
+      </xf:item>
+      <xf:itemset nodeset="instance('XMLfiles')/dcm:collections/dcm:collection">
+        <xf:label><xf:output value="."/></xf:label>
+        <xf:value><xf:output value="."/></xf:value>
+      </xf:itemset>
+    </xf:select1> &#160;&#160;&#160;&#160;
     <xf:input ref="instance('temp')/query">
       <xf:label>Keywords <h:a class="help">?<span class="comment search" 
         style="width: 350px">
-        Narrow your search by adding keywords, e.g. series identifier, composer name or part of the title.<h:br/>
-        To filter out a particular series of files, use the series' identifier (e.g. 'CNW' or 'BWV') as 
-        specified on the 'File' tab in MerMEId.<h:br/>
+        Narrow your search by adding keywords, e.g. part of the title.<h:br/>
         Search is case insensitive. 
         Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<br/>
         <span class="help_table">
@@ -220,26 +233,55 @@
             <span class="help_value">Match 1 character. Finds Nielsen and Nielson, but not Nielsson</span>
           </span>
         </span>
-      </span></h:a>
+      </span></h:a>:
       </xf:label>
     </xf:input>
-    <xf:trigger>
+    <xf:trigger id="source_search">
       <xf:label>Search</xf:label>
       <xf:action ev:event="DOMActivate">
+        <xf:setvalue ref="instance('temp')/page" value="1"/>
+      </xf:action>
+      <xf:action ev:event="DOMActivate send-query">
         <xf:setvalue ref="instance('temp')/target_uri" 
-          value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?query=',instance('temp')/query)"/>
+          value="concat(
+          instance('parameters')/dcm:server_name,
+          'storage/cross-link.xq?query=',instance('temp')/query,
+          '&amp;subject=',instance('temp')/series,
+          '&amp;page=',instance('temp')/page)"/>
         <xf:send submission="load-fileList"/>
       </xf:action>
     </xf:trigger>
-    <h:p>Found ?? records</h:p>
-    <h:p>[Navigation here]</h:p>
+    <xxf:variable name="page" select="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
+    <xxf:variable name="max_page" select="floor(instance('XMLfiles')/opensearch:totalResults div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
+    <h:p>Found <xf:output value="instance('XMLfiles')/opensearch:totalResults"/> record(s).
+      <xf:group ref=".[$max_page &gt; 1]">
+        Displaying page <xf:output value="$page"/> of <xf:output value="$max_page"/>.
+      </xf:group>
+      <xf:trigger ref=".[$page &gt; 1]">
+        <xf:label>&lt;&lt;</xf:label>
+        <xf:action ev:event="DOMActivate">
+          <xf:setvalue ref="instance('temp')/page" 
+            value="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)"/>
+          <xf:dispatch name="send-query" target="source_search"></xf:dispatch>
+        </xf:action>
+      </xf:trigger>
+      <xf:trigger ref=".[$page &lt; $max_page]">
+        <xf:label>&gt;&gt;</xf:label>
+        <xf:action ev:event="DOMActivate">
+          <xf:setvalue ref="instance('temp')/page" 
+            value="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)+2"/>
+          <xf:dispatch name="send-query" target="source_search"></xf:dispatch>
+        </xf:action>
+      </xf:trigger>
+    </h:p>
     <h:div class="file_ref_list">
       <xf:repeat nodeset="instance('XMLfiles')/dcm:file" id="repeat-ref-files">
         <h:div>
           <xf:switch>
             <xf:case id="hide_source_refs" selected="true()">
               <xf:trigger appearance="minimal">
-                <xf:label><xf:output value="concat(dcm:composer,': ',dcm:title)"/></xf:label>
+                <xf:label><h:img src="http:/editor/images/expand.png" title="Show sources"/>
+                  <xf:output value="concat(dcm:composer,': ',dcm:title)"/></xf:label>
                 <xf:action ev:event="DOMActivate">
                   <xf:toggle case="show_source_refs"/>
                 </xf:action>
@@ -247,7 +289,8 @@
             </xf:case>
             <xf:case id="show_source_refs">
               <xf:trigger appearance="minimal">
-                <xf:label><xf:output value="concat(dcm:composer,': ',dcm:title)"/></xf:label>
+                <xf:label><h:img src="http:/editor/images/collapse.png" title="Hide sources"/>
+                  <xf:output value="concat(dcm:composer,': ',dcm:title)"/></xf:label>
                 <xf:action ev:event="DOMActivate">
                   <xf:toggle case="hide_source_refs"/>
                 </xf:action>
@@ -255,8 +298,10 @@
               <h:ul>
                 <xf:repeat nodeset="dcm:sources/dcm:source" id="repeat-refs">
                   <h:li>
-                    <xf:trigger appearance="minimal">
-                      <xf:label><xf:output value="dcm:title"/></xf:label>
+                    <xf:trigger appearance="minimal" hint="Add reference to this source and close">
+                      <xf:label>
+                        <xf:output value="dcm:title"/>
+                      </xf:label>
                         <xf:action ev:event="DOMActivate">
                           <xf:insert nodeset="m:source[index('repeat-sources')]" 
                             context="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc" 
@@ -265,13 +310,15 @@
                             value="concat(
                             instance('XMLfiles')/dcm:file[index('repeat-ref-files')]/dcm:link/@href,
                             '#',
-                            instance('XMLfiles')/dcm:file[index('repeat-ref-files')]/dcm:sources/dcm:source[index('repeat-refs')]/@xml:id)"/>
+                            instance('XMLfiles')/dcm:file[index('repeat-ref-files')]/dcm:sources/dcm:source[index('repeat-refs')]/@ref)"/>
                           <xf:setvalue ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[index('repeat-sources')]/@label"
                             value="instance('XMLfiles')/dcm:file[index('repeat-ref-files')]/dcm:sources/dcm:source[index('repeat-refs')]/dcm:title"/>
                           <xf:dispatch name="id-update" target="form-group"/>
                           <xxf:hide dialog="source_reference_dialog"/>
                         </xf:action>
                     </xf:trigger>
+                    <h:a class="help_plain"><h:img src="http:/editor/images/id.png"/><h:span 
+                      class="comment">ID: <xf:output value="../../dcm:link/@href"/>#<xf:output value="@ref"/></h:span></h:a>
                   </h:li>
                 </xf:repeat>
               </h:ul>

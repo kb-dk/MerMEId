@@ -44,7 +44,8 @@
         <xi:include href="includes/relator.xbl" parse="xml"/>
         <xi:include href="includes/id.xbl" parse="xml"/>
         <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
-
+        <xi:include href="includes/create.xbl" parse="xml"/>
+        
     </h:head>
     
     <h:body class="history">
@@ -140,7 +141,8 @@
                             <dcm:attribute-editor ref="m:corpName[@role='ensemble']"/>
                             
                             <h:div class="persname-box">
-                                <h:div class="strong">Persons</h:div>
+                                <h:div class="vertical_spacer"/>
+                                <h:div class="blocklabel strong">Persons</h:div>
                                 <h:div class="blocklabel">
                                     <h:span class="fixed_width_long">Name</h:span>
                                     <h:div class="horiz_spacer"/>
@@ -162,12 +164,14 @@
                             
                             <xf:select1 ref="@evidence" class="maxlong">
                                 <xf:label class="fixed_width">Evidence <h:a class="help">?<h:span class="comment">Pointer to a bibliographic 
-                                    reference serving as main evidence for this performance.</h:span></h:a> </xf:label>
+                                    reference serving as main evidence for this performance.<h:br/>
+                                    Go to the "Bibliography" tab to add references to the list.
+                                </h:span></h:a> </xf:label>
                                 <xf:item>
                                     <xf:label/>
                                     <xf:value/>
                                 </xf:item>
-                                <xf:itemset nodeset="/m:mei/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl/t:bibl">
+                                <xf:itemset nodeset="/m:mei/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl/t:bibl[*//text()]">
                                     <xf:label><xf:output value="concat('[',translate(@type,'_',' '),'] ', t:author,': ',t:name[@role='recipient'],' ',t:title[@level='a'],' ',t:title[@level='j'],' ',t:title[@level='m'],' ',t:date)"/></xf:label>
                                     <xf:value ref="@xml:id"/>
                                 </xf:itemset>
@@ -176,11 +180,33 @@
 
 
                             <h:div class="reviews-box">
+                                <h:div class="vertical_spacer"/>
+                                <dcm:create ref="t:listBibl[@type='reviews']"
+                                    nodeset="t:bibl"
+                                    label="Add review"
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']/t:bibl[1]"/>
+                                <dcm:create nodeset="t:listBibl[@type='reviews']"
+                                    label="Add review"
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']"/>
                                 <xf:repeat nodeset="t:listBibl[@type='reviews']/t:bibl" id="repeat-review">
                                     <h:fieldset>
-                                        <h:legend>Review <dcm:element-buttons triggers="all" nodeset="t:bibl"
+                                        <h:legend>Review <dcm:element-buttons triggers="up down copy add" nodeset="t:bibl"
                                             index="repeat-review"
                                             origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']/t:bibl[1]"/>
+                                            <xf:trigger appearance="minimal" class="non-standard_button">
+                                                <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                                                <xf:action ref=".[count(../t:bibl)=1]" 
+                                                    ev:event="DOMActivate">
+                                                    <xf:delete ev:event="DOMActivate" nodeset="../../t:listBibl[@type='reviews']"/>
+                                                    <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                                                </xf:action>
+                                                <xf:action ref=".[count(../t:bibl)&gt;1]" 
+                                                    ev:event="DOMActivate">
+                                                    <xf:delete ev:event="DOMActivate" nodeset="."
+                                                        at="index('repeat-review')"/>
+                                                    <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                                                </xf:action>
+                                            </xf:trigger>                                            
                                             <dcm:id ref="."/>
                                             <dcm:attribute-editor ref="."/>
                                         </h:legend>

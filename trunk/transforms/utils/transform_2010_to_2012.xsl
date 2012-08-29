@@ -303,6 +303,7 @@
 
 
     <xsl:template match="m:repository/m:identifier">
+        <!-- Some CNW-specfic cleaning going on here; should do no harm in other contexts -->
         <xsl:apply-templates select="@*"/>
         <xsl:choose>
             <xsl:when test="contains(.,'[')">
@@ -553,7 +554,16 @@
             <xsl:if test="not(@type)">
                 <xsl:attribute name="type">secondary</xsl:attribute>
             </xsl:if>
-            <xsl:apply-templates select="@*|*"/>
+            <xsl:apply-templates select="@*"/>
+            <xsl:choose>
+                <!-- skip empty refs, but keep at least one for validity -->
+                <xsl:when test="count(t:bibl[*//text()])&gt;0">
+                    <xsl:apply-templates select="t:bibl[*//text()]"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="t:bibl[1]"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </listBibl>
     </xsl:template>
     
@@ -686,21 +696,6 @@
                                     <persName role="soloist"/>                                    
                                     <persName role=""/>
                                     <bibl label="documentation"/>
-                                    <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0">
-                                        <bibl type="Journal_article">
-                                            <author/>
-                                            <date/>
-                                            <title level="a"/>
-                                            <title level="j"/>
-                                            <editor/>
-                                            <biblScope type="vol"/>
-                                            <biblScope type="issue"/>
-                                            <biblScope type="pp"/>
-                                            <pubPlace/>
-                                            <publisher/>
-                                            <ref/>
-                                        </bibl>
-                                    </listBibl>
                                 </event>
                             </eventList>
                         </history>
@@ -842,14 +837,16 @@
     <xsl:template match="m:profiledesc/m:eventlist/m:event">
         <event>
             <xsl:apply-templates select="*[name(.)!='bibl']"/>
-            <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0">
-                <xsl:if test="not(@xml:id)">
-                    <xsl:attribute name="xml:id">
-                        <xsl:value-of select="concat('listBibl_',generate-id())"/>
-                    </xsl:attribute>
-                </xsl:if>
-                <xsl:apply-templates select="t:bibl"/>
-            </listBibl>
+            <xsl:if test="t:bibl[*//text()]">
+                <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0">
+                    <xsl:if test="not(@xml:id)">
+                        <xsl:attribute name="xml:id">
+                            <xsl:value-of select="concat('listBibl_',generate-id())"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:apply-templates select="t:bibl"/>
+                </listBibl>
+            </xsl:if>
         </event>
     </xsl:template>
     
@@ -865,6 +862,16 @@
                 <bibl/>
             </listBibl>
         </event>
+    </xsl:template>
+    
+    <xsl:template match="m:event/m:title">
+        <title>
+            <xsl:apply-templates select="@*"/>
+            <!-- The title "Other performance" is removed -->
+            <xsl:if test=".!='Other performance'">
+                <xsl:value-of select="."/>
+            </xsl:if>
+        </title>
     </xsl:template>
     
     <xsl:template match="m:app/m:rdg[@type='metadata']" mode="TempoMeter">
@@ -1150,6 +1157,24 @@
             </xsl:otherwise>
         </xsl:choose>        
     </xsl:template>
+    
+    <xsl:template match="t:repository">
+        <!-- some CNW-specific replacements ... -->
+        <repository xmlns="http://www.tei-c.org/ns/1.0">
+            <xsl:choose>
+                <xsl:when test="contains(.,'DK-K ')">
+                    <xsl:value-of select="concat(substring-after(.,'DK-K '),', Copenhagen')"></xsl:value-of>
+                </xsl:when>
+                <xsl:when test="contains(.,'DK-O ')">
+                    <xsl:value-of select="concat(substring-after(.,'DK-O '),', Odense')"></xsl:value-of>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="."/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </repository>
+    </xsl:template>
+    
     
     <xsl:template match="m:filedesc/m:pubstmt/m:identifier">
         <altId>
