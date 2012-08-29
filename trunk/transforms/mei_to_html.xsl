@@ -16,6 +16,7 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:m="http://www.music-encoding.org/ns/mei" 
 	xmlns:t="http://www.tei-c.org/ns/1.0"
+	xmlns:dcm="http://www.kb.dk/dcm"
 	xmlns:xl="http://www.w3.org/1999/xlink" 
 	xmlns:foo="http://www.kb.dk/foo" 
 	xmlns:exsl="http://exslt.org/common"
@@ -25,12 +26,16 @@
 	
 	<xsl:output 
 		method="xml" 
-		encoding="UTF-8"/>
+		encoding="UTF-8"
+	    omit-xml-declaration="yes"/>
 	<xsl:strip-space elements="*"/>
+	
+	<xsl:param name="hostname"/>
 	
 	<!-- GLOBAL VARIABLES -->
 	<!-- preferred language in titles and other multilingual fields -->
 	<xsl:variable name="preferred_language">none</xsl:variable>
+	<xsl:variable name="settings" select="document(concat('http://',$hostname,'/editor/forms/mei/mermeid_configuration.xml'))" />
 	
 	<!-- CREATE HTML DOCUMENT -->
 	<xsl:template match="m:mei" xml:space="default">
@@ -117,10 +122,10 @@
 	
 	<xsl:template name="make_html_body" xml:space="default">
 		<!-- main identification -->
-		
+
 		<xsl:variable name="file_context">
 			<xsl:value-of 
-				select="//m:seriesStmt/m:identifier[1]"/>
+				select="m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[1]"/>
 		</xsl:variable>
 		
 		<xsl:variable name="catalogue_no">
@@ -439,7 +444,7 @@
 		<xsl:for-each 
 			select="m:meiHead/
 			m:fileDesc/
-			m:sourceDesc[normalize-space(*//text())]">
+			m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']">
 			
 			<xsl:variable name="source_id" 
 				select="concat('source',generate-id(.),position())"/>
@@ -465,8 +470,19 @@
 				</p>
 				
 				<div  id="{$source_id}" style="display:none;" class="folded_content">
-					<xsl:for-each select="m:source[m:titleStmt/m:title/text()]">
-						<xsl:apply-templates select="."/>
+					<xsl:for-each select="m:source">
+						<xsl:choose>
+							<xsl:when test="@target!=''">
+								<!-- get external source description -->
+								<xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
+								<xsl:variable name="doc_name" select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
+								<xsl:variable name="doc" select="document($doc_name)"/>
+								<xsl:apply-templates select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
+							</xsl:when>
+							<xsl:when test="m:titleStmt/m:title/text()">
+								<xsl:apply-templates select="."/>
+							</xsl:when>
+						</xsl:choose>
 					</xsl:for-each>
 				</div>
 				

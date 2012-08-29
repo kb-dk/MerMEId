@@ -48,6 +48,17 @@
                 <!-- external source data -->
                 <xf:output value="@label"/>
                 <xf:group ref=".[normalize-space(@label)='']"> [No description] </xf:group>
+                <xf:trigger appearance="minimal">
+                  <xf:label><h:img src="http:/editor/images/update.png" title="Update title (re-read from external file)"/></xf:label>
+                  <xf:action ev:event="DOMActivate">
+                    <xxf:variable name="source_id" select="substring-after(@target,'#')"/>
+                    <xxf:variable name="doc" select="substring-before(@target,'#')"/>
+                    <xf:setvalue ref="instance('temp')/target_uri" 
+                      value="concat(instance('parameters')/dcm:server_name,instance('parameters')/dcm:document_root,$doc)"/>
+                    <xf:send submission="load-fileList"/>
+                    <xf:setvalue ref="@label" value="instance('XMLfiles')//m:source[@xml:id=$source_id]/m:titleStmt/m:title"/>
+                  </xf:action>
+                </xf:trigger>
               </xf:group>
               &#160;
             </h:td>
@@ -96,23 +107,13 @@
             </h:td>
             <h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy" nodeset="m:source" index="repeat-sources" 
               origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/><xf:trigger 
-                appearance="minimal">
+                appearance="minimal" class="non-standard_button">
                 <xf:label><h:img src="http:/editor/images/add.gif" title="Add source"/></xf:label>
                 <xf:action ev:event="DOMActivate">
                     <xxf:show dialog="add_source_dialog"/>
                   </xf:action>
               </xf:trigger><dcm:element-buttons triggers="remove" nodeset="m:source" index="repeat-sources" 
                 origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/>
-              
-              <!--<xf:trigger
-                appearance="minimal"><xf:label><h:img 
-                  src="http:/editor/images/add_link.png" title="Create source as link to external description after this source"></h:img></xf:label><xf:action 
-                    ev:event="DOMActivate">
-                    <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq')"/>
-                    <xf:send submission="load-fileList"/>
-                    <xxf:show dialog="source_reference_dialog"/>
-                  </xf:action>
-              </xf:trigger>-->
               <dcm:attribute-editor ref="."/>
             </h:td>
           </h:tr>
@@ -129,11 +130,12 @@
   <xxf:dialog id="leave-warning-dialog" appearance="full">
     <!-- The requested URI must be stored in instance('temp')/target_uri prior to opening the dialog -->
     <xf:label>Warning – Editing external source</xf:label>
-    <h:p>Editing an external source means that this file will be closed and another one opened
-      for editing.<h:br/>
+    <h:p>The description of this source is contained in another file.<br/> 
+      Editing an external source means that the present file will be closed and the MEI file containing the <br/>
+      external source one opened for editing instead. Thus, any changes will affect both files. <h:br/>
       Before you continue, make sure you are entitled to make changes in the file you are about to open.<h:br/>
-      If you need to update the title of this source reference after editing, return to this file and 
-      click the "Update" button next to the reference to get the updated title.
+      If you need to update the title of this source reference after editing, return to this file <br/>
+      and click the "Update" button next to the reference to get the updated title.
     </h:p>
     <h:p>Do you want to proceed?</h:p>    
     <xf:trigger>
@@ -159,28 +161,30 @@
   <xxf:dialog id="add_source_dialog">
     <xf:label>Add source</xf:label>
     <h:p>Sources may be added either by entering new data in this file<h:br/>
-    or by linking to an existing source in another file.</h:p>
-    <xf:trigger>
-      <xf:label><h:img src="http:/editor/images/add.gif" title="Add new source"/> Add new source &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</xf:label>
-      <xf:action ev:event="DOMActivate">
-        <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc" 
-          nodeset="m:source[index('repeat-sources')]"
-          origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/>
-        <xf:dispatch name="id-update" target="form-group"/>
-        <xxf:hide dialog="add_source_dialog"></xxf:hide>
-      </xf:action>
-    </xf:trigger>
-    <h:br/>
-    <xf:trigger>
-      <xf:label><h:img src="http:/editor/images/add_link.png" 
-        title="Add source as link to an external description"/> Add link to external source</xf:label>
-      <xf:action ev:event="DOMActivate">
-        <xxf:hide dialog="add_source_dialog"></xxf:hide>
-        <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq')"/>
-        <xf:send submission="load-fileList"/>
-        <xxf:show dialog="source_reference_dialog"/>
-      </xf:action>
-    </xf:trigger> 
+      or by linking to an existing source in another file.</h:p>
+    <h:div style="text-align:center">
+      <xf:trigger class="long">
+        <xf:label><h:img src="http:/editor/images/add.gif" title="Add new source"/> Add new source </xf:label>
+        <xf:action ev:event="DOMActivate">
+          <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc" 
+            nodeset="m:source[index('repeat-sources')]"
+            origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/>
+          <xf:dispatch name="id-update" target="form-group"/>
+          <xxf:hide dialog="add_source_dialog"></xxf:hide>
+        </xf:action>
+      </xf:trigger>
+      <h:br/>
+      <xf:trigger class="long">
+        <xf:label><h:img src="http:/editor/images/add_link.png" 
+          title="Add source as link to an external description"/> Add link to external source</xf:label>
+        <xf:action ev:event="DOMActivate">
+          <xxf:hide dialog="add_source_dialog"></xxf:hide>
+          <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq')"/>
+          <xf:send submission="load-fileList"/>
+          <xxf:show dialog="source_reference_dialog"/>
+        </xf:action>
+      </xf:trigger> 
+    </h:div>
   </xxf:dialog>
   
   
@@ -216,13 +220,14 @@
             <span class="help_value">Match 1 character. Finds Nielsen and Nielson, but not Nielsson</span>
           </span>
         </span>
-      </span>
-      </h:a></xf:label>
+      </span></h:a>
+      </xf:label>
     </xf:input>
     <xf:trigger>
       <xf:label>Search</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?query=',instance('temp')/query)"/>
+        <xf:setvalue ref="instance('temp')/target_uri" 
+          value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?query=',instance('temp')/query)"/>
         <xf:send submission="load-fileList"/>
       </xf:action>
     </xf:trigger>

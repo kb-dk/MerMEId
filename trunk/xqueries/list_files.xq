@@ -39,7 +39,7 @@ declare function app:format-reference(
 	{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']}
 	</td>
 	<td>{app:view-document-reference($doc)}</td>
-	<td nowrap="nowrap">{app:get-edition-and-number($doc)} &#160;</td>
+	<td nowrap="nowrap">{app:get-edition-and-number($doc)} </td>
 	<td>
 	<a target="_blank"
         title="view XML source" 
@@ -59,7 +59,7 @@ declare function app:format-reference(
 declare function app:get-edition-and-number($doc as node() ) as xs:string* {
 
 	let $c := 
-	$doc//m:seriesStmt/m:identifier/string()
+	$doc//m:fileDesc/m:seriesStmt/m:identifier[1]/string()
 	return ($c,$doc//m:meiHead/m:altId[@analog=$c]/string())
 
 };
@@ -70,7 +70,7 @@ declare function app:view-document-reference($doc as node()) as node() {
 	<a  target="_blank"
         title="view" 
         href="/storage/present.xq?doc={util:document-name($doc)}">
-	{$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:title[1]/string()}
+	{$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[1]/string()}
 	</a>
 	return $ref
 };
