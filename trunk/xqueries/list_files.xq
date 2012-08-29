@@ -42,12 +42,12 @@ declare function app:format-reference(
 	<td nowrap="nowrap">{app:get-edition-and-number($doc)} </td>
 	<td>
 	<a target="_blank"
-        title="view XML source" 
+        title="View XML source" 
         href="dcm/{util:document-name($doc)}">
 	<img src="/editor/images/xml.gif" 
 	alt="view source" 
 	border="0"
-        title="view source" />
+        title="View source" />
 	</a>
 	</td>
 	<td>{app:edit-form-reference($doc)}</td>
@@ -68,7 +68,7 @@ declare function app:view-document-reference($doc as node()) as node() {
 	(: Beware: Hard coded reference here!!! :)
 	let $ref := 
 	<a  target="_blank"
-        title="view" 
+        title="View" 
         href="/storage/present.xq?doc={util:document-name($doc)}">
 	{$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[1]/string()}
 	</a>
@@ -85,7 +85,7 @@ declare function app:edit-form-reference($doc as node()) as node() {
 	 edit-work-case.xml :)
 
 	let $ref := 
-	<a  title="edit" 
+	<a  title="Edit" 
         href="/orbeon/xforms-jsp/mei-form/?uri=http://{request:get-header('HOST')}/editor/forms/mei/edit-work-case.xml&amp;doc={util:document-name($doc)}">
 	<img border="0" src="/editor/images/edit.gif" alt="edit" />
 	</a>
@@ -156,7 +156,7 @@ declare function app:navigation(
 	if($from+$number<$total) then
 	(element a {
 			attribute rel   {"next"},
-			attribute title {"next"},
+			attribute title {"Go to next page"},
 			attribute href {
 				fn:string-join((
 						$uri,"?",
@@ -179,7 +179,7 @@ declare function app:navigation(
 	(("&lt; "),
 		element a {
 			attribute rel {"prev"},
-			attribute title {"prev"},
+			attribute title {"Go to previous page"},
 			attribute href {
        				fn:string-join(
 					($uri,"?","page=",$prevpage,$perpage,$collection,$querypart),"")},
@@ -193,7 +193,7 @@ declare function app:navigation(
 	return 
 	(if(not($page = $p)) then
 		element a {
-			attribute title {"Goto page ",xs:string($p)},
+			attribute title {"Go to page ",xs:string($p)},
 			attribute href {
        				fn:string-join(
 					($uri,"?",
@@ -220,7 +220,7 @@ declare function app:navigation(
 					attribute style {"width:70%;text-align:center;"},
 					element p {
 						element strong {
-							$total," hits"
+							$total," files"
 						}
 					},
 					element p {$page_nav}},

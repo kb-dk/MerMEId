@@ -20,7 +20,7 @@
 				</h:div>
 				<xf:repeat nodeset="m:title[@type='main']" id="main_titles" class="input_group">
 					<h:div>
-						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 						<dcm:element-buttons-typed 
 							triggers="all" 
 							nodeset="m:title[@type='main']" 
@@ -34,7 +34,7 @@
 				</h:div>
 				<xf:repeat nodeset="m:title[@type='alternative']" id="alternative_titles" class="input_group">
 					<h:div>
-						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 						<dcm:element-buttons-typed 
 							triggers="all" 
 							nodeset="m:title[@type='alternative']" 
@@ -48,7 +48,7 @@
 				</h:div>
 				<xf:repeat nodeset="m:title[@type='subordinate']" id="subtitles" class="input_group">
 					<h:div>
-						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 						<dcm:element-buttons-typed 
 							triggers="all" 
 							nodeset="m:title[@type='subordinate']" 
@@ -63,7 +63,7 @@
 					</h:div>
 					<xf:repeat nodeset="m:title[@type='uniform']" id="uniform_titles" class="input_group">
 						<h:div>
-							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 							<dcm:element-buttons-typed 
 								triggers="all" 
 								nodeset="m:title[@type='uniform']" 
@@ -80,7 +80,7 @@
 				</h:div>
 				<xf:repeat nodeset="m:title[@type='text_source']" id="text_sources" class="input_group">
 					<h:div>
-						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 						<dcm:element-buttons-typed 
 							triggers="all" 
 							nodeset="m:title[@type='text_source']" 
