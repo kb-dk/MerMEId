@@ -19,6 +19,11 @@ for $doc in collection("/db/dcm")
 where util:document-name($doc)=$document
 return $doc
 
+let $params := 
+<parameters>
+   <param name="hostname" value="{request:get-header('HOST')}"/>
+</parameters>
+
 for $doc in $list
-return transform:transform($doc,xs:anyURI(concat("","http://",request:get-header('HOST'),"/editor/transforms/mei/mei_to_html.xsl")),())
+return transform:transform($doc,xs:anyURI(concat("","http://",request:get-header('HOST'),"/editor/transforms/mei/mei_to_html.xsl")),$params)
  
