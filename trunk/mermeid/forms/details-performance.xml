@@ -65,6 +65,9 @@
                 <h:div style="float:right">
                     <xf:submit submission="save-to-file">
                         <xf:label>Save</xf:label>
+                    </xf:submit>
+                    <xf:submit submission="save-to-file">
+                        <xf:label>Save &amp; close</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:load resource="{$uri}" show="replace"/>
                         </xf:action>
@@ -185,6 +188,23 @@
                                     nodeset="t:bibl"
                                     label="Add review"
                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']/t:bibl[1]"/>
+
+                                <!-- is it possible to place the added listBibl last?
+                                <xf:group ref=".[not(t:listBibl[@type='reviews'])]">
+                                    <xf:trigger>
+                                        <xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add review"/> Add review LAST</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:insert context="." 
+                                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']"
+                                                nodeset="t:listBibl" 
+                                                at="last()" 
+                                                position="after"/>
+                                            <xf:dispatch name="id-update" target="form-group"/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                </xf:group>
+                                -->
+                                
                                 <dcm:create nodeset="t:listBibl[@type='reviews']"
                                     label="Add review"
                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']"/>

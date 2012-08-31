@@ -165,7 +165,18 @@
         <xf:dispatch name="language-update" target="form-group"/>
       </xf:action>
     </xf:submit>
-    
+<!-- test -->
+    <!-- filter ignores anything before the last "/", so this doesn't work yet -->
+    <!--<xf:submit submission="save-to-file" appearance="minimal">
+      <xf:label>SAVE AS TEMPLATE</xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xf:setvalue ref="instance('parameters')/dcm:xml_file" value="concat('templates/',.)"/>
+        <xf:message value="concat(instance('parameters')/dcm:crud_home,instance('parameters')/dcm:xml_file)"/>
+        <xf:dispatch name="language-update" target="form-group"/>
+      </xf:action>
+    </xf:submit>--> 
+<!-- end test -->    
+
     <h:a href="http:/storage/present.xq?doc={instance('parameters')/dcm:xml_file}"
       class="xforms-trigger" target="view_{instance('parameters')/dcm:xml_file}"><h:img 
         src="http:/editor/images/html.gif" alt="HTML" title="View as HTML" border="0"/></h:a>

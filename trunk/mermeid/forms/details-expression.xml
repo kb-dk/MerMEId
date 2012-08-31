@@ -65,6 +65,9 @@
                 <h:div style="float:right">
                     <xf:submit submission="save-to-file">
                         <xf:label>Save</xf:label>
+                    </xf:submit>
+                    <xf:submit submission="save-to-file">
+                        <xf:label>Save &amp; close</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:load resource="{$uri}" show="replace"/>
                         </xf:action>
