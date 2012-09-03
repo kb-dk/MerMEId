@@ -35,7 +35,7 @@
 			</h:fieldset>
 			<h:fieldset>
 				<h:legend>Time line <h:a class="help">?<h:span class="comment">A list of events related to the work. The list
-					may contain all kinds of events, whether related the compositional process, 
+					may contain all kinds of events, whether related to the compositional process, 
 					the work's transmission, its reception or other aspects of its history</h:span></h:a>
 					<dcm:attribute-editor ref="m:eventList[@type='history']"/>
 				</h:legend>
@@ -54,7 +54,7 @@
 								or date span of the event</h:span></h:a></xf:label>
 							<dcm:date-editor ref="."/>
 						</xf:group>
-						<xf:input ref="m:title" class="long">
+						<xf:input ref="m:title" class="maxlong">
 							<xf:label class="fixed_width">Description <h:a class="help">?<h:span class="comment">A description of the 
 								event, e.g. "Third movement finished" or "Arranged for piano by NN"</h:span></h:a></xf:label>
 						</xf:input>

@@ -240,24 +240,24 @@
 			m:work/
 			m:titleStmt/
 			m:respStmt[m:persName]">
-			<xsl:for-each 
-				select="m:persName[@role='dedicatee'][text()]">
-				<p>
-					<xsl:if test="position() = 1">
-						<span class="p_heading">Dedicatee: </span>
-					</xsl:if>
-					<xsl:apply-templates select="."/>
-				</p>
+			<p>
+			<xsl:for-each select="m:persName[text()][@role!='composer']">
+				<xsl:if test="@role and @role!=''">
+					<span class="p_heading">
+						<xsl:choose>
+							<xsl:when test="@role='author'">Text author</xsl:when>
+							<xsl:otherwise>
+								<xsl:call-template name="capitalize">
+									<xsl:with-param name="str" select="@role"/>
+								</xsl:call-template>
+							</xsl:otherwise>
+						</xsl:choose>
+						<xsl:text>: </xsl:text>
+					</span>
+				</xsl:if>
+				<xsl:apply-templates select="."/><br/>
 			</xsl:for-each>
-			<xsl:for-each 
-				select="m:persName[@role='author'][text()]">
-				<p>
-					<xsl:if test="position() = 1">
-						<span class="p_heading">Text author: </span>
-					</xsl:if>
-					<xsl:apply-templates select="."/>
-				</p>
-			</xsl:for-each>
+			</p>
 		</xsl:for-each>
 		
 		<xsl:for-each 
@@ -275,34 +275,16 @@
 					<xsl:for-each select="m:ptr[@target!='']">
 						<xsl:element name="a">
 							<xsl:attribute name="href">
-								<xsl:apply-templates select="@target"/>
+								<xsl:value-of select="@target"/>
 							</xsl:attribute>
 							<xsl:apply-templates select="@xl:title"/>
+							<xsl:if test="not(@xl:title) or @xl:title=''">
+								<xsl:value-of select="@target"/>
+							</xsl:if>
 						</xsl:element>
 					</xsl:for-each>
 				</p>
 			</xsl:for-each>
-		</xsl:for-each>
-		
-		<!-- composition history -->
-		
-		<xsl:for-each 
-			select="m:meiHead/
-			m:workDesc/
-			m:work/
-			m:history">
-			<xsl:for-each select="m:creation/m:date[text()]">
-				<xsl:if test="position()=1">
-					<p><span class="p_heading">
-						Date of composition: 
-					</span>
-						<xsl:apply-templates/>.
-					</p>
-				</xsl:if>
-			</xsl:for-each>		
-			<xsl:for-each select="m:p[text()]">
-				<p><xsl:apply-templates/></p>
-			</xsl:for-each>		
 		</xsl:for-each>
 		
 		
@@ -391,48 +373,80 @@
 		</xsl:for-each>
 		<!-- end top-level expressions (versions) -->
 		
-		<!-- performances -->		
+		<!-- history -->		
 		<xsl:for-each 
 			select="m:meiHead/
 			m:workDesc/
 			m:work/
-			m:history[m:eventList[@type='performances']/m:event[*//text()]]">
+			m:history[m:creation/m:date[text()] or m:p[text()] or m:eventList[@type='history' and m:event[*//text()]]]">
 			
 			<xsl:variable 
-				name="eventdiv_id" 
-				select="concat('event',generate-id(.),position())"/>
+				name="historydiv_id" 
+				select="concat('history',generate-id(.),position())"/>
 			
 			<xsl:text>
 			</xsl:text>
 			<script type="application/javascript"><xsl:text>
-				openness["</xsl:text><xsl:value-of select="$eventdiv_id"/><xsl:text>"]=false;
+				openness["</xsl:text><xsl:value-of select="$historydiv_id"/><xsl:text>"]=false;
 				</xsl:text></script>
 			<xsl:text>
 			</xsl:text>
 			
 			<div class="fold" style="display:block;">
 				<p class="p_heading" 
-					id="p{$eventdiv_id}"
+					id="p{$historydiv_id}"
 					title="Click to open"
-					onclick="toggle('{$eventdiv_id}')">
+					onclick="toggle('{$historydiv_id}')">
 					<img 
-						id="img{$eventdiv_id}"
+						id="img{$historydiv_id}"
 						class="noprint" 
 						style="display:inline" 
 						border="0" 
 						src="/editor/images/plus.png" 
-						alt="+"/> Performances
+						alt="+"/> History
 				</p>				
-				<div class="folded_content" id="{$eventdiv_id}" style="display:none;">
+				<div class="folded_content" id="{$historydiv_id}" style="display:none;">
 					
-					<xsl:for-each select="m:eventList[@type='performances']">
-						<xsl:if test="m:event[m:date/text() | m:title/text()]">
+					<!-- composition history -->
+					<xsl:for-each select="m:creation/m:date[text()]">
+						<xsl:if test="position()=1">
+							<p><span class="p_heading">
+								Date of composition: 
+							</span>
+								<xsl:apply-templates/>.
+							</p>
+						</xsl:if>
+					</xsl:for-each>		
+					<xsl:for-each select="m:p[text()]">
+						<p><xsl:apply-templates/></p>
+					</xsl:for-each>		
+					<xsl:for-each select="m:eventList[@type='history' and m:event[m:date/text() | m:title/text()]]">
+						<table>
+							<xsl:for-each select="m:event[m:date/text() | m:title/text()]">
+								<tr>
+									<td nowrap="nowrap">
+										<xsl:apply-templates select="m:date"/>
+									</td>
+									<td>
+										<xsl:apply-templates select="m:title"/>
+									</td>
+								</tr>
+							</xsl:for-each>
+						</table>
+					</xsl:for-each>
+					
+					<!-- performances -->
+					<xsl:for-each 
+						select="m:eventList[@type='performances' and m:event//text()]">
+						<div class="fold" style="display:block;">
+							<p class="p_heading">Performances</p>				
 							<table>
 								<xsl:for-each select="m:event[m:date/text() | m:title/text()]">
 									<xsl:apply-templates select="." mode="performance_details"/>
 								</xsl:for-each>
 							</table>
-						</xsl:if>
+							
+						</div>
 					</xsl:for-each>
 					
 				</div>
@@ -440,7 +454,8 @@
 			
 		</xsl:for-each>
 		
-		<!-- list sources -->
+		
+		<!-- sources -->
 		<xsl:for-each 
 			select="m:meiHead/
 			m:fileDesc/
@@ -1793,32 +1808,32 @@
 			<!-- accidentals -->
 			<foo:search>
 				<foo:find>[flat]</foo:find>
-				<foo:replace><span class="accidental">&#x266d;</span></foo:replace>
+				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="accidental">&#x266d;</span></foo:replace>
 			</foo:search>
 			<foo:search>
 				<foo:find>[sharp]</foo:find>
-				<foo:replace><span class="accidental">&#x266f;</span></foo:replace>
+				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="accidental">&#x266f;</span></foo:replace>
 			</foo:search>
 			<foo:search>
 				<foo:find>[dblflat]</foo:find>
-				<foo:replace><span class="accidental">&#x266d;&#x266d;</span></foo:replace>
+				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="accidental">&#x266d;&#x266d;</span></foo:replace>
 			</foo:search>
 			<foo:search>
 				<foo:find>[dblsharp]</foo:find>
-				<foo:replace><span class="accidental">x</span></foo:replace>
+				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="accidental">x</span></foo:replace>
 			</foo:search>
 			<foo:search>
 				<foo:find>[natural]</foo:find>
-				<foo:replace><span class="accidental">&#x266e;</span></foo:replace>
+				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="accidental">&#x266e;</span></foo:replace>
 			</foo:search>
 			<!-- time signatures -->
 			<foo:search>
 				<foo:find>[common]</foo:find>
-				<foo:replace><span class="timesig">c</span></foo:replace>
+				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="timesig">c</span></foo:replace>
 			</foo:search>
 			<foo:search>
 				<foo:find>[cut]</foo:find>
-				<foo:replace><span class="timesig">C</span></foo:replace>
+				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="timesig">C</span></foo:replace>
 			</foo:search>
 		</foo:string_replacement>
 	</xsl:param>
@@ -2011,8 +2026,9 @@
 					select="$replacements//foo:search[$search]/foo:replace/*"/>
 			</xsl:call-template>
 		</xsl:variable>
+		
 		<xsl:choose>
-			<xsl:when test="$search &lt; count(document($replacements)//foo:search)">
+			<xsl:when test="$search &lt; count($replacements//foo:search)">
 				<xsl:call-template name="replace_strings">
 					<xsl:with-param name="input_text" select="$replaced_text"/>
 					<xsl:with-param name="search" select="$search + 1"/>
@@ -2031,7 +2047,13 @@
 		<xsl:param name="replace"/>
 		<xsl:choose>
 			<xsl:when test="contains($input_text, $find)">
-				<xsl:value-of select="substring-before($input_text, $find)"/>
+				<xsl:copy-of select="substring-before($input_text, $find)"/>
+				<!-- NOTE: value-of in the following line instead of copy-of unfortunately 
+					strips off the replacement's <span> element - on the other hand, copy-of only works 
+					correctly with the last replacement, probably because
+					of the handling as string.  
+					/atge
+				-->
 				<xsl:value-of select="$replace"/>
 				<xsl:call-template name="string_replace">
 					<xsl:with-param name="input_text" 
