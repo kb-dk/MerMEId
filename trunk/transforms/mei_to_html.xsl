@@ -518,6 +518,12 @@
 			<br/>
 			<hr/>
 			<br/>
+			<xsl:if test="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()]">
+				<p><em>Title:</em><br/></p> 
+				<p>
+					<xsl:value-of select="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()][1]"/>
+				</p>
+			</xsl:if>
 			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt//text()">
 				<p><em>Series:</em><br/></p> 
 				<p>
@@ -1073,7 +1079,7 @@
 								</xsl:choose>
 							</xsl:for-each>
 							
-							<xsl:for-each select="m:identifier[text() and @analog!='']">
+							<xsl:for-each select="m:identifier[text()]">
 								<xsl:if test="position()&gt;1"><br/></xsl:if>
 								<xsl:apply-templates select="@analog"/><xsl:text> </xsl:text>
 								<xsl:apply-templates select="."/>.
@@ -1095,8 +1101,26 @@
 						</xsl:for-each>
 					</div>
 				</xsl:for-each>
-				
+								
 				<xsl:apply-templates select="m:componentGrp|m:itemList"/>
+				
+				<xsl:if test="m:identifier[text()]">
+					<div>
+						<xsl:for-each select="m:identifier[text()]">
+							<xsl:if test="position()&gt;1"><br/></xsl:if>
+							<xsl:apply-templates select="@analog"/><xsl:text> </xsl:text>
+							<xsl:choose>
+								<!-- some CNW-specific styling here -->
+								<xsl:when test="@analog='CNU Source'">
+									<b><xsl:apply-templates select="."/></b>.
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:apply-templates select="."/>.
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:for-each>
+					</div>
+				</xsl:if>
 				
 			</div>
 		</xsl:if>

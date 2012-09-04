@@ -318,7 +318,40 @@
                         </h:fieldset>
                         <!-- End source classification -->
                         
+                        <!-- identifiers -->
+                        <h:fieldset>
+                            <h:legend>Identification <h:a class="help">?<h:span class="comment">Identifiers other than the repository's own shelf mark, 
+                                e.g. RISM identifiers or other catalogue numbers identifying this specific item<h:br/>
+                                With manuscripts, RISM identifiers should be given at 
+                                item level (below).<h:br/>
+                                A source's shelf mark within an archive should not be entered here; place it  
+                                in the "Location" section at item level (below) instead. 
+                            </h:span></h:a></h:legend>
+                            <dcm:create
+                                nodeset="m:identifier"
+                                label="Add identifier"
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
+                            <xf:repeat nodeset="m:identifier" id="repeat-source-identifier">
+                                <xf:input ref="@analog" class="mediumshort">
+                                    <xf:label class="fixed_width">List name <h:a class="help">?<h:span 
+                                        class="comment">The name of the catalogue or list identifying this 
+                                        specific item, e.g. "RISM"</h:span></h:a></xf:label>
+                                </xf:input>
+                                <xf:input ref="." class="mediumlong">
+                                    <xf:label> No. <h:a class="help">?<h:span class="comment">The number 
+                                        identifying this particular source in the list, e.g. "B 1234"</h:span></h:a></xf:label>
+                                </xf:input>
+                                <dcm:element-buttons 
+                                    triggers="add remove" 
+                                    nodeset="m:identifier" 
+                                    index="repeat-source-identifier"
+                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
+                                <dcm:attribute-editor ref="."/>
+                                <h:br clear="all"/>
+                            </xf:repeat>
+                        </h:fieldset>
                         
+                        <!-- contributors -->
                         <h:fieldset>
                             <h:legend>Contributors <h:a class="help">?<h:span class="comment">Lists persons other than the composer or a scribe, 
                                 contributing to the intellectual contents of this source, e.g. an arranger or editor; 
@@ -562,19 +595,6 @@
                                         <h:a class="help">?<h:span class="comment">This field may be used for manuscript datings also.</h:span></h:a>
                                     </xf:label>
                                 </dcm:date-editor>
-                                <dcm:create
-                                    nodeset="m:identifier[@analog='RISM']"
-                                    label="Add RISM identifier (prints)"
-                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:identifier[@analog='RISM']"/>
-                                <xf:group ref="m:identifier[@analog='RISM']">
-                                    <xf:input ref="." class="mediumlong">
-                                        <xf:label class="fixed_width">RISM no. <h:a class="help">?<h:span class="comment">Use with  
-                                            prints only. With manuscripts, the RISM identifier should be given as part of a 
-                                            specific item's location information (below).</h:span></h:a></xf:label>
-                                    </xf:input>
-                                    <dcm:attribute-editor ref="."/>
-                                    <h:br clear="all"/>
-                                </xf:group>
                             </xf:repeat>
                         </h:fieldset>
                         

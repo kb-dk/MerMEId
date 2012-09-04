@@ -38,8 +38,11 @@
     <xsl:template match="m:filedesc">
         <fileDesc>
             <titleStmt>
-                <!-- titles are moved to <work> -->
-                <title/>
+                <!-- titles are moved to <work>; a copy of the first non-empty title is kept here, though -->
+                <xsl:element name="title">
+                    <xsl:attribute name="xml:lang"><xsl:value-of select="m:titlestmt/m:title[text()][1]/@xml:lang"></xsl:value-of></xsl:attribute>
+                    <xsl:value-of select="m:titlestmt/m:title[text()][1]"/>
+                </xsl:element>
             </titleStmt>
             <xsl:apply-templates select="m:pubstmt"/>
             <seriesStmt>
@@ -81,6 +84,8 @@
             <!-- work identifiers moved to <altId> -->
             <xsl:apply-templates select="*[name(.)!='identifier']"/>
             <availability>
+                <acqSource/>
+                <accessRestrict/> 
                 <useRestrict/>
             </availability>
         </pubStmt>
@@ -89,9 +94,6 @@
     <xsl:template match="m:pubstmt">
         <pubStmt>
             <xsl:apply-templates/>
-            <xsl:if test="name(..)='source'">
-                <identifier analog="RISM"/>
-            </xsl:if>
         </pubStmt>
     </xsl:template>   
     
@@ -145,7 +147,7 @@
     </xsl:template>   
         
     <xsl:template match="m:availability">
-        <!-- caution: <availability> is deleted! -->
+        <!-- caution: <availability> is overwritten! -->
     </xsl:template>   
 
     <xsl:template match="m:persname|t:persName">
@@ -232,6 +234,36 @@
         <source>
             <xsl:attribute name="analog">frbr:manifestation</xsl:attribute>
             <xsl:attribute name="xml:id"><xsl:value-of select="$source_id"/></xsl:attribute>
+            <xsl:for-each select="m:physdesc/m:physloc/m:repository/m:identifier[contains(.,'[')]">
+                <!-- put "CNU source xxx" identifiers here -->
+                <!-- cut out CNU Source references in [] (like "[CNU Source A]") and put them into their own <identifier> -->
+                <xsl:variable name="remainingString">
+                    <xsl:value-of select="substring-before(substring-after(.,'['),']')"/>
+                </xsl:variable>
+                <xsl:if test="$remainingString!=''">
+                    <identifier>
+                        <xsl:choose>
+                            <xsl:when test="contains($remainingString,'ource')">
+                                <xsl:attribute name="analog"><xsl:value-of
+                                    select="substring-before($remainingString,'ource')"/>ource</xsl:attribute>
+                                <xsl:variable name="identifier" select="normalize-space(substring-after($remainingString,'ource'))"/>
+                                <xsl:choose>
+                                    <xsl:when test="contains($identifier,'&lt;b&gt;')">
+                                        <xsl:value-of select="substring-before(substring-after($identifier,'&lt;b&gt;'),'&lt;/b&gt;')"></xsl:value-of>
+                                    </xsl:when>
+                                    <xsl:otherwise><xsl:value-of select="$identifier"></xsl:value-of></xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="substring-before($remainingString,']')"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </identifier>
+                </xsl:if>
+            </xsl:for-each>
+            <xsl:if test="count(m:physdesc/m:physloc/m:repository/m:identifier[contains(.,'[')])=0">
+                <identifier/>
+            </xsl:if>
             <xsl:apply-templates select="@*|m:titlestmt|m:pubstmt[1]"/> <!-- only put the first pubStmt here -->
             <physDesc>
                 <!-- <physloc>, <provenance> and <handlist> are moved to <item> -->
@@ -242,6 +274,7 @@
             <!-- add item level -->
             <itemList>
                 <item> 
+                    <identifier/>
                     <titleStmt>
                         <title/>
                     </titleStmt>
@@ -281,6 +314,7 @@
     <xsl:template match="m:pubstmt" mode="reprints">
         <xsl:param name="source_id"/>
         <source analog="frbr:manifestation">
+            <identifier/>
             <titleStmt>
                 <title/>
                 <respStmt>
@@ -315,23 +349,6 @@
                 <identifier>
                     <xsl:value-of select="normalize-space(substring-before(.,'['))"/>
                 </identifier>
-                <xsl:variable name="remainingString">
-                    <xsl:value-of select="substring-before(substring-after(.,'['),']')"/>
-                </xsl:variable>
-                <xsl:if test="$remainingString!=''">
-                    <identifier>
-                        <xsl:choose>
-                            <xsl:when test="contains($remainingString,'ource')">
-                                <xsl:attribute name="analog"><xsl:value-of
-                                        select="substring-before($remainingString,'ource')"/>ource</xsl:attribute>
-                                <xsl:value-of select="normalize-space(substring-after($remainingString,'ource'))"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="substring-before($remainingString,']')"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </identifier>
-                </xsl:if>
             </xsl:when>
             <xsl:otherwise>
                 <identifier>
@@ -339,7 +356,6 @@
                 </identifier>
             </xsl:otherwise>
         </xsl:choose>
-        <identifier analog="RISM"/>
     </xsl:template>
     
     <xsl:template match="m:provenance/m:eventlist/m:event">

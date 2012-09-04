@@ -81,11 +81,44 @@
                     
                     <xf:group ref="$binding">
                         <xf:input ref="m:titleStmt/m:title" class="maxlong">
-                            <xf:label>Short description <h:a class="help">?<h:span 
+                            <xf:label class="fixed_width">Short description <h:a class="help">?<h:span 
                                 class="comment">An optional heading identifying the item</h:span></h:a>
                             </xf:label>
                         </xf:input>
                         <dcm:attribute-editor ref="m:titleStmt/m:title"/>
+                        
+                        <!-- identifiers -->
+                        <h:span class="blocklabel strong">Identification <h:a class="help">?<h:span 
+                            class="comment">Identifiers other than the repository's own shelf mark, 
+                            e.g. RISM identifiers or other catalogue numbers identifying this specific item<h:br/>
+                                With prints, RISM identifiers should be given at general 
+                                source level (above).
+                            </h:span></h:a></h:span>
+                            <dcm:create
+                                nodeset="m:identifier"
+                                label="Add identifier"
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
+                            <xf:repeat nodeset="m:identifier" id="repeat-item-identifier">
+                                <xf:input ref="@analog" class="mediumshort">
+                                    <xf:label class="fixed_width">List name <h:a class="help">?<h:span 
+                                        class="comment">The name of the catalogue or list identifying this 
+                                        specific item, e.g. "RISM" (but please note that RISM identifiers 
+                                        of printed sources should be entered at 
+                                        source level (above) rather than on individual copies)</h:span></h:a></xf:label>
+                                </xf:input>
+                                <xf:input ref="." class="mediumlong">
+                                    <xf:label> No. <h:a class="help">?<h:span class="comment">The number 
+                                        identifying this particular source in the list, e.g. "A/II 1234"</h:span></h:a></xf:label>
+                                </xf:input>
+                                <dcm:element-buttons 
+                                    triggers="add remove" 
+                                    nodeset="m:identifier" 
+                                    index="repeat-item-identifier"
+                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
+                                <dcm:attribute-editor ref="."/>
+                                <h:br clear="all"/>
+                            </xf:repeat>
+                        
                         
                         <xf:group ref="m:physDesc/m:physLoc">
                             <h:hr/>
@@ -94,7 +127,7 @@
                                 <xf:input ref="m:corpName" class="mediumlong">
                                     <xf:label class="fixed_width">Repository  
                                         <h:a class="help">?<h:span class="comment">The library, archive or
-                                            other repository holding this item, e.g. "DK-Kk"</h:span></h:a>
+                                            other repository holding this item, e.g. "DK-Kk" or "State Archive, Copenhagen"</h:span></h:a>
                                     </xf:label>
                                 </xf:input>
                                 <dcm:attribute-editor ref="m:corpName"/>
@@ -150,6 +183,7 @@
                                         <dcm:attribute-editor ref="."/>
                                     </h:div>
                                 </xf:repeat>
+                                <!--
                                 <xf:group ref="m:identifier[normalize-space(@analog)]">
                                     <h:span class="blocklabel">Other identifiers <h:a class="help">?<h:span 
                                         class="comment">Other identifiers than the repository's own shelf mark, 
@@ -174,7 +208,7 @@
                                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:identifier[@analog][1]"/>
                                     <dcm:attribute-editor ref="."/>
                                     <h:br clear="all"/>
-                                </xf:repeat>
+                                </xf:repeat>-->
                             </xf:repeat>
                         </xf:group>
                         
