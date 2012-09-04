@@ -11,6 +11,7 @@
       </titleStmt>
       <pubStmt>
         <respStmt xml:id="">
+          <resp>Publisher</resp>
           <corpName authURI="http://www.kb.dk/dcm" xml:id="">
             <abbr>DCM</abbr>
             <expan>Danish Centre for Music Publication</expan>
@@ -26,15 +27,13 @@
           <persName role="editor" xml:id=""/>
         </respStmt>
         <date reg="" notbefore="" notafter=""/>
-        <identifier type="" xml:id=""/>
         <availability>
-          <acqSource/>
-          <accessRestrict/> 
+          <useRestrict/> 
         </availability>
       </pubStmt>      
       <seriesStmt>
         <title xml:id=""/>
-        <identifier xml:id=""/>
+        <identifier type="file_collection" xml:id=""/>
       </seriesStmt>
       <notesStmt>
         <annot type="bibliography" xml:id=""/>        
@@ -101,7 +100,7 @@
         </application>
       </appInfo>
       <projectDesc xml:id="">
-        <p>Created using MerMEId v.0.9</p>
+        <p>Created using MerMEId</p>
       </projectDesc>
     </encodingDesc>
     
@@ -180,16 +179,6 @@
                 <geogName xml:id=""/>            
               </creation>
               <p/>
-              <eventList type="history" xml:id="">
-                <event xml:id="">
-                  <title xml:id=""/>
-                  <date reg="" notbefore="" notafter=""/>
-                  <geogName role="" xml:id=""/>
-                  <corpName role="" xml:id=""/>
-                  <persName role="" xml:id=""/>
-                  <bibl label="documentation" xml:id=""/>
-                </event>
-              </eventList>
               <eventList type="performances" xml:id="">
                 <event xml:id="">
                   <title xml:id=""/>
@@ -199,7 +188,6 @@
                   <corpName role="ensemble" xml:id=""/>
                   <persName role="conductor" xml:id=""/>
                   <persName role="soloist" xml:id=""><ref target=""/></persName>
-                  <bibl label="documentation" xml:id=""/>
                 </event>
               </eventList>
             </history>

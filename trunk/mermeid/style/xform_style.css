@@ -322,6 +322,10 @@ label {
     font-weight: bold;
 }
 
+span.no_margin {
+    margin: 0px;
+    padding: 0px;
+}
 /* css for emulating <xforms:select1 selection="open"> */
 span.selection_open,
 span.selection_open_short {
@@ -507,7 +511,7 @@ a.help_plain {
 }
 
 a.help_plain img {
-    margin-bottom: -3px;
+    margin-bottom: -8px;
 }
 
 a.help span.comment, a.help_plain span.comment, 

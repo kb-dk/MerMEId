@@ -20,6 +20,7 @@
       </titleStmt>
       <pubStmt>
         <respStmt xml:id="">
+          <resp>Publisher</resp>
           <corpName authURI="http://www.kb.dk/dcm" xml:id="">
             <abbr/>
             <expan/>
@@ -32,15 +33,15 @@
           <persName role="editor" xml:id=""/>
         </respStmt>
         <date reg="" notbefore="" notafter=""/>
-        <identifier type="" xml:id=""/>
         <availability>
           <acqSource/>
           <accessRestrict/> 
+          <useRestrict/>
         </availability>
       </pubStmt>      
       <seriesStmt>
         <title xml:id=""/>
-        <identifier xml:id=""/>
+        <identifier type="file_collection" xml:id=""/>
       </seriesStmt>
       <notesStmt>
         <annot type="bibliography" xml:id="">
@@ -261,10 +262,6 @@
             <event evidence="" xml:id="">
               <title xml:id=""/>
               <date reg="" notbefore="" notafter=""/>
-              <geogName role="place" xml:id=""/>
-              <corpName role="" xml:id=""/>
-              <persName role="" xml:id=""/>
-              <bibl label="documentation" xml:id=""/>
             </event>
           </eventList>
           <eventList type="performances" xml:id="">
@@ -276,7 +273,6 @@
               <corpName role="ensemble" xml:id=""/>
               <persName role="conductor" xml:id=""/>
               <persName role="soloist" xml:id=""><ref target=""/></persName>
-              <bibl label="documentation" xml:id=""/>
               <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0" xml:id="">
                 <bibl type="Journal_article" xml:id="">
                   <author/>

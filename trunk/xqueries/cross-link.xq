@@ -39,7 +39,7 @@ declare function app:format-doc($doc  as node()) as node() {
     let $ref   := 
     <file>
         <series>{$doc/m:meiHead/m:fileDesc/m:seriesStmt/m:title/text()}</series>
-        <seriesId>{$doc/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier/text()}</seriesId>
+        <seriesId>{$doc/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/text()}</seriesId>
         <composer>{$doc/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}</composer>
         <title>{$doc/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[text()][1]/text()}</title>
 	<link 
@@ -83,7 +83,7 @@ declare function app:opensearch-header($total as xs:integer,
 		$coll),
      <collections>
 	{
-          for $c in distinct-values(collection("/db/dcm")//m:seriesStmt/m:identifier[string()]/string())
+          for $c in distinct-values(collection("/db/dcm")//m:seriesStmt/m:identifier[@type="file_collection"][string()]/string())
              return
 		<collection>{$c}</collection>
 	}

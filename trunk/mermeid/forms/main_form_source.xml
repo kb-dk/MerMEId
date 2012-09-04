@@ -15,16 +15,10 @@
       <h:legend>Sources</h:legend>
       <h:br/>
       
-      <dcm:create ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc"
-        nodeset="m:source"
-        label="Add new source"
-        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[*]"/>
       <xf:trigger ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc[not(m:source)]">
-        <xf:label><h:img src="http:/editor/images/add_link.png" title="Add link to external source description"></h:img></xf:label>
+        <xf:label><h:img src="http:/editor/images/add.gif" title="Add source"></h:img> Add source</xf:label>
         <xf:action ev:event="DOMActivate">
-            <xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq')"/>
-            <xf:send submission="load-fileList"/>
-            <xxf:show dialog="source_reference_dialog"/>
+            <xxf:show dialog="add_source_dialog"/>
           </xf:action>
       </xf:trigger>
       
@@ -317,8 +311,8 @@
                           <xxf:hide dialog="source_reference_dialog"/>
                         </xf:action>
                     </xf:trigger>
-                    <h:a class="help_plain"><h:img src="http:/editor/images/id.png"/><h:span 
-                      class="comment">ID: <xf:output value="../../dcm:link/@href"/>#<xf:output value="@ref"/></h:span></h:a>
+                    <h:a class="help_plain"><h:img src="http:/editor/images/id.png" style="margin-bottom: -2px;"/><h:span 
+                      class="comment" style="margin-top:0px; margin-left:-10px">ID: <xf:output value="../../dcm:link/@href"/>#<xf:output value="@ref"/></h:span></h:a>
                   </h:li>
                 </xf:repeat>
               </h:ul>

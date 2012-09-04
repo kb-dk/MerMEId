@@ -50,7 +50,7 @@
                     </xsl:if>
                 </title>
                 <!-- put in file context identifiers here (= the MerMEId collection) -->
-                <identifier><xsl:value-of select="normalize-space(//m:encodingdesc/m:projectdesc/m:p/m:list[@n='use'])"/></identifier>
+                <identifier type="file_collection"><xsl:value-of select="normalize-space(//m:encodingdesc/m:projectdesc/m:p/m:list[@n='use'])"/></identifier>
             </seriesStmt>
             <xsl:apply-templates select="m:notesstmt"/>
             <xsl:apply-templates select="m:sourcedesc"/>
@@ -77,8 +77,13 @@
     
     <xsl:template match="m:filedesc/m:pubstmt">
         <pubStmt>
+            <xsl:apply-templates select="@*"/>
+            <resp>Publisher</resp>
             <!-- work identifiers moved to <altId> -->
-            <xsl:apply-templates select="@*|*[name(.)!='identifier']"/>
+            <xsl:apply-templates select="*[name(.)!='identifier']"/>
+            <availability>
+                <useRestrict/>
+            </availability>
         </pubStmt>
     </xsl:template>   
     
@@ -629,9 +634,6 @@
                         <event>
                             <title/>
                             <date/>
-                            <geogName role=""/>
-                            <corpName role=""/>
-                            <persName role=""/>
                         </event>
                     </eventList>
                     <eventList type="performances">
@@ -675,16 +677,6 @@
                                 <geogName/>
                             </creation>
                             <p/>
-                            <eventList type="history">
-                                <event>
-                                    <title/>
-                                    <date/>
-                                    <geogName role=""/>
-                                    <corpName role=""/>
-                                    <persName role=""/>
-                                    <bibl label="documentation"/>
-                                </event>
-                            </eventList>
                             <eventList type="performances">
                                 <event>
                                     <title/>
@@ -695,7 +687,6 @@
                                     <persName role="conductor"/>
                                     <persName role="soloist"/>                                    
                                     <persName role=""/>
-                                    <bibl label="documentation"/>
                                 </event>
                             </eventList>
                         </history>

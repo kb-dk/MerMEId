@@ -55,11 +55,11 @@
           <h:br clear="all"/>
         </xf:repeat>
         <!-- standard references quick-add menu -->
-        <xf:group ref=".[count(instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier])&gt;0]">
+        <xf:group ref=".[count(instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']])&gt;0]">
           <h:hr style="margin:10px 0px;"/>
           <h:div class="blocklabel">Add from this collections's standard references:</h:div>
           <h:br clear="all"/>
-          <xf:repeat nodeset="instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier]" id="std-bibl-repeat">
+          <xf:repeat nodeset="instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']]" id="std-bibl-repeat">
             <xf:repeat nodeset="t:bibl" id="std-bibl-menu-repeat">
               <xf:trigger submission="replace-form-with" appearance="minimal">
                 <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="t:abbr"/></xf:label>
