@@ -125,14 +125,14 @@
 
 		<xsl:variable name="file_context">
 			<xsl:value-of 
-				select="m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[1]"/>
+				select="m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
 		</xsl:variable>
 		
 		<xsl:variable name="catalogue_no">
-			<xsl:value-of select="m:meiHead/m:altId[@analog=$file_context]"/>
+			<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@analog=$file_context]"/>
 		</xsl:variable>
 		
-		<xsl:if test="m:meiHead/m:altId[@analog=$file_context]/text()">
+		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier[@analog=$file_context]/text()">
 			<div class="series_header {$file_context}">
 				<a>
 					<xsl:value-of select="$file_context"/>
@@ -225,9 +225,9 @@
 		</xsl:for-each>
 		
 		<!-- other identifiers -->
-		<xsl:if test="m:meiHead/m:altId">
+		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier/text()">
 			<p>
-				<xsl:for-each select="m:meiHead/m:altId">
+				<xsl:for-each select="m:meiHead/m:workDesc/m:work/m:identifier[text()]">
 					<xsl:value-of 
 						select="concat(@analog,' ',.)"/><xsl:if test="position()&lt;last()"><br/></xsl:if>
 				</xsl:for-each>
@@ -523,8 +523,8 @@
 				<p>
 					<xsl:for-each select="m:meiHead/m:fileDesc/m:seriesStmt/m:title">
 						<xsl:value-of select="."/>
-						<xsl:for-each select="../identifier">
-							<xsl:text> (</xsl:text><xsl:value-of select="."/><xsl:text>)</xsl:text>
+						<xsl:for-each select="../identifier[normalize-space(@type) and @type!='file_collection' and text()]">
+							<br/><xsl:value-of select="@type"/><xsl:text> </xsl:text><xsl:value-of select="."/>
 						</xsl:for-each>
 						<xsl:if test="position()!=last()"><br/></xsl:if>
 					</xsl:for-each>
@@ -1075,7 +1075,7 @@
 							
 							<xsl:for-each select="m:identifier[text() and @analog!='']">
 								<xsl:if test="position()&gt;1"><br/></xsl:if>
-								<xsl:apply-templates select="@analog"/>
+								<xsl:apply-templates select="@analog"/><xsl:text> </xsl:text>
 								<xsl:apply-templates select="."/>.
 							</xsl:for-each>
 						</div>					
@@ -1088,8 +1088,9 @@
 						<xsl:for-each select="m:eventList/m:event[*/text()]">
 							<xsl:apply-templates select="m:title"/>
 							<xsl:for-each select="m:date[text()]">
-								<xsl:text> </xsl:text>
+								<xsl:text> (</xsl:text>
 								<xsl:apply-templates select="."/>
+								<xsl:text>)</xsl:text>
 							</xsl:for-each>.
 						</xsl:for-each>
 					</div>

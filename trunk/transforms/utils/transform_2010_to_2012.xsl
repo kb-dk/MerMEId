@@ -31,7 +31,6 @@
 
     <xsl:template match="m:meihead">
         <meiHead>
-            <xsl:apply-templates select="m:filedesc/m:pubstmt/m:identifier"/>
             <xsl:apply-templates/>
         </meiHead>
     </xsl:template>   
@@ -623,6 +622,7 @@
         <xsl:variable name="num_movements" select="count(//m:music/m:body/m:mdiv/m:score/m:section)"></xsl:variable>
         <workDesc>
             <work analog="frbr:work">
+                <xsl:apply-templates select="//m:meihead/m:filedesc/m:pubstmt/m:identifier"/>
                 <xsl:apply-templates select="//m:meihead/m:filedesc/m:titlestmt"/>
                 <history>
                     <creation>
@@ -1168,10 +1168,10 @@
     
     
     <xsl:template match="m:filedesc/m:pubstmt/m:identifier">
-        <altId>
+        <identifier>
             <xsl:attribute name="analog"><xsl:value-of select="@type"/></xsl:attribute>
             <xsl:value-of select="."/>
-        </altId>
+        </identifier>
     </xsl:template>
 
     <xsl:template match="m:revisiondesc">

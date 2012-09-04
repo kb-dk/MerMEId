@@ -96,23 +96,23 @@
 			<h:legend>Identification</h:legend>
 			<h:div class="blocklabel">
 				<h:span class="fixed_width"> List name <h:a class="help">?<h:span class="comment">Reference to a
-					list or catalogue in which the work is identified (e.g. "opus",
+					list or catalogue in which the work is identified (e.g. "Opus",
 					"CNW", "CNU" etc.)</h:span></h:a></h:span>
 				<h:span class="fixed_width"> No. <h:a class="help">?<h:span class="comment">The work's number and
 					signature in the list identifying it</h:span></h:a>
 				</h:span>
 			</h:div>
 			<xf:repeat
-				nodeset="instance('data-instance')/m:meiHead/m:altId"
-				id="alt-id-repeat">
+				nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:identifier"
+				id="work-id-repeat">
 				<h:div>					
 					<xf:input ref="@analog" class="mediumshort"/>
 					<xf:input ref="." class="mediumshort"/>
 					<dcm:element-buttons 
 						triggers="add delete" 
-						nodeset="m:altId" 
-						index="alt-id-repeat"
-						origin="instance('empty-instance')/m:meiHead/m:altId"/>
+						nodeset="m:identifier" 
+						index="work-id-repeat"
+						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:identifier"/>
 					<dcm:attribute-editor ref="."/>
 				</h:div>
 			</xf:repeat>
