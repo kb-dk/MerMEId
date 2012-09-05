@@ -101,6 +101,29 @@
 				
 				<h:div>
 					<dcm:create
+						nodeset="m:title[@type='original']"
+						label="Add original title"
+						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='original']"/>
+				</h:div>
+				<xf:group ref=".[m:title[@type='original']]">
+					<h:div class="blocklabel">Original title
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+					</h:div>
+				</xf:group>
+				<xf:repeat nodeset="m:title[@type='original']" id="original_titles" class="input_group">
+					<h:div>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
+						<dcm:element-buttons-typed 
+							triggers="up down move copy add remove" 
+							nodeset="m:title[@type='original']" 
+							index="original_titles"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='original']"/>
+						<dcm:attribute-editor ref="."/>
+					</h:div>
+				</xf:repeat>
+
+				<h:div>
+					<dcm:create
 						nodeset="m:title[@type='text_source']"
 						label="Add title of text source"
 						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"/>
@@ -129,13 +152,21 @@
 		<h:fieldset>
 			<h:legend>Identification</h:legend>
 			<h:div class="blocklabel">
-				<h:span class="fixed_width"> List name <h:a class="help">?<h:span class="comment">Reference to a
-					list or catalogue in which the work is identified (e.g. "Opus",
-					"CNW", "CNU" etc.)</h:span></h:a></h:span>
-				<h:span class="fixed_width"> No. <h:a class="help">?<h:span class="comment">The work's number and
+				<h:span class="fixed_width"> List name <h:a class="help">?<h:span class="comment">Name of a
+					list, catalogue or other numbering system in which the work is identified (e.g. "Opus",
+					"CNW", "BWV", "Neue Mozart-Ausgabe" etc.)<h:br/>
+					If the name matches the name of a file collection as defined at the "File" tab, 
+					this identifier will be shown (like "BWV 1063" or "NMA II/3") next to the work's title on the file list; 
+					it will also be used as a header in the HTML preview. 
+				</h:span></h:a></h:span>
+				<h:span class="fixed_width"> No. <h:a class="help">?<h:span class="comment">The work's number or
 					signature in the list identifying it</h:span></h:a>
 				</h:span>
 			</h:div>
+			<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work"
+				nodeset="m:identifier"
+				label="Add identifier"
+				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:identifier"/>
 			<xf:repeat
 				nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:identifier"
 				id="work-id-repeat">
@@ -143,7 +174,7 @@
 					<xf:input ref="@analog" class="mediumshort"/>
 					<xf:input ref="." class="mediumshort"/>
 					<dcm:element-buttons 
-						triggers="add delete" 
+						triggers="add remove" 
 						nodeset="m:identifier" 
 						index="work-id-repeat"
 						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:identifier"/>

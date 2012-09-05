@@ -606,7 +606,12 @@
     
     <xsl:template match="m:langusage">
         <langUsage>
-            <xsl:apply-templates select="*"/>
+            <xsl:for-each select="m:language">
+                <!-- delete unused language declarations except english -->
+                <xsl:if test="@xml:id=//@xml:lang or @xml:id='en'">
+                    <xsl:apply-templates select="."/>
+                </xsl:if>
+            </xsl:for-each>
         </langUsage>
     </xsl:template>   
 
@@ -873,21 +878,7 @@
             </xsl:if>
         </event>
     </xsl:template>
-    
-    <xsl:template match="m:event">
-        <event>
-            <xsl:apply-templates select="@*|*"/>
-            <listBibl type="documentation" xmlns="http://www.tei-c.org/ns/1.0">
-                <xsl:if test="not(@xml:id)">
-                    <xsl:attribute name="xml:id">
-                        <xsl:value-of select="concat('listBibl_',generate-id())"/>
-                    </xsl:attribute>
-                </xsl:if>
-                <bibl/>
-            </listBibl>
-        </event>
-    </xsl:template>
-    
+        
     <xsl:template match="m:event/m:title">
         <title>
             <xsl:apply-templates select="@*"/>

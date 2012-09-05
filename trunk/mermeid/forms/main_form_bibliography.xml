@@ -12,6 +12,14 @@
   
   <h:div class="inputdiv">
     
+    <h:br/>
+    <h:div>
+      <dcm:create ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt" 
+        nodeset="m:annot[@type='bibliography']"
+        label="Add bibliography"
+        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']"/>
+    </h:div>
+    
     <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']">
       
       <!-- reference types menu -->
@@ -79,40 +87,7 @@
         </xf:group>
       </xxf:dialog>
       <!-- end menu -->
-      
-      <h:br/>
-      
-      <!-- trigger adding a primary bibliography -->
-      <xf:trigger ref=".[not(t:listBibl[@type='primary'])]/t:listBibl">
-        <xf:label> Add a primary bibliography</xf:label>
-        <xf:action ev:event="DOMActivate">
-          <xf:insert nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl" at="1" position="before"
-            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='primary']"/>
-          <xf:dispatch name="id-update" target="form-group"/>
-        </xf:action>
-      </xf:trigger>
-      
-      <!-- trigger adding a secondary bibliography -->
-      <xf:trigger ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography'][not(t:listBibl[@type='secondary'])]/t:listBibl">
-        <xf:label> Add a secondary bibliography</xf:label>
-        <xf:action ev:event="DOMActivate">
-          <xf:insert nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl" at="1" position="after"
-            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='secondary']"/>
-          <xf:dispatch name="id-update" target="form-group"/>
-        </xf:action>
-      </xf:trigger>
-      
-      <!-- trigger adding a section for documentary material -->
-      <xf:trigger ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography'][not(t:listBibl[@type='documentation'])]/t:listBibl">
-        <xf:label> Add documentary material</xf:label>
-        <xf:action ev:event="DOMActivate">
-          <xf:insert nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl" at="last()" position="after"
-            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='documentation']"/>
-          <xf:dispatch name="id-update" target="form-group"/>
-        </xf:action>
-      </xf:trigger>
-      
-      
+                  
       <xf:repeat nodeset="t:listBibl" id="repeat-listbibl">
         <h:fieldset>
           <h:legend>
@@ -123,10 +98,10 @@
               origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[1]" 
               index="repeat-listbibl"/>
           </h:legend>
-          <h:br/>
+          <h:div class="vertical_spacer"/>
           <h:span class="blocklabel strong">References</h:span>
           <xf:trigger ref=".[not(t:bibl)]">
-            <xf:label> Add reference</xf:label>
+            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> Add reference</xf:label>
             <xf:action ev:event="DOMActivate">
               <xxf:show dialog="add-ref-dialog"/>
             </xf:action>
@@ -198,6 +173,22 @@
           
         </h:fieldset>
       </xf:repeat>
+      
+      <h:div>
+        <dcm:create nodeset="t:listBibl[@type='primary']"
+          label="Primary bibliography"
+          origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='primary']"/>
+      </h:div>
+      <h:div>
+        <dcm:create nodeset="t:listBibl[@type='secondary']"
+          label="Secondary bibliography"
+          origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='secondary']"/>
+      </h:div>
+      <h:div>
+        <dcm:create nodeset="t:listBibl[@type='documentation']"
+          label="Documentary material"
+          origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='documentation']"/>
+      </h:div>
       
     </xf:group>
     

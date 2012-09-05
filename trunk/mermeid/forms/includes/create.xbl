@@ -51,7 +51,7 @@
                     <xxf:sequence select="xxf:evaluate($nodeset)" xxbl:scope="outer"/>
                 </xxf:variable>
                 <xf:group ref=".[not($exists)]">
-                    <xf:trigger>
+                    <xf:trigger class="create_button">
                         <xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/>
                             <xf:output value="$label"/>
                         </xf:label>
