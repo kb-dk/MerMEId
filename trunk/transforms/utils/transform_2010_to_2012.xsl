@@ -61,13 +61,7 @@
 
     <xsl:template match="m:filedesc/m:titlestmt">
         <titleStmt>
-            <xsl:apply-templates select="m:title[@type='main']"/>
-            <xsl:apply-templates select="m:title[@type='alternative']"/>
-            <title xml:lang="en" type="uniform"/>
-            <title xml:lang="en" type="original"/>
-            <xsl:apply-templates select="*[name(.)='title' and not(@type='main' or @type='alternative')]"/>            
-            <title xml:lang="en" type="text_source"/>
-            <xsl:apply-templates select="*[name(.)!='title']"/>            
+            <xsl:apply-templates/>
         </titleStmt>
     </xsl:template>   
 
@@ -76,6 +70,29 @@
             <xsl:apply-templates/>
         </titleStmt>
     </xsl:template>   
+    
+    <xsl:template match="m:filedesc/m:titlestmt/m:title">
+        <xsl:choose>
+            <xsl:when test="not(normalize-space(.)) and @type!='main'">
+                <!-- delete empty titles except the main title -->
+            </xsl:when>
+            <xsl:otherwise>
+                <title>
+                    <xsl:choose>
+                        <xsl:when test="@type='main'">
+                            <!-- remove the 'main' type attribute -->
+                            <xsl:apply-templates select="@*[name()!='type']"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates select="@*"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:value-of select="."/>
+                </title>    
+            </xsl:otherwise>
+        </xsl:choose>
+        
+    </xsl:template>
     
     <xsl:template match="m:filedesc/m:pubstmt">
         <pubStmt>

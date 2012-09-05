@@ -166,9 +166,9 @@
 			m:work[@analog='frbr:work']/
 			m:titleStmt">
 			
-			<xsl:if test="m:title[@type='main'][text()]">
+			<xsl:if test="m:title[@type='main' or not(@type)][text()]">
 				<h1>
-					<xsl:for-each select="m:title[@type='main'][text()]">
+					<xsl:for-each select="m:title[@type='main' or not(@type)][text()]">
 						<xsl:element name="span">
 							<xsl:call-template name="maybe_print_lang"/>
 							<xsl:apply-templates select="."/>
@@ -1079,11 +1079,6 @@
 								</xsl:choose>
 							</xsl:for-each>
 							
-							<xsl:for-each select="m:identifier[text()]">
-								<xsl:if test="position()&gt;1"><br/></xsl:if>
-								<xsl:apply-templates select="@analog"/><xsl:text> </xsl:text>
-								<xsl:apply-templates select="."/>.
-							</xsl:for-each>
 						</div>					
 					</xsl:for-each>
 				</xsl:for-each>

@@ -18,71 +18,105 @@
 				<h:div class="blocklabel">Main title 
 					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
 				</h:div>
-				<xf:repeat nodeset="m:title[@type='main']" id="main_titles" class="input_group">
+				<xf:repeat nodeset="m:title[@type='main' or not(@type)]" id="main_titles" class="input_group">
 					<h:div>
 						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 						<dcm:element-buttons-typed 
 							triggers="all" 
-							nodeset="m:title[@type='main']" 
+							nodeset="m:title[@type='main' or not(@type)]" 
 							index="main_titles"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='main']"/>
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[1]"/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
-				<h:div class="blocklabel">Alternative title
-					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+				
+				<h:div>
+					<dcm:create
+						nodeset="m:title[@type='alternative']"
+						label="Add alternative title"
+						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='alternative']"/>
 				</h:div>
+				<xf:group ref=".[m:title[@type='alternative']]">
+					<h:div class="blocklabel">Alternative title
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+					</h:div>
+				</xf:group>
 				<xf:repeat nodeset="m:title[@type='alternative']" id="alternative_titles" class="input_group">
 					<h:div>
 						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 						<dcm:element-buttons-typed 
-							triggers="all" 
+							triggers="up down move copy add remove" 
 							nodeset="m:title[@type='alternative']" 
 							index="alternative_titles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='alternative']"/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
-				</xf:repeat>		
-				<h:div class="blocklabel">Subtitle
-					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+				</xf:repeat>	
+				
+				<h:div>
+					<dcm:create
+						nodeset="m:title[@type='subordinate']"
+						label="Add subtitle"
+						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='subordinate']"/>
 				</h:div>
+				<xf:group ref=".[m:title[@type='subordinate']]">
+					<h:div class="blocklabel">Subtitle
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+					</h:div>
+				</xf:group>
 				<xf:repeat nodeset="m:title[@type='subordinate']" id="subtitles" class="input_group">
 					<h:div>
 						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 						<dcm:element-buttons-typed 
-							triggers="all" 
+							triggers="up down move copy add remove" 
 							nodeset="m:title[@type='subordinate']" 
 							index="subtitles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='subordinate']"/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
+				
+				<h:div>
+					<dcm:create
+						nodeset="m:title[@type='uniform']"
+						label="Add uniform title"
+						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"/>
+				</h:div>
 				<xf:group ref=".[m:title[@type='uniform']]">
 					<h:div class="blocklabel">Uniform title
 						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
 					</h:div>
-					<xf:repeat nodeset="m:title[@type='uniform']" id="uniform_titles" class="input_group">
-						<h:div>
-							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
-							<dcm:element-buttons-typed 
-								triggers="all" 
-								nodeset="m:title[@type='uniform']" 
-								index="uniform_titles"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"/>
-							<dcm:attribute-editor ref="."/>
-						</h:div>
-					</xf:repeat>
 				</xf:group>
-				<h:div class="blocklabel">Text source
-					<h:a class="help">?<h:span class="comment">The title of a textual source for a sung or 
-						recited text used in the work, e.g. "Psalm 101"</h:span></h:a>
-					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+				<xf:repeat nodeset="m:title[@type='uniform']" id="uniform_titles" class="input_group">
+					<h:div>
+						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
+						<dcm:element-buttons-typed 
+							triggers="up down move copy add remove" 
+							nodeset="m:title[@type='uniform']" 
+							index="uniform_titles"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"/>
+						<dcm:attribute-editor ref="."/>
+					</h:div>
+				</xf:repeat>
+				
+				<h:div>
+					<dcm:create
+						nodeset="m:title[@type='text_source']"
+						label="Add title of text source"
+						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"/>
 				</h:div>
+				<xf:group ref=".[m:title[@type='text_source']]">
+					<h:div class="blocklabel">Text source
+						<h:a class="help">?<h:span class="comment">The title of a textual source for a sung or 
+							recited text used in the work, e.g. "Psalm 101"</h:span></h:a>
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+					</h:div>
+				</xf:group>
 				<xf:repeat nodeset="m:title[@type='text_source']" id="text_sources" class="input_group">
 					<h:div>
 						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 						<dcm:element-buttons-typed 
-							triggers="all" 
+							triggers="up down move copy add remove" 
 							nodeset="m:title[@type='text_source']" 
 							index="text_sources"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"/>

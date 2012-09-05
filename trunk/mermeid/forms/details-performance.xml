@@ -48,7 +48,7 @@
         
     </h:head>
     
-    <h:body class="history">
+    <h:body class="history" onload="initialize();">
         
         <xf:group id="form-group">
             
@@ -61,6 +61,16 @@
                 instance('parameters')/dcm:xml_file)"/>
             
             <h:div class="inputdiv">
+                
+                <xf:group id="editing_status"
+                    ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[normalize-space(.)][1]">
+                    <xf:output value="concat(substring(.,1,20), instance('temp')/etc[string-length(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[1])&gt;20], instance('temp')[changed='true']/change_marker)" id="work_identifier">
+                        <xf:label/> 
+                        <xf:action ev:event="xforms-value-changed">
+                            <xf:load resource="javascript:setPageTitle()"/>
+                        </xf:action>
+                    </xf:output>
+                </xf:group>
                 
                 <h:div style="float:right">
                     <xf:submit submission="save-to-file">
