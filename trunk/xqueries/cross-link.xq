@@ -28,6 +28,8 @@ declare variable $page     :=
                  request:get-parameter("page","1")          cast as xs:integer;
 declare variable $number   :=
                  request:get-parameter("itemsPerPage","20") cast as xs:integer;
+declare variable $target   := 
+                 request:get-parameter("target","")         cast as xs:string;
 
 declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
@@ -73,7 +75,13 @@ declare function app:opensearch-header($total as xs:integer,
 
 <fileList>
 {
-  let $list := list:getlist($coll,$query)
+  let $list := 
+	if($target) then
+	  list:get-reverse-links($target)
+	else
+	  list:getlist($coll,$query)
+
+
   let $intotal := fn:count($list/m:meiHead)
 
   return

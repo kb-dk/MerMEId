@@ -37,3 +37,16 @@ declare function list:getlist (
 };
 
 
+declare function list:get-reverse-links(
+	$target as xs:string
+	) as node()*  {
+
+	(:let $arget := "cnw0067.xml#source_d1e180":)
+
+	let $list  := 
+	   for $doc in collection("/db/dcm")/m:mei[m:meiHead//m:source[@target=$target]]
+	   return $doc
+
+	return $list
+
+};
