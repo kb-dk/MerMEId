@@ -199,21 +199,44 @@
                                     label="Add review"
                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']/t:bibl[1]"/>
 
-                                <!-- is it possible to place the added listBibl last?
+                                <!-- test: is it possible to place the added listBibl last?-->
                                 <xf:group ref=".[not(t:listBibl[@type='reviews'])]">
                                     <xf:trigger>
                                         <xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add review"/> Add review LAST</xf:label>
                                         <xf:action ev:event="DOMActivate">
+                                            <!-- temporary addition - to be read from attribute later -->
+                                            <xxf:variable name="nodeset" select="'t:listBibl'"/>
+                                            <xxf:variable name="local-name" select="substring-after($nodeset,':')"/>
                                             <xf:insert context="." 
                                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']"
                                                 nodeset="t:listBibl" 
                                                 at="last()" 
                                                 position="after"/>
+                                            <!-- any siblings after this one? -->
+                                            <xf:action if="*[local-name(.)=$local-name]/following-sibling::*">
+                                                <xxf:variable name="following-name" select="local-name(*[local-name(.)=$local-name]/following-sibling::*[1])"/>
+                                                <xxf:variable name="parent_nodeset" select="."/>
+                                                <xxf:variable name="origin" select="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']"/>
+                                                <!--<xf:message>Parent nodeset: <xf:output value="name($parent_nodeset)"/></xf:message>
+                                                <xf:message>Followed by: <xf:output value="$following-name"/></xf:message>-->
+                                                <xf:action while="$origin/preceding-sibling::*[local-name()=local-name($parent_nodeset/*[local-name(.)=$local-name]/following-sibling::*[1])] 
+                                                    and count($parent_nodeset/*[local-name(.)=$local-name]/preceding-sibling::*)+1 &lt; count($parent_nodeset/*)">
+                                                    <xxf:variable name="pos" select="count(*[local-name(.)=$local-name]/preceding-sibling::*)+1"/>
+                                                    <!--<xf:message>Position: <xf:output value="$pos"/></xf:message>
+                                                    <xf:message>Move down...</xf:message>-->
+                                                    <!-- move down -->
+                                                    <xf:insert origin="../*[$pos]"
+                                                        nodeset="*" at="$pos+1"/>
+                                                    <xf:delete nodeset="*" at="$pos"/>
+                                                    <xxf:variable name="newpos" select="count(*[local-name(.)=substring-after($nodeset,':')]/preceding-sibling::*)+1"/>
+                                                    <!--<xf:message>New position: <xf:output value="$newpos"/></xf:message>-->
+                                                </xf:action>
+                                            </xf:action>
                                             <xf:dispatch name="id-update" target="form-group"/>
                                         </xf:action>
                                     </xf:trigger>
                                 </xf:group>
-                                -->
+                                <!-- end test --> 
                                 
                                 <dcm:create nodeset="t:listBibl[@type='reviews']"
                                     label="Add review"

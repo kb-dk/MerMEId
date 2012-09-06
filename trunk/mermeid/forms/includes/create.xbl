@@ -56,8 +56,25 @@
                             <xf:output value="$label"/>
                         </xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:insert context="." origin="$origin"
-                                nodeset="xxf:evaluate($nodeset)"/>
+                            <xf:insert context="." origin="$origin" nodeset="xxf:evaluate($nodeset)"/>
+                            
+                            <!-- now, move the new element into place according to the empty model -->
+                            <xxf:variable name="local-name" select="local-name($origin)"/>
+                            <!-- any _different_ siblings after this one? (predicates are not taken into account yet...) -->
+                            <xf:action if="*[local-name(.)=$local-name]/following-sibling::*[local-name()!=$local-name]">
+                                <xxf:variable name="following-name" select="local-name(*[local-name(.)=$local-name][1]/following-sibling::*[local-name()!=$local-name][1])"/>
+                                <xxf:variable name="parent_nodeset" select="."/>
+                                <!-- keep moving down until the order fits the model or reaching the end -->
+                                <xf:action while="$origin/preceding-sibling::*[local-name()=local-name($parent_nodeset/*[local-name(.)=$local-name]/following-sibling::*[local-name()!=$local-name][1])] 
+                                    and count($parent_nodeset/*[local-name(.)=$local-name]/preceding-sibling::*)+1 &lt; count($parent_nodeset/*)">
+                                    <xxf:variable name="pos" select="count(*[local-name(.)=$local-name]/preceding-sibling::*)+1"/>
+                                    <xf:insert origin="../*[$pos]"
+                                        nodeset="*" at="$pos+1"/>
+                                    <xf:delete nodeset="*" at="$pos"/>
+                                </xf:action>
+                            </xf:action>
+                            <!-- end moving -->
+                            
                             <xf:dispatch name="id-update" target="form-group"/>
                         </xf:action>
                     </xf:trigger>
