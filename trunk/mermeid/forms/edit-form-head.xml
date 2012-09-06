@@ -170,6 +170,8 @@
       </xf:action>
       <!-- check list of language declarations -->
       <xf:dispatch name="language-update" target="form-group"/>
+      <!-- get lists of linking sources -->
+      <xf:dispatch name="get-linking-sources" target="linking_sources"/>
     </xf:action>
     
     <xf:action ev:event="xforms-submit-done">
@@ -211,6 +213,7 @@
   <xi:include href="includes/relator.xbl" parse="xml"/>
   <xi:include href="includes/performance_list.xbl" parse="xml"/>
   <xi:include href="includes/item.xbl" parse="xml"/>
+  <xi:include href="includes/linked_sources.xbl" parse="xml"/>
   <xi:include href="includes/id.xbl" parse="xml"/>
   <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
   

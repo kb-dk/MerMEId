@@ -4,6 +4,7 @@
   xmlns:h="http://www.w3.org/1999/xhtml" 
   xmlns:xf="http://www.w3.org/2002/xforms"
   xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
+  xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" 
   xmlns:ev="http://www.w3.org/2001/xml-events" 
   xmlns:m="http://www.music-encoding.org/ns/mei"
   xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
@@ -56,10 +57,23 @@
                 </xf:trigger>
               </xf:group>
               &#160;
+              
+<!-- reverse linking disabled due to performance problems
+  
+              <dcm:linked-sources id="linking_sources"
+                query="concat(
+                instance('parameters')/dcm:server_name,
+                'storage/cross-link.xq?target=',
+                instance('parameters')/dcm:xml_file,
+                '%23',
+                @xml:id)"
+              />
+-->              
+              
             </h:td>
             <h:td>
               <xf:group ref=".[*]">
-                <!-- source data included in this file -->
+                <!-- sources included in this file -->
                 <xf:group ref=".[instance('temp')/file_exists='true']">
                   <xf:trigger>
                     <xf:label><h:img src="http:/editor/images/edit.gif" title="Open the source editor"/> Edit</xf:label>
@@ -126,8 +140,8 @@
     <!-- The requested URI must be stored in instance('temp')/target_uri prior to opening the dialog -->
     <xf:label>Warning – Editing external source</xf:label>
     <h:p>The description of this source is contained in another file.<br/> 
-      Editing an external source means that the present file will be closed and the MEI file containing the <br/>
-      external source one opened for editing instead. Thus, any changes will affect both files. <h:br/>
+      Editing an external source means that the present file will be closed and the file containing the <br/>
+      actual source description will be opened for editing instead. <h:br/>
       Before you continue, make sure you are entitled to make changes in the file you are about to open.<h:br/>
       If you need to update the title of this source reference after editing, return to this file <br/>
       and click the "Update" button next to the reference to get the updated title.
