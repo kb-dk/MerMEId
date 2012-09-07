@@ -366,6 +366,12 @@
                     
                 </xf:group>
                 
+                <xf:group ref=".[not(instance('data-instance')//m:expression[@xml:id=instance('temp')/id])]">
+                    <h:h3>Not found</h:h3>
+                    <h:p>Did you remember to save your work before you opened the details editor?</h:p>
+                    <h:p>Please click the "Cancel" button to return to the list.</h:p>
+                </xf:group>
+                
             </h:div>
             
         </xf:group>

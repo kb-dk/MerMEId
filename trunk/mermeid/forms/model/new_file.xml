@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mei meiversion="2012" 
-  xmlns="http://www.music-encoding.org/ns/mei" 
-  xmlns:xl="http://www.w3.org/1999/xlink" 
-  xml:id="">
+<mei meiversion="2012" xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" xml:id="">
   <meiHead>
     <fileDesc>
       <titleStmt>
@@ -12,15 +9,11 @@
         <respStmt xml:id="">
           <resp>Publisher</resp>
           <corpName authURI="http://www.kb.dk/dcm" xml:id="">
-            <abbr>DCM</abbr>
-            <expan>Danish Centre for Music Publication</expan>
+            <abbr/>
+            <expan/>
             <address>
-              <addrLine>The Royal Library</addrLine>
-              <addrLine>Søren Kierkegaards Plads 1</addrLine>
-              <addrLine>P.O. Box 2149</addrLine>
-              <addrLine>DK - 1016 Copenhagen K</addrLine>
-              <addrLine><ptr target="http://www.kb.dk/dcm" xl:title="WWW"/></addrLine>
-              <addrLine><ptr target="mailto://foa-dcm@kb.dk" xl:title="E-mail"/></addrLine>
+              <addrLine/>
+              <addrLine><ptr target="" xl:title=""/></addrLine>
             </address>
           </corpName>
           <persName role="editor" xml:id=""/>
@@ -90,7 +83,6 @@
         </source>
       </sourceDesc>
     </fileDesc>
-    
     <encodingDesc>
       <appInfo>
         <application version="0.9">
@@ -101,7 +93,6 @@
         <p>Created using MerMEId</p>
       </projectDesc>
     </encodingDesc>
-    
     <workDesc>
       <work xml:id="" analog="frbr:work">
         <identifier analog=""/>
@@ -135,18 +126,15 @@
             </event>
           </eventList>
         </history>
-        
         <langUsage>
           <language xml:id="en">English</language>
         </langUsage>
-        
         <notesStmt>
           <annot type="links" xml:id="">
             <ptr target="" mimetype="" xl:title="External description" xml:id=""/> 
           </annot>
           <annot type="general_description" xml:id=""/> 
-        </notesStmt>        
-        
+        </notesStmt>     
         <classification>
           <classCode xml:id="DcmContentClass"/>
           <classCode xml:id="DcmPresentationClass"/>
@@ -158,7 +146,6 @@
             <term></term>
           </termList>
         </classification>
-
         <expressionList>
           <expression xml:id="" analog="frbr:expression" n="">
             <titleStmt>
@@ -204,7 +191,6 @@
                 <term/>
               </termList>
             </classification>
-            
             <castList>
               <castItem xml:id="">
                 <role xml:id="">
@@ -229,10 +215,8 @@
             </relationList>
           </expression>
         </expressionList>
-       
       </work>
     </workDesc>
-    
     <revisionDesc>
       <change xml:id="">
         <respStmt>
@@ -244,9 +228,6 @@
         <date reg=""/>
       </change>
     </revisionDesc>
-    
   </meiHead>
-  <music>
-    
-  </music>
+  <music/>
 </mei>

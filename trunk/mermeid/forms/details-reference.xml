@@ -86,8 +86,7 @@
                         </xf:action>
                     </xf:trigger>
                 </h:div>
-                
-                
+
                 <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl/t:bibl[@xml:id=instance('temp')/id]">
                     <h:h3>
                         <xf:repeat nodeset="t:author"><xf:output 
@@ -401,6 +400,12 @@
                         
                     </h:fieldset>
                     
+                </xf:group>
+                
+                <xf:group ref=".[not(instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl/t:bibl[@xml:id=instance('temp')/id])]">
+                    <h:h3>Not found</h:h3>
+                    <h:p>Did you remember to save your work before you opened the details editor?</h:p>
+                    <h:p>Please click the "Cancel" button to return to the list.</h:p>
                 </xf:group>
                 
             </h:div>
