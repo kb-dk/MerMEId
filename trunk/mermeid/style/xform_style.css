@@ -490,7 +490,7 @@ div.about_header, div.about_footer {
 
 /* css for help and warning pop-ups */
 
-a.help, a.help_plain, a.warning {
+a.help, a.help_plain, a.warning, a.popup {
     text-decoration: none;
     text-align: left;
     vertical-align:text-top;
@@ -509,11 +509,12 @@ a.help, a.help_plain, a.warning {
     -moz-border-radius: 2px;    
 }
 
-a.help_plain {
+a.help_plain, a.popup {
     background-color:transparent;
     border: none;
     color: black;
     padding: 2px;
+    font-weight: normal;
 }
 
 a.help_plain img {
@@ -521,7 +522,8 @@ a.help_plain img {
 }
 
 a.help span.comment, a.help_plain span.comment, 
-a.warning span.comment, a.dcm_id span.comment {
+a.warning span.comment, a.dcm_id span.comment,
+a.popup span.comment {
     display:inline;
     position: absolute;
     visibility:hidden;
@@ -547,8 +549,14 @@ a.warning span.comment, a.dcm_id span.comment {
     -moz-border-radius: 4px;
 }
 
+a.popup span.comment {
+    background-color: #ccc;
+    cursor: default;
+}
+
 a:hover.help span.comment, a:hover.help_plain span.comment, 
-a:hover.warning span.comment, a:hover.dcm_id span.comment  {
+a:hover.warning span.comment, a:hover.dcm_id span.comment,
+a:hover.popup span.comment {
     visibility:visible;
 }
 

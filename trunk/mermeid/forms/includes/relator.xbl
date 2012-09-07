@@ -43,7 +43,14 @@
         <xf:instance 
           id="relators-instance" 
           src="/../editor/forms/mei/model/relators.xml"
-          xxforms:readonly="true"/>         
+          xxforms:readonly="true"/>
+        
+        <xf:instance id="template">
+          <respStmt xmlns="http://www.music-encoding.org/ns/mei">
+            <persName role=""/>
+          </respStmt>
+        </xf:instance>
+        
       </xf:model>
     </xbl:implementation>
     
@@ -62,20 +69,23 @@
           </xxforms:variable>
                     
             <xf:input class="long" ref="$binding">
-              <xf:action ev:event="xforms-value-changed xforms-enabled" if="count(@binding/@role)!=1">
+              <xf:action ev:event="xforms-enabled" if="count(@role)!=1">
                 <!-- add role attribute -->
+                <!-- doesn't seem to work
+                <xf:insert nodeset="." 
+                  origin="instance('template')//@role"/>-->
               </xf:action>
             </xf:input>
             <xxforms:variable name="role" select="$binding/@role"/>
             
-            <!-- display a warning if role is not on standard relators list -->
-            <xf:group ref=".[not(instance('relators-instance')/role[.=$role])]">
-              <xf:output value="$binding/@role"/>
-              <h:a class="help_plain"><h:img src="http:/editor/images/warning.png" alt="warning"/><h:span class="comment">"<xf:output value="$binding/@role"/>" does not 
-                seem to be a standard MARC relation. Whenever possible, a standard value 
-                from the drop-down list should be used.</h:span></h:a>
-            </xf:group>
-            
+          <!-- display a warning if role is not on standard relators list -->
+          <xf:group ref=".[$role and not(instance('relators-instance')/role[.=$role])]">
+            <xf:output value="$binding/@role"/>
+            <h:a class="help_plain"><h:img src="http:/editor/images/warning.png" alt="warning"/><h:span class="comment">"<xf:output value="$binding/@role"/>" does not 
+              seem to be a standard MARC relation. Whenever possible, a standard value 
+              from the drop-down list should be used.</h:span></h:a>
+          </xf:group>
+          
           <xf:select1 ref="$binding/@role" class="mediumlong">
               <xf:itemset nodeset="instance('relators-instance')/role">
                 <xf:label><xf:output value="if (.!='') then . else '- Select relation -'"/></xf:label>

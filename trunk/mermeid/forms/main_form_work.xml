@@ -30,12 +30,6 @@
 					</h:div>
 				</xf:repeat>
 				
-				<h:div>
-					<dcm:create
-						nodeset="m:title[@type='alternative']"
-						label="Add alternative title"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='alternative']"/>
-				</h:div>
 				<xf:group ref=".[m:title[@type='alternative']]">
 					<h:div class="blocklabel">Alternative title
 						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
@@ -53,12 +47,6 @@
 					</h:div>
 				</xf:repeat>	
 				
-				<h:div>
-					<dcm:create
-						nodeset="m:title[@type='subordinate']"
-						label="Add subtitle"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='subordinate']"/>
-				</h:div>
 				<xf:group ref=".[m:title[@type='subordinate']]">
 					<h:div class="blocklabel">Subtitle
 						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
@@ -76,12 +64,6 @@
 					</h:div>
 				</xf:repeat>
 				
-				<h:div>
-					<dcm:create
-						nodeset="m:title[@type='uniform']"
-						label="Add uniform title"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"/>
-				</h:div>
 				<xf:group ref=".[m:title[@type='uniform']]">
 					<h:div class="blocklabel">Uniform title
 						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
@@ -99,12 +81,6 @@
 					</h:div>
 				</xf:repeat>
 				
-				<h:div>
-					<dcm:create
-						nodeset="m:title[@type='original']"
-						label="Add original title"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='original']"/>
-				</h:div>
 				<xf:group ref=".[m:title[@type='original']]">
 					<h:div class="blocklabel">Original title
 						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
@@ -122,12 +98,6 @@
 					</h:div>
 				</xf:repeat>
 
-				<h:div>
-					<dcm:create
-						nodeset="m:title[@type='text_source']"
-						label="Add title of text source"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"/>
-				</h:div>
 				<xf:group ref=".[m:title[@type='text_source']]">
 					<h:div class="blocklabel">Text source
 						<h:a class="help">?<h:span class="comment">The title of a textual source for a sung or 
@@ -146,6 +116,51 @@
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
+
+
+				<xf:group ref=".[not(m:title[@type='alternative']) or
+					not(m:title[@type='subordinate']) or
+					not(m:title[@type='uniform']) or
+					not(m:title[@type='original']) or
+					not(m:title[@type='text_source'])]">
+					<h:div class="vertical_spacer"/>
+					<h:a class="popup" style="font-size:.9em;"><h:img src="http:/editor/images/add.gif" title="Add more titles"/> Add more titles...<h:span 
+						class="comment" style="margin-top:0px;margin-left:-100px;">
+						<h:div style="text-align:center">
+							<h:div>
+								<dcm:create
+									nodeset="m:title[@type='alternative']"
+									label="Add alternative title"
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='alternative']"/>
+							</h:div>
+							<h:div>
+								<dcm:create
+									nodeset="m:title[@type='subordinate']"
+									label="Add subtitle"
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='subordinate']"/>
+							</h:div>
+							<h:div>
+								<dcm:create
+									nodeset="m:title[@type='uniform']"
+									label="Add uniform title"
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"/>
+							</h:div>
+							<h:div>
+								<dcm:create
+									nodeset="m:title[@type='original']"
+									label="Add original title"
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='original']"/>
+							</h:div>
+							<h:div>
+								<dcm:create
+									nodeset="m:title[@type='text_source']"
+									label="Add title of text source"
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"/>
+							</h:div>
+						</h:div>
+					</h:span></h:a>
+				</xf:group>
+				
 			</xf:group>
 		</h:fieldset>
 		
@@ -184,18 +199,28 @@
 		</h:fieldset>
 		
 		<h:fieldset>
-			<h:legend>Persons</h:legend>		
+			<h:legend>Persons <h:a class="help">?<h:span class="comment">A list of person involved in the creation or transmission 
+				of this work in general, such as the composer or text author</h:span></h:a></h:legend>		
 			<h:div class="blocklabel">
 				<h:span class="fixed_width_long">Name</h:span>
-				<h:span class="fixed_width"> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
+				<h:span class="fixed_width"> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Composer"
 					or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
 				</h:span>
 			</h:div>
-			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt[m:persName[count(@role)&gt;0 and @role!='']]">				
+			<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt"
+				nodeset="m:persName"
+				label="Add person"
+				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName"/>
+			<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt"
+				nodeset="m:respStmt"
+				label="Add person"
+				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt"/>
+			<!--<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt[m:persName[count(@role)&gt;0 and @role!='']]">-->
+			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt">
 				<xf:repeat nodeset="m:persName" id="relators-repeat">
 					<dcm:relator ref="."/>
 					<dcm:element-buttons 
-						triggers="add delete" 
+						triggers="add remove" 
 						nodeset="m:persName" 
 						index="relators-repeat"
 						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
@@ -208,6 +233,11 @@
 		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt">
 			<h:fieldset>
 				<h:legend>Work notes</h:legend>
+				<h:div class="vertical_spacer"/>
+				<dcm:create 
+					nodeset="m:annot[@type='general_description']"
+					label="Add work description"
+					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='general_description']"/>
 				<xf:textarea ref="m:annot[@type='general_description']" class="notes">
 					<xf:label class="blocklabel">General work description 
 						<h:a class="help">?<h:span class="comment">A general description of or introduction to the work</h:span></h:a>
@@ -220,6 +250,14 @@
 					>Links to external resources (web pages, PDF files etc.) about
 					the work in general - not about a particular
 					source</h:span></h:a></h:div>
+				<dcm:create 
+					nodeset="m:annot[@type='links']"
+					label="Add link"
+					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']"/>
+				<dcm:create ref="m:annot[@type='links']"
+					nodeset="m:ptr"
+					label="Add link"
+					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']/m:ptr"/>
 				<xf:group ref="m:annot[@type='links']">
 					<xf:repeat nodeset="m:ptr" id="general-notesstmt-annot-repeat-ptr">
 						<h:div>
@@ -234,7 +272,7 @@
 									as the link text, e.g. "CNU preface"</h:span></h:a></xf:label>
 							</xf:input>
 							<dcm:element-buttons 
-								triggers="all" 
+								triggers="up down copy add remove" 
 								nodeset="m:ptr" 
 								index="general-notesstmt-annot-repeat-ptr"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']/m:ptr"/>
@@ -245,28 +283,35 @@
 			</h:fieldset>
 		</xf:group>
 		
-		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList">
+		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification">
 			<h:fieldset>
 				<h:legend>Classification and keywords</h:legend>
 				
 				<!-- pre-defined keywords menu -->
 				<xxf:dialog id="keywords_menu" appearance="full" level="modeless"
 					close="true" draggable="true" visible="false">
+					<xf:action ev:event="check-for-termlist">
+						<xf:action if="not(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList)">
+							<xf:dispatch name="DOMActivate" target="termList-create"/>
+							<xf:delete nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term"/>
+						</xf:action>
+					</xf:action>
 					<xf:label>Keywords</xf:label>
 					<h:div style="height:100%">
 						<h:div class="strong">
 							Systematic keywords
 						</h:div>										
-						<h:table class="popup_menu_table">
+						<h:table class="popup_menu_table" cellpadding="0" cellspacing="0" border="0">
 							<xf:repeat nodeset="instance('keywords-instance')/m:termList[@label='level1']" id="level1_keywords-repeat">
 								<tr>
-									<td>
+									<td style="vertical-align:top;border-bottom: 1px solid #999; margin:0; padding:5px;">
 										<!-- level 1 keywords  -->
 										<xf:trigger submission="replace-form-with" appearance="minimal">
 											<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="m:term"/></xf:label>
 											<xf:action ev:event="DOMActivate">
+												<xf:dispatch name="check-for-termlist" target="keywords_menu"/>
 												<!-- insert new node -->
-												<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.!='']">
+												<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
 													<xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList" 
 														nodeset="m:term" 
 														at="last()"
@@ -281,13 +326,14 @@
 											</xf:action>
 										</xf:trigger>
 									</td>
-									<td>
+									<td style="vertical-align:top;border-bottom: 1px solid #999; margin:0; padding:5px;">
 										<!-- level 2 keywords --> 
 										<xf:repeat nodeset="following-sibling::m:termList[1]/m:term" id="level2_keywords-repeat">
 											<xf:trigger submission="replace-form-with" appearance="minimal">
 												<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="."/></xf:label>
 												<xf:action ev:event="DOMActivate">
-													<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.!='']">
+													<xf:dispatch name="check-for-termlist" target="keywords_menu"/>
+													<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
 														<xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList" 
 															nodeset="m:term" 
 															at="last()"
@@ -306,19 +352,20 @@
 								</tr>
 							</xf:repeat>
 						</h:table>
-						<h:hr/>
+						<h:br/>
 						<h:div class="strong">
 							Other keywords
 						</h:div>
 						<h:table style="width:370px;">
 							<h:tr>
-								<h:td>
+								<h:td style="vertical-align:top">
 									<xf:repeat nodeset="instance('keywords-instance')/m:termList[@label='keywords']/m:term" id="additional_keywords-repeat">
 										<span style="float:left; width: 120px;">
 											<xf:trigger submission="replace-form-with" appearance="minimal">
 												<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="."/></xf:label>
 												<xf:action ev:event="DOMActivate">
-													<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.!='']">
+													<xf:dispatch name="check-for-termlist" target="keywords_menu"/>
+													<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
 														<xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList" 
 															nodeset="m:term" 
 															at="last()"
@@ -333,7 +380,6 @@
 											</xf:trigger>
 										</span>
 									</xf:repeat>
-									
 								</h:td>
 							</h:tr>
 						</h:table>
@@ -350,14 +396,53 @@
 						<xxf:show dialog="keywords_menu" ev:event="DOMActivate"/>
 					</xf:trigger>
 				</h:div>
-				<xf:repeat nodeset="m:term" id="repeat-work-terms">
+				<!-- follows: a copy of the create-button code -->
+				<xf:group ref=".[not(m:termList)]">
+					<xf:trigger class="create_button" id="termList-create">
+						<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add term"/> Add term</xf:label>
+						<xf:action ev:event="DOMActivate">
+							<xxf:variable name="origin" select="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList"/>
+							<xf:insert context="." 
+								origin="$origin" 
+								nodeset="m:termList"/>
+							<xf:action if="*[local-name(.)='termList']/following-sibling::*[local-name()!='termList']">
+								<xxf:variable name="following-name" select="local-name(*[local-name(.)='termList'][1]/following-sibling::*[local-name()!='termList'][1])"/>
+								<xxf:variable name="parent_nodeset" select="."/>
+								<xf:action while="$origin/preceding-sibling::*[local-name()=local-name($parent_nodeset/*[local-name(.)='termList']/following-sibling::*[local-name()!='termList'][1])] 
+									and count($parent_nodeset/*[local-name(.)='termList']/preceding-sibling::*)+1 &lt; count($parent_nodeset/*)">
+									<xxf:variable name="pos" select="count(*[local-name(.)='termList']/preceding-sibling::*)+1"/>
+									<xf:insert origin="../*[$pos]"
+										nodeset="*" at="$pos+1"/>
+									<xf:delete nodeset="*" at="$pos"/>
+								</xf:action>
+							</xf:action>
+							<xf:dispatch name="id-update" target="form-group"/>
+						</xf:action>
+					</xf:trigger>
+				</xf:group>
+		
+				<xf:repeat nodeset="m:termList/m:term" id="repeat-work-terms">
 					<h:div>
 						<xf:input ref="." class="long"/>
 						<dcm:element-buttons 
-							triggers="add delete" 
+							triggers="add" 
 							nodeset="m:term" 
 							index="repeat-work-terms"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term"/>
+						<xf:trigger appearance="minimal" class="non-standard_button">
+							<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+							<xf:action ref=".[count(../m:term)=1]" 
+								ev:event="DOMActivate">
+								<xf:delete ev:event="DOMActivate" nodeset="../../m:termList"/>
+								<xf:dispatch name="xforms-value-changed" target="form-group"/>
+							</xf:action>
+							<xf:action ref=".[count(../m:term)&gt;1]" 
+								ev:event="DOMActivate">
+								<xf:delete ev:event="DOMActivate" nodeset="."
+									at="index('repeat-work-terms')"/>
+								<xf:dispatch name="xforms-value-changed" target="form-group"/>
+							</xf:action>
+						</xf:trigger> 
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>

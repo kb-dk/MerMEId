@@ -296,20 +296,30 @@
 			</h:fieldset>
 		</xf:group>
 		
-		<xf:repeat
-			nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes']"
-			id="repeat-private_notes">
-			<h:fieldset>
-				<h:legend>Private notes <h:a class="help">?<h:span class="comment">A container for
-					annotations not intended for public viewing. These may include to-do-lists or any other 
-					comments for non-public use.<h:br/>
-					Whether private notes will be accessible to end users will depend on how this file is 
-					used by other applications or otherwise made available.
-				</h:span></h:a></h:legend>
-				<xf:textarea ref=".[index('repeat-private_notes')]" class="mediumheight"/>
-				<dcm:attribute-editor ref="."/>
-			</h:fieldset>
-		</xf:repeat>
+		<h:fieldset>
+			<h:legend>Private notes <h:a class="help">?<h:span class="comment">A container for
+				annotations not intended for public viewing. These may include to-do-lists or any other 
+				comments for non-public use.<h:br/>
+				Whether private notes will be accessible to end users will depend on how this file is 
+				used by other applications or otherwise made available.
+			</h:span></h:a></h:legend>
+			<dcm:create ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt"
+				nodeset="m:annot[@type='private_notes']"
+				label="Add private notes"
+				origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes']"/>                        
+			<xf:repeat
+				nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes']"
+				id="repeat-private_notes">
+				<h:div>
+					<xf:textarea ref=".[index('repeat-private_notes')]" class="mediumheight"/>
+					<dcm:element-buttons-typed triggers="remove" 
+						index="repeat-private_notes" 
+						nodeset="m:annot[@type='private_notes']" 
+						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes']"/>
+					<dcm:attribute-editor ref="."/>
+				</h:div>
+			</xf:repeat>
+		</h:fieldset>
 		
 	</h:div>
 	
