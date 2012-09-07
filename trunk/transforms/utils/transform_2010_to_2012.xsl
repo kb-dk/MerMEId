@@ -865,7 +865,27 @@
     
     <xsl:template match="m:profiledesc/m:eventlist/m:event">
         <event>
-            <xsl:apply-templates select="*[name(.)!='bibl']"/>
+            <xsl:choose>
+                <xsl:when test="m:title='Other performance'">
+                    <!-- delete "Other performance" titles -->
+                    <title/>
+                </xsl:when>
+                <xsl:when test="m:title='First performance'">
+                    <xsl:choose>
+                        <xsl:when test="*[name(.)!='title']//text()">
+                            <xsl:apply-templates select="m:title"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <!-- delete "First performance" titles if no other data on the event -->
+                            <title/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="m:title"/>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:apply-templates select="*[name(.)!='bibl' and name(.)!='title']"/>
             <xsl:if test="t:bibl[*//text()]">
                 <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0">
                     <xsl:if test="not(@xml:id)">

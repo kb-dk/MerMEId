@@ -63,11 +63,26 @@
 											</h:span></h:a>
 									</xf:group>
 									<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
-									<dcm:element-buttons 
-										triggers="all" 
-										nodeset="m:title" 
-										index="repeat-version-titles"
-										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
+									<xf:group ref=".[count(../m:title)&gt;1]">
+										<dcm:element-buttons 
+											triggers="all" 
+											nodeset="m:title" 
+											index="repeat-version-titles"
+											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
+									</xf:group>										
+									<xf:group ref=".[count(../m:title)=1]">
+										<dcm:element-buttons 
+											triggers="up down copy add" 
+											nodeset="m:title" 
+											index="repeat-version-titles"
+											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
+										<xf:trigger appearance="minimal" class="non-standard_button">
+											<xf:label><img src="http:/editor/images/remove.gif" alt="Delete row"/></xf:label>
+											<xf:action ev:event="DOMActivate">
+												<xf:setvalue ref="." value="''"/>
+											</xf:action>
+										</xf:trigger>
+									</xf:group>
 									<dcm:attribute-editor ref="."/>
 								</h:div>
 							</xf:repeat>
@@ -313,11 +328,12 @@
 									</h:legend>
 									<h:div class="vertical_spacer"/> 
 									<h:div>
-										<xf:input ref="m:instrVoice" class="mediumlong">
+										<xf:input ref="m:instrVoice" class="long">
 											<xf:label class="fixed_width">Name <h:a class="help">?<h:span 
 												class="comment">Optional. Use if you want 
 												to specify the type of ensemble, e.g. "Orchestra", "String quartet", 
-												or "Choir". If no ensemble name has been entered in the first field, 
+												"Choir" or even an orchestration string like "2.2.2.2/4.2.3.1/timp/str".<h:br/> 
+												If no ensemble name has been entered in the first field, 
 												a suggested name is automatically inserted when choosing
 												a standard ensemble code in the last field.
 											</h:span></h:a></xf:label>
