@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
+    xmlns:xbl="http://www.w3.org/ns/xbl" 
+    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <!--
+        Component generating a special delete button deleting the context node, 
+        and also removing the parent node together with the last remaining node.
+        For instance, if used on a <event> node, this button removes the <eventList> parent node together 
+        with the last remaining <event> node. This is useful where the MEI schema does not allow the 
+        parent node to be empty.
+        
+        The component requires one attribute:
+        index:      The repeat's id  
+        
+        Example: 
+        <xf:repeat nodeset="m:work/m:history/m:eventList[@type='performances']/m:event" id="repeat-performanceces">
+            ...
+            <dcm:delete-parent-with-last index="repeat-performances"/>
+        </xf:repeat>
+        
+        Danish Centre for Music Publication (DCM) 
+        Axel Teich Geertinger, 2012
+        atge@kb.dk
+    -->
+    
+    <xbl:binding id="dcm-delete-parent-with-last-binding" element="dcm|delete-parent-with-last">
+        <!-- Orbeon Form Builder Component Metadata -->
+        <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+            <display-name lang="en">Delete elements</display-name>
+        </metadata>
+        <xbl:resources>
+            <xbl:style> 
+                .xbl-dcm-delete-parent-with-last { 
+                    display:inline; 
+                    width: auto; 
+                    background-color: transparent;
+                }
+                .xbl-dcm-delete-parent-with-last .editmenu {
+                    margin: 0 0 0 -8px;
+                }                        
+            </xbl:style>
+        </xbl:resources>
+        <xbl:template>
+            <xf:group xxbl:scope="outer">
+                
+                <xxf:variable name="index" xbl:attr="xbl:text=index"/>
+                <xxf:variable name="nodeset" select="name(.)"/>
+                <xxf:variable name="number" select="count(parent::node()/*[name()=$nodeset])"/>
+                
+                <h:span class="editmenu">
+                    <xf:trigger appearance="minimal">
+                        <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                        <xf:action if="$number=1" 
+                            ev:event="DOMActivate">
+                            <xf:delete ev:event="DOMActivate" nodeset="parent::node()"/>
+                            <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                        </xf:action>
+                        <xf:action if="$number&gt;1" 
+                            ev:event="DOMActivate">
+                            <xf:delete ev:event="DOMActivate" nodeset="."
+                                at="index($index)"/>
+                            <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                        </xf:action>
+                    </xf:trigger> 
+                </h:span>
+            </xf:group>
+        </xbl:template>
+    </xbl:binding>
+</xbl:xbl>

@@ -74,16 +74,29 @@
 				<h:br/> 
 				<h:br/>
 				
-				<h:div class="blocklabel">
-					<h:span class="fixed_width no_margin">&#160;</h:span>
-					<h:span class="fixed_width_long">Name</h:span>
-					<h:span class="fixed_width"> Role <h:a class="help">?<h:span class="comment">Specifies the 
-						person's role in the process of producing this file, e.g. "editor". 
-						The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+				<xf:group ref=".[not(m:respStmt/m:persName)]">
+					<h:span class="blocklabel">Persons <h:a class="help">?<h:span 
+						class="comment">Persons involved in the publication
+						of this file</h:span></h:a>
+						<dcm:create ref="m:respStmt"
+							nodeset="m:persName"
+							label="Add person"
+							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName"/>                        
 					</h:span>
-				</h:div>
+				</xf:group>
+
 				<xf:repeat nodeset="m:respStmt/m:persName" id="repeat-file-publication-person">
 					<xxf:variable name="pos" select="position()"/>
+					<xf:group ref=".[$pos=1]">
+					<h:div class="blocklabel">
+						<h:span class="fixed_width no_margin">&#160;</h:span>
+						<h:span class="fixed_width_long">Name</h:span>
+						<h:span class="fixed_width"> Role <h:a class="help">?<h:span class="comment">Specifies the 
+							person's role in the process of producing this file, e.g. "editor". 
+							The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+						</h:span>
+					</h:div>
+					</xf:group>
 					<h:span class="blocklabel fixed_width no_margin"><xf:group ref=".[$pos=1]">Persons <h:a class="help">?<h:span 
 						class="comment">Persons involved in the publication
 						of this file</h:span></h:a></xf:group></h:span>
