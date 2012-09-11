@@ -342,64 +342,94 @@ ProxyPass /orbeon  "ajp://mei.example.org:8009/orbeon"
     <div id="appendix">
       <h2>Appendix A. Configuration file</h2>
       <pre>
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 &lt;properties>
-  &lt;comment>Configuration for the MEI metadata editor&lt;/comment>
+  &lt;comment>HTTP Filter parameters&lt;/comment>
 
-  &lt;!-- 
+&lt;!--
 
-       If the editor is using records in exist, then this file should be
-       directly in SERVER_ROOT/editor
+The filter is meant to operate on top of an eXist XML database
 
-       If the editor is using records i a file system this file should be put
-       in the directory above the editor's work area. I.e., in the area for
-       documents records. If it is in
+-->
 
-       'SERVER_ROOT/editor/data'
-
-       a copy of this file should be put in
-
-       'SERVER_ROOT/editor'
-  --&gt;
-
-  &lt;!-- 
-       the editor lives somewhere else, which is not necessarily the same place as  
-       the SERVER_ROOT mentioned above. Here you give that place
-   --&gt;
-
-  &lt;entry key="editor.base">/home/xml-store&lt;/entry>
-
-  &lt;!-- the path to a style sheet which transforms an XML form to an XML
-       form. the path should be given relative to editor.base --&gt;
-
-  &lt;entry key="editor.sheet">/editor/transforms/mei/formulate.xsl&lt;/entry>
-
-  &lt;!-- the path to an XML Form relative to editor.base --&gt;
-  &lt;entry key="editor.form">/editor/forms/mei/edit_mei_form.xml&lt;/entry>
-
-  &lt;!-- the path to a style sheet which renders the data in html. the should be
-       given relative to editor.base --&gt;
-  &lt;entry key="editor.render">/editor/transforms/mei/cnw_to_html.xsl&lt;/entry>
-
-  &lt;!-- the name and path to an empty instance given relative to editor.base --&gt;
-  &lt;entry key="editor.empty">/editor/forms/mei/empty_doc.xml&lt;/entry>
-
-  &lt;!-- the exist user name  --&gt;
+  &lt;entry key="exist.host">disdev-01.kb.dk&lt;/entry>
+  &lt;entry key="exist.port">8080&lt;/entry>
+  &lt;entry key="exist.realm">exist&lt;/entry>
+  &lt;entry key="exist.context">/exist/rest/db/dcm&lt;/entry>
   &lt;entry key="exist.user">admin&lt;/entry>
+  &lt;entry key="exist.password">flormelis&lt;/entry>
 
-  &lt;!-- the exist user password  --&gt;
-  &lt;entry key="exist.password">your_own_very_secret_password&lt;/entry>
+&lt;!--
 
-  &lt;!-- The configurations below are irrelevant if you use eXist --&gt;
+get is the retrieval filter
 
-  &lt;!-- the name and path to an xsl style sheet generating update sql --&gt;
-  &lt;entry key="editor.sql_update_sheet">/editor/sql/mei-update.xsl&lt;/entry>
+-->
 
-  &lt;!-- the name and path to an xsl style sheet generating insert sql --&gt;
-  &lt;entry key="editor.sql_insert_sheet">/editor/sql/mei-insert.xsl&lt;/entry>
-  
+  &lt;entry key="get">http://disdev-01.kb.dk/editor/transforms/mei/filter_get.xsl&lt;/entry>
+  &lt;entry key="get.mime">application/xml&lt;/entry>
+  &lt;entry key="get.charset">UTF-8&lt;/entry>
+
+&lt;!--
+
+put is for updating
+
+-->
+
+  &lt;entry key="put">http://disdev-01.kb.dk/editor/transforms/mei/filter_put.xsl&lt;/entry>
+  &lt;entry key="put.mime">application/xml&lt;/entry>
+  &lt;entry key="put.charset">UTF-8&lt;/entry>
+
+&lt;!--
+
+del is for removing stuff
+
+-->
+
+  &lt;entry key="del.redirect">http://disdev-01.kb.dk/storage/list_files.xq&lt;/entry>
+
+&lt;!-- 
+
+Create is for what it seems to be. A URI that is good to use for creating new
+documents. We're doing that using uri templates (RFC6570). The URI should look like
+
+http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://disdev-01.kb.dk/form/dcm/&amp;doc=cnw0361.xml
+
+when ready
+
+-->
+
+   &lt;entry key="create">http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}&lt;/entry>
+   &lt;entry key="create.uri">http://disdev-01.kb.dk/editor/forms/mei/edit-work-case.xml&lt;/entry>
+   &lt;entry key="create.dir">http://disdev-01.kb.dk/filter/&lt;/entry>
+
 &lt;/properties>
 
       </pre>
+
+      <pre>
+&lt;parameters xmlns="http://www.kb.dk/dcm">
+  &lt;document_root>storage/dcm/&lt;/document_root>
+  &lt;exist_dir>/storage/&lt;/exist_dir>
+  &lt;orbeon_dir>http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/&lt;/orbeon_dir>
+  &lt;form_home>http://disdev-01.kb.dk/editor/forms/mei/&lt;/form_home>
+  &lt;crud_home>http://disdev-01.kb.dk/filter/&lt;/crud_home>
+  &lt;server_name>http://disdev-01.kb.dk/&lt;/server_name>
+  &lt;xml_file/>
+  
+  &lt;!-- default editor settings -->
+  
+  &lt;!-- Set boolean values to 'true' or nothing  -->
+  &lt;!-- Enable attribute editor? -->
+  &lt;attr_editor/>
+  &lt;!-- Enable xml:id display component? -->
+  &lt;show_id/>
+  &lt;!-- Enable xml:id display component? -->
+  &lt;code_inspector/>
+  
+&lt;/parameters>
+
+      </pre>
+
     </div>
   </body>
 
