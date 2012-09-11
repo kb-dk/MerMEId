@@ -81,19 +81,48 @@
     <div id="sect2">
       <h2>2. Installation</h2>
 
-      <ol>
-	<li><strong>Unpack and install the MerMEId:</strong> We suggest that
+      <p><strong>Unpack and install the MerMEId:</strong> We suggest that
 	you create a directory called <kbd>/home/xml-store</kbd> and unpack it
-	there. There should then appear a the following directories:
-	<pre>
-	  MerMEId/filter/
-	  MerMEId/orbeon/
-	  MerMEId/documents/
-	  MerMEId/mermeid/
-	  MerMEId/xqueries/
-	  MerMEId/transforms/
-	</pre></li>
+	there. There should then appear the following:</p>
 
+      <table>
+	<tr>
+	  <th>Directory</th>
+	  <th>Content</th>
+	</tr>
+	<tr>
+	  <td>documents</td>
+	  <td>empty, more or less</td>
+	</tr>
+	<tr>
+	  <td>filter</td>
+	  <td>a number of JAVA servlets, builds a war file using maven. You'll
+	  need to edit the java property file
+	  filter/src/main/resources/http_filter.xml</td>
+	</tr>
+	<tr>
+	  <td>mermeid</td>
+	  <td>the forms</td>
+	</tr>
+	<tr>
+	  <td>orbeon</td>
+	  <td>A JSP script which should be installed as &lt;your
+	  tomcat&gt;/webapps/orbeon/xforms-jsp/mei-form/index.jsp -- this is
+	  basically an xinclude processor</td>
+	</tr>
+	<tr>
+	  <td>transforms</td>
+	  <td>some transforms used for presentation, filtering and also for
+	  migration of mei2010 to 2012 just copy them on top of the old
+	  ones</td>
+	</tr>
+	<tr>
+	  <td>xqueries</td>
+	  <td>used for search and navigation</td>
+	</tr>
+      </table>
+
+      <ol>
 	<li>
 	  <p>
 	    <strong>Install Apache-Tomcat:</strong> We have recently run it on
@@ -169,19 +198,6 @@
 	  <kbd>Apache/2.2.3</kbd> Ensure that you have <kbd>mod_proxy</kbd> and
 	  <kbd>mod_proxy_ajp</kbd> installed.
 	</li>
-	<li>
-	  <strong>Install perl programming language:</strong> You should be able
-	  to use the version that comes with your distribution. We need packages
-	  called XML::LibXML and XML::LibXSLT. The shopping list under Red Hat
-	  would be: <kbd>libxml2-devel</kbd>, <kbd>perl-XML-LibXML</kbd>
-	  <kbd>libxslt-devel</kbd> and
-	  <kbd>perl-XML-LibXML-Common</kbd>. Unfortunately you won't get a perl
-	  api for libxslt. Get one from <a
-	  href="http://search.cpan.org/~msergeant/XML-LibXSLT-1.58/">cpan.org</a>. We
-	  are forced to use a very old version since Red Hat only support very
-	  old versions of the other packages. Choose a newer one if your
-	  system supports it!
-	</li>
       </ol>
     </div>
 
@@ -190,7 +206,7 @@
 
       <p>Ensure that Apache HTTPD and Apache Tomcat6 both starts with the
       operating system. A requisite for the following is that they are healthy,
-      up and running. I assume they are are running on port numbers 80 and 8080
+      up and running. We assume they that they are running on port numbers 80 and 8080
       respectively on a server called <kbd>mei.example.org</kbd>.</p>
 
       <ol>
