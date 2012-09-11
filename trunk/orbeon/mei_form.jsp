@@ -2,6 +2,14 @@
 <%@page import="java.io.*"%>
 <%@page import="org.apache.log4j.*"%>
 <%
+
+// This script does just one thing. When called it reads a URI from the
+// request and it will then retrieve the corresponding content and parse it
+// under the assumption that it is a well formed XML document. The parser is
+// then executing all XInclude statements in the document.
+//
+// The whole lot is then deliverd via the response object.
+
 request.setCharacterEncoding("UTF-8");
 
 response.setContentType("text/xml");
