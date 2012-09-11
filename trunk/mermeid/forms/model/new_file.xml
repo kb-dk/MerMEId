@@ -32,12 +32,8 @@
       </notesStmt>
       <sourceDesc>
         <source xml:id="" analog="frbr:manifestation">
-          <identifier analog=""/>
           <titleStmt>
             <title xml:id=""/>
-            <respStmt>
-              <persName role="" xml:id=""/>
-            </respStmt>
           </titleStmt>
           <pubStmt>
             <respStmt>
@@ -58,22 +54,6 @@
             </watermark>
             <physMedium/>
           </physDesc>
-          <notesStmt>
-            <annot type="source_description" xml:id=""/>
-            <annot type="links" xml:id="">
-              <ptr target="" mimetype="" xl:title="" xml:id=""/>
-            </annot>
-          </notesStmt>
-          <classification>
-            <termList>
-              <term classcode="DcmContentClass"/>
-              <term classcode="DcmPresentationClass"/>
-              <term classcode="DcmAuthorityClass"/>
-              <term classcode="DcmScoringClass"/>
-              <term classcode="DcmStateClass"/>
-              <term classcode="DcmCompletenessClass"/>
-            </termList>
-          </classification>
           <itemList/>
           <componentGrp/>
           <relationList>
@@ -107,23 +87,6 @@
             <geogName xml:id=""/>            
           </creation>
           <p/>
-          <eventList type="history" xml:id="">
-            <event evidence="" xml:id="">
-              <title xml:id=""/>
-              <date reg="" notbefore="" notafter=""/>
-            </event>
-          </eventList>
-          <eventList type="performances" xml:id="">
-            <event evidence="" xml:id="">
-              <title xml:id=""/>
-              <date reg="" notbefore="" notafter=""/>
-              <geogName role="venue" xml:id=""/>
-              <geogName role="place" xml:id=""/>
-              <corpName role="ensemble" xml:id=""/>
-              <persName role="conductor" xml:id=""/>
-              <persName role="soloist" xml:id=""><ref target=""/></persName>
-            </event>
-          </eventList>
         </history>
         <langUsage>
           <language xml:id="en">English</language>
@@ -141,9 +104,6 @@
           <expression xml:id="" analog="frbr:expression" n="">
             <titleStmt>
               <title xml:lang="en" xml:id=""/>
-              <respStmt>
-                <persName role="" xml:id=""/>
-              </respStmt>
             </titleStmt>
             <history xml:id="">
               <creation xml:id="">
@@ -151,57 +111,11 @@
                 <geogName xml:id=""/>            
               </creation>
               <p/>
-              <eventList type="performances" xml:id="">
-                <event xml:id="">
-                  <title xml:id=""/>
-                  <date reg="" notbefore="" notafter=""/>
-                  <geogName role="venue" xml:id=""/>
-                  <geogName role="place" xml:id=""/>
-                  <corpName role="ensemble" xml:id=""/>
-                  <persName role="conductor" xml:id=""/>
-                  <persName role="soloist" xml:id=""><ref target=""/></persName>
-                </event>
-              </eventList>
             </history>
-            <key pname="" accid="" mode=""/>
-            <tempo/>
-            <meter meter.count="" meter.unit="" meter.sym=""/>
-            <perfMedium analog="marc:048" authority="marcmusperf" xml:id="">
-              <ensemble xml:id="">
-                <instrVoice reg="" xml:id=""/>
-                <performer xml:id="">
-                  <instrVoice reg="" count="1" solo="false" xml:id=""/>
-                </performer>
-              </ensemble>
-              <performer xml:id="">
-                <instrVoice reg="" count="1" solo="false" xml:id=""/>
-              </performer>
-            </perfMedium>
-            <classification>
-              <termList>
-                <term/>
-              </termList>
-            </classification>
-            <castList>
-              <castItem xml:id="">
-                <role xml:id="">
-                  <ref target="">
-                    <name xml:lang="en" xml:id=""/>  
-                  </ref>
-                </role>
-                <roleDesc xml:lang="en" xml:id=""/>
-              </castItem>
-            </castList>
-            <incip xml:id="">     
-              <incipText xml:id=""> 
-                <p xml:lang="en"/>
-              </incipText>
-              <graphic target="" xl:title="" targettype="lowres" xml:id=""/>
-            </incip>
+            <perfMedium analog="marc:048" authority="marcmusperf" xml:id=""/>
+            <incip xml:id=""/>
             <componentGrp/>
-            <relationList>
-              <relation rel="hasReproduction" label="Edited score" targettype="edited_score" target="" xml:id=""/> <!-- link to external edition -->
-            </relationList>
+            <relationList/>
           </expression>
         </expressionList>
       </work>

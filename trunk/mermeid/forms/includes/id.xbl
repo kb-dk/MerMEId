@@ -30,14 +30,14 @@
     
     <xbl:template>
       <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
-        <xf:group ref=".[instance('parameters')/dcm:show_id='true']">
+        <xf:group ref=".[instance('parameters')/dcm:show_id='true' and (@xml:id)]">
           <xf:group appearance="xxforms:internal" xxbl:scope="inner">
             <xxforms:variable name="binding" as="node()?">
               <xxforms:sequence select="." xxbl:scope="outer"/>
             </xxforms:variable>
             <h:a class="dcm_id"><img src="/../editor/images/id.png" border="0" 
               alt="ID" class="id_card"/><h:span class="comment">ID: <xf:output 
-                value="if ($binding/@xml:id) then $binding/@xml:id else 'ID missing'"/></h:span></h:a>          
+                value="$binding/@xml:id"/></h:span></h:a>          
           </xf:group>
         </xf:group>
       </xf:group>

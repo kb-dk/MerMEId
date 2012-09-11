@@ -1028,7 +1028,7 @@
 				</xsl:for-each>
 				
 				<xsl:for-each select="m:notesStmt">
-					<xsl:for-each select="m:annot[//text()]">
+					<xsl:for-each select="m:annot[text()]">
 						<p>
 							<xsl:apply-templates select="."/>	    
 						</p>
@@ -1051,7 +1051,7 @@
 				<!-- source location and identifiers -->				
 				<xsl:for-each 
 					select="m:physDesc/m:physLoc">					
-					<xsl:for-each select="m:repository[m:corpName[text()]|m:identifier[text()]]">
+					<xsl:for-each select="m:repository[m:corpName[text()]|m:identifier[text() and (not(@analog) or @analog='')]]">
 						<div>						
 							<xsl:for-each select="m:corpName[text()]|m:identifier[text() and (not(@analog) or @analog='')]">
 								<xsl:choose>

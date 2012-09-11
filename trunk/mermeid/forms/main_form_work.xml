@@ -26,6 +26,7 @@
 							nodeset="m:title[@type='main' or not(@type)]" 
 							index="main_titles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[1]"/>
+						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
@@ -43,6 +44,7 @@
 							nodeset="m:title[@type='alternative']" 
 							index="alternative_titles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='alternative']"/>
+						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>	
@@ -60,6 +62,7 @@
 							nodeset="m:title[@type='subordinate']" 
 							index="subtitles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='subordinate']"/>
+						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
@@ -77,6 +80,7 @@
 							nodeset="m:title[@type='uniform']" 
 							index="uniform_titles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"/>
+						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
@@ -94,6 +98,7 @@
 							nodeset="m:title[@type='original']" 
 							index="original_titles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='original']"/>
+						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
@@ -113,6 +118,7 @@
 							nodeset="m:title[@type='text_source']" 
 							index="text_sources"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"/>
+						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
@@ -224,6 +230,7 @@
 						nodeset="m:persName" 
 						index="relators-repeat"
 						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
+					<dcm:id ref="."/>
 					<dcm:attribute-editor ref="."/>
 					<h:br/>
 				</xf:repeat>
@@ -276,6 +283,7 @@
 								nodeset="m:ptr" 
 								index="general-notesstmt-annot-repeat-ptr"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+							<dcm:id ref="."/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>

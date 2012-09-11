@@ -119,7 +119,7 @@
     <!-- load empty instance -->
     <xf:submission id="load-new-submission"
       method="get" serialization="none" validate="false"
-      resource="/editor/forms/mei/model/new_file.xml"
+      resource="{instance('parameters')/dcm:form_home}model/new_file.xml"
       replace="instance" instance="data-instance"/>
     
     <xf:submission id="load-data-submission" 

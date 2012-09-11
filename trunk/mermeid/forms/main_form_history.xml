@@ -12,6 +12,10 @@
 	
 	<h:div class="inputdiv">
 		
+		<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work"
+			nodeset="m:history"
+			label="Add history data"
+			origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:history"/>
 		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:history">
 			<h:fieldset>
 				<h:legend>Creation</h:legend>
@@ -24,6 +28,10 @@
 					<xf:label class="fixed_width_mediumlong">Place of composition </xf:label>
 				</xf:input>
 				<dcm:attribute-editor ref="."/>
+				<dcm:create  
+					nodeset="m:p"
+					label="Add creation note"
+					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:p"/>
 				<xf:textarea ref="m:p" class="notes">
 					<xf:label class="blocklabel">Creation note <h:a class="help">?<h:span class="comment">Text
 						explaining details and circumstances concerning the work's genesis and history</h:span></h:a>
@@ -33,28 +41,33 @@
 				</xf:textarea>
 				<dcm:attribute-editor ref="m:p"/>
 			</h:fieldset>
+			
 			<h:fieldset>
 				<h:legend>Time line <h:a class="help">?<h:span class="comment">A list of events related to the work. The list
 					may contain all kinds of events, whether related to the compositional process, 
 					the work's transmission, its reception or other aspects of its history</h:span></h:a>
+					<dcm:id ref="m:eventList[@type='history']"/>
 					<dcm:attribute-editor ref="m:eventList[@type='history']"/>
 				</h:legend>
-				<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:history" 
+				<h:div class="vertical_spacer"/>
+				<dcm:create  
 					nodeset="m:eventList[@type='history']"
 					label="Add event"
-					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history"/>
-				<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']" 
+					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']"/>
+				<dcm:create ref="m:eventList[@type='history']" 
 					nodeset="m:event"
 					label="Add event"
-					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:event"/>
+					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event"/>
 				
 				<xf:repeat nodeset="m:eventList[@type='history']/m:event" id="repeat-work-history">
 					<h:fieldset>
 						<h:legend>Event <dcm:element-buttons 
-							triggers="all" 
+							triggers="up down copy add" 
 							nodeset="m:event" 
 							index="repeat-work-history"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event"/>
+							<dcm:delete-parent-with-last index="repeat-work-history"/>
+							<dcm:id ref="."/>
 							<dcm:attribute-editor ref="."/>
 							<h:br clear="all"/>
 						</h:legend>
@@ -75,26 +88,27 @@
 			<!-- List work level performances -->
 			<h:fieldset>
 				<h:legend>Performances
-					<dcm:attribute-editor ref="."/>
+					<dcm:id ref="m:eventList[@type='performances']"/>
+					<dcm:attribute-editor ref="m:eventList[@type='performances']"/>
 				</h:legend>
-				<h:br/>
+				<h:div class="vertical_spacer"/>
+				<h:div class="strong">
+					Level: Work 
+					<h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
+						Listing performances of individual versions requires that versions  
+						have been defined (on the Music tab) and that they have been given a title 
+						in order to make them recognizable as versions.</h:span></h:a>
+				</h:div>
 				<dcm:create 
 					nodeset="m:eventList[@type='performances']"
 					label="Add performance"
-					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']"/>
+					origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']"/>
 				<dcm:create ref="m:eventList[@type='performances']" 
 					nodeset="m:event"
 					label="Add performance"
-					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+					origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
 				<xf:group ref="m:eventList[@type='performances']">
-					<h:div class="strong">
-						Level: Work 
-						<h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
-							Listing performances of individual versions requires that versions  
-							have been defined (on the Music tab) and that they have been given a title 
-							in order to make them recognizable as versions.</h:span></h:a>
-					</h:div>
-					<h:br/>
+					<h:div class="vertical_spacer"/>
 					<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
 						<xf:repeat nodeset="m:event" id="repeat-work-performance">
 							<h:tr class="hoverclass">
@@ -102,7 +116,6 @@
 									<xf:output value="position()"/>&#160;
 								</h:td>
 								<h:td>
-									<dcm:id ref="."/>&#160;
 									<xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
 									<xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
 									<xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
@@ -130,8 +143,9 @@
 									</xf:group>
 								</h:td>
 								<h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add" nodeset="m:event" index="repeat-work-performance" 
-									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+									origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
 									<dcm:delete-parent-with-last index="repeat-work-performance"/>
+									<dcm:id ref="."/>
 									<dcm:attribute-editor ref="."/>
 								</h:td>
 							</h:tr>
@@ -154,23 +168,26 @@
 							<xf:group ref=".[normalize-space($title)!='']">
 								<xf:output value="concat(' - ',$title)"/>
 							</xf:group>
-							<dcm:attribute-editor ref="."/>
+							<dcm:id ref="m:eventList[@type='performances']"/>
+							<dcm:attribute-editor ref="m:eventList[@type='performances']"/>
 						</h:legend>
-						<h:p class="blocklabel">
+						<h:div class="vertical_spacer"/>
+						<h:div class="strong">
 							Level: Version 
 							<h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
 								Listing performances of individual versions requires that versions  
 								have been defined (on the Music tab) and that they have been given a title 
 								in order to make them recognizable as versions.</h:span></h:a>
-						</h:p>
+						</h:div>
 						<dcm:create ref=".[not(m:eventList[@type='performances'])]"
 							nodeset="m:eventList"
 							label="Add performance"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']"/>
+							origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']"/>
 						<dcm:create ref="m:eventList[@type='performances']" 
 							nodeset="m:event"
 							label="Add performance"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+							origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+						<h:div class="vertical_spacer"/>
 						<xf:group ref="m:eventList[@type='performances']">
 							<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
 								<xf:repeat nodeset="m:event" id="repeat-expression-performance">
@@ -179,7 +196,6 @@
 											<xf:output value="position()"/>&#160;
 										</h:td>
 										<h:td>
-											<dcm:id ref="."/>&#160;
 											<xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
 											<xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
 											<xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
@@ -202,8 +218,9 @@
 											</xf:trigger>
 										</h:td>
 										<h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add" nodeset="m:event" index="repeat-expression-performance" 
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+											origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
 											<dcm:delete-parent-with-last index="repeat-expression-performance"/>
+											<dcm:id ref="."/>
 											<dcm:attribute-editor ref="."/>
 										</h:td>
 									</h:tr>
