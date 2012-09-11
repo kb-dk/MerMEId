@@ -47,8 +47,8 @@
 								"Discarded version". Enter a version title only if you 
 								want to distinguish different versions of the work. 
 								Otherwise leave empty.</h:span></h:a>
-							<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" 
-								alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+							<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" 
+								alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
 						</h:div>
 						<xf:group ref="m:titleStmt">
 							<xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
@@ -171,11 +171,14 @@
 							nodeset="m:graphic"
 							label="Add link to graphics"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>                        
+						<xf:group ref=".[m:incip/m:graphic]">
+							<h:span class="blocklabel">URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
+								"http://example.com/incipits/lowres/116.png"</h:span></h:a></h:span>
+						</xf:group>
 						<xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
 							<h:div>
 								<xf:input ref="@target" class="maxlong">
-									<xf:label>URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
-										"http://example.com/incipits/lowres/116.png"</h:span></h:a></xf:label>
+									<xf:label/>
 								</xf:input>
 								<xf:select1 ref="@targettype" class="auto_length">
 									<xf:item>
@@ -225,7 +228,7 @@
 						</xf:repeat>
 						
 						<h:span class="blocklabel">Text incipit
-							<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+							<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
 						</h:span>
 						<dcm:create ref="m:incip"
 							nodeset="m:incipText"
@@ -280,7 +283,7 @@
 						</xf:repeat>
 						<dcm:create 
 							nodeset="m:respStmt"
-							label="Add list of persons"
+							label="Add person"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt"/>
 						<dcm:create ref="m:respStmt"
 							nodeset="m:persName"
@@ -298,11 +301,15 @@
 						label="Add link to edited score"
 						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']"/>
 					<xf:group ref="m:relationList[m:relation[@rel='hasReproduction' and @targettype='edited_score']]">
+						<xf:group ref=".[m:relation[@rel='hasReproduction' and @targettype='edited_score']]">
+							<h:span class="blocklabel">URI <h:a class="help">?<h:span class="comment">Location of an external, edited score.
+								Not for digital representations of items listed as "sources"</h:span></h:a>
+							</h:span>
+						</xf:group>
 						<xf:repeat nodeset="m:relation[@rel='hasReproduction' and @targettype='edited_score']" id="edited_score-repeat">
 							<h:div>
 								<xf:input ref="@target" class="long">
-									<xf:label>URI <h:a class="help">?<h:span class="comment">Location of an external, edited score (this movement only).
-										Not for digital representations of items listed as "Sources"</h:span></h:a></xf:label>
+									<xf:label/>
 								</xf:input>
 								<xf:input ref="@label">
 									<xf:label>Description <h:a class="help">?<h:span class="comment">Explanatory text for the link to the resource, 

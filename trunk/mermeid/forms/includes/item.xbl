@@ -81,7 +81,7 @@
                     
                     <xf:group ref="$binding">
                         <xf:input ref="m:titleStmt/m:title" class="maxlong">
-                            <xf:label class="fixed_width">Short description <h:a class="help">?<h:span 
+                            <xf:label>Short description <h:a class="help">?<h:span 
                                 class="comment">An optional heading identifying the item</h:span></h:a>
                             </xf:label>
                         </xf:input>
@@ -269,7 +269,7 @@
                                             <h:legend>Title page 
                                                 <h:a class="help">?<h:span class="comment">Transcription of the item's title page. Multiple title pages
                                                     may be added if necessary</h:span></h:a>
-                                                <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                                                <!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
                                             </h:legend>
                                             <xf:repeat nodeset="m:titlePage" id="physdesc-titlepage">
                                                 <xf:input ref="@label">
@@ -390,7 +390,7 @@
                                         Information on the item's physical appearance and condition should be given in the 
                                         "physical description" area.
                                     </h:span></h:a> 
-                                        <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                                        <!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
                                     </h:span>
                                     <xf:textarea ref="m:annot[@type='source_description']" class="mediumheight"/>
                                     <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
@@ -492,7 +492,7 @@
                                                                                 <h:legend>Title page 
                                                                                     <h:a class="help">?<h:span class="comment">Transcription of the item's title page. Multiple title pages
                                                                                         may be added if necessary</h:span></h:a>
-                                                                                    <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                                                                                    <!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
                                                                                 </h:legend>
                                                                                 <xf:repeat nodeset="m:titlePage" id="component-physdesc-titlepage">
                                                                                     <xf:input ref="@label">
@@ -582,7 +582,7 @@
                                                                                 Information on the item's physical appearance and condition should be given in the 
                                                                                 "physical description" area below.
                                                                             </h:span></h:a> 
-                                                                                <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                                                                                <!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
                                                                             </h:span>
                                                                             <xf:textarea ref="m:annot[@type='source_description']"/>
                                                                             <dcm:attribute-editor ref="m:annot[@type='source_description']"/>

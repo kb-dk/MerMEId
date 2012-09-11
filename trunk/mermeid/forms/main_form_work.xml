@@ -16,7 +16,7 @@
 			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt"
 				id="repeat-title">
 				<h:div class="blocklabel">Main title 
-					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+					<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
 				</h:div>
 				<xf:repeat nodeset="m:title[@type='main' or not(@type)]" id="main_titles" class="input_group">
 					<h:div>
@@ -33,7 +33,7 @@
 				
 				<xf:group ref=".[m:title[@type='alternative']]">
 					<h:div class="blocklabel">Alternative title
-						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
 					</h:div>
 				</xf:group>
 				<xf:repeat nodeset="m:title[@type='alternative']" id="alternative_titles" class="input_group">
@@ -51,7 +51,7 @@
 				
 				<xf:group ref=".[m:title[@type='subordinate']]">
 					<h:div class="blocklabel">Subtitle
-						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
 					</h:div>
 				</xf:group>
 				<xf:repeat nodeset="m:title[@type='subordinate']" id="subtitles" class="input_group">
@@ -69,7 +69,7 @@
 				
 				<xf:group ref=".[m:title[@type='uniform']]">
 					<h:div class="blocklabel">Uniform title
-						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
 					</h:div>
 				</xf:group>
 				<xf:repeat nodeset="m:title[@type='uniform']" id="uniform_titles" class="input_group">
@@ -87,7 +87,7 @@
 				
 				<xf:group ref=".[m:title[@type='original']]">
 					<h:div class="blocklabel">Original title
-						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
 					</h:div>
 				</xf:group>
 				<xf:repeat nodeset="m:title[@type='original']" id="original_titles" class="input_group">
@@ -107,7 +107,7 @@
 					<h:div class="blocklabel">Text source
 						<h:a class="help">?<h:span class="comment">The title of a textual source for a sung or 
 							recited text used in the work, e.g. "Psalm 101"</h:span></h:a>
-						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
 					</h:div>
 				</xf:group>
 				<xf:repeat nodeset="m:title[@type='text_source']" id="text_sources" class="input_group">
@@ -248,8 +248,8 @@
 				<xf:textarea ref="m:annot[@type='general_description']" class="notes">
 					<xf:label class="blocklabel">General work description 
 						<h:a class="help">?<h:span class="comment">A general description of or introduction to the work</h:span></h:a>
-						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span 
-							class="comment">HTML markup and special characters allowed</h:span></h:a>
+						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span 
+							class="comment">HTML markup and special characters allowed</h:span></h:a>-->
 					</xf:label>
 				</xf:textarea>
 				<dcm:attribute-editor ref="m:annot[@type='general_description']"/>
