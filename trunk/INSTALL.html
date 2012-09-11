@@ -359,7 +359,7 @@ The filter is meant to operate on top of an eXist XML database
 
 -->
 
-  &lt;entry key="exist.host">disdev-01.kb.dk&lt;/entry>
+  &lt;entry key="exist.host">mei.example.org&lt;/entry>
   &lt;entry key="exist.port">8080&lt;/entry>
   &lt;entry key="exist.realm">exist&lt;/entry>
   &lt;entry key="exist.context">/exist/rest/db/dcm&lt;/entry>
@@ -372,7 +372,7 @@ get is the retrieval filter
 
 -->
 
-  &lt;entry key="get">http://disdev-01.kb.dk/editor/transforms/mei/filter_get.xsl&lt;/entry>
+  &lt;entry key="get">http://mei.example.org/editor/transforms/mei/filter_get.xsl&lt;/entry>
   &lt;entry key="get.mime">application/xml&lt;/entry>
   &lt;entry key="get.charset">UTF-8&lt;/entry>
 
@@ -382,7 +382,7 @@ put is for updating
 
 -->
 
-  &lt;entry key="put">http://disdev-01.kb.dk/editor/transforms/mei/filter_put.xsl&lt;/entry>
+  &lt;entry key="put">http://mei.example.org/editor/transforms/mei/filter_put.xsl&lt;/entry>
   &lt;entry key="put.mime">application/xml&lt;/entry>
   &lt;entry key="put.charset">UTF-8&lt;/entry>
 
@@ -392,22 +392,22 @@ del is for removing stuff
 
 -->
 
-  &lt;entry key="del.redirect">http://disdev-01.kb.dk/storage/list_files.xq&lt;/entry>
+  &lt;entry key="del.redirect">http://mei.example.org/storage/list_files.xq&lt;/entry>
 
 &lt;!-- 
 
 Create is for what it seems to be. A URI that is good to use for creating new
 documents. We're doing that using uri templates (RFC6570). The URI should look like
 
-http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://disdev-01.kb.dk/form/dcm/&amp;doc=cnw0361.xml
+http://mei.example.org/orbeon/xforms-jsp/mei-form/?uri=http://mei.example.org/form/dcm/&amp;doc=cnw0361.xml
 
 when ready
 
 -->
 
-   &lt;entry key="create">http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}&lt;/entry>
-   &lt;entry key="create.uri">http://disdev-01.kb.dk/editor/forms/mei/edit-work-case.xml&lt;/entry>
-   &lt;entry key="create.dir">http://disdev-01.kb.dk/filter/&lt;/entry>
+   &lt;entry key="create">http://mei.example.org/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}&lt;/entry>
+   &lt;entry key="create.uri">http://mei.example.org/editor/forms/mei/edit-work-case.xml&lt;/entry>
+   &lt;entry key="create.dir">http://mei.example.org/filter/&lt;/entry>
 
 &lt;/properties>
 
@@ -417,10 +417,10 @@ when ready
 &lt;parameters xmlns="http://www.kb.dk/dcm">
   &lt;document_root>storage/dcm/&lt;/document_root>
   &lt;exist_dir>/storage/&lt;/exist_dir>
-  &lt;orbeon_dir>http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/&lt;/orbeon_dir>
-  &lt;form_home>http://disdev-01.kb.dk/editor/forms/mei/&lt;/form_home>
-  &lt;crud_home>http://disdev-01.kb.dk/filter/&lt;/crud_home>
-  &lt;server_name>http://disdev-01.kb.dk/&lt;/server_name>
+  &lt;orbeon_dir>http://mei.example.org/orbeon/xforms-jsp/mei-form/&lt;/orbeon_dir>
+  &lt;form_home>http://mei.example.org/editor/forms/mei/&lt;/form_home>
+  &lt;crud_home>http://mei.example.org/filter/&lt;/crud_home>
+  &lt;server_name>http://mei.example.org/&lt;/server_name>
   &lt;xml_file/>
   
   &lt;!-- default editor settings -->
