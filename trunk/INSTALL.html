@@ -297,18 +297,10 @@
 
 Alias "/editor" "/home/xml-store/editor
 &lt;Location "/editor">
-        Options Indexes Includes FollowSymLinks ExecCGI
-        AddHandler cgi-script .cgi
+        Options None
         Order allow,deny
         Allow from all
 &lt;/Location>
-
-RewriteEngine on
-RewriteLogLevel 8
-RewriteLog /var/log/apache2/rewrite_log
-
-RewriteCond %{REQUEST_URI} ^/form/.*$
-RewriteRule ^/form/(.*)$     http://mei.example.org/editor/scripts/formulate-exist.cgi?file=http://mei.example.org/storage/$1 [P]
 
 ProxyPass /storage "ajp://mei.example.org:8009/exist/rest/db"
 ProxyPass /orbeon  "ajp://mei.example.org:8009/orbeon"
