@@ -145,9 +145,10 @@
 	    further ado.
 	  </p>
 	  <p>
-	    In the following we assume that tomcat lives in <kbd>/&lt;PATH
-	    TO&gt;/tomcat6</kbd>
+	    In the following we assume that tomcat lives in 
 	  </p>
+	  <pre>/&lt;PATH TO&gt;/tomcat6</pre>
+
 	  <ol type="i">
 	    <li>
 	      <strong>Install orbeon:</strong> We are using version 3.9.0. 
@@ -182,11 +183,11 @@
 		cd eXist
 		./build.sh dist-war
 	      </pre>
-	      That will create a file called
-	      <kbd>dist/exist-1.4.1*.war</kbd>. This file should be installed as
-	      exist.war in you tomcat6.
+	      That will create a file called something like
+	      <kbd>dist/exist-&lt;version number&gt;.war</kbd>.
+	      This file should be installed as <kbd>exist.war</kbd> in you tomcat6.
 	      <pre>
-		cp dist/exist-1.4.1*.war /&lt;PATH TO&gt;/tomcat6/webapps/	    
+		cp dist/exist-1.4.1*.war /&lt;PATH TO YOUR&gt;/tomcat6/webapps/exist.war	    
 	      </pre>
 	    </li>
 	  </ol>
