@@ -985,7 +985,8 @@
 				<!-- generate decreasing headings -->
 				<xsl:variable name="level">
 					<xsl:choose>
-						<xsl:when test="count(ancestor-or-self::*[name()='componentGrp' or name()='itemList']) &gt; 0">
+						<xsl:when test="name(..)='componentGrp'">5</xsl:when>
+						<xsl:when test="count(ancestor-or-self::*[name()='itemList']) &gt; 0">
 							<xsl:value-of select="count(ancestor-or-self::*[name()='componentGrp' or name()='itemList'])+3"/>
 						</xsl:when>
 						<xsl:otherwise>3</xsl:otherwise>
@@ -1097,7 +1098,8 @@
 					</div>
 				</xsl:for-each>
 								
-				<xsl:apply-templates select="m:componentGrp|m:itemList"/>
+				<xsl:apply-templates select="m:componentGrp"/>
+				<xsl:apply-templates select="m:itemList"/>
 				
 				<xsl:if test="m:identifier[text()]">
 					<div>
