@@ -334,7 +334,7 @@
 				</xsl:for-each>
 				
 				<!-- components (movements) -->
-				<xsl:for-each select="m:componentGrp[normalize-space(concat(*//title[.!=''][1],*//tempo[.!=''][1],*//@n[.!=''][1],*//@target[.!=''][1]))]">
+				<xsl:for-each select="m:componentGrp[normalize-space(concat(*//title[.!=''][1],*//tempo[.!=''][1],*//@n[.!=''][1],*//@target[.!=''][1],*//text()[1]))]">
 					
 					<xsl:variable name="mdiv_id" 
 						select="concat('movements',generate-id(),position())"/>
@@ -524,7 +524,7 @@
 					<xsl:value-of select="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()][1]"/>
 				</p>
 			</xsl:if>
-			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt//text()">
+			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:title/text()">
 				<p><em>Series:</em><br/></p> 
 				<p>
 					<xsl:for-each select="m:meiHead/m:fileDesc/m:seriesStmt/m:title">
@@ -751,9 +751,12 @@
 		</p>
 	</xsl:template>
 	
-	<xsl:template match="m:key">
+	<xsl:template match="m:key[@pname or @accid or @mode]">
 		<p>
-			<span class="label">Key: </span><xsl:apply-templates/>
+			<span class="label">Key: </span>
+			<xsl:value-of select="translate(@pname,'abcdefgh','ABCDEFGH')"/><xsl:text> </xsl:text> 
+			<xsl:apply-templates select="@accid"/><xsl:text> </xsl:text>
+			<xsl:value-of select="@mode"/>
 		</p>
 	</xsl:template>
 	
