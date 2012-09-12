@@ -29,12 +29,12 @@
             <h:td class="number_cell">
               <xf:output value="position()"/>&#160;
               <xf:group ref=".[not(*)]">
-                <h:a class="help_plain"><h:img src="http:/editor/images/link.png" alt="External source description (link)"/><h:span 
-                  class="comment">The description of this source is contained in a different file.<h:br/> 
-                  This is a link to the external source description.</h:span></h:a>&#160;
+                <h:img src="http:/editor/images/link.png" title="External source description (link)"/>&#160;
               </xf:group>
             </h:td>
             <h:td>
+              <dcm:id ref="."/>
+              &#160;
               <xf:group ref=".[*]">
                 <!-- source data included in this file -->
                 <xf:output value="m:titleStmt/m:title"/>
@@ -58,7 +58,7 @@
               </xf:group>
               &#160;
               
-<!-- reverse linking disabled due to performance problems 
+<!-- reverse linking disabled due to performance problems
   
               <dcm:linked-sources id="linking_sources"
                 query="concat(
@@ -123,7 +123,6 @@
                   </xf:action>
               </xf:trigger><dcm:element-buttons triggers="remove" nodeset="m:source" index="repeat-sources" 
                 origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/>
-              <dcm:id ref="."/>
               <dcm:attribute-editor ref="."/>
             </h:td>
           </h:tr>

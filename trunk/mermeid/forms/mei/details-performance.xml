@@ -128,7 +128,6 @@
                                 </xf:select1>
                             </h:span>
                             <!-- end selection="open" -->
-                            <dcm:id ref="."/>
                             <dcm:attribute-editor ref="m:title"/>
                             
                             <h:br clear="all"/>
@@ -137,24 +136,21 @@
                                 <xf:label class="fixed_width">Date</xf:label>
                             </dcm:date-editor>
                             
-                            <xf:input ref="m:geogName[@role='venue']" class="maxlong">
+                            <xf:input ref="m:geogName[@role='venue']" class="long">
                                 <xf:label class="fixed_width">Venue</xf:label>
                             </xf:input>
-                            <dcm:id ref="m:geogName[@role='venue']"/>
                             <dcm:attribute-editor ref="m:geogName[@role='venue']"/>
                             <h:br clear="all"/>
                             
-                            <xf:input ref="m:geogName[@role='place']" class="maxlong">
+                            <xf:input ref="m:geogName[@role='place']" class="long">
                                 <xf:label class="fixed_width">Place</xf:label>
                             </xf:input>
-                            <dcm:id ref="m:geogName[@role='place']"/>
                             <dcm:attribute-editor ref="m:geogName[@role='place']"/>
                             <h:br clear="all"/>
                             
-                            <xf:input ref="m:corpName[@role='ensemble']" class="maxlong">
+                            <xf:input ref="m:corpName[@role='ensemble']" class="long">
                                 <xf:label class="fixed_width">Ensemble</xf:label>
                             </xf:input>
-                            <dcm:id ref="m:corpName[@role='ensemble']"/>
                             <dcm:attribute-editor ref="m:corpName[@role='ensemble']"/>
                             
                             <h:div class="persname-box">
@@ -172,7 +168,6 @@
                                     <dcm:relator ref="."/>
                                     <dcm:element-buttons triggers="add delete" nodeset="m:persName" index="performance-relators-repeat"
                                         origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:persName[1]"/>
-                                    <dcm:id ref="."/>
                                     <dcm:attribute-editor ref="."/>
                                     <h:br/>
                                 </xf:repeat>
@@ -224,7 +219,7 @@
                                                         at="index('repeat-review')"/>
                                                     <xf:dispatch name="xforms-value-changed" target="form-group"/>
                                                 </xf:action>
-                                            </xf:trigger>&#160;                                            
+                                            </xf:trigger>                                            
                                             <dcm:id ref="."/>
                                             <dcm:attribute-editor ref="."/>
                                         </h:legend>
@@ -261,7 +256,7 @@
                                             <xf:label class="fixed_width">Date</xf:label>
                                         </dcm:date-editor>
                                         
-                                        <xf:input ref="t:author" class="long">
+                                        <xf:input ref="t:author" class="medium_long">
                                             <xf:label class="fixed_width">Author</xf:label>
                                         </xf:input>
                                         <dcm:attribute-editor ref="t:author"/>

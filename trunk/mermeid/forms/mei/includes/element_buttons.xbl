@@ -69,7 +69,7 @@
                 </xxf:variable>
                 
                 <h:span class="editmenu">
-                    <xf:group ref=".[contains($triggers,'up') or contains($triggers,'all')]" class="button_group">
+                    <xf:group ref=".[contains($triggers,'up') or contains($triggers,'all') or contains($triggers,'move')]" class="button_group">
                         <xf:group ref=".[count(preceding-sibling::*[local-name()=$local-name]) = 0]">
                             <h:img src="http:/editor/images/arrow_up_disabled.gif" class="button_patch"/><xf:output value="''"/>
                         </xf:group>
@@ -87,7 +87,7 @@
                             </xf:trigger>
                         </xf:group>
                     </xf:group>                    
-                    <xf:group ref=".[contains($triggers,'down') or contains($triggers,'all')]" class="button_group">
+                    <xf:group ref=".[contains($triggers,'down') or contains($triggers,'all') or contains($triggers,'move')]" class="button_group">
                         <xf:group ref=".[count(following-sibling::*[local-name()=$local-name]) = 0]">
                             <h:img src="http:/editor/images/arrow_down_disabled.gif" class="button_patch"/><xf:output value="''"/>
                         </xf:group>
@@ -139,7 +139,8 @@
                             <xf:trigger appearance="minimal">
                                 <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                                 <xf:action ev:event="DOMActivate">
-                                    <xf:delete nodeset="." at="index($index)"/>
+                                    <xf:delete ev:event="DOMActivate" nodeset="."
+                                        at="index($index)"/>
                                     <xf:dispatch name="xforms-value-changed" target="form-group"/>
                                 </xf:action>
                             </xf:trigger>

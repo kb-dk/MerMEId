@@ -16,7 +16,7 @@
 			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt"
 				id="repeat-title">
 				<h:div class="blocklabel">Main title 
-					<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+					<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
 				</h:div>
 				<xf:repeat nodeset="m:title[@type='main' or not(@type)]" id="main_titles" class="input_group">
 					<h:div>
@@ -26,14 +26,13 @@
 							nodeset="m:title[@type='main' or not(@type)]" 
 							index="main_titles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[1]"/>
-						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
 				
 				<xf:group ref=".[m:title[@type='alternative']]">
 					<h:div class="blocklabel">Alternative title
-						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
 					</h:div>
 				</xf:group>
 				<xf:repeat nodeset="m:title[@type='alternative']" id="alternative_titles" class="input_group">
@@ -44,14 +43,13 @@
 							nodeset="m:title[@type='alternative']" 
 							index="alternative_titles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='alternative']"/>
-						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>	
 				
 				<xf:group ref=".[m:title[@type='subordinate']]">
 					<h:div class="blocklabel">Subtitle
-						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
 					</h:div>
 				</xf:group>
 				<xf:repeat nodeset="m:title[@type='subordinate']" id="subtitles" class="input_group">
@@ -62,14 +60,13 @@
 							nodeset="m:title[@type='subordinate']" 
 							index="subtitles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='subordinate']"/>
-						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
 				
 				<xf:group ref=".[m:title[@type='uniform']]">
 					<h:div class="blocklabel">Uniform title
-						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
 					</h:div>
 				</xf:group>
 				<xf:repeat nodeset="m:title[@type='uniform']" id="uniform_titles" class="input_group">
@@ -80,14 +77,13 @@
 							nodeset="m:title[@type='uniform']" 
 							index="uniform_titles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"/>
-						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
 				
 				<xf:group ref=".[m:title[@type='original']]">
 					<h:div class="blocklabel">Original title
-						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
 					</h:div>
 				</xf:group>
 				<xf:repeat nodeset="m:title[@type='original']" id="original_titles" class="input_group">
@@ -98,7 +94,6 @@
 							nodeset="m:title[@type='original']" 
 							index="original_titles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='original']"/>
-						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
@@ -107,7 +102,7 @@
 					<h:div class="blocklabel">Text source
 						<h:a class="help">?<h:span class="comment">The title of a textual source for a sung or 
 							recited text used in the work, e.g. "Psalm 101"</h:span></h:a>
-						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
 					</h:div>
 				</xf:group>
 				<xf:repeat nodeset="m:title[@type='text_source']" id="text_sources" class="input_group">
@@ -118,7 +113,6 @@
 							nodeset="m:title[@type='text_source']" 
 							index="text_sources"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"/>
-						<dcm:id ref="."/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
@@ -230,7 +224,6 @@
 						nodeset="m:persName" 
 						index="relators-repeat"
 						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
-					<dcm:id ref="."/>
 					<dcm:attribute-editor ref="."/>
 					<h:br/>
 				</xf:repeat>
@@ -248,8 +241,8 @@
 				<xf:textarea ref="m:annot[@type='general_description']" class="notes">
 					<xf:label class="blocklabel">General work description 
 						<h:a class="help">?<h:span class="comment">A general description of or introduction to the work</h:span></h:a>
-						<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span 
-							class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+						<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span 
+							class="comment">HTML markup and special characters allowed</h:span></h:a>
 					</xf:label>
 				</xf:textarea>
 				<dcm:attribute-editor ref="m:annot[@type='general_description']"/>
@@ -283,7 +276,6 @@
 								nodeset="m:ptr" 
 								index="general-notesstmt-annot-repeat-ptr"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']/m:ptr"/>
-							<dcm:id ref="."/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>

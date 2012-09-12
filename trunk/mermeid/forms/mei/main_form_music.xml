@@ -32,7 +32,7 @@
 							triggers="all" 
 							nodeset="m:expression" 
 							index="repeat-expression"
-							origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]"/>
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]"/>
 						<dcm:attribute-editor ref="."/>
 					</h:legend>
 										
@@ -47,8 +47,8 @@
 								"Discarded version". Enter a version title only if you 
 								want to distinguish different versions of the work. 
 								Otherwise leave empty.</h:span></h:a>
-							<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" 
-								alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+							<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" 
+								alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
 						</h:div>
 						<xf:group ref="m:titleStmt">
 							<xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
@@ -96,89 +96,43 @@
 							</h:span></h:a>
 						</h:legend>
 						
-						<h:div>     
-							<dcm:create 
-								nodeset="m:tempo"
-								label="Add tempo"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:tempo"/>
+						<h:div>                               
 							<xf:input ref="m:tempo" class="maxlong">
 								<xf:label class="fixed_width_short">Tempo</xf:label>
 							</xf:input>
-							<xf:trigger appearance="minimal" ref="m:tempo">
-								<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-								<xf:action ev:event="DOMActivate">
-									<xf:delete nodeset="."/>
-								</xf:action>
-							</xf:trigger>
 							<dcm:attribute-editor ref="m:tempo"/>
 							<h:br clear="all"/>  
-							<dcm:create 
-								nodeset="m:meter"
-								label="Add metre"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:meter"/>
-							<xf:group ref="m:meter">
-								<xf:input ref="@meter.count" class="minimal_length">
-									<xf:label class="fixed_width_short">Metre</xf:label>
-								</xf:input>/ <xf:input ref="@meter.unit" class="minimal_length"/> or symbol: 
-								<xf:select1	ref="@meter.sym" class="auto_length">
-									<xf:item>
-										<xf:label>-</xf:label>
-										<xf:value/>
-									</xf:item>
-									<xf:item>
-										<xf:label>common time</xf:label>
-										<xf:value>common</xf:value>
-									</xf:item>
-									<xf:item>
-										<xf:label>cut time</xf:label>
-										<xf:value>cut</xf:value>
-									</xf:item>
-								</xf:select1>
-								<xf:trigger appearance="minimal">
-									<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-									<xf:action ev:event="DOMActivate">
-										<xf:delete nodeset="."/>
-									</xf:action>
-								</xf:trigger>
-								<dcm:attribute-editor/>
-							</xf:group>
-							<h:br clear="all"/>
-							<dcm:create 
-								nodeset="m:key"
-								label="Add main key"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:key"/>
-							<xf:group ref="m:key">
-								<h:span class="fixed_width_short">Key</h:span>
-								<xi:include href="includes/key_select.xml" parse="xml"/>
-								<xf:trigger appearance="minimal">
-									<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-									<xf:action ev:event="DOMActivate">
-										<xf:delete nodeset="."/>
-									</xf:action>
-								</xf:trigger>
-								<dcm:attribute-editor/>
-							</xf:group>
+							<xf:input ref="m:meter/@meter.count" class="minimal_length">
+								<xf:label class="fixed_width_short">Metre</xf:label>
+							</xf:input>/ <xf:input ref="m:meter/@meter.unit" class="minimal_length"/> or symbol: 
+							<xf:select1	ref="m:meter/@meter.sym" class="auto_length">
+								<xf:item>
+									<xf:label>-</xf:label>
+									<xf:value/>
+								</xf:item>
+								<xf:item>
+									<xf:label>common time</xf:label>
+									<xf:value>common</xf:value>
+								</xf:item>
+								<xf:item>
+									<xf:label>cut time</xf:label>
+									<xf:value>cut</xf:value>
+								</xf:item>
+							</xf:select1>
+							<dcm:attribute-editor ref="m:meter"/>
 						</h:div>                                    
-						<h:span class="blocklabel strong">Incipits <h:a class="help">?<h:span class="comment">Both 
-							music and text incipits may be added. Music incipits can be added as links to graphic files
-							or entered using an encoding such as <em>Plaine &amp; Easie Code</em>.
-						</h:span></h:a></h:span>
-						<dcm:create nodeset="m:incip"
-							label="Add incipits"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip"/>                        
-						<h:span class="blocklabel">Music incipit graphics</h:span>
-						<dcm:create ref="m:incip"
-							nodeset="m:graphic"
-							label="Add link to graphics"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>                        
-						<xf:group ref=".[m:incip/m:graphic]">
-							<h:span class="blocklabel">URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
-								"http://example.com/incipits/lowres/116.png"</h:span></h:a></h:span>
+						<xf:group ref="m:key">
+							<h:span class="fixed_width_short">Key</h:span>
+							<xi:include href="includes/key_select.xml" parse="xml"/>
+							<dcm:attribute-editor ref="."/>
 						</xf:group>
+						<h:br clear="all"/>
+						<h:span class="blocklabel">Music incipit graphics</h:span>
 						<xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
 							<h:div>
 								<xf:input ref="@target" class="maxlong">
-									<xf:label/>
+									<xf:label>URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
+										"http://example.com/incipits/lowres/116.png"</h:span></h:a></xf:label>
 								</xf:input>
 								<xf:select1 ref="@targettype" class="auto_length">
 									<xf:item>
@@ -197,11 +151,11 @@
 								<h:a class="help">?<h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
 									web graphics, or "Print quality" for print quality graphics</h:span></h:a>
 								<dcm:element-buttons
-									triggers="add remove" 
+									triggers="add delete" 
 									nodeset="m:graphic" 
 									index="incipit-repeat"
 									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>
-								<dcm:attribute-editor/>
+								<dcm:attribute-editor ref="."/>
 							</h:div>
 						</xf:repeat>
 						
@@ -224,22 +178,14 @@
 								nodeset="m:incipCode" 
 								index="incipcode-repeat"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
-							<dcm:attribute-editor/>
+							<dcm:attribute-editor ref="."/>
 						</xf:repeat>
 						
 						<h:span class="blocklabel">Text incipit
-							<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+							<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
 						</h:span>
-						<dcm:create ref="m:incip"
-							nodeset="m:incipText"
-							label="Add text incipit"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>                        
-						<dcm:create ref="m:incip/m:incipText"
-							nodeset="m:p"
-							label="Add text incipit"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>                        
-						<xf:repeat nodeset="m:incip/m:incipText/m:p" id="text-incipit-repeat" class="input_group">
-							<xf:input ref="." class="maxlong"><xf:label/></xf:input> 
+						<xf:repeat nodeset="m:incip/m:incipText" id="text-incipit-repeat" class="input_group">
+							<xf:input ref="m:p" class="maxlong"><xf:label/></xf:input> 
 							<xf:select1 ref="@xml:lang" xxf:refresh-items="false">
 								<xf:label/>
 								<xf:itemset nodeset="instance('languages')/language">
@@ -248,42 +194,39 @@
 								</xf:itemset>
 							</xf:select1>                                
 							<dcm:element-buttons
-								triggers="add remove" 
-								nodeset="m:p" 
+								triggers="add delete" 
+								nodeset="m:incipText" 
 								index="text-incipit-repeat"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
-							<dcm:attribute-editor/>
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>
+							<dcm:attribute-editor ref="."/>
 							<h:br/>
 						</xf:repeat>
 					</h:fieldset>
 					
 					<xf:group ref="m:titleStmt">
-						<h:div class="blocklabel">Persons <h:a class="help">?<h:span 
+						<h:div class="blocklabel strong">Persons <h:a class="help">?<h:span 
 							class="comment">Persons with connection to this particular version
 							only, e.g. an arranger, or a text author in a collection of songs 
 							with different authors</h:span></h:a></h:div>	
+						<h:div class="blocklabel">
+							<h:span class="fixed_width_long">Name</h:span>
+							<h:span> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
+								or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+							</h:span>
+						</h:div>
 						<xf:repeat nodeset="m:respStmt/m:persName" id="version-relators-repeat">
-							<xf:group ref=".[position()=1]">
-								<h:div class="blocklabel">
-									<h:span class="fixed_width_long">Name</h:span>
-									<h:span> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
-										or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
-									</h:span>
-								</h:div>
-							</xf:group>
 							<dcm:relator ref="."/>
 							<dcm:element-buttons 
-								triggers="add" 
+								triggers="add remove" 
 								nodeset="m:persName" 
 								index="version-relators-repeat"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
-							<dcm:delete-parent-with-last index="version-relators-repeat"/>
 							<dcm:attribute-editor ref="."/>
 							<h:br/>
 						</xf:repeat>
 						<dcm:create 
 							nodeset="m:respStmt"
-							label="Add person"
+							label="Add list of persons"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt"/>
 						<dcm:create ref="m:respStmt"
 							nodeset="m:persName"
@@ -291,32 +234,20 @@
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
 					</xf:group>
 					
-					<h:span class="blocklabel">Edited score</h:span>
-					<dcm:create  
-						nodeset="m:relationList"
-						label="Add link to edited score"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList"/>
-					<dcm:create ref="m:relationList" 
-						nodeset="m:relation[@rel='hasReproduction' and @targettype='edited_score']"
-						label="Add link to edited score"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']"/>
 					<xf:group ref="m:relationList[m:relation[@rel='hasReproduction' and @targettype='edited_score']]">
-						<xf:group ref=".[m:relation[@rel='hasReproduction' and @targettype='edited_score']]">
-							<h:span class="blocklabel">URI <h:a class="help">?<h:span class="comment">Location of an external, edited score.
-								Not for digital representations of items listed as "sources"</h:span></h:a>
-							</h:span>
-						</xf:group>
+						<h:span class="blocklabel">Edited score</h:span>
 						<xf:repeat nodeset="m:relation[@rel='hasReproduction' and @targettype='edited_score']" id="edited_score-repeat">
 							<h:div>
 								<xf:input ref="@target" class="long">
-									<xf:label/>
+									<xf:label>URI <h:a class="help">?<h:span class="comment">Location of an external, edited score (this movement only).
+										Not for digital representations of items listed as "Sources"</h:span></h:a></xf:label>
 								</xf:input>
 								<xf:input ref="@label">
 									<xf:label>Description <h:a class="help">?<h:span class="comment">Explanatory text for the link to the resource, 
 										e.g. "Carl Nielsen Edition, full score"</h:span></h:a></xf:label>
 								</xf:input>
 								<dcm:element-buttons
-									triggers="add remove" 
+									triggers="add delete" 
 									nodeset="m:relation" 
 									index="edited_score-repeat"
 									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']"/>
@@ -364,7 +295,7 @@
 						
 						<xf:group ref="m:perfMedium">
 							<h:div class="blocklabel strong">Ensembles </h:div>
-							<xf:trigger ref=".[count($binding/m:perfMedium/m:ensemble)=0]" class="create_button">
+							<xf:trigger ref=".[count($binding/m:perfMedium/m:ensemble)=0]">
 								<xf:label><img src="http:/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
 								<xf:action ev:event="DOMActivate">
 									<xxf:show dialog="ensemble-menu"/>
@@ -460,7 +391,7 @@
 										<h:a class="help">?<h:span class="comment">Optional. An ensemble may be specified by name (above), 
 											by a list of performers, or both.</h:span></h:a></h:span>
 									</h:div>
-									<xf:trigger ref=".[count(m:performer)=0]" style="margin-left: 8px;" class="create_button">
+									<xf:trigger ref=".[count(m:performer)=0]" style="margin-left: 8px;">
 										<xf:label><img src="http:/editor/images/list.png" alt="Add from list"/> Add performer(s)</xf:label>
 										<xf:action ev:event="DOMActivate">
 											<xxf:show dialog="ensemble-performer-menu"/>
@@ -519,7 +450,7 @@
 									and for soloists (vocalists and instrumentalists). 
 								</h:span></h:a>
 							</h:div>
-							<xf:trigger ref=".[count(m:performer)=0]" class="create_button">
+							<xf:trigger ref=".[count(m:performer)=0]">
 								<xf:label><img src="http:/editor/images/add.gif" alt="Add"/> Add performer</xf:label>
 								<xf:action ev:event="DOMActivate">
 									<xf:insert context="." 
@@ -568,27 +499,20 @@
 												<xf:dispatch name="xforms-value-changed" target="form-group"/>
 											</xf:action>
 										</xf:trigger>
-									<dcm:id/>
-									<dcm:attribute-editor/>
+									<dcm:attribute-editor ref="."/>
 									<h:br/>
 								</xf:repeat>
 							</xf:group>
 						</xf:group>
 						
-						<h:div class="blocklabel strong">Characters
-							<h:a class="help">?<h:span class="comment">A list of characters 
-								appearing in the piece. Names may be entered in more than one language, and each 
-								characters may be linked to a performer listed above.                                        
-							</h:span></h:a>                                        
-							<xf:group ref="m:castList">
-								<dcm:id/>
-								<dcm:attribute-editor/>
-							</xf:group>
-						</h:div>
-						<dcm:create nodeset="m:castList"
-							label="Add character"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList"/>
 						<xf:group ref="m:castList">
+							<h:div class="blocklabel strong">Characters
+								<h:a class="help">?<h:span class="comment">A list of characters 
+									appearing in the piece. Names may be entered in more than one language, and each 
+									characters may be linked to a performer listed above.                                        
+								</h:span></h:a>                                        
+								<dcm:attribute-editor ref="."/>
+							</h:div>
 							<xf:trigger ref=".[count(m:castItem)=0]">
 								<xf:label><img src="http:/editor/images/add.gif" alt="Add"/> Add character</xf:label>
 								<xf:action ev:event="DOMActivate">
@@ -608,13 +532,11 @@
 										<xf:output value="if (m:role/m:ref/m:name[1]!='') then m:role/m:ref/m:name[1] else '[Character]'"/>
 										<dcm:id ref="."/>
 										<dcm:element-buttons
-											triggers="add up down" 
+											triggers="add remove up down" 
 											nodeset="m:castItem" 
 											index="repeat-cast"
 											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]"/>
-										<dcm:delete-parent-with-last index="repeat-cast"/>
-										<dcm_id/>
-										<dcm:attribute-editor/>
+										<dcm:attribute-editor ref="."/>
 									</h:legend>
 									<xf:repeat nodeset="m:role/m:ref/m:name" id="repeat-role">
 										<xxf:variable name="pos" select="position()"/>

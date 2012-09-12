@@ -227,10 +227,9 @@
         <xf:value>true</xf:value>
       </xf:item>      
     </xf:select>
-    <h:div class="vertical_spacer"/>
-    <!--
+    <h:br/>
     <h:hr/>
-    <h:p><b>Advanced settings</b></h:p>-->
+    <h:p><b>Advanced settings</b></h:p>
     <xf:select appearance="full" ref="instance('parameters')/dcm:attr_editor">
       <xf:action ev:event="xforms-value-changed">
         <xf:insert context="." origin="xxf:set-session-attribute('attr_editor',instance('parameters')/dcm:attr_editor)"/>
@@ -240,7 +239,7 @@
           src="http:/editor/images/warning.png" alt="warning"/><h:span class="comment">This enables changing or adding
             all possible attributes according to the XML schema. Changing attributes may compromise the validity 
             of your data and affect the way MerMEId displays them. 
-            Use the attribute editor only if you know what you are doing.
+            Use the attribute editor only if you what you are doing.
           </h:span></h:a></xf:label>
         <xf:value>true</xf:value>
       </xf:item>      
