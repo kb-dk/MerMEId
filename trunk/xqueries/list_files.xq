@@ -134,7 +134,7 @@ declare function app:navigation(
 {
 
 	let $total := fn:count($list/m:meiHead)
-	let $uri   := request:get-effective-uri() cast as xs:string
+	let $uri   := "" (:request:get-effective-uri() cast as xs:string:)
 
 	let $collection :=
 	if(not($coll)) then
