@@ -174,7 +174,7 @@
 	      <strong>Install eXist:</strong> We're using version 1.4.1 Prepare
 	      the code and build the application by first running the installer
 	      <pre>
-		java -jar eXist-1.4.1-rev15155.jar
+		java -jar eXist-&lt;version number&gt;.jar
 	      </pre>
 	      This will unpack the distribution into a directory of your
 	      choice. Let's call it eXist. In that directory you can repack it
@@ -261,8 +261,7 @@
 	  based client IcedTea. It should work on all platforms. Click on
 	  "Web Start Client" and log on as admin with the user credentials
 	  you just created. The admin's credentials should be put into the
-	  <a href="#appendix">configuration file
-	  <kbd>editor-config.xml</kbd>.</a> Figure 2 shows the client after
+	  <a href="#appendix">configuration files</a> Figure 2 shows the client after
 	  installation and configuration.</li>
 
 	  <li><strong>Load some content:</strong>
@@ -305,7 +304,7 @@
 
 # This is how to configure stuff in Apache:
 
-Alias "/editor" "/home/xml-store/editor
+Alias "/editor" "/home/xml-store/mermeid
 &lt;Location "/editor">
         Options None
         Order allow,deny

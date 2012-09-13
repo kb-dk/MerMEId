@@ -43,6 +43,10 @@ declare function list:get-reverse-links(
 
 	(:let $arget := "cnw0067.xml#source_d1e180":)
 
+	(:for $doc in
+	  collection("/db/dcm")/m:mei[m:meiHead/m:fileDesc/m:sourceDesc/m:source[@target=$target]]:)
+
+
 	let $list  := 
 	   for $doc in collection("/db/dcm")/m:mei[m:meiHead//m:source[@target=$target]]
 	   return $doc
