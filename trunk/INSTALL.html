@@ -2,6 +2,11 @@
   <head>
     <title>Installing and configuring the MerMEId editor</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+
+    <!--
+	$Id$
+    -->
+
   </head>
   <body>
 
@@ -135,6 +140,13 @@
 	</tr>
       </table>
 
+      <p>In addition, there are a number of files.  <a
+      href="build-distro.sh">build-distro.sh</a>, editor.war <a
+      href="INSTALL.html">INSTALL.html</a> and <a
+      href="README.html">README.html</a>. If you prefer keep the form in the
+      your application server, you can deploy the editor.war. See below.</p>
+
+
       <ol>
 	<li>
 	  <p>
@@ -165,10 +177,6 @@
 	      </pre>
 	      The jsp is dependent on a package called commons-httpclient. We've
 	      added it in the distribution.
-	      <!--pre>
-		cd /home/xml-store/editor
-		cp some_jars/commons-httpclient-3.1.jar /&lt;PATH TO&gt;/tomcat6/webapps/orbeon/WEB-INF/lib/
-	      </pre-->
 	    </li>
 	    <li>
 	      <strong>Install eXist:</strong> We're using version 1.4.1 Prepare
@@ -187,7 +195,7 @@
 	      <kbd>dist/exist-&lt;version number&gt;.war</kbd>.
 	      This file should be installed as <kbd>exist.war</kbd> in you tomcat6.
 	      <pre>
-		cp dist/exist-*.war /&lt;PATH TO YOUR&gt;/tomcat6/webapps/exist.war	    
+		cp dist/exist-*.war /&lt;PATH TO YOUR&gt;/tomcat6/webapps/exist.war
 	      </pre>
 	    </li>
 	  </ol>
@@ -300,6 +308,9 @@
 	</li>
 	<li>
 	  <strong>Configure Apache HTTPD </strong>
+
+If you store the form in Apache, you should enter the following in the some
+apache configuration file.
 	  <pre>
 
 # This is how to configure stuff in Apache:
@@ -316,6 +327,19 @@ ProxyPass /orbeon  "ajp://mei.example.org:8009/orbeon"
 ProxyPass /filter  "ajp://mei.example.org:8009/filter"
 
 	  </pre>
+
+<p>On the other hand, if you put them in the application server through deploying the editor.war. Enter the following in your apache configuration.</p>
+
+	  <pre>
+
+ProxyPass /editor  "ajp://mei.example.org:8009/editor
+ProxyPass /storage "ajp://mei.example.org:8009/exist/rest/db"
+ProxyPass /orbeon  "ajp://mei.example.org:8009/orbeon"
+ProxyPass /filter  "ajp://mei.example.org:8009/filter"
+
+	  </pre>
+
+
 	</li>
       </ol>
     </div>
