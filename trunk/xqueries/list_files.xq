@@ -70,7 +70,7 @@ declare function app:view-document-reference($doc as node()) as node() {
 	<a  target="_blank"
         title="View" 
         href="/storage/present.xq?doc={util:document-name($doc)}">
-	{$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[1]/string()}
+	{$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[string()][1]/string()}
 	</a>
 	return $ref
 };
