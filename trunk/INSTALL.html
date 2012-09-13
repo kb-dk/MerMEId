@@ -304,7 +304,7 @@
 
 # This is how to configure stuff in Apache:
 
-Alias "/editor" "/home/xml-store/mermeid
+Alias "/editor" "/home/xml-store/MerMEId/mermeid 
 &lt;Location "/editor">
         Options None
         Order allow,deny
@@ -313,6 +313,7 @@ Alias "/editor" "/home/xml-store/mermeid
 
 ProxyPass /storage "ajp://mei.example.org:8009/exist/rest/db"
 ProxyPass /orbeon  "ajp://mei.example.org:8009/orbeon"
+ProxyPass /filter  "ajp://mei.example.org:8009/filter"
 
 	  </pre>
 	</li>
