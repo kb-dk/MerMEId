@@ -196,6 +196,14 @@
     </h:div>
   </xxf:dialog>
   
+  <xxf:dialog appearance="full" id="link_type_dialog">
+    <xf:select ref="instance('temp')/value" appearance="full">
+      <xf:itemset>
+        <!-- vælg hvilken type link der skal oprettes her -->
+      </xf:itemset>
+    </xf:select>
+  </xxf:dialog>
+  
   <xxf:dialog id="source_reference_dialog" appearance="full">
     <xf:label>External source description</xf:label>
     <xf:select1 ref="instance('temp')/series" class="mediumshort">
