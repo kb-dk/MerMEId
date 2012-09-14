@@ -2,15 +2,56 @@ body {
     background-color: #f2f2f2;
 }
 
-
 table {
     width: auto;
     padding:2px;
 }
 
+a:link, a:visited, a:active, a:hover {
+   /* text-decoration: none; */
+}
+
+a img {
+    border: none;
+}
+
+ul {
+    padding-left: 25px;
+    margin-left:0;
+}
+
 ul.important {
     list-style-image: url('../images/important.png');
     padding-left: 25px;
+    margin-left:0;
+}
+
+map.manual {
+    border: none;
+}
+
+map.manual area {
+    cursor: help;
+    border: 1px solid red;
+}
+
+.close_div {
+    float:right;
+}
+
+a.trigger {
+    text-decoration: none;
+    padding: 1px;
+}
+
+
+a.trigger img {
+    padding: 2px;
+}
+
+a.trigger img:hover {
+    border:1px solid #999999;
+    padding: 1px;
 }
 
 .footer, .footer a:link, .footer a:visited, .footer a:active {

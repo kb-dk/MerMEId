@@ -517,14 +517,13 @@
 		<div class="colophon">
 			<br/>
 			<hr/>
-			<br/>
 			<xsl:if test="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()]">
-				<p><em>Title:</em><br/></p> 
+				<p><em>File title:</em><br/></p> 
 				<p>
 					<xsl:value-of select="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()][1]"/>
 				</p>
 			</xsl:if>
-			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:title/text()">
+			<xsl:if test="m:meiHead/m:fileDesc/m:seriesStmt/m:title/text()">
 				<p><em>Series:</em><br/></p> 
 				<p>
 					<xsl:for-each select="m:meiHead/m:fileDesc/m:seriesStmt/m:title">
@@ -537,7 +536,7 @@
 				</p>
 			</xsl:if>
 			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt//text()">
-				<p><em>Publication:</em></p>
+				<p><em>File publication:</em></p>
 				<p>
 					<xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:expan"/>
 					<xsl:choose>
