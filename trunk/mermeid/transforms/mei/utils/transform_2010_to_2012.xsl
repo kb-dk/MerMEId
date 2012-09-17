@@ -97,7 +97,6 @@
     <xsl:template match="m:filedesc/m:pubstmt">
         <pubStmt>
             <xsl:apply-templates select="@*"/>
-            <resp>Publisher</resp>
             <!-- work identifiers moved to <altId> -->
             <xsl:apply-templates select="*[name(.)!='identifier']"/>
             <availability>
@@ -117,6 +116,7 @@
     <xsl:template match="m:filedesc/m:pubstmt/m:respstmt">
         <respStmt>
             <!-- add DCM info -->
+            <resp>Publisher</resp>
             <corpName>
                 <abbr>DCM</abbr>
                 <expan>Danish Centre for Music Publication</expan>
@@ -261,7 +261,7 @@
                     <identifier>
                         <xsl:choose>
                             <xsl:when test="contains($remainingString,'ource')">
-                                <xsl:attribute name="analog"><xsl:value-of
+                                <xsl:attribute name="type"><xsl:value-of
                                     select="substring-before($remainingString,'ource')"/>ource</xsl:attribute>
                                 <xsl:variable name="identifier" select="normalize-space(substring-after($remainingString,'ource'))"/>
                                 <xsl:choose>
@@ -472,8 +472,6 @@
         <xsl:apply-templates select="@*"/>
         <xsl:apply-templates select="m:corpname"/>
         <xsl:apply-templates select="m:identifier"/>
-        <!-- add RISM identifier -->
-        <identifier analog="RISM"/>
         <xsl:apply-templates select="m:extptr"/>
     </xsl:template>
 
@@ -1213,7 +1211,7 @@
     
     <xsl:template match="m:filedesc/m:pubstmt/m:identifier">
         <identifier>
-            <xsl:attribute name="analog"><xsl:value-of select="@type"/></xsl:attribute>
+            <xsl:attribute name="type"><xsl:value-of select="@type"/></xsl:attribute>
             <xsl:value-of select="."/>
         </identifier>
     </xsl:template>

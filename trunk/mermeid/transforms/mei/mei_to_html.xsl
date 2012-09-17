@@ -129,10 +129,10 @@
 		</xsl:variable>
 		
 		<xsl:variable name="catalogue_no">
-			<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@analog=$file_context]"/>
+			<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
 		</xsl:variable>
 		
-		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier[@analog=$file_context]/text()">
+		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]/text()">
 			<div class="series_header {$file_context}">
 				<a>
 					<xsl:value-of select="$file_context"/>
@@ -229,7 +229,7 @@
 			<p>
 				<xsl:for-each select="m:meiHead/m:workDesc/m:work/m:identifier[text()]">
 					<xsl:value-of 
-						select="concat(@analog,' ',.)"/><xsl:if test="position()&lt;last()"><br/></xsl:if>
+						select="concat(@type,' ',.)"/><xsl:if test="position()&lt;last()"><br/></xsl:if>
 				</xsl:for-each>
 			</p>
 		</xsl:if>
@@ -1054,9 +1054,9 @@
 				<!-- source location and identifiers -->				
 				<xsl:for-each 
 					select="m:physDesc/m:physLoc">					
-					<xsl:for-each select="m:repository[m:corpName[text()]|m:identifier[text() and (not(@analog) or @analog='')]]">
+					<xsl:for-each select="m:repository[m:corpName[text()]|m:identifier[text() and (not(@type) or @type='')]]">
 						<div>						
-							<xsl:for-each select="m:corpName[text()]|m:identifier[text() and (not(@analog) or @analog='')]">
+							<xsl:for-each select="m:corpName[text()]|m:identifier[text() and (not(@type) or @type='')]">
 								<xsl:choose>
 									<xsl:when test="name(.)='corpName'">
 										<em><xsl:apply-templates select="."/></em>
@@ -1107,10 +1107,10 @@
 					<div>
 						<xsl:for-each select="m:identifier[text()]">
 							<xsl:if test="position()&gt;1"><br/></xsl:if>
-							<xsl:apply-templates select="@analog"/><xsl:text> </xsl:text>
+							<xsl:apply-templates select="@type"/><xsl:text> </xsl:text>
 							<xsl:choose>
 								<!-- some CNW-specific styling here -->
-								<xsl:when test="@analog='CNU Source'">
+								<xsl:when test="@type='CNU Source'">
 									<b><xsl:apply-templates select="."/></b>.
 								</xsl:when>
 								<xsl:otherwise>

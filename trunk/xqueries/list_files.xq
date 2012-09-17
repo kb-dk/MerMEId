@@ -60,7 +60,7 @@ declare function app:get-edition-and-number($doc as node() ) as xs:string* {
 
 	let $c := 
 	$doc//m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"][1]/string()
-	return ($c,$doc//m:meiHead/m:workDesc/m:work[1]/m:identifier[@analog=$c]/string())
+	return ($c,$doc//m:meiHead/m:workDesc/m:work[1]/m:identifier[@type=$c]/string())
 
 };
 
