@@ -22,8 +22,13 @@ ul {
 
 ul.important {
     list-style-image: url('../images/important.png');
-    padding-left: 25px;
+    padding-left: 30px;
     margin-left:0;
+    background-color: #ffeeaa;
+}
+
+ul.important li {
+    padding: 5px;
 }
 
 map.manual {
@@ -37,6 +42,13 @@ map.manual area {
 
 .close_div {
     float:right;
+}
+
+img.illustration {
+    margin-bottom: 10px;
+    box-shadow: 10px 10px 10px #333;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 10px 10px 10px #333;
 }
 
 a.trigger {
