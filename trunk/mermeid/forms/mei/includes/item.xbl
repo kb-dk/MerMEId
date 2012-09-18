@@ -91,33 +91,33 @@
                         <h:span class="blocklabel strong">Identification <h:a class="help">?<h:span 
                             class="comment">Identifiers other than the repository's own shelf mark, 
                             e.g. RISM identifiers or other catalogue numbers identifying this specific item<h:br/>
-                                With prints, RISM identifiers should be given at general 
-                                source level (above).
-                            </h:span></h:a></h:span>
-                            <dcm:create
-                                nodeset="m:identifier"
-                                label="Add identifier"
+                            With prints, RISM identifiers should be given at general 
+                            source level (above).
+                        </h:span></h:a></h:span>
+                        <dcm:create
+                            nodeset="m:identifier"
+                            label="Add identifier"
+                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
+                        <xf:repeat nodeset="m:identifier" id="repeat-item-identifier">
+                            <xf:input ref="@analog" class="mediumshort">
+                                <xf:label class="fixed_width">List name <h:a class="help">?<h:span 
+                                    class="comment">The name of the catalogue or list identifying this 
+                                    specific item, e.g. "RISM" (but please note that RISM identifiers 
+                                    of printed sources should be entered at 
+                                    source level (above) rather than on individual copies)</h:span></h:a></xf:label>
+                            </xf:input>
+                            <xf:input ref="." class="mediumlong">
+                                <xf:label> No. <h:a class="help">?<h:span class="comment">The number 
+                                    identifying this particular source in the list, e.g. "A/II 1234"</h:span></h:a></xf:label>
+                            </xf:input>
+                            <dcm:element-buttons 
+                                triggers="add remove" 
+                                nodeset="m:identifier" 
+                                index="repeat-item-identifier"
                                 origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
-                            <xf:repeat nodeset="m:identifier" id="repeat-item-identifier">
-                                <xf:input ref="@analog" class="mediumshort">
-                                    <xf:label class="fixed_width">List name <h:a class="help">?<h:span 
-                                        class="comment">The name of the catalogue or list identifying this 
-                                        specific item, e.g. "RISM" (but please note that RISM identifiers 
-                                        of printed sources should be entered at 
-                                        source level (above) rather than on individual copies)</h:span></h:a></xf:label>
-                                </xf:input>
-                                <xf:input ref="." class="mediumlong">
-                                    <xf:label> No. <h:a class="help">?<h:span class="comment">The number 
-                                        identifying this particular source in the list, e.g. "A/II 1234"</h:span></h:a></xf:label>
-                                </xf:input>
-                                <dcm:element-buttons 
-                                    triggers="add remove" 
-                                    nodeset="m:identifier" 
-                                    index="repeat-item-identifier"
-                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
-                                <dcm:attribute-editor ref="."/>
-                                <h:br clear="all"/>
-                            </xf:repeat>
+                            <dcm:attribute-editor ref="."/>
+                            <h:br clear="all"/>
+                        </xf:repeat>
                         
                         
                         <xf:group ref="m:physDesc/m:physLoc">
@@ -184,31 +184,31 @@
                                     </h:div>
                                 </xf:repeat>
                                 <!--
-                                <xf:group ref="m:identifier[normalize-space(@analog)]">
+                                    <xf:group ref="m:identifier[normalize-space(@analog)]">
                                     <h:span class="blocklabel">Other identifiers <h:a class="help">?<h:span 
-                                        class="comment">Other identifiers than the repository's own shelf mark, 
-                                        e.g. RISM identifiers or other catalogue numbers identifying this specific item</h:span></h:a></h:span>
-                                </xf:group>
-                                <xf:repeat nodeset="m:identifier[normalize-space(@analog)]" id="physloc-identifier-repeat">
+                                    class="comment">Other identifiers than the repository's own shelf mark, 
+                                    e.g. RISM identifiers or other catalogue numbers identifying this specific item</h:span></h:a></h:span>
+                                    </xf:group>
+                                    <xf:repeat nodeset="m:identifier[normalize-space(@analog)]" id="physloc-identifier-repeat">
                                     <xf:input ref="@analog">
-                                        <xf:label>Label <h:a class="help">?<h:span 
-                                            class="comment">The name of the catalogue or list identifying this 
-                                            specific item, e.g. "RISM" (but please note that RISM identifiers 
-                                            of printed sources should be entered under "Publication" at 
-                                            source level (above) rather than on individual copies)</h:span></h:a></xf:label>
+                                    <xf:label>Label <h:a class="help">?<h:span 
+                                    class="comment">The name of the catalogue or list identifying this 
+                                    specific item, e.g. "RISM" (but please note that RISM identifiers 
+                                    of printed sources should be entered under "Publication" at 
+                                    source level (above) rather than on individual copies)</h:span></h:a></xf:label>
                                     </xf:input>
                                     <xf:input ref="." class="mediumlong">
-                                        <xf:label> no. <h:a class="help">?<h:span 
-                                            class="comment">The item's number in the catalogue or list</h:span></h:a></xf:label>
+                                    <xf:label> no. <h:a class="help">?<h:span 
+                                    class="comment">The item's number in the catalogue or list</h:span></h:a></xf:label>
                                     </xf:input>
                                     <dcm:element-buttons 
-                                        triggers="add delete" 
-                                        nodeset="m:identifier" 
-                                        index="physloc-identifier-repeat"
-                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:identifier[@analog][1]"/>
+                                    triggers="add delete" 
+                                    nodeset="m:identifier" 
+                                    index="physloc-identifier-repeat"
+                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:identifier[@analog][1]"/>
                                     <dcm:attribute-editor ref="."/>
                                     <h:br clear="all"/>
-                                </xf:repeat>-->
+                                    </xf:repeat>-->
                             </xf:repeat>
                         </xf:group>
                         
@@ -225,30 +225,35 @@
                                     <xf:label>Hide details</xf:label>
                                     <xf:toggle case="hide_details" ev:event="DOMActivate"/>
                                 </xf:trigger>	
-
+                                
                                 <xf:group ref="m:physDesc">                                    
-                                    <dcm:create 
-                                        nodeset="m:provenance"
-                                        label="Add provenance list"
-                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance"/>                                            
-                                    <xf:group ref="m:provenance/m:eventList">
-                                        <h:fieldset>
-                                            <h:legend>Provenance
-                                                <dcm:attribute-editor ref="."/>
-                                            </h:legend>
-                                            <dcm:create 
-                                                nodeset="m:event"
-                                                label="Add event"
-                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>                                            
+                                    <h:fieldset>
+                                        <h:legend>Provenance
+                                            <dcm:attribute-editor ref="."/>
+                                        </h:legend>
+                                        <dcm:create 
+                                            nodeset="m:provenance"
+                                            label="Add provenance list"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance"/>                                            
+                                        <dcm:create ref="m:provenance"
+                                            nodeset="m:eventList"
+                                            label="Add provenance"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList"/>                                            
+                                        <dcm:create ref="m:provenance/m:eventList"
+                                            nodeset="m:event"
+                                            label="Add event"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>                                            
+                                        <xf:group ref="m:provenance/m:eventList">
                                             <xf:repeat nodeset="m:event" id="physdesc-provenance">
                                                 <h:fieldset>
                                                     <h:legend>
                                                         Event
                                                         <dcm:element-buttons 
-                                                            triggers="up down copy add remove" 
+                                                            triggers="up down copy add" 
                                                             nodeset="m:event" 
                                                             index="physdesc-provenance"
                                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>
+                                                        <dcm:delete-parent-with-last index="physdesc-provenance"/>
                                                         <dcm:attribute-editor ref="."/>
                                                     </h:legend>
                                                     <dcm:date-editor ref="m:date">
@@ -261,8 +266,8 @@
                                                     <dcm:attribute-editor ref="m:title"/>
                                                 </h:fieldset>
                                             </xf:repeat>
-                                        </h:fieldset>
-                                    </xf:group> 
+                                        </xf:group> 
+                                    </h:fieldset>
                                     
                                     <xf:group ref=".[m:titlePage]">
                                         <h:fieldset>
@@ -353,7 +358,7 @@
                                         <dcm:attribute-editor ref="m:condition"/>                                                    
                                     </h:fieldset>
                                     
-                               </xf:group>
+                                </xf:group>
                                 
                                 <h:fieldset>
                                     <h:legend>Persons <h:a class="help">?<h:span class="comment">Lists persons with 
@@ -383,7 +388,7 @@
                                         </xf:repeat>
                                     </xf:group>
                                 </h:fieldset>
-
+                                
                                 <xf:group ref="m:notesStmt">
                                     <h:span class="blocklabel">General description <h:a class="help">?<h:span class="comment">Text 
                                         describing or introducing to the item, its history, its significance etc.<br/>
