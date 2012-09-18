@@ -143,9 +143,18 @@
       <p>In addition, there are a number of files.  <a
       href="build-distro.sh">build-distro.sh</a>, editor.war <a
       href="INSTALL.html">INSTALL.html</a> and <a
-      href="README.html">README.html</a>. If you prefer keep the form in the
-      your application server, you can deploy the editor.war. See below.</p>
+      href="README.html">README.html</a>.</p>
 
+      <p>Here you have a choice. You can deliver the form through Apache
+      HTTPD. That is an advantage if you are developer and need to customize
+      the code code. But if you like to keep it as it is, then it might be
+      easier to deploye it in your tomcat. </p>
+
+      <pre>
+	cp editor.war /&lt;PATH TO YOUR&gt;/tomcat6/webapps/exist.war
+      </pre>
+
+      <p>See below how apache is configured in the two cases.</p>
 
       <ol>
 	<li>
@@ -294,7 +303,7 @@
 	  </li>
 	  <li>
 	    <strong>Load the query/queries</strong>. While still in xquery,
-	    do on the command line.
+	    you can do this from the command line. First the xquery files:
 	    <pre>
 	      ./load_exist.pl --user admin \
 	      --password your_own_very_secret_password \
@@ -302,6 +311,15 @@
 	      --load . \
 	      --context "/exist/rest/db" \
 	      --suffix xq
+	    </pre>
+	    And then the xquery modules:
+	    <pre>
+	      ./load_exist.pl --user admin \
+	      --password your_own_very_secret_password \
+	      --host-port mei.example.org:80 \
+	      --load . \
+	      --context "/exist/rest/db" \
+	      --suffix xqm
 	    </pre>
 	  </li>
 	</ol>
