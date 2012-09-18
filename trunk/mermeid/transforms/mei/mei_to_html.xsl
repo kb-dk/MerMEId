@@ -1103,23 +1103,20 @@
 				<xsl:apply-templates select="m:componentGrp"/>
 				<xsl:apply-templates select="m:itemList"/>
 				
-				<xsl:if test="m:identifier[text()]">
+				<xsl:for-each select="m:physDesc/m:physLoc/m:repository/m:identifier[text() and @type!='']">
 					<div>
-						<xsl:for-each select="m:identifier[text()]">
-							<xsl:if test="position()&gt;1"><br/></xsl:if>
-							<xsl:apply-templates select="@type"/><xsl:text> </xsl:text>
-							<xsl:choose>
-								<!-- some CNW-specific styling here -->
-								<xsl:when test="@type='CNU Source'">
-									<b><xsl:apply-templates select="."/></b>.
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:apply-templates select="."/>.
-								</xsl:otherwise>
-							</xsl:choose>
-						</xsl:for-each>
+						<xsl:apply-templates select="@type"/><xsl:text> </xsl:text>
+						<xsl:choose>
+							<!-- some CNW-specific styling here -->
+							<xsl:when test="@type='CNU Source'">
+								<b><xsl:apply-templates select="."/></b>.
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:apply-templates select="."/>.
+							</xsl:otherwise>
+						</xsl:choose>
 					</div>
-				</xsl:if>
+				</xsl:for-each>
 				
 			</div>
 		</xsl:if>
