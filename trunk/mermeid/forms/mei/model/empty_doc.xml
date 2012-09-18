@@ -93,6 +93,7 @@
               <term classcode="DcmScoringClass"/>
               <term classcode="DcmStateClass"/>
               <term classcode="DcmCompletenessClass"/>
+              <term/>
             </termList>
           </classification>
           <itemList>
@@ -220,14 +221,14 @@
             </item> 
           </componentGrp>
           <relationList>
-            <relation rel="isEmbodimentOf" target="" xml:id=""/>
+            <relation rel="isEmbodimentOf" target="" xml:id="" label=""/>
           </relationList>
         </source>
         <source label="" target="" xml:id=""/>
         <source>
           <relationList>
-            <relation rel="isEmbodimentOf" target="" xml:id=""/>
-            <relation rel="hasPart" target="" xml:id=""/>
+            <relation rel="isEmbodimentOf" target="" xml:id="" label=""/>
+            <relation rel="hasPart" target="" xml:id="" label=""/>
           </relationList>
         </source>
       </sourceDesc>

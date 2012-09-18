@@ -135,12 +135,12 @@
                         
                         
                         
-                        <!-- Point to relevant version if more than one available -->
+                        <!-- Point to relevant version if more than one available 
                         <xf:group ref=".[count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
                             <h:div class="vertical_spacer"/>
                             <h:div>
                                 <dcm:create 
-                                    nodeset="m:titleStmt"
+                                    nodeset="m:relation"
                                     label="Specify work version"
                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:relationList/m:relation[@rel='isEmbodimentOf'][1]"/>
                                 <xf:select1 ref="m:relationList/m:relation[@rel='isEmbodimentOf'][1]" xxf:refresh-items="true" id="cast-select" class="maxlong">
@@ -160,7 +160,72 @@
                                 <dcm:attribute-editor ref="m:relationList/m:relation[@rel='isEmbodimentOf'][1]"/>
                             </h:div>
                         </xf:group>
+                        -->
+              
+              
+              
+                        <h:fieldset>
+                            <h:legend>Relations <h:a class="help">?<h:span class="comment">Relations may be between
+                                sources (for instance, marking this source as a reprint of another source) or between 
+                                sources and versions of the work (to define that this source represents a particular version 
+                                of the work as defined on the "Music" tab).<h:br/>
+                                To define this source as a reprint, choose the relation "is reproduction of" and choose the 
+                                source describing the first edition as the target. 
+                                <h:br/>
+                                <h:br/>Depending on the encoding pratice of your project, relations may or may not 
+                                be defined mutually, i.e. the opposite relation may be defined on the target.<h:br/>
+                                The list is based on FRBR relations (see http://www.ifla.org/files/cataloguing/frbr/frbr_2008.pdf).
+                            </h:span></h:a></h:legend>
+                            <dcm:create 
+                                nodeset="m:relationList"
+                                label="Add relation list"
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:relationList"/>
+                            <dcm:create ref="m:relationList"
+                                nodeset="m:relation"
+                                label="Add relation"
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:relationList/m:relation"/>
+                            <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
+                                <xf:repeat nodeset="m:relationList/m:relation" id="work_relations">
+                                    <h:tr>
+                                        <h:td>
+                                            <h:span>This source </h:span>
+                                            <xi:include href="includes/relation_select.xml" parse="xml"/>
+                                            <xf:select1 ref="@target" class="long">
+                                                <xf:label/> 
+                                                <xf:item>
+                                                    <xf:label>- select target -</xf:label>
+                                                    <xf:value/>
+                                                </xf:item>
+                                                <xf:itemset nodeset="instance('data-instance')//m:source/@xml:id | instance('data-instance')//m:expression/@xml:id">
+                                                    <xf:label><xf:output value="concat(../m:titleStmt/m:title[1],' (',.,')')"/></xf:label>
+                                                    <xf:value ref="."/>
+                                                </xf:itemset>
+                                            </xf:select1>
+                                        </h:td>
+                                        <!--<h:td>
+                                            <xf:input ref="@label" class="long">
+                                            <xf:label> Link label <h:a class="help">?<h:span class="comment">The text to be 
+                                            displayed as the link text</h:span></h:a></xf:label>
+                                            </xf:input>
+                                            </h:td>-->
+                                        <h:td style="vertical-align:top; white-space:nowrap;">
+                                            <h:span class="editmenu">
+                                                <dcm:element-buttons 
+                                                    triggers="up down add" 
+                                                    nodeset="m:relation" 
+                                                    index="work_relations"
+                                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList/m:relation"/>
+                                                <dcm:delete-parent-with-last index="work_relations"/>
+                                                <dcm:attribute-editor ref="."/>
+                                            </h:span>
+                                        </h:td>
+                                    </h:tr>
+                                </xf:repeat>
+                            </h:table>
+                        </h:fieldset>
                         
+                        
+              
                         <!-- Source classification -->
                         <!-- For now, editing classification requires either the DCM classcodes being defined already 
                         in <work> or that a termList exists already -->
@@ -360,7 +425,7 @@
                                 </xf:group>
                                 <xf:group ref="m:classification/m:termList[count(m:term[not(contains(@classcode,'Dcm'))])=0]">
                                     <dcm:create 
-                                        nodeset="m:term[not(contains(@classcode,'Dcm'))]"
+                                        nodeset="m:term[not(@classcode) or not(contains(@classcode,'Dcm'))]"
                                         label="Add classification term"
                                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:classification/m:termList/m:term[not(@classcode)]"/>
                                 </xf:group>
@@ -370,8 +435,8 @@
                                         <xf:input ref=".">
                                             <xf:label>Term</xf:label>
                                         </xf:input>
-                                        <dcm:element-buttons triggers="add remove"
-                                            nodeset="m:term"
+                                        <dcm:element-buttons-typed triggers="add remove"
+                                            nodeset="m:term[not(@classcode) or not(contains(@classcode,'Dcm'))]"
                                             index="repeat-classification-terms"
                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:classification/m:termList/m:term[not(@classcode)]"/>
                                     </h:div>
@@ -454,8 +519,7 @@
                                 describing or introducing to the source, its history, its significance etc.<br/>
                                 Information on the source's physical appearance and condition should be given in the 
                                 "physical description" area below.
-                            </h:span></h:a> 
-                                <!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a></h:legend>--></h:legend>
+                            </h:span></h:a> </h:legend>
                             <dcm:create
                                 nodeset="m:notesStmt"
                                 label="Add general description"
@@ -695,6 +759,7 @@
                             </xf:repeat>
                         </h:fieldset>
                         
+                             
                         <!-- Components -->
                         <h:fieldset class="item-components">
                             <h:legend class="item-components">Components <h:a 
@@ -707,11 +772,11 @@
                             <dcm:create
                                 nodeset="m:componentGrp"
                                 label="Add components"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp"/>
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentGrp"/>
                             <dcm:create ref="m:componentGrp"
                                 nodeset="m:item"
                                 label="Add component"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp/m:item"/>
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentGrp/m:item"/>
                             <xf:group ref=".[m:componentGrp]">
                                 <h:table class="component_list" cellpadding="0" cellspacing="0" border="0">
                                     <xf:repeat nodeset="m:componentGrp/m:item" id="repeat-source-component">
@@ -726,7 +791,7 @@
                                                             triggers="up down copy add remove" 
                                                             nodeset="m:item" 
                                                             index="repeat-source-component"
-                                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentGrp/m:item"/>
+                                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:itemList/m:item/m:componentGrp/m:item"/>
                                                         <dcm:attribute-editor/>
                                                     </h:span>
                                                     <h:div class="vertical_spacer"/>

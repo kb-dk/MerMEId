@@ -301,7 +301,7 @@
 					<xf:repeat nodeset="m:relationList/m:relation" id="work_relations">
 						<h:tr>
 							<h:td>
-								<h:span>This work</h:span>
+								<h:span>This work </h:span>
 								<xi:include href="includes/relation_select.xml" parse="xml"/>
 								<xf:group ref="@target[normalize-space()='']">
 									<xf:trigger>
@@ -316,7 +316,8 @@
 								<xf:group ref="@target[normalize-space()]">
 									<xf:output value="."/>
 									<xf:trigger>
-										<xf:label><h:img src="http:/editor/images/go_to_link.png" title="Go to linked file"/> Go there</xf:label>
+										<xf:label><h:img src="http:/editor/images/go_to_link.png" 
+											title="Go to linked file"/> Go to...</xf:label>
 										<xf:action ev:event="DOMActivate">
 											<xxf:variable name="uri" 
 												select="concat(
