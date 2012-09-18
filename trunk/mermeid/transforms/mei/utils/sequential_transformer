@@ -1,8 +1,6 @@
 #!/usr/bin/perl -w
 
 use strict;
-use XML::LibXML;
-use XML::LibXSLT;
 use URI::Escape;
 use Getopt::Long;
 
@@ -10,15 +8,15 @@ binmode STDOUT,':raw';
 
 my $reserved  = "^A-Za-z0-9/&?=:;$@#.?\-";
 
-my $sheets    = join(',',
-		     ("utils/transform_2010_to_2012.xsl",
-		      "utils/add_ID.xsl",
-		      "utils/add_MARC048_reg_values.xsl",
-		      "utils/remove_empty_attributes.xsl"));
+my @sheet_list = ("utils/transform_2010_to_2012.xsl",
+		  "utils/add_ID.xsl",
+		  "utils/add_MARC048_reg_values.xsl",
+		  "utils/remove_empty_attributes.xsl");
 
-my $suffix    = "";
-my $directory = "";
-my $param     = "";
+my $suffix     = "";
+my $directory  = "";
+my $param      = "";
+my $sheets     = "";
 
 my $result = GetOptions (
     "sheets=s"    => \$sheets,
@@ -26,16 +24,11 @@ my $result = GetOptions (
     "param=s"     => \$param,
     "directory=s" => \$directory);
 
-my $parser = new XML::LibXML;
-my $xslt   = new XML::LibXSLT;
+if($sheets) {
+    @sheet_list   = split /,/,$sheets;
+}
 
-$xslt->register_function("urn:string", 
-			 "escape",
-			 sub {
-			     my $str = shift; 
-			     return uri_escape_utf8($str,$reserved);
-			 });
-my @sheet_list      = split /,/,$sheets;
+die "I die since there is no directory like $directory\n" unless(-d $directory); 
 
 my $find = "find $directory -name '*$suffix' -print";
 my $in;
