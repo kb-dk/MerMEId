@@ -99,7 +99,7 @@
                             label="Add identifier"
                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
                         <xf:repeat nodeset="m:identifier" id="repeat-item-identifier">
-                            <xf:input ref="@analog" class="mediumshort">
+                            <xf:input ref="@type" class="mediumshort">
                                 <xf:label class="fixed_width">List name <h:a class="help">?<h:span 
                                     class="comment">The name of the catalogue or list identifying this 
                                     specific item, e.g. "RISM" (but please note that RISM identifiers 

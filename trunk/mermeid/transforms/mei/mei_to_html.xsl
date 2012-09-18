@@ -1051,11 +1051,13 @@
 				</xsl:for-each>
 				
 				
-				<!-- source location and identifiers -->				
+				<!-- source location and identifiers -->
+				<xsl:variable name="components" select="count(../../m:componentGrp/m:item[//text()])"/>
 				<xsl:for-each 
 					select="m:physDesc/m:physLoc">					
 					<xsl:for-each select="m:repository[m:corpName[text()]|m:identifier[text() and (not(@type) or @type='')]]">
-						<div>						
+						<div> 
+							<xsl:if test="$components &gt; 1"><br/></xsl:if>
 							<xsl:for-each select="m:corpName[text()]|m:identifier[text() and (not(@type) or @type='')]">
 								<xsl:choose>
 									<xsl:when test="name(.)='corpName'">
@@ -1099,12 +1101,9 @@
 						</xsl:for-each>
 					</div>
 				</xsl:for-each>
-								
-				<xsl:apply-templates select="m:componentGrp"/>
-				<xsl:apply-templates select="m:itemList"/>
-				
+
 				<xsl:for-each select="m:identifier[text()]">
-					<div>
+				<div>
 						<xsl:apply-templates select="@type"/><xsl:text> </xsl:text>
 						<xsl:choose>
 							<!-- some CNW-specific styling here -->
@@ -1117,6 +1116,10 @@
 						</xsl:choose>
 					</div>
 				</xsl:for-each>
+				
+				<xsl:apply-templates select="m:componentGrp"/>
+				
+				<xsl:apply-templates select="m:itemList"/>
 				
 			</div>
 		</xsl:if>
