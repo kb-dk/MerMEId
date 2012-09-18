@@ -282,10 +282,9 @@
 	  installation and configuration.</li>
 
 	  <li><strong>Load some content:</strong>
-
-	  After configuring eXist, it is just to populate the database
+	  <p>After configuring eXist, it is just to populate the database
 	  with some content. You can do that using the client, or a command
-	  line tool, xquery/load_exist.pl
+	  line tool, xquery/load_exist.pl</p>
 
 	  <pre>
 	    cd xquery
@@ -297,13 +296,12 @@
 	    --suffix xml
 	  </pre>
 
-	  Please note that we've folded the command line using '\' just for
-	  typographical reasons.
-
+	  <p>Please note that we've folded the command line using '\' just for
+	  typographical reasons.</p>
 	  </li>
 	  <li>
-	    <strong>Load the query/queries</strong>. While still in xquery,
-	    you can do this from the command line. First the xquery files:
+	    <strong>Load the query/queries</strong>. <p>While still in xquery,
+	    you can do this from the command line. First the xquery files:</p>
 	    <pre>
 	      ./load_exist.pl --user admin \
 	      --password your_own_very_secret_password \
@@ -312,7 +310,7 @@
 	      --context "/exist/rest/db" \
 	      --suffix xq
 	    </pre>
-	    And then the xquery modules:
+	    <p>And then the xquery modules:</p>
 	    <pre>
 	      ./load_exist.pl --user admin \
 	      --password your_own_very_secret_password \
@@ -327,8 +325,8 @@
 	<li>
 	  <strong>Configure Apache HTTPD </strong>
 
-If you store the form in Apache, you should enter the following in the some
-apache configuration file.
+	  <p>If you store the form in Apache, you should enter the following
+	  in the some apache configuration file.</p>
 	  <pre>
 
 # This is how to configure stuff in Apache:
@@ -346,7 +344,9 @@ ProxyPass /filter  "ajp://mei.example.org:8009/filter"
 
 	  </pre>
 
-<p>On the other hand, if you put them in the application server through deploying the editor.war. Enter the following in your apache configuration.</p>
+	  <p>On the other hand, if you put them in the application server
+	  through deploying the editor.war. Enter the following in your apache
+	  configuration.</p>
 
 	  <pre>
 
