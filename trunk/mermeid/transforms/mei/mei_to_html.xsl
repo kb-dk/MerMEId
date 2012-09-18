@@ -287,7 +287,6 @@
 			</xsl:for-each>
 		</xsl:for-each>
 		
-		
 		<!-- top-level expression (versions and one-movement work details) -->
 		<xsl:for-each select="m:meiHead/
 			m:workDesc/
@@ -512,6 +511,28 @@
 			m:notesStmt/
 			m:annot[@type='bibliography']/
 			t:listBibl[t:bibl/*[text()]]"/>		
+		
+		<!-- related files -->
+		<xsl:for-each 
+			select="m:meiHead/
+			m:workDesc/
+			m:work/
+			m:relationList">
+			<xsl:for-each select="m:relation[@target!='']">
+				<p>
+					<xsl:element name="a">
+						<xsl:attribute name="href">
+							<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
+						</xsl:attribute>
+						<xsl:apply-templates select="@label"/>
+						<xsl:if test="not(@label) or @label=''">
+							<xsl:value-of select="@target"/>
+						</xsl:if>
+					</xsl:element>
+				</p>
+			</xsl:for-each>
+		</xsl:for-each>
+		
 		
 		<!-- colophon -->
 		<div class="colophon">

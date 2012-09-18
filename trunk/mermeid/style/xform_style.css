@@ -164,6 +164,9 @@ div.horiz_spacer {
 }
 
 /* buttons and triggers */
+.editmenu {
+    white-space: nowrap;
+}
 
 button, button.detail_button, button[type], .xforms-button {
     margin: 0px;
@@ -420,6 +423,7 @@ img.tree {
 table.element_list td.buttons_cell {
     width: 135px;
     text-align: right;
+    vertical-align:top;
 }
 
 table.element_list td.buttons_cell .xbl-dcm-element-buttons {
@@ -437,7 +441,7 @@ table.element_list tr {
 }
 
 table.element_list .xbl-dcm-element-buttons {
-    display:block;
+   /* display:block; */
     height: 22px;
 }
 

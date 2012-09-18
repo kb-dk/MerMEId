@@ -47,6 +47,7 @@
         <xi:include href="includes/item.xbl" parse="xml"/>
         <xi:include href="includes/id.xbl" parse="xml"/>
         <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
+        <xi:include href="includes/linked_sources.xbl" parse="xml"/>
     </h:head>
     
     <h:body class="source" onload="initialize();">
@@ -92,13 +93,26 @@
                 </h:div>
                      
                 <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=instance('temp')/id]">
-                    <h:h3>
-                        <xf:output value="m:titleStmt/m:title"/>
-                        <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
-                        <dcm:id ref="."/>
-                        <dcm:attribute-editor ref="."/>
-                    </h:h3>                
-                    
+                    <h:div>
+                        <h:h3 style="display:inline;">
+                            <xf:output value="m:titleStmt/m:title"/>
+                            <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
+                            <dcm:id ref="."/>
+                            <dcm:attribute-editor ref="."/>
+                        </h:h3>                
+                        <!-- linking files disabled due to poor performance
+                        <h:span>
+                            <dcm:linked-sources id="linking_sources"
+                                query="concat(
+                                instance('parameters')/dcm:server_name,
+                                'storage/cross-link.xq?target=',
+                                instance('parameters')/dcm:xml_file,
+                                '%23',
+                                @xml:id)"
+                            />
+                        </h:span>
+                        -->
+                    </h:div>
                     <h:fieldset>
                         <h:legend>Source 
                             <h:a class="help">?<h:span class="comment">A source corresponds to the FRBR "manifestation" level. At this level, therefore, 
@@ -118,6 +132,8 @@
                         </xf:input>
                         <dcm:id ref="m:titleStmt/m:title"/>
                         <dcm:attribute-editor ref="m:titleStmt/m:title"/>
+                        
+                        
                         
                         <!-- Point to relevant version if more than one available -->
                         <xf:group ref=".[count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
