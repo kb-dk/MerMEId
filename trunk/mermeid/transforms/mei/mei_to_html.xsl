@@ -1103,7 +1103,7 @@
 				<xsl:apply-templates select="m:componentGrp"/>
 				<xsl:apply-templates select="m:itemList"/>
 				
-				<xsl:for-each select="m:physDesc/m:physLoc/m:repository/m:identifier[text() and @type!='']">
+				<xsl:for-each select="m:identifier[text()]">
 					<div>
 						<xsl:apply-templates select="@type"/><xsl:text> </xsl:text>
 						<xsl:choose>
