@@ -110,14 +110,27 @@
 	</tr>
 	<tr>
 	  <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">filter</td>
-	  <td>a number of JAVA servlets, builds a war file using maven. You'll
-	  need to edit the java property file
-	  filter/src/main/resources/http_filter.xml</td>
+	  <td>
+	    <p>a number of JAVA servlets, builds a war file using
+	    maven. You'll need to edit the java property file
+	    filter/src/main/resources/http_filter.xml and then recompile the
+	    package using maven:</p>
+
+	    <pre>
+	      cd &lt;path to source&gt;/filter/
+	      mvn install
+	      cp target/filter*.war /&lt;PATH TO YOUR&gt;/tomcat6/webapps/filter.war     
+	    </pre>
+
+	  </td>
 	</tr>
 	<tr>
-	  <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">mermeid</td>
+	  <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">
+	    mermeid
+	  </td>
 	  <td>the forms. The configuration here lives in
-	  <kbd><a href="mermeid/forms/mermeid_configuration.xml">mermeid/forms/mermeid_configuration.xml</a></kbd></td>
+	  <kbd><a href="mermeid/forms/mermeid_configuration.xml">mermeid/forms/mermeid_configuration.xml</a></kbd>
+	  </td>
 	</tr>
 	<tr>
 	  <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">orbeon</td>
