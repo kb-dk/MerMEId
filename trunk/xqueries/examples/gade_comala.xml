@@ -2304,12 +2304,8 @@
                     </relationList>
                 </source>
                 <source analog="frbr:manifestation" label="" xml:id="source_d1e1013">
-                    <identifier type=""/>
                     <titleStmt>
                         <title xml:id="title_4366N1102B">J: Printed choral parts with Danish text</title>
-                        <respStmt>
-                            <persName role="" xml:id="persName_4366N11030"/>
-                        </respStmt>
                     </titleStmt>
                     <pubStmt>
                         <respStmt>
@@ -2322,10 +2318,7 @@
                         <titlePage label="Title page" xml:id="titlePage_4366N11042">
                             <p>Title on first page of soprano part: &lt;i&gt;COMALA, Digt efter Ossian. SOPRANI. N. W. Gade. Op. 12.&lt;/i&gt;</p>
                         </titlePage>
-                        <extent unit="pages_(S)">4</extent>
-                        <extent unit="pages_(A)">4</extent>
-                        <extent unit="pages_(T)">6</extent>
-                        <extent unit="pages_(B)">6</extent>
+                        <extent/>
                         <dimensions unit="cm">26.6x34.3</dimensions>
                         <watermark xml:id="watermark_4366N11055">
                             <ptr mimetype="" xl:title="" xml:id="ptr_4366N1105A"/>
@@ -2338,9 +2331,6 @@
 Two reprint editions of these parts were published: 
 The first reprint has the plate number 926 added, indicating that the plates were engraved for and published by Horneman &amp; Erslev. In that case the plate number was probably added in 1874 (cf. Dan Fog: &lt;i&gt;Musikhandel i Danmark&lt;/i&gt;, vol. II, p.182).
 The second reprint is a lithographic reproduction of the original plates, made after Wilhelm Hansen had taken over Horneman &amp; Erslev in 1879 and published by Wilhelm Hansen as number WH 926. On the first page is printed in lower margin: &lt;i&gt;Kjøbenhavn, Wilhelm Hansens Forlag.&lt;/i&gt; On the last page, in lower margin: &lt;i&gt;Wilhelm Hansens Nodestik-og Tryk, Kjöbenhavn.&lt;/i&gt; The publisher's name seems to indicate that the parts were printed in 1879, since in that same year the name form &lt;i&gt;Wilhelm Hansens Musik-Forlag&lt;/i&gt; was to become the one usually employed. </annot>
-                        <annot type="links" xml:id="annot_4366N11065">
-                            <ptr mimetype="" xl:title="" xml:id="ptr_4366N1106A"/>
-                        </annot>
                     </notesStmt>
                     <classification>
                         <termList>
@@ -2354,7 +2344,6 @@ The second reprint is a lithographic reproduction of the original plates, made a
                     </classification>
                     <itemList>
                         <item label="" xml:id="item_d1e6127">
-                            <identifier type=""/>
                             <titleStmt>
                                 <title xml:id="title_4366N11086">Jmf: Printed vocal parts with Danish text, The Music Society's copy</title>
                             </titleStmt>
@@ -2367,8 +2356,6 @@ The second reprint is a lithographic reproduction of the original plates, made a
                                     <repository>
                                         <corpName xml:id="corpName_4366N11093">DK-Kk</corpName>
                                         <identifier xml:id="identifier_4366N11096">Mf. 127</identifier>
-                                        <ptr mimetype="" xl:title="Facsimile" xml:id="ptr_4366N1109C"/>
-                                        <ptr mimetype="" xl:title="Transcription" xml:id="ptr_4366N110A1"/>
                                     </repository>
                                 </physLoc>
                                 <provenance/>
@@ -2380,7 +2367,7 @@ The second reprint is a lithographic reproduction of the original plates, made a
                                 <physMedium/>
                             </physDesc>
                             <notesStmt>
-                                <annot type="source_description" xml:id="annot_4366N110C5">150 parts: S (50), A (32), T (28), B (40). Some of the parts (29 + 19 + 14 + 22) are from the original edition without plate naumbers, some from the first reprint (10 + 13 + 14 + 18), and additional 11 soprano parts are WH reprints. Three of the latter parts are stamped &lt;i&gt;Dansk Koncert-Forening / København&lt;/i&gt; on first page. Some of the parts glued into blue paper cover.</annot>
+                                <annot type="source_description" xml:id="annot_4366N110C5">150 parts: S (50), A (32), T (28), B (40). Some of the parts (29 + 19 + 14 + 22) are from the original edition without plate numbers, some from the first reprint (10 + 13 + 14 + 18), and additional 11 soprano parts are WH reprints. Three of the latter parts are stamped &lt;i&gt;Dansk Koncert-Forening / København&lt;/i&gt; on first page. Some of the parts glued into blue paper cover.</annot>
                                 <annot type="links" xml:id="annot_4366N110C9">
                                     <ptr mimetype="" xl:title="" xml:id="ptr_4366N110CE"/>
                                 </annot>
@@ -2388,18 +2375,190 @@ The second reprint is a lithographic reproduction of the original plates, made a
                             <componentGrp/>
                         </item>
                     </itemList>
-                    <componentGrp/>
+                    <componentGrp>
+                        <item analog="frbr:manifestation" label="" xml:id="item_d01c6991">
+                            <titleStmt>
+                                <title xml:id="title_509f5a7c">Soprani</title>
+                            </titleStmt>
+                            <physDesc>
+                                <titlePage label="" xml:id="titlePage_c6c52585">
+                                    <p/>
+                                </titlePage>
+                                <extent unit="pages">4</extent>
+                                <dimensions unit="cm"/>
+                                <physMedium/>
+                            </physDesc>
+                            <notesStmt>
+                                <annot type="source_description" xml:id="annot_9369e7f5"/>
+                            </notesStmt>
+                        </item>
+                        <item label="" xml:id="item_1edf78e9">
+                            <titleStmt>
+                                <title xml:id="title_15b6c89f">Alti</title>
+                            </titleStmt>
+                            <pubStmt>
+                                <respStmt>
+                                    <corpName role="publisher" xml:id="corpName_a08af205"/>
+                                </respStmt>
+                                <geogName xml:id="geogName_7ad9d626"/>
+                                <date/>
+                            </pubStmt>
+                            <physDesc>
+                                <condition/>
+                                <titlePage label="" xml:id="titlePage_f2ce8174">
+                                    <p/>
+                                </titlePage>
+                                <physLoc>
+                                    <repository>
+                                        <corpName xml:id="corpName_5b70ab0e"/>
+                                        <identifier xml:id="identifier_0268f90e"/>
+                                        <ptr mimetype="" xl:title="Library record" xml:id="ptr_7348096d"/>
+                                        <ptr mimetype="" xl:title="Facsimile" xml:id="ptr_c0f990a5"/>
+                                    </repository>
+                                </physLoc>
+                                <provenance>
+                                    <eventList xml:id="eventList_15af5f1c">
+                                        <event xml:id="event_bbbd4ae3">
+                                            <title xml:id="title_32da66fd"/>
+                                            <date/>
+                                            <geogName role="" xml:id="geogName_3f89f251"/>
+                                            <corpName role="" xml:id="corpName_d82a30f3"/>
+                                            <persName role="" xml:id="persName_663a539b"/>
+                                        </event>
+                                    </eventList>
+                                </provenance>
+                                <extent unit="pages">4</extent>
+                                <dimensions unit="cm"/>
+                                <handList xml:id="handList_9af9546d">
+                                    <hand initial="true" medium="" xml:id="hand_a833a913"/>
+                                </handList>
+                                <watermark xml:id="watermark_9968b31f">
+                                    <ptr mimetype="" xl:title="" xml:id="ptr_116cfe6e"/>
+                                </watermark>
+                                <physMedium/>
+                                <plateNum/>
+                            </physDesc>
+                            <notesStmt>
+                                <annot type="source_description" xml:id="annot_9d1cf187"/>
+                                <annot type="links" xml:id="annot_744d7920">
+                                    <ptr mimetype="" xl:title="" xml:id="ptr_03db76bf"/>
+                                </annot>
+                            </notesStmt>
+                        </item>
+                        <item label="" xml:id="item_7046a7de">
+                            <titleStmt>
+                                <title xml:id="title_0308fa9b">Tenori</title>
+                            </titleStmt>
+                            <pubStmt>
+                                <respStmt>
+                                    <corpName role="publisher" xml:id="corpName_9010bfc1"/>
+                                </respStmt>
+                                <geogName xml:id="geogName_9e3e9792"/>
+                                <date/>
+                            </pubStmt>
+                            <physDesc>
+                                <condition/>
+                                <titlePage label="" xml:id="titlePage_23a55db4">
+                                    <p/>
+                                </titlePage>
+                                <physLoc>
+                                    <repository>
+                                        <corpName xml:id="corpName_58bdd937"/>
+                                        <identifier xml:id="identifier_a00347a6"/>
+                                        <ptr mimetype="" xl:title="Library record" xml:id="ptr_67b0a80d"/>
+                                        <ptr mimetype="" xl:title="Facsimile" xml:id="ptr_159b457b"/>
+                                    </repository>
+                                </physLoc>
+                                <provenance>
+                                    <eventList xml:id="eventList_ae623c8c">
+                                        <event xml:id="event_eb84e589">
+                                            <title xml:id="title_6411a1eb"/>
+                                            <date/>
+                                            <geogName role="" xml:id="geogName_08aad757"/>
+                                            <corpName role="" xml:id="corpName_0f793920"/>
+                                            <persName role="" xml:id="persName_379def94"/>
+                                        </event>
+                                    </eventList>
+                                </provenance>
+                                <extent unit="pages">6</extent>
+                                <dimensions unit="cm"/>
+                                <handList xml:id="handList_4087e571">
+                                    <hand initial="true" medium="" xml:id="hand_b047a4d8"/>
+                                </handList>
+                                <watermark xml:id="watermark_9acc096c">
+                                    <ptr mimetype="" xl:title="" xml:id="ptr_dcbec2f0"/>
+                                </watermark>
+                                <physMedium/>
+                                <plateNum/>
+                            </physDesc>
+                            <notesStmt>
+                                <annot type="source_description" xml:id="annot_cc888e43"/>
+                                <annot type="links" xml:id="annot_e0f3aead">
+                                    <ptr mimetype="" xl:title="" xml:id="ptr_e4bd0084"/>
+                                </annot>
+                            </notesStmt>
+                        </item>
+                        <item label="" xml:id="item_a402e050">
+                            <titleStmt>
+                                <title xml:id="title_8e39e5d4">Bassi</title>
+                            </titleStmt>
+                            <pubStmt>
+                                <respStmt>
+                                    <corpName role="publisher" xml:id="corpName_76ce3678"/>
+                                </respStmt>
+                                <geogName xml:id="geogName_68114a72"/>
+                                <date/>
+                            </pubStmt>
+                            <physDesc>
+                                <condition/>
+                                <titlePage label="" xml:id="titlePage_3ac275c2">
+                                    <p/>
+                                </titlePage>
+                                <physLoc>
+                                    <repository>
+                                        <corpName xml:id="corpName_7b77f291"/>
+                                        <identifier xml:id="identifier_98f44b56"/>
+                                        <ptr mimetype="" xl:title="Library record" xml:id="ptr_028f29a4"/>
+                                        <ptr mimetype="" xl:title="Facsimile" xml:id="ptr_3323ab3a"/>
+                                    </repository>
+                                </physLoc>
+                                <provenance>
+                                    <eventList xml:id="eventList_e0e0ed28">
+                                        <event xml:id="event_51009842">
+                                            <title xml:id="title_a3bd305f"/>
+                                            <date/>
+                                            <geogName role="" xml:id="geogName_579a89db"/>
+                                            <corpName role="" xml:id="corpName_871042df"/>
+                                            <persName role="" xml:id="persName_8a33a19b"/>
+                                        </event>
+                                    </eventList>
+                                </provenance>
+                                <extent unit="pages">6</extent>
+                                <dimensions unit="cm"/>
+                                <handList xml:id="handList_867b7360">
+                                    <hand initial="true" medium="" xml:id="hand_0d9b056a"/>
+                                </handList>
+                                <watermark xml:id="watermark_15324d88">
+                                    <ptr mimetype="" xl:title="" xml:id="ptr_86d28c19"/>
+                                </watermark>
+                                <physMedium/>
+                                <plateNum/>
+                            </physDesc>
+                            <notesStmt>
+                                <annot type="source_description" xml:id="annot_6795e0e7"/>
+                                <annot type="links" xml:id="annot_3f78d391">
+                                    <ptr mimetype="" xl:title="" xml:id="ptr_685ebac1"/>
+                                </annot>
+                            </notesStmt>
+                        </item>
+                    </componentGrp>
                     <relationList>
                         <relation rel="isEmbodimentOf" target="#expression_1" xml:id="relation_4366N110D5"/>
                     </relationList>
                 </source>
                 <source analog="frbr:manifestation" label="" xml:id="source_d1e6214">
-                    <identifier type=""/>
                     <titleStmt>
                         <title xml:id="title_4366N110DF"/>
-                        <respStmt>
-                            <persName role="" xml:id="persName_4366N110E3"/>
-                        </respStmt>
                     </titleStmt>
                     <pubStmt>
                         <respStmt>
@@ -2411,9 +2570,6 @@ The second reprint is a lithographic reproduction of the original plates, made a
                     <physDesc>
                         <plateNum>926</plateNum>
                     </physDesc>
-                    <notesStmt>
-                        <annot type="source_description" xml:id="annot_4366N110F7"/>
-                    </notesStmt>
                     <relationList>
                         <relation rel="isReproductionOf" target="source_d1e1013" xml:id="relation_4366N110FC"/>
                     </relationList>
@@ -4841,10 +4997,7 @@ In the middle of the front page is a list of eight publications in this series; 
                     <language xml:id="de">German</language>
                 </langUsage>
                 <notesStmt>
-                    <annot type="general_description" xml:id="annot_b34b5aba"/>
-                    <annot type="links" xml:id="annot_94490270">
-                        <ptr mimetype="" xl:title="" xml:id="ptr_1d95b63f"/>
-                    </annot>
+                    <annot type="links" xml:id="annot_94490270"/>
                 </notesStmt>
                 <classification>
                     <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmContentClass"/>
@@ -5513,6 +5666,15 @@ In the middle of the front page is a list of eight publications in this series; 
                     <p/>
                 </changeDesc>
                 <date reg="2012-09-17">2012-09-17</date>
+            </change>
+            <change xml:id="change_4311N12C06">
+                <respStmt>
+                    <persName xml:id="persName_4311N12C09"/>
+                </respStmt>
+                <changeDesc>
+                    <p/>
+                </changeDesc>
+                <date>2012-09-18</date>
             </change>
         </revisionDesc>
     </meiHead>
