@@ -152,7 +152,6 @@
 			m:workDesc/
 			m:work/
 			m:titleStmt/m:respStmt">
-			
 			<xsl:for-each select="m:persName[@role='composer']">
 				<p>
 					<xsl:apply-templates select="."/>
@@ -163,7 +162,7 @@
 		<xsl:for-each 
 			select="m:meiHead/
 			m:workDesc/
-			m:work[@analog='frbr:work']/
+			m:work/
 			m:titleStmt">
 			
 			<xsl:if test="m:title[@type='main' or not(@type)][text()]">
@@ -220,9 +219,9 @@
 					</xsl:for-each>
 				</xsl:element>
 
-			</xsl:if>
-			
+			</xsl:if>			
 		</xsl:for-each>
+		
 		
 		<!-- other identifiers -->
 		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier/text()">
@@ -259,6 +258,18 @@
 			</xsl:for-each>
 			</p>
 		</xsl:for-each>
+
+		<xsl:for-each select="m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source'][text()]">
+			<div>
+				<xsl:if test="position()=1">
+					<span class="p_heading">Text source: </span>
+				</xsl:if>
+				<xsl:element name="span">
+					<xsl:call-template name="maybe_print_lang"/>
+					<xsl:apply-templates select="."/>
+				</xsl:element>
+			</div>
+		</xsl:for-each>
 		
 		<xsl:for-each 
 			select="m:meiHead/
@@ -284,6 +295,84 @@
 						</xsl:element>
 					</xsl:for-each>
 				</p>
+			</xsl:for-each>
+		</xsl:for-each>
+		
+		<!-- related files -->
+		<xsl:for-each 
+			select="m:meiHead/
+			m:workDesc/
+			m:work/
+			m:relationList">
+			<xsl:for-each select="m:relation[@target!='']">
+				<xsl:variable name="rel" select="@rel"/>
+				<xsl:if test="count(preceding-sibling::*[@rel=$rel])=0">
+					<!-- one <p> per relation type -->
+					<p>
+						<div class="p_heading">
+							<xsl:choose>
+								<xsl:when test="@rel='hasPart'">Contains:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='isPartOf'">Contained in:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='hasAlternate'">Alternate version:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='isAlternateOf'">Alternate version of:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='hasArrangement'">Arrangement:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='isArrangementOf'">Arrangement of:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='hasRevision'">Revised version:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='isRevisionOf'">Revised version of:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='hasImitation'">Imitation:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='isImitationOf'">Imitation of:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='hasTranslation'">Translated version:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='isTranslationOf'">Translation of:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='hasAdaptation'">Adaptation:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='isAdaptationOf'">Adaptation of:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='hasAbridgement'">Abridged version:</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="@rel='isAbridgementOf'">Abridged version of:</xsl:when>
+							</xsl:choose>
+						</div>
+						<xsl:for-each select="../m:relation[@rel=$rel]">
+							<xsl:element name="a">
+								<xsl:attribute name="href">
+									<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
+								</xsl:attribute>
+								<xsl:apply-templates select="@label"/>
+								<xsl:if test="not(@label) or @label=''">
+									<xsl:value-of select="@target"/>
+								</xsl:if>
+							</xsl:element>
+							<xsl:if test="position()!=last()"><br/></xsl:if>
+						</xsl:for-each>
+					</p>
+				</xsl:if>
 			</xsl:for-each>
 		</xsl:for-each>
 		
@@ -511,27 +600,6 @@
 			m:notesStmt/
 			m:annot[@type='bibliography']/
 			t:listBibl[t:bibl/*[text()]]"/>		
-		
-		<!-- related files -->
-		<xsl:for-each 
-			select="m:meiHead/
-			m:workDesc/
-			m:work/
-			m:relationList">
-			<xsl:for-each select="m:relation[@target!='']">
-				<p>
-					<xsl:element name="a">
-						<xsl:attribute name="href">
-							<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
-						</xsl:attribute>
-						<xsl:apply-templates select="@label"/>
-						<xsl:if test="not(@label) or @label=''">
-							<xsl:value-of select="@target"/>
-						</xsl:if>
-					</xsl:element>
-				</p>
-			</xsl:for-each>
-		</xsl:for-each>
 		
 		
 		<!-- colophon -->
@@ -890,6 +958,7 @@
 				<xsl:for-each select="m:geogName[text()]">
 					<xsl:apply-templates select="."/>
 					<xsl:if test="position() &lt; last()">, </xsl:if>
+					<xsl:if test="position()=last() and count(../m:corpName[text()]|../m:persName[text()])=0">. </xsl:if>
 				</xsl:for-each>
 				<xsl:for-each select="m:corpName[text()]|
 					m:persName[text()]">
@@ -1032,7 +1101,7 @@
 								[Source classification:
 							</xsl:if>
 							<xsl:value-of select="."/>
-							<xsl:choose>
+							<xsl:choose>    
 								<xsl:when test="position()=last()">]</xsl:when>
 								<xsl:otherwise><xsl:text>, </xsl:text></xsl:otherwise>
 							</xsl:choose>
@@ -1040,11 +1109,28 @@
 					</div>
 				</xsl:for-each>
 				
-				<xsl:comment> contributors </xsl:comment>
-				<xsl:for-each select="m:pubStmt[m:respStmt/m:persName/text()] |
-					m:pubStmt[m:respStmt/m:corpName/text()]">					
+				<xsl:for-each select="m:titleStmt[m:respStmt/m:persName/text()]">					
+					<xsl:comment> contributors </xsl:comment>
 					<xsl:call-template name="list_agents"/>	
 				</xsl:for-each>
+				
+				<xsl:for-each select="m:pubStmt[//text()]">					
+					<xsl:comment>publication</xsl:comment>
+					<div>
+						<xsl:if test="m:respStmt/m:corpName/text()">
+							<xsl:apply-templates select="m:respStmt/m:corpName"/>
+							<xsl:if test="normalize-space(concat(m:date,m:geogName))">
+								<xsl:text>, </xsl:text>
+							</xsl:if>
+						</xsl:if>
+						<xsl:apply-templates select="m:geogName"/>
+						<xsl:text> </xsl:text>
+						<xsl:apply-templates select="m:date"/>
+						<xsl:if test="normalize-space(concat(m:respStmt/m:corpName, m:date, m:geogName))">.</xsl:if>
+						<!--<xsl:call-template name="list_agents"/>-->
+					</div>
+				</xsl:for-each>
+				
 				
 				<xsl:comment> physical description </xsl:comment>				
 				<xsl:for-each select="m:physDesc">
@@ -1218,7 +1304,7 @@
 		</xsl:for-each>
 		
 		<xsl:for-each select="m:plateNum[text()]">
-			<p>Plate No. <xsl:apply-templates select="."/>.</p>
+			<p>Pl. No. <xsl:apply-templates select="."/>.</p>
 		</xsl:for-each>
 		
 		<xsl:apply-templates select="m:handList[m:hand/@medium!='' or m:hand/text()]"/>

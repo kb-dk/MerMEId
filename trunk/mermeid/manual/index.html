@@ -12,12 +12,15 @@
 
 <body>
 
+<div class="manual_header">
+
 <div class="close_div">
 <a href="javascript:window.close();" class="trigger"><img alt="Close"
 title="Close" src="../images/close.gif" width="12" height="12" /></a></div>
+<img alt="MerMEId" src="../images/mermeid_30px.png" width="130" height="23" />
+</div>
 
-<h1><img alt="MerMEId" src="../images/mermeid_30px.png" width="130" height="23"
-/></h1>
+<h1>Getting started</h1>
 
 <h2>Contents</h2>
 <ul>
@@ -29,10 +32,18 @@ title="Close" src="../images/close.gif" width="12" height="12" /></a></div>
       <li><a href="#HTML">HTML preview</a></li>
     </ul>
   </li>
+  <li><a href="#hints">Hints to using the editor</a> 
+    <ul>
+      <li><a href="#dates">Entering dates</a></li>
+    </ul>
+  </li>
+  <li><a href="#contact">Contacting us</a></li>
+  <li><a href="#contact">Selected unicode characters</a></li>
   <!--<li>Troubleshooting</li>
-                    <li>Reference: List of unicode characters
-                    </li>-->
+                                                    <li>Reference: List of unicode characters
+                                                    </li>-->
 </ul>
+<hr />
 
 <h2><a name="basics" id="basics">MerMEId basics</a></h2>
 
@@ -47,11 +58,11 @@ editing tool, and the HTML preview. </p>
 
 <p>The usual way to start working with MerMEId would be to open the file list,
 usually located at http://[your hostname here]/storage/list_files.xq (<a
-href="/storage/list_files.xq" target="_blank">here</a>). You
-should then see a list of existing files in your collection (if any):</p>
+href="/storage/list_files.xq" target="_blank">here</a>). You should then see a
+list of existing files in your collection (if any):</p>
 
 <p><img alt="" src="../images/manual/list_files.png" width="968" height="408"
-usemap="#map" border="0" class="illustration"/></p>
+usemap="#map" border="0" class="illustration" /></p>
 
 <div>
 <map name="map" id="map" class="manual">
@@ -199,17 +210,6 @@ deleting and re-arranging items:</p>
     </tr>
   </tbody>
 </table>
-<ul class="important">
-  <li>Important: Never use the ampersand sign (<span
-    style="color:#ff0000">&amp;</span>) like you would in a text document, as
-    it has a special meaning in XML. If you need an ampersand in your text,
-    enter it as <span style="color:#ff0000">&amp;amp;</span> &#x2013; this is
-    the standard "code" for the ampersand sign. Otherwise you will get an XML
-    error when trying to view your file. For example, instead of writing <span
-    style="color:#ff0000">Breitkopf &amp; Haertel</span>, write <span
-    style="color:#ff0000">Breitkopf &amp;amp; Haertel<span
-    style="color:#000000">.</span></span></li>
-</ul>
 
 <h3><a name="HTML" id="HTML">HTML Preview</a></h3>
 
@@ -219,7 +219,7 @@ of your data as well, but probably this is not how your data will be displayed
 in the end. </p>
 
 <p><img alt="HTML preview" src="../images/manual/html_view.png" width="937"
-  height="659"  class="illustration"/></p>
+height="659" class="illustration" /></p>
 
 <p>If titles or other text is given in more than one language, all other
 alternatives than the first one are shown in grey with an abbreviated
@@ -235,6 +235,549 @@ content.</p>
 
 <p>At the bottom of the page, in grey, metadata about the file are displayed
 (i.e. the colophon).</p>
+<hr />
+
+<h2><a name="hints" id="hints">Hints to using the editor</a></h2>
+
+<h3><a name="special_characters" id="special_characters">Entering special
+characters</a></h3>
+
+<p>Unicode characters may be pasted into your text. Please note, however, that
+displaying special characters correctly may depend on the fonts installed on
+the user's computer and/or on the way your data are processed for display.
+Especially musical symbols are still very poorly supported by font suppliers
+(at present, only flat, natural, and sharp signs can be used fairly safely).</p>
+
+<p>A <a href="#unicode">list of selected unicode characters</a> is given at the
+end of this document; symbols may be simply copied from there. </p>
+<ul class="important">
+  <li>Important: Never use the ampersand sign (<span
+    style="color:#ff0000">&amp;</span>) like you would in a text document, as
+    it has a special meaning in XML. If you need an ampersand in your text,
+    enter it as <span style="color:#ff0000">&amp;amp;</span> &#x2013; this is
+    the standard code for the ampersand sign. Otherwise you will get an XML
+    error when trying to view your file. For example, instead of writing <span
+    style="color:#ff0000">Breitkopf &amp; Haertel</span>, write <span
+    style="color:#ff0000">Breitkopf &amp;amp; Haertel<span
+    style="color:#000000">.</span></span></li>
+</ul>
+
+<h3><a name="dates" id="dates">Entering dates</a></h3>
+
+<p>Since dates in MEI consist of a visible and a hidden (machine-readable)
+component, a special date editor is opened whenever you click a date field or
+the "Edit" button next to a date. </p>
+
+<p><img alt="Date editor" src="../images/manual/date_editor.png" width="379"
+height="248" class="illustration" /></p>
+
+<p>The visible part of the date is entered at the bottom. You may enter
+anything you would like to be displayed as the date, e.g. "May 23",
+"1906-1918", "2012-09-19" or "No later than the composer's 41st anniversary".
+</p>
+
+<p>The machine-readable part is entered using the day, month and year fields in
+the middle. You may either enter a single date or a date interval. Choose the
+appropriate setting at the top. The machine-readable part always uses exact
+dates (i.e. both day, month and year), but for your convenience the date editor
+computes exact dates from incomplete dates entered. For instance, if you choose
+"Date interval" and enter only the two years 1895 and 1896, these will be
+interpreted as an interval beginning 1 January 1895 and ending 31 December 1896
+when clicking the "OK" button. If you choose the months as well, the first day
+of the month will be added in the start date and the last day of the month in
+the end date automatically (not taking into account leap years, though!). You
+can even enter an interval of a year or a month by selecting "Single date" and
+filling in only the year or the year and a month. An interval will be computed
+when you click the "OK" button.</p>
+
+<p>Once computed, the machine-readable part will be displayed on the form in
+square brackets for your control.</p>
+<hr />
+
+<h2><a name="contact" id="contact">Contacting us</a></h2>
+
+<p>MerMEId is developed by the Danish Centre for Music Publication. Please
+click the MerMEId logo in the lower right corner of the editor for contact
+details and licensing information.</p>
+<hr />
+
+<h2><a name="unicode" id="unicode">Selected unicode characters</a></h2>
+
+<p>The following is a list of selected unicode characters that you may paste
+into your data. Be aware, however, that the correct displaying of these
+character may depend on the fonts available on the user's computer and/or the
+way your data are processed for display. If some of the characters are not
+displayed correctly in the list below, you will see the problem illustrated.</p>
+
+<h3>Musical symbols</h3>
+
+<table border="0" cellpadding="0" cellspacing="0" class="unicode_table">
+  <tbody>
+    <tr>
+      <td>&#x266d; 
+
+        <p>&amp;#266d;</p>
+      </td>
+      <td>&#x266e; 
+
+        <p>&amp;#266e;</p>
+      </td>
+      <td>&#x266f; 
+
+        <p>&amp;#266f;</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Greek letters</h3>
+
+<table border="0" cellpadding="0" cellspacing="0" class="unicode_table">
+  <tbody>
+    <tr>
+      <td>&#x3b1; 
+
+        <p>&amp;#03b1;</p>
+      </td>
+      <td>&#x3b2; 
+
+        <p>&amp;#x03b2;</p>
+      </td>
+      <td>&#x3b3; 
+
+        <p>&amp;#x03b3;</p>
+      </td>
+      <td>&#x3b4; 
+
+        <p>&amp;#x03b4;</p>
+      </td>
+      <td>&#x3b5; 
+
+        <p>&amp;#x03b5;</p>
+      </td>
+      <td>&#x3b6; 
+
+        <p>&amp;#x03b6;</p>
+      </td>
+      <td>&#x3b7; 
+
+        <p>&amp;#x03b7;</p>
+      </td>
+      <td>&#x3b8; 
+
+        <p>&amp;#x03b8;</p>
+      </td>
+      <td>&#x3b9; 
+
+        <p>&amp;#x03b9;</p>
+      </td>
+      <td>&#x3ba; 
+
+        <p>&amp;#x03ba;</p>
+      </td>
+      <td>&#x3bb; 
+
+        <p>&amp;#x03bb;</p>
+      </td>
+      <td>&#x3bc; 
+
+        <p>&amp;#x03bc;</p>
+      </td>
+      <td>&#x3bd; 
+
+        <p>&amp;#x03bd;</p>
+      </td>
+    </tr>
+    <tr>
+      <td>&#x3be; 
+
+        <p>&amp;#x03be;</p>
+      </td>
+      <td>&#x3bf; 
+
+        <p>&amp;#x03bf;</p>
+      </td>
+      <td>&#x3c0; 
+
+        <p>&amp;#x03c0;</p>
+      </td>
+      <td>&#x3c1; 
+
+        <p>&amp;#03c1;</p>
+      </td>
+      <td>&#x3c2; 
+
+        <p>&amp;#x03c2;</p>
+      </td>
+      <td>&#x3c3; 
+
+        <p>&amp;#x03bc3;</p>
+      </td>
+      <td>&#x3c4; 
+
+        <p>&amp;#x03c4;</p>
+      </td>
+      <td>&#x3c5; 
+
+        <p>&amp;#x03c5;</p>
+      </td>
+      <td>&#x3c6; 
+
+        <p>&amp;#x03c6;</p>
+      </td>
+      <td>&#x3c7; 
+
+        <p>&amp;#x03c7;</p>
+      </td>
+      <td>&#x3c8; 
+
+        <p>&amp;#x03c8;</p>
+      </td>
+      <td>&#x3c9; 
+
+        <p>&amp;#x03c9;</p>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Runes</h3>
+
+<table border="0" cellpadding="0" cellspacing="0" class="unicode_table">
+  <tbody>
+    <tr>
+      <td>&#x16a0; 
+
+        <p>&amp;#16a0;</p>
+      </td>
+      <td>&#x16a1; 
+
+        <p>&amp;#16a1;</p>
+      </td>
+      <td>&#x16a2; 
+
+        <p>&amp;#16a2;</p>
+      </td>
+      <td>&#x16a3; 
+
+        <p>&amp;#16a3;</p>
+      </td>
+      <td>&#x16a4; 
+
+        <p>&amp;#16a4;</p>
+      </td>
+      <td>&#x16a5; 
+
+        <p>&amp;#16a5;</p>
+      </td>
+      <td>&#x16a6; 
+
+        <p>&amp;#16a6;</p>
+      </td>
+      <td>&#x16a7; 
+
+        <p>&amp;#16a7;</p>
+      </td>
+      <td>&#x16a8; 
+
+        <p>&amp;#16a8;</p>
+      </td>
+      <td>&#x16a9; 
+
+        <p>&amp;#16a9;</p>
+      </td>
+      <td>&#x16aa; 
+
+        <p>&amp;#16aa;</p>
+      </td>
+      <td>&#x16ab; 
+
+        <p>&amp;#16ab;</p>
+      </td>
+      <td>&#x16ac; 
+
+        <p>&amp;#16ac;</p>
+      </td>
+      <td>&#x16ad; 
+
+        <p>&amp;#16ad;</p>
+      </td>
+      <td>&#x16ae; 
+
+        <p>&amp;#16ae;</p>
+      </td>
+      <td>&#x16af; 
+
+        <p>&amp;#16af;</p>
+      </td>
+    </tr>
+    <tr>
+      <td>&#x16b0; 
+
+        <p>&amp;#16b0;</p>
+      </td>
+      <td>&#x16b1; 
+
+        <p>&amp;#16b1;</p>
+      </td>
+      <td>&#x16b2; 
+
+        <p>&amp;#16b2;</p>
+      </td>
+      <td>&#x16b3; 
+
+        <p>&amp;#16b3;</p>
+      </td>
+      <td>&#x16b4; 
+
+        <p>&amp;#16b4;</p>
+      </td>
+      <td>&#x16b5; 
+
+        <p>&amp;#16b5;</p>
+      </td>
+      <td>&#x16b6; 
+
+        <p>&amp;#16b6;</p>
+      </td>
+      <td>&#x16b7; 
+
+        <p>&amp;#16b7;</p>
+      </td>
+      <td>&#x16b8; 
+
+        <p>&amp;#16b8;</p>
+      </td>
+      <td>&#x16b9; 
+
+        <p>&amp;#16b9;</p>
+      </td>
+      <td>&#x16ba; 
+
+        <p>&amp;#16ba;</p>
+      </td>
+      <td>&#x16bb; 
+
+        <p>&amp;#16bb;</p>
+      </td>
+      <td>&#x16bc; 
+
+        <p>&amp;#16bc;</p>
+      </td>
+      <td>&#x16bd; 
+
+        <p>&amp;#16bd;</p>
+      </td>
+      <td>&#x16be; 
+
+        <p>&amp;#16be;</p>
+      </td>
+      <td>&#x16bf; 
+
+        <p>&amp;#16bf;</p>
+      </td>
+    </tr>
+    <tr>
+      <td>&#x16c0; 
+
+        <p>&amp;#16c0;</p>
+      </td>
+      <td>&#x16c1; 
+
+        <p>&amp;#16c1;</p>
+      </td>
+      <td>&#x16c2; 
+
+        <p>&amp;#16c2;</p>
+      </td>
+      <td>&#x16c3; 
+
+        <p>&amp;#16c3;</p>
+      </td>
+      <td>&#x16c4; 
+
+        <p>&amp;#16c4;</p>
+      </td>
+      <td>&#x16c5; 
+
+        <p>&amp;#16c5;</p>
+      </td>
+      <td>&#x16c6; 
+
+        <p>&amp;#16c6;</p>
+      </td>
+      <td>&#x16c7; 
+
+        <p>&amp;#16c7;</p>
+      </td>
+      <td>&#x16c8; 
+
+        <p>&amp;#16c8;</p>
+      </td>
+      <td>&#x16c9; 
+
+        <p>&amp;#16c9;</p>
+      </td>
+      <td>&#x16ca; 
+
+        <p>&amp;#16ca;</p>
+      </td>
+      <td>&#x16cb; 
+
+        <p>&amp;#16cb;</p>
+      </td>
+      <td>&#x16cc; 
+
+        <p>&amp;#16cc;</p>
+      </td>
+      <td>&#x16cd; 
+
+        <p>&amp;#16cd;</p>
+      </td>
+      <td>&#x16ce; 
+
+        <p>&amp;#16ce;</p>
+      </td>
+      <td>&#x16cf; 
+
+        <p>&amp;#16cf;</p>
+      </td>
+    </tr>
+    <tr>
+      <td>&#x16d0; 
+
+        <p>&amp;#16d0;</p>
+      </td>
+      <td>&#x16d1; 
+
+        <p>&amp;#16d1;</p>
+      </td>
+      <td>&#x16d2; 
+
+        <p>&amp;#16d2;</p>
+      </td>
+      <td>&#x16d3; 
+
+        <p>&amp;#16d3;</p>
+      </td>
+      <td>&#x16d4; 
+
+        <p>&amp;#16d4;</p>
+      </td>
+      <td>&#x16d5; 
+
+        <p>&amp;#16d5;</p>
+      </td>
+      <td>&#x16d6; 
+
+        <p>&amp;#16d6;</p>
+      </td>
+      <td>&#x16d7; 
+
+        <p>&amp;#16d7;</p>
+      </td>
+      <td>&#x16d8; 
+
+        <p>&amp;#16d8;</p>
+      </td>
+      <td>&#x16d9; 
+
+        <p>&amp;#16d9;</p>
+      </td>
+      <td>&#x16da; 
+
+        <p>&amp;#16da;</p>
+      </td>
+      <td>&#x16db; 
+
+        <p>&amp;#16db;</p>
+      </td>
+      <td>&#x16dc; 
+
+        <p>&amp;#16dc;</p>
+      </td>
+      <td>&#x16dd; 
+
+        <p>&amp;#16dd;</p>
+      </td>
+      <td>&#x16de; 
+
+        <p>&amp;#16de;</p>
+      </td>
+      <td>&#x16df; 
+
+        <p>&amp;#16df;</p>
+      </td>
+    </tr>
+    <tr>
+      <td>&#x16e0; 
+
+        <p>&amp;#16e0;</p>
+      </td>
+      <td>&#x16e1; 
+
+        <p>&amp;#16e1;</p>
+      </td>
+      <td>&#x16e2; 
+
+        <p>&amp;#16e2;</p>
+      </td>
+      <td>&#x16e3; 
+
+        <p>&amp;#16e3;</p>
+      </td>
+      <td>&#x16e4; 
+
+        <p>&amp;#16e4;</p>
+      </td>
+      <td>&#x16e5; 
+
+        <p>&amp;#16e5;</p>
+      </td>
+      <td>&#x16e6; 
+
+        <p>&amp;#16e6;</p>
+      </td>
+      <td>&#x16e7; 
+
+        <p>&amp;#16e7;</p>
+      </td>
+      <td>&#x16e8; 
+
+        <p>&amp;#16e8;</p>
+      </td>
+      <td>&#x16e9; 
+
+        <p>&amp;#16e9;</p>
+      </td>
+      <td>&#x16ea; 
+
+        <p>&amp;#16ea;</p>
+      </td>
+      <td>&#x16eb; 
+
+        <p>&amp;#16eb;</p>
+      </td>
+      <td>&#x16ec; 
+
+        <p>&amp;#16ec;</p>
+      </td>
+      <td>&#x16ed; 
+
+        <p>&amp;#16ed;</p>
+      </td>
+      <td>&#x16ee; 
+
+        <p>&amp;#16ee;</p>
+      </td>
+      <td>&#x16ef; 
+
+        <p>&amp;#16ef;</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <p></p>
 <hr />

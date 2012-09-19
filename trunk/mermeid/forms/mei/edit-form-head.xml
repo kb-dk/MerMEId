@@ -159,15 +159,20 @@
       <!-- load XML data -->
       <xf:send submission="load-data-submission"/>
       <!-- automatically add change entry in revisionDesc -->
-      <xf:action if="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date!=''">
-        <xf:insert nodeset="instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
-          position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
-        <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
-          value="substring-before(now(), 'T')"/>
-      </xf:action>
-      <xf:action if="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date=''">
-        <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
-          value="substring-before(now(), 'T')"/>
+      <xxf:variable name="last_revision" 
+        select="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]"/>
+      <xxf:variable name="today" select="substring-before(now(), 'T')"/>
+      <xf:action if="$last_revision/m:date!=$today or ($last_revision/m:date=$today and $last_revision/*/*/text())">
+        <xf:action if="$last_revision/m:date!=''">
+          <xf:insert nodeset="instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
+            position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
+            value="$today"/>
+        </xf:action>
+        <xf:action if="$last_revision/m:date=''">
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
+            value="$today"/>
+        </xf:action>
       </xf:action>
       <!-- check list of language declarations -->
       <xf:dispatch name="language-update" target="form-group"/>
