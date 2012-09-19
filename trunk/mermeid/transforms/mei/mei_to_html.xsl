@@ -27,7 +27,7 @@
 	<xsl:output 
 		method="xml" 
 		encoding="UTF-8"
-	    omit-xml-declaration="yes"/>
+		omit-xml-declaration="yes"/>
 	<xsl:strip-space elements="*"/>
 	
 	<xsl:param name="hostname"/>
@@ -122,7 +122,7 @@
 	
 	<xsl:template name="make_html_body" xml:space="default">
 		<!-- main identification -->
-
+		
 		<xsl:variable name="file_context">
 			<xsl:value-of 
 				select="m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
@@ -218,7 +218,7 @@
 						<xsl:call-template name="maybe_print_br" />
 					</xsl:for-each>
 				</xsl:element>
-
+				
 			</xsl:if>			
 		</xsl:for-each>
 		
@@ -240,25 +240,25 @@
 			m:titleStmt/
 			m:respStmt[m:persName]">
 			<p>
-			<xsl:for-each select="m:persName[text()][@role!='composer']">
-				<xsl:if test="@role and @role!=''">
-					<span class="p_heading">
-						<xsl:choose>
-							<xsl:when test="@role='author'">Text author</xsl:when>
-							<xsl:otherwise>
-								<xsl:call-template name="capitalize">
-									<xsl:with-param name="str" select="@role"/>
-								</xsl:call-template>
-							</xsl:otherwise>
-						</xsl:choose>
-						<xsl:text>: </xsl:text>
-					</span>
-				</xsl:if>
-				<xsl:apply-templates select="."/><br/>
-			</xsl:for-each>
+				<xsl:for-each select="m:persName[text()][@role!='composer']">
+					<xsl:if test="@role and @role!=''">
+						<span class="p_heading">
+							<xsl:choose>
+								<xsl:when test="@role='author'">Text author</xsl:when>
+								<xsl:otherwise>
+									<xsl:call-template name="capitalize">
+										<xsl:with-param name="str" select="@role"/>
+									</xsl:call-template>
+								</xsl:otherwise>
+							</xsl:choose>
+							<xsl:text>: </xsl:text>
+						</span>
+					</xsl:if>
+					<xsl:apply-templates select="."/><br/>
+				</xsl:for-each>
 			</p>
 		</xsl:for-each>
-
+		
 		<xsl:for-each select="m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source'][text()]">
 			<div>
 				<xsl:if test="position()=1">
@@ -375,7 +375,30 @@
 				</xsl:if>
 			</xsl:for-each>
 		</xsl:for-each>
+
+		<!-- show work history and global sources first if more than one version -->
+		<xsl:if test="count(m:meiHead/
+			m:workDesc/
+			m:work/m:expressionList/m:expression)&gt;1">
+			
+			<!-- work history -->		
+			<xsl:apply-templates 
+				select="m:meiHead/
+				m:workDesc/
+				m:work/
+				m:history[m:creation/m:date[text()] or m:p[text()] or m:eventList[m:event[*//text()]]]"/>
+			
+			<!-- global sources -->
+			<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
+				or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0"></xsl:if>
+			<xsl:apply-templates 
+				select="m:meiHead[count(m:workDesc/m:work/m:expressionList/m:expression)&lt;2]/
+				m:fileDesc/
+				m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"/>
+			
+		</xsl:if>
 		
+
 		<!-- top-level expression (versions and one-movement work details) -->
 		<xsl:for-each select="m:meiHead/
 			m:workDesc/
@@ -458,140 +481,85 @@
 				
 			</xsl:element>
 			
+			
+			<!-- version history -->		
+			<xsl:apply-templates 
+				select="m:history[m:creation/m:date[text()] or m:p[text()] or m:eventList[m:event[*//text()]]]"/>
+			
+			<!-- version-specific sources -->
+			<xsl:if test="count(../m:expression)&gt;1">
+				<xsl:variable name="expression_id" select="@xml:id"/>
+				<xsl:for-each 
+					select="/m:mei/m:meiHead/m:fileDesc/
+					m:sourceDesc[(normalize-space(*//text()) or m:source/@target!='') 
+					and m:source/m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
+					<xsl:variable name="source_id" 
+						select="concat('version_source',generate-id(.),$expression_id)"/>
+					
+					<div class="fold">
+						<xsl:text>
+						</xsl:text><script type="application/javascript"><xsl:text>
+							openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;
+							</xsl:text></script>
+						<xsl:text>
+						</xsl:text>
+						<p class="p_heading" 
+							id="p{$source_id}"
+							title="Click to open" 
+							onclick="toggle('{$source_id}')">
+							<img class="noprint" 
+								style="display:inline;" 
+								border="0" 
+								id="img{$source_id}"
+								alt="+"
+								src="/editor/images/plus.png"/>
+							Sources
+						</p>
+						
+						<div  id="{$source_id}" style="display:none;" class="folded_content">
+							<xsl:for-each select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
+								<xsl:choose>
+									<xsl:when test="@target!=''">
+										<!-- get external source description -->
+										<xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
+										<xsl:variable name="doc_name" select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
+										<xsl:variable name="doc" select="document($doc_name)"/>
+										<xsl:apply-templates select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
+									</xsl:when>
+									<xsl:when test="m:titleStmt/m:title/text()">
+										<xsl:apply-templates select="."/>
+									</xsl:when>
+								</xsl:choose>
+							</xsl:for-each>
+						</div>
+					</div>
+				</xsl:for-each>
+			</xsl:if>
+			
 		</xsl:for-each>
 		<!-- end top-level expressions (versions) -->
 		
-		<!-- history -->		
-		<xsl:for-each 
-			select="m:meiHead/
+		<!-- show work history and global sources after movements if only one version -->
+		<xsl:if test="count(m:meiHead/
 			m:workDesc/
-			m:work/
-			m:history[m:creation/m:date[text()] or m:p[text()] or m:eventList[@type='history' and m:event[*//text()]]]">
-			
-			<xsl:variable 
-				name="historydiv_id" 
-				select="concat('history',generate-id(.),position())"/>
-			
-			<xsl:text>
-			</xsl:text>
-			<script type="application/javascript"><xsl:text>
-				openness["</xsl:text><xsl:value-of select="$historydiv_id"/><xsl:text>"]=false;
-				</xsl:text></script>
-			<xsl:text>
-			</xsl:text>
-			
-			<div class="fold" style="display:block;">
-				<p class="p_heading" 
-					id="p{$historydiv_id}"
-					title="Click to open"
-					onclick="toggle('{$historydiv_id}')">
-					<img 
-						id="img{$historydiv_id}"
-						class="noprint" 
-						style="display:inline" 
-						border="0" 
-						src="/editor/images/plus.png" 
-						alt="+"/> History
-				</p>				
-				<div class="folded_content" id="{$historydiv_id}" style="display:none;">
-					
-					<!-- composition history -->
-					<xsl:for-each select="m:creation/m:date[text()]">
-						<xsl:if test="position()=1">
-							<p><span class="p_heading">
-								Date of composition: 
-							</span>
-								<xsl:apply-templates/>.
-							</p>
-						</xsl:if>
-					</xsl:for-each>		
-					<xsl:for-each select="m:p[text()]">
-						<p><xsl:apply-templates/></p>
-					</xsl:for-each>		
-					<xsl:for-each select="m:eventList[@type='history' and m:event[m:date/text() | m:title/text()]]">
-						<table>
-							<xsl:for-each select="m:event[m:date/text() | m:title/text()]">
-								<tr>
-									<td nowrap="nowrap">
-										<xsl:apply-templates select="m:date"/>
-									</td>
-									<td>
-										<xsl:apply-templates select="m:title"/>
-									</td>
-								</tr>
-							</xsl:for-each>
-						</table>
-					</xsl:for-each>
-					
-					<!-- performances -->
-					<xsl:for-each 
-						select="m:eventList[@type='performances' and m:event//text()]">
-						<div class="fold" style="display:block;">
-							<p class="p_heading">Performances</p>				
-							<table>
-								<xsl:for-each select="m:event[m:date/text() | m:title/text()]">
-									<xsl:apply-templates select="." mode="performance_details"/>
-								</xsl:for-each>
-							</table>
-							
-						</div>
-					</xsl:for-each>
-					
-				</div>
-			</div>
-			
-		</xsl:for-each>
+			m:work/m:expressionList/m:expression)&lt;2">
 		
-		
-		<!-- sources -->
-		<xsl:for-each 
-			select="m:meiHead/
-			m:fileDesc/
-			m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']">
+			<!-- work history -->		
+			<xsl:apply-templates 
+				select="m:meiHead/
+				m:workDesc/
+				m:work/
+				m:history[m:creation/m:date[text()] or m:p[text()] or m:eventList[m:event[*//text()]]]"/>
 			
-			<xsl:variable name="source_id" 
-				select="concat('source',generate-id(.),position())"/>
+			<!-- global sources -->
+			<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
+				or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0"></xsl:if>
+			<xsl:apply-templates 
+				select="m:meiHead[count(m:workDesc/m:work/m:expressionList/m:expression)&lt;2]/
+				m:fileDesc/
+				m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"/>
 			
-			<div class="fold">
-				<xsl:text>
-				</xsl:text><script type="application/javascript"><xsl:text>
-					openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;
-					</xsl:text></script>
-				<xsl:text>
-				</xsl:text>
-				<p class="p_heading" 
-					id="p{$source_id}"
-					title="Click to open" 
-					onclick="toggle('{$source_id}')">
-					<img class="noprint" 
-						style="display:inline;" 
-						border="0" 
-						id="img{$source_id}"
-						alt="+"
-						src="/editor/images/plus.png"/>
-					Sources
-				</p>
-				
-				<div  id="{$source_id}" style="display:none;" class="folded_content">
-					<xsl:for-each select="m:source">
-						<xsl:choose>
-							<xsl:when test="@target!=''">
-								<!-- get external source description -->
-								<xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
-								<xsl:variable name="doc_name" select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
-								<xsl:variable name="doc" select="document($doc_name)"/>
-								<xsl:apply-templates select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
-							</xsl:when>
-							<xsl:when test="m:titleStmt/m:title/text()">
-								<xsl:apply-templates select="."/>
-							</xsl:when>
-						</xsl:choose>
-					</xsl:for-each>
-				</div>
-				
-			</div>
-			
-		</xsl:for-each>
+		</xsl:if>
 		
 		<!-- bibliography -->
 		<xsl:apply-templates 
@@ -668,7 +636,7 @@
 			</xsl:if>
 			<xsl:apply-templates select="m:meiHead/m:revisionDesc"/>
 		</div>
-
+		
 		<xsl:for-each select="m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes' and text()]">
 			<div class="private">
 				<div class="private_heading">[Private notes]</div>
@@ -913,10 +881,10 @@
 	<xsl:template match="m:castList[m:castItem/m:role/m:ref/m:name[normalize-space(.)]]">
 		<p>
 			<span class="label">Characters: </span>
-<!--			<xsl:for-each 
+			<!--			<xsl:for-each 
 				select="m:castItem/m:role/m:ref/m:name">
 				<xsl:apply-templates select="."/><xsl:if test="position() &lt; last()"><xsl:text>, </xsl:text></xsl:if>
-			</xsl:for-each>-->
+				</xsl:for-each>-->
 			<xsl:for-each select="m:castItem/m:role//m:name[count(@xml:lang[.=ancestor-or-self::m:castItem/preceding-sibling::*//@xml:lang])=0 or not(@xml:lang)]">
 				<!-- iterate over languages -->
 				<xsl:variable name="lang" select="@xml:lang"/>
@@ -944,7 +912,126 @@
 	</xsl:template>
 	
 	
+	<!-- history -->		
+	<xsl:template match="m:history">
+		<xsl:variable 
+			name="historydiv_id" 
+			select="concat('history',generate-id(.),position())"/>
+		
+		<xsl:text>
+		</xsl:text>
+		<script type="application/javascript"><xsl:text>
+			openness["</xsl:text><xsl:value-of select="$historydiv_id"/><xsl:text>"]=false;
+			</xsl:text></script>
+		<xsl:text>
+		</xsl:text>
+		
+		<div class="fold" style="display:block;">
+			<p class="p_heading" 
+				id="p{$historydiv_id}"
+				title="Click to open"
+				onclick="toggle('{$historydiv_id}')">
+				<img 
+					id="img{$historydiv_id}"
+					class="noprint" 
+					style="display:inline" 
+					border="0" 
+					src="/editor/images/plus.png" 
+					alt="+"/> History
+			</p>				
+			<div class="folded_content" id="{$historydiv_id}" style="display:none;">
+				
+				<!-- composition history -->
+				<xsl:for-each select="m:creation/m:date[text()]">
+					<xsl:if test="position()=1">
+						<p><span class="p_heading">
+							Date of composition: 
+						</span>
+							<xsl:apply-templates/>.
+						</p>
+					</xsl:if>
+				</xsl:for-each>		
+				<xsl:for-each select="m:p[text()]">
+					<p><xsl:apply-templates/></p>
+				</xsl:for-each>		
+				<xsl:for-each select="m:eventList[@type='history' and m:event[m:date/text() | m:title/text()]]">
+					<table>
+						<xsl:for-each select="m:event[m:date/text() | m:title/text()]">
+							<tr>
+								<td nowrap="nowrap">
+									<xsl:apply-templates select="m:date"/>
+								</td>
+								<td>
+									<xsl:apply-templates select="m:title"/>
+								</td>
+							</tr>
+						</xsl:for-each>
+					</table>
+				</xsl:for-each>
+				
+				<!-- performances -->
+				<xsl:for-each 
+					select="m:eventList[@type='performances' and m:event//text()]">
+					<div class="fold" style="display:block;">
+						<p class="p_heading">Performances</p>				
+						<table>
+							<xsl:for-each select="m:event[//text()]">
+								<xsl:apply-templates select="." mode="performance_details"/>
+							</xsl:for-each>
+						</table>
+						
+					</div>
+				</xsl:for-each>
+				
+			</div>
+		</div>
+	</xsl:template>
 	
+	
+	<!-- sources -->
+	<xsl:template match="m:sourceDesc">
+		
+		<xsl:variable name="source_id" 
+			select="concat('source',generate-id(.),position())"/>
+		
+		<div class="fold">
+			<xsl:text>
+			</xsl:text><script type="application/javascript"><xsl:text>
+				openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;
+				</xsl:text></script>
+			<xsl:text>
+			</xsl:text>
+			<p class="p_heading" 
+				id="p{$source_id}"
+				title="Click to open" 
+				onclick="toggle('{$source_id}')">
+				<img class="noprint" 
+					style="display:inline;" 
+					border="0" 
+					id="img{$source_id}"
+					alt="+"
+					src="/editor/images/plus.png"/>
+				Sources
+			</p>
+			
+			<div  id="{$source_id}" style="display:none;" class="folded_content">
+				<xsl:for-each select="m:source">
+					<xsl:choose>
+						<xsl:when test="@target!=''">
+							<!-- get external source description -->
+							<xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
+							<xsl:variable name="doc_name" select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
+							<xsl:variable name="doc" select="document($doc_name)"/>
+							<xsl:apply-templates select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
+						</xsl:when>
+						<xsl:when test="m:titleStmt/m:title/text()">
+							<xsl:apply-templates select="."/>
+						</xsl:when>
+					</xsl:choose>
+				</xsl:for-each>
+			</div>
+		</div>
+	</xsl:template>
 	
 	<!-- performance-related templates -->
 	
@@ -1091,9 +1178,9 @@
 						<xsl:apply-templates select="m:title"/>
 					</xsl:element>
 				</xsl:for-each>
-
+				
 				<xsl:call-template name="list_agents"/>
-								
+				
 				<xsl:for-each select="m:classification/m:termList[m:term[text()]]">
 					<div class="classification">
 						<xsl:for-each select="m:term[text()]">
@@ -1208,9 +1295,9 @@
 						</xsl:for-each>
 					</div>
 				</xsl:for-each>
-
+				
 				<xsl:for-each select="m:identifier[text()]">
-				<div>
+					<div>
 						<xsl:apply-templates select="@type"/><xsl:text> </xsl:text>
 						<xsl:choose>
 							<!-- some CNW-specific styling here -->
@@ -1231,7 +1318,7 @@
 			</div>
 		</xsl:if>
 	</xsl:template>
-
+	
 	<xsl:template match="m:itemList">		
 		<xsl:choose>
 			<xsl:when test="count(m:item)&gt;1 or m:item/m:titleStmt/m:title/text()">
@@ -1249,7 +1336,7 @@
 		</xsl:choose>
 	</xsl:template>
 	
-
+	
 	<xsl:template match="m:source/m:componentGrp | m:item/m:componentGrp">
 		<xsl:variable name="labels" select="count(m:item[@label!=''])"/>
 		<xsl:choose>
@@ -1274,7 +1361,7 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-		
+	
 	
 	<xsl:template match="m:physDesc">
 		<xsl:if test="m:dimensions[text()] | m:extent[text()]">
