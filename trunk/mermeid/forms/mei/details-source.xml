@@ -135,7 +135,7 @@
                         
                         
                         
-                        <!-- Point to relevant version if more than one available 
+                        <!-- Point to relevant version if more than one available [ Obsolete ]
                         <xf:group ref=".[count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
                             <h:div class="vertical_spacer"/>
                             <h:div>
@@ -161,7 +161,6 @@
                             </h:div>
                         </xf:group>
                         -->
-              
               
               
                         <h:fieldset>
@@ -198,7 +197,7 @@
                                                 </xf:item>
                                                 <xf:itemset nodeset="instance('data-instance')//m:source/@xml:id | instance('data-instance')//m:expression/@xml:id">
                                                     <xf:label><xf:output value="concat(../m:titleStmt/m:title[1],' (',.,')')"/></xf:label>
-                                                    <xf:value ref="."/>
+                                                    <xf:value ref="concat('#',.)"/>
                                                 </xf:itemset>
                                             </xf:select1>
                                         </h:td>
