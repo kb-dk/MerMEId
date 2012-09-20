@@ -132,37 +132,7 @@
                         </xf:input>
                         <dcm:id ref="m:titleStmt/m:title"/>
                         <dcm:attribute-editor ref="m:titleStmt/m:title"/>
-                        
-                        
-                        
-                        <!-- Point to relevant version if more than one available [ Obsolete ]
-                        <xf:group ref=".[count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
-                            <h:div class="vertical_spacer"/>
-                            <h:div>
-                                <dcm:create 
-                                    nodeset="m:relation"
-                                    label="Specify work version"
-                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:relationList/m:relation[@rel='isEmbodimentOf'][1]"/>
-                                <xf:select1 ref="m:relationList/m:relation[@rel='isEmbodimentOf'][1]" xxf:refresh-items="true" id="cast-select" class="maxlong">
-                                    <xf:label class="fixed_width_long">Represents: 
-                                        <h:a class="help">?<h:span class="comment">Indicates which version of the work 
-                                            is embodied by the source</h:span></h:a>
-                                    </xf:label>
-                                    <xf:item>
-                                        <xf:label>- Please select -</xf:label>
-                                        <xf:value/>
-                                    </xf:item>
-                                    <xf:itemset nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression">
-                                        <xf:label><xf:output value="m:titleStmt/m:title"/> (ID: <xf:output value="@xml:id"/>)</xf:label>
-                                        <xf:value ref="@xml:id"></xf:value>
-                                    </xf:itemset>
-                                </xf:select1>	
-                                <dcm:attribute-editor ref="m:relationList/m:relation[@rel='isEmbodimentOf'][1]"/>
-                            </h:div>
-                        </xf:group>
-                        -->
-              
-              
+                                 
                         <h:fieldset>
                             <h:legend>Relations <h:a class="help">?<h:span class="comment">Relations may be between
                                 sources (for instance, marking this source as a reprint of another source) or between 

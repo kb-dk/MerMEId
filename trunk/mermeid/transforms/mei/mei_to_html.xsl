@@ -282,7 +282,7 @@
 				</p>
 			</xsl:if>			
 			<xsl:for-each select="m:annot[@type='links'][m:ptr[@target!='']]">
-				<p><xsl:text>See also: </xsl:text>
+				<p><xsl:text>⇒</xsl:text>
 					<xsl:for-each select="m:ptr[@target!='']">
 						<xsl:element name="a">
 							<xsl:attribute name="href">
@@ -432,7 +432,7 @@
 				<xsl:for-each select="m:relationList[m:relation[@target!='']]">
 					<p><xsl:text>Related resources: </xsl:text>
 						<xsl:for-each select="m:relation[@target!='']">
-							<xsl:element name="a">
+							⇒<xsl:element name="a">
 								<xsl:attribute name="href">
 									<xsl:apply-templates select="@target"/>
 								</xsl:attribute>
@@ -517,7 +517,10 @@
 						</p>
 						
 						<div  id="{$source_id}" style="display:none;" class="folded_content">
-							<xsl:for-each select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
+							<!-- skip reproductions (=reprints) -->
+							<xsl:for-each select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' 
+								and substring-after(@target,'#')=$expression_id] and 
+								not(m:relationList/m:relation[@rel='isReproductionOf'])]">
 								<xsl:choose>
 									<xsl:when test="@target!=''">
 										<!-- get external source description -->
@@ -553,11 +556,12 @@
 			
 			<!-- global sources -->
 			<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
-				or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0"></xsl:if>
+				or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0">
 			<xsl:apply-templates 
 				select="m:meiHead[count(m:workDesc/m:work/m:expressionList/m:expression)&lt;2]/
 				m:fileDesc/
 				m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"/>
+			</xsl:if>
 			
 		</xsl:if>
 		
@@ -864,7 +868,7 @@
 				<br/>
 			</xsl:for-each>
 			
-			<xsl:for-each select="m:performer">
+			<xsl:for-each select="m:performer[not(m:instrVoice[@solo='true'])]">
 				<xsl:for-each select="m:instrVoice[text()]">
 					<xsl:if test="@count &gt; 1">
 						<xsl:apply-templates select="@count"/>
@@ -875,16 +879,28 @@
 						</xsl:text></xsl:if>
 			</xsl:for-each>
 			
+			<xsl:if test="count(m:performer/m:instrVoice[@solo='true'])&gt;0">
+				<xsl:if test="count(m:performer[not(m:instrVoice[@solo='true'])])&gt;0">
+					<br/>
+				</xsl:if>
+				<span class="p_heading:">Soloist<xsl:if test="count(m:performer[m:instrVoice[@solo='true']])&gt;1">s</xsl:if>:</span>
+				<xsl:for-each select="m:performer[m:instrVoice[@solo='true']]">
+					<xsl:for-each select="m:instrVoice[text()]">
+						<xsl:if test="@count &gt; 1">
+							<xsl:apply-templates select="@count"/>
+						</xsl:if>
+						<xsl:text> </xsl:text>
+						<xsl:apply-templates/></xsl:for-each><xsl:if 
+							test="position()&lt;last()"><xsl:text>, 
+						</xsl:text></xsl:if>
+				</xsl:for-each>
+			</xsl:if>
 		</p>
 	</xsl:template>
 	
 	<xsl:template match="m:castList[m:castItem/m:role/m:ref/m:name[normalize-space(.)]]">
 		<p>
 			<span class="label">Characters: </span>
-			<!--			<xsl:for-each 
-				select="m:castItem/m:role/m:ref/m:name">
-				<xsl:apply-templates select="."/><xsl:if test="position() &lt; last()"><xsl:text>, </xsl:text></xsl:if>
-				</xsl:for-each>-->
 			<xsl:for-each select="m:castItem/m:role//m:name[count(@xml:lang[.=ancestor-or-self::m:castItem/preceding-sibling::*//@xml:lang])=0 or not(@xml:lang)]">
 				<!-- iterate over languages -->
 				<xsl:variable name="lang" select="@xml:lang"/>
@@ -901,16 +917,34 @@
 	
 	<xsl:template match="m:castList" mode="castlist">
 		<xsl:param name="lang" select="'en'"/>
-		<xsl:for-each 
+<!--		<xsl:for-each 
 			select="m:castItem/m:role/m:ref/m:name[@xml:lang=$lang]">
-			<xsl:apply-templates select="."/><xsl:apply-templates select="ancestor-or-self::m:castItem//m:roleDesc[@xml:lang=$lang]"></xsl:apply-templates><xsl:if test="position() &lt; last()"><xsl:text>; </xsl:text></xsl:if>
+			<xsl:variable name="performer"><xsl:value-of 
+				select="/*//m:performer[@xml:id=substring-after(../@target,'#')]/m:instrVoice"/></xsl:variable>
+			<xsl:apply-templates select="."/><xsl:apply-templates 
+				select="ancestor-or-self::m:castItem//m:roleDesc[@xml:lang=$lang]">
+				<xsl:with-param name="perf" select="$performer"/>
+			</xsl:apply-templates><xsl:if 
+					test="position() &lt; last()"><xsl:text>; </xsl:text></xsl:if>
+		</xsl:for-each>-->
+		<xsl:for-each select="m:castItem/m:role/m:ref/m:name[@xml:lang=$lang]">
+			<xsl:variable name="target" select="substring-after(../@target,'#')"/>
+			<xsl:apply-templates select="."/><xsl:apply-templates 
+				select="ancestor-or-self::m:castItem//m:roleDesc[@xml:lang=$lang]"/><xsl:if 
+					test="$target"><xsl:apply-templates 
+						select="/*//m:performer[@xml:id=$target]" 
+						mode="castlist_performer"/></xsl:if><xsl:if 
+				test="position() &lt; last()"><xsl:text>; </xsl:text></xsl:if>
 		</xsl:for-each>
 	</xsl:template>
 	
 	<xsl:template match="m:roleDesc">
-		<xsl:if test="normalize-space(.)"> (<xsl:value-of select="."/>)</xsl:if>
+			<xsl:if test="normalize-space(.)">, <xsl:value-of select="."/></xsl:if>
 	</xsl:template>
 	
+	<xsl:template match="m:performer" mode="castlist_performer">
+		<xsl:if test="normalize-space(m:instrVoice[1])"> (<xsl:value-of select="m:instrVoice[1]"/>)</xsl:if>
+	</xsl:template>
 	
 	<!-- history -->		
 	<xsl:template match="m:history">
@@ -1015,7 +1049,8 @@
 			</p>
 			
 			<div  id="{$source_id}" style="display:none;" class="folded_content">
-				<xsl:for-each select="m:source">
+				<!-- skip reproductions (=reprints) here -->
+				<xsl:for-each select="m:source[not(m:relationList/m:relation[@rel='isReproductionOf'])]">
 					<xsl:choose>
 						<xsl:when test="@target!=''">
 							<!-- get external source description -->
@@ -1075,6 +1110,12 @@
 				
 				<xsl:if test="m:title[text()] and m:title!='Other performance'">
 					<xsl:apply-templates select="m:title"/>.<xsl:text> </xsl:text>
+				</xsl:if>
+				
+				<xsl:if test="@evidence!=''">
+					<xsl:variable name="evidence" select="@evidence"/>
+					[Evidence: 
+					<xsl:apply-templates select="/m:mei/m:meiHead//*[@xml:id=$evidence]"/>]
 				</xsl:if>
 				
 				<xsl:for-each select="t:listBibl">
@@ -1150,20 +1191,25 @@
 	<!-- source-related templates -->
 	
 	<xsl:template match="m:source|m:item">
-		<xsl:if test="m:titleStmt/m:title/text() or local-name()='item'">
+		<xsl:param name="mode" select="''"/>
+		<xsl:variable name="source_id" select="@xml:id"/>
+		<xsl:if test="m:titleStmt/m:title/text() 
+			or local-name()='item'
+			or m:relationList/m:relation[@rel='isReproductionOf']">
 			<div>
-				<xsl:if test="local-name()='source'">
-					<xsl:attribute name="class">source</xsl:attribute>
-				</xsl:if>
 				<xsl:attribute name="id">
 					<xsl:choose>
 						<xsl:when test="@xml:id"><xsl:value-of  select="@xml:id"/></xsl:when>
 						<xsl:otherwise><xsl:value-of select="generate-id(.)"/></xsl:otherwise>
 					</xsl:choose>
 				</xsl:attribute>
+				<xsl:if test="local-name()='source'">
+					<xsl:attribute name="class">source</xsl:attribute>
+				</xsl:if>
 				<!-- generate decreasing headings -->
 				<xsl:variable name="level">
 					<xsl:choose>
+						<xsl:when test="$mode='reprint'">4</xsl:when>
 						<xsl:when test="name(..)='componentGrp'">5</xsl:when>
 						<xsl:when test="count(ancestor-or-self::*[name()='itemList']) &gt; 0">
 							<xsl:value-of select="count(ancestor-or-self::*[name()='componentGrp' or name()='itemList'])+3"/>
@@ -1231,9 +1277,9 @@
 						</p>
 					</xsl:for-each>
 					<xsl:for-each select="m:annot[@type='links'][m:ptr[@target!='']]">
-						<p><xsl:text>See also: </xsl:text>
+						<p>
 							<xsl:for-each select="m:ptr[@target!='']">
-								<xsl:element name="a">
+								⇒<xsl:element name="a">
 									<xsl:attribute name="href">
 										<xsl:apply-templates select="@target"/>
 									</xsl:attribute>
@@ -1251,7 +1297,6 @@
 					select="m:physDesc/m:physLoc">					
 					<xsl:for-each select="m:repository[m:corpName[text()]|m:identifier[text() and (not(@type) or @type='')]]">
 						<div> 
-							<xsl:if test="$components &gt; 1"><br/></xsl:if>
 							<xsl:for-each select="m:corpName[text()]|m:identifier[text() and (not(@type) or @type='')]">
 								<xsl:choose>
 									<xsl:when test="name(.)='corpName'">
@@ -1266,7 +1311,7 @@
 							</xsl:for-each>
 							
 							<xsl:for-each select="m:ptr[normalize-space(@target)]">
-								<xsl:element name="a">
+								⇒<xsl:element name="a">
 									<xsl:attribute name="href">
 										<xsl:value-of select="@target"/>
 									</xsl:attribute>  
@@ -1311,9 +1356,35 @@
 					</div>
 				</xsl:for-each>
 				
-				<xsl:apply-templates select="m:componentGrp"/>
+				<!-- List exemplars (items) last if there is more than one or it does have a heading of its own 
+					 Otherwise, this is a manuscript with some information given at item level, 
+					 which should be shown before the components.
+				-->
+				<xsl:choose>
+					<xsl:when test="local-name()='source' and 
+						(count(m:itemList/m:item[//text()])&gt;1 or 
+						m:itemList/m:item/m:titleStmt/m:title/text())">
+						<xsl:apply-templates select="m:componentGrp"/>
+						<xsl:apply-templates select="m:itemList"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:apply-templates select="m:itemList"/>
+						<xsl:apply-templates select="m:componentGrp"/>
+					</xsl:otherwise>
+				</xsl:choose>
 				
-				<xsl:apply-templates select="m:itemList"/>
+				<!-- list reproductions (reprints) -->
+				<xsl:for-each select="/*//m:source[m:relationList/m:relation[@rel='isReproductionOf'
+					and substring-after(@target,'#')=$source_id]]">
+					<xsl:if test="position()=1">
+						<xsl:if test="not(m:titleStmt/m:title/text())">
+							<p class="p_heading">Reprint:</p>
+						</xsl:if>
+					</xsl:if>
+					<xsl:apply-templates select=".">
+						<xsl:with-param name="mode">reprint</xsl:with-param>
+					</xsl:apply-templates>
+				</xsl:for-each>
 				
 			</div>
 		</xsl:if>
@@ -1493,21 +1564,21 @@
 				</xsl:for-each>
 			</table>
 		</xsl:if>
-		<xsl:if test="count(t:bibl[@type='Diary entry' and normalize-space(concat(t:author,t:date))]) &gt; 0">
+		<xsl:if test="count(t:bibl[@type='Diary_entry' and normalize-space(concat(t:author,t:date))]) &gt; 0">
 			<p class="p_subheading">Diary entries:</p>
 			<table class="letters">
-				<xsl:for-each select="t:bibl[@type='Diary entry' and normalize-space(concat(t:author,t:date))]">
+				<xsl:for-each select="t:bibl[@type='Diary_entry' and normalize-space(concat(t:author,t:date))]">
 					<xsl:apply-templates select="."/>
 				</xsl:for-each>
 			</table>
 		</xsl:if>
 		<xsl:if
-			test="count(t:bibl[(@type='Letter' or @type='Diary entry') and normalize-space(concat(t:author,t:date))])&gt;0 and 
-			count(t:bibl[@type!='Letter' and @type!='Diary entry' and normalize-space(concat(t:author,t:title[@level='a'],t:title[@level='m']))])&gt;0">
+			test="count(t:bibl[(@type='Letter' or @type='Diary_entry') and normalize-space(concat(t:author,t:date))])&gt;0 and 
+			count(t:bibl[@type!='Letter' and @type!='Diary_entry' and normalize-space(concat(t:author,t:title[@level='a'],t:title[@level='m']))])&gt;0">
 			<p class="p_heading">Other:</p>
 		</xsl:if>
 		<xsl:for-each
-			select="t:bibl[@type!='Letter' and @type!='Diary entry' and normalize-space(concat(t:author,t:title[@level='a'],t:title[@level='m']))]">
+			select="t:bibl[@type!='Letter' and @type!='Diary_entry' and normalize-space(concat(t:author,t:title[@level='a'],t:title[@level='m']))]">
 			<p class="bibl_record">
 				<xsl:apply-templates select="."/>
 			</p>
@@ -1765,8 +1836,8 @@
 					select="normalize-space(t:biblScope[@type='pp'])"/></xsl:if>. * </xsl:otherwise>
 		</xsl:choose>
 		<!-- links to full text (exception: letters and diary entries handled elsewhere) -->
-		<xsl:if test="normalize-space(t:ref/@target) and not(@type='Diary entry' or @type='Letter')">
-			<a target="_blank" title="Link to full text">
+		<xsl:if test="normalize-space(t:ref/@target) and not(@type='Diary_entry' or @type='Letter')">
+			⇒<a target="_blank" title="Link to full text">
 				<xsl:attribute name="href">
 					<xsl:value-of select="normalize-space(t:ref/@target)"/>
 				</xsl:attribute>
@@ -1843,7 +1914,7 @@
 	<!-- display external link -->
 	<xsl:template match="m:extptr">
 		<xsl:if test="normalize-space(@xl:href)">
-			<a target="_blank">
+			⇒<a target="_blank">
 				<xsl:attribute name="href">
 					<xsl:value-of select="@xl:href"/>
 				</xsl:attribute>

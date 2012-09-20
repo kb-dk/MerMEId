@@ -347,7 +347,7 @@
             </notesStmt>
             <relationList>
                 <relation rel="isReproductionOf">
-                    <xsl:attribute name="target"><xsl:value-of select="$source_id"/></xsl:attribute>
+                    <xsl:attribute name="target">#<xsl:value-of select="$source_id"/></xsl:attribute>
                 </relation>
             </relationList>
         </source>        
