@@ -469,7 +469,7 @@
 								style="display:inline;" 
 								id="img{$mdiv_id}"
 								border="0" 
-								src="/editor/images/plus.png" alt="-"/> Movements
+								src="/editor/images/plus.png" alt="-"/> Music
 						</p>
 						
 						<div class="folded_content" style="display:none" id="{$mdiv_id}">						
@@ -712,6 +712,7 @@
 	<xsl:template match="m:expression/m:componentGrp">		
 		<xsl:choose>
 			<xsl:when test="count(m:expression)&gt;1">
+				<!-- displaying movements non-folding 
 				<xsl:element name="ul">
 					<xsl:attribute name="class">movement_list</xsl:attribute>
 					<xsl:if test="count(m:item|m:expression)=1">
@@ -723,6 +724,47 @@
 						</li>
 					</xsl:for-each>
 				</xsl:element>
+				-->
+				
+				<xsl:variable name="mdiv_id" 
+					select="concat('subsection',../../@xml:id,generate-id(),position())"/>
+				
+				<div class="fold">
+					<p class="p_heading" 
+						id="p{$mdiv_id}"
+						onclick="toggle('{$mdiv_id}')"
+						title="Click to open">
+						<xsl:text>
+						</xsl:text><script type="application/javascript"><xsl:text>
+							openness["</xsl:text><xsl:value-of select="$mdiv_id"/><xsl:text>"]=false;
+							</xsl:text></script>
+						<xsl:text>
+						</xsl:text>
+						<img 
+							class="noprint" 
+							style="display:inline;" 
+							id="img{$mdiv_id}"
+							border="0" 
+							src="/editor/images/plus.png" alt="-"/> Sections
+						
+					</p>
+					<div class="folded_content" style="display:none" id="{$mdiv_id}">						
+						<xsl:element name="ul">
+							<xsl:attribute name="class">movement_list</xsl:attribute>
+							<xsl:if test="count(m:item|m:expression)=1">
+								<xsl:attribute name="class">single_movement</xsl:attribute>
+							</xsl:if>
+							<xsl:for-each select="m:expression">
+								<li>
+									<xsl:apply-templates select="."/>
+								</li>
+							</xsl:for-each>
+						</xsl:element>
+					</div>
+				</div>	
+				<!-- end test -->				
+				
+				
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:apply-templates select="m:expression"/>
