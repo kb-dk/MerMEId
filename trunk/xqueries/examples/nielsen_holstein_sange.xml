@@ -8,7 +8,7 @@
                 <respStmt xml:id="respStmt_id6533cc95">
                     <resp>Publisher</resp>
                     <corpName authURI="http://www.kb.dk/dcm" xml:id="corpName_id7290fc0b">
-                        <abbr/>
+                        <abbr>DCM</abbr>
                         <expan/>
                         <address>
                             <addrLine>
@@ -18,13 +18,13 @@
                         </address>
                     </corpName>
                 </respStmt>
-                <date/>
+                <date notafter="2012-12-31" notbefore="2012-01-01">2012</date>
                 <availability>
                     <useRestrict/>
                 </availability>
             </pubStmt>
             <seriesStmt>
-                <title xml:id="title_idb2286a6a"/>
+                <title xml:id="title_idb2286a6a">MerMEId Demo Files</title>
                 <identifier type="file_collection" xml:id="identifier_id45d9c5bc">Demo</identifier>
             </seriesStmt>
             <notesStmt>
@@ -84,12 +84,14 @@
         </encodingDesc>
         <workDesc>
             <work analog="frbr:work" xml:id="work_idb8acdc23">
+                <identifier type="Opus">10</identifier>
                 <identifier type="CNW">126-131</identifier>
                 <identifier type="CNU">III/4 11-16</identifier>
+                <identifier type="Demo">4-9</identifier>
                 <titleStmt>
-                    <title type="text_source" xml:id="title_1901cdac" xml:lang="da">Digte. København 1895</title>
                     <title xml:id="title_idd68da4b7" xml:lang="da">Seks Sange til Tekster af Ludvig Holstein</title>
                     <title xml:id="title_e5bfb1b5" xml:lang="en">Six Songs to Texts by Ludvig Holstein</title>
+                    <title type="text_source" xml:id="title_1901cdac" xml:lang="da">Digte. København 1895</title>
                     <respStmt>
                         <persName role="composer" xml:id="persName_idfd4e4845">Carl Nielsen</persName>
                         <persName role="author" xml:id="persName_a3f3f660">Ludvig Holstein</persName>
@@ -141,20 +143,28 @@
                     </expression>
                 </expressionList>
                 <relationList>
-                    <relation label="Æbleblomst (CNW 126)" rel="hasPart" target="cnw0126.xml" xml:id="relation_f248510c"/>
-                    <relation label="Erindringens Sø (CNW 127)" rel="hasPart" target="cnw0127.xml" xml:id="relation_f42ea8cd"/>
-                    <relation label="Sommersang (CNW 128)" rel="hasPart" target="cnw0128.xml" xml:id="relation_02f7cff0"/>
-                    <relation label="Sang bag Ploven (CNW 129)" rel="hasPart" target="cnw0129.xml" xml:id="relation_04bea6f2"/>
-                    <relation label="I Aften (CNW 130)" rel="hasPart" target="cnw0130.xml" xml:id="relation_9a19d783"/>
-                    <relation label="Hilsen (CNW 131)" rel="hasPart" target="cnw0131.xml" xml:id="relation_dbd4af91"/>
-                    <relation label="Aladdin eller Den Forunderlige Lampe" rel="isPartOf" target="cnw0017.xml" xml:id="relation_209e9b3b"/>
+                    <relation label="Æbleblomst (CNW 126)" rel="hasPart" target="nielsen_cnw0126.xml" xml:id="relation_f248510c"/>
+                    <relation label="Erindringens Sø (CNW 127)" rel="hasPart" target="nielsen_cnw0127.xml" xml:id="relation_f42ea8cd"/>
+                    <relation label="Sommersang (CNW 128)" rel="hasPart" target="nielsen_cnw0128.xml" xml:id="relation_02f7cff0"/>
+                    <relation label="Sang bag Ploven (CNW 129)" rel="hasPart" target="nielsen_cnw0129.xml" xml:id="relation_04bea6f2"/>
+                    <relation label="I Aften (CNW 130)" rel="hasPart" target="nielsen_cnw0130.xml" xml:id="relation_9a19d783"/>
+                    <relation label="Hilsen (CNW 131)" rel="hasPart" target="nielsen_cnw0131.xml" xml:id="relation_dbd4af91"/>
                 </relationList>
             </work>
         </workDesc>
         <revisionDesc>
             <change xml:id="change_id7b4e2a61">
                 <respStmt>
-                    <persName xml:id="persName_ida1a6bc6f"/>
+                    <persName xml:id="persName_ida1a6bc6f">atge</persName>
+                </respStmt>
+                <changeDesc>
+                    <p>created</p>
+                </changeDesc>
+                <date>2012-09-19</date>
+            </change>
+            <change xml:id="change_c3379065">
+                <respStmt>
+                    <persName xml:id="persName_21dab52e"/>
                 </respStmt>
                 <changeDesc>
                     <p/>

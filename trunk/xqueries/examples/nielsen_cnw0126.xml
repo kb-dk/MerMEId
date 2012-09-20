@@ -1,13 +1,13 @@
-<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:t="http://www.tei-c.org/ns/1.0" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="2012" xml:id="mei_d1e1">
+<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="2012" xml:id="mei_d1e1">
     <meiHead>
         <fileDesc>
             <titleStmt>
                 <title xml:lang="da">Æbleblomst </title>
             </titleStmt>
             <pubStmt>
-                <respStmt>
+                <respStmt xml:id="respStmt_5fc8391d">
                     <resp>Publisher</resp>
-                    <corpName>
+                    <corpName xml:id="corpName_6198cc3c">
                         <abbr>DCM</abbr>
                         <expan>Danish Centre for Music Publication</expan>
                         <address>
@@ -23,11 +23,11 @@
                             </addrLine>
                         </address>
                     </corpName>
-                    <persName role="editor">Niels Bo Foltmann</persName>
-                    <persName role="editor">Axel Teich Geertinger</persName>
-                    <persName role="editor">Peter Hauge</persName>
-                    <persName role="editor">Niels Krabbe</persName>
-                    <persName role="editor">Elly Bruunshuus Petersen</persName>
+                    <persName role="editor" xml:id="persName_400d28b5">Niels Bo Foltmann</persName>
+                    <persName role="editor" xml:id="persName_0e8e8d45">Axel Teich Geertinger</persName>
+                    <persName role="editor" xml:id="persName_466c0a9a">Peter Hauge</persName>
+                    <persName role="editor" xml:id="persName_10fefdb3">Niels Krabbe</persName>
+                    <persName role="editor" xml:id="persName_dcc7c373">Elly Bruunshuus Petersen</persName>
                 </respStmt>
                 <date/>
                 <availability>
@@ -37,14 +37,14 @@
                 </availability>
             </pubStmt>
             <seriesStmt>
-                <title>MerMEId Demo Files</title>
-                <identifier type="file_collection">Demo</identifier>
+                <title xml:id="title_89d812f5">MerMEId Demo Files</title>
+                <identifier type="file_collection" xml:id="identifier_1692bdbf">Demo</identifier>
             </seriesStmt>
             <notesStmt>
-                <annot type="private_notes"/>
-                <annot type="bibliography">
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="listBibl_d1e241" type="primary">
-                        <bibl xml:id="bibl_d1e101" type="Letter">
+                <annot type="private_notes" xml:id="annot_b09afb84"/>
+                <annot type="bibliography" xml:id="annot_d4b38ed6">
+                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="primary" xml:id="listBibl_d1e241">
+                        <bibl type="Letter" xml:id="bibl_d1e101">
                             <author>Thorvald Otterström</author>
                             <name role="recipient">Carl Nielsen</name>
                             <date when-iso="1905-12-29">1905-12-29</date>
@@ -54,15 +54,15 @@
                                 <idno>CNA IAb</idno>
                             </msIdentifier>
                             <note/>
-                            <ref target=""/>
+                            <ref/>
                             <ref type="editions">
-                                <bibl xml:id="bibl_d1e130">
+                                <bibl xmlns:t="http://www.tei-c.org/ns/1.0" xml:id="bibl_d1e130">
                                     <title type="short_title">CNB</title>
                                     <biblScope>II/550</biblScope>
                                 </bibl>
                             </ref>
                         </bibl>
-                        <bibl xml:id="bibl_d1e141" type="Letter">
+                        <bibl type="Letter" xml:id="bibl_d1e141">
                             <author>Vilhelm Herold</author>
                             <name role="recipient">Carl Nielsen</name>
                             <date when-iso="1912-03-02">1912-03-02</date>
@@ -72,15 +72,15 @@
                                 <idno>CNA IAb</idno>
                             </msIdentifier>
                             <note/>
-                            <ref target=""/>
+                            <ref/>
                             <ref type="editions">
-                                <bibl xml:id="bibl_d1e170">
+                                <bibl xmlns:t="http://www.tei-c.org/ns/1.0" xml:id="bibl_d1e170">
                                     <title type="short_title">CNB</title>
                                     <biblScope>IV/260</biblScope>
                                 </bibl>
                             </ref>
                         </bibl>
-                        <bibl xml:id="bibl_d1e181" type="Letter">
+                        <bibl type="Letter" xml:id="bibl_d1e181">
                             <author>Irmelin Nielsen</author>
                             <name role="recipient">Anne Marie Telmányi</name>
                             <date when-iso="1918-08-27">1918-08-27</date>
@@ -90,15 +90,15 @@
                                 <idno/>
                             </msIdentifier>
                             <note/>
-                            <ref target=""/>
+                            <ref/>
                             <ref type="editions">
-                                <bibl xml:id="bibl_d1e209">
+                                <bibl xmlns:t="http://www.tei-c.org/ns/1.0" xml:id="bibl_d1e209">
                                     <title type="short_title">CNB</title>
                                     <biblScope>VI/111</biblScope>
                                 </bibl>
                             </ref>
                         </bibl>
-                        <bibl xml:id="bibl_d1e220" type="Letter">
+                        <bibl type="Letter" xml:id="bibl_d1e220">
                             <author>Carl Nielsen</author>
                             <name role="recipient">Irmelin Eggert-Møller</name>
                             <date when-iso="1923-11-26">1923-11-26</date>
@@ -108,15 +108,15 @@
                                 <idno>CNA IIIAa1</idno>
                             </msIdentifier>
                             <note/>
-                            <ref target=""/>
+                            <ref/>
                             <ref type="editions">
-                                <bibl xml:id="bibl_d1e249">
+                                <bibl xmlns:t="http://www.tei-c.org/ns/1.0" xml:id="bibl_d1e249">
                                     <title type="short_title">CNB</title>
                                     <biblScope>VII/582</biblScope>
                                 </bibl>
                             </ref>
                         </bibl>
-                        <bibl xml:id="bibl_d1e260" type="Diary_entry">
+                        <bibl type="Diary_entry" xml:id="bibl_d1e260">
                             <author/>
                             <date when-iso="1906-12-15">1906-12-15</date>
                             <geogName/>
@@ -125,19 +125,19 @@
                                 <idno>CNA IC</idno>
                             </msIdentifier>
                             <note/>
-                            <ref target=""/>
+                            <ref/>
                             <ref type="editions">
-                                <bibl xml:id="bibl_d1e285">
+                                <bibl xmlns:t="http://www.tei-c.org/ns/1.0" xml:id="bibl_d1e285">
                                     <title type="short_title">CNB</title>
                                     <biblScope>III/168</biblScope>
                                 </bibl>
-                                <bibl xml:id="bibl_d1e294">
+                                <bibl xmlns:t="http://www.tei-c.org/ns/1.0" xml:id="bibl_d1e294">
                                     <title type="short_title">T Sch</title>
                                     <biblScope>231</biblScope>
                                 </bibl>
                             </ref>
                         </bibl>
-                        <bibl xml:id="bibl_d1e306" type="Diary_entry">
+                        <bibl type="Diary_entry" xml:id="bibl_d1e306">
                             <author/>
                             <date when-iso="1907-03-09">1907-03-09</date>
                             <geogName/>
@@ -146,81 +146,55 @@
                                 <idno>CNA IC</idno>
                             </msIdentifier>
                             <note/>
-                            <ref target=""/>
+                            <ref/>
                             <ref type="editions">
-                                <bibl xml:id="bibl_d1e331">
+                                <bibl xmlns:t="http://www.tei-c.org/ns/1.0" xml:id="bibl_d1e331">
                                     <title type="short_title">CNB</title>
                                     <biblScope>III/245</biblScope>
                                 </bibl>
-                                <bibl xml:id="bibl_d1e340">
+                                <bibl xmlns:t="http://www.tei-c.org/ns/1.0" xml:id="bibl_d1e340">
                                     <title type="short_title">T Sch</title>
                                     <biblScope>239</biblScope>
                                 </bibl>
                             </ref>
                         </bibl>
                     </listBibl>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" xml:id="listBibl_d1e371" type="secondary">
-                        <bibl xml:id="bibl_d1e354" type="Journal_article">
-                            <author/>
-                            <date/>
-                            <title level="a"/>
-                            <title level="j"/>
-                            <editor/>
-                            <biblScope type="vol"/>
-                            <biblScope type="issue"/>
-                            <biblScope type="pp"/>
-                            <pubPlace/>
-                            <publisher/>
-                            <ref target=" "/>
-                        </bibl>
-                    </listBibl>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="documentation" xml:id="listBibl_d1e37">
-                        <bibl type="Concert_programme" xml:id="bibl_d1e37">
-                            <date/>
-                            <title/>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository/>
-                                <idno/>
-                            </msIdentifier>
-                            <note/>
-                            <ref target=""/>
-                        </bibl>
-                    </listBibl>
+                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="secondary" xml:id="listBibl_d1e371"/>
+                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="documentation" xml:id="listBibl_d1e37"/>
                 </annot>
             </notesStmt>
             <sourceDesc>
-                <source analog="frbr:manifestation" xml:id="source_d1e42">
-                    <identifier/>
+                <source analog="frbr:manifestation" label="" xml:id="source_d1e42">
+                    <identifier type=""/>
                     <titleStmt>
-                        <title/>
+                        <title xml:id="title_3e421535"/>
                         <respStmt>
-                            <persName role="composer"/>
+                            <persName role="composer" xml:id="persName_5e23f5ba"/>
                         </respStmt>
                     </titleStmt>
                     <pubStmt>
                         <respStmt>
-                            <corpName role="publisher"/>
+                            <corpName role="publisher" xml:id="corpName_58f6ec2a"/>
                         </respStmt>
-                        <geogName/>
+                        <geogName xml:id="geogName_ee1a6a67"/>
                         <date/>
                     </pubStmt>
                     <physDesc>
-                        <titlePage label="Title page">
+                        <titlePage label="Title page" xml:id="titlePage_f514f322">
                             <p/>
                         </titlePage>
                         <extent unit="pages"/>
                         <dimensions unit="cm"/>
-                        <watermark>
-                            <ptr/>
+                        <watermark xml:id="watermark_6cd6daca">
+                            <ptr mimetype="" xl:title="" xml:id="ptr_cbba41c4"/>
                         </watermark>
                         <physMedium/>
                         <plateNum/>
                     </physDesc>
                     <notesStmt>
-                        <annot type="source_description"/>
-                        <annot type="links">
-                            <ptr xl:title="" mimetype="" target=""/>
+                        <annot type="source_description" xml:id="annot_27327a1a"/>
+                        <annot type="links" xml:id="annot_65a68f73">
+                            <ptr mimetype="" xl:title="" xml:id="ptr_51b9188a"/>
                         </annot>
                     </notesStmt>
                     <classification>
@@ -234,46 +208,46 @@
                         </termList>
                     </classification>
                     <itemList>
-                        <item xml:id="item_d1e489">
-                            <identifier/>
+                        <item label="" xml:id="item_d1e489">
+                            <identifier type=""/>
                             <titleStmt>
-                                <title/>
+                                <title xml:id="title_e9a6c779"/>
                             </titleStmt>
                             <pubStmt>
                                 <date/>
                             </pubStmt>
                             <physDesc>
-                                <condition/>
+                                <condition xml:id="condition_fa81a8dc"/>
                                 <physLoc>
                                     <repository>
-                                        <corpName/>
-                                        <identifier/>
-                                        <ptr xl:title="Facsimile" mimetype="" target=""/>
-                                        <ptr xl:title="Transcription" mimetype="" target=""/>
+                                        <corpName xml:id="corpName_5385ff80"/>
+                                        <identifier xml:id="identifier_8bfabd85"/>
+                                        <ptr mimetype="" xl:title="Facsimile" xml:id="ptr_56f8975d"/>
+                                        <ptr mimetype="" xl:title="Transcription" xml:id="ptr_8fbc03a5"/>
                                     </repository>
                                 </physLoc>
                                 <provenance>
-                                    <eventList>
+                                    <eventList xml:id="eventList_52a66244">
                                         <event xml:id="event_d1e525">
-                                            <title/>
-                                            <date notbefore="" notafter="" reg=""/>
-                                            <geogName role=""/>
-                                            <corpName role=""/>
-                                            <persName role=""/>
+                                            <title xml:id="title_4fdb09cd"/>
+                                            <date/>
+                                            <geogName role="" xml:id="geogName_dc07417a"/>
+                                            <corpName role="" xml:id="corpName_8b5b50e3"/>
+                                            <persName role="" xml:id="persName_0152ceed"/>
                                         </event>
                                     </eventList>
                                 </provenance>
                                 <extent unit="pages"/>
                                 <dimensions unit="cm"/>
-                                <handList>
-                                    <hand medium="ink" initial="true"/>
+                                <handList xml:id="handList_6701fa75">
+                                    <hand initial="true" medium="ink" xml:id="hand_a8e6bd3b"/>
                                 </handList>
                                 <physMedium/>
                             </physDesc>
                             <notesStmt>
-                                <annot type="source_description"/>
-                                <annot type="links">
-                                    <ptr target="" mimetype="" xl:title=""/>
+                                <annot type="source_description" xml:id="annot_5a26f7a0"/>
+                                <annot type="links" xml:id="annot_e94aa4ad">
+                                    <ptr mimetype="" xl:title="" xml:id="ptr_67eca5ac"/>
                                 </annot>
                             </notesStmt>
                             <componentGrp/>
@@ -281,7 +255,7 @@
                     </itemList>
                     <componentGrp/>
                     <relationList>
-                        <relation rel="isEmbodimentOf" target="#expression_1"/>
+                        <relation label="" rel="isEmbodimentOf" target="#expression_1" xml:id="relation_1dec277b"/>
                     </relationList>
                 </source>
             </sourceDesc>
@@ -292,58 +266,38 @@
                     <name>MerMEId</name>
                 </application>
             </appInfo>
-            <projectDesc>
+            <projectDesc xml:id="projectDesc_41eb7b27">
                 <p>Metadata created using MerMEId 0.1.</p>
             </projectDesc>
         </encodingDesc>
         <workDesc>
-            <work xml:id="work_d1e598" analog="frbr:work">
+            <work analog="frbr:work" xml:id="work_d1e598">
                 <identifier type="Opus">10. 1</identifier>
                 <identifier type="CNW">126</identifier>
                 <identifier type="CNU">lll/4, 11</identifier>
                 <identifier type="CNS">277</identifier>
+                <identifier type="Demo">4</identifier>
                 <titleStmt>
-                    <title xml:lang="da">Æbleblomst </title>
-                    <title xml:lang="en">Apple Blossom</title>
-                    <title type="alternative" xml:lang="da">Du fine, hvide Æbleblomst!</title>
-                    <title xml:lang="en" type="alternative">You apple blossom fine and white</title>
+                    <title xml:id="title_59fb424c" xml:lang="da">Æbleblomst </title>
+                    <title xml:id="title_bfa98543" xml:lang="en">Apple Blossom</title>
+                    <title type="alternative" xml:id="title_64bd57f3" xml:lang="da">Du fine, hvide Æbleblomst!</title>
+                    <title type="alternative" xml:id="title_8a065301" xml:lang="en">You apple blossom fine and white</title>
                     <respStmt>
-                        <persName role="composer">Carl Nielsen</persName>
-                        <persName role="author">Ludvig Holstein</persName>
+                        <persName role="composer" xml:id="persName_4144ef4f">Carl Nielsen</persName>
+                        <persName role="author" xml:id="persName_9c8b7497">Ludvig Holstein</persName>
                     </respStmt>
                 </titleStmt>
-                <history>
-                    <creation>
-                        <date notbefore="1894-01-01" notafter="1895-12-31">1894-1895</date>
-                        <geogName/>
+                <history xml:id="history_0007e59e">
+                    <creation xml:id="creation_863966dd">
+                        <date notafter="1896-12-31" notbefore="1895-01-01">1895-1896</date>
                     </creation>
-                    <p/>
-                    <eventList type="history">
-                        <event xml:id="event_d1e651">
-                            <title/>
-                            <date/>
-                        </event>
-                    </eventList>
-                    <eventList type="performances">
-                        <event xml:id="event_d1e661">
-                            <title/>
-                            <date/>
-                            <geogName role="venue"/>
-                            <geogName role="place"/>
-                            <corpName role="ensemble"/>
-                            <persName role="conductor"/>
-                        </event>
-                    </eventList>
                 </history>
                 <langUsage>
                     <language xml:id="da">Danish</language>
                     <language xml:id="en">English</language>
                 </langUsage>
                 <notesStmt>
-                    <annot type="general_description"/>
-                    <annot type="links">
-                        <ptr xl:title="" mimetype="" target=""/>
-                    </annot>
+                    <annot type="links" xml:id="annot_f83af263"/>
                 </notesStmt>
                 <classification>
                     <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmContentClass"/>
@@ -353,48 +307,42 @@
                     <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmStateClass"/>
                     <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmCompletenessClass"/>
                     <termList>
-                        <term/>
                         <term>Vocal music</term>
                         <term>Song</term>
                     </termList>
                 </classification>
                 <expressionList>
-                    <expression analog="frbr:expression" xml:id="expression_1" n="">
+                    <expression analog="frbr:expression" xml:id="expression_1">
                         <titleStmt>
-                            <title xml:lang="da">Æbleblomst</title>
-                            <title xml:lang="en">Apple Blossom</title>
-                            <respStmt>
-                                <persName role=""/>
-                            </respStmt>
+                            <title xml:id="title_3f52e61c" xml:lang="en"/>
                         </titleStmt>
-                        <history>
-                            <creation>
+                        <history xml:id="history_228e7b38">
+                            <creation xml:id="creation_b9e0b1e2">
                                 <date/>
-                                <geogName/>
+                                <geogName xml:id="geogName_f89f5feb"/>
                             </creation>
                             <p/>
-                            <eventList type="performances">
+                            <eventList type="performances" xml:id="eventList_a3bdee1a">
                                 <event xml:id="event_d1e756">
-                                    <title/>
+                                    <title xml:id="title_92f266c0"/>
                                     <date/>
-                                    <geogName role="venue"/>
-                                    <geogName role="place"/>
-                                    <corpName role="ensemble"/>
-                                    <persName role="conductor"/>
-                                    <persName role="soloist"/>
-                                    <persName role=""/>
+                                    <geogName role="venue" xml:id="geogName_80544464"/>
+                                    <geogName role="place" xml:id="geogName_741e912a"/>
+                                    <corpName role="ensemble" xml:id="corpName_3588bac0"/>
+                                    <persName role="conductor" xml:id="persName_990bd720"/>
+                                    <persName role="soloist" xml:id="persName_5f86684d"/>
+                                    <persName role="" xml:id="persName_d7e9d2d9"/>
                                 </event>
                             </eventList>
                         </history>
-                        <key pname="" accid="" mode=""/>
                         <tempo>Poco allegretto</tempo>
-                        <meter meter.count="2" meter.unit="4" meter.sym=""/>
-                        <perfMedium analog="marc:048">
+                        <meter meter.count="2" meter.unit="4"/>
+                        <perfMedium analog="marc:048" xml:id="perfMedium_c4376b74">
                             <performer xml:id="performer_d1e788">
-                                <instrVoice reg="vn" solo="false" count="1">voice</instrVoice>
+                                <instrVoice count="1" reg="vn" solo="false" xml:id="instrVoice_e6cce945">voice</instrVoice>
                             </performer>
                             <performer xml:id="performer_d1e794">
-                                <instrVoice reg="ka" solo="false" count="1">pno.</instrVoice>
+                                <instrVoice count="1" reg="ka" solo="false" xml:id="instrVoice_dd8a81b0">pno.</instrVoice>
                             </performer>
                         </perfMedium>
                         <classification>
@@ -403,28 +351,29 @@
                             </termList>
                         </classification>
                         <castList/>
-                        <incip>
-                            <incipText>
+                        <incip xml:id="incip_6fde4545">
+                            <incipText xml:id="incipText_4cc0a5af">
                                 <p xml:lang="da">Du fine hvide Æbleblomst!</p>
                                 <p xml:lang="en">You apple blossom fine and white!</p>
                             </incipText>
-                            <graphic targettype="lowres" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_126.png"/>
-                            <graphic targettype="hires" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_126.png"/>
-                            <graphic targettype="print" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_126.png"/>
-                            <score/>
+                            <graphic target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_126.png" targettype="lowres" xl:title="" xml:id="graphic_42503ed5"/>
+                            <graphic target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_126.png" targettype="hires" xl:title="" xml:id="graphic_c54716b0"/>
+                            <graphic target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_126.png" targettype="print" xl:title="" xml:id="graphic_b235fe0f"/>
+                            <score xml:id="score_835317ca"/>
                         </incip>
                         <componentGrp/>
-                        <relationList>
-                            <relation rel="hasReproduction" label="Edited score" targettype="edited_score" target=""/>
-                        </relationList>
+                        <relationList/>
                     </expression>
                 </expressionList>
+                <relationList>
+                    <relation label="Seks Sange til Tekster af Ludvig Holstein" rel="isPartOf" target="nielsen_holstein_sange.xml" xml:id="relation_4d44c696"/>
+                </relationList>
             </work>
         </workDesc>
         <revisionDesc>
             <change xml:id="change_d1e844">
                 <respStmt>
-                    <persName role=""/>
+                    <persName role="" xml:id="persName_1a5b9a9f"/>
                 </respStmt>
                 <changeDesc>
                     <p/>
@@ -433,7 +382,7 @@
             </change>
             <change xml:id="change_d1e859">
                 <respStmt>
-                    <persName role="">ebp</persName>
+                    <persName role="" xml:id="persName_f68b2977">ebp</persName>
                 </respStmt>
                 <changeDesc>
                     <p>tab. 1</p>
@@ -442,7 +391,7 @@
             </change>
             <change xml:id="change_d1e877">
                 <respStmt>
-                    <persName role=""/>
+                    <persName role="" xml:id="persName_9d8ef154"/>
                 </respStmt>
                 <changeDesc>
                     <p/>
@@ -451,7 +400,7 @@
             </change>
             <change xml:id="change_d1e893">
                 <respStmt>
-                    <persName role=""/>
+                    <persName role="" xml:id="persName_342e1347"/>
                 </respStmt>
                 <changeDesc>
                     <p/>
@@ -460,7 +409,7 @@
             </change>
             <change xml:id="change_d1e909">
                 <respStmt>
-                    <persName role=""/>
+                    <persName role="" xml:id="persName_8dd26b0f"/>
                 </respStmt>
                 <changeDesc>
                     <p/>
@@ -469,7 +418,7 @@
             </change>
             <change xml:id="change_d1e926">
                 <respStmt>
-                    <persName role=""/>
+                    <persName role="" xml:id="persName_d2a07af9"/>
                 </respStmt>
                 <changeDesc>
                     <p/>
@@ -478,7 +427,7 @@
             </change>
             <change xml:id="change_d1e942">
                 <respStmt>
-                    <persName role=""/>
+                    <persName role="" xml:id="persName_7fed935e"/>
                 </respStmt>
                 <changeDesc>
                     <p/>
@@ -487,7 +436,7 @@
             </change>
             <change xml:id="change_d1e958">
                 <respStmt>
-                    <persName role=""/>
+                    <persName role="" xml:id="persName_5ec8b282"/>
                 </respStmt>
                 <changeDesc>
                     <p/>
@@ -496,7 +445,7 @@
             </change>
             <change xml:id="change_d1e974">
                 <respStmt>
-                    <persName role=""/>
+                    <persName role="" xml:id="persName_8554274d"/>
                 </respStmt>
                 <changeDesc>
                     <p/>
@@ -505,7 +454,7 @@
             </change>
             <change xml:id="change_d1e990">
                 <respStmt>
-                    <persName role=""/>
+                    <persName role="" xml:id="persName_588b77c0"/>
                 </respStmt>
                 <changeDesc>
                     <p/>
@@ -514,14 +463,23 @@
             </change>
             <change xml:id="change_d1e1006">
                 <respStmt>
-                    <persName role=""/>
+                    <persName role="" xml:id="persName_061e4b8f"/>
                 </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
                 <date reg="2012-09-17">2012-09-17</date>
             </change>
+            <change xml:id="change_96b57e1d">
+                <respStmt>
+                    <persName xml:id="persName_f1659f46"/>
+                </respStmt>
+                <changeDesc>
+                    <p/>
+                </changeDesc>
+                <date>2012-09-19</date>
+            </change>
         </revisionDesc>
     </meiHead>
-    <music/>
+    <music xmlns:t="http://www.tei-c.org/ns/1.0"/>
 </mei>
