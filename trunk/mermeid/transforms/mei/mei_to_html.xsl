@@ -773,19 +773,17 @@
 	</xsl:template>	
 	
 	<xsl:template match="m:incip">
-		<xsl:variable name="text_incipit"><xsl:value-of select="m:incipText"/></xsl:variable>
-		<xsl:if test="normalize-space($text_incipit)">
+		<xsl:for-each select="m:incipCode[text()]">
 			<p>
-				<xsl:for-each select="m:incipText/m:p[text()]">
-					<xsl:if test="position() = 1"><span class="label">Text incipit: </span></xsl:if>
-					<xsl:element name="span">
-						<xsl:call-template name="maybe_print_lang"/>
-						<xsl:apply-templates select="."/>
-					</xsl:element>
-					<xsl:if test="position() &lt; last()"><br/></xsl:if>
-				</xsl:for-each>
+				<span class="label">
+					<xsl:choose>
+						<xsl:when test="normalize-space(@analog)"><xsl:value-of select="@analog"/>: </xsl:when>
+						<xsl:otherwise>Music incipit: </xsl:otherwise>
+					</xsl:choose>
+				</span>
+				<xsl:apply-templates select="."/>
 			</p>
-		</xsl:if>	
+		</xsl:for-each>
 		<xsl:if test="normalize-space(m:graphic[@targettype='lowres']/@target)!=''">
 			<p>
 				<xsl:choose>
@@ -822,13 +820,20 @@
 				</xsl:choose>
 			</p>
 		</xsl:if>
-		<xsl:for-each select="m:incipCode[text()]">
-			<p>
-				<xsl:if test="@analog"><xsl:value-of select="@analog"/>: </xsl:if>
-				<xsl:value-of select="."/>
-			</p>
-		</xsl:for-each>
 		<xsl:apply-templates select="m:score"/>
+		<xsl:variable name="text_incipit"><xsl:value-of select="m:incipText"/></xsl:variable>
+		<xsl:if test="normalize-space($text_incipit)">
+			<p>
+				<xsl:for-each select="m:incipText/m:p[text()]">
+					<xsl:if test="position() = 1"><span class="label">Text incipit: </span></xsl:if>
+					<xsl:element name="span">
+						<xsl:call-template name="maybe_print_lang"/>
+						<xsl:apply-templates select="."/>
+					</xsl:element>
+					<xsl:if test="position() &lt; last()"><br/></xsl:if>
+				</xsl:for-each>
+			</p>
+		</xsl:if>	
 	</xsl:template>
 	
 	<xsl:template match="m:incip/m:score"/>
