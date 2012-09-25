@@ -54,6 +54,7 @@
 	<li><a href="#sect1">System requirements</a></li>
 	<li><a href="#sect2">Installation</a></li>
 	<li><a href="#sect3">Configuration</a></li>
+	<li><a href="#security">Authentication &amp; Security</a>
 	<li><a href="#testing">Testing and Getting Started</a></li>
 	<li><a href="#appendix">Appendix A. Configuration files</a></li>
       </ol>
@@ -391,6 +392,41 @@ ProxyPass /filter  "ajp://mei.example.org:8009/filter"
       <p>If everything is up and running you should be able to get an HTML
       version, a form and a raw XML version for each object in the
       xml_store.</p>
+
+    </div>
+
+    <br style="clear:both;"/>
+
+    <div id="security">
+      <h2>7. Authentication &amp; Security</h2>
+
+      <p>The seasoned sysadmin should already have noticed that there is only
+      one component which is protected by some Authentication and
+      Authorization Infrastructure, and that is the eXist database engine. The
+      sysadmin should also have noticed that the web application
+      <kbd>filter</kbd> actually performs these operations and that it has not
+      been mentioned that it is protected.</p>
+
+      <p>It is not protected. If you run this application on the open Internet
+      you need to do the following.</p>
+
+      <ol type="i">
+	<li>Place the MerMEId server behind a firewall that closes tomcat's
+	port 8080 for external users</li>
+
+	<li>Protect both the vulnerable components <kbd>/orbeon</kbd> and
+	<kbd>/filter</kbd>. Currently we do this using basic
+	authentication. We put the following in our apache configuration:
+	<pre>
+&lt;LocationMatch ^/+(orbeon|filter)/+.*>
+  AuthType Basic
+  AuthName "MerMEId users &amp; developers."
+  AuthUserFile /home/xml-store/passwordfile
+  Require valid-user 
+&lt;/LocationMatch>
+	</pre>
+	</li>
+      </ol>
 
     </div>
 
