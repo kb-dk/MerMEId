@@ -402,8 +402,8 @@ ProxyPass /filter  "ajp://mei.example.org:8009/filter"
 
       <p>The seasoned sysadmin should already have noticed that there is only
       one component which is protected by some Authentication and
-      Authorization Infrastructure, and that is the eXist database engine. The
-      sysadmin should also have noticed that the web application
+      Authorization Infrastructure (AAI), and that is the eXist database
+      engine. The sysadmin should also have noticed that the web application
       <kbd>filter</kbd> actually performs these operations and that it has not
       been mentioned that it is protected.</p>
 
@@ -430,6 +430,18 @@ ProxyPass /filter  "ajp://mei.example.org:8009/filter"
 
       <p>This will protect the database from the vulnerabilities built into
       the forms and the filter.</p>
+
+      <p>You can create the <kbd>passwordfile</kbd> like this:</p>
+
+      <pre>
+	htpasswd -bc passwordfile trusted_user magic_word
+      </pre>
+
+      <p>This will create a new <kbd>passwordfile</kbd> for your
+      <kbd>trusted_user</kbd> containing its very secret
+      <kbd>magic_word</kbd>. The <kbd>htpasswd</kbd> utility should come with
+      the Apache distribution. You could obviously use any AAI scheme
+      supported by the web server.</p>
 
     </div>
 
