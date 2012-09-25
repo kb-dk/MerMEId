@@ -299,82 +299,7 @@
 		</xsl:for-each>
 		
 		<!-- related files -->
-		<xsl:for-each 
-			select="m:meiHead/
-			m:workDesc/
-			m:work/
-			m:relationList">
-			<xsl:for-each select="m:relation[@target!='']">
-				<xsl:variable name="rel" select="@rel"/>
-				<xsl:if test="count(preceding-sibling::*[@rel=$rel])=0">
-					<!-- one <p> per relation type -->
-					<p>
-						<div class="p_heading">
-							<xsl:choose>
-								<xsl:when test="@rel='hasPart'">Contains:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='isPartOf'">Contained in:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='hasAlternate'">Alternate version:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='isAlternateOf'">Alternate version of:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='hasArrangement'">Arrangement:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='isArrangementOf'">Arrangement of:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='hasRevision'">Revised version:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='isRevisionOf'">Revised version of:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='hasImitation'">Imitation:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='isImitationOf'">Imitation of:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='hasTranslation'">Translated version:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='isTranslationOf'">Translation of:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='hasAdaptation'">Adaptation:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='isAdaptationOf'">Adaptation of:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='hasAbridgement'">Abridged version:</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="@rel='isAbridgementOf'">Abridged version of:</xsl:when>
-							</xsl:choose>
-						</div>
-						<xsl:for-each select="../m:relation[@rel=$rel]">
-							<xsl:element name="a">
-								<xsl:attribute name="href">
-									<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
-								</xsl:attribute>
-								<xsl:apply-templates select="@label"/>
-								<xsl:if test="not(@label) or @label=''">
-									<xsl:value-of select="@target"/>
-								</xsl:if>
-							</xsl:element>
-							<xsl:if test="position()!=last()"><br/></xsl:if>
-						</xsl:for-each>
-					</p>
-				</xsl:if>
-			</xsl:for-each>
-		</xsl:for-each>
+		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:relationList" mode="external"/>
 
 		<!-- show work history and global sources first if more than one version -->
 		<xsl:if test="count(m:meiHead/
@@ -652,6 +577,80 @@
 	
 	
 	<!-- SUB-TEMPLATES -->
+	
+	<xsl:template match="m:relationList" mode="external">
+		<xsl:for-each select="m:relation[@target!='']">
+			<xsl:variable name="rel" select="@rel"/>
+			<xsl:if test="count(preceding-sibling::*[@rel=$rel])=0">
+				<!-- one <p> per relation type -->
+				<p>
+					<div class="p_heading">
+						<xsl:choose>
+							<xsl:when test="@rel='hasPart'">Contains:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='isPartOf'">Contained in:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='hasAlternate'">Alternate version:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='isAlternateOf'">Alternate version of:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='hasArrangement'">Arrangement:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='isArrangementOf'">Arrangement of:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='hasRevision'">Revised version:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='isRevisionOf'">Revised version of:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='hasImitation'">Imitation:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='isImitationOf'">Imitation of:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='hasTranslation'">Translated version:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='isTranslationOf'">Translation of:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='hasAdaptation'">Adaptation:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='isAdaptationOf'">Adaptation of:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='hasAbridgement'">Abridged version:</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="@rel='isAbridgementOf'">Abridged version of:</xsl:when>
+						</xsl:choose>
+					</div>
+					<xsl:for-each select="../m:relation[@rel=$rel]">
+						<xsl:element name="a">
+							<xsl:attribute name="href">
+								<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
+							</xsl:attribute>
+							<xsl:apply-templates select="@label"/>
+							<xsl:if test="not(@label) or @label=''">
+								<xsl:value-of select="@target"/>
+							</xsl:if>
+						</xsl:element>
+						<xsl:if test="position()!=last()"><br/></xsl:if>
+					</xsl:for-each>
+				</p>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:template>
+	
 	
 	<xsl:template match="m:expression">
 		<!-- display title etc. only with components or versions -->
