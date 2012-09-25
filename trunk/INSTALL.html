@@ -55,7 +55,7 @@
 	<li><a href="#sect2">Installation</a></li>
 	<li><a href="#sect3">Configuration</a></li>
 	<li><a href="#testing">Testing and Getting Started</a></li>
-	<li><a href="#security">Authentication &amp; Security</a>
+	<li><a href="#security">Authentication &amp; Security</a></li>
 	<li><a href="#appendix">Appendix A. Configuration files</a></li>
       </ol>
 
@@ -417,7 +417,7 @@ ProxyPass /filter  "ajp://mei.example.org:8009/filter"
 	<li>Protect both the vulnerable components <kbd>/orbeon</kbd> and
 	<kbd>/filter</kbd>. Currently we do this using basic
 	authentication. We put the following in our apache configuration:
-	<pre>&lt;LocationMatch ^/+(orbeon|filter)/+.*>
+	<pre>&lt;LocationMatch ^/+(orbeon/xforms-jsp/mei-form|filter)/+.*>
   AuthType Basic
   AuthName "MerMEId users &amp; developers."
   AuthUserFile /home/xml-store/passwordfile
