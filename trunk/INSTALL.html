@@ -417,14 +417,12 @@ ProxyPass /filter  "ajp://mei.example.org:8009/filter"
 	<li>Protect both the vulnerable components <kbd>/orbeon</kbd> and
 	<kbd>/filter</kbd>. Currently we do this using basic
 	authentication. We put the following in our apache configuration:
-	<pre>
-&lt;LocationMatch ^/+(orbeon|filter)/+.*>
+	<pre>&lt;LocationMatch ^/+(orbeon|filter)/+.*>
   AuthType Basic
   AuthName "MerMEId users &amp; developers."
   AuthUserFile /home/xml-store/passwordfile
   Require valid-user 
-&lt;/LocationMatch>
-	</pre>
+&lt;/LocationMatch></pre>
 	</li>
       </ol>
 
