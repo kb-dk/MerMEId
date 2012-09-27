@@ -22,7 +22,7 @@
             <xsl:attribute name="meiversion">2012</xsl:attribute>
             <xsl:if test="count(@xml:id)=0">
                 <xsl:attribute name="xml:id">
-                    <xsl:value-of select="concat('mei_',generate-id())"/>
+                    <xsl:value-of select="concat('mei_',generate-id(.))"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:apply-templates select="@*|node()"/>
@@ -246,7 +246,7 @@
 
     <xsl:template match="m:source">
         <xsl:variable name="source_id">
-            <xsl:value-of select="concat('source_',generate-id())"/>
+            <xsl:value-of select="concat('source_',generate-id(.))"/>
         </xsl:variable>
         <source>
             <xsl:attribute name="analog">frbr:manifestation</xsl:attribute>
@@ -520,11 +520,11 @@
                 <xsl:if test="not(//m:music/m:front/t:div[t:head='Bibliography']/t:listBibl[@type='primary'])">
                     <listBibl type="primary" xmlns="http://www.tei-c.org/ns/1.0">
                         <xsl:attribute name="xml:id">
-                            <xsl:value-of select="concat('listBibl_',generate-id())"/>
+                            <xsl:value-of select="concat('listBibl_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
                         </xsl:attribute>
                         <bibl type="Letter">
                             <xsl:attribute name="xml:id">
-                                <xsl:value-of select="concat('bibl_',generate-id())"/>
+                                <xsl:value-of select="concat('bibl_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
                             </xsl:attribute>
                             <author/>
                             <name role="recipient"/>
@@ -550,11 +550,11 @@
                 <xsl:if test="not(//m:music/m:front/t:div[t:head='Bibliography']/t:listBibl[@type='documentation'])">
                     <listBibl type="documentation" xmlns="http://www.tei-c.org/ns/1.0">
                         <xsl:attribute name="xml:id">
-                            <xsl:value-of select="concat('listBibl_',generate-id())"/>
+                            <xsl:value-of select="concat('listBibl_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
                         </xsl:attribute>
                         <bibl type="Concert_programme">
                             <xsl:attribute name="xml:id">
-                                <xsl:value-of select="concat('bibl_',generate-id())"/>
+                                <xsl:value-of select="concat('bibl_',generate-id(.))"/>
                             </xsl:attribute>
                             <date/>
                             <title/>
@@ -582,7 +582,7 @@
         <listBibl xmlns="http://www.tei-c.org/ns/1.0">
             <xsl:if test="not(@xml:id)">
                 <xsl:attribute name="xml:id">
-                    <xsl:value-of select="concat('listBibl_',generate-id())"/>
+                    <xsl:value-of select="concat('listBibl_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
                 </xsl:attribute>
             </xsl:if>
             <!-- add @type "secondary" to existing bibliography if missing -->
@@ -888,7 +888,7 @@
                 <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0">
                     <xsl:if test="not(@xml:id)">
                         <xsl:attribute name="xml:id">
-                            <xsl:value-of select="concat('listBibl_',generate-id())"/>
+                            <xsl:value-of select="concat('listBibl_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
                         </xsl:attribute>
                     </xsl:if>
                     <xsl:apply-templates select="t:bibl"/>

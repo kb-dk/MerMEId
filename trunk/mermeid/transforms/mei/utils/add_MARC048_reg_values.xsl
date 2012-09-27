@@ -6,7 +6,7 @@
     xmlns:m="http://www.music-encoding.org/ns/mei" 
     xmlns:t="http://www.tei-c.org/ns/1.0" 
     exclude-result-prefixes="m xsl"
-    version="1.0">
+    version="2.0">
     
     <xsl:template match="@*|*">
         <xsl:copy>

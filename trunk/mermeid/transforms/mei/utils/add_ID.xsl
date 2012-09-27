@@ -19,7 +19,7 @@
         <xsl:element name="{$element_name}">
             <xsl:if test="not(@xml:id)">
                 <xsl:attribute name="xml:id">
-                    <xsl:value-of select="concat($element_name,'_',generate-id())"/>
+                    <xsl:value-of select="concat($element_name,'_',generate-id(.))"/><xsl:number level="any"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:apply-templates select="@*|node()"/>
@@ -31,7 +31,7 @@
         <xsl:element name="{$element_name}" namespace="http://www.tei-c.org/ns/1.0"> 
             <xsl:if test="not(@xml:id)">
                 <xsl:attribute name="xml:id">
-                    <xsl:value-of select="concat($element_name,'_',generate-id())"/>
+                    <xsl:value-of select="concat($element_name,'_',generate-id(.))"/><xsl:number level="any"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:apply-templates select="@*|node()"/>
