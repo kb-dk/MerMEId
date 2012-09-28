@@ -17,14 +17,19 @@
 			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt"
 				id="repeat-title">
 				<h:div class="blocklabel">Main title </h:div>
-				<xf:repeat nodeset="m:title[@type='main' or not(@type)]" id="main_titles" class="input_group">
+				<dcm:create
+					nodeset="m:title[not(@type) or @type='main']"
+					label="Add main title"
+					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[not(@type)]"/>
+				
+				<xf:repeat nodeset="m:title[not(@type) or @type='main']" id="main_titles" class="input_group">
 					<h:div>
 						<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 						<dcm:element-buttons-typed 
 							triggers="all" 
 							nodeset="m:title[@type='main' or not(@type)]" 
 							index="main_titles"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[1]"/>
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[not(@type)]"/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>

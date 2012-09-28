@@ -189,7 +189,9 @@
     <xf:action ev:event="xforms-submit-error">
       <xxf:variable name="code" select="event('response-status-code')"/>
       <xf:action if="$code!=404">
-        <xf:message>An error occurred (<xf:output value="$code"/>)</xf:message>
+        <xf:message>An error occurred (<xf:output value="$code"/>)
+          <!--<h:br/>File:<xf:output value="instance('temp')/target_uri"/>--></xf:message>
+        
       </xf:action>
       <!-- Load empty instance if loading fails (i.e. document does not exist yet) -->
       <xf:action if="$code=404">
