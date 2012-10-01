@@ -32,6 +32,7 @@
             @import "/editor/style/tab_style.css"; 
             @import "/editor/style/xform_style.css";
             @import "/editor/style/model_editor_style.css";
+            @import "/editor/style/yui_rich_text_editor.css"; 
         </h:style>
         
         <xi:include href="details-form-model.xml" parse="xml"/>
@@ -498,18 +499,20 @@
                                     nodeset="m:annot[@type='source_description']"
                                     label="Add general description"
                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='source_description']"/>
-                                <xf:textarea ref="m:annot[@type='source_description']"/>
-                                <xf:trigger appearance="minimal" ref="m:annot[@type='source_description']">
-                                    <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete"/></xf:label>
-                                    <xf:action ev:event="DOMActivate">
-                                        <xf:delete nodeset="."/>
-                                        <xf:action if="count(parent::node()/*)=0">
-                                            <xf:delete nodeset="parent::node()"/>
+                                <h:div style="white-space:nowrap">
+                                    <xf:textarea ref="m:annot[@type='source_description']" mediatype="text/html"/>
+                                    <xf:trigger appearance="minimal" ref="m:annot[@type='source_description']">
+                                        <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete"/></xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:delete nodeset="."/>
+                                            <xf:action if="count(parent::node()/*)=0">
+                                                <xf:delete nodeset="parent::node()"/>
+                                            </xf:action>
                                         </xf:action>
-                                    </xf:action>
-                                </xf:trigger>
-                                <dcm:id ref="m:annot[@type='source_description']"/>
-                                <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
+                                    </xf:trigger>
+                                    <dcm:id ref="m:annot[@type='source_description']"/>
+                                    <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
+                                </h:div>
                                 <h:div>
                                     <h:span class="blocklabel">External source descriptions <h:a class="help">?<h:span class="comment">Links to external resources (texts) about 
                                         this particular source.</h:span></h:a>
@@ -627,7 +630,7 @@
                                         nodeset="m:physMedium"
                                         label="Add physical medium"
                                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:physMedium"/>
-                                    <xf:textarea ref="m:physMedium" class="mediumheight">
+                                    <xf:textarea ref="m:physMedium" class="mediumheight" mediatype="text/html">
                                         <xf:label class="blocklabel">Physical medium <h:a class="help">?<h:span class="comment">Description of 
                                             paper, number of staves on page, printing technique etc.
                                         </h:span></h:a></xf:label>
@@ -681,7 +684,7 @@
                                         nodeset="m:p"
                                         label="Add transcript"
                                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage/m:p"/>
-                                    <xf:textarea ref="m:p" class="mediumheight"/>
+                                    <xf:textarea ref="m:p" class="mediumheight" mediatype="text/html"/>
                                     <h:hr/> 
                                 </xf:repeat>
                             </h:fieldset>
@@ -808,7 +811,7 @@
                                                                     label="Add description"
                                                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp/m:item/m:notesStmt/m:annot[1]"/>
                                                                 <xf:repeat nodeset="m:annot[@type='source_description']">
-                                                                    <xf:textarea ref="." class="mediumheight"/>
+                                                                    <xf:textarea ref="." class="mediumheight" mediatype="text/html"/>
                                                                     <dcm:attribute-editor/>
                                                                 </xf:repeat>
                                                             </xf:group>
@@ -846,7 +849,7 @@
                                                                             <dcm:attribute-editor ref="."/>                                                    
                                                                         </h:div>
                                                                     </xf:repeat>
-                                                                    <xf:textarea ref="m:physMedium" class="mediumheight">
+                                                                    <xf:textarea ref="m:physMedium" class="mediumheight" mediatype="text/html">
                                                                         <xf:label class="blocklabel">Physical medium <h:a class="help">?<h:span class="comment">Description of 
                                                                             paper, number of staves on page, printing technique etc.
                                                                         </h:span></h:a></xf:label>

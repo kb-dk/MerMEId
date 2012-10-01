@@ -235,7 +235,7 @@
 			<h:fieldset>
 				<h:legend>Encoding</h:legend>
 				<h:span class="blocklabel strong">Project description</h:span>
-				<xf:textarea ref="m:projectDesc/m:p" class="mediumheight"/>
+				<xf:textarea ref="m:projectDesc/m:p" class="mediumheight" mediatype="text/html"/>
 				<dcm:attribute-editor ref="m:projectDesc"/>
 				<h:br/>
 				<h:span class="blocklabel strong">Applications <h:a class="help">?<h:span 
@@ -324,7 +324,7 @@
 				nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes']"
 				id="repeat-private_notes">
 				<h:div>
-					<xf:textarea ref=".[index('repeat-private_notes')]" class="mediumheight"/>
+					<xf:textarea ref=".[index('repeat-private_notes')]" class="mediumheight" mediatype="text/html"/>
 					<dcm:element-buttons-typed triggers="remove" 
 						index="repeat-private_notes" 
 						nodeset="m:annot[@type='private_notes']" 

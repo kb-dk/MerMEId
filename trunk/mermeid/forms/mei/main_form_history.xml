@@ -54,7 +54,7 @@
 					label="Add creation note"
 					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:p"/>
 				<xf:repeat nodeset="m:p" id="repeat-history-p">
-					<xf:textarea ref="." class="notes">
+					<xf:textarea ref="." class="notes" mediatype="text/html">
 						<xf:label class="blocklabel">Creation note <h:a class="help">?<h:span class="comment">Text
 							explaining details and circumstances concerning the work's genesis and history</h:span></h:a>
 						</xf:label>

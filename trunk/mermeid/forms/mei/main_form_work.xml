@@ -239,16 +239,18 @@
 						label="Add work description"
 						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='general_description']"/>
 					<xf:repeat nodeset="m:annot[@type='general_description']" id="repeat_work_description">
-						<xf:textarea ref="." class="notes">
-							<xf:label class="blocklabel">General work description 
-								<h:a class="help">?<h:span class="comment">A general description of or introduction to the work</h:span></h:a>
-							</xf:label>
-						</xf:textarea>
-						<dcm:element-buttons-typed triggers="remove" 
-							index="repeat_work_description" 
-							nodeset="m:annot[@type='general_description']" 
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='general_description']"/>
-						<dcm:attribute-editor ref="."/>
+						<h:div style="white-space:nowrap">
+							<xf:textarea ref="." class="notes"  mediatype="text/html">
+								<xf:label class="blocklabel">General work description 
+									<h:a class="help">?<h:span class="comment">A general description of or introduction to the work</h:span></h:a>
+								</xf:label>
+							</xf:textarea>
+							<dcm:element-buttons-typed triggers="remove" 
+								index="repeat_work_description" 
+								nodeset="m:annot[@type='general_description']" 
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='general_description']"/>
+							<dcm:attribute-editor ref="."/>
+						</h:div>
 					</xf:repeat>
 					<h:div class="blocklabel">External descriptions <h:a class="help">?<h:span class="comment"
 						>Links to external resources (web pages, PDF files etc.) about

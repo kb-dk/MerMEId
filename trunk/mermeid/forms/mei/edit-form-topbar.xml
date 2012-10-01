@@ -140,14 +140,16 @@
     <!-- The requested URI must be stored in instance('temp')/target_uri prior to opening the dialog -->
     <xf:label>Warning</xf:label>
     <h:p>You have unsaved changes. 
-      Do you want to proceed?
+      Do you want to save before proceeding?
     </h:p>
-    <h:p>Changes will be lost if you answer "Yes". <h:br/>
-      To keep changes, choose "No" and save your work.
+    <h:p>Changes will be lost if you answer "No". <h:br/>
+      To keep changes, choose "Yes".
     </h:p>    
-    <xf:trigger>
+    <xf:trigger appearance="save_proceed_button">
       <xf:label>Yes</xf:label>
       <xf:action ev:event="DOMActivate">
+        <xf:dispatch name="language-update" target="form-group"/>
+        <xf:send submission="save-to-file"/>
         <xf:load resource="{instance('temp')/target_uri}" show="replace"/>
         <xxf:hide dialog="exit-warning-dialog"/>
       </xf:action>
@@ -155,6 +157,7 @@
     <xf:trigger>
       <xf:label>No</xf:label>
       <xf:action ev:event="DOMActivate">
+        <xf:load resource="{instance('temp')/target_uri}" show="replace"/>
         <xxf:hide dialog="exit-warning-dialog"/>
       </xf:action>
     </xf:trigger>

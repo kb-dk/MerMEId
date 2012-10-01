@@ -25,6 +25,7 @@
   <h:style type="text/css" media="all"> 
     @import "/editor/style/tab_style.css"; 
     @import "/editor/style/xform_style.css";
+    @import "/editor/style/yui_rich_text_editor.css"; 
   </h:style>
   
   <xf:model>
@@ -186,12 +187,11 @@
       <xf:setvalue ref="instance('temp')/file_exists" value="'true'"/>
     </xf:action>
     
-    <xf:action ev:event="xforms-submit-error">
+    <xf:action ev:event="xforms-submit-error"  ev:propagate="stop">
       <xxf:variable name="code" select="event('response-status-code')"/>
       <xf:action if="$code!=404">
         <xf:message>An error occurred (<xf:output value="$code"/>)
           <!--<h:br/>File:<xf:output value="instance('temp')/target_uri"/>--></xf:message>
-        
       </xf:action>
       <!-- Load empty instance if loading fails (i.e. document does not exist yet) -->
       <xf:action if="$code=404">

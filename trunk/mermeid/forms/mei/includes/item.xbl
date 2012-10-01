@@ -291,7 +291,7 @@
                                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
                                                 <dcm:attribute-editor ref="."/>
                                                 <h:br/>
-                                                <xf:textarea ref="m:p"  class="mediumheight"/>
+                                                <xf:textarea ref="m:p"  class="mediumheight" mediatype="text/html"/>
                                                 <h:br/>
                                             </xf:repeat>
                                         </h:fieldset>
@@ -345,14 +345,14 @@
                                             </xf:repeat>
                                             <h:hr/>
                                         </xf:group>
-                                        <xf:textarea ref="m:physMedium" class="mediumheight">
+                                        <xf:textarea ref="m:physMedium" class="mediumheight" mediatype="text/html">
                                             <xf:label class="blocklabel">Physical medium <h:a class="help">?<h:span class="comment">Description of 
                                                 paper, number of staves on page, printing technique etc.
                                             </h:span></h:a></xf:label>
                                         </xf:textarea>
                                         <dcm:attribute-editor ref="m:physMedium"/>                                                    
                                         <h:br/>						
-                                        <xf:textarea ref="m:condition" class="mediumheight">
+                                        <xf:textarea ref="m:condition" class="mediumheight" mediatype="text/html">
                                             <xf:label class="blocklabel">Condition</xf:label>
                                         </xf:textarea>
                                         <dcm:attribute-editor ref="m:condition"/>                                                    
@@ -397,7 +397,7 @@
                                     </h:span></h:a> 
                                         <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                                     </h:span>
-                                    <xf:textarea ref="m:annot[@type='source_description']" class="mediumheight"/>
+                                    <xf:textarea ref="m:annot[@type='source_description']" class="mediumheight" mediatype="text/html"/>
                                     <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
                                     <xf:group ref="m:annot[@type='links']">
                                         <h:span class="blocklabel">External source descriptions <h:a class="help">?<h:span class="comment">Links to external resources (texts) about 
@@ -514,7 +514,7 @@
                                                                                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
                                                                                     <dcm:attribute-editor ref="."/>
                                                                                     <h:br/>
-                                                                                    <xf:textarea ref="m:p"  class="mediumheight"/>
+                                                                                    <xf:textarea ref="m:p" class="mediumheight" mediatype="text/html"/>
                                                                                     <h:br/>
                                                                                 </xf:repeat>
                                                                             </h:fieldset>
@@ -568,14 +568,14 @@
                                                                                 </xf:repeat>
                                                                                 <h:hr/>
                                                                             </xf:group>
-                                                                            <xf:textarea ref="m:physMedium" class="mediumheight">
+                                                                            <xf:textarea ref="m:physMedium" class="mediumheight" mediatype="text/html">
                                                                                 <xf:label class="blocklabel">Physical medium <h:a class="help">?<h:span class="comment">Description of 
                                                                                     paper, number of staves on page, printing technique etc.
                                                                                 </h:span></h:a></xf:label>
                                                                             </xf:textarea>
                                                                             <dcm:attribute-editor ref="m:physMedium"/>                                                    
                                                                             <h:br/>						
-                                                                            <xf:textarea ref="m:condition" class="mediumheight">
+                                                                            <xf:textarea ref="m:condition" class="mediumheight" mediatype="text/html">
                                                                                 <xf:label class="blocklabel">Condition</xf:label>
                                                                             </xf:textarea>
                                                                             <dcm:attribute-editor ref="m:condition"/>                                                    
@@ -589,7 +589,7 @@
                                                                             </h:span></h:a> 
                                                                                 <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                                                                             </h:span>
-                                                                            <xf:textarea ref="m:annot[@type='source_description']"/>
+                                                                            <xf:textarea ref="m:annot[@type='source_description']" mediatype="text/html"/>
                                                                             <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
                                                                             <xf:group ref="m:annot[@type='links']">
                                                                                 <h:span class="blocklabel">External source descriptions <h:a class="help">?<h:span class="comment">Links to external resources (texts) about 
