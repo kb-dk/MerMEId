@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:head xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xf="http://www.w3.org/2002/xforms" 
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <h:title id="PageTitle">MerMEId - Editing standard data</h:title>
+    
+    <h:meta http-equiv="Content-Type" content="application/xhtml+xml"/>
+    
+    <h:script type="text/javascript" src="http:/editor/js/editor.js"/>
+    
+    <h:style type="text/css" media="all"> 
+        @import "/editor/style/tab_style.css"; 
+        @import "/editor/style/xform_style.css";
+        @import "/editor/style/model_editor_style.css";
+    </h:style>
+    
+    <xf:model>
+        
+        <xf:instance xmlns="http://www.tei-c.org/ns/1.0" 
+            id="bibliography-instance" 
+            src="/../editor/forms/mei/model/standard_bibliography.xml"/>
+        
+        <xf:instance xmlns="http://www.tei-c.org/ns/1.0" 
+            id="bibl-type-instance" 
+            src="/../editor/forms/mei/model/bibl_reference_types.xml" 
+            xxf:readonly="true"/>
+        
+        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+            id="instrumentation"
+            src="/../editor/forms/mei/model/standard_instrumentation.xml"/>
+        
+        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+            id="ensembles" 
+            src="/../editor/forms/mei/model/ensembles.xml" 
+            xxf:readonly="true"/>
+        
+        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+            id="instruments" 
+            src="/../editor/forms/mei/model/instruments.xml" 
+            xxf:readonly="true"/>
+
+        <xf:instance id="mei_attr_list" 
+            src="/../editor/forms/mei/model/MEI_attr_list.xml"/>
+        
+        <xf:instance id="tei_attr_list" 
+            src="/../editor/forms/mei/model/TEI_attr_list.xml"/>    
+        
+        <xf:instance id="parameters" 
+            xmlns="http://www.kb.dk/dcm"
+            src="/../editor/forms/mei/mermeid_configuration.xml" parse="xml"/>
+        
+        <xf:instance id="XMLfiles" 
+            xmlns="http://www.kb.dk/dcm">
+            <fileList/>
+        </xf:instance>
+        
+        <xf:instance id="temp">
+            <temp>
+                <id/>
+                <counter/>
+                <changed>false</changed>
+                <change_marker>*</change_marker>
+                <etc>...</etc>
+                <target_uri/>
+                <collection/>
+                <new/>
+                <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="">
+                    <bibl type="Monograph">
+                        <abbr/>
+                        <author/>
+                        <date/>
+                        <title level="m"/>
+                        <editor/>
+                        <biblScope type="pages"/>
+                        <pubPlace/>
+                        <publisher/>
+                        <ref target=""/>
+                    </bibl>
+                </listBibl>
+            </temp>
+        </xf:instance> 
+        
+        <xf:bind nodeset="instance('temp')">
+            <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
+        </xf:bind>               
+        
+        <!-- submissions - loading and saving data -->            
+        
+        <xf:submission id="save-to-file"
+            ref="instance('bibliography-instance')"
+            validate="false"
+            relevant="false"
+            xxf:calculate="false"
+            resource="{instance('temp')/target_uri}" 
+            method="put"
+            replace="instance">
+        </xf:submission>
+        
+        <xf:submission id="load-fileList"
+            method="get" 
+            serialization="none" 
+            validate="false"
+            resource="{instance('temp')/target_uri}"
+            replace="instance" 
+            instance="XMLfiles"/>
+        
+        <!-- "onload" xforms actions -->
+        <xf:action ev:event="xforms-model-construct-done">
+            <!-- store XML data file name -->
+            <xf:setvalue ref="instance('parameters')/dcm:xml_file" value="xxf:get-request-parameter('doc')"/>
+            <!-- get settings from session variables -->
+            <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
+            <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
+            <xf:setvalue ref="instance('parameters')/dcm:code_inspector" value="xxf:get-session-attribute('code_inspector')"/>
+            <xf:setvalue ref="instance('temp')/target_uri" 
+                value="concat(
+                instance('parameters')/dcm:server_name,
+                'storage/cross-link.xq?query=',instance('temp')/query,
+                '&amp;subject=dummy')"/>
+        </xf:action>
+        
+        <xf:action ev:event="xforms-submit-done">
+            <!-- set instance state to unchanged on saving -->
+            <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
+        </xf:action>
+        
+        <xf:action ev:event="xforms-submit-error">
+            <xxf:variable name="code" select="event('response-status-code')"/>
+            <xf:action>
+                <xf:message>An error occurred (<xf:output value="$code"/>)</xf:message>
+            </xf:action>
+        </xf:action>
+        
+    </xf:model>
+    
+    <!-- XBL components -->
+    <xi:include href="includes/element_buttons.xbl" parse="xml"/>
+    <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
+    <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
+    <xi:include href="includes/tei_date_editor.xbl" parse="xml"/>
+    <xi:include href="includes/id.xbl" parse="xml"/>
+    <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
+</h:head>
+

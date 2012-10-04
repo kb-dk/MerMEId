@@ -160,7 +160,7 @@
 					origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr][1]"/>                        
 				<xf:repeat nodeset="m:respStmt/m:corpName/m:address/m:addrLine[m:ptr]" id="repeat-addr-ptr">
 					<h:div>
-						<xf:input ref="m:ptr/@target" class="long">
+						<xf:input ref="m:ptr/@target" class="maxlong">
 							<xf:label class="fixed_width">URI 
 								<h:a class="help">?<h:span class="comment">Link or mail address, e.g. 
 								"http://www.example.com" or "mailto://someone@example.com"</h:span></h:a>

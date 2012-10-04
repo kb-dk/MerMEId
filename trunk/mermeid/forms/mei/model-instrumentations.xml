@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xf="http://www.w3.org/2002/xforms" 
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
+    xmlns:m="http://www.music-encoding.org/ns/mei"
+    xmlns:t="http://www.tei-c.org/ns/1.0" 
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <!--
+        Standard instrumentations editor 
+        Danish Centre for Music Publication (DCM) 
+        Axel Teich Geertinger, 2012
+        atge@kb.dk
+    -->
+    
+    <xi:include href="model-edit-head.xml" parse="xml"/>
+    
+    <h:body class="file">
+        
+        <xf:group id="form-group">
+            
+            <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+            <xxf:variable name="uri" 
+                select="xxf:get-session-attribute('return_url')"/>
+            
+            <h:div class="inputdiv">
+                
+                <h:div style="float:right">
+                    <xf:submit submission="save-to-file">
+                        <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:setvalue ref="instance('temp')/target_uri" 
+                                value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>
+                        </xf:action>
+                    </xf:submit>
+                    <xf:submit submission="save-to-file">
+                        <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:setvalue ref="instance('temp')/target_uri" 
+                                value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>
+                            <xf:load resource="{xxf:get-session-attribute('return_url')}" show="replace"/>
+                        </xf:action>
+                    </xf:submit>
+                    <xf:trigger>
+                        <xf:label><h:img src="http:/editor/images/close.gif" alt="Cancel (close)"/> Cancel</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:load resource="{xxf:get-session-attribute('return_url')}" show="replace"/>
+                        </xf:action>
+                    </xf:trigger>
+                </h:div>
+                
+                <h:h3>Edit list of standard instrumentations and instrument groups</h:h3>
+
+                [Coming up...]
+
+            </h:div>
+            
+        </xf:group>
+        
+        
+        <xf:group ref=".[instance('parameters')/dcm:code_inspector='true']">
+            <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+        </xf:group>
+        
+        <h:br clear="all"/>
+        
+        <xi:include href="edit-form-footer.xml" parse="xml"/>
+    </h:body>
+</h:html>

@@ -224,6 +224,27 @@
   <!-- Dialog for editing session settings and opening standard (template) data editors -->
   <xxf:dialog id="settings-dialog" appearance="full" level="modal">
     <xf:label>MerMEId settings</xf:label>
+    <xf:trigger appearance="minimal">
+      <xf:label><h:img src="http:/editor/images/expand.png" title="Edit"/> Edit standard bibliographic references <h:a class="help">?<h:span class="comment">For each 
+      file collection (series), a list of frequently used bibliographic references may be available when adding
+      a new reference at the "Bibliography" tab. The lists may be edited using this menu option.<h:br/>
+      Files are associated with a file collection by specifying a file collection name at the "File" tab.</h:span></h:a></xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xf:insert context="." origin="xxf:set-session-attribute('return_url',instance('parameters')/dcm:this_page)"/>
+        <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-references.xml"></xf:load>
+      </xf:action>
+    </xf:trigger>
+    <h:br/>
+<!--    <xf:trigger appearance="minimal">
+      <xf:label><h:img src="http:/editor/images/expand.png" title="Edit"/> Edit standard instrumentations <h:a class="help">?<h:span 
+        class="comment">Edit the standard ensembles and instrument groups available when adding new instruments 
+        at the "Music" tab.</h:span></h:a></xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xf:insert context="." origin="xxf:set-session-attribute('return_url',instance('parameters')/dcm:this_page)"/>
+        <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-instrumentations.xml"></xf:load>
+      </xf:action>
+    </xf:trigger>
+    <h:hr/>-->
     <xf:select appearance="full" ref="instance('parameters')/dcm:show_id">
       <xf:action ev:event="xforms-value-changed">
         <xf:insert context="." origin="xxf:set-session-attribute('show_id',instance('parameters')/dcm:show_id)"/>
@@ -238,7 +259,6 @@
     </xf:select>
     <h:div class="vertical_spacer"/>
     <!--
-    <h:hr/>
     <h:p><b>Advanced settings</b></h:p>-->
     <xf:select appearance="full" ref="instance('parameters')/dcm:attr_editor">
       <xf:action ev:event="xforms-value-changed">
