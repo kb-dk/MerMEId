@@ -243,8 +243,8 @@
         <xf:insert context="." origin="xxf:set-session-attribute('return_url',instance('parameters')/dcm:this_page)"/>
         <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-instrumentations.xml"></xf:load>
       </xf:action>
-    </xf:trigger>
-    <h:hr/>-->
+    </xf:trigger>-->
+    <h:hr/>
     <xf:select appearance="full" ref="instance('parameters')/dcm:show_id">
       <xf:action ev:event="xforms-value-changed">
         <xf:insert context="." origin="xxf:set-session-attribute('show_id',instance('parameters')/dcm:show_id)"/>

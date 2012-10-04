@@ -34,7 +34,7 @@
             @import "/editor/style/model_editor_style.css";
             @import "/editor/style/yui_rich_text_editor.css"; 
         </h:style>
-
+        
         <xi:include href="details-form-model.xml" parse="xml"/>
         
         <!-- XBL components -->
@@ -142,17 +142,17 @@
                                 <xf:output value="'[component]'"/> 
                             </xf:group> / 
                         </xf:group>
-                            <xf:group ref=".[normalize-space(@n)]"> 
-                                <xf:output value="concat(@n, '. ')"/>
-                            </xf:group>
-                            <xf:output value="m:titleStmt/m:title[1]"/>
-                            <xf:group ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo[1])]">                 
-                                <xf:output value="'. '"/>
-                            </xf:group>
-                            <xf:output value="m:tempo"/>
-                            <xf:group ref=".[normalize-space(concat(m:titleStmt/m:title[1],m:tempo,@n))='']">
-                                <xf:output value="'[this component]'"/> 
-                            </xf:group> 
+                        <xf:group ref=".[normalize-space(@n)]"> 
+                            <xf:output value="concat(@n, '. ')"/>
+                        </xf:group>
+                        <xf:output value="m:titleStmt/m:title[1]"/>
+                        <xf:group ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo[1])]">                 
+                            <xf:output value="'. '"/>
+                        </xf:group>
+                        <xf:output value="m:tempo"/>
+                        <xf:group ref=".[normalize-space(concat(m:titleStmt/m:title[1],m:tempo,@n))='']">
+                            <xf:output value="'[this component]'"/> 
+                        </xf:group> 
                         <!-- end path -->
                         <dcm:id ref="."/>
                     </h:h3>                
@@ -170,19 +170,19 @@
                             </xf:input>
                         </h:div>
                         <xf:group ref="m:titleStmt">
-                                <xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
-                                    <h:div>
-                                        <h:label class="fixed_width_short">Title</h:label><xi:include 
-                                            href="includes/input_with_xmllang.xml" parse="xml"/>
-                                        <dcm:element-buttons 
-                                            triggers="all" 
-                                            nodeset="m:title" 
-                                            index="repeat-version-titles"
-                                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
-                                        <dcm:attribute-editor ref="."/>
-                                    </h:div>
-                                </xf:repeat>
-                            </xf:group>                                    
+                            <xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
+                                <h:div>
+                                    <h:label class="fixed_width_short">Title</h:label><xi:include 
+                                        href="includes/input_with_xmllang.xml" parse="xml"/>
+                                    <dcm:element-buttons 
+                                        triggers="all" 
+                                        nodeset="m:title" 
+                                        index="repeat-version-titles"
+                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
+                                    <dcm:attribute-editor ref="."/>
+                                </h:div>
+                            </xf:repeat>
+                        </xf:group>                                    
                         
                         <h:div>                               
                             <xf:input ref="m:tempo" class="maxlong">
@@ -277,11 +277,9 @@
                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
                                 <dcm:attribute-editor ref="."/>
                             </xf:repeat>
-
-
-                            <h:span class="blocklabel">Text incipit
-                                <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
-                            </h:span>
+                            
+                            <h:div class="vertical_spacer"/>
+                            <h:span class="blocklabel">Text incipit</h:span>
                             <dcm:create ref="m:incip/m:incipText"
                                 nodeset="m:p"
                                 label="Add text incipit"
@@ -337,7 +335,9 @@
                             <h:div class="blocklabel strong">Persons <h:a class="help">?<h:span 
                                 class="comment">Persons with connection to this particular component
                                 only, e.g. an arranger, or a text author in a collection of songs 
-                                with different authors</h:span></h:a></h:div>	
+                                with different authors.<h:br/>
+                                Not for persons appearing in this component (characters). 
+                            </h:span></h:a></h:div>	
                             <h:div class="blocklabel">
                                 <h:span class="fixed_width_long">Name</h:span>
                                 <h:span> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
@@ -363,7 +363,67 @@
                                 label="Add person"
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
                         </xf:group>
-                    </h:fieldset>               
+                        
+                        
+                        <!-- test instrumentation selection -->
+                        <xxf:variable name="topLevelPerfMedium" select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium"/>
+                        <xf:group ref=".[$topLevelPerfMedium[*]]">
+                            <h:hr/>
+                            <h:span class="blocklabel strong">Instruments/Performers selection <h:a class="help">?<h:span 
+                                class="comment">A sub-selection of the performers and ensembles defined at version level may 
+                                be specified here. You may choose to only specify certain performers which you want to to be explicitly listed, 
+                                e.g. only the sub-selection of soloists playing in this particular movement, but not the entire orchestra.
+                            </h:span></h:a></h:span>
+                            <xxf:variable name="thisPerfMedium" select="m:perfMedium"/>
+                            <dcm:create nodeset="m:perfMedium"
+                                label="Instruments/Performers"
+                                origin="instance('empty-instance')//m:expression/m:componentGrp/m:expression/m:perfMedium"/>
+                            <xf:group ref="$thisPerfMedium">
+                                <xf:repeat nodeset="$topLevelPerfMedium/m:performer" id="performers-repeat">
+                                    <xf:group ref=".[count(preceding-sibling::m:performer)=0]">
+                                        <h:span class="blocklabel">Performers</h:span>
+                                    </xf:group>
+                                    <xxf:variable name="thisPerformer" select="."/>
+                                    <h:div>
+                                        <xf:group ref=".[m:instrVoice=$thisPerfMedium/m:performer/m:instrVoice 
+                                            or m:instrVoice/@reg=$thisPerfMedium/m:performer/m:instrVoice/@reg]">
+                                            <xf:trigger appearance="minimal">
+                                                <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:delete context="$thisPerfMedium" nodeset="m:performer[m:instrVoice=$thisPerformer/m:instrVoice 
+                                                        or m:instrVoice/@reg=$thisPerformer/m:instrVoice/@reg]"/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                            <xf:output value="m:instrVoice/@count"/>
+                                            <xf:output value="m:instrVoice"/>
+                                            <xf:group ref="m:instrVoice/@reg[.!='']"> (<xf:output value="."/>)</xf:group>
+                                        </xf:group>
+                                        <xf:group ref=".[not(m:instrVoice=$thisPerfMedium/m:performer/m:instrVoice 
+                                            or m:instrVoice/@reg=$thisPerfMedium/m:performer/m:instrVoice/@reg)]">
+                                            <xf:trigger appearance="minimal">
+                                                <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this performer"/></xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <!-- put a copy in the temp instance and generate new @id before putting it in place -->
+                                                    <xf:delete context="instance('temp')/element" nodeset="*"/>
+                                                    <xf:insert context="instance('temp')/element" nodeset="m:performer" origin="$thisPerformer"/>
+                                                    <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                                                    <xf:insert context="$thisPerfMedium" nodeset="m:performer" 
+                                                        origin="instance('temp')/element/m:performer"/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                            <h:span class="disabled">
+                                                <xf:output value="m:instrVoice/@count"/>
+                                                <xf:output value="m:instrVoice"/>
+                                                <xf:group ref="m:instrVoice/@reg[.!='']"> (<xf:output value="."/>)</xf:group>
+                                            </h:span>
+                                        </xf:group>
+                                    </h:div>
+                                </xf:repeat>
+                            </xf:group>
+                        </xf:group>
+                        <!-- end test -->
+                        
+                    </h:fieldset>     
                     
                 </xf:group>
                 
