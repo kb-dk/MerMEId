@@ -678,7 +678,7 @@
 											<xf:label>- Please select -</xf:label>
 											<xf:value/>
 										</xf:item>
-										<xf:itemset nodeset="$binding//*[(local-name()='ensemble' or local-name()='performer') and local-name(..)='perfMedium'][m:instrVoice!='']">
+										<xf:itemset nodeset="$binding/m:perfMedium//*[(local-name()='ensemble' or local-name()='performer') and local-name(..)='perfMedium'][m:instrVoice!='']">
 											<!-- last AND condition excludes performers within an ensemble from the drop-down list-->
 											<xf:label><xf:output value="m:instrVoice"/></xf:label>
 											<xf:value ref="concat('#',@xml:id)"></xf:value>
