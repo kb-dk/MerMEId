@@ -1241,7 +1241,7 @@
     
     <xsl:template match="m:date">
         <xsl:apply-templates select="." mode="regularize">
-            <xsl:with-param name="reg">reg</xsl:with-param>
+            <xsl:with-param name="reg">isodate</xsl:with-param>
             <xsl:with-param name="notbefore">notbefore</xsl:with-param>
             <xsl:with-param name="notafter">notafter</xsl:with-param>
             <xsl:with-param name="namespace">http://www.music-encoding.org/ns/mei</xsl:with-param>
@@ -1282,17 +1282,23 @@
                                             <!-- second part castable as month -->
                                             <xsl:choose>
                                                 <xsl:when test="$datepieces[3]='??'">
-                                                    <!-- YYYY-MM-??: use one month -->
+                                                    <!-- YYYY-MM-??: one month -->
+                                                    <xsl:attribute name="{$reg}" select="concat($datepieces[1],'-',$datepieces[2])"/>
+                                                    <!--
                                                     <xsl:attribute name="{$notbefore}" select="xs:date(concat($datepieces[1],'-',$datepieces[2],'-01'))"/>
                                                     <xsl:attribute name="{$notafter}" select="xs:date(concat($datepieces[1],'-',$datepieces[2],'-',$days_in_month[xs:integer($datepieces[2])]))"/>
+                                                    -->
                                                 </xsl:when>
                                             </xsl:choose>
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <xsl:if test="$datepieces[2]='??'">
-                                                <!-- YYYY-??-??: use one year -->
+                                                <!-- YYYY-??-??: one year -->
+                                                <xsl:attribute name="{$reg}" select="$datepieces[1]"/>
+                                                <!-- 
                                                 <xsl:attribute name="{$notbefore}" select="xs:date(concat($datepieces[1],'-01-01'))"/>
                                                 <xsl:attribute name="{$notafter}" select="xs:date(concat($datepieces[1],'-12-31'))"/>
+                                                -->
                                             </xsl:if>
                                         </xsl:otherwise>
                                     </xsl:choose>                                    
@@ -1302,14 +1308,22 @@
                                     <xsl:choose>
                                         <xsl:when test="$datepieces[2] castable as xs:integer and string-length($datepieces[2])=4">
                                             <!-- YYYY-YYYY: use year range -->
+                                            <xsl:attribute name="{$notbefore}" select="$datepieces[1]"/>
+                                            <xsl:attribute name="{$notafter}" select="$datepieces[2]"/>
+                                            <!--
                                             <xsl:attribute name="{$notbefore}" select="xs:date(concat($datepieces[1],'-01-01'))"/>
                                             <xsl:attribute name="{$notafter}" select="xs:date(concat($datepieces[2],'-12-31'))"/>
+                                            -->
                                         </xsl:when>
                                         <xsl:when test="$datepieces[2] castable as xs:integer and string-length($datepieces[2])=2">
                                             <xsl:if test="xs:integer(substring($datepieces[1],3,2)) &lt; xs:integer($datepieces[2])">
                                                 <!-- YYYY-YY: use year range -->
+                                                <xsl:attribute name="{$notbefore}" select="$datepieces[1]"/>
+                                                <xsl:attribute name="{$notafter}" select="concat(substring($datepieces[1],1,2),$datepieces[2])"/>
+                                                <!--
                                                 <xsl:attribute name="{$notbefore}" select="xs:date(concat($datepieces[1],'-01-01'))"/>
                                                 <xsl:attribute name="{$notafter}" select="xs:date(concat(substring($datepieces[1],1,2),$datepieces[2],'-12-31'))"/>
+                                                -->
                                             </xsl:if>
                                         </xsl:when>
                                     </xsl:choose>                      
@@ -1318,8 +1332,11 @@
                                     <xsl:choose>
                                         <xsl:when test="number($datepieces[1]) and string-length(normalize-space($datepieces[1]))=4">
                                             <!-- YYYY: use one year -->
+                                            <xsl:attribute name="{$reg}" select="normalize-space($datepieces[1])"/>
+                                            <!--
                                             <xsl:attribute name="{$notbefore}" select="xs:date(concat(normalize-space($datepieces[1]),'-01-01'))"/>
                                             <xsl:attribute name="{$notafter}" select="xs:date(concat(normalize-space($datepieces[1]),'-12-31'))"/>
+                                            -->
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <xsl:attribute name="{$notbefore}" select="''"/>
