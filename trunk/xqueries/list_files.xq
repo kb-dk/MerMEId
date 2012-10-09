@@ -107,7 +107,7 @@ declare function app:delete-document-reference($doc as node()) as node() {
 	title="file name"/>
 
 	<input 
-    	onclick="{fn:concat('show_confirm(&quot;del',$form-id,'&quot;,&quot;',$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[string()][1]/string()[1],'&quot;);return false;')}" 
+    	onclick="{fn:concat('show_confirm(&quot;del',$form-id,'&quot;,&quot;',$doc//m:workDesc/m:work/m:titleStmt/m:title[string()]/string()[1],'&quot;);return false;')}" 
 	type="image" 
 	src="/editor/images/delete.gif"  
 	name="button"
