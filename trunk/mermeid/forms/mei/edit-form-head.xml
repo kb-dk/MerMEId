@@ -139,8 +139,9 @@
       xxf:calculate="false"
       resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
       method="put"
-      replace="instance">
-    </xf:submission>
+      replace="instance"
+      xxf:username="{instance('parameters')/dcm:exist_user}"
+      xxf:password="{instance('parameters')/dcm:exist_pwd}"/>
 
     <xf:submission id="load-fileList"
       method="get" 
@@ -174,9 +175,13 @@
             position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
           <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
             value="$today"/>
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date/@isodate"
+            value="$today"/>
         </xf:action>
         <xf:action if="$last_revision/m:date=''">
           <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
+            value="$today"/>
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date/@isodate"
             value="$today"/>
         </xf:action>
       </xf:action>

@@ -27,7 +27,8 @@
   </xsl:template>
   
   <!-- Remove empty attributes -->
-  <xsl:template match="identifier/@type|@unit|@target|@targettype|@pname|@accid|@mode|@meter.count|@meter.unit|@meter.sym|@notbefore|@notafter|@reg|@n|@evidence">
+  <xsl:template match="identifier/@type|@unit|@target|@targettype|@pname|@accid|@mode|@meter.count|@meter.unit|@meter.sym|
+    @notbefore|@notafter|@reg|@isodate|@startdate|@enddate|@n|@evidence">
     <xsl:if test="normalize-space(.)">
       <xsl:copy-of select="."/>
     </xsl:if>

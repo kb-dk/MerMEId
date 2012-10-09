@@ -88,9 +88,11 @@
             <xforms:model id="editor-model">
                 <xforms:instance id="editor-instance">
                     <editor_date>
-                        <reg/>
+                        <isodate/>
                         <notbefore/>
                         <notafter/>
+                        <startdate/>
+                        <enddate/>
                         <displayed_date/>
                         <mode/>
                         <month_days>
@@ -109,11 +111,13 @@
                         </month_days>
                         <is-valid/>
                         <error_msg>Invalid date(s) entered</error_msg>
-                        <attributes reg="" notbefore="" notafter=""/>
+                        <attributes isodate="" notbefore="" notafter="" startdate="" enddate=""/>
                     </editor_date>
                 </xforms:instance>
                 <xforms:bind nodeset="instance('editor-instance')">
-                    <xforms:bind id="reg-bind" nodeset="reg" type="xforms:date" name="date"/>
+                    <xforms:bind id="isodate-bind" nodeset="isodate" type="xforms:date" name="date"/>
+                    <xforms:bind id="startdate-bind" nodeset="startdate" type="xforms:date" name="date"/>
+                    <xforms:bind id="enddate-bind" nodeset="enddate" type="xforms:date" name="date"/>
                     <xforms:bind id="notafter-bind" nodeset="notafter" type="xforms:date" name="date"/>
                     <xforms:bind id="notbefore-bind" nodeset="notbefore" type="xforms:date" name="date"/>
                     <xforms:bind id="displayed-date-bind" nodeset="displayed_date" type="xforms:string" name="string"/>
@@ -132,7 +136,9 @@
                     <xxforms:variable name="binding" as="node()?">
                         <xxforms:sequence select="." xxbl:scope="outer"/>
                     </xxforms:variable>
-                    <xxforms:variable name="reg" as="node()?" select="$binding/@reg"/>
+                    <xxforms:variable name="isodate" as="node()?" select="$binding/@isodate"/>
+                    <xxforms:variable name="startdate" as="node()?" select="$binding/@startdate"/>
+                    <xxforms:variable name="enddate" as="node()?" select="$binding/@enddate"/>
                     <xxforms:variable name="notbefore" as="node()?" select="$binding/@notbefore"/>
                     <xxforms:variable name="notafter" as="node()?" select="$binding/@notafter"/>
                     
@@ -150,13 +156,16 @@
                                 <xforms:dispatch name="date-initialize" targetid="reset_button"/>
                             </xforms:action>
                         </xforms:trigger>
-                        <xforms:group ref=".[normalize-space($reg)]"> 
-                            [<xforms:output value="$reg"/>] 
+                        <xforms:group ref=".[normalize-space($isodate)]"> 
+                            [<xforms:output value="$isodate"/>] 
                         </xforms:group>
-                        <xforms:group ref=".[normalize-space(concat($notbefore,$notafter))]"> 
-                            [<xforms:group ref=".[normalize-space($notbefore)]">not before <xforms:output value="$notbefore"/>; </xforms:group>
-                            <xforms:group ref=".[normalize-space($notafter)]">not after <xforms:output value="$notafter"/></xforms:group>] 
+                        <xforms:group ref=".[normalize-space(concat($notbefore,$notafter,$startdate,$enddate))]"> 
+                            [<xforms:group ref=".[normalize-space($notbefore)]">Not before <xforms:output value="$notbefore"/>; </xforms:group><xforms:group 
+                                ref=".[normalize-space($startdate)]">Start date <xforms:output value="$startdate"/>; </xforms:group>
+                            <xforms:group ref=".[normalize-space($notafter)]">Not after <xforms:output value="$notafter"/></xforms:group><xforms:group 
+                                ref=".[normalize-space($enddate)]">End date <xforms:output value="$enddate"/>; </xforms:group>] 
                         </xforms:group>
+                        <!-- @startdate/@enddate supported up this point. To do: the rest... -->                            
                         
                         <xforms:trigger>
                             <xforms:label>Edit</xforms:label>
@@ -202,13 +211,13 @@
                                         class="comment">This is the machine-readable part of the date entry.<xhtml:br/> 
                                         Enter the day in the first field and year in the last one. Select the month 
                                         from the list in the middle field.</xhtml:span></xhtml:a></xhtml:div>
-                                <dcm:dropdown-month-date ref="reg" xbl:attr="navindex navindex=tabindex">
+                                <dcm:dropdown-month-date ref="isodate" xbl:attr="navindex navindex=tabindex">
                                     <xforms:label class="dcm-date-editor-label">Date: </xforms:label>
                                 </dcm:dropdown-month-date>
                                 <xforms:trigger appearance="minimal">
                                     <xforms:label><xhtml:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xforms:label>
                                     <xforms:action ev:event="DOMActivate">
-                                        <xforms:setvalue ref="reg" value="''"/>
+                                        <xforms:setvalue ref="isodate" value="''"/>
                                     </xforms:action>
                                 </xforms:trigger>
                             </xhtml:div>
@@ -255,7 +264,7 @@
                             <xforms:trigger ref=".[instance('editor-instance')/mode='single']">
                                 <xforms:label>Paste date</xforms:label>
                                 <xforms:action ev:event="DOMActivate">
-                                    <xforms:setvalue ref="instance('editor-instance')/displayed_date" value="instance('editor-instance')/reg"/>
+                                    <xforms:setvalue ref="instance('editor-instance')/displayed_date" value="instance('editor-instance')/isodate"/>
                                 </xforms:action>
                             </xforms:trigger>
                             <xforms:trigger ref=".[instance('editor-instance')/mode='interval']">
@@ -287,25 +296,25 @@
                                     <xforms:setvalue ref="is-valid" value="'false'"/>
                                     <xforms:setvalue ref="error_msg" value="'Invalid date(s) entered'"/>
                                     <xforms:action if="mode='single'">
-                                        <xforms:action if="matches(reg,'^\d{4}-\d{1,2}-\d{1,2}')">
+                                        <xforms:action if="matches(isodate,'^\d{4}-\d{1,2}-\d{1,2}')">
                                             <xforms:setvalue ref="is-valid" value="'true'"/>
                                             <xforms:setvalue ref="notafter" value="''"/>
                                             <xforms:setvalue ref="notbefore" value="''"/>
                                         </xforms:action>
-                                        <xforms:action if="not(matches(reg,'^\d{4}-\d{1,2}-\d{1,2}'))">
-                                            <xforms:action if="matches(reg,'^\d{4}-\d{1,2}-')">
+                                        <xforms:action if="not(matches(isodate,'^\d{4}-\d{1,2}-\d{1,2}'))">
+                                            <xforms:action if="matches(isodate,'^\d{4}-\d{1,2}-')">
                                                 <!-- only year and month entered -->
-                                                <xforms:setvalue ref="notbefore" value="concat(substring(instance('editor-instance')/reg,1,8),'01')"/>
-                                                <xforms:setvalue ref="notafter" value="concat(substring(instance('editor-instance')/reg,1,8),instance('editor-instance')/month_days/month[number(substring(instance('editor-instance')/reg,6,2))])"/>
-                                                <xforms:setvalue ref="reg" value="''"/>
+                                                <xforms:setvalue ref="notbefore" value="concat(substring(instance('editor-instance')/isodate,1,8),'01')"/>
+                                                <xforms:setvalue ref="notafter" value="concat(substring(instance('editor-instance')/isodate,1,8),instance('editor-instance')/month_days/month[number(substring(instance('editor-instance')/isodate,6,2))])"/>
+                                                <xforms:setvalue ref="isodate" value="''"/>
                                                 <xforms:setvalue ref="is-valid" value="'true'"/>                                                                    
                                             </xforms:action>
-                                            <xforms:action if="not(matches(reg,'^\d{4}-\d{1,2}-'))">
-                                                <xforms:action if="matches(reg,'^\d{4}-')">
+                                            <xforms:action if="not(matches(isodate,'^\d{4}-\d{1,2}-'))">
+                                                <xforms:action if="matches(isodate,'^\d{4}-')">
                                                     <!-- only year entered -->
-                                                    <xforms:setvalue ref="notbefore" value="concat(substring(instance('editor-instance')/reg,1,4),'-01-01')"/>
-                                                    <xforms:setvalue ref="notafter" value="concat(substring(instance('editor-instance')/reg,1,4),'-12-31')"/>
-                                                    <xforms:setvalue ref="reg" value="''"/>
+                                                    <xforms:setvalue ref="notbefore" value="concat(substring(instance('editor-instance')/isodate,1,4),'-01-01')"/>
+                                                    <xforms:setvalue ref="notafter" value="concat(substring(instance('editor-instance')/isodate,1,4),'-12-31')"/>
+                                                    <xforms:setvalue ref="isodate" value="''"/>
                                                     <xforms:setvalue ref="is-valid" value="'true'"/>                                                                    
                                                 </xforms:action>
                                             </xforms:action>
@@ -351,7 +360,7 @@
                                             </xforms:action>
                                         </xforms:action>
                                         <xforms:action if="is-valid='true'">
-                                            <xforms:setvalue ref="reg" value="''"/>
+                                            <xforms:setvalue ref="isodate" value="''"/>
                                         </xforms:action>
                                     </xforms:action>
                                     <xforms:action if="not(is-valid='true')">
@@ -359,8 +368,8 @@
                                     </xforms:action>
                                     <xforms:action if="is-valid='true'">
                                         <!-- create the attributes needed if they don't exist -->
-                                        <xforms:action if="count($binding/@reg)!=1">
-                                            <xforms:insert context="$binding" origin="instance('editor-instance')/attributes/@reg"/>
+                                        <xforms:action if="count($binding/@isodate)!=1">
+                                            <xforms:insert context="$binding" origin="instance('editor-instance')/attributes/@isodate"/>
                                         </xforms:action>
                                         <xforms:action if="count($binding/@notbefore)!=1">
                                             <xforms:insert context="$binding" origin="instance('editor-instance')/attributes/@notbefore"/>
@@ -370,7 +379,7 @@
                                         </xforms:action>
                                         <!-- copy values to external node -->
                                         <xforms:setvalue ref="$binding" value="instance('editor-instance')/displayed_date"/>
-                                        <xforms:setvalue ref="$binding/@reg" value="instance('editor-instance')/reg"/>
+                                        <xforms:setvalue ref="$binding/@isodate" value="instance('editor-instance')/isodate"/>
                                         <xforms:setvalue ref="$binding/@notbefore" value="instance('editor-instance')/notbefore"/>
                                         <xforms:setvalue ref="$binding/@notafter" value="instance('editor-instance')/notafter"/>
                                         <!-- reset internal values -->
@@ -385,7 +394,7 @@
                                 <xforms:label>Reset</xforms:label>
                                 <xforms:action ev:event="DOMActivate date-initialize">
                                     <xforms:setvalue ref="displayed_date" value="$binding/string()"/>
-                                    <xforms:setvalue ref="reg" value="$reg"/>
+                                    <xforms:setvalue ref="isodate" value="$isodate"/>
                                     <xforms:setvalue ref="notbefore" value="$notbefore"/>
                                     <xforms:setvalue ref="notafter" value="$notafter"/>
                                     <xforms:setvalue ref="mode" value="'single'"/>
