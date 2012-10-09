@@ -365,17 +365,22 @@
             </history>
             <key pname="" accid="" mode=""/>
             <tempo/>
-            <meter meter.count="" meter.unit="" meter.sym=""/>
+            <meter count="" unit="" sym=""/>
             <perfMedium analog="marc:048" authority="marcmusperf" xml:id="">
-              <ensemble xml:id="">
-                <instrVoice reg="" xml:id=""/>
-                <performer xml:id="">
-                  <instrVoice reg="" count="1" solo="false" xml:id=""/>
-                </performer>
-              </ensemble>
-              <performer xml:id="">
-                <instrVoice reg="" count="1" solo="false" xml:id=""/>
-              </performer>
+              <castList>
+                <castItem xml:id="">
+                  <instrVoice count="" solo="" xml:id="" code=""/> 
+                  <role xml:lang="en" xml:id=""/>
+                  <roleDesc xml:lang="en" xml:id=""/>
+                </castItem>
+              </castList>
+              <instrumentation>
+                <instrVoiceGrp xml:id="" n="">
+                  <head/>
+                  <instrVoice code="" count="1" solo="false" xml:id=""/>
+                </instrVoiceGrp>
+                <instrVoice code="" count="1" solo="false" xml:id=""/>
+              </instrumentation>
             </perfMedium>
             <classification>
               <termList>
@@ -383,16 +388,6 @@
               </termList>
             </classification>
             
-            <castList>
-              <castItem xml:id="">
-                <role xml:id="">
-                  <ref target="">
-                    <name xml:lang="en" xml:id=""/>  
-                  </ref>
-                </role>
-                <roleDesc xml:lang="en" xml:id=""/>
-              </castItem>
-            </castList>
             <incip xml:id="">     
               <incipText xml:id=""> 
                 <p xml:lang="en"/>
@@ -414,7 +409,7 @@
                 </titleStmt>
                 <key pname="" accid="" mode=""/>
                 <tempo/>
-                <meter meter.count="" meter.unit="" meter.sym=""/>
+                <meter count="" unit="" sym=""/>
                 <perfMedium analog="marc:048" authority="marcmusperf"/>
                 <incip xml:id="">     
                   <incipText xml:id=""> 

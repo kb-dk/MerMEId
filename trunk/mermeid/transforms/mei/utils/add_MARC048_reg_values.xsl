@@ -17,19 +17,21 @@
     <xsl:template match="m:instrVoice">
         <instrVoice>
             <xsl:apply-templates select="@*"/>
-            <xsl:if test="@reg='' or not(@reg)">
-                <xsl:variable name="reg">
-                    <xsl:call-template name="findReg">
+            <xsl:if test="@code='' or not(@code)">
+                <xsl:variable name="code">
+                    <xsl:call-template name="findCode">
                         <xsl:with-param name="input"><xsl:value-of select="."/></xsl:with-param>
                     </xsl:call-template>
                 </xsl:variable>
-                <xsl:attribute name="reg"><xsl:value-of select="$reg"/></xsl:attribute>
+                <xsl:if test="$code!=''">
+                    <xsl:attribute name="code"><xsl:value-of select="$code"/></xsl:attribute>
+                </xsl:if>
             </xsl:if>
             <xsl:value-of select="."/>
         </instrVoice>
     </xsl:template>
         
-    <xsl:template name="findReg">
+    <xsl:template name="findCode">
         <xsl:param name="input"/>
         <xsl:if test="contains($input,'cor.')">ba</xsl:if>
         <xsl:if test="contains($input,'tr.') or contains($input,'trp.') or contains($input,'trumpet')">bb</xsl:if>

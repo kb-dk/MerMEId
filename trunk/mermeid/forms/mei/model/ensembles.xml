@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Based on MARC:048 ensembles as defined at http://www.loc.gov/marc/bibliographic/bd048.html -->
 <ensembles>
-    <perfMedium analog="http://www.loc.gov/marc/bibliographic/bd048.html" 
+    <instrumentation analog="http://www.loc.gov/marc/bibliographic/bd048.html" 
         xmlns="http://www.music-encoding.org/ns/mei">
-        <ensemble><instrVoice reg=""/></ensemble>
+        <instrVoiceGrp code=""><head/></instrVoiceGrp>
         <!-- Larger ensembles -->
-        <ensemble><instrVoice reg="oa">Full orchestra</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="ob">Chamber orchestra</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="oc">String orchestra</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="od">Band</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="oe">Dance orchestra</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="of">Brass band</instrVoice></ensemble>  
-        <ensemble><instrVoice reg="on">Unspecified</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="ou">Unknown</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="oy">Ethnic</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="oz">Other</instrVoice></ensemble>
+        <instrVoiceGrp code="oa"><head>Full orchestra</head></instrVoiceGrp> 
+        <instrVoiceGrp code="ob"><head>Chamber orchestra</head></instrVoiceGrp> 
+        <instrVoiceGrp code="oc"><head>String orchestra</head></instrVoiceGrp> 
+        <instrVoiceGrp code="od"><head>Band</head></instrVoiceGrp> 
+        <instrVoiceGrp code="oe"><head>Dance orchestra</head></instrVoiceGrp> 
+        <instrVoiceGrp code="of"><head>Brass band</head></instrVoiceGrp>  
+        <instrVoiceGrp code="on"><head>Unspecified</head></instrVoiceGrp> 
+        <instrVoiceGrp code="ou"><head>Unknown</head></instrVoiceGrp> 
+        <instrVoiceGrp code="oy"><head>Ethnic</head></instrVoiceGrp> 
+        <instrVoiceGrp code="oz"><head>Other</head></instrVoiceGrp>
         <!-- Choirs -->
-        <ensemble><instrVoice reg="ca">Mixed choir</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="cb">Women's choir</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="cc">Men's choir</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="cd">Children's choir</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="cn">Unspecified choir</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="cu">Unknown choir</instrVoice></ensemble> 
-        <ensemble><instrVoice reg="cy">Ethnic choir</instrVoice></ensemble>        
-    </perfMedium>
+        <instrVoiceGrp code="ca"><head>Mixed choir</head></instrVoiceGrp> 
+        <instrVoiceGrp code="cb"><head>Women's choir</head></instrVoiceGrp> 
+        <instrVoiceGrp code="cc"><head>Men's choir</head></instrVoiceGrp> 
+        <instrVoiceGrp code="cd"><head>Children's choir</head></instrVoiceGrp> 
+        <instrVoiceGrp code="cn"><head>Unspecified choir</head></instrVoiceGrp> 
+        <instrVoiceGrp code="cu"><head>Unknown choir</head></instrVoiceGrp> 
+        <instrVoiceGrp code="cy"><head>Ethnic choir</head></instrVoiceGrp>        
+    </instrumentation>
 </ensembles>

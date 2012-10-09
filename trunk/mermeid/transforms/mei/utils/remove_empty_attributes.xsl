@@ -14,7 +14,8 @@
         </xsl:copy>
     </xsl:template>
     
-    <xsl:template match="identifier/@type|@unit|@target|@targettype|@pname|@accid|@mode|@meter.count|@meter.unit|@meter.sym|@notbefore|@notafter|@reg|@n">
+    <xsl:template match="identifier/@type|@unit|@target|@targettype|@pname|@accid|@mode|@meter.count|@meter.unit|@meter.sym
+        |@isodate|@startdate|@enddate|@notbefore|@notafter|@reg|@n">
         <xsl:if test="normalize-space(.)!=''">
             <xsl:variable name="attrName"><xsl:value-of select="name()"/></xsl:variable>
             <xsl:attribute name="{$attrName}"><xsl:value-of select="."/></xsl:attribute>

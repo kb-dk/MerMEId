@@ -232,6 +232,7 @@
             <appInfo>
                 <application version="0.1">
                     <name>MerMEId</name>
+                    <ptr target="http://www.kb.dk/en/kb/nb/mta/dcm/projekter/mermeid.html" label="MerMEId project home page"/>
                 </application>
             </appInfo>
             <xsl:apply-templates select="@*|*"/>
@@ -386,19 +387,19 @@
                     <xsl:when test="$notbefore!='' and $notbefore=$notafter">
                         <xsl:choose>
                             <xsl:when test="$notbefore castable as xs:date">
-                                <xsl:attribute name="reg"><xsl:value-of select="$notbefore"/></xsl:attribute>
+                                <xsl:attribute name="isodate"><xsl:value-of select="$notbefore"/></xsl:attribute>
                                 <xsl:attribute name="notbefore" select="''"/>
                                 <xsl:attribute name="notafter" select="''"/>
                             </xsl:when>
                             <xsl:when test="$notbefore castable as xs:integer and string-length($notbefore)=4">
                                 <xsl:attribute name="notbefore" select="xs:date(concat($notbefore,'-01-01'))"/>
                                 <xsl:attribute name="notafter" select="xs:date(concat($notafter,'-12-31'))"/>
-                                <xsl:attribute name="reg" select="''"/>
+                                <xsl:attribute name="isodate" select="''"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:attribute name="notbefore" select="''"/>
                                 <xsl:attribute name="notafter" select="''"/>
-                                <xsl:attribute name="reg" select="''"/>
+                                <xsl:attribute name="isodate" select="''"/>
                             </xsl:otherwise>
                         </xsl:choose>
                         <xsl:value-of select="$notbefore"></xsl:value-of>
@@ -426,7 +427,7 @@
                                 <xsl:attribute name="notafter" select="''"/>
                             </xsl:otherwise>
                         </xsl:choose>
-                        <xsl:attribute name="reg" select="''"/>
+                        <xsl:attribute name="isodate" select="''"/>
                         <xsl:variable name="date_value">
                             <xsl:value-of select="$notbefore"/>
                             <xsl:if test="$notbefore!='' and $notafter!=''"> - </xsl:if>
@@ -672,9 +673,6 @@
                             <date/>
                         </event>
                     </eventList>
-                    <eventList type="performances">
-                        <xsl:apply-templates select="m:eventlist/m:event"/>
-                    </eventList>
                 </history>
                 <xsl:apply-templates select="m:langusage"/>
                 <notesStmt>
@@ -714,16 +712,7 @@
                             </creation>
                             <p/>
                             <eventList type="performances">
-                                <event>
-                                    <title/>
-                                    <date/>
-                                    <geogName role="venue"/>
-                                    <geogName role="place"/>
-                                    <corpName role="ensemble"/>
-                                    <persName role="conductor"/>
-                                    <persName role="soloist"/>                                    
-                                    <persName role=""/>
-                                </event>
+                                <xsl:apply-templates select="m:eventlist/m:event"/>
                             </eventList>
                         </history>
                         <xsl:choose>
@@ -742,68 +731,59 @@
                             </xsl:when>
                             <xsl:otherwise>
                                 <tempo/>
-                                <meter meter.count="" meter.unit="" meter.sym=""/>
+                                <meter/>
                             </xsl:otherwise>
                         </xsl:choose>                        
                         <perfMedium analog="marc:048">
-                            <!-- list instrumentation at top level if there is no more than one work component OR if instrumentation is indicated on first component only-->
-                            <xsl:choose>
-                                <!-- if only 1 work component: -->
-                                <xsl:when test="$num_subworks=1">
-                                    <!-- show instrumentation if non-empty -->
-                                    <xsl:if	test="count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
-                                        <xsl:apply-templates select="//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp" mode="instruments"/>
-                                    </xsl:if>
-                                </xsl:when>
-                                <!-- if more than one component (i.e. there are sub-works): -->
-                                <xsl:otherwise>
-                                    <!-- show instrumentation if first components' instrumentation is non-empty -->				
-                                    <xsl:if test="count(//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
-                                        <!-- AND it is the only component with instrumentation -->
-                                        <xsl:if	test="count(//m:music/m:body/m:mdiv[m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]])=1">
-                                            <xsl:apply-templates select="//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp" mode="instruments"/>
+                            <castList>
+                                <!-- list cast at top level if there is no more than one work component OR if instrumentation is indicated on first component only-->
+                                <xsl:choose>
+                                    <!-- if only 1 work component: -->
+                                    <!-- show cast if non-empty -->
+                                    <xsl:when test="$num_subworks=1 and
+                                        count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
+                                        <xsl:apply-templates select="//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]" mode="castList"/>
+                                    </xsl:when>
+                                    <!-- if more than one component (i.e. there are sub-works): -->
+                                    <xsl:otherwise>
+                                        <!-- show cast list if first components' cast list is non-empty -->
+                                        <!-- AND it is the only component having a cast list -->
+                                        <xsl:if test="count(//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0 
+                                            and count(//m:music/m:body/m:mdiv[m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]])=1">
+                                            <xsl:apply-templates select="//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]" mode="castList"/>
                                         </xsl:if>
-                                    </xsl:if>
-                                </xsl:otherwise>
-                            </xsl:choose>		
+                                    </xsl:otherwise>
+                                </xsl:choose>		
+                            </castList>
+                            
+                            <instrumentation>
+                                <!-- list instrumentation at top level if there is no more than one work component OR if instrumentation is indicated on first component only-->
+                                <xsl:choose>
+                                    <!-- if only 1 work component: -->
+                                    <xsl:when test="$num_subworks=1">
+                                        <!-- show instrumentation if non-empty -->
+                                        <xsl:if	test="count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
+                                            <xsl:apply-templates select="//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp" mode="instruments"/>
+                                        </xsl:if>
+                                    </xsl:when>
+                                    <!-- if more than one component (i.e. there are sub-works): -->
+                                    <xsl:otherwise>
+                                        <!-- show instrumentation if first components' instrumentation is non-empty -->				
+                                        <xsl:if test="count(//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
+                                            <!-- AND it is the only component with instrumentation -->
+                                            <xsl:if	test="count(//m:music/m:body/m:mdiv[m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]])=1">
+                                                <xsl:apply-templates select="//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp" mode="instruments"/>
+                                            </xsl:if>
+                                        </xsl:if>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </instrumentation>
                         </perfMedium>
                         <classification>
                             <termList>
                                 <term/>
                             </termList>
                         </classification>
-                        <castList>
-                            <!-- list cast at top level if there is no more than one work component OR if instrumentation is indicated on first component only-->
-                            <xsl:choose>
-                                <!-- if only 1 work component: -->
-                                <!-- show cast if non-empty -->
-                                <xsl:when test="$num_subworks=1 and
-                                    count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
-                                    <xsl:apply-templates select="//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]" mode="castList"/>
-                                </xsl:when>
-                                <!-- if more than one component (i.e. there are sub-works): -->
-                                <xsl:otherwise>
-                                    <xsl:choose>
-                                        <!-- show cast list if first components' cast list is non-empty -->
-                                        <!-- AND it is the only component having a cast list -->
-                                        <xsl:when test="count(//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0 
-                                            and count(//m:music/m:body/m:mdiv[m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]])=1">
-                                            <xsl:apply-templates select="//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]" mode="castList"/>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <!--<castItem>
-                                                <role>
-                                                    <ref target="">
-                                                        <name xml:lang="en"/>  
-                                                    </ref>
-                                                </role>
-                                                <roleDesc xml:lang="en"/>
-                                            </castItem>-->
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:otherwise>
-                            </xsl:choose>		
-                        </castList>
                         <incip>     
                             <incipText>
                                 <xsl:choose>
@@ -909,15 +889,15 @@
     
     <xsl:template match="m:app/m:rdg[@type='metadata']" mode="TempoMeter">
         <tempo><xsl:value-of select="m:tempo"/></tempo>
-        <meter meter.count="" meter.unit="" meter.sym="">
+        <meter>
             <xsl:if test="m:scoredef/@meter.count!=''">
-                <xsl:attribute name="meter.count"><xsl:value-of select="m:scoredef/@meter.count"/></xsl:attribute>
+                <xsl:attribute name="count"><xsl:value-of select="m:scoredef/@meter.count"/></xsl:attribute>
             </xsl:if>
             <xsl:if test="m:scoredef/@meter.unit!=''">
-                <xsl:attribute name="meter.unit"><xsl:value-of select="m:scoredef/@meter.unit"/></xsl:attribute>
+                <xsl:attribute name="unit"><xsl:value-of select="m:scoredef/@meter.unit"/></xsl:attribute>
             </xsl:if>
             <xsl:if test="m:scoredef/@meter.sym!=''">
-                <xsl:attribute name="meter.sym"><xsl:value-of select="m:scoredef/@meter.sym"/></xsl:attribute>
+                <xsl:attribute name="sym"><xsl:value-of select="m:scoredef/@meter.sym"/></xsl:attribute>
             </xsl:if>
         </meter>
     </xsl:template>
@@ -939,36 +919,30 @@
     <xsl:template match="m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp" mode="instruments">
         <xsl:choose>
             <xsl:when test="count(m:staffgrp[contains(@label.full,'Basic')]/m:staffdef[normalize-space(concat(@label.abbr,' ',@label.full))!=''])&gt;2">
-                <!-- if more than two basic instruments, make them an ensemble -->
-                <ensemble>
-                    <instrVoice reg="on"/>
-                    <xsl:apply-templates select="m:staffgrp[contains(@label.full,'Basic')]/m:staffdef[normalize-space(concat(@label.abbr,' ',@label.full))!='']" mode="performer"/>
-                </ensemble>
+                <!-- if more than two basic instruments, make them a group -->
+                <instrVoiceGrp n="on">
+                    <head/>
+                    <xsl:apply-templates select="m:staffgrp[contains(@label.full,'Basic')]/m:staffdef[normalize-space(concat(@label.abbr,' ',@label.full))!='']" mode="instrVoice"/>
+                </instrVoiceGrp>
             </xsl:when>
             <xsl:otherwise>
                 <!-- else just list performer(s) -->
-                <xsl:apply-templates select="m:staffgrp[contains(@label.full,'Basic')]/m:staffdef[normalize-space(concat(@label.abbr,' ',@label.full))!='']" mode="performer"/>
+                <xsl:apply-templates select="m:staffgrp[contains(@label.full,'Basic')]/m:staffdef[normalize-space(concat(@label.abbr,' ',@label.full))!='']" mode="instrVoice"/>
             </xsl:otherwise>
         </xsl:choose>
         <xsl:apply-templates select="m:staffgrp[contains(@label.full,'Choir')]/m:staffdef[normalize-space(concat(@label.abbr,' ',@label.full))!='']" mode="choirs"/>
-        <xsl:apply-templates select="m:staffgrp[contains(@label.full,'Soloists')]/m:staffdef[normalize-space(concat(@label.abbr,' ',@label.full))!='']" mode="performer"/>
+        <xsl:apply-templates select="m:staffgrp[contains(@label.full,'Soloists')]/m:staffdef[normalize-space(concat(@label.abbr,' ',@label.full))!='']" mode="instrVoice"/>
     </xsl:template>    
     
-    <xsl:template match="m:staffdef" mode="performer">
-        <performer>
-            <xsl:apply-templates select="." mode="instrVoice"/>
-        </performer>
-    </xsl:template>
-
     <xsl:template match="m:staffdef" mode="choirs">
-        <ensemble>
-            <instrVoice reg="cn">Choir</instrVoice> 
-            <xsl:apply-templates select="." mode="performer"/>
-        </ensemble>
+        <instrVoiceGrp n="cn">
+            <head>Choir</head>
+            <xsl:apply-templates select="." mode="instrVoice"/>
+        </instrVoiceGrp>
     </xsl:template>
     
     <xsl:template match="m:staffdef" mode="instrVoice">
-            <instrVoice reg="">
+            <instrVoice>
                 <xsl:choose>
                     <xsl:when test="contains(parent::node()/@label.full,'Soloists')">
                         <xsl:attribute name="solo">true</xsl:attribute>
@@ -978,7 +952,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
                 <xsl:if test="contains(parent::node()/@label.full,'Choir')">
-                    <xsl:attribute name="reg">cn</xsl:attribute>
+                    <xsl:attribute name="code">cn</xsl:attribute>
                 </xsl:if>
                 <xsl:variable name="instrString" select="normalize-space(concat(@label.abbr,' ',@label.full))"/>
                 <xsl:variable name="instrCount">
@@ -1025,10 +999,9 @@
     
     <xsl:template match="m:staffdef" mode="castList">
         <castItem>
+            <instrVoice/>
             <role>
-                <ref>
-                    <name xml:lang="en"><xsl:value-of select="normalize-space(concat(@label.abbr,' ',@label.full))"/></name>  
-                </ref>
+                <name xml:lang="en"><xsl:value-of select="normalize-space(concat(@label.abbr,' ',@label.full))"/></name>  
             </role>
             <roleDesc xml:lang="en"/>
         </castItem>        
@@ -1070,40 +1043,42 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <tempo/>
-                    <meter meter.count="" meter.unit="" meter.sym=""/>
+                    <meter/>
                 </xsl:otherwise>
             </xsl:choose>                        
             <perfMedium analog="marc:048">
-                <!-- show instrumentation at sub-work level if: 1) more than one sub-work -->
-                <xsl:if test="$num_subworks&gt;1">
-                    <!-- AND 2) if indicated in any other than the first -->				
-                    <xsl:if test="count(//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]) 
-                        != count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])">
+                <castList>
+                    <xsl:choose>                
+                        <!-- show castItems at sub-work level if: 1) more than one sub-work -->
+                        <!-- AND 2) if indicated in any other than the first -->
                         <!-- AND 3) this component's instrumentation is indicated -->
-                        <xsl:if	test="count(m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
-                            <xsl:apply-templates select="m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp" mode="instruments"/>
+                        <xsl:when test="$num_subworks&gt;1 and 
+                            count(//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]) 
+                            != count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]) and 
+                            count(m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
+                            <xsl:apply-templates select="m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[@label.full='Characters']/m:staffdef" mode="castList"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <castItem>
+                                <role/>              
+                            </castItem>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </castList>                        
+                <instrumentation>
+                    <!-- show instrumentation at sub-work level if: 1) more than one sub-work -->
+                    <xsl:if test="$num_subworks&gt;1">
+                        <!-- AND 2) if indicated in any other than the first -->				
+                        <xsl:if test="count(//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]) 
+                            != count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])">
+                            <!-- AND 3) this component's instrumentation is indicated -->
+                            <xsl:if	test="count(m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
+                                <xsl:apply-templates select="m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp" mode="instruments"/>
+                            </xsl:if>
                         </xsl:if>
-                    </xsl:if>
-                </xsl:if>		
+                    </xsl:if>	
+                </instrumentation>
             </perfMedium>                          
-            <castList>
-                <xsl:choose>                
-                    <!-- show castItems at sub-work level if: 1) more than one sub-work -->
-                    <!-- AND 2) if indicated in any other than the first -->
-                    <!-- AND 3) this component's instrumentation is indicated -->
-                    <xsl:when test="$num_subworks&gt;1 and 
-                        count(//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]) 
-                        != count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]) and 
-                        count(m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
-                        <xsl:apply-templates select="m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[@label.full='Characters']/m:staffdef" mode="castList"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <castItem>
-                            <role/>              
-                        </castItem>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </castList>                        
             <incip>     
                 <incipText>
                     <xsl:choose>
@@ -1241,7 +1216,7 @@
     
     <xsl:template match="m:date">
         <xsl:apply-templates select="." mode="regularize">
-            <xsl:with-param name="reg">isodate</xsl:with-param>
+            <xsl:with-param name="isodate">isodate</xsl:with-param>
             <xsl:with-param name="notbefore">notbefore</xsl:with-param>
             <xsl:with-param name="notafter">notafter</xsl:with-param>
             <xsl:with-param name="namespace">http://www.music-encoding.org/ns/mei</xsl:with-param>
@@ -1250,7 +1225,7 @@
 
     <xsl:template match="t:date">
         <xsl:apply-templates select="." mode="regularize">
-            <xsl:with-param name="reg">when-iso</xsl:with-param>
+            <xsl:with-param name="isodate">when-iso</xsl:with-param>
             <xsl:with-param name="notbefore">notBefore-iso</xsl:with-param>
             <xsl:with-param name="notafter">notAfter-iso</xsl:with-param>
             <xsl:with-param name="namespace">http://www.tei-c.org/ns/1.0</xsl:with-param>
@@ -1258,16 +1233,16 @@
     </xsl:template>
     
     <xsl:template match="m:date|t:date" mode="regularize">
-        <xsl:param name="reg"/>
+        <xsl:param name="isodate"/>
         <xsl:param name="notbefore"/>
         <xsl:param name="notafter"/>
         <xsl:param name="namespace"/>
         <xsl:element name="date" namespace="{$namespace}">
             <xsl:variable name="datestring" select="."/>
-            <!-- try to fill in @reg or @notbefore/@notafter -->
+            <!-- try to fill in @isodate or @notbefore/@notafter -->
             <xsl:choose>
                 <xsl:when test="$datestring castable as xs:date">
-                    <xsl:attribute name="{$reg}"><xsl:value-of select="."/></xsl:attribute>
+                    <xsl:attribute name="{$isodate}"><xsl:value-of select="."/></xsl:attribute>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:variable name="datepieces" select="tokenize(normalize-space($datestring),'-')"/>
@@ -1283,7 +1258,7 @@
                                             <xsl:choose>
                                                 <xsl:when test="$datepieces[3]='??'">
                                                     <!-- YYYY-MM-??: one month -->
-                                                    <xsl:attribute name="{$reg}" select="concat($datepieces[1],'-',$datepieces[2])"/>
+                                                    <xsl:attribute name="{$isodate}" select="concat($datepieces[1],'-',$datepieces[2])"/>
                                                     <!--
                                                     <xsl:attribute name="{$notbefore}" select="xs:date(concat($datepieces[1],'-',$datepieces[2],'-01'))"/>
                                                     <xsl:attribute name="{$notafter}" select="xs:date(concat($datepieces[1],'-',$datepieces[2],'-',$days_in_month[xs:integer($datepieces[2])]))"/>
@@ -1294,7 +1269,7 @@
                                         <xsl:otherwise>
                                             <xsl:if test="$datepieces[2]='??'">
                                                 <!-- YYYY-??-??: one year -->
-                                                <xsl:attribute name="{$reg}" select="$datepieces[1]"/>
+                                                <xsl:attribute name="{$isodate}" select="$datepieces[1]"/>
                                                 <!-- 
                                                 <xsl:attribute name="{$notbefore}" select="xs:date(concat($datepieces[1],'-01-01'))"/>
                                                 <xsl:attribute name="{$notafter}" select="xs:date(concat($datepieces[1],'-12-31'))"/>
@@ -1332,7 +1307,7 @@
                                     <xsl:choose>
                                         <xsl:when test="number($datepieces[1]) and string-length(normalize-space($datepieces[1]))=4">
                                             <!-- YYYY: use one year -->
-                                            <xsl:attribute name="{$reg}" select="normalize-space($datepieces[1])"/>
+                                            <xsl:attribute name="{$isodate}" select="normalize-space($datepieces[1])"/>
                                             <!--
                                             <xsl:attribute name="{$notbefore}" select="xs:date(concat(normalize-space($datepieces[1]),'-01-01'))"/>
                                             <xsl:attribute name="{$notafter}" select="xs:date(concat(normalize-space($datepieces[1]),'-12-31'))"/>
