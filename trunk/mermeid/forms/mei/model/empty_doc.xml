@@ -370,12 +370,14 @@
               <castList>
                 <castItem xml:id="">
                   <instrVoice count="" solo="" xml:id="" code=""/> 
-                  <role xml:lang="en" xml:id=""/>
+                  <role xml:id="">
+                    <name  xml:lang="en"/>
+                  </role>
                   <roleDesc xml:lang="en" xml:id=""/>
                 </castItem>
               </castList>
               <instrumentation>
-                <instrVoiceGrp xml:id="" n="">
+                <instrVoiceGrp xml:id="" code="">
                   <head/>
                   <instrVoice code="" count="1" solo="false" xml:id=""/>
                 </instrVoiceGrp>
@@ -410,7 +412,9 @@
                 <key pname="" accid="" mode=""/>
                 <tempo/>
                 <meter count="" unit="" sym=""/>
-                <perfMedium analog="marc:048" authority="marcmusperf"/>
+                <perfMedium analog="marc:048" authority="marcmusperf">
+                  <instrumentation/>
+                </perfMedium>
                 <incip xml:id="">     
                   <incipText xml:id=""> 
                     <p xml:lang="en"/>

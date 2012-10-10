@@ -5,7 +5,7 @@
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:xi="http://www.w3.org/2001/XInclude">
     <h:span class="fixed_width_mediumlong">
-        <xf:input ref="m:instrVoice/@count" class="minimal_length">
+        <xf:input ref="@count" class="minimal_length">
             <!--<xf:label class="fixed_width">No. &amp; name <h:a class="help">?<h:span 
                 class="comment">Enter the number of players in the 
                 first input field, and the instrument's name, as it is to be 
@@ -13,25 +13,25 @@
                 If no name is entered, a suggested name is inserted when 
                 choosing a standard instrument code in the last field.
                 </h:span></h:a></xf:label>-->
-        </xf:input><xf:input ref="m:instrVoice" class="mediumshort">
+        </xf:input><xf:input ref="." class="mediumshort">
         </xf:input>
     </h:span>
-    <xf:select1 ref="m:instrVoice/@reg" class="long">
+    <xf:select1 ref="@code" class="long">
         <xf:label><!--Standard code <h:a class="help">?<h:span 
             class="comment">Choosing a standard MARC code optimizes data  
             compatibility and interchangeability with other systems.<h:br/>
             Also, it may be used to automatically insert the 
             instrument's name in the "name" field if no name has been entered yet.
             </h:span></h:a>--></xf:label>
-        <xf:itemset nodeset="instance('instruments')//m:performer">
-            <xf:label><xf:output value="if (m:instrVoice/@reg!='') then concat(m:instrVoice/@reg, ' (',m:instrVoice/@label,')') else '- Please select -'"/></xf:label>
-            <xf:value ref="m:instrVoice/@reg"/>
+        <xf:itemset nodeset="instance('instruments')/m:instrVoice">
+            <xf:label><xf:output value="if (@code!='') then concat(@code, ' (',@label,')') else '- Please select -'"/></xf:label>
+            <xf:value ref="@code"/>
         </xf:itemset>
         <xf:action ev:event="xforms-value-changed">
             <!-- insert instrument name (display name) if empty -->
             <xxf:variable name="instrument" select="."></xxf:variable>
             <xf:action if="..=''">
-                <xf:setvalue ref=".." value="instance('instruments')//m:performer/m:instrVoice[@reg=$instrument]"/>
+                <xf:setvalue ref=".." value="instance('instruments')/m:instrVoice[@code=$instrument]"/>
             </xf:action>
         </xf:action>
     </xf:select1>

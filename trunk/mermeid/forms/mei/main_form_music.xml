@@ -29,7 +29,7 @@
 							origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]"/>
 						<dcm:attribute-editor ref="."/>
 					</h:legend>
-										
+					
 					<xxf:variable name="num_ex" as="string" select="count(../m:expression)"/>
 					<xxf:variable name="binding" select="."/>
 					
@@ -331,365 +331,413 @@
 						</h:span></h:a>
 							<dcm:attribute-editor ref="m:perfMedium"/>
 						</h:legend>
-
-						<!-- dialog for adding ensembles -->
-						<xxf:dialog id="ensemble-menu" appearance="full" level="modal"
-							close="true" draggable="true" visible="false">
-							<xf:label>Ensembles</xf:label>
-							<xf:repeat nodeset="instance('instrumentation')/m:ensemble[m:instrVoice/@reg]" id="ensemble-menu-repeat">
-								<xf:trigger submission="replace-form-with" appearance="minimal">
-									<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/>
-										<xf:output ref="if (m:instrVoice!='') then m:instrVoice else '[empty ensemble]'"/>
-									</xf:label>
-									<xf:action ev:event="DOMActivate">
-										<xf:insert context="$binding/m:perfMedium" 
-											nodeset="m:ensemble"
-											at="index('repeat-ensemble')"
-											position="after" 
-											origin="instance('instrumentation')/m:ensemble[m:instrVoice/@reg][index('ensemble-menu-repeat')]"/>
-										<!-- generate IDs for added performers -->
-										<xf:dispatch name="id-update" target="form-group"/>
-										<xxf:hide dialog="ensemble-menu"/>
-									</xf:action>
-								</xf:trigger>
-								<h:br/>
-							</xf:repeat>
-						</xxf:dialog>			
+						
+						<dcm:create  
+							nodeset="m:perfMedium"
+							label="Add instrumentation and cast"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium"/>
 						
 						<xf:group ref="m:perfMedium">
-							<h:div class="blocklabel strong">Ensembles </h:div>
-							<xf:trigger ref=".[count($binding/m:perfMedium/m:ensemble)=0]" class="create_button">
-								<xf:label><img src="http:/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
-								<xf:action ev:event="DOMActivate">
-									<xxf:show dialog="ensemble-menu"/>
-								</xf:action>
-							</xf:trigger>
-							<xf:repeat nodeset="m:ensemble" id="repeat-ensemble">
-								<h:fieldset>
-									<h:legend>
-										<xf:output value="if (m:instrVoice!='') then m:instrVoice else '[Ensemble]'"/> &#160;
-										<dcm:element-buttons-typed 
-											triggers="up down" 
-											nodeset="m:ensemble" 
-											origin="instance('instrumentation')/m:ensemble[m:instrVoice/@reg][index('ensemble-menu-repeat')]"
-											index="repeat-ensemble"/><xf:trigger 
-												appearance="minimal" class="non-standard_button">
-												<xf:label><img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
-												<xf:action ev:event="DOMActivate">
-													<xxf:show dialog="ensemble-menu"/>
-												</xf:action>
-											</xf:trigger>
-										<xf:trigger appearance="minimal">
-											<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-											<xf:action ev:event="DOMActivate">
-												<xf:delete nodeset="." at="index('repeat-ensemble')"/>
-												<!-- remove references to deleted items -->
-												<xf:setvalue ref="$binding/m:castList/m:castItem/m:role/m:ref/@target[not(.=$binding//@xml:id)]" value="''"/>
-											</xf:action>
-										</xf:trigger>
-										<dcm:attribute-editor ref="."/>
-									</h:legend>
-									<h:div class="vertical_spacer"/> 
-									<h:div>
-										<xf:input ref="m:instrVoice" class="long">
-											<xf:label class="fixed_width">Name <h:a class="help">?<h:span 
-												class="comment">Optional. Use if you want 
-												to specify the type of ensemble, e.g. "Orchestra", "String quartet", 
-												"Choir" or even an orchestration string like "2.2.2.2/4.2.3.1/timp/str".<h:br/> 
-												If no ensemble name has been entered in the first field, 
-												a suggested name is automatically inserted when choosing
-												a standard ensemble code in the last field.
-											</h:span></h:a></xf:label>
-										</xf:input>
-										<xf:select1 ref="m:instrVoice/@reg">
-											<xf:label>Standard code <h:a class="help">?<h:span 
-												class="comment">Choosing a standard MARC code optimizes data  
-												compatibility and interchangeability with other systems. <h:br/>
-												A code should be supplied also when you do not want the ensemble 
-												to have a name (label).
-											</h:span></h:a></xf:label>
-											<xf:itemset nodeset="instance('ensembles')//m:ensemble">
-												<xf:label><xf:output value="if (m:instrVoice/@reg!='') then concat(m:instrVoice/@reg, ' (',m:instrVoice,')') else '- Please select -'"/></xf:label>
-												<xf:value ref="m:instrVoice/@reg"/>
-											</xf:itemset>
-											<xf:action ev:event="xforms-value-changed">
-												<xxf:variable name="ensemble" select="."></xxf:variable>
-												<xf:action if="..=''">
-													<!-- set ensemble name if empty -->
-													<xf:setvalue ref=".." value="instance('ensembles')//m:ensemble/m:instrVoice[@reg=$ensemble]"/>
-												</xf:action>
-											</xf:action>
-										</xf:select1>
-										<dcm:attribute-editor ref="m:instrVoice"/>
-									</h:div>
-									<h:div class="vertical_spacer"/>
-
-									<!-- performers within an ensemble -->
-
-									<!-- dialog for adding performers to existing ensembles -->
-									<xxf:dialog id="ensemble-performer-menu" appearance="full" level="modal"
-										close="true" draggable="true" visible="false">
-										<xf:label>Performers</xf:label>
-										<xf:repeat nodeset="instance('instrumentation')/m:ensemble[m:performer]" id="ensemble-performer-menu-repeat">
-											<xf:trigger submission="replace-form-with" appearance="minimal">
-												<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/>
-													<xf:output ref="if (m:instrVoice!='') then m:instrVoice else '[single performer]'"/>
-												</xf:label>
-												<xf:action ev:event="DOMActivate">
-													<xf:insert context="$binding/m:perfMedium/m:ensemble[index('repeat-ensemble')]" 
-														nodeset="m:performer"
-														at="index('repeat-ensemble-performer')"
-														position="after" 
-														origin="instance('instrumentation')/m:ensemble[m:performer][index('ensemble-performer-menu-repeat')]/m:performer"/>
-													<!-- generate IDs for added performers -->
-													<xf:dispatch name="id-update" target="form-group"/>
-													<xxf:hide dialog="ensemble-performer-menu"/>
-												</xf:action>
-											</xf:trigger>
-											<h:br/>
-										</xf:repeat>
-									</xxf:dialog>			
-									
-									<h:div><h:span class="strong">Performers in this ensemble
-										<h:a class="help">?<h:span class="comment">Optional. An ensemble may be specified by name (above), 
-											by a list of performers, or both.</h:span></h:a></h:span>
-									</h:div>
-									<xf:trigger ref=".[count(m:performer)=0]" style="margin-left: 8px;" class="create_button">
-										<xf:label><img src="http:/editor/images/list.png" alt="Add from list"/> Add performer(s)</xf:label>
+							
+							<dcm:create
+								nodeset="m:instrumentation"
+								label="Add instrumentation"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium/m:instrumentation"/>
+							
+							
+							<!-- dialog for adding ensembles -->
+							<xxf:dialog id="ensemble-menu" appearance="full" level="modal"
+								close="true" draggable="true" visible="false">
+								<xf:label>Ensembles</xf:label>
+								<xf:repeat nodeset="instance('instrumentation')/m:instrVoiceGrp[@code]" id="ensemble-menu-repeat">
+									<xf:trigger submission="replace-form-with" appearance="minimal">
+										<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/>
+											<xf:output ref="if (m:head!='') then m:head else '[empty ensemble]'"/>
+										</xf:label>
 										<xf:action ev:event="DOMActivate">
-											<xxf:show dialog="ensemble-performer-menu"/>
+											<xf:insert context="$binding/m:perfMedium/m:instrumentation" 
+												nodeset="m:instrVoiceGrp"
+												at="index('repeat-ensemble')"
+												position="after" 
+												origin="instance('instrumentation')/m:instrVoiceGrp[@code][index('ensemble-menu-repeat')]"/>
+											<!-- generate IDs for added performers -->
+											<xf:dispatch name="id-update" target="form-group"/>
+											<xxf:hide dialog="ensemble-menu"/>
 										</xf:action>
 									</xf:trigger>
-									<xf:group ref=".[count(m:performer)&gt;0]">
-										<h:div class="vertical_spacer"/> 
-										<h:span class="fixed_width_mediumlong">No. &amp; name <h:a class="help">?<h:span 
-											class="comment">Enter the number of players in the 
-											first input field, and the instrument's name, as it is to be 
-											displayed, in the second, e.g. "vl.1" or "violin".
-											If no name is entered, a suggested name is inserted when 
-											choosing a standard instrument code in the last field.
-										</h:span></h:a></h:span>
-										<h:span class="fixed_width_long">Standard code <h:a class="help">?<h:span 
-											class="comment">Choosing a standard MARC code optimizes data  
-											compatibility and interchangeability with other systems.<h:br/>
-											Also, it may be used to automatically insert the 
-											instrument's name in the "name" field if no name has been entered yet.
-										</h:span></h:a></h:span>
-										<h:br/>
-										<xf:repeat nodeset="m:performer" id="repeat-ensemble-performer">
-											<xi:include href="includes/instrvoice-input.xml" parse="xml"/>
-											<dcm:element-buttons
-												triggers="up down add" 
-												nodeset="m:performer" 
-												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:performer[1]"
-												index="repeat-ensemble-performer"/>
-											<xf:trigger appearance="minimal" class="non-standard_button">
-												<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-												<xf:action ev:event="DOMActivate">
-													<xf:delete nodeset="." at="index('repeat-ensemble-performer')"/>
-													<!-- remove references to deleted items -->
-													<xf:setvalue ref="$binding/m:castList/m:castItem/m:role/m:ref/@target[not(.=$binding//@xml:id)]" value="''"/>
-													<xf:dispatch name="xforms-value-changed" target="form-group"/>
-												</xf:action>
-											</xf:trigger>
-											<xf:trigger>
-												<xf:label><img src="http:/editor/images/list.png" alt="Add" title="Add from list"/> Add from list</xf:label>
-												<xf:action ev:event="DOMActivate">
-													<xxf:show dialog="ensemble-performer-menu"/>
-												</xf:action>
-											</xf:trigger>                                            
-											<dcm:attribute-editor ref="."/>
-											<h:br/>
-										</xf:repeat>
-									</xf:group>
-								</h:fieldset>
-							</xf:repeat>
-							
-							<!-- stand-alone performers -->
-							<h:div class="blocklabel strong">Instruments and singers
-								<h:a class="help">?<h:span class="comment">List of performers not to be regarded 
-									as part of an ensemble. Use this section for some chamber music
-									(e.g. piano music, songs with or without piano, music for solo instruments)
-									and for soloists (vocalists and instrumentalists). 
-								</h:span></h:a>
-							</h:div>
-							<xf:trigger ref=".[count(m:performer)=0]" class="create_button">
-								<xf:label><img src="http:/editor/images/add.gif" alt="Add"/> Add performer</xf:label>
-								<xf:action ev:event="DOMActivate">
-									<xf:insert context="." 
-										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:performer[1]"/>
-									<xf:dispatch name="id-update" target="form-group"/>
-								</xf:action>
-							</xf:trigger>
-							<xf:group ref=".[count(m:performer)&gt;0]">
-								<h:div class="vertical_spacer"/> 
-								<h:span class="fixed_width_mediumlong">No. &amp; name <h:a class="help">?<h:span 
-									class="comment">Enter the number of players in the 
-									first input field, and the instrument's name, as it is to be 
-									displayed, in the second, e.g. "vl.1" or "violin".
-									If no name is entered, a suggested name is inserted when 
-									choosing a standard instrument code in the last field.
-								</h:span></h:a></h:span>
-								<h:span class="fixed_width_long">Standard code <h:a class="help">?<h:span 
-									class="comment">Choosing a standard MARC code optimizes data  
-									compatibility and interchangeability with other systems.<h:br/>
-									Also, it may be used to automatically insert the 
-									instrument's name in the "name" field if no name has been entered yet.
-								</h:span></h:a></h:span>
-								<h:span class="fixed_width_short" style="text-align:center;">Solo <h:a class="help">?<h:span 
-									class="comment">Mark performers as soloists only when they are to be 
-									regarded as soloists as opposed to an ensemble.<h:br/> 
-									"Solo" should usually not be used with chamber music or 
-									music for one instrument.</h:span></h:a></h:span>
-								<h:br/>
-								<xf:repeat nodeset="m:performer" id="repeat-performer">
-									<xi:include href="includes/instrvoice-input.xml" parse="xml"/>
-									<h:span class="fixed_width_short"  style="text-align:center;">
-										<xf:input ref="m:instrVoice/@solo"><xf:label> </xf:label></xf:input>
-									</h:span>
-									<dcm:id ref="."/>
-									<dcm:element-buttons
-										triggers="add up down copy" 
-										nodeset="m:performer" 
-										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:performer[1]"
-										index="repeat-performer"/><xf:trigger 
-											appearance="minimal" class="element-button">
-											<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-											<xf:action ev:event="DOMActivate">
-												<xf:delete nodeset="." at="index('repeat-performer')"/>
-												<!-- remove references to deleted items -->
-												<xf:setvalue ref="$binding/m:castList/m:castItem/m:role/m:ref/@target[not(.=$binding//@xml:id)]" value="''"/>
-												<xf:dispatch name="xforms-value-changed" target="form-group"/>
-											</xf:action>
-										</xf:trigger>
-									<dcm:id/>
-									<dcm:attribute-editor/>
 									<h:br/>
 								</xf:repeat>
-							</xf:group>
-						</xf:group>
-						
-						<h:div class="blocklabel strong">Characters
-							<h:a class="help">?<h:span class="comment">A list of characters 
-								appearing in the piece. Names may be entered in more than one language, and each 
-								characters may be linked to a performer listed above.                                        
-							</h:span></h:a>                                        
-							<xf:group ref="m:castList">
-								<dcm:id/>
-								<dcm:attribute-editor/>
-							</xf:group>
-						</h:div>
-						<dcm:create nodeset="m:castList"
-							label="Add character"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList"/>
-						<xf:group ref="m:castList">
-							<xf:trigger ref=".[count(m:castItem)=0]">
-								<xf:label><img src="http:/editor/images/add.gif" alt="Add"/> Add character</xf:label>
-								<xf:action ev:event="DOMActivate">
-									<xf:insert context="." 
-										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]"/>
-									<xf:setvalue ref="m:castItem[last()]/@xml:id"
-										value="concat('castItem_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-									<xf:dispatch name="id-update" target="form-group"/>
-								</xf:action>
-							</xf:trigger>
-							<xf:repeat nodeset="m:castItem" id="repeat-cast">
-								<xf:action ev:event="xforms-value-changed">
-									<xf:dispatch name="add-id" target="form-group"/>
-								</xf:action>
-								<h:fieldset>
-									<h:legend>
-										<xf:output value="if (m:role/m:ref/m:name[1]!='') then m:role/m:ref/m:name[1] else '[Character]'"/>
-										<dcm:id ref="."/>
-										<dcm:element-buttons
-											triggers="add up down" 
-											nodeset="m:castItem" 
-											index="repeat-cast"
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]"/>
-										<dcm:delete-parent-with-last index="repeat-cast"/>
-										<dcm_id/>
-										<dcm:attribute-editor/>
-									</h:legend>
-									<xf:repeat nodeset="m:role/m:ref/m:name" id="repeat-role">
-										<xxf:variable name="pos" select="position()"/>
-										<xf:input ref="."><xf:label class="fixed_width">Name: <h:a class="help">?<h:span
-											class="comment">E.g. "Erik", "A servant" or "Villagers"</h:span></h:a></xf:label></xf:input>
-										<xf:input ref="../../../m:roleDesc[$pos]"><xf:label> Description: <h:a class="help">?<h:span
-											class="comment">An optional description of the role, e.g. 
-											"King of Denmark" or "Rigoletto's daughter"</h:span></h:a></xf:label></xf:input>
-										<dcm:attribute-editor ref="../../../m:roleDesc[$pos]"/>										
-										<xf:select1 ref="@xml:lang" xxf:refresh-items="false">
-											<xf:label/>
-											<xf:itemset nodeset="instance('languages')/language">
-												<xf:label><xf:output value="."/></xf:label>
-												<xf:value ref="@xml:id"></xf:value>
-											</xf:itemset>
-											<xf:action ev:event="xforms-value-changed">
-												<xxf:variable name="lang" select="."/>
-												<xf:setvalue ref="$binding/m:castList/m:castItem[index('repeat-cast')]/m:roleDesc[$pos]/@xml:lang" value="$lang"/>
-											</xf:action>
-										</xf:select1>
-										<!-- edit buttons --> 
-										<h:span class="editmenu" style="margin-left: 8px;">
-											<xf:trigger appearance="minimal" class="element-button">
-												<xf:label><h:img src="http:/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
-												<xf:action ev:event="DOMActivate">
-													<xxf:variable name="idx" select="index('repeat-role')"/>
-													<xf:insert context="parent::node()" nodeset="m:name" at="$idx"
-														origin="m:name[$idx]"/>
-													<xf:insert context="../../.." nodeset="m:roleDesc" at="$idx"
-														origin="m:roleDesc[$idx]"/>
-													<xf:dispatch name="id-update" target="form-group"/>
-												</xf:action>
-											</xf:trigger>
-											<xf:trigger appearance="minimal" class="element-button">
-												<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
-												<xf:action ev:event="DOMActivate">
-													<xxf:variable name="idx" select="index('repeat-role')"/>
-													<xf:insert context="parent::node()" nodeset="m:name" at="$idx"
-														origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]/m:role/m:ref/m:name"/>
-													<xf:insert context="../../.." nodeset="m:roleDesc" at="$idx"
-														origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]/m:roleDesc"/>
-													<xf:dispatch name="id-update" target="form-group"/>
-												</xf:action>
-											</xf:trigger>
-											<xf:trigger appearance="minimal" class="element-button">
+							</xxf:dialog>			
+							
+							<xf:group ref="m:instrumentation">
+								<h:div class="blocklabel strong">Ensembles </h:div>
+								<xf:trigger ref=".[count(m:instrVoiceGrp)=0]" class="create_button">
+									<xf:label><img src="http:/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
+									<xf:action ev:event="DOMActivate">
+										<xxf:show dialog="ensemble-menu"/>
+									</xf:action>
+								</xf:trigger>
+								<xf:repeat nodeset="m:instrVoiceGrp" id="repeat-ensemble">
+									<h:fieldset>
+										<h:legend>
+											<xf:output value="if (m:head!='') then m:head else '[Ensemble]'"/> &#160;
+											<dcm:element-buttons 
+												triggers="up down" 
+												nodeset="m:instrVoiceGrp" 
+												origin="instance('instrumentation')/m:instrVoiceGrp[1]"
+												index="repeat-ensemble"/><xf:trigger 
+													appearance="minimal" class="non-standard_button">
+													<xf:label><img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xxf:show dialog="ensemble-menu"/>
+													</xf:action>
+												</xf:trigger>
+											<xf:trigger appearance="minimal">
 												<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 												<xf:action ev:event="DOMActivate">
-													<xxf:variable name="idx" select="index('repeat-role')"/>
-													<xf:delete nodeset="../m:name" at="$idx"/>
-													<xf:delete nodeset="../../../m:roleDesc" at="$idx"/>
-													<xf:dispatch name="xforms-value-changed" target="form-group"/>
+													<xf:delete nodeset="." at="index('repeat-ensemble')"/>
+													<!-- remove references to deleted items -->
+													<!--<xf:setvalue ref="$binding/m:castList/m:castItem/m:role/m:ref/@target[not(.=$binding//@xml:id)]" value="''"/>-->
 												</xf:action>
 											</xf:trigger>
+											<dcm:attribute-editor ref="."/>
+										</h:legend>
+										<h:div class="vertical_spacer"/> 
+										<h:div>
+											<dcm:create 
+												nodeset="m:head"
+												label="Add ensemble heading"
+												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoiceGrp/m:head"/>
+											<xf:input ref="m:head" class="long">
+												<xf:label class="fixed_width">Heading <h:a class="help">?<h:span 
+													class="comment">An optional heading or name wich may be used with or 
+													instead of a detailed listing of the instruments in the ensemble. 
+													Use it to specify the type of ensemble, e.g. "Orchestra", "String quartet", 
+													"Choir", to give a general heading like "Instrumentation" or 
+													an orchestration string like "2.2.2.2/4.2.3.1/timp/str".<h:br/> 
+													If no heading has been entered, 
+													a suggested ensemble name is automatically inserted when choosing
+													a standard ensemble code in the last field.
+												</h:span></h:a></xf:label>
+											</xf:input>
+											<xf:select1 ref="@code">
+												<xf:label>Standard code <h:a class="help">?<h:span 
+													class="comment">Choosing a standard MARC code optimizes data  
+													compatibility and interchangeability with other systems. <h:br/>
+													A code should be supplied also when you do not want the ensemble 
+													to have a heading (name).
+												</h:span></h:a></xf:label>
+												<xf:itemset nodeset="instance('ensembles')/m:instrVoiceGrp">
+													<xf:label><xf:output value="if (@code!='') then concat(@code, ' (',m:head,')') else '- Please select -'"/></xf:label>
+													<xf:value ref="@code"/>
+												</xf:itemset>
+												<xf:action ev:event="xforms-value-changed">
+													<xxf:variable name="ensemble" select="."></xxf:variable>
+													<xf:action if="../m:head=''">
+														<!-- set ensemble name if empty -->
+														<xf:setvalue ref="../m:head" value="instance('ensembles')/m:instrVoiceGrp[@code=$ensemble]"/>
+													</xf:action>
+												</xf:action>
+											</xf:select1>
+											<dcm:attribute-editor ref="m:head"/>
+										</h:div>
+										<h:div class="vertical_spacer"/>
+										
+										<!-- performers within an ensemble -->
+										
+										<!-- dialog for adding performers to existing ensembles -->
+										<xxf:dialog id="ensemble-performer-menu" appearance="full" level="modal"
+											close="true" draggable="true" visible="false">
+											<xf:label>Performers</xf:label>
+											<xf:repeat nodeset="instance('instrumentation')/m:instrVoiceGrp[m:instrVoice]" id="ensemble-performer-menu-repeat">
+												<xf:trigger submission="replace-form-with" appearance="minimal">
+													<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/>
+														<xf:output ref="if (m:head!='') then m:head else '[single performer]'"/>
+													</xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xf:insert context="$binding/m:perfMedium/m:instrumentation/m:instrVoiceGrp[index('repeat-ensemble')]" 
+															nodeset="m:instrVoice"
+															at="index('repeat-ensemble-performer')"
+															position="after" 
+															origin="instance('instrumentation')/m:instrVoiceGrp[m:instrVoice][index('ensemble-performer-menu-repeat')]/m:instrVoice"/>
+														<!-- generate IDs for added performers -->
+														<xf:dispatch name="id-update" target="form-group"/>
+														<xxf:hide dialog="ensemble-performer-menu"/>
+													</xf:action>
+												</xf:trigger>
+												<h:br/>
+											</xf:repeat>
+										</xxf:dialog>			
+										
+										<h:div><h:span class="strong">Performers in this ensemble
+											<h:a class="help">?<h:span class="comment">Optional. An ensemble may be specified by name (above), 
+												by a list of performers, or both.</h:span></h:a></h:span>
+										</h:div>
+										<xf:trigger ref=".[count(m:instrVoice)=0]" style="margin-left: 8px;" class="create_button">
+											<xf:label><img src="http:/editor/images/list.png" alt="Add from list"/> Add performer(s)</xf:label>
+											<xf:action ev:event="DOMActivate">
+												<xxf:show dialog="ensemble-performer-menu"/>
+											</xf:action>
+										</xf:trigger>
+										<xf:group ref=".[count(m:instrVoice)&gt;0]">
+											<h:div class="vertical_spacer"/> 
+											<h:span class="fixed_width_mediumlong">No. &amp; name <h:a class="help">?<h:span 
+												class="comment">Enter the number of players in the 
+												first input field, and the instrument's name, as it is to be 
+												displayed, in the second, e.g. "vl.1" or "violin".
+												If no name is entered, a suggested name is inserted when 
+												choosing a standard instrument code in the last field.
+											</h:span></h:a></h:span>
+											<h:span class="fixed_width_long">Standard code <h:a class="help">?<h:span 
+												class="comment">Choosing a standard MARC code optimizes data  
+												compatibility and interchangeability with other systems.<h:br/>
+												Also, it may be used to automatically insert the 
+												instrument's name in the "name" field if no name has been entered yet.
+											</h:span></h:a></h:span>
+											<h:br/>
+											<xf:repeat nodeset="m:instrVoice" id="repeat-ensemble-performer">
+												<xi:include href="includes/instrvoice-input.xml" parse="xml"/>
+												<dcm:element-buttons
+													triggers="up down add remove" 
+													nodeset="m:instrVoice" 
+													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
+													index="repeat-ensemble-performer"/>
+												<xf:trigger>
+													<xf:label><img src="http:/editor/images/list.png" alt="Add" title="Add from list"/> Add from list</xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xxf:show dialog="ensemble-performer-menu"/>
+													</xf:action>
+												</xf:trigger>                                            
+												<dcm:attribute-editor ref="."/>
+												<h:br/>
+											</xf:repeat>
+										</xf:group>
+									</h:fieldset>
+								</xf:repeat>
+								
+								<!-- stand-alone performers -->
+								<h:div class="blocklabel strong">Instruments and singers
+									<h:a class="help">?<h:span class="comment">List of performers not to be regarded 
+										as part of an ensemble. Use this section for some chamber music
+										(e.g. piano music, songs with or without piano, music for solo instruments)
+										and for soloists (vocalists and instrumentalists). 
+									</h:span></h:a>
+								</h:div>
+								<dcm:create
+									nodeset="m:instrVoice"
+									label="Add performer"
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"/>
+								<xf:group ref=".[m:instrVoice]">
+									<h:div class="vertical_spacer"/> 
+									<h:span class="fixed_width_mediumlong">No. &amp; name <h:a class="help">?<h:span 
+										class="comment">Enter the number of players in the 
+										first input field, and the instrument's name, as it is to be 
+										displayed, in the second, e.g. "vl.1" or "violin".
+										If no name is entered, a suggested name is inserted when 
+										choosing a standard instrument code in the last field.
+									</h:span></h:a></h:span>
+									<h:span class="fixed_width_long">Standard code <h:a class="help">?<h:span 
+										class="comment">Choosing a standard MARC code optimizes data  
+										compatibility and interchangeability with other systems.<h:br/>
+										Also, it may be used to automatically insert the 
+										instrument's name in the "name" field if no name has been entered yet.
+									</h:span></h:a></h:span>
+									<h:span class="fixed_width_short" style="text-align:center;">Solo <h:a class="help">?<h:span 
+										class="comment">Mark performers as soloists only when they are to be 
+										regarded as soloists as opposed to an ensemble.<h:br/> 
+										"Solo" should usually not be used with chamber music or 
+										music for one instrument.</h:span></h:a></h:span>
+									<h:br/>
+									<xf:repeat nodeset="m:instrVoice" id="repeat-performer">
+										<xi:include href="includes/instrvoice-input.xml" parse="xml"/>
+										<h:span class="fixed_width_short"  style="text-align:center;">
+											<xf:input ref="@solo"><xf:label> </xf:label></xf:input>
 										</h:span>
-										<!-- end buttons -->
-										<dcm:attribute-editor ref="."/>
+										<dcm:id ref="."/>
+										<dcm:element-buttons
+											triggers="add up down copy remove" 
+											nodeset="m:instrVoice" 
+											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
+											index="repeat-performer"/>
+										<dcm:id/>
+										<dcm:attribute-editor/>
 										<h:br/>
 									</xf:repeat>
-									<xf:select1 ref="m:role/m:ref/@target" xxf:refresh-items="true" id="cast-select">
-										<xf:label class="fixed_width">Performed by: 
-											<h:a class="help">?<h:span class="comment">To specify the vocalist(s) performing
-												this character, select the appropriate performer or ensemble from the list.<h:br/>
-												Use this to indicate that, for instance, King Erik is sung by a tenor soloist.
-											</h:span></h:a>
-										</xf:label>
-										<xf:item>
-											<xf:label>- Please select -</xf:label>
-											<xf:value/>
-										</xf:item>
-										<xf:itemset nodeset="$binding/m:perfMedium//*[(local-name()='ensemble' or local-name()='performer') and local-name(..)='perfMedium'][m:instrVoice!='']">
-											<!-- last AND condition excludes performers within an ensemble from the drop-down list-->
-											<xf:label><xf:output value="m:instrVoice"/></xf:label>
-											<xf:value ref="concat('#',@xml:id)"></xf:value>
-										</xf:itemset>
-									</xf:select1>
-									<dcm:attribute-editor ref="m:role/m:ref"/>
-									<h:br/>
-									
-								</h:fieldset>
-							</xf:repeat>
+								</xf:group>
+							</xf:group>
+							
+							
+							<h:div class="blocklabel strong">Roles
+								<h:a class="help">?<h:span class="comment">A list of roles (characters)
+									appearing in the piece. Role names may be entered in more than one language.                                        
+								</h:span></h:a>                                        
+								<xf:group ref="m:castList">
+									<dcm:id/>
+									<dcm:attribute-editor/>
+								</xf:group>
+							</h:div>
+							<dcm:create nodeset="m:castList"
+								label="Add role"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList"/>
+							<xf:group ref="m:castList">
+								<xf:trigger ref=".[count(m:castItem)=0]">
+									<xf:label><img src="http:/editor/images/add.gif" alt="Add"/> Add role</xf:label>
+									<xf:action ev:event="DOMActivate">
+										<xf:insert context="." 
+											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]"/>
+										<xf:setvalue ref="m:castItem[last()]/@xml:id"
+											value="concat('castItem_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+										<xf:dispatch name="id-update" target="form-group"/>
+									</xf:action>
+								</xf:trigger>
+								<xf:repeat nodeset="m:castItem" id="repeat-cast">
+									<xf:action ev:event="xforms-value-changed">
+										<xf:dispatch name="add-id" target="form-group"/>
+									</xf:action>
+									<h:fieldset>
+										<h:legend>
+											<xf:output value="if (m:role/m:name[1]!='') then m:role/m:name[1] else '[Role]'"/>
+											<dcm:element-buttons
+												triggers="add up down" 
+												nodeset="m:castItem" 
+												index="repeat-cast"
+												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]"/>
+											<dcm:delete-parent-with-last index="repeat-cast"/>
+											<dcm:id/>
+											<dcm:attribute-editor/>
+										</h:legend>
+										<xf:repeat nodeset="m:role/m:name" id="repeat-role">
+											<xxf:variable name="pos" select="position()"/>
+											<xf:input ref="."><xf:label>Name: <h:a class="help">?<h:span
+												class="comment">E.g. "Erik", "A servant" or "Villagers"</h:span></h:a></xf:label></xf:input>
+											<xf:input ref="../../m:roleDesc[$pos]" class="long"><xf:label> Description: <h:a class="help">?<h:span
+												class="comment">An optional description of the role, e.g. 
+												"King of Denmark" or "Rigoletto's daughter"</h:span></h:a></xf:label></xf:input>
+											<dcm:attribute-editor ref="../../m:roleDesc[$pos]"/>										
+											<xf:select1 ref="@xml:lang" xxf:refresh-items="false">
+												<xf:label/>
+												<xf:itemset nodeset="instance('languages')/language">
+													<xf:label><xf:output value="."/></xf:label>
+													<xf:value ref="@xml:id"></xf:value>
+												</xf:itemset>
+												
+<!-- Some problem here -->												
+<!--setvalue was: <xf:setvalue ref="$binding/m:perfMedium/m:castList/m:castItem[index('repeat-cast')]/m:roleDesc[$pos]/@xml:lang" value="$lang"/>
+												<xf:action ev:event="xforms-value-changed">
+													<xxf:variable name="lang" select="."/>
+													<xf:setvalue ref="../../../m:roleDesc[$pos]/@xml:lang" value="$lang"/>
+												</xf:action>
+end problem -->
+											</xf:select1>
+											<!-- edit buttons --> 
+											<h:span class="editmenu" style="margin-left: 8px;">
+												<xf:trigger appearance="minimal" class="element-button">
+													<xf:label><h:img src="http:/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xxf:variable name="idx" select="index('repeat-role')"/>
+														<xf:insert context="parent::node()" nodeset="m:name" at="$idx"
+															origin="m:name[$idx]"/>
+														<xf:insert context="../.." nodeset="m:roleDesc" at="$idx"
+															origin="m:roleDesc[$idx]"/>
+														<xf:dispatch name="id-update" target="form-group"/>
+													</xf:action>
+												</xf:trigger>
+												<xf:trigger appearance="minimal" class="element-button">
+													<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xxf:variable name="idx" select="index('repeat-role')"/>
+														<xf:insert context="parent::node()" nodeset="m:name" at="$idx"
+															origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]/m:role/m:name"/>
+														<xf:insert context="../.." nodeset="m:roleDesc" at="$idx"
+															origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]/m:roleDesc"/>
+														<xf:dispatch name="id-update" target="form-group"/>
+													</xf:action>
+												</xf:trigger>
+												<xf:trigger appearance="minimal" class="element-button">
+													<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xxf:variable name="idx" select="index('repeat-role')"/>
+														<xf:delete nodeset="../m:name" at="$idx"/>
+														<xf:delete nodeset="../../m:roleDesc" at="$idx"/>
+														<xf:dispatch name="xforms-value-changed" target="form-group"/>
+													</xf:action>
+												</xf:trigger>
+											</h:span>
+											<!-- end buttons -->
+											<dcm:attribute-editor/>
+											<h:br/>
+										</xf:repeat>
+										
+										<!-- role performer(s) -->
+										<dcm:create
+											nodeset="m:instrVoice"
+											label="Add performer"
+											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem/m:instrVoice[1]"/>
+										<xf:group ref=".[m:instrVoice]">
+											<h:div class="vertical_spacer"/> 
+											<xf:repeat nodeset="m:instrVoice" id="repeat-role-performer">
+												<xf:input ref="." class="mediumshort">
+													<xf:label>Voice <h:a class="help">?<h:span 
+														class="comment">Indicates the type of vocalist(s) 
+														or vocal ensemble performing this role,
+														e.g. "S.", "Soprano" or "Choir (SSATB)".<h:br/>
+														If no name is entered, a suggested name is inserted when 
+														choosing a standard code in the last field.
+													</h:span></h:a></xf:label>
+												</xf:input>
+												<xf:select1 ref="@code" class="long">
+													<xf:label> Standard code <h:a class="help">?<h:span 
+														class="comment">Choosing a standard MARC code optimizes data  
+														compatibility and interchangeability with other systems.<h:br/>
+														Also, it may be used to automatically insert the 
+														voice type in the "Voice" field if none has been entered yet.
+													</h:span></h:a></xf:label>
+													<xf:item>
+														<xf:label>- Please select -</xf:label>
+														<xf:value/>
+													</xf:item>
+													<xf:itemset nodeset="instance('instruments')/m:instrVoice[substring(@code,1,1)='v']">
+														<xf:label><xf:output value="concat(@code, ' (',@label,')')"/></xf:label>
+														<xf:value ref="@code"/>
+													</xf:itemset>
+													<xf:itemset nodeset="instance('ensembles')/m:instrVoiceGrp[substring(@code,1,1)='c']">
+														<xf:label><xf:output value="concat(@code, ' (',m:head,')')"/></xf:label>
+														<xf:value ref="@code"/>
+													</xf:itemset>
+													<xf:action ev:event="xforms-value-changed">
+														<!-- insert voice name (display name) if empty -->
+														<xxf:variable name="instrument" select="."></xxf:variable>
+														<xf:action if="..=''">
+															<xf:setvalue ref=".." value="instance('instruments')/m:instrVoice[@code=$instrument]"/>
+														</xf:action>
+													</xf:action>
+												</xf:select1>
+												<xf:input ref="@solo"><xf:label> Solo <h:a class="help">?<h:span 
+													class="comment">Mark performers as soloists only when they are to be 
+													regarded as soloists as opposed to an ensemble.<h:br/> 
+													"Solo" should usually not be used with chamber music or 
+													songs.</h:span></h:a></xf:label></xf:input>
+												<dcm:id ref="."/>
+												<dcm:element-buttons
+													triggers="add up down copy remove" 
+													nodeset="m:instrVoice" 
+													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
+													index="repeat-performer"/>
+												<dcm:id/>
+												<dcm:attribute-editor/>
+												<h:br/>
+											</xf:repeat>
+										</xf:group>
+										<!-- end role performer(s) -->
+										
+										
+									</h:fieldset>
+								</xf:repeat>
+							</xf:group>
+							
+							
 						</xf:group>
+						
 					</h:fieldset>
 					
 					<!-- Components  -->
@@ -782,14 +830,14 @@
 													<!--<xf:trigger appearance="minimal">
 														<xf:label><h:img src="http:/editor/images/copy-to-sub-element.png" alt="copy to sub-element" title="Copy to sub-component"/></xf:label>
 														<xf:action ev:event="DOMActivate">
-															<xf:insert context="." nodeset="m:expression" origin=".."/>
-															<xf:setvalue ref="m:expression/@xml:id" value="''"/>
-															<xf:action while="count(m:expression//@xml:id[.!='']) &gt; 0">
-																<xf:setvalue ref="m:expression//@xml:id[.!='']" value="''"/>
-															</xf:action>                                  
-															<xf:dispatch name="id-update" target="form-group"/>
+														<xf:insert context="." nodeset="m:expression" origin=".."/>
+														<xf:setvalue ref="m:expression/@xml:id" value="''"/>
+														<xf:action while="count(m:expression//@xml:id[.!='']) &gt; 0">
+														<xf:setvalue ref="m:expression//@xml:id[.!='']" value="''"/>
+														</xf:action>                                  
+														<xf:dispatch name="id-update" target="form-group"/>
 														</xf:action>
-													</xf:trigger>-->
+														</xf:trigger>-->
 												</xf:group>
 											</xf:group>	
 											
@@ -874,16 +922,16 @@
 																		<!--<xf:trigger appearance="minimal">
 																			<xf:label><h:img src="http:/editor/images/copy-to-sub-element.png" alt="copy to sub-element" title="Copy to sub-component"/></xf:label>
 																			<xf:action ev:event="DOMActivate">
-																				<xf:insert context="."
-																					nodeset="m:expression"
-																					origin=".."/>
-																				<xf:setvalue ref="m:expression/@xml:id" value="''"/>
-																				<xf:action while="count(m:expression//@xml:id[.!='']) &gt; 0">
-																					<xf:setvalue ref="m:expression//@xml:id[.!='']" value="''"/>
-																				</xf:action>                                  
-																				<xf:dispatch name="id-update" target="form-group"/>
+																			<xf:insert context="."
+																			nodeset="m:expression"
+																			origin=".."/>
+																			<xf:setvalue ref="m:expression/@xml:id" value="''"/>
+																			<xf:action while="count(m:expression//@xml:id[.!='']) &gt; 0">
+																			<xf:setvalue ref="m:expression//@xml:id[.!='']" value="''"/>
+																			</xf:action>                                  
+																			<xf:dispatch name="id-update" target="form-group"/>
 																			</xf:action>
-																		</xf:trigger>-->
+																			</xf:trigger>-->
 																	</xf:group>
 																</xf:group>	
 																

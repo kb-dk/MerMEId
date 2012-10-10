@@ -1,157 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<perfMedium xmlns="http://www.music-encoding.org/ns/mei">
+<instrumentation xmlns="http://www.music-encoding.org/ns/mei">
     <!-- Pre-defined instrument groups for easy inserting. -->
-    <!-- Ensembles without a "reg" attribute in <instrVoice> are not shown in the 
-         list of pre-defined entire ensembles; instead, they are used for grouped insertion
-         at "performer" level, i.e. as part of a larger ensemble or stand-alone performers -->
-    <ensemble>
-        <instrVoice reg="on"></instrVoice>
-    </ensemble>
-    <ensemble xml:id="">
-        <instrVoice></instrVoice>
-        <performer xml:id="">
-            <instrVoice count="1" reg="zn"></instrVoice>
-        </performer>    
-    </ensemble>
-    <ensemble xml:id="">
-        <instrVoice>Voice &amp; piano</instrVoice>
-        <performer xml:id="">
-            <instrVoice count="1" reg="vn">voice</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="1" reg="ka">pno.</instrVoice>
-        </performer>    
-    </ensemble>
-    <ensemble xml:id="">
-        <instrVoice reg="oa">Orchestra</instrVoice>
-        <performer xml:id="">
-            <instrVoice count="2" reg="wa">fl.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="2" reg="wb">ob.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="2" reg="wc">cl.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="2" reg="wd">fg.</instrVoice>
-        </performer>    
-        <performer xml:id="">
-            <instrVoice count="4" reg="ba">cor.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="2" reg="bb">tr.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="3." reg="bd">trb.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="1" reg="be">tb.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="1" reg="pa">timp.</instrVoice>
-        </performer>    
-        <performer xml:id="">
-            <instrVoice count="" reg="sn">str.</instrVoice>
-        </performer>        
-    </ensemble>
-    <ensemble xml:id="">
-        <instrVoice>Woodwinds 2.2.2.2</instrVoice>
-        <performer xml:id="">
-            <instrVoice count="2" reg="wa">fl.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="2" reg="wb">ob.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="2" reg="wc">cl.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="2" reg="wd">fg.</instrVoice>
-        </performer>    
-    </ensemble>
-    <ensemble xml:id="">
-        <instrVoice>Brass 4.2.3.1 + timp.</instrVoice>
-        <performer xml:id="">
-            <instrVoice count="4" reg="ba">cor.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="2" reg="bb">tr.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="3." reg="bd">trb.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="1" reg="be">tb.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="1" reg="pa">timp.</instrVoice>
-        </performer>    
-    </ensemble>
-    <ensemble xml:id="">
-        <instrVoice reg="oc">Strings (5-part)</instrVoice>
-        <performer xml:id="">
-            <instrVoice count="" reg="sa">vl.1</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="" reg="sa">vl.2</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="" reg="sb">va.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="" reg="sc">vc.</instrVoice>
-        </performer>        
-        <performer xml:id="">
-            <instrVoice count="" reg="sd">cb.</instrVoice>
-        </performer>    
-    </ensemble>
-    <ensemble xml:id="">
-        <instrVoice>Strings (unspec.)</instrVoice>
-        <performer xml:id="">
-            <instrVoice count="" reg="sn">str.</instrVoice>
-        </performer>    
-    </ensemble>
-    <ensemble xml:id="">
-        <instrVoice reg="oc">String quartet</instrVoice>
-        <performer xml:id="">
-            <instrVoice count="2" reg="sa">vl.</instrVoice>
-        </performer>   
-        <performer xml:id="">
-            <instrVoice count="1" reg="sb">va.</instrVoice>
-        </performer>   
-        <performer xml:id="">
-            <instrVoice count="1" reg="sc">vc.</instrVoice>
-        </performer>   
-    </ensemble>
-    <ensemble xml:id="">
-        <instrVoice reg="ca">Choir SATB</instrVoice>
-        <performer xml:id="">
-            <instrVoice count="1" reg="va">S.</instrVoice>
-        </performer>   
-        <performer xml:id="">
-            <instrVoice count="1" reg="vc">A.</instrVoice>
-        </performer>   
-        <performer xml:id="">
-            <instrVoice count="1" reg="vd">T.</instrVoice>
-        </performer>   
-        <performer xml:id="">
-            <instrVoice count="1" reg="vf">B.</instrVoice>
-        </performer>   
-    </ensemble>
-    <ensemble xml:id="">
-        <instrVoice reg="ca">Choir SSAATTBB</instrVoice>
-        <performer xml:id="">
-            <instrVoice count="2" reg="va">S.</instrVoice>
-        </performer>   
-        <performer xml:id="">
-            <instrVoice count="2" reg="vc">A.</instrVoice>
-        </performer>   
-        <performer xml:id="">
-            <instrVoice count="2" reg="vd">T.</instrVoice>
-        </performer>   
-        <performer xml:id="">
-            <instrVoice count="2" reg="vf">B.</instrVoice>
-        </performer>   
-    </ensemble>
-</perfMedium>
+    <!-- Groups without a "code" attribute are not shown in the 
+        list of pre-defined entire ensembles; instead, they are used for grouped insertion
+        at "performer" level, i.e. as part of a larger instrVoiceGrp or stand-alone performers -->
+    <instrVoiceGrp code="on">
+        <head/>
+    </instrVoiceGrp>
+    <instrVoiceGrp>
+        <head/>
+        <instrVoice count="1" code=""></instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp xml:id="">
+        <head>Voice &amp; piano</head>
+        <instrVoice count="1" code="vn">voice</instrVoice>
+        <instrVoice count="1" code="ka">pno.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp xml:id="" code="oa">
+        <head>Orchestra</head>
+        <instrVoice count="2" code="wa">fl.</instrVoice>
+        <instrVoice count="2" code="wb">ob.</instrVoice>
+        <instrVoice count="2" code="wc">cl.</instrVoice>
+        <instrVoice count="2" code="wd">fg.</instrVoice>
+        <instrVoice count="4" code="ba">cor.</instrVoice>
+        <instrVoice count="2" code="bb">tr.</instrVoice>
+        <instrVoice count="3." code="bd">trb.</instrVoice>
+        <instrVoice count="1" code="be">tb.</instrVoice>
+        <instrVoice count="1" code="pa">timp.</instrVoice>
+        <instrVoice count="" code="sn">str.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp xml:id="">
+        <head>Woodwinds 2.2.2.2</head>
+        <instrVoice count="2" code="wa">fl.</instrVoice>
+        <instrVoice count="2" code="wb">ob.</instrVoice>
+        <instrVoice count="2" code="wc">cl.</instrVoice>
+        <instrVoice count="2" code="wd">fg.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp xml:id="">
+        <head>Brass 4.2.3.1 + timp.</head>
+        <instrVoice count="4" code="ba">cor.</instrVoice>
+        <instrVoice count="2" code="bb">tr.</instrVoice>
+        <instrVoice count="3." code="bd">trb.</instrVoice>
+        <instrVoice count="1" code="be">tb.</instrVoice>
+        <instrVoice count="1" code="pa">timp.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp xml:id="" code="oc">
+        <head>Strings (5-part)</head>
+        <instrVoice count="" code="sa">vl.1</instrVoice>
+        <instrVoice count="" code="sa">vl.2</instrVoice>
+        <instrVoice count="" code="sb">va.</instrVoice>
+        <instrVoice count="" code="sc">vc.</instrVoice>
+        <instrVoice count="" code="sd">cb.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp xml:id="">
+        <head>Strings (unspec.)</head>
+        <instrVoice count="" code="sn">str.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp xml:id="" code="oc">
+        <head>String quartet</head>
+        <instrVoice count="2" code="sa">vl.</instrVoice>
+        <instrVoice count="1" code="sb">va.</instrVoice>
+        <instrVoice count="1" code="sc">vc.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp xml:id="" code="ca">
+        <head>Choir SATB</head>
+        <instrVoice count="1" code="va">S.</instrVoice>
+        <instrVoice count="1" code="vc">A.</instrVoice>
+        <instrVoice count="1" code="vd">T.</instrVoice>
+        <instrVoice count="1" code="vf">B.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp xml:id="" code="ca">
+        <head>Choir SSAATTBB</head>
+        <instrVoice count="2" code="va">S.</instrVoice>
+        <instrVoice count="2" code="vc">A.</instrVoice>
+        <instrVoice count="2" code="vd">T.</instrVoice>
+        <instrVoice count="2" code="vf">B.</instrVoice>
+    </instrVoiceGrp>
+</instrumentation>
