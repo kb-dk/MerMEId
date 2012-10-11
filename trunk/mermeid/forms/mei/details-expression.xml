@@ -382,7 +382,7 @@
                                 label="Instruments/Performers"
                                 origin="instance('empty-instance')//m:expression/m:componentGrp/m:expression/m:perfMedium"/>
                             <xxf:variable name="thisInstrumentation" select="m:perfMedium/m:instrumentation"/>
-                            <xf:group ref="$this">
+                            <xf:group ref="$thisInstrumentation">
                                 <!-- select ensembles -->
                                 <xf:repeat nodeset="$topLevelInstrumentation/m:instrVoiceGrp">
                                     <xf:group ref=".[count(preceding-sibling::m:instrVoiceGrp)=0]">
@@ -395,8 +395,8 @@
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/>
                                                     <h:span>
-                                                        <xf:output value="m:head"/>
-                                                        <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
+                                                        <xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>
+                                                        <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -410,8 +410,8 @@
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this ensemble"/>
                                                     <h:span class="disabled">
-                                                        <xf:output value="m:head"/>
-                                                        <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
+                                                        <xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>
+                                                        <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -419,7 +419,7 @@
                                                     <xf:delete context="instance('temp')/element" nodeset="*"/>
                                                     <xf:insert context="instance('temp')/element" nodeset="m:instrVoiceGrp" origin="$topLevelEnsemble"/>
                                                     <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-                                                    <xf:insert context="$thisPerfMedium" nodeset="m:instrVoiceGrp" 
+                                                    <xf:insert context="$thisInstrumentation" nodeset="m:instrVoiceGrp" 
                                                         origin="instance('temp')/element/m:instrVoiceGrp"/>
                                                 </xf:action>
                                             </xf:trigger>
@@ -440,7 +440,7 @@
                                                                 <h:span>
                                                                     <xf:output value="@count"/>
                                                                     <xf:output value="."/>
-                                                                    <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
+                                                                    <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
                                                                 </h:span>
                                                             </xf:label>
                                                             <xf:action ev:event="DOMActivate">
@@ -456,7 +456,7 @@
                                                                 <h:span class="disabled">
                                                                     <xf:output value="@count"/>
                                                                     <xf:output value="."/>
-                                                                    <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
+                                                                    <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
                                                                 </h:span>
                                                             </xf:label>
                                                             <xf:action ev:event="DOMActivate">
@@ -492,7 +492,7 @@
                                                     <h:span>
                                                         <xf:output value="@count"/>
                                                         <xf:output value="."/>
-                                                        <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
+                                                        <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -501,14 +501,14 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group ref=".[not(.=$thisPerfMedium/m:instrVoice 
-                                            or @code=$thisPerfMedium/m:instrVoice/@code)]">
+                                        <xf:group ref=".[not(.=$thisInstrumentation/m:instrVoice 
+                                            or @code=$thisInstrumentation/m:instrVoice/@code)]">
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this performer"/>
                                                     <h:span class="disabled">
                                                         <xf:output value="@count"/>
                                                         <xf:output value="."/>
-                                                        <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
+                                                        <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -516,7 +516,7 @@
                                                     <xf:delete context="instance('temp')/element" nodeset="*"/>
                                                     <xf:insert context="instance('temp')/element" nodeset="m:instrVoice" origin="$thisPerformer"/>
                                                     <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-                                                    <xf:insert context="$thisPerfMedium" nodeset="m:instrVoice" 
+                                                    <xf:insert context="$thisInstrumentation" nodeset="m:instrVoice" 
                                                         origin="instance('temp')/element/m:instrVoice"/>
                                                 </xf:action>
                                             </xf:trigger>
@@ -549,8 +549,8 @@
                                     <xxf:variable name="thisCast" select="."/>
                                     <!-- change node names etc. from here... -->                                    
                                     <h:div>
-                                        <xf:group ref=".[m:instrVoice=$thisPerfMedium/m:performer/m:instrVoice 
-                                            or m:instrVoice/@reg=$thisPerfMedium/m:performer/m:instrVoice/@reg]">
+                                        <xf:group ref=".[m:instrVoice=$thisCastList/m:performer/m:instrVoice 
+                                            or m:instrVoice/@reg=$thisCastList/m:performer/m:instrVoice/@reg]">
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
                                                     <h:span>
@@ -560,13 +560,13 @@
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
-                                                    <xf:delete context="$thisPerfMedium" nodeset="m:performer[m:instrVoice=$thisPerformer/m:instrVoice 
+                                                    <xf:delete context="$thisCastList" nodeset="m:performer[m:instrVoice=$thisPerformer/m:instrVoice 
                                                         or m:instrVoice/@reg=$thisPerformer/m:instrVoice/@reg]"/>
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group ref=".[not(m:instrVoice=$thisPerfMedium/m:performer/m:instrVoice 
-                                            or m:instrVoice/@reg=$thisPerfMedium/m:performer/m:instrVoice/@reg)]">
+                                        <xf:group ref=".[not(m:instrVoice=$thisCastList/m:performer/m:instrVoice 
+                                            or m:instrVoice/@reg=$thisCastList/m:performer/m:instrVoice/@reg)]">
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this performer"/>
                                                     <h:span class="disabled">
@@ -580,7 +580,7 @@
                                                     <xf:delete context="instance('temp')/element" nodeset="*"/>
                                                     <xf:insert context="instance('temp')/element" nodeset="m:performer" origin="$thisPerformer"/>
                                                     <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-                                                    <xf:insert context="$thisPerfMedium" nodeset="m:performer" 
+                                                    <xf:insert context="$thisCastList" nodeset="m:performer" 
                                                         origin="instance('temp')/element/m:performer"/>
                                                 </xf:action>
                                             </xf:trigger>

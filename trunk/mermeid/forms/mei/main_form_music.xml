@@ -580,16 +580,9 @@
 								label="Add role"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList"/>
 							<xf:group ref="m:castList">
-								<xf:trigger ref=".[count(m:castItem)=0]">
-									<xf:label><img src="http:/editor/images/add.gif" alt="Add"/> Add role</xf:label>
-									<xf:action ev:event="DOMActivate">
-										<xf:insert context="." 
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:castList/m:castItem[1]"/>
-										<xf:setvalue ref="m:castItem[last()]/@xml:id"
-											value="concat('castItem_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-										<xf:dispatch name="id-update" target="form-group"/>
-									</xf:action>
-								</xf:trigger>
+								<dcm:create nodeset="m:castItem"
+									label="Add role"
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem"/>
 								<xf:repeat nodeset="m:castItem" id="repeat-cast">
 									<xf:action ev:event="xforms-value-changed">
 										<xf:dispatch name="add-id" target="form-group"/>
@@ -620,10 +613,11 @@
 													<xf:label><xf:output value="."/></xf:label>
 													<xf:value ref="@xml:id"></xf:value>
 												</xf:itemset>
+												
 												<xf:action ev:event="xforms-value-changed">
 													<xxf:variable name="lang" select="."/>
-													<!--<xf:setvalue ref="$binding/m:perfMedium/m:castList/m:castItem[index('repeat-cast')]/m:roleDesc[$pos]/@xml:lang" value="$lang"/>-->
 													<xf:setvalue ref="../../../m:roleDesc[$pos]/@xml:lang" value="$lang"/>
+													<!--<xf:setvalue ref="$binding/m:perfMedium/m:castList/m:castItem[index('repeat-cast')]/m:roleDesc[$pos]/@xml:lang" value="$lang"/>-->
 												</xf:action>
 											</xf:select1>
 											<!-- edit buttons --> 

@@ -920,7 +920,7 @@
         <xsl:choose>
             <xsl:when test="count(m:staffgrp[contains(@label.full,'Basic')]/m:staffdef[normalize-space(concat(@label.abbr,' ',@label.full))!=''])&gt;2">
                 <!-- if more than two basic instruments, make them a group -->
-                <instrVoiceGrp n="on">
+                <instrVoiceGrp code="on">
                     <head/>
                     <xsl:apply-templates select="m:staffgrp[contains(@label.full,'Basic')]/m:staffdef[normalize-space(concat(@label.abbr,' ',@label.full))!='']" mode="instrVoice"/>
                 </instrVoiceGrp>
@@ -935,7 +935,7 @@
     </xsl:template>    
     
     <xsl:template match="m:staffdef" mode="choirs">
-        <instrVoiceGrp n="cn">
+        <instrVoiceGrp code="cn">
             <head>Choir</head>
             <xsl:apply-templates select="." mode="instrVoice"/>
         </instrVoiceGrp>
