@@ -366,109 +366,111 @@
                         
                         
                         <!--  instrumentation selection -->
-                        <xxf:variable name="topLevelPerfMedium" select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium"/>
-                        <xf:group ref=".[$topLevelPerfMedium[*]]" class="instr_subselection">
+                        <xxf:variable name="topLevelInstrumentation" select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:instrumentation"/>
+                        <xf:group ref=".[$topLevelInstrumentation[*]]" class="instr_subselection">
                             <h:hr/>
                             <h:span class="blocklabel strong">Instruments/Performers selection <h:a class="help">?<h:span 
                                 class="comment">A sub-selection of the performers and ensembles defined at version level may 
                                 be specified here. You may choose to only specify certain performers which you want to to be explicitly listed, 
                                 e.g. only the sub-selection of soloists playing or characters appearing in this particular movement, but not the entire orchestra.
                             </h:span></h:a></h:span>
-                            <xxf:variable name="thisPerfMedium" select="m:perfMedium"/>
+                            <dcm:create ref="m:perfMedium"
+                                nodeset="m:instrumentation"
+                                label="Instruments/Performers"
+                                origin="instance('empty-instance')//m:expression/m:componentGrp/m:expression/m:perfMedium"/>
                             <dcm:create nodeset="m:perfMedium"
                                 label="Instruments/Performers"
                                 origin="instance('empty-instance')//m:expression/m:componentGrp/m:expression/m:perfMedium"/>
-                            <xf:group ref="$thisPerfMedium">
+                            <xxf:variable name="thisInstrumentation" select="m:perfMedium/m:instrumentation"/>
+                            <xf:group ref="$this">
                                 <!-- select ensembles -->
-                                <xf:repeat nodeset="$topLevelPerfMedium/m:ensemble">
-                                    <xf:group ref=".[count(preceding-sibling::m:ensemble)=0]">
+                                <xf:repeat nodeset="$topLevelInstrumentation/m:instrVoiceGrp">
+                                    <xf:group ref=".[count(preceding-sibling::m:instrVoiceGrp)=0]">
                                         <h:span class="blocklabel">Ensembles</h:span>
                                     </xf:group>
                                     <xxf:variable name="topLevelEnsemble" select="."/>
                                     <h:div>
-                                        <xf:group ref=".[m:instrVoice=$thisPerfMedium/m:ensemble/m:instrVoice 
-                                            or m:instrVoice/@reg=$thisPerfMedium/m:ensemble/m:instrVoice/@reg]">
+                                        <xf:group ref=".[m:head=$thisInstrumentation/m:instrVoiceGrp/m:head 
+                                            or @code=$thisInstrumentation/m:instrVoiceGrp/@code]">
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/>
                                                     <h:span>
-                                                        <xf:output value="m:instrVoice/@count"/>
-                                                        <xf:output value="m:instrVoice"/>
-                                                        <xf:group ref=".[m:instrVoice/@reg[.!='']]"> (<xf:output value="m:instrVoice/@reg"/>)</xf:group>
+                                                        <xf:output value="m:head"/>
+                                                        <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
-                                                    <xf:delete context="$thisPerfMedium" nodeset="m:ensemble[m:instrVoice=$topLevelEnsemble/m:instrVoice 
-                                                        or m:instrVoice/@reg=$topLevelEnsemble/m:instrVoice/@reg]"/>
+                                                    <xf:delete context="$thisInstrumentation" nodeset="m:instrVoiceGrp[m:head=$topLevelEnsemble/m:head 
+                                                        or m:instrVoice/@code=$topLevelEnsemble/m:instrVoice/@code]"/>
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group ref=".[not(m:instrVoice=$thisPerfMedium/m:ensemble/m:instrVoice 
-                                            or m:instrVoice/@reg=$thisPerfMedium/m:ensemble/m:instrVoice/@reg)]">
+                                        <xf:group ref=".[not(m:head=$thisInstrumentation/m:instrVoiceGrp/m:head 
+                                            or @code=$thisInstrumentation/m:instrVoiceGrp/@code)]">
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this ensemble"/>
                                                     <h:span class="disabled">
-                                                        <xf:output value="m:instrVoice/@count"/>
-                                                        <xf:output value="m:instrVoice"/>
-                                                        <xf:group ref=".[m:instrVoice/@reg[.!='']]"> (<xf:output value="m:instrVoice/@reg"/>)</xf:group>
+                                                        <xf:output value="m:head"/>
+                                                        <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <!-- put a copy in the temp instance and generate new @id before putting it in place -->
                                                     <xf:delete context="instance('temp')/element" nodeset="*"/>
-                                                    <xf:insert context="instance('temp')/element" nodeset="m:ensemble" origin="$topLevelEnsemble"/>
+                                                    <xf:insert context="instance('temp')/element" nodeset="m:instrVoiceGrp" origin="$topLevelEnsemble"/>
                                                     <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-                                                    <xf:insert context="$thisPerfMedium" nodeset="m:ensemble" 
-                                                        origin="instance('temp')/element/m:ensemble"/>
+                                                    <xf:insert context="$thisPerfMedium" nodeset="m:instrVoiceGrp" 
+                                                        origin="instance('temp')/element/m:instrVoiceGrp"/>
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
                                         
                                         <!-- performers within this ensemble -->
                                         <!-- show only if the ensemble is checked -->
-                                        <xf:group ref="$thisPerfMedium/m:ensemble[m:instrVoice=$topLevelEnsemble/m:instrVoice 
-                                            or m:instrVoice/@reg=$topLevelEnsemble/m:instrVoice/@reg]">
+                                        <xf:group ref="$thisInstrumentation/m:instrVoiceGrp[m:head=$topLevelEnsemble/m:head 
+                                            or @code=$topLevelEnsemble/@code]">
                                             <xxf:variable name="thisEnsemble" select="."/>
-                                            <xf:repeat nodeset="$topLevelEnsemble/m:performer">
-                                            <xxf:variable name="thisPerformer" select="."/>
-                                            <h:div>&#160;&#160;&#160;&#160;
-                                                <xf:group ref=".[m:instrVoice=$thisEnsemble/m:performer/m:instrVoice 
-                                                    or m:instrVoice/@reg=$thisEnsemble/m:performer/m:instrVoice/@reg]">
-                                                    <xf:trigger appearance="minimal">
-                                                        <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
-                                                            <h:span>
-                                                                <xf:output value="m:instrVoice/@count"/>
-                                                                <xf:output value="m:instrVoice"/>
-                                                                <xf:group ref=".[m:instrVoice/@reg[.!='']]"> (<xf:output value="m:instrVoice/@reg"/>)</xf:group>
-                                                            </h:span>
-                                                        </xf:label>
-                                                        <xf:action ev:event="DOMActivate">
-                                                            <xf:delete context="$thisEnsemble" nodeset="m:performer[m:instrVoice=$thisPerformer/m:instrVoice 
-                                                                or m:instrVoice/@reg=$thisPerformer/m:instrVoice/@reg]"/>
-                                                        </xf:action>
-                                                    </xf:trigger>
-                                                </xf:group>
-                                                <xf:group ref=".[not(m:instrVoice=$thisEnsemble/m:performer/m:instrVoice 
-                                                    or m:instrVoice/@reg=$thisEnsemble/m:performer/m:instrVoice/@reg)]">
-                                                    <xf:trigger appearance="minimal">
-                                                        <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this performer"/>
-                                                            <h:span class="disabled">
-                                                                <xf:output value="m:instrVoice/@count"/>
-                                                                <xf:output value="m:instrVoice"/>
-                                                                <xf:group ref=".[m:instrVoice/@reg[.!='']]"> (<xf:output value="m:instrVoice/@reg"/>)</xf:group>
-                                                            </h:span>
-                                                        </xf:label>
-                                                        <xf:action ev:event="DOMActivate">
-                                                            <!-- put a copy in the temp instance and generate new @id before putting it in place -->
-                                                            <xf:delete context="instance('temp')/element" nodeset="*"/>
-                                                            <xf:insert context="instance('temp')/element" nodeset="m:performer" origin="$thisPerformer"/>
-                                                            <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-                                                            <xf:insert context="$thisEnsemble" nodeset="m:performer" 
-                                                                origin="instance('temp')/element/m:performer"/>
-                                                        </xf:action>
-                                                    </xf:trigger>
-                                                </xf:group>
-                                            </h:div>
-                                        </xf:repeat>
+                                            <xf:repeat nodeset="$topLevelEnsemble/m:instrVoice">
+                                                <xxf:variable name="thisPerformer" select="."/>
+                                                <h:div>&#160;&#160;&#160;&#160;
+                                                    <xf:group ref=".[.=$thisEnsemble/m:instrVoice 
+                                                        or @code=$thisEnsemble/m:instrVoice/@code]">
+                                                        <xf:trigger appearance="minimal">
+                                                            <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
+                                                                <h:span>
+                                                                    <xf:output value="@count"/>
+                                                                    <xf:output value="."/>
+                                                                    <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
+                                                                </h:span>
+                                                            </xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:delete context="$thisEnsemble" nodeset="m:instrVoice[.=$thisPerformer/m:instrVoice 
+                                                                    or @code=$thisPerformer/@code]"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </xf:group>
+                                                    <xf:group ref=".[not(.=$thisEnsemble/m:instrVoice 
+                                                        or @code=$thisEnsemble/m:instrVoice/@code)]">
+                                                        <xf:trigger appearance="minimal">
+                                                            <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this performer"/>
+                                                                <h:span class="disabled">
+                                                                    <xf:output value="@count"/>
+                                                                    <xf:output value="."/>
+                                                                    <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
+                                                                </h:span>
+                                                            </xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <!-- put a copy in the temp instance and generate new @id before putting it in place -->
+                                                                <xf:delete context="instance('temp')/element" nodeset="*"/>
+                                                                <xf:insert context="instance('temp')/element" nodeset="m:instrVoice" origin="$thisPerformer"/>
+                                                                <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                                                                <xf:insert context="$thisEnsemble" nodeset="m:instrVoice" 
+                                                                    origin="instance('temp')/element/m:instrVoice"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </xf:group>
+                                                </h:div>
+                                            </xf:repeat>
                                         </xf:group>
                                         <!-- end performers in ensemble -->
                                         
@@ -477,45 +479,45 @@
                                 <!-- end ensembles -->
                                 
                                 <!-- select performers -->
-                                <xf:repeat nodeset="$topLevelPerfMedium/m:performer">
-                                    <xf:group ref=".[count(preceding-sibling::m:performer)=0]">
+                                <xf:repeat nodeset="$topLevelInstrumentation/m:instrVoice">
+                                    <xf:group ref=".[count(preceding-sibling::m:instrVoice)=0]">
                                         <h:span class="blocklabel">Performers</h:span>
                                     </xf:group>
                                     <xxf:variable name="thisPerformer" select="."/>
                                     <h:div>
-                                        <xf:group ref=".[m:instrVoice=$thisPerfMedium/m:performer/m:instrVoice 
-                                            or m:instrVoice/@reg=$thisPerfMedium/m:performer/m:instrVoice/@reg]">
+                                        <xf:group ref=".[.=$thisInstrumentation/m:instrVoice 
+                                            or @code=$thisInstrumentation/m:instrVoice/@code]">
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
                                                     <h:span>
-                                                        <xf:output value="m:instrVoice/@count"/>
-                                                        <xf:output value="m:instrVoice"/>
-                                                        <xf:group ref=".[m:instrVoice/@reg[.!='']]"> (<xf:output value="m:instrVoice/@reg"/>)</xf:group>
+                                                        <xf:output value="@count"/>
+                                                        <xf:output value="."/>
+                                                        <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
-                                                    <xf:delete context="$thisPerfMedium" nodeset="m:performer[m:instrVoice=$thisPerformer/m:instrVoice 
-                                                        or m:instrVoice/@reg=$thisPerformer/m:instrVoice/@reg]"/>
+                                                    <xf:delete context="$thisInstrumentation" nodeset="m:instrVoice[.=$thisPerformer/m:instrVoice 
+                                                        or @code=$thisPerformer/@code]"/>
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
-                                        <xf:group ref=".[not(m:instrVoice=$thisPerfMedium/m:performer/m:instrVoice 
-                                            or m:instrVoice/@reg=$thisPerfMedium/m:performer/m:instrVoice/@reg)]">
+                                        <xf:group ref=".[not(.=$thisPerfMedium/m:instrVoice 
+                                            or @code=$thisPerfMedium/m:instrVoice/@code)]">
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this performer"/>
                                                     <h:span class="disabled">
-                                                        <xf:output value="m:instrVoice/@count"/>
-                                                        <xf:output value="m:instrVoice"/>
-                                                        <xf:group ref=".[m:instrVoice/@reg[.!='']]"> (<xf:output value="m:instrVoice/@reg"/>)</xf:group>
+                                                        <xf:output value="@count"/>
+                                                        <xf:output value="."/>
+                                                        <xf:group ref="@code[.!='']"> (<xf:output value="."/>)</xf:group>
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <!-- put a copy in the temp instance and generate new @id before putting it in place -->
                                                     <xf:delete context="instance('temp')/element" nodeset="*"/>
-                                                    <xf:insert context="instance('temp')/element" nodeset="m:performer" origin="$thisPerformer"/>
+                                                    <xf:insert context="instance('temp')/element" nodeset="m:instrVoice" origin="$thisPerformer"/>
                                                     <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-                                                    <xf:insert context="$thisPerfMedium" nodeset="m:performer" 
-                                                        origin="instance('temp')/element/m:performer"/>
+                                                    <xf:insert context="$thisPerfMedium" nodeset="m:instrVoice" 
+                                                        origin="instance('temp')/element/m:instrVoice"/>
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
@@ -526,26 +528,26 @@
                         <!-- end select performers -->
                         
                         <!-- end instrumentation selection -->
-
-
+                        
+                        
                         <!--  cast selection -->
-                        <xxf:variable name="topLevelCastList" select="ancestor-or-self::m:expression[local-name(../..)='work']/m:castList"/>
+                        <xxf:variable name="topLevelCastList" select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:castList"/>
                         <xf:group ref=".[$topLevelCastList[*]]" class="instr_subselection">
                             <h:hr/>
-                            <h:span class="blocklabel strong">Cast list (characters) selection <h:a class="help">?<h:span 
-                                class="comment">A sub-selection of the charactersdefined at version level may 
+                            <h:span class="blocklabel strong">Roles (characters) selection <h:a class="help">?<h:span 
+                                class="comment">A sub-selection of the roles defined at version level may 
                                 be specified here.
                             </h:span></h:a></h:span>
-                            <xxf:variable name="thisCastList" select="m:castList"/>
+                            <xxf:variable name="thisCastList" select="m:perfMedium/m:castList"/>
                             <dcm:create nodeset="m:castlist"
-                                label="Characters"
-                                origin="instance('empty-instance')//m:expression/m:componentGrp/m:expression/m:castList"/>
+                                label="Roles"
+                                origin="instance('empty-instance')//m:expression/m:componentGrp/m:expression/m:perfMedium/m:castList"/>
                             <xf:group ref="$thisCastList">
                                 
                                 <xf:repeat nodeset="topLevelCastList/m:castItem">
-                                    
-<!-- change node names etc. from here... -->                                    
-                                    <xxf:variable name="thisPerformer" select="."/>
+
+                                    <xxf:variable name="thisCast" select="."/>
+                                    <!-- change node names etc. from here... -->                                    
                                     <h:div>
                                         <xf:group ref=".[m:instrVoice=$thisPerfMedium/m:performer/m:instrVoice 
                                             or m:instrVoice/@reg=$thisPerfMedium/m:performer/m:instrVoice/@reg]">
@@ -604,9 +606,7 @@
             
         </xf:group>
         
-        <xf:group ref=".[instance('parameters')/dcm:code_inspector='true']">
-            <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
-        </xf:group>
+        <xi:include href="includes/code-inspector.xml" parse="xml"/>
         <h:br clear="all"/>   
         
         <xi:include href="edit-form-footer.xml" parse="xml"/>

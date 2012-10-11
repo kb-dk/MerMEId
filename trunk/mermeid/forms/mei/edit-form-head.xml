@@ -139,9 +139,7 @@
       xxf:calculate="false"
       resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
       method="put"
-      replace="instance"
-      xxf:username="{instance('parameters')/dcm:exist_user}"
-      xxf:password="{instance('parameters')/dcm:exist_pwd}"/>
+      replace="instance"/>
 
     <xf:submission id="load-fileList"
       method="get" 

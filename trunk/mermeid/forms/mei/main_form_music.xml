@@ -620,14 +620,11 @@
 													<xf:label><xf:output value="."/></xf:label>
 													<xf:value ref="@xml:id"></xf:value>
 												</xf:itemset>
-												
-<!-- Some problem here -->												
-<!--setvalue was: <xf:setvalue ref="$binding/m:perfMedium/m:castList/m:castItem[index('repeat-cast')]/m:roleDesc[$pos]/@xml:lang" value="$lang"/>
 												<xf:action ev:event="xforms-value-changed">
 													<xxf:variable name="lang" select="."/>
+													<!--<xf:setvalue ref="$binding/m:perfMedium/m:castList/m:castItem[index('repeat-cast')]/m:roleDesc[$pos]/@xml:lang" value="$lang"/>-->
 													<xf:setvalue ref="../../../m:roleDesc[$pos]/@xml:lang" value="$lang"/>
 												</xf:action>
-end problem -->
 											</xf:select1>
 											<!-- edit buttons --> 
 											<h:span class="editmenu" style="margin-left: 8px;">
@@ -1029,9 +1026,7 @@ end problem -->
 		</h:div>
 	</xf:group>
 	
-	<xf:group ref=".[instance('parameters')/dcm:code_inspector='true']">
-		<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
-	</xf:group>
+	<xi:include href="includes/code-inspector.xml" parse="xml"/>
 	<h:br clear="all"/>
 	
 </h:div>
