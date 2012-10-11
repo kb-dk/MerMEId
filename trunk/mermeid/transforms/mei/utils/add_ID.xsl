@@ -6,6 +6,7 @@
     xmlns:m="http://www.music-encoding.org/ns/mei" 
     xmlns:t="http://www.tei-c.org/ns/1.0" 
     exclude-result-prefixes="m xsl"
+    xmlns:uuid="java:java.util.UUID"
     version="2.0">
     
     <xsl:template match="@*|*">
@@ -19,22 +20,31 @@
         <xsl:element name="{$element_name}">
             <xsl:if test="not(@xml:id)">
                 <xsl:attribute name="xml:id">
-                    <xsl:value-of select="concat($element_name,'_',generate-id(.))"/><xsl:number level="any"/>
+                    <xsl:value-of select="concat($element_name,'_',generate-id(.))"/><xsl:number level="any" count="//node()" />
                 </xsl:attribute>
             </xsl:if>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:element>
     </xsl:template>
+
+    <xsl:template match="t:listBibl">
+      <xsl:element name="listBibl" namespace="http://www.tei-c.org/ns/1.0"> 
+	<xsl:apply-templates select="@*"/>
+	<xsl:attribute name="xml:id">
+	  <xsl:value-of select="concat('listBibl_',uuid:randomUUID())"/><xsl:number level="any"  count="//node()" />
+	</xsl:attribute>
+	<xsl:apply-templates select="node()"/>
+      </xsl:element>
+    </xsl:template>
         
     <xsl:template match="t:bibl">
         <xsl:variable name="element_name" select="local-name()"/>
         <xsl:element name="{$element_name}" namespace="http://www.tei-c.org/ns/1.0"> 
-            <xsl:if test="not(@xml:id)">
-                <xsl:attribute name="xml:id">
-                    <xsl:value-of select="concat($element_name,'_',generate-id(.))"/><xsl:number level="any"/>
-                </xsl:attribute>
-            </xsl:if>
-            <xsl:apply-templates select="@*|node()"/>
+	  <xsl:apply-templates select="@*"/>
+	  <xsl:attribute name="xml:id">
+	    <xsl:value-of select="concat($element_name,'_',generate-id(.))"/><xsl:number level="any"  count="//node()" />
+	  </xsl:attribute>
+	  <xsl:apply-templates select="node()"/>
         </xsl:element>
     </xsl:template>
     
