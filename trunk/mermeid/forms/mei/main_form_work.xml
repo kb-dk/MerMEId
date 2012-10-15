@@ -245,6 +245,9 @@
 									<h:a class="help">?<h:span class="comment">A general description of or introduction to the work</h:span></h:a>
 								</xf:label>
 							</xf:textarea>
+					
+<!--<h:br/>TinyMCE:
+<fr:tinymce ref="."/>-->							
 							<dcm:element-buttons-typed triggers="remove" 
 								index="repeat_work_description" 
 								nodeset="m:annot[@type='general_description']" 
