@@ -345,7 +345,6 @@
 				
 				<!-- performers -->
 				<xsl:apply-templates select="m:perfMedium[*//m:instrVoice/text()]"/>
-				<xsl:apply-templates select="m:castList[m:castItem/m:role/m:ref/m:name[normalize-space(.)]]"/>		
 				
 				<!-- meter, key, incipit – only relevant at this level in single movement works -->
 				<xsl:apply-templates select="m:tempo[text()]"/>
@@ -370,7 +369,7 @@
 				</xsl:for-each>
 				
 				<!-- components (movements) -->
-				<xsl:for-each select="m:componentGrp[normalize-space(concat(*//title[.!=''][1],*//tempo[.!=''][1],*//@n[.!=''][1],*//@target[.!=''][1],*//text()[1]))]">
+				<xsl:for-each select="m:componentGrp[normalize-space(*//text()[1]) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">
 					
 					<xsl:variable name="mdiv_id" 
 						select="concat('movements',generate-id(),position())"/>
@@ -892,67 +891,68 @@
 	<!-- work-related templates -->
 	
 	<xsl:template match="m:perfMedium">
-		<p>
-			<xsl:if test="position()=1">
-				<span class="label">Instrumentation: </span>
-			</xsl:if>
-			
-			<xsl:for-each select="m:ensemble">
-				<xsl:if test="m:instrVoice[text()]">
-					<xsl:apply-templates select="m:instrVoice"/>
-					<xsl:if test="m:performer[m:instrVoice[text()]]"><xsl:text>:</xsl:text></xsl:if>
-					<xsl:text> </xsl:text>
+		<xsl:for-each select="m:instrumentation">
+			<p>
+				<xsl:if test="position()=1">
+					<span class="label">Instrumentation: </span>
 				</xsl:if>
-				<xsl:for-each select="m:performer">
+				
+				<xsl:for-each select="m:instrVoiceGrp">
+					<xsl:if test="m:head[text()]">
+						<xsl:value-of select="m:head"/>
+						<xsl:if test="m:instrVoice[text()]"><xsl:text>:</xsl:text></xsl:if>
+						<xsl:text> </xsl:text>
+					</xsl:if>
 					<xsl:for-each select="m:instrVoice[text()]">
 						<xsl:if test="@count &gt; 1">
 							<xsl:apply-templates select="@count"/>
 						</xsl:if>
 						<xsl:text> </xsl:text>
-						<xsl:apply-templates/></xsl:for-each><xsl:if test="position()&lt;last()"><xsl:text>, </xsl:text></xsl:if>
+						<xsl:apply-templates/><xsl:if 
+							test="position()&lt;last()"><xsl:text>, </xsl:text></xsl:if>
+					</xsl:for-each>
+					<br/>
 				</xsl:for-each>
-				<br/>
-			</xsl:for-each>
-			
-			<xsl:for-each select="m:performer[not(m:instrVoice[@solo='true'])]">
-				<xsl:for-each select="m:instrVoice[text()]">
+				
+				<xsl:for-each select="m:instrVoice[not(@solo='true')][text()]">
 					<xsl:if test="@count &gt; 1">
 						<xsl:apply-templates select="@count"/>
 					</xsl:if>
 					<xsl:text> </xsl:text>
-					<xsl:apply-templates/></xsl:for-each><xsl:if 
+					<xsl:apply-templates/><xsl:if 
 						test="position()&lt;last()"><xsl:text>, 
 						</xsl:text></xsl:if>
-			</xsl:for-each>
-			
-			<xsl:if test="count(m:performer/m:instrVoice[@solo='true'])&gt;0">
-				<xsl:if test="count(m:performer[not(m:instrVoice[@solo='true'])])&gt;0">
-					<br/>
-				</xsl:if>
-				<span class="p_heading:">Soloist<xsl:if test="count(m:performer[m:instrVoice[@solo='true']])&gt;1">s</xsl:if>:</span>
-				<xsl:for-each select="m:performer[m:instrVoice[@solo='true']]">
-					<xsl:for-each select="m:instrVoice[text()]">
-						<xsl:if test="@count &gt; 1">
-							<xsl:apply-templates select="@count"/>
-						</xsl:if>
-						<xsl:text> </xsl:text>
-						<xsl:apply-templates/></xsl:for-each><xsl:if 
-							test="position()&lt;last()"><xsl:text>, 
-						</xsl:text></xsl:if>
 				</xsl:for-each>
-			</xsl:if>
-		</p>
+				
+				<xsl:if test="count(m:instrVoice[@solo='true'])&gt;0">
+					<xsl:if test="count(m:instrVoice[not(@solo='true')])&gt;0">
+						<br/>
+					</xsl:if>
+					<span class="p_heading:">Soloist<xsl:if test="count(m:instrVoice[@solo='true'])&gt;1">s</xsl:if>:</span>
+					<xsl:for-each select="m:instrVoice[@solo='true'][text()]">
+							<xsl:if test="@count &gt; 1">
+								<xsl:apply-templates select="@count"/>
+							</xsl:if>
+							<xsl:text> </xsl:text>
+							<xsl:apply-templates/><xsl:if 
+								test="position()&lt;last()"><xsl:text>, 
+								</xsl:text></xsl:if>
+					</xsl:for-each>
+				</xsl:if>
+			</p>
+		</xsl:for-each>
+		<xsl:apply-templates select="m:castList[//*/text()]"/>
 	</xsl:template>
 	
-	<xsl:template match="m:castList[m:castItem/m:role/m:ref/m:name[normalize-space(.)]]">
+	<xsl:template match="m:castList">
 		<p>
 			<span class="label">Characters: </span>
-			<xsl:for-each select="m:castItem/m:role//m:name[count(@xml:lang[.=ancestor-or-self::m:castItem/preceding-sibling::*//@xml:lang])=0 or not(@xml:lang)]">
+			<xsl:for-each select="m:castItem/m:role/m:name[count(@xml:lang[.=ancestor-or-self::m:castItem/preceding-sibling::*//@xml:lang])=0 or not(@xml:lang)]">
 				<!-- iterate over languages -->
 				<xsl:variable name="lang" select="@xml:lang"/>
 				<xsl:element name="span">
 					<xsl:call-template name="maybe_print_lang"/>
-					<xsl:apply-templates select="ancestor-or-self::m:castList" mode="castlist">
+					<xsl:apply-templates select="../../../../m:castList" mode="castlist">
 						<xsl:with-param name="lang" select="$lang"/>
 					</xsl:apply-templates>
 				</xsl:element>
@@ -963,23 +963,10 @@
 	
 	<xsl:template match="m:castList" mode="castlist">
 		<xsl:param name="lang" select="'en'"/>
-<!--		<xsl:for-each 
-			select="m:castItem/m:role/m:ref/m:name[@xml:lang=$lang]">
-			<xsl:variable name="performer"><xsl:value-of 
-				select="/*//m:performer[@xml:id=substring-after(../@target,'#')]/m:instrVoice"/></xsl:variable>
+		<xsl:for-each select="m:castItem/m:role/m:name[@xml:lang=$lang]">
 			<xsl:apply-templates select="."/><xsl:apply-templates 
-				select="ancestor-or-self::m:castItem//m:roleDesc[@xml:lang=$lang]">
-				<xsl:with-param name="perf" select="$performer"/>
-			</xsl:apply-templates><xsl:if 
-					test="position() &lt; last()"><xsl:text>; </xsl:text></xsl:if>
-		</xsl:for-each>-->
-		<xsl:for-each select="m:castItem/m:role/m:ref/m:name[@xml:lang=$lang]">
-			<xsl:variable name="target" select="substring-after(../@target,'#')"/>
-			<xsl:apply-templates select="."/><xsl:apply-templates 
-				select="ancestor-or-self::m:castItem//m:roleDesc[@xml:lang=$lang]"/><xsl:if 
-					test="$target"><xsl:apply-templates 
-						select="/*//m:performer[@xml:id=$target]" 
-						mode="castlist_performer"/></xsl:if><xsl:if 
+				select="../../m:roleDesc[@xml:lang=$lang]"/><xsl:for-each 
+					select="../../m:instrVoice[text()]"> (<xsl:value-of select="."/>)</xsl:for-each><xsl:if 
 				test="position() &lt; last()"><xsl:text>; </xsl:text></xsl:if>
 		</xsl:for-each>
 	</xsl:template>
@@ -988,9 +975,6 @@
 			<xsl:if test="normalize-space(.)">, <xsl:value-of select="."/></xsl:if>
 	</xsl:template>
 	
-	<xsl:template match="m:performer" mode="castlist_performer">
-		<xsl:if test="normalize-space(m:instrVoice[1])"> (<xsl:value-of select="m:instrVoice[1]"/>)</xsl:if>
-	</xsl:template>
 	
 	<!-- history -->		
 	<xsl:template match="m:history">
