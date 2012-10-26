@@ -655,9 +655,9 @@
 		<!-- display title etc. only with components or versions -->
 		<xsl:apply-templates select="m:titleStmt[ancestor-or-self::*[local-name()='componentGrp'] or count(../m:expression)&gt;1]"/>
 		<xsl:apply-templates select="m:tempo[text()]"/>		
-		<xsl:apply-templates select="m:meter[normalize-space(concat(@meter.count,@meter.unit,@meter.sym))]"/>
+		<xsl:apply-templates select="m:meter[normalize-space(concat(@count,@unit,@sym))]"/>
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
-		<xsl:apply-templates select="m:perfMedium[//m:instrVoice or //instrVoiceGrp or //castItem]" mode="subLevel"/>
+		<xsl:apply-templates select="m:perfMedium[m:instrumentation[m:instrVoice or m:instrVoiceGrp] or m:castList/m:castItem]" mode="subLevel"/>
 		<xsl:apply-templates select="m:incip"/>
 		<xsl:apply-templates select="m:componentGrp"/>
 	</xsl:template>
@@ -840,14 +840,14 @@
 		<p>
 			<xsl:if test="position() = 1"><span class="label">Metre: </span></xsl:if>
 			<xsl:choose>
-				<xsl:when test="@meter.count!='' and @meter.unit!=''">
-					<span class="meter"><xsl:value-of select="concat(@meter.count,'/',@meter.unit)"/></span>
+				<xsl:when test="@count!='' and @unit!=''">
+					<span class="meter"><xsl:value-of select="concat(@count,'/',@unit)"/></span>
 				</xsl:when>
 				<xsl:otherwise>
 					<span class="timesig">
 						<xsl:choose>
-							<xsl:when test="@meter.sym='common'">c</xsl:when>
-							<xsl:when test="@meter.sym='cut'">C</xsl:when>
+							<xsl:when test="@sym='common'">c</xsl:when>
+							<xsl:when test="@sym='cut'">C</xsl:when>
 						</xsl:choose>
 					</span>
 				</xsl:otherwise>
@@ -978,18 +978,18 @@
 		<xsl:variable name="perfMedium">			
 			<xsl:element name="perfMedium" namespace="http://www.music-encoding.org/ns/mei">
 				<xsl:element name="instrumentation" namespace="http://www.music-encoding.org/ns/mei">
-					<xsl:variable name="instrVoiceGrps" select="$topLevelInstrumentation/m:instrVoiceGrp[@xml:id=/*//m:expression[@xml:id=$thisExpressionId]//m:instrVoiceGrp/@n]"/>
+					<xsl:variable name="instrVoiceGrps" select="$topLevelInstrumentation/m:instrVoiceGrp[@xml:id=/*//m:expression[@xml:id=$thisExpressionId]/m:perfMedium//m:instrVoiceGrp/@n]"/>
 					<xsl:for-each select="$instrVoiceGrps">
 						<xsl:element name="instrVoiceGrp" namespace="http://www.music-encoding.org/ns/mei">
 							<xsl:copy-of select="m:head"/>
-							<xsl:copy-of select="m:instrVoice[text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]//m:instrVoice/@n]"/>
+							<xsl:copy-of select="m:instrVoice[text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]/m:perfMedium//m:instrVoice/@n]"/>
 						</xsl:element>
 					</xsl:for-each>
-					<xsl:copy-of select="$topLevelInstrumentation/m:instrVoice[text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]//m:instrVoice/@n]"/>
+					<xsl:copy-of select="$topLevelInstrumentation/m:instrVoice[text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]/m:perfMedium/m:instrumentation/m:instrVoice/@n]"/>
 				</xsl:element>
 				<xsl:element name="castList" namespace="http://www.music-encoding.org/ns/mei">
 					<xsl:variable name="topLevelCastList" select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:castList"/>
-					<xsl:copy-of select="$topLevelCastList/m:castItem[//text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]//m:castItem/@n]"/>
+					<xsl:copy-of select="$topLevelCastList/m:castItem[//text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]/m:perfMedium/m:castList/m:castItem/@n]"/>
 				</xsl:element>
 			</xsl:element>
 		</xsl:variable>
