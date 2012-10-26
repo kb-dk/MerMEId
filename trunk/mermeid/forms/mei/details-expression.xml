@@ -414,13 +414,14 @@
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
-                                                    <!-- put a copy in the temp instance and generate new @id before putting it in place -->
+                                                    <!-- put a copy in the temp instance and turn it into a reference before putting it in place -->
                                                     <xf:delete context="instance('temp')/element" nodeset="*"/>
                                                     <xf:insert context="instance('temp')/element" nodeset="m:instrVoiceGrp" origin="$topLevelEnsemble"/>
                                                     <!-- remove child elements -->
                                                     <xf:delete context="instance('temp')/element/m:instrVoiceGrp" nodeset="m:instrVoice"/>
                                                     <!-- move the main element's @xml:id to @n for identification (to do: add attribute @sameas for this?) -->
                                                     <xf:setvalue ref="instance('temp')/element/*[1]/@n" value="instance('temp')/element/*[1]/@xml:id"/>
+                                                    <xf:delete context="instance('temp')/element/*[1]" nodeset="*|@*[name()!='n' and name()!='xml:id']"/>
                                                     <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
                                                     <xf:insert context="$thisInstrumentation" nodeset="m:instrVoiceGrp" 
                                                         origin="instance('temp')/element/m:instrVoiceGrp" at="1" position="before"/>
@@ -473,10 +474,11 @@
                                                                 </h:span>
                                                             </xf:label>
                                                             <xf:action ev:event="DOMActivate">
-                                                                <!-- put a copy in the temp instance and generate new @id before putting it in place -->
+                                                                <!-- put a copy in the temp instance and turn it into a reference before putting it in place -->
                                                                 <xf:delete context="instance('temp')/element" nodeset="*"/>
                                                                 <xf:insert context="instance('temp')/element" nodeset="m:instrVoice" origin="$thisTopLevelPerformer"/>
                                                                 <xf:setvalue ref="instance('temp')/element/*[1]/@n" value="instance('temp')/element/*[1]/@xml:id"/>
+                                                                <xf:delete context="instance('temp')/element/*[1]" nodeset="*|text()|@*[name()!='n' and name()!='xml:id']"/>
                                                                 <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
                                                                 <xxf:variable name="insertPoint" select="count(instance('temp')/element/m:instrVoice/m:head)"/>
                                                                 <xf:insert context="$thisEnsemble" nodeset="*" 
@@ -540,6 +542,7 @@
                                                     <xf:delete context="instance('temp')/element" nodeset="*"/>
                                                     <xf:insert context="instance('temp')/element" nodeset="m:instrVoice" origin="$thisTopLevelPerformer"/>
                                                     <xf:setvalue ref="instance('temp')/element/*[1]/@n" value="instance('temp')/element/*[1]/@xml:id"/>
+                                                    <xf:delete context="instance('temp')/element/*[1]" nodeset="*|text()|@*[name()!='n' and name()!='xml:id']"/>
                                                     <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
                                                     <xxf:variable name="insertPoint" select="count(instance('temp')/element/m:instrVoice/m:head)"/>
                                                     <xf:insert context="$thisInstrumentation" nodeset="*" 
@@ -583,7 +586,7 @@
                                 label="Roles"
                                 origin="instance('empty-instance')//m:expression/m:componentGrp/m:expression/m:perfMedium/m:castList"/>
                             <xf:group ref="$thisCastList">
-                                <xf:repeat nodeset="topLevelCastList/m:castItem">
+                                <xf:repeat nodeset="$topLevelCastList/m:castItem">
                                     <xxf:variable name="thisTopLevelCast" select="."/>
                                     <xxf:variable name="castId" select="@xml:id"/>
                                     <h:div>
@@ -591,7 +594,7 @@
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this role"/>
                                                     <h:span>
-                                                        <xf:output value="m:role[text()][1]"/>
+                                                        <xf:output value="m:role//text()[1]"/>
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -603,7 +606,7 @@
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this role"/>
                                                     <h:span class="disabled">
-                                                        <xf:output value="m:role[text()][1]"/>
+                                                        <xf:output value="m:role//text()[1]"/>
                                                     </h:span>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -611,6 +614,7 @@
                                                     <xf:delete context="instance('temp')/element" nodeset="*"/>
                                                     <xf:insert context="instance('temp')/element" nodeset="m:castItem" origin="$thisTopLevelCast"/>
                                                     <xf:setvalue ref="instance('temp')/element/*[1]/@n" value="instance('temp')/element/*[1]/@xml:id"/>
+                                                    <xf:delete context="instance('temp')/element/*[1]" nodeset="*|@*[name()!='n' and name()!='xml:id']"/>
                                                     <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
                                                     <xf:insert context="$thisCastList" nodeset="*" 
                                                         origin="instance('temp')/element/m:castItem" at="1" position="before"/>

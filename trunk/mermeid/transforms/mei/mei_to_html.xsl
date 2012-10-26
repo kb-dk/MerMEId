@@ -657,7 +657,7 @@
 		<xsl:apply-templates select="m:tempo[text()]"/>		
 		<xsl:apply-templates select="m:meter[normalize-space(concat(@meter.count,@meter.unit,@meter.sym))]"/>
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
-		<xsl:apply-templates select="m:perfMedium[*//m:instrVoice/text()]"/>
+		<xsl:apply-templates select="m:perfMedium[//m:instrVoice or //instrVoiceGrp or //castItem]" mode="subLevel"/>
 		<xsl:apply-templates select="m:incip"/>
 		<xsl:apply-templates select="m:componentGrp"/>
 	</xsl:template>
@@ -890,63 +890,57 @@
 	
 	<!-- work-related templates -->
 	
+	<!-- perfMedium templates -->
 	<xsl:template match="m:perfMedium">
-		<xsl:for-each select="m:instrumentation">
+		<xsl:param name="full" select="true()"/>
+		<xsl:for-each select="m:instrumentation[*]">
 			<p>
 				<xsl:if test="position()=1">
-					<span class="label">Instrumentation: </span>
+					<span class="label">Instrumentation: </span><br/>
 				</xsl:if>
-				
-				<xsl:for-each select="m:instrVoiceGrp">
-					<xsl:if test="m:head[text()]">
-						<xsl:value-of select="m:head"/>
-						<xsl:if test="m:instrVoice[text()]"><xsl:text>:</xsl:text></xsl:if>
-						<xsl:text> </xsl:text>
-					</xsl:if>
-					<xsl:for-each select="m:instrVoice[text()]">
-						<xsl:if test="@count &gt; 1">
-							<xsl:apply-templates select="@count"/>
-						</xsl:if>
-						<xsl:text> </xsl:text>
-						<xsl:apply-templates/><xsl:if 
-							test="position()&lt;last()"><xsl:text>, </xsl:text></xsl:if>
-					</xsl:for-each>
-					<br/>
-				</xsl:for-each>
-				
-				<xsl:for-each select="m:instrVoice[not(@solo='true')][text()]">
-					<xsl:if test="@count &gt; 1">
-						<xsl:apply-templates select="@count"/>
-					</xsl:if>
-					<xsl:text> </xsl:text>
-					<xsl:apply-templates/><xsl:if 
-						test="position()&lt;last()"><xsl:text>, 
-						</xsl:text></xsl:if>
-				</xsl:for-each>
-				
+				<xsl:apply-templates select="m:instrVoiceGrp"/>
+				<xsl:apply-templates select="m:instrVoice[not(@solo='true')][text()]"/>
 				<xsl:if test="count(m:instrVoice[@solo='true'])&gt;0">
 					<xsl:if test="count(m:instrVoice[not(@solo='true')])&gt;0">
 						<br/>
 					</xsl:if>
 					<span class="p_heading:">Soloist<xsl:if test="count(m:instrVoice[@solo='true'])&gt;1">s</xsl:if>:</span>
-					<xsl:for-each select="m:instrVoice[@solo='true'][text()]">
-							<xsl:if test="@count &gt; 1">
-								<xsl:apply-templates select="@count"/>
-							</xsl:if>
-							<xsl:text> </xsl:text>
-							<xsl:apply-templates/><xsl:if 
-								test="position()&lt;last()"><xsl:text>, 
-								</xsl:text></xsl:if>
-					</xsl:for-each>
+					<xsl:apply-templates select="m:instrVoice[@solo='true'][text()]"/>
 				</xsl:if>
 			</p>
 		</xsl:for-each>
-		<xsl:apply-templates select="m:castList[//*/text()]"/>
+		<xsl:apply-templates select="m:castList[//*/text()]">
+			<xsl:with-param name="full" select="$full"/>
+		</xsl:apply-templates>
 	</xsl:template>
 	
+	<xsl:template match="m:instrVoiceGrp">
+		<xsl:if test="m:head[text()]">
+			<xsl:value-of select="m:head"/>
+			<xsl:if test="m:instrVoice[text()]"><xsl:text>:</xsl:text></xsl:if>
+			<xsl:text> </xsl:text>
+		</xsl:if>
+		<xsl:for-each select="m:instrVoice[text()]">
+			<xsl:apply-templates select="."/><xsl:if 
+				test="position()&lt;last()"><xsl:text>, </xsl:text></xsl:if>
+		</xsl:for-each>
+		<br/>
+	</xsl:template>
+	
+	<xsl:template match="m:instrVoice">
+		<xsl:if test="@count &gt; 1">
+			<xsl:apply-templates select="@count"/>
+		</xsl:if>
+		<xsl:text> </xsl:text>
+		<xsl:apply-templates/><xsl:if 
+			test="position()&lt;last()"><xsl:text>, 
+		</xsl:text></xsl:if>
+	</xsl:template>
+
 	<xsl:template match="m:castList">
+		<xsl:param name="full" select="true()"/>
 		<p>
-			<span class="label">Characters: </span>
+			<span class="label">Roles: </span>
 			<xsl:for-each select="m:castItem/m:role/m:name[count(@xml:lang[.=ancestor-or-self::m:castItem/preceding-sibling::*//@xml:lang])=0 or not(@xml:lang)]">
 				<!-- iterate over languages -->
 				<xsl:variable name="lang" select="@xml:lang"/>
@@ -954,6 +948,7 @@
 					<xsl:call-template name="maybe_print_lang"/>
 					<xsl:apply-templates select="../../../../m:castList" mode="castlist">
 						<xsl:with-param name="lang" select="$lang"/>
+						<xsl:with-param name="full" select="$full"></xsl:with-param>
 					</xsl:apply-templates>
 				</xsl:element>
 				<xsl:if test="position() &lt; last()"><br/></xsl:if>
@@ -963,10 +958,11 @@
 	
 	<xsl:template match="m:castList" mode="castlist">
 		<xsl:param name="lang" select="'en'"/>
+		<xsl:param name="full" select="true()"></xsl:param>
 		<xsl:for-each select="m:castItem/m:role/m:name[@xml:lang=$lang]">
-			<xsl:apply-templates select="."/><xsl:apply-templates 
+			<xsl:apply-templates select="."/><xsl:if test="$full"><xsl:apply-templates 
 				select="../../m:roleDesc[@xml:lang=$lang]"/><xsl:for-each 
-					select="../../m:instrVoice[text()]"> (<xsl:value-of select="."/>)</xsl:for-each><xsl:if 
+					select="../../m:instrVoice[text()]"> (<xsl:value-of select="."/>)</xsl:for-each></xsl:if><xsl:if 
 				test="position() &lt; last()"><xsl:text>; </xsl:text></xsl:if>
 		</xsl:for-each>
 	</xsl:template>
@@ -974,7 +970,34 @@
 	<xsl:template match="m:roleDesc">
 			<xsl:if test="normalize-space(.)">, <xsl:value-of select="."/></xsl:if>
 	</xsl:template>
-	
+
+	<xsl:template match="m:perfMedium" mode="subLevel">
+		<xsl:variable name="topLevelInstrumentation" select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:instrumentation"/>
+		<xsl:variable name="thisExpressionId" select="parent::node()/@xml:id"/>
+		<!-- create a <perfMedium> result tree containing a copy of the performers referenced in this movement -->
+		<xsl:variable name="perfMedium">			
+			<xsl:element name="perfMedium" namespace="http://www.music-encoding.org/ns/mei">
+				<xsl:element name="instrumentation" namespace="http://www.music-encoding.org/ns/mei">
+					<xsl:variable name="instrVoiceGrps" select="$topLevelInstrumentation/m:instrVoiceGrp[@xml:id=/*//m:expression[@xml:id=$thisExpressionId]//m:instrVoiceGrp/@n]"/>
+					<xsl:for-each select="$instrVoiceGrps">
+						<xsl:element name="instrVoiceGrp" namespace="http://www.music-encoding.org/ns/mei">
+							<xsl:copy-of select="m:head"/>
+							<xsl:copy-of select="m:instrVoice[text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]//m:instrVoice/@n]"/>
+						</xsl:element>
+					</xsl:for-each>
+					<xsl:copy-of select="$topLevelInstrumentation/m:instrVoice[text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]//m:instrVoice/@n]"/>
+				</xsl:element>
+				<xsl:element name="castList" namespace="http://www.music-encoding.org/ns/mei">
+					<xsl:variable name="topLevelCastList" select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:castList"/>
+					<xsl:copy-of select="$topLevelCastList/m:castItem[//text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]//m:castItem/@n]"/>
+				</xsl:element>
+			</xsl:element>
+		</xsl:variable>
+		<xsl:apply-templates select="exsl:node-set($perfMedium)/m:perfMedium">
+			<xsl:with-param name="full" select="false()"/>
+		</xsl:apply-templates>
+	</xsl:template>
+	<!-- end perfMedium -->
 	
 	<!-- history -->		
 	<xsl:template match="m:history">
