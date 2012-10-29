@@ -11,9 +11,6 @@
 		<h:div class="inputdiv">
 			
 			<xf:repeat nodeset="m:expression" id="repeat-expression">
-				<xf:action ev:event="DOMFocusIn">
-					<xf:setvalue ref="instance('temp')/music_outline/exp" value="index('repeat-expression')"/>
-				</xf:action>
 				<h:fieldset>
 					<h:legend>Version
 						<dcm:id/>
@@ -41,8 +38,6 @@
 								"Discarded version". Enter a version title only if you 
 								want to distinguish different versions of the work. 
 								Otherwise leave empty.</h:span></h:a>
-							<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" 
-								alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
 						</h:div>
 						<xf:group ref="m:titleStmt">
 							<xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
@@ -111,10 +106,10 @@
 								label="Add metre"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:meter"/>
 							<xf:group ref="m:meter">
-								<xf:input ref="@meter.count" class="minimal_length">
+								<xf:input ref="@count" class="minimal_length">
 									<xf:label class="fixed_width_short">Metre</xf:label>
-								</xf:input>/ <xf:input ref="@meter.unit" class="minimal_length"/> or symbol: 
-								<xf:select1	ref="@meter.sym" class="auto_length">
+								</xf:input>/ <xf:input ref="@unit" class="minimal_length"/> or symbol: 
+								<xf:select1	ref="@sym" class="auto_length">
 									<xf:item>
 										<xf:label>-</xf:label>
 										<xf:value/>
@@ -152,7 +147,8 @@
 								</xf:trigger>
 								<dcm:attribute-editor/>
 							</xf:group>
-						</h:div>                                    
+						</h:div>   
+						
 						<h:span class="blocklabel strong">Incipits <h:a class="help">?<h:span class="comment">Both 
 							music and text incipits may be added. Music incipits can be added as links to graphic files
 							or entered using an encoding such as <em>Plaine &amp; Easie Code</em>.
@@ -160,12 +156,12 @@
 						<dcm:create nodeset="m:incip"
 							label="Add incipits"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip"/>                        
-						<h:span class="blocklabel">Music incipit graphics</h:span>
 						<dcm:create ref="m:incip"
 							nodeset="m:graphic"
 							label="Add link to graphics"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>                        
 						<xf:group ref=".[m:incip/m:graphic]">
+							<h:span class="blocklabel">Music incipit graphics</h:span>
 							<h:span class="blocklabel">URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
 								"http://example.com/incipits/lowres/116.png"</h:span></h:a></h:span>
 						</xf:group>
@@ -199,56 +195,63 @@
 							</h:div>
 						</xf:repeat>
 						
-						<h:span class="blocklabel">Music incipit code <h:a class="help">?<h:span 
-							class="comment">One-line incipit encoding, using e.g. <em>Plaine &amp; Easie Code</em></h:span></h:a></h:span>
-						<dcm:create ref="m:incip"
-							nodeset="m:incipCode"
-							label="Add music incipit code"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>                        
-						<xf:repeat nodeset="m:incip/m:incipCode" id="incipcode-repeat">
-							<xf:input ref="@analog">
-								<xf:label>Code language <h:a class="help">?<h:span class="comment">The name of the encoding language used, 
-									e.g. "Plaine &amp; Easie Code"</h:span></h:a></xf:label>
-							</xf:input>
-							<xf:input ref="." class="maxlong">
-								<xf:label> Code <h:a class="help">?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
-							</xf:input>
-							<dcm:element-buttons
-								triggers="add remove" 
-								nodeset="m:incipCode" 
-								index="incipcode-repeat"
+						<h:div>
+							<dcm:create ref="m:incip"
+								nodeset="m:incipCode"
+								label="Add music incipit code"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
-							<dcm:attribute-editor/>
-						</xf:repeat>
-						
-						<h:span class="blocklabel">Text incipit
-							<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
-						</h:span>
-						<dcm:create ref="m:incip"
-							nodeset="m:incipText"
-							label="Add text incipit"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>                        
-						<dcm:create ref="m:incip/m:incipText"
-							nodeset="m:p"
-							label="Add text incipit"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>                        
-						<xf:repeat nodeset="m:incip/m:incipText/m:p" id="text-incipit-repeat" class="input_group">
-							<xf:input ref="." class="maxlong"><xf:label/></xf:input> 
-							<xf:select1 ref="@xml:lang" xxf:refresh-items="false">
-								<xf:label/>
-								<xf:itemset nodeset="instance('languages')/language">
-									<xf:label><xf:output value="."/></xf:label>
-									<xf:value ref="@xml:id"></xf:value>
-								</xf:itemset>
-							</xf:select1>                                
-							<dcm:element-buttons
-								triggers="add remove" 
-								nodeset="m:p" 
-								index="text-incipit-repeat"
+						</h:div>
+						<xf:group ref=".[m:incip/m:incipCode]">
+							<h:span class="blocklabel">Music incipit code <h:a class="help">?<h:span 
+								class="comment">One-line incipit encoding, using e.g. <em>Plaine &amp; Easie Code</em></h:span></h:a></h:span>
+							<xf:repeat nodeset="m:incip/m:incipCode" id="incipcode-repeat">
+								<xf:input ref="@analog">
+									<xf:label>Code language <h:a class="help">?<h:span class="comment">The name of the encoding language used, 
+										e.g. "Plaine &amp; Easie Code"</h:span></h:a></xf:label>
+								</xf:input>
+								<xf:input ref="." class="maxlong">
+									<xf:label> Code <h:a class="help">?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
+								</xf:input>
+								<dcm:element-buttons
+									triggers="add remove" 
+									nodeset="m:incipCode" 
+									index="incipcode-repeat"
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
+								<dcm:attribute-editor/>
+							</xf:repeat>
+						</xf:group>
+						<h:div>
+							<dcm:create ref="m:incip"
+								nodeset="m:incipText"
+								label="Add text incipit"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>                        
+							<dcm:create ref="m:incip/m:incipText"
+								nodeset="m:p"
+								label="Add text incipit"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
-							<dcm:attribute-editor/>
-							<h:br/>
-						</xf:repeat>
+						</h:div>
+						<xf:group ref=".[m:incip/m:incipText/m:p]">
+							<h:span class="blocklabel">Text incipit
+								<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+							</h:span>
+							<xf:repeat nodeset="m:incip/m:incipText/m:p" id="text-incipit-repeat" class="input_group">
+								<xf:input ref="." class="maxlong"><xf:label/></xf:input> 
+								<xf:select1 ref="@xml:lang" xxf:refresh-items="false">
+									<xf:label/>
+									<xf:itemset nodeset="instance('languages')/language">
+										<xf:label><xf:output value="."/></xf:label>
+										<xf:value ref="@xml:id"></xf:value>
+									</xf:itemset>
+								</xf:select1>                                
+								<dcm:element-buttons
+									triggers="add remove" 
+									nodeset="m:p" 
+									index="text-incipit-repeat"
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
+								<dcm:attribute-editor/>
+								<h:br/>
+							</xf:repeat>
+						</xf:group>
 					</h:fieldset>
 					
 					<xf:group ref="m:titleStmt">
@@ -334,7 +337,7 @@
 						
 						<dcm:create  
 							nodeset="m:perfMedium"
-							label="Add instrumentation and cast"
+							label="Add instruments &amp; roles"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium"/>
 						
 						<xf:group ref="m:perfMedium">
@@ -721,11 +724,9 @@
 										</xf:group>
 										<!-- end role performer(s) -->
 										
-										
 									</h:fieldset>
 								</xf:repeat>
 							</xf:group>
-							
 							
 						</xf:group>
 						
@@ -793,44 +794,36 @@
 											</xf:group>
 										</h:td>
 										<h:td class="buttons_cell" style="text-align:right;">
+					
+											<h:img src="http:/editor/images/arrow_left_disabled.png" class="button_patch"/>
 											
-											<xf:group ref=".[not(m:componentGrp)]">
-												<xf:trigger>
-													<xf:label><h:img src="http:/editor/images/sub-element.png" alt="sub-element"/> Add sub-component group</xf:label>
-													<xf:action ev:event="DOMActivate">
-														<xf:insert nodeset="m:componentGrp" 
-															origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp"/>
-														<xf:dispatch name="id-update" target="form-group"/>
-													</xf:action>
-												</xf:trigger>
+											<xxf:variable name="tooManySublevels" select="m:componentGrp/m:expression/m:componentGrp/m:expression"/> 
+											<xxf:variable name="expTarget" select="preceding-sibling::m:expression[1][not($tooManySublevels)]"/>
+											<xf:group ref=".[not($expTarget)]">
+												<h:img src="http:/editor/images/arrow_right_disabled.png" class="button_patch"/><xf:output value="''"/>
 											</xf:group>
-											
-											<xf:group ref="m:componentGrp">
-												
-												<xf:group ref=".[not(m:expression)]">
-													<xf:trigger appearance="minimal">
-														<xf:label><h:img src="http:/editor/images/sub-element.png" alt="sub-element" title="Add sub-component"/></xf:label>
-														<xf:action ev:event="DOMActivate">
-															<xf:insert context="."
-																nodeset="m:expression"
-																origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
-															<xf:dispatch name="id-update" target="form-group"/>
+											<xf:trigger appearance="minimal" ref=".[$expTarget]">
+												<xf:label><h:img src="http:/editor/images/arrow_right.png" alt="move right" title="Make this a sub-component (child) of the above"/></xf:label>
+												<xf:action ev:event="DOMActivate">
+													<xxf:variable name="expOrig" select="."/>
+													<xf:action if="not($expTarget/m:componentGrp)">
+														<!-- insert <componentGrp> if it doesn't exist -->
+														<xxf:variable name="origin" select="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
+														<xf:insert context="$expTarget" origin="$origin" nodeset="m:componentGrp" at="1" position="before"/>
+														<!-- move the componentGrp into place according to the empty model if necessary-->
+														<xxf:variable name="emptyDocExp" select="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
+														<xf:action while="$emptyDocExp/preceding-sibling::*[local-name()=local-name($expTarget/m:componentGrp/following-sibling::*[1])]
+															and count($expTarget/m:componentGrp/preceding-sibling::*)+1 &lt; count($expTarget/*)">
+															<xxf:variable name="pos" select="count($expTarget/m:componentGrp/preceding-sibling::*)+1"/>
+															<xf:insert context="$expTarget" origin="m:componentGrp"
+																nodeset="*" at="$pos+1" position="after"/>
+															<xf:delete context="$expTarget" nodeset="*" at="$pos"/>	
 														</xf:action>
-													</xf:trigger>
-													<!-- Option: copy to sub-component -->
-													<!--<xf:trigger appearance="minimal">
-														<xf:label><h:img src="http:/editor/images/copy-to-sub-element.png" alt="copy to sub-element" title="Copy to sub-component"/></xf:label>
-														<xf:action ev:event="DOMActivate">
-														<xf:insert context="." nodeset="m:expression" origin=".."/>
-														<xf:setvalue ref="m:expression/@xml:id" value="''"/>
-														<xf:action while="count(m:expression//@xml:id[.!='']) &gt; 0">
-														<xf:setvalue ref="m:expression//@xml:id[.!='']" value="''"/>
-														</xf:action>                                  
-														<xf:dispatch name="id-update" target="form-group"/>
-														</xf:action>
-														</xf:trigger>-->
-												</xf:group>
-											</xf:group>	
+													</xf:action>
+													<xf:insert context="$expTarget/m:componentGrp" nodeset="m:expression" origin="$expOrig"/>
+													<xf:delete context="." nodeset="." at="index('component-list1')"/>
+												</xf:action>
+											</xf:trigger>
 											
 											<dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list1" 
 												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>
@@ -886,45 +879,43 @@
 																</xf:group>
 															</h:td>
 															<h:td class="buttons_cell" style="text-align:right;">
+											
+																<xf:trigger appearance="minimal">
+																	<xf:label><h:img src="http:/editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
+																	<xf:action ev:event="DOMActivate">
+																		<xxf:variable name="origin" select="."/>
+																		<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list1')+1" position="after"/>
+																		<xf:delete nodeset="."/>
+																	</xf:action>
+																</xf:trigger>
 																
-																<xf:group ref=".[not(m:componentGrp)]">
-																	<xf:trigger>
-																		<xf:label><h:img src="http:/editor/images/sub-element.png" alt="sub-element"/> Add sub-component group</xf:label>
-																		<xf:action ev:event="DOMActivate">
-																			<xf:insert nodeset="m:componentGrp" 
-																				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp"/>
-																			<xf:dispatch name="id-update" target="form-group"/>
-																		</xf:action>
-																	</xf:trigger>
+																<xxf:variable name="tooManySublevels" select="m:componentGrp/m:expression"/> 
+																<xxf:variable name="expTarget" select="preceding-sibling::m:expression[1][not($tooManySublevels)]"/>
+																<xf:group ref=".[not($expTarget)]">
+																	<h:img src="http:/editor/images/arrow_right_disabled.png" class="button_patch"/><xf:output value="''"/>
 																</xf:group>
-																
-																<xf:group ref="m:componentGrp">
-																	<xf:group ref=".[not(m:expression)]">
-																		<xf:trigger appearance="minimal">
-																			<xf:label><h:img src="http:/editor/images/sub-element.png" alt="sub-element" title="Add sub-component"/></xf:label>
-																			<xf:action ev:event="DOMActivate">
-																				<xf:insert context="."
-																					nodeset="m:expression"
-																					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
-																				<xf:dispatch name="id-update" target="form-group"/>
+																<xf:trigger appearance="minimal" ref=".[$expTarget]">
+																	<xf:label><h:img src="http:/editor/images/arrow_right.png" alt="move right" title="Make this a sub-component (child) of the above"/></xf:label>
+																	<xf:action ev:event="DOMActivate">
+																		<xxf:variable name="expOrig" select="."/>
+																		<xf:action if="not($expTarget/m:componentGrp)">
+																			<!-- insert <componentGrp> if it doesn't exist -->
+																			<xxf:variable name="origin" select="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
+																			<xf:insert context="$expTarget" origin="$origin" nodeset="m:componentGrp" at="1" position="before"/>
+																			<!-- move the componentGrp into place according to the empty model if necessary-->
+																			<xxf:variable name="emptyDocExp" select="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
+																			<xf:action while="$emptyDocExp/preceding-sibling::*[local-name()=local-name($expTarget/m:componentGrp/following-sibling::*[1])]
+																				and count($expTarget/m:componentGrp/preceding-sibling::*)+1 &lt; count($expTarget/*)">
+																				<xxf:variable name="pos" select="count($expTarget/m:componentGrp/preceding-sibling::*)+1"/>
+																				<xf:insert context="$expTarget" origin="m:componentGrp"
+																					nodeset="*" at="$pos+1" position="after"/>
+																				<xf:delete context="$expTarget" nodeset="*" at="$pos"/>	
 																			</xf:action>
-																		</xf:trigger>
-																		<!-- Optional: copy to sub-component -->
-																		<!--<xf:trigger appearance="minimal">
-																			<xf:label><h:img src="http:/editor/images/copy-to-sub-element.png" alt="copy to sub-element" title="Copy to sub-component"/></xf:label>
-																			<xf:action ev:event="DOMActivate">
-																			<xf:insert context="."
-																			nodeset="m:expression"
-																			origin=".."/>
-																			<xf:setvalue ref="m:expression/@xml:id" value="''"/>
-																			<xf:action while="count(m:expression//@xml:id[.!='']) &gt; 0">
-																			<xf:setvalue ref="m:expression//@xml:id[.!='']" value="''"/>
-																			</xf:action>                                  
-																			<xf:dispatch name="id-update" target="form-group"/>
-																			</xf:action>
-																			</xf:trigger>-->
-																	</xf:group>
-																</xf:group>	
+																		</xf:action>
+																		<xf:insert context="$expTarget/m:componentGrp" nodeset="m:expression" origin="$expOrig"/>
+																		<xf:delete context="." nodeset="." at="index('component-list1')"/>
+																	</xf:action>
+																</xf:trigger>
 																
 																<dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list2" 
 																	origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>
@@ -987,7 +978,20 @@
 																						<h:small>File must be saved before components can be edited</h:small>
 																					</xf:group>
 																				</h:td>
-																				<h:td class="buttons_cell" style="text-align:right;"><dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list3" 
+																				<h:td class="buttons_cell" style="text-align:right;">
+																					
+																					<xf:trigger appearance="minimal">
+																						<xf:label><h:img src="http:/editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
+																						<xf:action ev:event="DOMActivate">
+																							<xxf:variable name="origin" select="."/>
+																							<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list1')+1" position="after"/>
+																							<xf:delete nodeset="."/>
+																						</xf:action>
+																					</xf:trigger>
+																					
+																					<h:img src="http:/editor/images/arrow_right_disabled.png" class="button_patch"/>
+																					
+																					<dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list3" 
 																					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>
 																					<dcm:attribute-editor ref="."/>
 																				</h:td>
