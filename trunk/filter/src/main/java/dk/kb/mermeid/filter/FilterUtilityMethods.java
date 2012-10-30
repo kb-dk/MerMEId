@@ -8,7 +8,20 @@ package dk.kb.mermeid.filter;
  */
 public class FilterUtilityMethods  {
 
-    private String uri_base = "/storage/dcm";
+    /*
+
+      The filter is addressed using a context root ending with something
+      stored in "filter" parameter in the http_filter.xml. Typically "filter/"
+      
+      A MerMEId record is typically retrieved using filter/dcm/filname.xml
+
+      We will refer to "filter" as context "dcm" as database and filename.xml
+      as "record"
+
+    */
+
+    private String database = "";
+    private String record   = "";
 
     private javax.xml.parsers.DocumentBuilderFactory dfactory  =
 	javax.xml.parsers.DocumentBuilderFactory.newInstance();
@@ -37,12 +50,12 @@ public class FilterUtilityMethods  {
 	throws java.io.IOException 
     {
 
+	String newRequest  = this.uriConstructor(request,response);
+
 	java.lang.String    mime    = this.props.getProperty("get.mime");
 	java.lang.String    charset = this.props.getProperty("get.charset");
 
 	request.setCharacterEncoding("UTF-8");
-
-	String newRequest  = this.uriConstructor(request,response);
 
 	org.apache.commons.httpclient.HttpClient httpClient = 
 	    new org.apache.commons.httpclient.HttpClient();
@@ -79,7 +92,7 @@ public class FilterUtilityMethods  {
 	    response.setContentType(mime);
 	    response.setCharacterEncoding(charset);
 	    java.io.Writer out      = response.getWriter();
-	    this.doTransform(this.props.getProperty("get"),in,out);
+	    this.doTransform(this.props.getProperty("get." + this.getBase()),in,out);
 	    out.flush();
 	} else {
 	    response.setContentType("text/plain");
@@ -122,7 +135,7 @@ public class FilterUtilityMethods  {
 	java.io.StringWriter outdata = new java.io.StringWriter();
 	java.io.Writer  out          = response.getWriter();
 
-	this.doTransform(this.props.getProperty("put"),in,outdata);
+	this.doTransform(this.props.getProperty("put" + this.getBase()),in,outdata);
 
 	String result      = outdata.getBuffer().toString();  
 
@@ -283,6 +296,23 @@ public class FilterUtilityMethods  {
 
     }
 
+    public void setBase(String base) {
+	this.database = base;
+    }
+    public String getBase() {
+	return this.database;
+    }
+
+    public String getRecord() {
+	return this.record;
+    }
+
+    public void setRecord(String record) {
+	this.record = record;
+    }
+
+
+
     public String uriConstructor(javax.servlet.http.HttpServletRequest  request,
 				  javax.servlet.http.HttpServletResponse response ) {
 	
@@ -303,7 +333,8 @@ public class FilterUtilityMethods  {
 	String path              = "";
 
 	// It seems that we need to access this on localhost on port 8080
-	// or PUT won't work.
+	// or PUT won't work. Supposedly a configurable security limitation in eXist
+	// I think it's good.
 
 	String basedOn  = "";
 	String protocol = "http://";
@@ -311,7 +342,13 @@ public class FilterUtilityMethods  {
 	    basedOn     = "pathInfo";
 	    path        = protocol + host + pathInfo;
 	} else {
-	    String file = pathInfo.substring(pathInfo.lastIndexOf("/"));
+	    String file = pathInfo.substring(
+                                   pathInfo.lastIndexOf(
+			                   this.props.getProperty("filter")));
+	    String base = file.replaceAll("/([^/]+)$","");
+
+	    this.setBase(base);
+
 	    basedOn     = "context";
 
 	    host        = this.props.getProperty("exist.host");
@@ -320,7 +357,7 @@ public class FilterUtilityMethods  {
 	    logger.info("port number: " + portNumber); 
 
 	    port        = java.lang.Integer.parseInt(portNumber);
-	    path        = protocol + host + ":" + port + context + file;
+	    path        = protocol + host + ":" + port + context + base + file;
 	}
 	
 
