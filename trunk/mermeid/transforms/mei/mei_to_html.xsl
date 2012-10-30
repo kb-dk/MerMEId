@@ -302,25 +302,23 @@
 		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:relationList" mode="external"/>
 
 		<!-- show work history and global sources first if more than one version -->
-		<xsl:if test="count(m:meiHead/
-			m:workDesc/
-			m:work/m:expressionList/m:expression)&gt;1">
+		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
 			
-			<!-- work history -->		
+			<!-- work history -->
 			<xsl:apply-templates 
 				select="m:meiHead/
 				m:workDesc/
 				m:work/
-				m:history[m:creation/m:date[text()] or m:p[text()] or m:eventList[m:event[*//text()]]]"/>
+				m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event/*//text()]]"/>
 			
 			<!-- global sources -->
 			<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
-				or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0"></xsl:if>
-			<xsl:apply-templates 
-				select="m:meiHead[count(m:workDesc/m:work/m:expressionList/m:expression)&lt;2]/
-				m:fileDesc/
-				m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"/>
-			
+				or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0">
+				<xsl:apply-templates 
+					select="m:meiHead[count(m:workDesc/m:work/m:expressionList/m:expression)&lt;2]/
+					m:fileDesc/
+					m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"/>
+			</xsl:if>
 		</xsl:if>
 		
 
@@ -337,78 +335,71 @@
 				</xsl:with-param>
 			</xsl:apply-templates>			
 			
-			<xsl:element name="div">
-				<!-- indent details if more than one version -->
-				<xsl:if test="count(../m:expression)&gt;1">
-					<xsl:attribute name="style">margin-left: +1.5em;</xsl:attribute>
-				</xsl:if>
+			<!-- performers -->
+			<xsl:apply-templates select="m:perfMedium[*//m:instrVoice/text()]"/>
+			
+			<!-- meter, key, incipit – only relevant at this level in single movement works -->
+			<xsl:apply-templates select="m:tempo[text()]"/>
+			<xsl:apply-templates select="m:meter[normalize-space(concat(@meter.count,@meter.unit,@meter.sym))]"/>
+			<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
+			<xsl:apply-templates select="m:incip"/>			
+			
+			<!-- external links -->
+			<xsl:for-each select="m:relationList[m:relation[@target!='']]">
+				<p><xsl:text>Related resources: </xsl:text>
+					<xsl:for-each select="m:relation[@target!='']">
+						⇒<xsl:element name="a">
+							<xsl:attribute name="href">
+								<xsl:apply-templates select="@target"/>
+							</xsl:attribute>
+							<xsl:apply-templates select="@label"/>
+							<xsl:if test="not(@label) or @label=''"><xsl:value-of select="@target"/></xsl:if>
+						</xsl:element>
+						<xsl:if test="position()&lt;last()">, </xsl:if>
+					</xsl:for-each>
+				</p>
+			</xsl:for-each>
+			
+			<!-- components (movements) -->
+			<xsl:for-each select="m:componentGrp[normalize-space(*//text()[1]) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">
 				
-				<!-- performers -->
-				<xsl:apply-templates select="m:perfMedium[*//m:instrVoice/text()]"/>
+				<xsl:variable name="mdiv_id" 
+					select="concat('movements',generate-id(),position())"/>
 				
-				<!-- meter, key, incipit – only relevant at this level in single movement works -->
-				<xsl:apply-templates select="m:tempo[text()]"/>
-				<xsl:apply-templates select="m:meter[normalize-space(concat(@meter.count,@meter.unit,@meter.sym))]"/>
-				<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
-				<xsl:apply-templates select="m:incip"/>			
-				
-				<!-- external links -->
-				<xsl:for-each select="m:relationList[m:relation[@target!='']]">
-					<p><xsl:text>Related resources: </xsl:text>
-						<xsl:for-each select="m:relation[@target!='']">
-							⇒<xsl:element name="a">
-								<xsl:attribute name="href">
-									<xsl:apply-templates select="@target"/>
-								</xsl:attribute>
-								<xsl:apply-templates select="@label"/>
-								<xsl:if test="not(@label) or @label=''"><xsl:value-of select="@target"/></xsl:if>
-							</xsl:element>
-							<xsl:if test="position()&lt;last()">, </xsl:if>
-						</xsl:for-each>
+				<div class="fold">
+					
+					<p class="p_heading" 
+						id="p{$mdiv_id}"
+						onclick="toggle('{$mdiv_id}')"
+						title="Click to open">
+						
+						<xsl:text>
+						</xsl:text><script type="application/javascript"><xsl:text>
+							openness["</xsl:text><xsl:value-of select="$mdiv_id"/><xsl:text>"]=false;
+							</xsl:text></script>
+						<xsl:text>
+						</xsl:text>
+						
+						<img 
+							class="noprint" 
+							style="display:inline;" 
+							id="img{$mdiv_id}"
+							border="0" 
+							src="/editor/images/plus.png" alt="-"/> Music
 					</p>
-				</xsl:for-each>
-				
-				<!-- components (movements) -->
-				<xsl:for-each select="m:componentGrp[normalize-space(*//text()[1]) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">
 					
-					<xsl:variable name="mdiv_id" 
-						select="concat('movements',generate-id(),position())"/>
+					<div class="folded_content" style="display:none" id="{$mdiv_id}">						
+						<xsl:apply-templates select="m:expression"/>
+					</div>
 					
-					<div class="fold">
-						
-						<p class="p_heading" 
-							id="p{$mdiv_id}"
-							onclick="toggle('{$mdiv_id}')"
-							title="Click to open">
-							
-							<xsl:text>
-							</xsl:text><script type="application/javascript"><xsl:text>
-								openness["</xsl:text><xsl:value-of select="$mdiv_id"/><xsl:text>"]=false;
-								</xsl:text></script>
-							<xsl:text>
-							</xsl:text>
-							
-							<img 
-								class="noprint" 
-								style="display:inline;" 
-								id="img{$mdiv_id}"
-								border="0" 
-								src="/editor/images/plus.png" alt="-"/> Music
-						</p>
-						
-						<div class="folded_content" style="display:none" id="{$mdiv_id}">						
-							<xsl:apply-templates select="m:expression"/>
-						</div>
-						
-					</div>			
-				</xsl:for-each>
-				
-			</xsl:element>
+				</div>			
+			</xsl:for-each>
 			
-			
-			<!-- version history -->		
+			<!-- version history -->	
+			<xsl:if test="count(/m:mei/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
 			<xsl:apply-templates 
-				select="m:history[m:creation/m:date[text()] or m:p[text()] or m:eventList[m:event[*//text()]]]"/>
+				select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*//text()]]]"/>
+			</xsl:if>
 			
 			<!-- version-specific sources -->
 			<xsl:if test="count(../m:expression)&gt;1">
@@ -466,17 +457,15 @@
 		</xsl:for-each>
 		<!-- end top-level expressions (versions) -->
 		
-		<!-- show work history and global sources after movements if only one version -->
-		<xsl:if test="count(m:meiHead/
-			m:workDesc/
-			m:work/m:expressionList/m:expression)&lt;2">
+		<!-- show work history and global sources _after_ movements if only one version -->
+		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2">
 		
 			<!-- work history -->		
 			<xsl:apply-templates 
 				select="m:meiHead/
 				m:workDesc/
 				m:work/
-				m:history[m:creation/m:date[text()] or m:p[text()] or m:eventList[m:event[*//text()]]]"/>
+				m:history[m:creation[//text()] or m:p[text()] or m:eventList[m:event[*//text()]]]"/>
 			
 			<!-- global sources -->
 			<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
@@ -765,7 +754,11 @@
 				
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:apply-templates select="m:expression"/>
+				<ul class="single_movement">
+					<li>
+						<xsl:apply-templates select="m:expression"/>
+					</li>
+				</ul>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>	
@@ -1055,25 +1048,31 @@
 						</xsl:for-each>
 					</table>
 				</xsl:for-each>
-				
 				<!-- performances -->
-				<xsl:for-each 
-					select="m:eventList[@type='performances' and m:event//text()]">
-					<div class="fold" style="display:block;">
-						<p class="p_heading">Performances</p>				
-						<table>
-							<xsl:for-each select="m:event[//text()]">
-								<xsl:apply-templates select="." mode="performance_details"/>
-							</xsl:for-each>
-						</table>
-						
-					</div>
-				</xsl:for-each>
-				
+				<xsl:choose>
+					<xsl:when test="name(parent::node())='work' and count(../m:expressionList/m:expression)=1">
+						<xsl:apply-templates select="../m:expressionList/m:expression/m:history/m:eventList[@type='performances' and m:event//text()]"/>
+					</xsl:when>
+					<xsl:when test="name(parent::node())!='work' and count(/m:mei/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression) &gt; 1">
+						<xsl:apply-templates select="m:eventList[@type='performances' and m:event//text()]"/>
+					</xsl:when>
+				</xsl:choose>
 			</div>
 		</div>
 	</xsl:template>
 	
+	<xsl:template match="m:eventList[@type='performances']">
+		<xsl:if test="m:event//text()">
+			<div class="fold" style="display:block;">
+				<p class="p_heading">Performances</p>				
+				<table>
+					<xsl:for-each select="m:event[//text()]">
+						<xsl:apply-templates select="." mode="performance_details"/>
+					</xsl:for-each>
+				</table>
+			</div>
+		</xsl:if>
+	</xsl:template>
 	
 	<!-- sources -->
 	<xsl:template match="m:sourceDesc">
