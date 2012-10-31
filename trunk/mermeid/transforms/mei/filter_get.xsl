@@ -134,7 +134,6 @@
 	
 	<!-- MEI -> HTML -->
 	<xsl:template match="m:lb" mode="mei2html">&lt;br/&gt;</xsl:template> 
-	<xsl:template match="m:p" mode="mei2html">&lt;p&gt;<xsl:apply-templates select="@*"/><xsl:apply-templates mode="mei2html"/>&lt;/p&gt;</xsl:template>
 	<xsl:template match="m:rend[@fontweight = 'bold']" mode="mei2html">&lt;b&gt;<xsl:apply-templates mode="mei2html"/>&lt;/b&gt;</xsl:template>
 	<xsl:template match="m:rend[@fontstyle = 'ital']" mode="mei2html">&lt;i&gt;<xsl:apply-templates mode="mei2html"/>&lt;/i&gt;</xsl:template>
 	<xsl:template match="m:rend[@rend = 'underline']" mode="mei2html">&lt;u&gt;<xsl:apply-templates mode="mei2html"/>&lt;/u&gt;</xsl:template>
@@ -171,7 +170,7 @@
 			<xsl:when test="@form = 'simple'">&lt;ul&gt;<xsl:for-each select="m:li">&lt;li&gt;<xsl:apply-templates mode="mei2html"/>&lt;/li&gt;</xsl:for-each>&lt;/ul&gt;</xsl:when>
 			<xsl:when test="@form = 'ordered'">&lt;ol&gt;<xsl:for-each select="m:li">&lt;li&gt;<xsl:apply-templates mode="mei2html"/>&lt;/li&gt;</xsl:for-each>&lt;/ol&gt;</xsl:when>
 		</xsl:choose></xsl:template>
-	<xsl:template match="m:fig[./graphic]" mode="mei2html">&lt;img src="<xsl:value-of select="./graphic/@target"/>"/&gt;</xsl:template> 
+	<xsl:template match="m:fig[m:graphic]" mode="mei2html">&lt;img src="<xsl:value-of select="m:graphic/@target"/>"/&gt;</xsl:template> 
 	<!-- END MEI -> HTML -->
 	
 	<xsl:template match="@*|node()" mode="mei2html">

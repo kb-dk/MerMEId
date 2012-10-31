@@ -337,7 +337,7 @@
 			
 			<!-- meter, key, incipit – only relevant at this level in single movement works -->
 			<xsl:apply-templates select="m:tempo[text()]"/>
-			<xsl:apply-templates select="m:meter[normalize-space(concat(@meter.count,@meter.unit,@meter.sym))]"/>
+			<xsl:apply-templates select="m:meter[normalize-space(concat(@count,@unit,@sym))]"/>
 			<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
 			<xsl:apply-templates select="m:incip"/>			
 			
@@ -2280,9 +2280,9 @@
 			</xsl:when>
 		</xsl:choose>
 	</xsl:template>
-	<xsl:template match="m:fig[./graphic]">
+	<xsl:template match="m:fig[m:graphic]">
 		<xsl:element name="img">
-			<xsl:attribute name="src"><xsl:value-of select="./graphic/@target"/></xsl:attribute>
+			<xsl:attribute name="src"><xsl:value-of select="m:graphic/@target"/></xsl:attribute>
 		</xsl:element>
 	</xsl:template> 
 	<!-- END TEXT HANDLING -->	

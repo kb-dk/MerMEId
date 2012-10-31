@@ -161,22 +161,24 @@
 		
 		<h:fieldset>
 			<h:legend>Identification</h:legend>
-			<h:div class="blocklabel">
-				<h:span class="fixed_width"> List name <h:a class="help">?<h:span class="comment">Name of a
-					list, catalogue or other numbering system in which the work is identified (e.g. "Opus",
-					"CNW", "BWV", "Neue Mozart-Ausgabe" etc.)<h:br/>
-					If the name matches the name of a file collection as defined at the "File" tab, 
-					this identifier will be shown (like "BWV 1063" or "NMA II/3") next to the work's title on the file list; 
-					it will also be used as a header in the HTML preview. 
-				</h:span></h:a></h:span>
-				<h:span class="fixed_width"> No. <h:a class="help">?<h:span class="comment">The work's number or
-					signature in the list identifying it</h:span></h:a>
-				</h:span>
-			</h:div>
 			<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work"
 				nodeset="m:identifier"
 				label="Add identifier"
 				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:identifier"/>
+			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:identifier">
+				<h:div class="blocklabel">
+					<h:span class="fixed_width"> List name <h:a class="help">?<h:span class="comment">Name of a
+						list, catalogue or other numbering system in which the work is identified (e.g. "Opus",
+						"CNW", "BWV", "Neue Mozart-Ausgabe" etc.)<h:br/>
+						If the name matches the name of a file collection as defined at the "File" tab, 
+						this identifier will be shown (like "BWV 1063" or "NMA II/3") next to the work's title on the file list; 
+						it will also be used as a header in the HTML preview. 
+					</h:span></h:a></h:span>
+					<h:span class="fixed_width"> No. <h:a class="help">?<h:span class="comment">The work's number or
+						signature in the list identifying it</h:span></h:a>
+					</h:span>
+				</h:div>
+			</xf:group>
 			<xf:repeat
 				nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:identifier"
 				id="work-id-repeat">
@@ -196,12 +198,6 @@
 		<h:fieldset>
 			<h:legend>Persons <h:a class="help">?<h:span class="comment">A list of person involved in the creation or transmission 
 				of this work in general, such as the composer or text author</h:span></h:a></h:legend>		
-			<h:div class="blocklabel">
-				<h:span class="fixed_width_long">Name</h:span>
-				<h:span class="fixed_width"> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Composer"
-					or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
-				</h:span>
-			</h:div>
 			<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt"
 				nodeset="m:persName"
 				label="Add person"
@@ -212,6 +208,14 @@
 				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt"/>
 			<!--<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt[m:persName[count(@role)&gt;0 and @role!='']]">-->
 			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt">
+				<xf:group ref="m:persName">
+					<h:div class="blocklabel">
+						<h:span class="fixed_width_long">Name</h:span>
+						<h:span class="fixed_width"> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Composer"
+							or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+						</h:span>
+					</h:div>
+				</xf:group>
 				<xf:repeat nodeset="m:persName" id="relators-repeat">
 					<dcm:relator ref="."/>
 					<dcm:element-buttons 
@@ -295,8 +299,8 @@
 		
 		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">
 			<h:fieldset>
-				<h:legend>Relations <h:a class="help">?<h:span class="comment">If this work has relations to 
-					other works or files, these relations may be specified here to create links between them.<h:br/>
+				<h:legend>Relations <h:a class="help">?<h:span class="comment">Relations between this work and 
+					other works or files may be specified here to create links between them.<h:br/>
 					For instance, if this work is also part of a larger work or a collection of works 
 					defined in a different file, a link pointing to the external file may be defined here with the 
 					relation "is part of". <h:br/>

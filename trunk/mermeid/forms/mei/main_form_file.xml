@@ -236,7 +236,21 @@
 			<h:fieldset>
 				<h:legend>Encoding</h:legend>
 				<h:span class="blocklabel strong">Project description</h:span>
-				<xf:textarea ref="m:projectDesc/m:p" class="mediumheight" mediatype="text/html"/>
+				<dcm:create 
+					nodeset="m:projectDesc"
+					label="Add project description"
+					origin="instance('empty-instance')/m:meiHead/m:encodingDesc/m:projectDesc"/>
+				<dcm:create ref="m:projectDesc"
+					nodeset="m:p"
+					label="Add project description"
+					origin="instance('empty-instance')/m:meiHead/m:encodingDesc/m:projectDesc/m:p"/>
+				<xf:repeat nodeset="m:projectDesc/m:p" id="repeat-projectdesc-p">
+					<xf:textarea ref="." class="mediumheight" mediatype="text/html"/>
+					<dcm:element-buttons triggers="add del-parent-with-last"
+						nodeset="m:p" 
+						index="repeat-projectdesc-p" 
+						origin="instance('empty-instance')/m:meiHead/m:encodingDesc/m:projectDesc/m:p"/>
+				</xf:repeat>
 				<dcm:attribute-editor ref="m:projectDesc"/>
 				<h:br/>
 				<h:span class="blocklabel strong">Applications <h:a class="help">?<h:span 
@@ -326,7 +340,7 @@
 				id="repeat-private_notes">
 				<h:div>
 					<xf:textarea ref=".[index('repeat-private_notes')]" class="mediumheight" mediatype="text/html"/>
-					<dcm:element-buttons-typed triggers="remove" 
+					<dcm:element-buttons-typed triggers="add remove" 
 						index="repeat-private_notes" 
 						nodeset="m:annot[@type='private_notes']" 
 						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes']"/>

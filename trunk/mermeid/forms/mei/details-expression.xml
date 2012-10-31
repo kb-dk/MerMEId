@@ -54,6 +54,7 @@
         <xf:group id="form-group">
             
             <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+            
             <xxf:variable name="uri" 
                 select="concat(instance('parameters')/dcm:orbeon_dir,
                 '?uri=',
@@ -184,16 +185,22 @@
                             </xf:repeat>
                         </xf:group>                                    
                         
-                        <h:div>                               
+                        <h:div>                 
+                            <dcm:create nodeset="m:tempo"
+                                label="Add tempo"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc//m:tempo[1]"/>
                             <xf:input ref="m:tempo" class="maxlong">
                                 <xf:label class="fixed_width_short">Tempo</xf:label>
                             </xf:input>
                             <dcm:attribute-editor ref="m:tempo"/>
                             <h:br clear="all"/>  
-                            <xf:input ref="m:meter/@meter.count" class="minimal_length">
+                            <dcm:create nodeset="m:meter"
+                                label="Add meter"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc//m:meter[1]"/>
+                            <xf:input ref="m:meter/@count" class="minimal_length">
                                 <xf:label class="fixed_width_short">Metre</xf:label>
-                            </xf:input>/ <xf:input ref="m:meter/@meter.unit" class="minimal_length"/> or symbol: 
-                            <xf:select1	ref="m:meter/@meter.sym" class="auto_length">
+                            </xf:input>/ <xf:input ref="m:meter/@unit" class="minimal_length"/> or symbol: 
+                            <xf:select1	ref="m:meter/@sym" class="auto_length">
                                 <xf:item>
                                     <xf:label>-</xf:label>
                                     <xf:value/>
@@ -208,7 +215,10 @@
                                 </xf:item>
                             </xf:select1>
                             <dcm:attribute-editor ref="m:meter"/>
-                        </h:div>                                    
+                        </h:div>            
+                        <dcm:create nodeset="m:key"
+                            label="Add key"
+                            origin="instance('empty-instance')/m:meiHead/m:workDesc//m:key[1]"/>
                         <xf:group ref="m:key">
                             <h:label class="fixed_width_short">Key</h:label>
                             <xi:include href="includes/key_select.xml" parse="xml"/>
@@ -311,6 +321,13 @@
                             </xf:repeat>
                         </xf:group>
                         <h:span class="blocklabel">Edited score</h:span>
+                        <dcm:create nodeset="m:relationList"
+                            label="Add links to edited score"
+                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:relationList"/>
+                        <dcm:create ref="m:relationList" 
+                            nodeset="m:relation[@rel='hasReproduction' and @targettype='edited_score']"
+                            label="Add link to edited score"
+                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList/m:relation[@rel='hasReproduction']"/>
                         <xf:repeat nodeset="m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']" id="edited_score-repeat">
                             <h:div>
                                 <xf:input ref="@target" class="long">
@@ -322,7 +339,7 @@
                                         e.g. "Carl Nielsen Edition, full score"</h:span></h:a></xf:label>
                                 </xf:input>
                                 <dcm:element-buttons
-                                    triggers="add delete" 
+                                    triggers="add remove" 
                                     nodeset="m:relation" 
                                     index="edited_score-repeat"
                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']"/>
@@ -338,12 +355,14 @@
                                 with different authors.<h:br/>
                                 Not for persons appearing in this component (characters). 
                             </h:span></h:a></h:div>	
-                            <h:div class="blocklabel">
-                                <h:span class="fixed_width_long">Name</h:span>
-                                <h:span> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
-                                    or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
-                                </h:span>
-                            </h:div>
+                            <xf:group ref="m:respStmt/m:persName">
+                                <h:div class="blocklabel">
+                                    <h:span class="fixed_width_long">Name</h:span>
+                                    <h:span> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
+                                        or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+                                    </h:span>
+                                </h:div>
+                            </xf:group>
                             <xf:repeat nodeset="m:respStmt/m:persName" id="version-relators-repeat">
                                 <dcm:relator ref="."/>
                                 <dcm:element-buttons 
