@@ -249,9 +249,11 @@ type="text/css"/>
 
 </head>
 <body>
-<h1>
-{app:list-title()}
-</h1>
+<div style="float:right;">
+<a href="/editor/manual/" target="_blank"><img src="/editor/images/help.png" title="help" alt="help"/></a>
+</div>
+<img src="/editor/images/mermeid_30px.png" title="MerMEId - Metadata Editor and Repository for MEI Data" alt="MerMEId Logo"/>
+<hr/>
 <form action="" method="get" class="search">
 <fieldset>
 <input name="query"  value='{request:get-parameter("query","")}'/>
@@ -325,15 +327,16 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	<button type="submit" title="All collections" disabled="true">All collections</button>
 	return $link
 }
-</p>
-<p>
-{
-	<button type="submit" title="New file" 
-	onclick="location.href='/filter/new/'; return false;"><img 
-	src="/editor/images/new.gif" alt="New file" border="0" /> Add new file
-	</button>
-}
 </p> 
+<h2>
+{app:list-title()}
+{
+	<a title="Add new file" href="#" class="addLink" 
+	onclick="location.href='/filter/new/'; return false;"><img 
+	src="/editor/images/new.gif" alt="New file" border="0" /></a>
+}
+</h2>
+
 {
 	let $list := loop:getlist($coll,$query)
 	return

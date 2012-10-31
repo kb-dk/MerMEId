@@ -32,3 +32,4 @@ function getInternetExplorerVersion()
 function initialize() {
     setPageTitle();
 }
+

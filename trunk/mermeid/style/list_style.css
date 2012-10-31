@@ -13,10 +13,32 @@ h1 {
     margin:0px;
 }
 
+h2 {
+    margin-bottom: 0;
+}
+
+p {
+    margin: 5px 0 5px 0;
+}
+
 a {
     color:black;
 }
 
+a.addLink {
+    text-decoration: none;
+}
+
+a.addLink img {
+    padding: 2px;
+    border: none;
+    vertical-align:top;
+}
+
+a.addLink:hover img {
+    padding: 1px;
+    border: 1px solid #999;
+}
 
 table {
     width: 100%;
@@ -36,7 +58,7 @@ td {
     padding: .2em;
     padding-left: .3em;
     margin: 0em;
-    border-top: 1px dotted #666;
+    border-top: 1px solid #999;
 }
 
 button {
