@@ -133,36 +133,14 @@
 	
 	
 	<!-- MEI -> HTML -->
-	<xsl:template match="m:lb" mode="mei2html">
-		&lt;br/&gt;
-	</xsl:template> 
-	<xsl:template match="m:rend[@fontweight = 'bold']" mode="mei2html">
-		&lt;b&gt;
-		<xsl:apply-templates mode="mei2html"/>
-		&lt;/b&gt;
-	</xsl:template>
-	<xsl:template match="m:rend[@fontstyle = 'ital']" mode="mei2html">
-		&lt;i&gt;
-		<xsl:apply-templates mode="mei2html"/>
-		&lt;/i&gt;
-	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'underline']" mode="mei2html">
-		&lt;u&gt;
-		<xsl:apply-templates mode="mei2html"/>
-		&lt;/u&gt;
-	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'sub']" mode="mei2html">
-		&lt;sub&gt;
-		<xsl:apply-templates mode="mei2html"/>
-		&lt;/sub&gt;
-	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'sup']" mode="mei2html">
-		&lt;sup&gt;
-		<xsl:apply-templates mode="mei2html"/>
-		&lt;/sup&gt;
-	</xsl:template>
-	<xsl:template match="m:rend[@fontfam or @fontsize or @color]" mode="mei2html">
-		<xsl:variable name="atts">
+	<xsl:template match="m:lb" mode="mei2html">&lt;br/&gt;</xsl:template> 
+	<xsl:template match="m:p" mode="mei2html">&lt;p&gt;<xsl:apply-templates select="@*"/><xsl:apply-templates mode="mei2html"/>&lt;/p&gt;</xsl:template>
+	<xsl:template match="m:rend[@fontweight = 'bold']" mode="mei2html">&lt;b&gt;<xsl:apply-templates mode="mei2html"/>&lt;/b&gt;</xsl:template>
+	<xsl:template match="m:rend[@fontstyle = 'ital']" mode="mei2html">&lt;i&gt;<xsl:apply-templates mode="mei2html"/>&lt;/i&gt;</xsl:template>
+	<xsl:template match="m:rend[@rend = 'underline']" mode="mei2html">&lt;u&gt;<xsl:apply-templates mode="mei2html"/>&lt;/u&gt;</xsl:template>
+	<xsl:template match="m:rend[@rend = 'sub']" mode="mei2html">&lt;sub&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sub&gt;</xsl:template>
+	<xsl:template match="m:rend[@rend = 'sup']" mode="mei2html">&lt;sup&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sup&gt;</xsl:template>
+	<xsl:template match="m:rend[@fontfam or @fontsize or @color]" mode="mei2html"><xsl:variable name="atts">
 			<xsl:if test="@fontfam">
 				<xsl:value-of select="concat('font-family:',@fontfam,';')"/>
 			</xsl:if>
@@ -172,11 +150,7 @@
 			<xsl:if test="@color">
 				<xsl:value-of select="concat('color:',@color,';')"/>
 			</xsl:if>
-		</xsl:variable>
-		&lt;span style="<xsl:value-of select="$atts"/>"&gt;
-		<xsl:apply-templates mode="mei2html"/>
-		&lt;/span&gt;
-	</xsl:template>
+		</xsl:variable>&lt;span style="<xsl:value-of select="$atts"/>"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
 	<!--
 		<xsl:template match="m:persName|m:corpName|m:name|m:ptr|m:address|m:bibl|m:date|m:geogName|m:title|m:quote" mode="mei2html">
 		<xsl:variable name="atts">
@@ -191,41 +165,13 @@
 		&lt;/span&gt;
 		</xsl:template>
 	-->
-	<xsl:template match="m:ref[@target]" mode="mei2html">
-		&lt;a src="<xsl:value-of select="@target"/>" target="<xsl:value-of select="@xl:show"/>" title="<xsl:value-of select="@xl:title"/>"&gt;
-		<xsl:apply-templates mode="mei2html"/>
-		&lt;/a&gt;
-	</xsl:template>
-	<xsl:template match="m:rend[@halign]" mode="mei2html">
-		&lt;div style="text-align:<xsl:value-of select="@halign"/>;"&gt;
-		<xsl:apply-templates mode="mei2html"/>
-		&lt;/div&gt;
-	</xsl:template>
-	<xsl:template match="m:list" mode="mei2html">
-		<xsl:choose>
-			<xsl:when test="@form = 'simple'">
-				&lt;ul&gt;
-				<xsl:for-each select="m:li">
-					&lt;li&gt;
-					<xsl:apply-templates mode="mei2html"/>
-					&lt;/li&gt;
-				</xsl:for-each>
-				&lt;/ul&gt;
-			</xsl:when>
-			<xsl:when test="@form = 'ordered'">
-				&lt;ol&gt;
-				<xsl:for-each select="m:li">
-					&lt;li&gt;
-					<xsl:apply-templates mode="mei2html"/>
-					&lt;/li&gt;
-				</xsl:for-each>
-				&lt;/ol&gt;
-			</xsl:when>
-		</xsl:choose>
-	</xsl:template>
-	<xsl:template match="m:fig[./graphic]" mode="mei2html">
-		&lt;img src="<xsl:value-of select="./graphic/@target"/>"/&gt;
-	</xsl:template> 
+	<xsl:template match="m:ref[@target]" mode="mei2html">&lt;a src="<xsl:value-of select="@target"/>" target="<xsl:value-of select="@xl:show"/>" title="<xsl:value-of select="@xl:title"/>"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/a&gt;</xsl:template>
+	<xsl:template match="m:rend[@halign]" mode="mei2html">&lt;div style="text-align:<xsl:value-of select="@halign"/>;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/div&gt;</xsl:template>
+	<xsl:template match="m:list" mode="mei2html"><xsl:choose>
+			<xsl:when test="@form = 'simple'">&lt;ul&gt;<xsl:for-each select="m:li">&lt;li&gt;<xsl:apply-templates mode="mei2html"/>&lt;/li&gt;</xsl:for-each>&lt;/ul&gt;</xsl:when>
+			<xsl:when test="@form = 'ordered'">&lt;ol&gt;<xsl:for-each select="m:li">&lt;li&gt;<xsl:apply-templates mode="mei2html"/>&lt;/li&gt;</xsl:for-each>&lt;/ol&gt;</xsl:when>
+		</xsl:choose></xsl:template>
+	<xsl:template match="m:fig[./graphic]" mode="mei2html">&lt;img src="<xsl:value-of select="./graphic/@target"/>"/&gt;</xsl:template> 
 	<!-- END MEI -> HTML -->
 	
 	<xsl:template match="@*|node()" mode="mei2html">

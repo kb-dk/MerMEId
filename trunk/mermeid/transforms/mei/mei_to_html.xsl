@@ -8,7 +8,6 @@
 	Danish Centre for Music Publication
 	The Royal Library, Copenhagen
 	
-	Last modified $Date$ by $Author$
 -->
 
 <xsl:stylesheet version="1.0" 
@@ -48,6 +47,7 @@
 			</body>
 		</html>
 	</xsl:template>
+	
 	
 	<!-- MAIN TEMPLATES -->
 	<xsl:template name="make_html_head">
@@ -115,11 +115,8 @@
       ]]>
       // </xsl:comment>
 		</script>
-		
 	</xsl:template>
-	
-	
-	
+		
 	<xsl:template name="make_html_body" xml:space="default">
 		<!-- main identification -->
 		
@@ -282,7 +279,7 @@
 				</p>
 			</xsl:if>			
 			<xsl:for-each select="m:annot[@type='links'][m:ptr[@target!='']]">
-				<p><xsl:text>⇒</xsl:text>
+				<p><img src="/editor/images/html_link.png" title="Link to external resource"/>
 					<xsl:for-each select="m:ptr[@target!='']">
 						<xsl:element name="a">
 							<xsl:attribute name="href">
@@ -348,7 +345,8 @@
 			<xsl:for-each select="m:relationList[m:relation[@target!='']]">
 				<p><xsl:text>Related resources: </xsl:text>
 					<xsl:for-each select="m:relation[@target!='']">
-						⇒<xsl:element name="a">
+						<img src="/editor/images/html_link.png" title="Link to external resource"/>
+						<xsl:element name="a">
 							<xsl:attribute name="href">
 								<xsl:apply-templates select="@target"/>
 							</xsl:attribute>
@@ -819,7 +817,7 @@
 					<xsl:if test="position() = 1"><span class="label">Text incipit: </span></xsl:if>
 					<xsl:element name="span">
 						<xsl:call-template name="maybe_print_lang"/>
-						<xsl:apply-templates select="."/>
+						<xsl:apply-templates/>
 					</xsl:element>
 					<xsl:if test="position() &lt; last()"><br/></xsl:if>
 				</xsl:for-each>
@@ -852,8 +850,10 @@
 	<xsl:template match="m:key[@pname or @accid or @mode]">
 		<p>
 			<span class="label">Key: </span>
-			<xsl:value-of select="translate(@pname,'abcdefgh','ABCDEFGH')"/><xsl:text> </xsl:text> 
-			<xsl:apply-templates select="@accid"/><xsl:text> </xsl:text>
+			<xsl:value-of select="translate(@pname,'abcdefgh','ABCDEFGH')"/> 
+			<xsl:if test="@accid"><xsl:call-template name="key_accidental">
+				<xsl:with-param name="attr" select="@accid"/>
+			</xsl:call-template></xsl:if><xsl:text> </xsl:text>
 			<xsl:value-of select="@mode"/>
 		</p>
 	</xsl:template>
@@ -993,11 +993,10 @@
 	<!-- end perfMedium -->
 	
 	<!-- history -->		
-	<xsl:template match="m:history">
+	<xsl:template match="m:history[*//text()]">
 		<xsl:variable 
 			name="historydiv_id" 
 			select="concat('history',generate-id(.),position())"/>
-		
 		<xsl:text>
 		</xsl:text>
 		<script type="application/javascript"><xsl:text>
@@ -1331,7 +1330,8 @@
 					<xsl:for-each select="m:annot[@type='links'][m:ptr[@target!='']]">
 						<p>
 							<xsl:for-each select="m:ptr[@target!='']">
-								⇒<xsl:element name="a">
+								<img src="/editor/images/html_link.png" title="Link to external resource"/>
+								<xsl:element name="a">
 									<xsl:attribute name="href">
 										<xsl:apply-templates select="@target"/>
 									</xsl:attribute>
@@ -1363,7 +1363,8 @@
 							</xsl:for-each>
 							
 							<xsl:for-each select="m:ptr[normalize-space(@target)]">
-								⇒<xsl:element name="a">
+								<img src="/editor/images/html_link.png" title="Link to external resource"/>
+								<xsl:element name="a">
 									<xsl:attribute name="href">
 										<xsl:value-of select="@target"/>
 									</xsl:attribute>  
@@ -1889,7 +1890,8 @@
 		</xsl:choose>
 		<!-- links to full text (exception: letters and diary entries handled elsewhere) -->
 		<xsl:if test="normalize-space(t:ref/@target) and not(@type='Diary_entry' or @type='Letter')">
-			⇒<a target="_blank" title="Link to full text">
+			<img src="/editor/images/html_link.png" title="Link to external resource"/>
+			<a target="_blank" title="Link to full text">
 				<xsl:attribute name="href">
 					<xsl:value-of select="normalize-space(t:ref/@target)"/>
 				</xsl:attribute>
@@ -1966,7 +1968,8 @@
 	<!-- display external link -->
 	<xsl:template match="m:extptr">
 		<xsl:if test="normalize-space(@xl:href)">
-			⇒<a target="_blank">
+			<img src="/editor/images/html_link.png" title="Link to external resource"/>
+			<a target="_blank">
 				<xsl:attribute name="href">
 					<xsl:value-of select="@xl:href"/>
 				</xsl:attribute>
@@ -2121,295 +2124,6 @@
 	</xsl:template>
 	
 	
-	<!-- HANDLE SPECIAL CHARACTERS -->
-	
-	<xsl:template name="key_accidental">
-		<xsl:param name="attr"/>
-		<span class="accidental">
-			<xsl:choose>
-				<xsl:when test="$attr='f'">&#x266d;</xsl:when>
-				<xsl:when test="$attr='ff'">&#x266d;&#x266d;</xsl:when>
-				<xsl:when test="$attr='s'">&#x266f;</xsl:when>
-				<xsl:when test="$attr='ss'">x</xsl:when>
-				<xsl:when test="$attr='n'">&#x266e;</xsl:when>
-				<xsl:when test="$attr='-flat'">&#x266d;</xsl:when>
-				<xsl:when test="$attr='-dblflat'">&#x266d;&#x266d;</xsl:when>
-				<xsl:when test="$attr='-sharp'">&#x266f;</xsl:when>
-				<xsl:when test="$attr='-dblsharp'">x</xsl:when>
-				<xsl:when test="$attr='-neutral'">&#x266e;</xsl:when>
-				<xsl:when test="$attr='-natural'">&#x266e;</xsl:when>
-				<xsl:otherwise/>
-			</xsl:choose>
-		</span>
-	</xsl:template>
-	
-	<!-- find accidental codes and other things to replace in strings -->
-	<xsl:param name="replacement_nodes_doc">
-		<foo:string_replacement>
-			<!-- accidentals -->
-			<foo:search>
-				<foo:find>[flat]</foo:find>
-				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="accidental">&#x266d;</span></foo:replace>
-			</foo:search>
-			<foo:search>
-				<foo:find>[sharp]</foo:find>
-				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="accidental">&#x266f;</span></foo:replace>
-			</foo:search>
-			<foo:search>
-				<foo:find>[dblflat]</foo:find>
-				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="accidental">&#x266d;&#x266d;</span></foo:replace>
-			</foo:search>
-			<foo:search>
-				<foo:find>[dblsharp]</foo:find>
-				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="accidental">x</span></foo:replace>
-			</foo:search>
-			<foo:search>
-				<foo:find>[natural]</foo:find>
-				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="accidental">&#x266e;</span></foo:replace>
-			</foo:search>
-			<!-- time signatures -->
-			<foo:search>
-				<foo:find>[common]</foo:find>
-				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="timesig">c</span></foo:replace>
-			</foo:search>
-			<foo:search>
-				<foo:find>[cut]</foo:find>
-				<foo:replace><span xmlns="http://www.w3.org/1999/xhtml" class="timesig">C</span></foo:replace>
-			</foo:search>
-		</foo:string_replacement>
-	</xsl:param>
-	
-	<!--
-		This is for html constructs like <b> ... </b>, <i>... </i> and
-		the <runes> ... </runes> that we cannot solve in any other way 
-		right now.
-	-->
-	
-	<xsl:template  match="text()">
-		<xsl:call-template name="replace_nodes">
-			<xsl:with-param
-				name="text"
-				select="."/>
-		</xsl:call-template>
-	</xsl:template>
-	
-	<xsl:template name="replace_nodes">
-		<xsl:param name="text"><xsl:value-of select="."/></xsl:param>
-		
-		<xsl:choose>
-			<xsl:when test="contains($text,'&lt;') and 
-				contains(substring-after($text,'&lt;'),'&gt;')">
-				
-				<!-- If there is an &lt; and after that character there is &gt;,
-					then we have found an escaped element. Now tell us the name of
-					that element -->
-				<xsl:variable name="element_with_attr">
-					<!-- This gets the name and any attributes -->
-					<xsl:value-of select="substring-before(substring-after($text,'&lt;'),'&gt;')"/>
-				</xsl:variable>
-				<!-- Now separate them into element name and attributes -->
-				<xsl:variable name="element">
-					<xsl:choose>
-						<xsl:when test="contains($element_with_attr,' ')">
-							<xsl:value-of select="substring-before($element_with_attr,' ')"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:value-of select="$element_with_attr"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:variable>
-				<xsl:variable name="attributes">
-					<xsl:choose>
-						<xsl:when test="contains($element_with_attr,' ')">
-							<xsl:value-of select="substring-after($element_with_attr,' ')"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:text></xsl:text>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:variable>
-				
-				<xsl:choose>
-					
-					<!-- Now we know its name. Let's check if there is an end element -->
-					
-					<xsl:when test="contains($text,concat('&lt;/',$element,'&gt;'))">
-						
-						<xsl:variable name="begin" select="concat('&lt;',$element_with_attr,'&gt;')"/>
-						<xsl:variable name="end"   select="concat('&lt;/',$element,'&gt;')"/>
-						
-						<!-- we have to process the string before $start further to see
-							if there is someting else than escaped XML -->
-						
-						<xsl:call-template name="replace_strings">
-							<xsl:with-param name="input_text" 
-								select="substring-before($text,$begin)"/>
-						</xsl:call-template>
-						
-						<!-- The runes are special -->
-						<xsl:choose>
-							<xsl:when test="$element='span' and contains($attributes,'runes')">
-								<span class="runes">
-									<xsl:call-template name="replace_strings">
-										<xsl:with-param name="input_text"> 
-											<!-- xsl:value-of
-												disable-output-escaping="yes"
-												select="substring-before(substring-after($text,$begin),$end)"/ -->
-											<xsl:value-of 
-												select="java:org.apache.commons.lang.StringEscapeUtils.unescapeXml(substring-before(substring-after($text,$begin),$end))"/>
-										</xsl:with-param>
-									</xsl:call-template>
-								</span>
-							</xsl:when>
-							
-							<!--
-								Otherwise we just create the element without further ado.
-								No questions asked.
-							-->
-							
-							<xsl:otherwise>
-								<xsl:element name="{$element}">
-									
-									<!-- To do: Here, the attributes contained in the 
-										$attributes string should be added /atge -->
-									<xsl:call-template name="add_attributes_from_string">
-										<xsl:with-param name="inputString" select="$attributes"/>
-									</xsl:call-template>									
-									
-									<xsl:if test="not($element = 'br')">
-										<xsl:text>
-										</xsl:text>
-									</xsl:if>
-									<!-- There could be more escaped elements inside our element -->
-									<xsl:call-template name="replace_nodes">
-										<xsl:with-param
-											name="text"
-											select="substring-before(substring-after($text,$begin),$end)"/>
-									</xsl:call-template>
-								</xsl:element>
-							</xsl:otherwise>
-						</xsl:choose>
-						
-						<!-- Then we use recursion to treat the string after the end tag -->
-						
-						<xsl:call-template name="replace_nodes">
-							<xsl:with-param 
-								name="text"    
-								select="substring-after($text,$end)"/>
-						</xsl:call-template>
-						
-					</xsl:when>
-					<xsl:otherwise>
-						
-						<!-- OK, there was no end element. This usually implies something like
-							&lt;br/&gt;, &lt;br&gt; or &lt;img src=""/&gt; -->
-						
-						<xsl:call-template name="replace_strings">
-							<xsl:with-param name="input_text"
-								select="substring-before($text,'&lt;')"/>
-						</xsl:call-template>
-						
-						<xsl:variable name="element_name">
-							<xsl:choose>
-								<xsl:when test="contains($element,'/')">
-									<xsl:value-of select="substring-before($element,'/')"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="$element"/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</xsl:variable>
-						
-						<xsl:if test="$element = 'br' or $element = 'img'">
-							<xsl:element name="{$element_name}">
-								<xsl:call-template name="add_attributes_from_string">
-									<xsl:with-param name="inputString" select="$attributes"/>
-								</xsl:call-template>
-							</xsl:element>
-						</xsl:if>
-						
-						<xsl:call-template name="replace_nodes">
-							<xsl:with-param name="text" select="substring-after($text,'&gt;')"/>
-						</xsl:call-template>
-						
-						
-					</xsl:otherwise>
-				</xsl:choose>
-				
-			</xsl:when>
-			
-			<!-- Now we have found a text not having a &lt; in it -->
-			
-			<xsl:otherwise>
-				<xsl:call-template name="replace_strings">
-					<xsl:with-param name="input_text" select="$text"/>
-				</xsl:call-template>
-			</xsl:otherwise>
-			
-		</xsl:choose>
-		
-	</xsl:template>
-	
-	
-	<xsl:param name="replacements" select="exsl:node-set($replacement_nodes_doc)" />
-	
-	<!-- replace all items in replacement list -->
-	<xsl:template name="replace_strings">
-		<xsl:param name="input_text" select="."/>
-		<xsl:param name="search">1</xsl:param>
-		<xsl:variable name="replaced_text">
-			<xsl:call-template name="string_replace">
-				<xsl:with-param name="input_text" 
-					select="$input_text"/>
-				<xsl:with-param name="find" 
-					select="$replacements//foo:search[$search]/foo:find"/>
-				<xsl:with-param name="replace" 
-					select="$replacements//foo:search[$search]/foo:replace/*"/>
-			</xsl:call-template>
-		</xsl:variable>
-		
-		<xsl:choose>
-			<xsl:when test="$search &lt; count($replacements//foo:search)">
-				<xsl:call-template name="replace_strings">
-					<xsl:with-param name="input_text" select="$replaced_text"/>
-					<xsl:with-param name="search" select="$search + 1"/>
-				</xsl:call-template>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:copy-of select="$replaced_text"/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-	
-	<!-- standard string replace returning node sets -->
-	<xsl:template name="string_replace">
-		<xsl:param name="input_text"/>
-		<xsl:param name="find"/>
-		<xsl:param name="replace"/>
-		<xsl:choose>
-			<xsl:when test="contains($input_text, $find)">
-				<xsl:copy-of select="substring-before($input_text, $find)"/>
-				<!-- NOTE: value-of in the following line instead of copy-of unfortunately 
-					strips off the replacement's <span> element - on the other hand, copy-of only works 
-					correctly with the last replacement, probably because
-					of the handling as string.  
-					/atge
-				-->
-				<xsl:value-of select="$replace"/>
-				<xsl:call-template name="string_replace">
-					<xsl:with-param name="input_text" 
-						select="substring-after($input_text, $find)"/>
-					<xsl:with-param name="find" select="$find"/>
-					<xsl:with-param name="replace" select="$replace"/>
-				</xsl:call-template>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:copy-of select="$input_text"/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-	
-	
 	<xsl:template name="maybe_print_lang">
 		<xsl:attribute name="xml:lang">
 			<xsl:value-of select="@xml:lang"/>
@@ -2431,29 +2145,146 @@
 		</xsl:if>
 	</xsl:template>
 	
-	<xsl:template name="add_attributes_from_string">
-		<!-- To fix: attribute values including spaces are lost... /atge -->
-		<xsl:param name="inputString"/>
-		<xsl:choose>
-			<xsl:when test="contains($inputString, ' ')">
-				<xsl:variable name="this_attr" select="substring-before($inputString,' ')"/>
-				<xsl:variable name="attr_name" select="substring-before($this_attr,'=')"/>
-				<xsl:variable name="attr_value" select="substring-before(substring-after($this_attr,'&quot;'),'&quot;')"></xsl:variable>
-				<xsl:attribute name="{$attr_name}"><xsl:value-of select="$attr_value"/></xsl:attribute>
-				<xsl:variable name="remainder" select="substring-after($inputString, ' ')"></xsl:variable>
-				<xsl:call-template name="add_attributes_from_string">
-					<xsl:with-param name="inputString" select="$remainder"/>
-				</xsl:call-template>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:if test="$inputString!=''">
-					<xsl:variable name="attr_name" select="substring-before($inputString,'=')"/>
-					<xsl:variable name="attr_value" select="substring-before(substring-after($inputString,'&quot;'),'&quot;')"></xsl:variable>
-					<xsl:attribute name="{$attr_name}"><xsl:value-of select="$attr_value"/></xsl:attribute>
-				</xsl:if>
-			</xsl:otherwise>
-		</xsl:choose>
+	
+	<!-- HANDLE TEXT AND SPECIAL CHARACTERS -->
+	
+	<xsl:template name="key_accidental">
+		<xsl:param name="attr"/>
+		<span class="accidental">
+			<xsl:choose>
+				<xsl:when test="$attr='f'">&#x266d;</xsl:when>
+				<xsl:when test="$attr='ff'">&#x266d;&#x266d;</xsl:when>
+				<xsl:when test="$attr='s'">&#x266f;</xsl:when>
+				<xsl:when test="$attr='ss'">x</xsl:when>
+				<xsl:when test="$attr='n'">&#x266e;</xsl:when>
+				<xsl:when test="$attr='-flat'">&#x266d;</xsl:when>
+				<xsl:when test="$attr='-dblflat'">&#x266d;&#x266d;</xsl:when>
+				<xsl:when test="$attr='-sharp'">&#x266f;</xsl:when>
+				<xsl:when test="$attr='-dblsharp'">x</xsl:when>
+				<xsl:when test="$attr='-neutral'">&#x266e;</xsl:when>
+				<xsl:when test="$attr='-natural'">&#x266e;</xsl:when>
+				<xsl:otherwise/>
+			</xsl:choose>
+		</span>
 	</xsl:template>
 	
+	<!-- replacements -->
+	<xsl:template match="text()[contains(.,'[flat]')]">
+		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[flat]'))"/>
+		<span class="accidental">&#x266d;</span>
+		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[flat]'))"/>
+	</xsl:template>
+	<xsl:template match="text()[contains(.,'[natural]')]">
+		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[natural]'))"/>
+		<span class="accidental">&#x266e;</span>
+		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[natural]'))"/>
+	</xsl:template>
+	<xsl:template match="text()[contains(.,'[sharp]')]">
+		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[sharp]'))"/>
+		<span class="accidental">&#x266f;</span>
+		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[sharp]'))"/>
+	</xsl:template>
+	<xsl:template match="text()[contains(.,'[dblflat]')]">
+		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[dblflat]'))"/>
+		<span class="accidental">&#x266d;&#x266d;</span>
+		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[dblflat]'))"/>
+	</xsl:template>
+	<xsl:template match="text()[contains(.,'[dblsharp]')]">
+		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[dblsharp]'))"/>
+		<span class="accidental">x</span>
+		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[dblsharp]'))"/>
+	</xsl:template>
+	<xsl:template match="text()[contains(.,'[common]')]">
+		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[common]'))"/>
+		<span class="timesig">c</span>
+		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[common]'))"/>
+	</xsl:template>
+	<xsl:template match="text()[contains(.,'[cut]')]">
+		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[cut]'))"/>
+		<span class="timesig">C</span>
+		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[cut]'))"/>
+	</xsl:template>
+	
+	<xsl:template match="text()">
+		<xsl:copy-of select="."/>
+	</xsl:template>
+
+	<!-- formatted text -->
+	<xsl:template match="m:lb">
+		<br/>
+	</xsl:template> 
+	<xsl:template match="m:p">
+		<p><xsl:apply-templates/></p>
+	</xsl:template>
+	<xsl:template match="m:rend[@fontweight = 'bold']">
+		<b><xsl:apply-templates/></b>
+	</xsl:template>
+	<xsl:template match="m:rend[@fontstyle = 'ital']">
+		<i><xsl:apply-templates/></i>
+	</xsl:template>
+	<xsl:template match="m:rend[@rend = 'underline']">
+		<u><xsl:apply-templates/></u>
+	</xsl:template>
+	<xsl:template match="m:rend[@rend = 'sub']">
+		<sub><xsl:apply-templates/></sub>
+	</xsl:template>
+	<xsl:template match="m:rend[@rend = 'sup']">
+		<sup><xsl:apply-templates/></sup>
+	</xsl:template>
+	<xsl:template match="m:rend[@fontfam or @fontsize or @color]">
+		<xsl:variable name="atts">
+			<xsl:if test="@fontfam">
+				<xsl:value-of select="concat('font-family:',@fontfam,';')"/>
+			</xsl:if>
+			<xsl:if test="@fontsize">
+				<xsl:value-of select="concat('font-size:',@fontsize,';')"/>
+			</xsl:if>
+			<xsl:if test="@color">
+				<xsl:value-of select="concat('color:',@color,';')"/>
+			</xsl:if>
+		</xsl:variable>
+		<xsl:element name="span">
+			<xsl:attribute name="style"><xsl:value-of select="$atts"/></xsl:attribute>
+			<xsl:apply-templates/>
+		</xsl:element>
+	</xsl:template>
+	<xsl:template match="m:ref[@target]">
+		<xsl:element name="a">
+			<xsl:attribute name="src"><xsl:value-of select="@target"/></xsl:attribute>
+			<xsl:attribute name="target"><xsl:value-of select="@xl:show"/></xsl:attribute>
+			<xsl:attribute name="title"><xsl:value-of select="@xl:title"/></xsl:attribute>
+			<xsl:apply-templates/>
+		</xsl:element>
+	</xsl:template>
+	<xsl:template match="m:rend[@halign]">
+		<xsl:element name="div">
+			<xsl:attribute name="style">text-align:<xsl:value-of select="@halign"/>;</xsl:attribute>
+			<xsl:apply-templates/>
+		</xsl:element>
+	</xsl:template>
+	<xsl:template match="m:list">
+		<xsl:choose>
+			<xsl:when test="@form = 'simple'">
+				<ul>
+				<xsl:for-each select="m:li">
+					<li><xsl:apply-templates/></li>
+				</xsl:for-each>
+				</ul>
+			</xsl:when>
+			<xsl:when test="@form = 'ordered'">
+				<ol>
+				<xsl:for-each select="m:li">
+					<li><xsl:apply-templates/></li>
+				</xsl:for-each>
+				</ol>
+			</xsl:when>
+		</xsl:choose>
+	</xsl:template>
+	<xsl:template match="m:fig[./graphic]">
+		<xsl:element name="img">
+			<xsl:attribute name="src"><xsl:value-of select="./graphic/@target"/></xsl:attribute>
+		</xsl:element>
+	</xsl:template> 
+	<!-- END TEXT HANDLING -->	
 	
 </xsl:stylesheet>

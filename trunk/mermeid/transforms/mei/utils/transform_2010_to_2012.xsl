@@ -735,6 +735,26 @@
                             </xsl:otherwise>
                         </xsl:choose>                        
                         <perfMedium analog="marc:048">                            
+                            <castList>
+                                <!-- list cast at top level if there is no more than one work component OR if instrumentation is indicated on first component only-->
+                                <xsl:choose>
+                                    <!-- if only 1 work component: -->
+                                    <!-- show cast if non-empty -->
+                                    <xsl:when test="$num_subworks=1 and
+                                        count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
+                                        <xsl:apply-templates select="//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]" mode="castList"/>
+                                    </xsl:when>
+                                    <!-- if more than one component (i.e. there are sub-works): -->
+                                    <xsl:otherwise>
+                                        <!-- show cast list if first components' cast list is non-empty -->
+                                        <!-- AND it is the only component having a cast list -->
+                                        <xsl:if test="count(//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0 
+                                            and count(//m:music/m:body/m:mdiv[m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]])=1">
+                                            <xsl:apply-templates select="//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]" mode="castList"/>
+                                        </xsl:if>
+                                    </xsl:otherwise>
+                                </xsl:choose>		
+                            </castList>
                             <instrumentation>
                                 <!-- list instrumentation at top level if there is no more than one work component OR if instrumentation is indicated on first component only-->
                                 <xsl:choose>
@@ -757,26 +777,6 @@
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </instrumentation>
-                            <castList>
-                                <!-- list cast at top level if there is no more than one work component OR if instrumentation is indicated on first component only-->
-                                <xsl:choose>
-                                    <!-- if only 1 work component: -->
-                                    <!-- show cast if non-empty -->
-                                    <xsl:when test="$num_subworks=1 and
-                                        count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0">
-                                        <xsl:apply-templates select="//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]" mode="castList"/>
-                                    </xsl:when>
-                                    <!-- if more than one component (i.e. there are sub-works): -->
-                                    <xsl:otherwise>
-                                        <!-- show cast list if first components' cast list is non-empty -->
-                                        <!-- AND it is the only component having a cast list -->
-                                        <xsl:if test="count(//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))])>0 
-                                            and count(//m:music/m:body/m:mdiv[m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]/m:staffdef[normalize-space(concat(@label.full,@label.abbr))]])=1">
-                                            <xsl:apply-templates select="//m:music/m:body/m:mdiv[1]/m:score/m:app/m:rdg[@type='metadata']/m:scoredef/m:staffgrp/m:staffgrp[contains(concat(@label.full,@label.abbr),'aracter')]" mode="castList"/>
-                                        </xsl:if>
-                                    </xsl:otherwise>
-                                </xsl:choose>		
-                            </castList>
                         </perfMedium>
                         <classification>
                             <termList>

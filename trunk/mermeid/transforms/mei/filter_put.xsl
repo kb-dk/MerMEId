@@ -23,6 +23,7 @@
     omit-xml-declaration="yes" 
     indent="yes"/>
   <xsl:strip-space elements="*" />
+  <xsl:strip-space elements="node"/>
   
   <xsl:template match="/">
     <xsl:variable name="new_doc">
@@ -51,6 +52,9 @@
       <xsl:copy-of select="."/>
     </xsl:if>
   </xsl:template>    
+  
+  <!-- Remove empty elements -->
+  <xsl:template match="m:castList[not(*)]"/>
   
   <!-- delete duplicate language definitions (fixes an xforms problem) -->
   <xsl:template match="m:mei/m:meiHead/m:workDesc/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
@@ -156,56 +160,22 @@
   <!-- End entity conversion -->    
   
   <!-- HTML -> MEI -->
-  <xsl:template match="h:p">
-    <xsl:element name="p" namespace="http://www.music-encoding.org/ns/mei">
-      <xsl:apply-templates select="node()"/>
-    </xsl:element>
-  </xsl:template>
-  <xsl:template match="h:br">
-    <xsl:element name="lb" namespace="http://www.music-encoding.org/ns/mei">
-      <xsl:apply-templates select="node()"/>
-    </xsl:element>
-  </xsl:template>
-  <xsl:template match="h:b">
-    <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
-      <xsl:attribute name="fontweight">bold</xsl:attribute>
-      <xsl:apply-templates select="node() | @*"/>
-    </xsl:element>
-  </xsl:template>
-  <xsl:template match="h:i">
-    <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
-      <xsl:attribute name="fontstyle">ital</xsl:attribute>
-      <xsl:apply-templates select="node() | @*"/>
-    </xsl:element>
-  </xsl:template>
-  <xsl:template match="h:u">
-    <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
-      <xsl:attribute name="rend">underline</xsl:attribute>
-      <xsl:apply-templates select="node() | @*"/>
-    </xsl:element>
-  </xsl:template>
-  <xsl:template match="h:sub">
-    <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
-      <xsl:attribute name="rend">sub</xsl:attribute>
-      <xsl:apply-templates select="node() | @*"/>    
-    </xsl:element>
-  </xsl:template>
-  <xsl:template match="h:sup">
-    <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
-      <xsl:attribute name="rend">sup</xsl:attribute>
-      <xsl:apply-templates select="node() | @*"/>
-    </xsl:element>
-  </xsl:template>
+  <xsl:template match="h:p"><xsl:element name="p" namespace="http://www.music-encoding.org/ns/mei"><xsl:apply-templates select="@*|node()"/></xsl:element></xsl:template>
+  <xsl:template match="h:br"><xsl:element name="lb" namespace="http://www.music-encoding.org/ns/mei"><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
+  <xsl:template match="h:b|h:strong"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="fontweight">bold</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
+  <xsl:template match="h:i|h:em"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="fontstyle">ital</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
+  <xsl:template match="h:u"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="rend">underline</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
+  <xsl:template match="h:sub"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="rend">sub</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
+  <xsl:template match="h:sup"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="rend">sup</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
   <xsl:template match="h:span">
     <xsl:choose>
       <!-- <span title="mei:persName" class="mei:atts[authority(GND),authURI(http://example.com)]">Gade</span> -->
       <xsl:when test="contains(@title,'mei:')">
         <xsl:variable name="tagName" select="substring-after(@title,'mei:')"/>
-        <!--<xsl:variable name="atts" select="tokenize(substring-before(substring-after(@class,'mei:atts['),']'),',')"/>-->
         <xsl:variable name="atts">
-          <xsl:call-template name="tokens">
+          <xsl:call-template name="tokenize">
             <xsl:with-param name="str" select="substring-before(substring-after(@class,'mei:atts['),']')"/>
-            <xsl:with-param name="splitString" select="','"></xsl:with-param>
+            <xsl:with-param name="splitString" select="','"/>
           </xsl:call-template>
         </xsl:variable>
         <xsl:element name="{$tagName}" namespace="http://www.music-encoding.org/ns/mei">
@@ -242,30 +212,17 @@
       <xsl:apply-templates select="node() | @*"/>
     </xsl:element>
   </xsl:template>
-  <xsl:template match="h:div[contains(@style,'text-align')]">
-    <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
-      <xsl:attribute name="halign"><xsl:value-of select="substring-before(substring-after(@style,'text-align:'),';')"/></xsl:attribute>
-      <xsl:apply-templates select="node() | @*"/>
-    </xsl:element>
-  </xsl:template>
+  <xsl:template match="h:div[contains(@style,'text-align')]"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="halign"><xsl:value-of select="substring-before(substring-after(@style,'text-align:'),';')"/></xsl:attribute><xsl:apply-templates select="node() | @*"/></xsl:element></xsl:template>
   <xsl:template match="h:ul">
     <xsl:element name="list" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="form">simple</xsl:attribute>
-      <xsl:for-each select="h:li">
-        <xsl:element name="li" namespace="http://www.music-encoding.org/ns/mei">
-          <xsl:apply-templates select="node() | @*"/>
-        </xsl:element>
-      </xsl:for-each>
+      <xsl:for-each select="h:li"><xsl:element name="li" namespace="http://www.music-encoding.org/ns/mei"><xsl:apply-templates select="node() | @*"/></xsl:element></xsl:for-each>
     </xsl:element>
   </xsl:template>
   <xsl:template match="h:ol">
     <xsl:element name="list" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="form">ordered</xsl:attribute>
-      <xsl:for-each select="h:li">
-        <xsl:element name="li" namespace="http://www.music-encoding.org/ns/mei">
-          <xsl:apply-templates select="node() | @*"/>
-        </xsl:element>
-      </xsl:for-each>
+      <xsl:for-each select="h:li"><xsl:element name="li" namespace="http://www.music-encoding.org/ns/mei"><xsl:apply-templates select="node() | @*"/></xsl:element></xsl:for-each>
     </xsl:element>
   </xsl:template>
   <xsl:template match="h:img">
@@ -278,7 +235,7 @@
   <!-- end HTML -> MEI -->
   
   <!-- utilities -->
-  <xsl:template name="tokens">
+  <xsl:template name="tokenize">
     <xsl:param name="str" select="."/>
     <xsl:param name="splitString" select="' '"/>
     <xsl:choose>
@@ -286,7 +243,7 @@
         <token>
           <xsl:value-of select="substring-before($str,$splitString)"/>
         </token>
-        <xsl:call-template name="tokens">
+        <xsl:call-template name="tokenize">
           <xsl:with-param name="str"
             select="substring-after($str,$splitString)"/>
           <xsl:with-param name="splitString" select="$splitString"/>
