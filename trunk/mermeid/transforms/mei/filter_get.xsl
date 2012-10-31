@@ -131,6 +131,19 @@
 		</xsl:choose>
 	</xsl:template>	
 	
+	<!-- add elements needed -->
+	<xsl:template match="m:perfMedium" mode="component">
+		<perfMedium>
+			<xsl:apply-templates select="@*"/>
+			<xsl:if test="not(m:castList)">
+				<castList/>
+			</xsl:if>
+			<xsl:apply-templates select="*"/>
+			<xsl:if test="not(m:instrumentation)">
+				<instrumentation/>
+			</xsl:if>
+		</perfMedium>
+	</xsl:template>
 	
 	<!-- MEI -> HTML -->
 	<xsl:template match="m:lb" mode="mei2html">&lt;br/&gt;</xsl:template> 

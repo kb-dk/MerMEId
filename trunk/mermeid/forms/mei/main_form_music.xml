@@ -882,7 +882,7 @@
 																	<xf:label><h:img src="http:/editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
 																	<xf:action ev:event="DOMActivate">
 																		<xxf:variable name="origin" select="."/>
-																		<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list1')+1" position="after"/>
+																		<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list1')" position="after"/>
 																		<xf:delete nodeset="."/>
 																	</xf:action>
 																</xf:trigger>
@@ -982,7 +982,7 @@
 																						<xf:label><h:img src="http:/editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
 																						<xf:action ev:event="DOMActivate">
 																							<xxf:variable name="origin" select="."/>
-																							<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list1')+1" position="after"/>
+																							<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list2')" position="after"/>
 																							<xf:delete nodeset="."/>
 																						</xf:action>
 																					</xf:trigger>

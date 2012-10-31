@@ -641,10 +641,10 @@
 	<xsl:template match="m:expression">
 		<!-- display title etc. only with components or versions -->
 		<xsl:apply-templates select="m:titleStmt[ancestor-or-self::*[local-name()='componentGrp'] or count(../m:expression)&gt;1]"/>
+		<xsl:apply-templates select="m:perfMedium[m:instrumentation[m:instrVoice or m:instrVoiceGrp] or m:castList/m:castItem]" mode="subLevel"/>
 		<xsl:apply-templates select="m:tempo[text()]"/>		
 		<xsl:apply-templates select="m:meter[normalize-space(concat(@count,@unit,@sym))]"/>
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
-		<xsl:apply-templates select="m:perfMedium[m:instrumentation[m:instrVoice or m:instrVoiceGrp] or m:castList/m:castItem]" mode="subLevel"/>
 		<xsl:apply-templates select="m:incip"/>
 		<xsl:apply-templates select="m:componentGrp"/>
 	</xsl:template>
@@ -888,7 +888,7 @@
 		<xsl:param name="full" select="true()"/>
 		<xsl:for-each select="m:instrumentation[*]">
 			<p>
-				<xsl:if test="position()=1">
+				<xsl:if test="position()=1 and $full">
 					<span class="label">Instrumentation: </span><br/>
 				</xsl:if>
 				<xsl:apply-templates select="m:instrVoiceGrp"/>
@@ -902,7 +902,7 @@
 				</xsl:if>
 			</p>
 		</xsl:for-each>
-		<xsl:apply-templates select="m:castList[//*/text()]">
+		<xsl:apply-templates select="m:castList[*//text()]">
 			<xsl:with-param name="full" select="$full"/>
 		</xsl:apply-templates>
 	</xsl:template>
@@ -933,7 +933,9 @@
 	<xsl:template match="m:castList">
 		<xsl:param name="full" select="true()"/>
 		<p>
-			<span class="label">Roles: </span>
+			<xsl:if test="$full">
+				<span class="label">Roles: </span>
+			</xsl:if>
 			<xsl:for-each select="m:castItem/m:role/m:name[count(@xml:lang[.=ancestor-or-self::m:castItem/preceding-sibling::*//@xml:lang])=0 or not(@xml:lang)]">
 				<!-- iterate over languages -->
 				<xsl:variable name="lang" select="@xml:lang"/>

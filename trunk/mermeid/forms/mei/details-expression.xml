@@ -599,11 +599,11 @@
                             <xxf:variable name="thisCastList" select="m:perfMedium/m:castList"/>
                             <dcm:create nodeset="m:perfMedium"
                                 label="Roles"
-                                origin="instance('empty-instance')//m:expression/m:componentGrp/m:expression/m:perfMedium"/>
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression/m:perfMedium"/>
                             <dcm:create ref="m:perfMedium" 
                                 nodeset="m:castList"
                                 label="Roles"
-                                origin="instance('empty-instance')//m:expression/m:componentGrp/m:expression/m:perfMedium/m:castList"/>
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression/m:perfMedium/m:castList"/>
                             <xf:group ref="$thisCastList">
                                 <xf:repeat nodeset="$topLevelCastList/m:castItem">
                                     <xxf:variable name="thisTopLevelCast" select="."/>
