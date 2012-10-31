@@ -16,9 +16,17 @@
       <h:legend>Sources</h:legend>
       <h:br/>
       
+      <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc">
+      <dcm:create 
+        nodeset="m:sourceDesc"
+        label="Add sources"
+        origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc">
+        <!-- To do: listen for a dcm-create event, delete the inserted empty source, and open add_source_dialog instead -->
+      </dcm:create>
+      </xf:group>
       <xf:trigger ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc[not(m:source)]">
         <xf:label><h:img src="http:/editor/images/add.gif" title="Add source"></h:img> Add source</xf:label>
-        <xf:action ev:event="DOMActivate">
+        <xf:action ev:event="DOMActivate addSource">
             <xxf:show dialog="add_source_dialog"/>
           </xf:action>
       </xf:trigger>
@@ -121,7 +129,7 @@
                 <xf:action ev:event="DOMActivate">
                     <xxf:show dialog="add_source_dialog"/>
                   </xf:action>
-              </xf:trigger><dcm:element-buttons triggers="remove" nodeset="m:source" index="repeat-sources" 
+              </xf:trigger><dcm:element-buttons triggers="del-parent-with-last" nodeset="m:source" index="repeat-sources" 
                 origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/>
               <dcm:attribute-editor ref="."/>
             </h:td>

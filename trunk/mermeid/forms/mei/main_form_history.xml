@@ -86,11 +86,10 @@
 				<xf:repeat nodeset="m:eventList[@type='history']/m:event" id="repeat-work-history">
 					<h:fieldset>
 						<h:legend>Event <dcm:element-buttons 
-							triggers="up down copy add" 
+							triggers="up down copy add del-parent-with-last" 
 							nodeset="m:event" 
 							index="repeat-work-history"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event"/>
-							<dcm:delete-parent-with-last index="repeat-work-history"/>
 							<dcm:attribute-editor ref="."/>
 							<h:br clear="all"/>
 						</h:legend>
@@ -166,9 +165,8 @@
 				<h:small>File must be saved before performances can be edited</h:small>
 				</xf:group>
 				</h:td>
-				<h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add" nodeset="m:event" index="repeat-work-performance" 
+				<h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add del-parent-with-last" nodeset="m:event" index="repeat-work-performance" 
 				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
-				<dcm:delete-parent-with-last index="repeat-work-performance"/>
 				<dcm:attribute-editor ref="."/>
 				</h:td>
 				</h:tr>
@@ -240,9 +238,8 @@
 												</xf:action>
 											</xf:trigger>
 										</h:td>
-										<h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add" nodeset="m:event" index="repeat-expression-performance" 
+										<h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add del-parent-with-last" nodeset="m:event" index="repeat-expression-performance" 
 											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
-											<dcm:delete-parent-with-last index="repeat-expression-performance"/>
 											<dcm:attribute-editor ref="."/>
 										</h:td>
 									</h:tr>

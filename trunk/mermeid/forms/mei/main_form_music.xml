@@ -270,11 +270,10 @@
 							</xf:group>
 							<dcm:relator ref="."/>
 							<dcm:element-buttons 
-								triggers="add" 
+								triggers="add del-parent-with-last" 
 								nodeset="m:persName" 
 								index="version-relators-repeat"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
-							<dcm:delete-parent-with-last index="version-relators-repeat"/>
 							<dcm:attribute-editor ref="."/>
 							<h:br/>
 						</xf:repeat>
@@ -594,11 +593,10 @@
 										<h:legend>
 											<xf:output value="if (m:role/m:name[1]!='') then m:role/m:name[1] else '[Role]'"/>
 											<dcm:element-buttons
-												triggers="add up down" 
+												triggers="add up down del-parent-with-last" 
 												nodeset="m:castItem" 
 												index="repeat-cast"
 												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]"/>
-											<dcm:delete-parent-with-last index="repeat-cast"/>
 											<dcm:id/>
 											<dcm:attribute-editor/>
 										</h:legend>

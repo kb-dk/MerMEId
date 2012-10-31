@@ -350,11 +350,10 @@
 							<h:td style="vertical-align:top; white-space:nowrap;">
 								<h:span class="editmenu">
 									<dcm:element-buttons 
-										triggers="up down add" 
+										triggers="up down add del-parent-with-last" 
 										nodeset="m:relation" 
 										index="work_relations"
 										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList/m:relation"/>
-									<dcm:delete-parent-with-last index="work_relations"/>
 								<dcm:attribute-editor ref="."/>
 								</h:span>
 							</h:td>
@@ -407,11 +406,10 @@
 					<h:div>
 						<xf:input ref="." class="long"/>
 						<dcm:element-buttons 
-							triggers="add" 
+							triggers="add del-parent-with-last" 
 							nodeset="m:term" 
 							index="repeat-work-terms"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term"/>
-						<dcm:delete-parent-with-last index="repeat-work-terms"/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>

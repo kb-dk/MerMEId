@@ -249,11 +249,10 @@
                                                     <h:legend>
                                                         Event
                                                         <dcm:element-buttons 
-                                                            triggers="up down copy add" 
+                                                            triggers="up down copy add del-parent-with-last" 
                                                             nodeset="m:event" 
                                                             index="physdesc-provenance"
                                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>
-                                                        <dcm:delete-parent-with-last index="physdesc-provenance"/>
                                                         <dcm:attribute-editor ref="."/>
                                                     </h:legend>
                                                     <dcm:date-editor ref="m:date">

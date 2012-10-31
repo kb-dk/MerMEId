@@ -15,10 +15,11 @@
         
         The component requires four attributes:
         triggers:   a list (white space or comma separated) of buttons to display; 
-        recognized values are add, delete, remove, copy, up, down, and all.
+        recognized values are add, delete, remove, del-parent-with-last, copy, up, down, and all.
         "all" equals add, delete, copy, up and down. 
         As opposed to "delete", "remove" also allows removing the last 
-        remaining row. 
+        remaining row. "del-parent-with-last" furthermore removes the parent element, if it is empty after having deleted
+        the last row. 
         nodeset:    The name of the repeated nodeset (the . selector will not work).
         index:      The repeat's id  
         origin:     The nodeset to use as a model when adding a new elements
@@ -139,13 +140,26 @@
                             <xf:trigger appearance="minimal">
                                 <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                                 <xf:action ev:event="DOMActivate">
-                                    <xf:delete ev:event="DOMActivate" nodeset="."
-                                        at="index($index)"/>
+                                    <xf:delete nodeset="." at="index($index)"/>
                                     <xf:dispatch name="xforms-value-changed" target="form-group"/>
                                 </xf:action>
                             </xf:trigger>
                         </xf:group>
                     </xf:group>    
+                    <xf:group ref=".[contains($triggers,'del-parent-with-last')]" class="button_group">
+                        <xxf:variable name="number" select="count(parent::node()/*)"/>
+                        <xf:trigger appearance="minimal">
+                            <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:action if="$number=1" ev:event="DOMActivate">
+                                <xf:delete nodeset="parent::node()"/>
+                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                            </xf:action>
+                            <xf:action if="$number&gt;1" ev:event="DOMActivate">
+                                <xf:delete nodeset="." at="index($index)"/>
+                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                            </xf:action>
+                        </xf:trigger> 
+                    </xf:group>
                 </h:span>
             </xf:group>
         </xbl:template>
