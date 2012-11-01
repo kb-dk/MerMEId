@@ -97,13 +97,12 @@
                                     <xf:insert origin="../*[$pos]"
                                         nodeset="*" at="$pos+1"/>
                                     <xf:delete nodeset="*" at="$pos"/>
-                                    <xf:dispatch name="dcm-create" target="dcm-create-binding"/>
                                 </xf:action>
                             </xf:action>
                             
                             <!-- end moving -->
-                            
                             <xf:dispatch name="id-update" target="form-group"/>
+                            <xf:dispatch name="dcm-create" target="dcm-create-binding"/>
                         </xf:action>
                     </xf:trigger>
                 </xf:group>

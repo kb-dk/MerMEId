@@ -132,11 +132,11 @@
                             <dcm:attribute-editor ref="m:title"/>
                             
                             <h:br clear="all"/>
-                            
-                            <dcm:date-editor ref="m:date">
-                                <xf:label class="fixed_width">Date</xf:label>
-                            </dcm:date-editor>
-                            
+                            <h:div>
+                                <dcm:date-editor ref="m:date">
+                                    <xf:label class="fixed_width">Date</xf:label>
+                                </dcm:date-editor>
+                            </h:div>
                             <xf:input ref="m:geogName[@role='venue']" class="long">
                                 <xf:label class="fixed_width">Venue</xf:label>
                             </xf:input>
@@ -253,9 +253,11 @@
                                         <dcm:attribute-editor ref="t:biblScope[@type='pp']"/>
                                         <h:br clear="both"/>
                                         
-                                        <dcm:date-editor ref="t:date">
-                                            <xf:label class="fixed_width">Date</xf:label>
-                                        </dcm:date-editor>
+                                        <h:div>
+                                            <dcm:date-editor ref="t:date">
+                                                <xf:label class="fixed_width">Date</xf:label>
+                                            </dcm:date-editor>
+                                        </h:div>
                                         
                                         <xf:input ref="t:author" class="medium_long">
                                             <xf:label class="fixed_width">Author</xf:label>

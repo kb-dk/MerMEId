@@ -113,11 +113,11 @@
 				</xf:repeat>
 				
 				
-				<xf:group ref=".[not(m:title[@type='alternative']) or
-					not(m:title[@type='subordinate']) or
-					not(m:title[@type='uniform']) or
-					not(m:title[@type='original']) or
-					not(m:title[@type='text_source'])]">
+				<xf:group ref=".[not(m:title[@type='alternative'] 
+					and m:title[@type='subordinate'] 
+					and	m:title[@type='uniform'] 
+					and	m:title[@type='original'] 
+					and	m:title[@type='text_source'])]">
 					<h:div class="vertical_spacer"/>
 					<h:a class="popup" style="font-size:.9em;"><h:img src="http:/editor/images/add.gif" title="Add more titles"/> Add more titles...<h:span 
 						class="comment" style="margin-top:0px;margin-left:-100px;">

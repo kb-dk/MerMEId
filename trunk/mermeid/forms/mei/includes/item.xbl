@@ -255,10 +255,12 @@
                                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>
                                                         <dcm:attribute-editor ref="."/>
                                                     </h:legend>
-                                                    <dcm:date-editor ref="m:date">
-                                                        <xf:label class="fixed_width">Date <h:a class="help">?<h:span class="comment">Date 
-                                                            or date span of the event</h:span></h:a></xf:label>
-                                                    </dcm:date-editor>
+                                                    <h:div>
+                                                        <dcm:date-editor ref="m:date">
+                                                            <xf:label class="fixed_width">Date <h:a class="help">?<h:span class="comment">Date 
+                                                                or date span of the event</h:span></h:a></xf:label>
+                                                        </dcm:date-editor>
+                                                    </h:div>
                                                     <xf:input ref="m:title" class="maxlong">
                                                         <xf:label class="fixed_width">Description <h:a class="help">?<h:span class="comment">Description of the event "Purchased by The Royal Library from John Doe"</h:span></h:a></xf:label>
                                                     </xf:input>
