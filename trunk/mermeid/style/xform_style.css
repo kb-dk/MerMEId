@@ -10,7 +10,14 @@
 }
 
 .xforms-loading-loading {
-    margin-top: 15px;
+    display:list-item !important;
+    margin-top: 5px;
+    padding: 10px 0px;
+    list-style:square url('/editor/images/throbber.gif');
+    font-size: .1px;
+    color: transparent;
+    background-color: transparent;
+    text-transform: uppercase;
 }
 
 /* override controls style */

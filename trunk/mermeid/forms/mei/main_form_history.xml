@@ -225,8 +225,8 @@
 											&#160;
 										</h:td>
 										<h:td>
-											<xf:trigger>
-												<xf:label><h:img src="http:/editor/images/edit.gif" title="Open performance editor"/> Edit</xf:label>
+											<xf:trigger appearance="minimal">
+												<xf:label><h:img src="http:/editor/images/edit.gif" title="Open performance editor"/></xf:label>
 												<xf:action ev:event="DOMActivate">
 													<xxf:variable name="uri" 
 														select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-performance.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>

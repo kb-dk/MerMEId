@@ -138,8 +138,8 @@
                   </h:td>
                   <h:td nowrap="nowrap">
                     <xf:group ref=".[instance('temp')/file_exists='true']">
-                      <xf:trigger>
-                        <xf:label><h:img src="http:/editor/images/edit.gif" title="Open reference editor"/> Edit</xf:label>
+                      <xf:trigger appearance="minimal">
+                        <xf:label><h:img src="http:/editor/images/edit.gif" title="Open reference editor"/></xf:label>
                         <xf:action ev:event="DOMActivate">
                           <xxf:variable name="uri" 
                             select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-reference.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
@@ -190,12 +190,13 @@
           label="Secondary bibliography"
           origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='secondary']"/>
       </h:div>
-      <h:div>
+      <!-- deprecated
+        <h:div>
         <dcm:create nodeset="t:listBibl[@type='documentation']"
           label="Documentary material"
           origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='documentation']"/>
       </h:div>
-      
+      -->
     </xf:group>
     
   </h:div>  

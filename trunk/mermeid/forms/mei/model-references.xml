@@ -51,7 +51,7 @@
                     </xf:trigger>
                 </h:div>
                 
-                <h:h3>Edit list of frequently used bibliographic references</h:h3>
+                <h:h2>Edit list of frequently used bibliographic references</h:h2>
                 
                 <h:div>
                     <xf:select1 ref="instance('temp')/collection" class="maxlong">
@@ -110,13 +110,26 @@
                         </xf:trigger>
                     </xf:group>
                 </h:div>
-                <h:br/>
-                <xf:trigger ref=".[not(instance('bibliography-instance')/t:listBibl[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]/t:bibl)]">
-                    <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> Add reference</xf:label>
-                    <xf:action ev:event="DOMActivate">
-                        <xxf:show dialog="add-ref-dialog"/>
-                    </xf:action>
-                </xf:trigger>
+                <h:hr/>
+                <h:h3>
+                    <xf:group ref="instance('temp')/collection[.!='']">
+                        <xf:output value="."/> references
+                    </xf:group>
+                    <xf:group ref="instance('temp')/collection[.='']">
+                        References for all collections
+                    </xf:group>
+                </h:h3>
+                <xf:group ref=".[not(instance('bibliography-instance')/t:listBibl[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]/t:bibl)]">
+                    <h:div>
+                        [None]<h:br/>&#160;
+                    </h:div>
+                    <xf:trigger >
+                        <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> Add reference</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xxf:show dialog="add-ref-dialog"/>
+                        </xf:action>
+                    </xf:trigger>
+                </xf:group>
                 <xf:repeat id="repeat-references"
                     nodeset="instance('bibliography-instance')/t:listBibl[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]/t:bibl">
                     <h:fieldset>

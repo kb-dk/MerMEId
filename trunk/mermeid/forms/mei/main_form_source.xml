@@ -22,6 +22,7 @@
         label="Add sources"
         origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc">
         <!-- To do: listen for a dcm-create event, delete the inserted empty source, and open add_source_dialog instead -->
+        <!--<xf:message ev:event="dcm-create xforms-changed">SOURCE ADDED</xf:message>-->
       </dcm:create>
       </xf:group>
       <xf:trigger ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc[not(m:source)]">
@@ -83,8 +84,8 @@
               <xf:group ref=".[*]">
                 <!-- sources included in this file -->
                 <xf:group ref=".[instance('temp')/file_exists='true']">
-                  <xf:trigger>
-                    <xf:label><h:img src="http:/editor/images/edit.gif" title="Open the source editor"/> Edit</xf:label>
+                  <xf:trigger appearance="minimal">
+                    <xf:label><h:img src="http:/editor/images/edit.gif" title="Open the source editor"/></xf:label>
                     <xf:action ev:event="DOMActivate">
                       <xxf:variable name="uri" 
                         select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-source.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
@@ -101,8 +102,8 @@
               </xf:group>
               <xf:group ref=".[not(*)]">
                 <!-- external source data -->
-                <xf:trigger>
-                  <xf:label><h:img src="http:/editor/images/edit.gif" title="Go to external source"/> Edit</xf:label>
+                <xf:trigger appearance="minimal">
+                  <xf:label><h:img src="http:/editor/images/edit.gif" title="Go to external source"/></xf:label>
                   <xf:action ev:event="DOMActivate">
                     <xxf:variable name="uri" 
                       select="concat(

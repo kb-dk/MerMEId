@@ -85,7 +85,7 @@
                         </xf:action>
                     </xf:submit>
                     <xf:trigger>
-                        <xf:label><h:img src="http:/editor/images/close.gif" alt="Cancel (close)"/> Cancel</xf:label>
+                        <xf:label><h:img src="http:/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:load resource="{$uri}" show="replace"/>
                         </xf:action>
@@ -909,9 +909,9 @@
                 </xf:group>
                 
                 <xf:group ref=".[not(instance('data-instance')//m:source[@xml:id=instance('temp')/id])]">
-                    <h:h3>Not found</h:h3>
+                    <h:h3>Item not found</h:h3>
                     <h:p>Did you remember to save your work before you opened the details editor?</h:p>
-                    <h:p>Please click the "Cancel" button to return to the list.</h:p>
+                    <h:p>Please click the "Discard" button to return to the list.</h:p>
                 </xf:group>
                 
             </h:div>
