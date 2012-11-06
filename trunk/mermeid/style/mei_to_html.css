@@ -203,11 +203,11 @@ table.source_component_list td.label_cell {
 /* SPECIAL SYMBOLS */
 
 /* Embedded fonts */
-/* time signature (common/cut time) font */
+/* Unicode music symbols font */
 @font-face {
-	font-family: 'Rhythms';
-	src: url('fonts/Rhythms.eot');
-	src: local('Rhythms Regular'), local('Rhythms'), url('fonts/Rhythms.ttf') format('truetype');
+	font-family: 'Euterpe';
+	src: url('fonts/Euterpe.eot');
+	src: local('Euterpe Regular'), local('Euterpe'), url('fonts/Euterpe.ttf') format('truetype');
 } 
 
 /* Runes font */
@@ -236,16 +236,20 @@ table.source_component_list td.label_cell {
     font-weight: bold;
 }
 
-.timesig {
-    font-family: Rhythms, Opus, Helsinki, Petrucci; 
-    font-size: 1.2em;
-}
-
 .runes {
     font-family: Hnias, Junicode, sans-serif, serif;
 }
 
+.music_symbols {
+    font-family: Euterpe, "Arial Unicode MS", sans-serif, serif;
+    font-size: 2em;
+    line-height: .5em;
+}
 
+.time_signature {
+    position:relative;
+    top: .2em;
+}
 /* css for help pop-ups */
 a.help {
     text-decoration : none;

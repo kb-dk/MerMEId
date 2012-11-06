@@ -3,10 +3,10 @@ body {
 }
 
 div.manual_header {
-    background-color: #999;
     margin: -20px;
     margin-bottom: 10px;
     padding: 10px 20px;
+    border-bottom: 1px solid #666;
 }
 
 div.toplink {
@@ -23,6 +23,10 @@ h1 {
 
 h2 {
     font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1em;
 }
 
 table {
@@ -108,6 +112,47 @@ a.trigger img:hover {
     padding: 1px;
 }
 
+p.footer {
+        border-top: 1px solid #666;
+        padding-top: 10px;
+}
+
 .footer, .footer a:link, .footer a:visited, .footer a:active {
     color: #888888;
+}
+
+
+
+/* SPECIAL SYMBOLS */
+
+/* Embedded fonts */
+/* Unicode music symbols font */
+@font-face {
+	font-family: 'Euterpe';
+	src: url('fonts/Euterpe.eot');
+	src: local('Euterpe Regular'), local('Euterpe'), url('fonts/Euterpe.ttf') format('truetype');
+} 
+
+/* Runes font */
+@font-face {
+	font-family: 'Hnias';
+	src: url('fonts/Hnias.eot');
+	src: local('Hnias Regular'), local('Hnias'), url('fonts/Hnias.ttf') format('truetype');
+} 
+
+
+/* End embedded font */
+
+.runes {
+    font-family: Hnias, Junicode, sans-serif, serif;
+}
+
+.music_symbols, .music_symbols td {
+    font-family: Euterpe, "Arial Unicode MS", sans-serif, serif;
+    font-size: 1.2em;
+    line-height: .8em;
+}
+
+.music_symbols td p {
+    font-size: .4em;
 }

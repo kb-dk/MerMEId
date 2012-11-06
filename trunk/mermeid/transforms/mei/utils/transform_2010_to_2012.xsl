@@ -169,11 +169,8 @@
 
     <xsl:template match="m:persname|t:persName">
             <xsl:choose>
-                <xsl:when test="@type='soloist' and .=''">
-                    <!-- delete empty soloist persnames ('soloist' not a MARC relator) -->                
-                </xsl:when>
-                <xsl:when test="@type='dedicatee' and .=''">
-                    <!-- delete empty dedicatee persnames -->                
+                <xsl:when test=".=''">
+                    <!-- delete empty persnames -->                
                 </xsl:when>
                 <xsl:otherwise>
                     <persName role="">
@@ -279,9 +276,6 @@
                     </identifier>
                 </xsl:if>
             </xsl:for-each>
-            <xsl:if test="count(m:physdesc/m:physloc/m:repository/m:identifier[contains(.,'[')])=0">
-                <identifier/>
-            </xsl:if>
             <xsl:apply-templates select="@*|m:titlestmt|m:pubstmt[1]"/> <!-- only put the first pubStmt here -->
             <physDesc>
                 <!-- <physloc>, <provenance> and <handlist> are moved to <item> -->
@@ -292,13 +286,9 @@
             <!-- add item level -->
             <itemList>
                 <item> 
-                    <identifier/>
                     <titleStmt>
                         <title/>
                     </titleStmt>
-                    <pubStmt>
-                        <date/>
-                    </pubStmt>
                     <physDesc>
                         <condition/>
                         <xsl:apply-templates select="m:physdesc/m:physloc"/>
@@ -308,16 +298,9 @@
                         <xsl:apply-templates select="m:physdesc/m:handlist"/>
                         <physMedium/>
                     </physDesc>
-                    <notesStmt>
-                        <annot type="source_description"/>
-                        <annot type="links">
-                            <ptr target="" mimetype="" xl:title=""/>
-                        </annot>
-                    </notesStmt>
-                    <componentGrp/>
+                    <notesStmt/>
                 </item> 
             </itemList>
-            <componentGrp/>
             <relationList>
                 <relation rel="isEmbodimentOf" target="#expression_1"/>
             </relationList>
@@ -332,20 +315,14 @@
     <xsl:template match="m:pubstmt" mode="reprints">
         <xsl:param name="source_id"/>
         <source analog="frbr:manifestation">
-            <identifier/>
             <titleStmt>
                 <title/>
-                <respStmt>
-                    <persName role=""/>
-                </respStmt>
+                <respStmt/>
             </titleStmt>
             <xsl:apply-templates select="."/>
             <physDesc>
                 <plateNum><xsl:value-of select="m:identifier[@type='plate_no']"/></plateNum>
             </physDesc>
-            <notesStmt>
-                <annot type="source_description"/>                     
-            </notesStmt>
             <relationList>
                 <relation rel="isReproductionOf">
                     <xsl:attribute name="target">#<xsl:value-of select="$source_id"/></xsl:attribute>
@@ -369,9 +346,11 @@
                 </identifier>
             </xsl:when>
             <xsl:otherwise>
-                <identifier>
-                    <xsl:value-of select="."/>
-                </identifier>
+                <xsl:if test="normalize-space(.)">
+                    <identifier>
+                        <xsl:value-of select="."/>
+                    </identifier>
+                </xsl:if>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -1196,14 +1175,16 @@
     </xsl:template>    
         
     <xsl:template match="m:extptr">
-        <ptr>
-            <!-- rename attributes -->
-            <xsl:copy-of select="@*[name()!='xl:href' and name()!='targettype']"/>
-            <xsl:attribute name="target"><xsl:value-of select="@xl:href"/></xsl:attribute>
-            <xsl:attribute name="xl:title"><xsl:value-of 
-                select="concat(translate(substring(@targettype,1,1), 'abcdefghijklmnopqrstuvwxyzæøå', 'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ'), 
-                substring(@targettype, 2))"/></xsl:attribute>
-        </ptr>
+        <xsl:if test="@target!='' or @xl:href!=''">
+            <ptr>
+                <!-- rename attributes -->
+                <xsl:copy-of select="@*[name()!='xl:href' and name()!='targettype']"/>
+                <xsl:attribute name="target"><xsl:value-of select="@xl:href"/></xsl:attribute>
+                <xsl:attribute name="xl:title"><xsl:value-of 
+                    select="concat(translate(substring(@targettype,1,1), 'abcdefghijklmnopqrstuvwxyzæøå', 'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ'), 
+                    substring(@targettype, 2))"/></xsl:attribute>
+            </ptr>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="m:date">

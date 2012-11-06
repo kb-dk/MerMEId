@@ -46,8 +46,10 @@
   </xsl:template>
   
   <!-- Remove empty attributes -->
-  <xsl:template match="identifier/@type|@unit|@target|@targettype|@pname|@accid|@mode|@count|@sym|@code|@solo|
-    @notbefore|@notafter|@reg|@isodate|@startdate|@enddate|@n|@evidence">
+  <xsl:template match="m:identifier/@type|@unit|@pname|@accid|@mode|@count|@sym|@code|@solo|
+    @n|@evidence|@target|@targettype|
+    @notbefore|@notafter|@reg|@isodate|@startdate|@enddate|@notAfter-iso|@notBefore-iso|@when-iso|
+    @xml:lang">
     <xsl:if test="normalize-space(.)">
       <xsl:copy-of select="."/>
     </xsl:if>

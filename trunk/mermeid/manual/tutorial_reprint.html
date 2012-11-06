@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+    <title>MerMEId manual</title>
+    <link href="../style/tab_style.css" rel="stylesheet" type="text/css" />
+    <link href="../style/list_style.css" rel="stylesheet" type="text/css" />
+    <link href="../style/manual.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" href="../js/manual.js">
+    </script>
+  </head>
+  
+  <body>
+    
+    <div class="manual_header">
+      
+      <div class="close_div">
+        <a href="javascript:window.close();" class="trigger"><img alt="Close"
+          title="Close" src="../images/close.gif" width="12" height="12" /></a></div>
+      <img alt="MerMEId" src="../images/mermeid_30px.png" width="130" height="23" />
+    </div>
+    
+    <div class="toclink"><a href="index.html">Back to table of contents</a></div>
+    
+    <h3>How to...</h3>
+    <h1>Add a reprint edition of a source</h1>
+    <p>A reprint is an unchanged reproduction of an earlier print. In <a class="help_plain">FRBR<span class="comment">
+      Functional Requirements for Bibliographic Records as defined by the IFLA</span></a> terms, 
+      it is a new manifestation, related to the original one as being a reproduction.</p>
+    <p>Thus, to add a reprint edition in MerMEId, you should</p>
+    <ul>
+      <li>create a new source</li>
+      <li>save your work and open the new source for editing</li>
+      <li>[add a title?]</li>
+      <li>in "Relations" near the top of the page, select "is a reproduction of" as the relation and the original
+        source as the target of the relation. In the target selection list, sources are identified both by title and their 
+        ID attribute (if you want to see your sources' IDs, turn on "show ID" in the MerMEId settings menu or 
+        use the attribute editor, which also can be activated in the settings menu).</li>
+      <li>add any desired details about this reprint, such as publication date, publisher or plate numbers.</li>
+      <li>save your work and close the source editor.</li>
+    </ul>
+    <p>In the HTML preview, the reprint will be displayed after the original source:
+      <img src="..." alt="HTML preview: Reprint"/>
+    </p>
+    <p>Remember that a relation is bidirectional. Depending on your project and your encoding practice, 
+      you may want to define the relation also the other way (from the original, pointing to the reprint).
+      To do this, open the original source for editing, add the relation "has reproduction:", and select the 
+      reprint source as its target.</p>
+    
+    
+    
+    <p class="footer">2012 Danish Centre for Music Publication | The Royal Library,
+      Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
+        href="http://www.kb.dk/dcm">www.kb.dk/dcm</a></p>
+  </body>
+</html>
