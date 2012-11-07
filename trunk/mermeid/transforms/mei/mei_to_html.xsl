@@ -857,10 +857,10 @@
 					</span>
 				</xsl:when>
 				<xsl:otherwise>
-					<span class="timesig">
+					<span class="music_symbols time_signature">
 						<xsl:choose>
-							<xsl:when test="@sym='common'">c</xsl:when>
-							<xsl:when test="@sym='cut'">C</xsl:when>
+							<xsl:when test="@sym='common'">&#x1d134;</xsl:when>
+							<xsl:when test="@sym='cut'">&#x1d135;</xsl:when>
 						</xsl:choose>
 					</span>
 				</xsl:otherwise>

@@ -87,146 +87,171 @@
                         </xf:input>
                         <dcm:attribute-editor ref="m:titleStmt/m:title"/>
                         
-                        <!-- identifiers -->
-                        <h:span class="blocklabel strong">Identification <h:a class="help">?<h:span 
-                            class="comment">Identifiers other than the repository's own shelf mark, 
-                            e.g. RISM identifiers or other catalogue numbers identifying this specific item<h:br/>
-                            With prints, RISM identifiers should be given at general 
-                            source level (above).
-                        </h:span></h:a></h:span>
-                        <dcm:create
-                            nodeset="m:identifier"
-                            label="Add identifier"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
-                        <xf:repeat nodeset="m:identifier" id="repeat-item-identifier">
-                            <xf:input ref="@type" class="mediumshort">
-                                <xf:label class="fixed_width">List name <h:a class="help">?<h:span 
-                                    class="comment">The name of the catalogue or list identifying this 
-                                    specific item, e.g. "RISM" (but please note that RISM identifiers 
-                                    of printed sources should be entered at 
-                                    source level (above) rather than on individual copies)</h:span></h:a></xf:label>
-                            </xf:input>
-                            <xf:input ref="." class="mediumlong">
-                                <xf:label> No. <h:a class="help">?<h:span class="comment">The number 
-                                    identifying this particular source in the list, e.g. "A/II 1234"</h:span></h:a></xf:label>
-                            </xf:input>
-                            <dcm:element-buttons 
-                                triggers="add remove" 
-                                nodeset="m:identifier" 
-                                index="repeat-item-identifier"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
-                            <dcm:attribute-editor ref="."/>
-                            <h:br clear="all"/>
-                        </xf:repeat>
-                        
-                        
-                        <xf:group ref="m:physDesc/m:physLoc">
-                            <h:hr/>
-                            <xf:repeat nodeset="m:repository" id="physdesc-physloc">
-                                <h:span class="blocklabel strong">Location </h:span>
-                                <xf:input ref="m:corpName" class="mediumlong">
-                                    <xf:label class="fixed_width">Repository  
-                                        <h:a class="help">?<h:span class="comment">The library, archive or
-                                            other repository holding this item, e.g. "DK-Kk" or "State Archive, Copenhagen"</h:span></h:a>
-                                    </xf:label>
-                                </xf:input>
-                                <dcm:attribute-editor ref="m:corpName"/>
-                                <xf:input ref="m:identifier">
-                                    <xf:label>Shelfmark 
-                                        <h:a class="help">?<h:span class="comment">The shelfmark or other signature
-                                            identfying this item in the repository</h:span></h:a>
-                                    </xf:label>
-                                </xf:input>
-                                <dcm:attribute-editor ref="m:identifier"/>
-                                <h:br clear="all"/>
-                                <xf:label class="blocklabel">External links 
-                                    <h:a class="help">?<h:span class="comment">Links pointing to representations (facsimile,
-                                        transcription, library catalogue etc.) of this particular item</h:span></h:a></xf:label>
+                        <!-- location -->
+                        <h:div>
+                            <dcm:create ref="m:physDesc"
+                                nodeset="m:physLoc"
+                                label="Add location"
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:physLoc"/>
+                            <xf:group ref="m:physDesc/m:physLoc">
                                 <dcm:create 
-                                    nodeset="m:ptr"
-                                    label="Add link"
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:physDesc/m:physLoc/m:repository/m:ptr"/>                                            
-                                <xf:repeat nodeset="m:ptr" id="physdesc-physloc-extptr">
-                                    <h:div>
-                                        <xf:input ref="@target" class="mediumlong">
-                                            <xf:label class="fixed_width">URI 
-                                                <h:a class="help">?<h:span class="comment">Link address</h:span></h:a>
-                                            </xf:label>
-                                        </xf:input>
-                                        <!-- input/select emulating selection="open" behaviour -->
-                                        <h:span class="selection_open_short">
-                                            <xf:input ref="@xl:title">
-                                                <xf:label class="fixed_width">Resource type <h:a class="help">?<h:span class="comment">A descriptive label for the link to the resource. 
-                                                    Select from list or enter a custom text.</h:span></h:a></xf:label>
-                                            </xf:input>
-                                            <!-- set tabindex to 1000 to skip the select on tabbing -->
-                                            <xf:select1 ref="@xl:title" tabindex="1000">
-                                                <xf:item>
-                                                    <xf:label>Facsimile</xf:label>
-                                                    <xf:value>Facsimile</xf:value>
-                                                </xf:item>
-                                                <xf:item>
-                                                    <xf:label>Transcription</xf:label>
-                                                    <xf:value>Transcription</xf:value>
-                                                </xf:item>
-                                                <xf:item>
-                                                    <xf:label>Library record</xf:label>
-                                                    <xf:value>Library record</xf:value>
-                                                </xf:item>
-                                            </xf:select1>
-                                        </h:span>
+                                    nodeset="m:repository"
+                                    label="Add repository"
+                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository"/>
+                                <xf:repeat nodeset="m:repository" id="physdesc-physloc">
+                                    <h:hr/>
+                                    <h:span class="blocklabel strong">Location 
                                         <dcm:element-buttons 
-                                            triggers="add remove" 
-                                            nodeset="m:ptr" 
-                                            index="physdesc-physloc-extptr"
-                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:ptr[1]"/>
-                                        <dcm:attribute-editor ref="."/>
-                                    </h:div>
-                                </xf:repeat>
-                                <!--
-                                    <xf:group ref="m:identifier[normalize-space(@analog)]">
-                                    <h:span class="blocklabel">Other identifiers <h:a class="help">?<h:span 
-                                    class="comment">Other identifiers than the repository's own shelf mark, 
-                                    e.g. RISM identifiers or other catalogue numbers identifying this specific item</h:span></h:a></h:span>
-                                    </xf:group>
-                                    <xf:repeat nodeset="m:identifier[normalize-space(@analog)]" id="physloc-identifier-repeat">
-                                    <xf:input ref="@analog">
-                                    <xf:label>Label <h:a class="help">?<h:span 
-                                    class="comment">The name of the catalogue or list identifying this 
-                                    specific item, e.g. "RISM" (but please note that RISM identifiers 
-                                    of printed sources should be entered under "Publication" at 
-                                    source level (above) rather than on individual copies)</h:span></h:a></xf:label>
+                                            triggers="remove" 
+                                            nodeset="m:repository" 
+                                            index="physdesc-physloc"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository"/>
+                                    </h:span>
+                                    <xf:input ref="m:corpName" class="mediumlong">
+                                        <xf:label class="fixed_width">Repository  
+                                            <h:a class="help">?<h:span class="comment">The library, archive or
+                                                other repository holding this item, e.g. "DK-Kk" or "State Archive, Copenhagen"</h:span></h:a>
+                                        </xf:label>
                                     </xf:input>
-                                    <xf:input ref="." class="mediumlong">
-                                    <xf:label> no. <h:a class="help">?<h:span 
-                                    class="comment">The item's number in the catalogue or list</h:span></h:a></xf:label>
+                                    <dcm:attribute-editor ref="m:corpName"/>
+                                    <xf:input ref="m:identifier">
+                                        <xf:label>Shelfmark 
+                                            <h:a class="help">?<h:span class="comment">The shelfmark or other signature
+                                                identfying this item in the repository</h:span></h:a>
+                                        </xf:label>
                                     </xf:input>
-                                    <dcm:element-buttons 
-                                    triggers="add delete" 
-                                    nodeset="m:identifier" 
-                                    index="physloc-identifier-repeat"
-                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:identifier[@analog][1]"/>
-                                    <dcm:attribute-editor ref="."/>
+                                    <dcm:attribute-editor ref="m:identifier"/>
                                     <h:br clear="all"/>
-                                    </xf:repeat>-->
+                                    <xf:label class="blocklabel">External links 
+                                        <h:a class="help">?<h:span class="comment">Links pointing to representations (facsimile,
+                                            transcription, library catalogue etc.) of this particular item</h:span></h:a></xf:label>
+                                    <dcm:create 
+                                        nodeset="m:ptr"
+                                        label="Add link"
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:ptr"/>                                            
+                                    <xf:repeat nodeset="m:ptr" id="physdesc-physloc-extptr">
+                                        <h:div>
+                                            <xf:input ref="@target" class="mediumlong">
+                                                <xf:label class="fixed_width">URI 
+                                                    <h:a class="help">?<h:span class="comment">Link address</h:span></h:a>
+                                                </xf:label>
+                                            </xf:input>
+                                            <!-- input/select emulating selection="open" behaviour -->
+                                            <h:span class="selection_open_short">
+                                                <xf:input ref="@xl:title">
+                                                    <xf:label class="fixed_width">Resource type <h:a class="help">?<h:span class="comment">A descriptive label for the link to the resource. 
+                                                        Select from list or enter a custom text.</h:span></h:a></xf:label>
+                                                </xf:input>
+                                                <!-- set tabindex to 1000 to skip the select on tabbing -->
+                                                <xf:select1 ref="@xl:title" tabindex="1000">
+                                                    <xf:item>
+                                                        <xf:label>Facsimile</xf:label>
+                                                        <xf:value>Facsimile</xf:value>
+                                                    </xf:item>
+                                                    <xf:item>
+                                                        <xf:label>Transcription</xf:label>
+                                                        <xf:value>Transcription</xf:value>
+                                                    </xf:item>
+                                                    <xf:item>
+                                                        <xf:label>Library record</xf:label>
+                                                        <xf:value>Library record</xf:value>
+                                                    </xf:item>
+                                                </xf:select1>
+                                            </h:span>
+                                            <dcm:element-buttons 
+                                                triggers="add remove" 
+                                                nodeset="m:ptr" 
+                                                index="physdesc-physloc-extptr"
+                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:ptr[1]"/>
+                                            <dcm:attribute-editor/>
+                                        </h:div>
+                                    </xf:repeat>
+                                    <!--
+                                        <xf:group ref="m:identifier[normalize-space(@analog)]">
+                                        <h:span class="blocklabel">Other identifiers <h:a class="help">?<h:span 
+                                        class="comment">Other identifiers than the repository's own shelf mark, 
+                                        e.g. RISM identifiers or other catalogue numbers identifying this specific item</h:span></h:a></h:span>
+                                        </xf:group>
+                                        <xf:repeat nodeset="m:identifier[normalize-space(@analog)]" id="physloc-identifier-repeat">
+                                        <xf:input ref="@analog">
+                                        <xf:label>Label <h:a class="help">?<h:span 
+                                        class="comment">The name of the catalogue or list identifying this 
+                                        specific item, e.g. "RISM" (but please note that RISM identifiers 
+                                        of printed sources should be entered under "Publication" at 
+                                        source level (above) rather than on individual copies)</h:span></h:a></xf:label>
+                                        </xf:input>
+                                        <xf:input ref="." class="mediumlong">
+                                        <xf:label> no. <h:a class="help">?<h:span 
+                                        class="comment">The item's number in the catalogue or list</h:span></h:a></xf:label>
+                                        </xf:input>
+                                        <dcm:element-buttons 
+                                        triggers="add delete" 
+                                        nodeset="m:identifier" 
+                                        index="physloc-identifier-repeat"
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:identifier[@analog][1]"/>
+                                        <dcm:attribute-editor ref="."/>
+                                        <h:br clear="all"/>
+                                        </xf:repeat>-->
+                                </xf:repeat>
+                            </xf:group>
+                        </h:div>
+                        
+                        <!-- identifiers -->
+                        <h:div>
+                            <dcm:create
+                                nodeset="m:identifier"
+                                label="Add other identifiers"
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
+                            <xf:group ref=".[m:identifier]">
+                                <h:span class="blocklabel strong">Other identifiers <h:a class="help">?<h:span 
+                                    class="comment">Identifiers other than the repository's own shelf mark, 
+                                    e.g. RISM identifiers or other catalogue numbers identifying this specific item<h:br/>
+                                    With prints, RISM identifiers should be given at general 
+                                    source level (above).
+                                </h:span></h:a></h:span>
+                            </xf:group>
+                            <xf:repeat nodeset="m:identifier" id="repeat-item-identifier">
+                                <xf:input ref="@type" class="mediumshort">
+                                    <xf:label class="fixed_width">List name <h:a class="help">?<h:span 
+                                        class="comment">The name of the catalogue or list identifying this 
+                                        specific item, e.g. "RISM" (but please note that RISM identifiers 
+                                        of printed sources should be entered at 
+                                        source level (above) rather than on individual copies)</h:span></h:a></xf:label>
+                                </xf:input>
+                                <xf:input ref="." class="mediumlong">
+                                    <xf:label> No. <h:a class="help">?<h:span class="comment">The number 
+                                        identifying this particular source in the list, e.g. "A/II 1234"</h:span></h:a></xf:label>
+                                </xf:input>
+                                <dcm:element-buttons 
+                                    triggers="add remove" 
+                                    nodeset="m:identifier" 
+                                    index="repeat-item-identifier"
+                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
+                                <dcm:attribute-editor ref="."/>
+                                <h:br clear="all"/>
                             </xf:repeat>
-                        </xf:group>
+                        </h:div>
+                        
                         
                         <xf:switch>
                             <xf:case id="hide_details" selected="true()">
-                                <xf:trigger class="detail_button">
-                                    <xf:label>Show details</xf:label>
-                                    <xf:toggle case="show_details" ev:event="DOMActivate"/>
-                                </xf:trigger>
+                                <h:div>
+                                    <xf:trigger class="detail_button">
+                                        <xf:label>Show details</xf:label>
+                                        <xf:toggle case="show_details" ev:event="DOMActivate"/>
+                                    </xf:trigger>
+                                </h:div>
                             </xf:case>
                             
                             <xf:case id="show_details" selected="false()">
-                                <xf:trigger class="detail_button">
-                                    <xf:label>Hide details</xf:label>
-                                    <xf:toggle case="hide_details" ev:event="DOMActivate"/>
-                                </xf:trigger>	
+                                <h:div>
+                                    <xf:trigger class="detail_button">
+                                        <xf:label>Hide details</xf:label>
+                                        <xf:toggle case="hide_details" ev:event="DOMActivate"/>
+                                    </xf:trigger>	
+                                </h:div>
                                 
-                                <xf:group ref="m:physDesc">                                    
+                                <xf:group ref="m:physDesc">
                                     <h:fieldset>
                                         <h:legend>Provenance
                                             <dcm:attribute-editor ref="."/>
@@ -269,14 +294,23 @@
                                             </xf:repeat>
                                         </xf:group> 
                                     </h:fieldset>
-                                    
-                                    <xf:group ref=".[m:titlePage]">
-                                        <h:fieldset>
-                                            <h:legend>Title page 
-                                                <h:a class="help">?<h:span class="comment">Transcription of the item's title page. Multiple title pages
-                                                    may be added if necessary</h:span></h:a>
-                                                <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
-                                            </h:legend>
+                                </xf:group>
+
+                                <dcm:create nodeset="m:physDesc"
+                                    label="Add physical description"
+                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc"/>
+                                
+                                <xf:group ref="m:physDesc">                                    
+                                    <h:fieldset>
+                                        <h:legend>Title page 
+                                            <h:a class="help">?<h:span class="comment">Transcription of the item's title page. Multiple title pages
+                                                may be added if necessary</h:span></h:a>
+                                            <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                                        </h:legend>
+                                        <dcm:create nodeset="m:titlePage"
+                                            label="Add title page"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:titlePage"/>
+                                        <xf:group ref=".[m:titlePage]">
                                             <xf:repeat nodeset="m:titlePage" id="physdesc-titlepage">
                                                 <xf:input ref="@label">
                                                     <xf:label class="fixed_width">Label 
@@ -286,7 +320,7 @@
                                                     </xf:label>
                                                 </xf:input>
                                                 <dcm:element-buttons 
-                                                    triggers="all" 
+                                                    triggers="add copy up down remove" 
                                                     nodeset="m:titlePage" 
                                                     index="physdesc-titlepage"
                                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
@@ -295,70 +329,139 @@
                                                 <xf:textarea ref="m:p"  class="mediumheight" mediatype="text/html"/>
                                                 <h:br/>
                                             </xf:repeat>
-                                        </h:fieldset>
-                                    </xf:group>
+                                        </xf:group>
+                                    </h:fieldset>
                                     
                                     <h:fieldset>
                                         <h:legend>Physical description
                                             <dcm:attribute-editor ref="."/>
                                         </h:legend>
-                                        <xf:repeat nodeset="m:extent" id="physdesc-extent">
-                                            <h:div>
-                                                <h:span class="fixed_width">Extent:</h:span>
-                                                <xf:input ref=".">
-                                                    <xf:label>Value <h:a class="help">?<h:span class="comment">The number of pages or folios, e.g. "48", "XII + 36" or
-                                                        "VIII"</h:span></h:a></xf:label>
-                                                </xf:input>
-                                                <xf:input ref="@unit">
-                                                    <xf:label>Unit <h:a class="help">?<h:span class="comment">Usually "pages" or "folios"</h:span></h:a></xf:label>
-                                                </xf:input>
-                                                <dcm:attribute-editor ref="."/>                                                    
-                                            </h:div>
-                                        </xf:repeat>
-                                        <xf:repeat nodeset="m:dimensions" id="physdesc-dimensions">
-                                            <h:div>
-                                                <h:span class="fixed_width">Dimensions:</h:span>
-                                                <xf:input ref=".">
-                                                    <xf:label>Value <h:a class="help">?<h:span class="comment">Numbers describing the physical dimensions 
-                                                        of the source, usually given as height x width, e.g. "23.5x34"</h:span></h:a></xf:label>
-                                                </xf:input>
-                                                <xf:input ref="@unit">
-                                                    <xf:label>Unit <h:a class="help">?<h:span class="comment">Unit of measurement, usually "cm" or "inches"</h:span></h:a></xf:label>
-                                                </xf:input>
-                                                <dcm:attribute-editor ref="."/>                                                    
-                                            </h:div>
-                                        </xf:repeat>
-                                        <xf:group ref="m:handList">
-                                            <h:hr/>
-                                            <h:span class="blocklabel">List of hands
-                                                <dcm:attribute-editor ref="."/>                                                    
-                                            </h:span>
-                                            <xf:repeat nodeset="m:hand" id="repeat-source-physdesc-handlist" class="nowrap">
+                                        
+                                        <h:div>
+                                            <dcm:create nodeset="m:extent"
+                                                label="Add extent"
+                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:extent"/>
+                                            <xf:repeat nodeset="m:extent" id="physdesc-extent">
                                                 <h:div>
-                                                    <xi:include href="hand-input.xml" parse="xml"/>
+                                                    <h:span class="fixed_width">Extent:</h:span>
+                                                    <xf:input ref=".">
+                                                        <xf:label>Value <h:a class="help">?<h:span class="comment">The number of pages or folios, e.g. "48", "XII + 36" or
+                                                            "VIII"</h:span></h:a></xf:label>
+                                                    </xf:input>
+                                                    <xf:input ref="@unit">
+                                                        <xf:label>Unit <h:a class="help">?<h:span class="comment">Usually "pages" or "folios"</h:span></h:a></xf:label>
+                                                    </xf:input>
+                                                    <dcm:attribute-editor/>                                                    
                                                     <dcm:element-buttons  
-                                                        triggers="all" 
-                                                        nodeset="m:hand" 
-                                                        index="repeat-source-physdesc-handlist"
-                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
-                                                    <dcm:attribute-editor ref="."/>                                                    
+                                                        triggers="remove" 
+                                                        nodeset="m:extent" 
+                                                        index="physdesc-extent"
+                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:extent"/>
                                                 </h:div>
                                             </xf:repeat>
-                                            <h:hr/>
-                                        </xf:group>
-                                        <xf:textarea ref="m:physMedium" class="mediumheight" mediatype="text/html">
-                                            <xf:label class="blocklabel">Physical medium <h:a class="help">?<h:span class="comment">Description of 
-                                                paper, number of staves on page, printing technique etc.
-                                            </h:span></h:a></xf:label>
-                                        </xf:textarea>
-                                        <dcm:attribute-editor ref="m:physMedium"/>                                                    
-                                        <h:br/>						
-                                        <xf:textarea ref="m:condition" class="mediumheight" mediatype="text/html">
-                                            <xf:label class="blocklabel">Condition</xf:label>
-                                        </xf:textarea>
-                                        <dcm:attribute-editor ref="m:condition"/>                                                    
+                                        </h:div>
+                                        
+                                        <h:div>
+                                            <dcm:create nodeset="m:dimensions"
+                                                label="Add dimensions"
+                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:dimensions"/>
+                                            <xf:repeat nodeset="m:dimensions" id="physdesc-dimensions">
+                                                <h:div>
+                                                    <h:span class="fixed_width">Dimensions:</h:span>
+                                                    <xf:input ref=".">
+                                                        <xf:label>Value <h:a class="help">?<h:span class="comment">Numbers describing the physical dimensions 
+                                                            of the source, usually given as height x width, e.g. "23.5x34"</h:span></h:a></xf:label>
+                                                    </xf:input>
+                                                    <xf:input ref="@unit">
+                                                        <xf:label>Unit <h:a class="help">?<h:span class="comment">Unit of measurement, usually "cm" or "inches"</h:span></h:a></xf:label>
+                                                    </xf:input>
+                                                    <dcm:attribute-editor ref="."/>                                                    
+                                                    <dcm:element-buttons  
+                                                        triggers="remove" 
+                                                        nodeset="m:dimensions" 
+                                                        index="physdesc-dimensions"
+                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:dimensions"/>
+                                                </h:div>
+                                            </xf:repeat>
+                                        </h:div>
+                                        
+                                        <h:div>
+                                            <dcm:create nodeset="m:handList"
+                                                label="Add list of hands"
+                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:handList"/>
+                                            <xf:group ref="m:handList">
+                                                <h:hr/>
+                                                <h:span class="blocklabel">List of hands
+                                                    <dcm:attribute-editor ref="."/>                                                    
+                                                </h:span>
+                                                <xf:repeat nodeset="m:hand" id="repeat-source-physdesc-handlist" class="nowrap">
+                                                    <h:div>
+                                                        <xi:include href="hand-input.xml" parse="xml"/>
+                                                        <dcm:element-buttons  
+                                                            triggers="add up down del-parent-with-last" 
+                                                            nodeset="m:hand" 
+                                                            index="repeat-source-physdesc-handlist"
+                                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
+                                                        <dcm:attribute-editor ref="."/>                                                    
+                                                    </h:div>
+                                                </xf:repeat>
+                                                <h:hr/>
+                                            </xf:group>
+                                        </h:div>
+                                        
+                                        <h:div>
+                                            <dcm:create nodeset="m:physMedium"
+                                                label="Add physical medium"
+                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physMedium"/>
+                                            <xf:repeat nodeset="m:physMedium" id="repeat-physMedium">
+                                                <xf:textarea ref="." class="mediumheight" mediatype="text/html">
+                                                    <xf:label class="blocklabel">Physical medium <h:a class="help">?<h:span class="comment">Description of 
+                                                        paper, number of staves on page, printing technique etc.
+                                                    </h:span></h:a></xf:label>
+                                                </xf:textarea>
+                                                <dcm:attribute-editor/>
+                                                <dcm:element-buttons triggers="remove"
+                                                    nodeset="m:physMedium"
+                                                    index="repeat-physMedium"
+                                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physMedium"/>
+                                                <h:br/>						
+                                            </xf:repeat>
+                                        </h:div>
+                                        
+                                        <h:div>
+                                            <dcm:create nodeset="m:condition"
+                                                label="Add condition"
+                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:condition"/>
+                                            <xf:repeat nodeset="m:condition" id="repeat-condition">
+                                                <xf:textarea ref="." class="mediumheight" mediatype="text/html">
+                                                    <xf:label class="blocklabel">Condition</xf:label>
+                                                </xf:textarea>
+                                                <dcm:attribute-editor/>
+                                                <dcm:element-buttons triggers="remove"
+                                                    nodeset="m:condition"
+                                                    index="repeat-condition"
+                                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:condition"/>
+                                                <h:br/>						
+                                            </xf:repeat>
+                                        </h:div>
+                                        
+                                        <h:div>
+                                            <dcm:create nodeset="m:watermark"
+                                                label="Add watermark"
+                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:watermark"></dcm:create>
+                                            <xf:repeat nodeset="m:watermark" id="repeat-watermark">
+                                                <xf:textarea ref="." class="mediumheight" mediatype="text/html">
+                                                    <xf:label class="blocklabel">Watermark</xf:label>
+                                                </xf:textarea>
+                                                <dcm:attribute-editor/>
+                                                <dcm:element-buttons triggers="remove"
+                                                    nodeset="m:watermark"
+                                                    index="repeat-watermark"
+                                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:watermark"/>
+                                                <h:br/>						
+                                            </xf:repeat>
+                                        </h:div>
                                     </h:fieldset>
-                                    
                                 </xf:group>
                                 
                                 <h:fieldset>
@@ -390,20 +493,40 @@
                                     </xf:group>
                                 </h:fieldset>
                                 
+                                <h:span class="blocklabel">General description <h:a class="help">?<h:span class="comment">Text 
+                                    describing or introducing to the item, its history, its significance etc.<br/>
+                                    Information on the item's physical appearance and condition should be given in the 
+                                    "physical description" area.
+                                </h:span></h:a> 
+                                </h:span>
+                                <dcm:create nodeset="m:notesStmt"
+                                    label="Add general description"
+                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt"/>
                                 <xf:group ref="m:notesStmt">
-                                    <h:span class="blocklabel">General description <h:a class="help">?<h:span class="comment">Text 
-                                        describing or introducing to the item, its history, its significance etc.<br/>
-                                        Information on the item's physical appearance and condition should be given in the 
-                                        "physical description" area.
-                                    </h:span></h:a> 
-                                        <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                                    <dcm:create
+                                        nodeset="m:annot[@type='source_description']"
+                                        label="Add general description"
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='source_description']"/>
+                                    <xf:repeat nodeset="m:annot[@type='source_description']" id="item-generaldesc">
+                                        <xf:textarea ref="." class="mediumheight" mediatype="text/html"/>
+                                        <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
+                                        <dcm:element-buttons-typed triggers="remove"
+                                            nodeset="m:annot[@type='source_description']"
+                                            index="item-generaldesc"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='source_description']"/>
+                                    </xf:repeat>
+                                    <h:span class="blocklabel">External source descriptions <h:a class="help">?<h:span class="comment">Links to external resources (texts) about 
+                                        this particular source.</h:span></h:a>
                                     </h:span>
-                                    <xf:textarea ref="m:annot[@type='source_description']" class="mediumheight" mediatype="text/html"/>
-                                    <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
+                                    <dcm:create 
+                                        nodeset="m:annot[@type='links']"
+                                        label="Add external description"
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='links']"/>
                                     <xf:group ref="m:annot[@type='links']">
-                                        <h:span class="blocklabel">External source descriptions <h:a class="help">?<h:span class="comment">Links to external resources (texts) about 
-                                            this particular source.</h:span></h:a>
-                                        </h:span>
+                                        <dcm:create 
+                                            nodeset="m:ptr"
+                                            label="Add external description"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='links']/m:ptr"/>
                                         <xf:repeat nodeset="m:ptr" id="source-notesstmt-annot-repeat-extptr">
                                             <h:div>
                                                 <xf:input ref="@target" class="long">
@@ -417,7 +540,7 @@
                                                         as the link text, e.g. "The Carl Nielsen Edition's source description"</h:span></h:a></xf:label>
                                                 </xf:input>
                                                 <dcm:element-buttons 
-                                                    triggers="all" 
+                                                    triggers="add up down del-parent-with-last" 
                                                     nodeset="m:ptr" 
                                                     index="source-notesstmt-annot-repeat-extptr"
                                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>

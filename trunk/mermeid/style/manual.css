@@ -31,7 +31,7 @@ h3 {
 
 table {
     width: auto;
-    padding:2px;
+    padding:0px;
 }
 
 table.unicode_table {
@@ -41,17 +41,18 @@ table.unicode_table {
     border-left: 1px solid #666;
 }
 
-table.unicode_table p {
-    font-size: .6em;
-}
-
 table.unicode_table td {
+    padding: .5em .5em 0 .5em;
     text-align: center;
     border: none;
     border-right: 1px solid #666;
     border-bottom: 1px solid #666;
 }
 
+table.unicode_table p {
+    font-size: .6em;
+    color: #666;
+}
 
 a:link, a:visited, a:active, a:hover {
    /* text-decoration: none; */
