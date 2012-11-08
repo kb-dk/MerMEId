@@ -53,16 +53,20 @@
     HTTP client</p>
 
     <p>filter parses the request, and will assume that the string after the
-    last slash ('/') is an unique file name that can be used for retrieval in
-    the XML database.</p>
+    last slash ('/') is an unique file name (or really a record ID) that can
+    be used for retrieval in the XML database. The string between the two last
+    slashes is regarded as the database name. I.e.:</p>
+
+    <pre>
+      http://example.org/context/&lt;database name&gt;/&lt;record ID&gt;
+    </pre>
 
     <h2>Update using PUT</h2>
 
     <p>filter accepts PUT requests to any URI. It will XSL transform the
     content and save it into the database.</p>
 
-    <p>Requests for documents at any context root, and will assume that the
-    string after the last slash ('/') is a unique file name or ID.</p>
+    <p>Requests are parsed exactly as for GET requests</p>
 
     <h2>Deleting using GET</h2>
 
