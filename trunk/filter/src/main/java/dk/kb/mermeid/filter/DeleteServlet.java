@@ -64,11 +64,14 @@ public class DeleteServlet extends javax.servlet.http.HttpServlet {
 	     text = text + "response:\t" + clientResponseHeaders[i].toExternalForm(); 
 	}
 
-	java.lang.String redirect_to = this.props.getProperty("del.redirect");
+	java.lang.String redirect_to = this.props.getProperty("del." +
+							      this.utilities.getBase() +
+							      ".redirect");
 
 	response.setContentType("text/plain");
 	response.setCharacterEncoding("UTF-8");
 	response.sendRedirect(redirect_to);
+
 	java.io.PrintWriter out   = response.getWriter();
 	out.println(text);
 	logger.debug(text);
