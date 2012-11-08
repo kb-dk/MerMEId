@@ -67,6 +67,10 @@ ul {
     margin-left:0;
 }
 
+li {
+    margin-bottom: 10px;
+}
+
 ul.important {
     list-style-image: url('../images/important.png');
     padding-left: 30px;
@@ -76,6 +80,18 @@ ul.important {
 
 ul.important li {
     padding: 5px;
+}
+
+ul.toc {
+    list-style-image: url('../images/point_right.png')
+}
+
+ul.toc li {
+    margin-bottom: 1em;
+}
+
+ul.toc li li {
+    margin-bottom: 0;
 }
 
 map.manual {
@@ -93,6 +109,7 @@ map.manual area {
 
 img.illustration {
     margin-bottom: 10px;
+    margin-top: 10px;
     box-shadow: 10px 10px 10px #333;
     /* For non-CSS3 FireFox */
     -moz-box-shadow: 10px 10px 10px #333;

@@ -139,7 +139,11 @@ a.help {
     -moz-border-radius: 2px;    
 }
 
-a.help span.comment {
+a.help_plain {
+    cursor: help;
+}
+
+a.help span.comment, a.help_plain span.comment {
     display:inline;
     position: absolute;
     visibility:hidden;
@@ -155,7 +159,6 @@ a.help span.comment {
     margin-left: -5px;
     border: 1px solid #ddd;
     font-weight:normal;
-    font-size: 1.2em;
     box-shadow: 10px 10px 10px #333;
     border-radius: 4px;
     /* For non-CSS3 FireFox */
@@ -163,7 +166,11 @@ a.help span.comment {
     -moz-border-radius: 4px;
 }
 
-a:hover.help span.comment  {
+a.help span.comment {
+    font-size: 1.2em;
+}
+
+a:hover.help span.comment, a:hover.help_plain span.comment  {
     visibility:visible;
 }
 

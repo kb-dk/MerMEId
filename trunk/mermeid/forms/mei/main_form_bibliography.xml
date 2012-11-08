@@ -33,7 +33,6 @@
         <h:br clear="all"/>
         <xf:repeat nodeset="instance('bibl-type-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]/@type]/t:bibl" 
           id="ref-type-menu-repeat">
-          <xf:output value="concat('listbibltype: ',instance('data-instance')/m:music/m:front/t:div/t:listBibl[index('repeat-listbibl')]/@type"/>
           <xf:trigger submission="replace-form-with" appearance="minimal" class="non-standard_trigger">
             <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="translate(@type,'_',' ')"/></xf:label>
             <xf:action ev:event="DOMActivate">
@@ -98,6 +97,11 @@
           <h:legend>
             <xf:output value="concat(translate(substring(@type,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(@type,2,string-length(@type)-1))"/> 
             <xf:output ref=".[count(@type)&lt;1]" value="'Bibliography'"/>
+            <xf:group ref=".[@type='documentation' or @type='evidence']">
+              <h:a class="help">?<h:span class="comment">A list of supplementary, documentary material or evidence (for instance, evidence 
+                for the existence of a work now lost). Performance evidence should be given with the individual performances at the 
+                "History" tab.</h:span></h:a>
+            </xf:group>
             <dcm:element-buttons triggers="remove" 
               nodeset="t:listBibl" 
               origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[1]" 
@@ -190,13 +194,11 @@
           label="Secondary bibliography"
           origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='secondary']"/>
       </h:div>
-      <!-- deprecated
         <h:div>
         <dcm:create nodeset="t:listBibl[@type='documentation']"
           label="Documentary material"
           origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='documentation']"/>
       </h:div>
-      -->
     </xf:group>
     
   </h:div>  

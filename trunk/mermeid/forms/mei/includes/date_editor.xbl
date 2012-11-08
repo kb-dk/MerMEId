@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xbl:xbl xmlns:xhtml="http://www.w3.org/1999/xhtml"
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml"
     xmlns:xforms="http://www.w3.org/2002/xforms"
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
@@ -66,13 +66,13 @@
                 .dcm-date-input-box { margin:2px 0 2px 0; }
                 .dcm-date-editor-blocklabel { 
                 display: block; 
-                font-weight:bold;
+                font-weight:normal;
                 padding-bottom: 3px;
                 }
                 .dcm-date-editor-label { 
                 display: inline-block;  
                 width: 7em; 
-                font-weight: bold; 
+                font-weight: normal; 
                 }
                 .dcm-date-input-box .display_input { margin-top: 10px; } 
                 .dcm-date-input-box .display_input input.xforms-input-input { width: 20em; } 
@@ -143,7 +143,7 @@
                     <xxforms:variable name="notafter" as="node()?" select="$binding/@notafter"/>
                     
                     <!-- The on-form visible part -->
-                    <xhtml:div class="dcm-date-editor-onform">
+                    <h:div class="dcm-date-editor-onform">
                         
                         <xforms:trigger class="date-editor-output" appearance="minimal">
                             <xforms:label>
@@ -160,12 +160,11 @@
                             [<xforms:output value="$isodate"/>] 
                         </xforms:group>
                         <xforms:group ref=".[normalize-space(concat($notbefore,$notafter,$startdate,$enddate))]"> 
-                            [<xforms:group ref=".[normalize-space($notbefore)]">Not before <xforms:output value="$notbefore"/>; </xforms:group><xforms:group 
-                                ref=".[normalize-space($startdate)]">Start date <xforms:output value="$startdate"/>; </xforms:group>
+                            [<xforms:group ref=".[normalize-space($notbefore)]">Not before <xforms:output value="$notbefore"/> – </xforms:group><xforms:group 
+                                ref=".[normalize-space($startdate)]"><xforms:output value="$startdate"/> – </xforms:group>
                             <xforms:group ref=".[normalize-space($notafter)]">Not after <xforms:output value="$notafter"/></xforms:group><xforms:group 
-                                ref=".[normalize-space($enddate)]">End date <xforms:output value="$enddate"/>; </xforms:group>] 
+                                ref=".[normalize-space($enddate)]"><xforms:output value="$enddate"/></xforms:group>] 
                         </xforms:group>
-                        <!-- @startdate/@enddate supported up this point. To do: the rest... -->                            
                         
                         <xforms:trigger>
                             <xforms:label>Edit</xforms:label>
@@ -173,94 +172,111 @@
                                 <xxforms:show dialog="date-editor-dialog"/>
                             </xforms:action>
                         </xforms:trigger>
-                    </xhtml:div>
+                    </h:div>
                     
                     <xxforms:dialog id="date-editor-dialog" appearance="full" level="modal"
                         close="true" draggable="true" visible="false">
-                        <xforms:label>Edit date</xforms:label>
+                        <xforms:label>Edit date </xforms:label>
                         <xforms:action ev:event="xxforms-dialog-open">
                             <xforms:dispatch name="date-initialize" targetid="reset_button"/>
                         </xforms:action>
-                        <xhtml:div class="date_editor_heading">
+                        <h:div class="date_editor_heading">
                             <xforms:select1 appearance="full" ref="mode">
-                                <xforms:label class="dcm-date-editor-label">Date type: <xhtml:a class="help">?<xhtml:span 
-                                    class="comment">A date consists of a machine-readable part (one or two
-                                    dates in standard date format) and a text intended for display, which may 
-                                    be in any format. Both parts must be filled in.<xhtml:br/>
-                                    Start by choosing whether you intend to 
-                                    enter a single date or a date span.<xhtml:br/> 
-                                    "Single date" will be interpreted as a date span if day or both day and month 
-                                    fields are left empty. In that case an exact date 
-                                    interval (first day to last day of the time span indicated)
-                                    is automatically computed when you click the "OK" button. 
-                                </xhtml:span></xhtml:a></xforms:label>
+                                <xforms:label class="dcm-date-editor-label strong">Date type: </xforms:label>
                                 <xforms:item>
                                     <xforms:label>Single date</xforms:label>
                                     <xforms:value>single</xforms:value>
                                 </xforms:item>
                                 <xforms:item>
-                                    <xforms:label>Date interval</xforms:label>
+                                    <xforms:label>Date span</xforms:label>
                                     <xforms:value>interval</xforms:value>
                                 </xforms:item>
                             </xforms:select1>
-                        </xhtml:div>
+                            &#160;
+                            <h:a 
+                                class="help">?<h:span 
+                                    class="comment">A date consists of a machine-readable part (in the upper part of the form) 
+                                    and a text intended for display (in the lower part).
+                                    Both parts must be filled in.<h:br/>
+                                    Start by choosing whether you intend to 
+                                    enter a single date (including dates like a single month or year) or a date span. <h:br/>
+                                    The day or both day and month fields may be left empty.
+                                </h:span></h:a>
+                        </h:div>
+                        
                         <xforms:group ref=".[instance('editor-instance')/mode='single']">
-                            <xhtml:div class="dcm-date-input-box">
-                                <xhtml:div class="dcm-date-editor-blocklabel">Standard format date: <xhtml:a 
-                                    class="help">?<xhtml:span 
-                                        class="comment">This is the machine-readable part of the date entry.<xhtml:br/> 
-                                        Enter the day in the first field and year in the last one. Select the month 
-                                        from the list in the middle field.</xhtml:span></xhtml:a></xhtml:div>
+                            <h:div class="dcm-date-input-box">
                                 <dcm:dropdown-month-date ref="isodate" xbl:attr="navindex navindex=tabindex">
                                     <xforms:label class="dcm-date-editor-label">Date: </xforms:label>
                                 </dcm:dropdown-month-date>
                                 <xforms:trigger appearance="minimal">
-                                    <xforms:label><xhtml:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xforms:label>
+                                    <xforms:label><h:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xforms:label>
                                     <xforms:action ev:event="DOMActivate">
                                         <xforms:setvalue ref="isodate" value="''"/>
                                     </xforms:action>
                                 </xforms:trigger>
-                            </xhtml:div>
+                            </h:div>
                         </xforms:group>
                         <xforms:group ref=".[instance('editor-instance')/mode='interval']">
-                            <xhtml:div class="dcm-date-input-box" xbl:attr="navindex navindex=tabindex">
-                                <xhtml:div class="dcm-date-editor-blocklabel">Standard format dates: <xhtml:a 
-                                    class="help">?<xhtml:span 
-                                        class="comment">This is the machine-readable part of the dates entry.<xhtml:br/> 
-                                        Enter the day in the first field and year in the last one. Select the month 
-                                        from the list in the middle field.</xhtml:span></xhtml:a></xhtml:div>
-                                <dcm:dropdown-month-date ref="notbefore">
-                                    <xforms:label class="dcm-date-editor-label">Not before: </xforms:label>
+                            <h:div class="dcm-date-input-box" xbl:attr="navindex navindex=tabindex">
+                                <h:div class="blocklabel strong">Start</h:div>
+                                <dcm:dropdown-month-date ref="startdate">
+                                    <xforms:label class="dcm-date-editor-label">Date: <h:a class="help">?<h:span class="comment">Use this 
+                                        if you know the exact start date (or start month, or year) of the event</h:span></h:a></xforms:label>
                                 </dcm:dropdown-month-date>
                                 <xforms:trigger appearance="minimal">
-                                    <xforms:label><xhtml:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xforms:label>
+                                    <xforms:label><h:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xforms:label>
+                                    <xforms:action ev:event="DOMActivate">
+                                        <xforms:setvalue ref="startdate" value="''"/>
+                                    </xforms:action>
+                                </xforms:trigger>
+                                <h:br/>
+                                <dcm:dropdown-month-date ref="notbefore">
+                                    <xforms:label class="dcm-date-editor-label">Not before: <h:a class="help">?<h:span class="comment">Use this 
+                                        if you only know that the event could not have started before a certain date (or month, or year)</h:span></h:a></xforms:label>
+                                </dcm:dropdown-month-date>
+                                <xforms:trigger appearance="minimal">
+                                    <xforms:label><h:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xforms:label>
                                     <xforms:action ev:event="DOMActivate">
                                         <xforms:setvalue ref="notbefore" value="''"/>
                                     </xforms:action>
                                 </xforms:trigger>
-                            </xhtml:div>
-                            <xhtml:div class="dcm-date-input-box">
-                                <dcm:dropdown-month-date ref="notafter">
-                                    <xforms:label class="dcm-date-editor-label">Not after: </xforms:label>
+                            </h:div>
+                            <h:hr/>
+                            <h:div class="dcm-date-input-box">
+                                <h:div class="blocklabel strong">End</h:div>
+                                <dcm:dropdown-month-date ref="enddate">
+                                    <xforms:label class="dcm-date-editor-label">Date: <h:a class="help">?<h:span class="comment">Use this 
+                                        if you know the exact end date (or end month, or year) of the event</h:span></h:a></xforms:label>
                                 </dcm:dropdown-month-date>
                                 <xforms:trigger appearance="minimal">
-                                    <xforms:label><xhtml:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xforms:label>
+                                    <xforms:label><h:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xforms:label>
+                                    <xforms:action ev:event="DOMActivate">
+                                        <xforms:setvalue ref="enddate" value="''"/>
+                                    </xforms:action>
+                                </xforms:trigger>
+                                <h:br/>
+                                <dcm:dropdown-month-date ref="notafter">
+                                    <xforms:label class="dcm-date-editor-label">Not after: <h:a class="help">?<h:span class="comment">Use this 
+                                        if you only know that the event must have ended before a certain date (or month, or year)</h:span></h:a></xforms:label>
+                                </dcm:dropdown-month-date>
+                                <xforms:trigger appearance="minimal">
+                                    <xforms:label><h:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xforms:label>
                                     <xforms:action ev:event="DOMActivate">
                                         <xforms:setvalue ref="notafter" value="''"/>
                                     </xforms:action>
                                 </xforms:trigger>
-                            </xhtml:div>
+                            </h:div>
                         </xforms:group>
-                        <xhtml:br/>
-                        <xhtml:div class="dcm-date-input-box">
+                        <h:br/>
+                        <h:div class="dcm-date-input-box">
                             <xforms:input ref="displayed_date" class="display_input">
                                 <xforms:label class="dcm-date-editor-blocklabel">Displayed date or text: 
-                                    <xhtml:a class="help">?<xhtml:span class="comment">Enter the date (or date span) in whatever form 
-                                        it is to be displayed, e.g. "1845-1846", "in late 1976", "1918-12-24" or "probably before 1888".
-                                        While the date fields above are required to hold specific dates to ensure machine readability, 
-                                        there are no restrictions on the displayed text. A suggested text may be generated from the 
-                                        entered dates using the "Paste date" button.</xhtml:span></xhtml:a></xforms:label>
+                                    <h:a class="help">?<h:span class="comment">Enter the date (or date span) in whatever form 
+                                    it is to be displayed, e.g. "1845-1846", "in late 1976", "1918-12-24" or "probably before 1888".</h:span></h:a>
+                                </xforms:label>
                             </xforms:input> 
+                            <!--
                             <xforms:trigger ref=".[instance('editor-instance')/mode='single']">
                                 <xforms:label>Paste date</xforms:label>
                                 <xforms:action ev:event="DOMActivate">
@@ -274,94 +290,44 @@
                                         value="concat('Between ',instance('editor-instance')/notbefore,' and ',instance('editor-instance')/notafter)"/>
                                 </xforms:action>
                             </xforms:trigger>
-                            
-                        </xhtml:div>
+                            -->
+                        </h:div>
                         
-                        <xhtml:div class="dcm-date-editor-error">
+                        <h:div class="dcm-date-editor-error">
                             <xforms:switch>
                                 <xforms:case id="hide_error"/>                                                
                                 <xforms:case id="show_error">
-                                    <xhtml:div class="dcm-date-input-box">
+                                    <h:div class="dcm-date-input-box">
                                         <xforms:output value="instance('editor-instance')/error_msg"/>
-                                    </xhtml:div>
+                                    </h:div>
                                 </xforms:case>
                             </xforms:switch>
-                        </xhtml:div>
+                        </h:div>
                         
                         <!-- Editor OK/Reset/Cancel buttons -->
-                        <xhtml:div class="dcm-date-input-box">
+                        <h:div class="dcm-date-input-box">
                             <xforms:trigger>
                                 <xforms:label>OK</xforms:label>
                                 <xforms:action ev:event="DOMActivate">
                                     <xforms:setvalue ref="is-valid" value="'false'"/>
                                     <xforms:setvalue ref="error_msg" value="'Invalid date(s) entered'"/>
                                     <xforms:action if="mode='single'">
-                                        <xforms:action if="matches(isodate,'^\d{4}-\d{1,2}-\d{1,2}')">
+                                        <xforms:action if="normalize-space(isodate) and normalize-space(displayed_date)">
                                             <xforms:setvalue ref="is-valid" value="'true'"/>
                                             <xforms:setvalue ref="notafter" value="''"/>
                                             <xforms:setvalue ref="notbefore" value="''"/>
-                                        </xforms:action>
-                                        <xforms:action if="not(matches(isodate,'^\d{4}-\d{1,2}-\d{1,2}'))">
-                                            <xforms:action if="matches(isodate,'^\d{4}-\d{1,2}-')">
-                                                <!-- only year and month entered -->
-                                                <xforms:setvalue ref="notbefore" value="concat(substring(instance('editor-instance')/isodate,1,8),'01')"/>
-                                                <xforms:setvalue ref="notafter" value="concat(substring(instance('editor-instance')/isodate,1,8),instance('editor-instance')/month_days/month[number(substring(instance('editor-instance')/isodate,6,2))])"/>
-                                                <xforms:setvalue ref="isodate" value="''"/>
-                                                <xforms:setvalue ref="is-valid" value="'true'"/>                                                                    
-                                            </xforms:action>
-                                            <xforms:action if="not(matches(isodate,'^\d{4}-\d{1,2}-'))">
-                                                <xforms:action if="matches(isodate,'^\d{4}-')">
-                                                    <!-- only year entered -->
-                                                    <xforms:setvalue ref="notbefore" value="concat(substring(instance('editor-instance')/isodate,1,4),'-01-01')"/>
-                                                    <xforms:setvalue ref="notafter" value="concat(substring(instance('editor-instance')/isodate,1,4),'-12-31')"/>
-                                                    <xforms:setvalue ref="isodate" value="''"/>
-                                                    <xforms:setvalue ref="is-valid" value="'true'"/>                                                                    
-                                                </xforms:action>
-                                            </xforms:action>
+                                            <xforms:setvalue ref="startdate" value="''"/>
+                                            <xforms:setvalue ref="enddate" value="''"/>
                                         </xforms:action>
                                     </xforms:action>
                                     <xforms:action if="mode='interval'">
-                                        <!-- check @notbefore -->
-                                        <xforms:action if="matches(notbefore,'^\d{4}-\d{1,2}-\d{1,2}')">
-                                            <xforms:setvalue ref="is-valid" value="'notbefore'"/> <!-- = partly valid -->
-                                        </xforms:action>
-                                        <xforms:action if="not(matches(notbefore,'^\d{4}-\d{1,2}-\d{1,2}'))">
-                                            <xforms:action if="matches(notbefore,'^\d{4}-\d{1,2}-')">
-                                                <!-- if only year and month entered, change to beginning of month -->
-                                                <xforms:setvalue ref="notbefore" value="concat(substring(instance('editor-instance')/notbefore,1,8),'01')"/>
-                                                <xforms:setvalue ref="is-valid" value="'notbefore'"/> <!-- = partly valid -->                                                                    
-                                            </xforms:action>
-                                            <xforms:action if="not(matches(notbefore,'^\d{4}-\d{1,2}-'))">
-                                                <xforms:action if="matches(notbefore,'^\d{4}-')">
-                                                    <!-- if only year entered, change to January 1 -->
-                                                    <xforms:setvalue ref="notbefore" value="concat(substring(instance('editor-instance')/notbefore,1,4),'-01-01')"/>
-                                                    <xforms:setvalue ref="is-valid" value="'notbefore'"/> <!-- = partly valid -->
-                                                </xforms:action>
-                                            </xforms:action>
-                                        </xforms:action>
-                                        <xforms:action if="is-valid='notbefore'">
-                                            <!-- first date OK, proceed to check @notafter -->
-                                            <xforms:action if="matches(notafter,'^\d{4}-\d{1,2}-\d{1,2}')">
-                                                <xforms:setvalue ref="is-valid" value="'true'"/> 
-                                            </xforms:action>
-                                            <xforms:action if="not(matches(notafter,'^\d{4}-\d{1,2}-\d{1,2}'))">
-                                                <xforms:action if="matches(notafter,'^\d{4}-\d{1,2}-')">
-                                                    <!-- if only year and month entered, change to last day of month -->
-                                                    <xforms:setvalue ref="notafter" value="concat(substring(instance('editor-instance')/notafter,1,8),instance('editor-instance')/month_days/month[number(substring(instance('editor-instance')/notafter,6,2))])"/>
-                                                    <xforms:setvalue ref="is-valid" value="'true'"/>                                                                     
-                                                </xforms:action>
-                                                <xforms:action if="not(matches(notafter,'^\d{4}-\d{1,2}-'))">
-                                                    <xforms:action if="matches(notafter,'^\d{4}-')">
-                                                        <!-- if only year entered, change to December 31 -->
-                                                        <xforms:setvalue ref="notafter" value="concat(substring(instance('editor-instance')/notafter,1,4),'-12-31')"/>
-                                                        <xforms:setvalue ref="is-valid" value="'true'"/>
-                                                    </xforms:action>
-                                                </xforms:action>
-                                            </xforms:action>
-                                        </xforms:action>
-                                        <xforms:action if="is-valid='true'">
+                                        <xforms:action if="normalize-space(concat(notafter,notbefore,startdate,enddate)) and normalize-space(displayed_date)">
+                                            <xforms:setvalue ref="is-valid" value="'true'"/>
                                             <xforms:setvalue ref="isodate" value="''"/>
                                         </xforms:action>
+                                    </xforms:action>
+                                    <xforms:action if="normalize-space(displayed_date)=''">
+                                        <xforms:setvalue ref="error_msg" value="'A display value must be entered'"></xforms:setvalue>
                                     </xforms:action>
                                     <xforms:action if="not(is-valid='true')">
                                         <xforms:toggle case="show_error"/>
@@ -377,11 +343,19 @@
                                         <xforms:action if="count($binding/@notafter)!=1">
                                             <xforms:insert context="$binding" origin="instance('editor-instance')/attributes/@notafter"/>
                                         </xforms:action>
+                                        <xforms:action if="count($binding/@startdate)!=1">
+                                            <xforms:insert context="$binding" origin="instance('editor-instance')/attributes/@startdate"/>
+                                        </xforms:action>
+                                        <xforms:action if="count($binding/@enddate)!=1">
+                                            <xforms:insert context="$binding" origin="instance('editor-instance')/attributes/@enddate"/>
+                                        </xforms:action>
                                         <!-- copy values to external node -->
                                         <xforms:setvalue ref="$binding" value="instance('editor-instance')/displayed_date"/>
                                         <xforms:setvalue ref="$binding/@isodate" value="instance('editor-instance')/isodate"/>
                                         <xforms:setvalue ref="$binding/@notbefore" value="instance('editor-instance')/notbefore"/>
                                         <xforms:setvalue ref="$binding/@notafter" value="instance('editor-instance')/notafter"/>
+                                        <xforms:setvalue ref="$binding/@startdate" value="instance('editor-instance')/startdate"/>
+                                        <xforms:setvalue ref="$binding/@enddate" value="instance('editor-instance')/enddate"/>
                                         <!-- reset internal values -->
                                         <xforms:dispatch name="date-initialize" targetid="reset_button"/>
                                         <!-- close editor -->
@@ -397,9 +371,10 @@
                                     <xforms:setvalue ref="isodate" value="$isodate"/>
                                     <xforms:setvalue ref="notbefore" value="$notbefore"/>
                                     <xforms:setvalue ref="notafter" value="$notafter"/>
+                                    <xforms:setvalue ref="startdate" value="$startdate"/>
+                                    <xforms:setvalue ref="enddate" value="$enddate"/>
                                     <xforms:setvalue ref="mode" value="'single'"/>
-                                    <!--<xforms:action if="matches(notbefore,'^\d{4}-\d{1,2}-\d{1,2}') and matches(notafter,'^\d{4}-\d{1,2}-\d{1,2}')">-->
-                                    <xforms:action if="($notbefore castable as xs:date) and ($notafter castable as xs:date)">
+                                    <xforms:action if="normalize-space(concat(notbefore,notafter,startdate,enddate))">
                                         <xforms:setvalue ref="mode" value="'interval'"/>
                                     </xforms:action>
                                     <xforms:toggle case="hide_error"/>
@@ -415,7 +390,7 @@
                                 </xforms:action>
                             </xforms:trigger>    
                             
-                        </xhtml:div>
+                        </h:div>
                         <!-- Stop propagation of all UI events -->
                         <xforms:action ev:event="#all" ev:propagate="stop"/>
                     </xxforms:dialog>
@@ -424,7 +399,7 @@
                 
                 
                 <dcm:attribute-editor ref="."/>
-                <!--<xhtml:br/>-->
+                <!--<h:br/>-->
                 
             </xforms:group>
         </xbl:template>

@@ -28,10 +28,17 @@
 					nodeset="m:date"
 					label="Add creation date"
 					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:creation/m:date"/>
-				<dcm:date-editor ref="m:creation/m:date" style="display:inline;">
-					<xf:label class="fixed_width_mediumlong">Date of composition <h:a class="help">?<h:span class="comment">Date or time span 
-						of composition</h:span></h:a></xf:label>
-				</dcm:date-editor>
+				<xf:repeat nodeset="m:creation/m:date" id="repeat-creation-date">
+					<dcm:date-editor ref="." style="display:inline;">
+						<xf:label class="fixed_width_mediumlong">Date of composition <h:a class="help">?<h:span class="comment">Date or time span 
+							of composition</h:span></h:a></xf:label>
+					</dcm:date-editor>
+					<dcm:element-buttons 
+						triggers="remove" 
+						nodeset="m:date" 
+						index="repeat-creation-date" 
+						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:creation/m:date"/>
+				</xf:repeat>
 				<h:div>				
 					<dcm:create ref="m:creation"
 						nodeset="m:geogName"
@@ -189,7 +196,7 @@
 						<xf:group ref=".[normalize-space($title)!='']">
 							<xf:output value="concat(' - ',$title)"/>
 						</xf:group>
-						<dcm:attribute-editor ref="."/>
+						<dcm:attribute-editor ref="m:history/m:eventList[@type='performances']"/>
 					</h:legend>
 					<!--<h:p class="blocklabel">
 						Level: Version 
@@ -205,11 +212,11 @@
 						<dcm:create 
 							nodeset="m:eventList[@type='performances']"
 							label="Add performance"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']"/>
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history/m:eventList[@type='performances']"/>
 						<dcm:create ref="m:eventList[@type='performances']" 
 							nodeset="m:event"
 							label="Add performance"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history/m:eventList[@type='performances']/m:event"/>
 						<xf:group ref="m:eventList[@type='performances']">
 							<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
 								<xf:repeat nodeset="m:event" id="repeat-expression-performance">

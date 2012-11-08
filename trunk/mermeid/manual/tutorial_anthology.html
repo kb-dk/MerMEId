@@ -22,10 +22,9 @@
     
     <div class="toclink"><a href="index.html">Back to table of contents</a></div>
     
-    <h3>How to...</h3>
-    <h1>Create a music anthology</h1>
+    <h2>Creating a music anthology</h2>
     <p>A distinction should be made between anthologies regarded as one work and anthologies regarded 
-      as a collection of individual works.</p>
+      as a collection of individual works.<br/>&#160;</p>
     <p><strong>Anthologies regarded as one work</strong>, e.g. certain song cycles,
       are simply works with a number of constituent components. These components are defined at the 
       <span class="music">Music</span> tab:</p>
@@ -42,22 +41,27 @@
         at this stage.</li>
       <li>Then, create another work to represent the anthology. At the <span class="work">Work</span> tab,
         start defining relations to the contained works by clicking the "Add relation" button.</li>
-      <li>Select the "contains:" relation</li>
-      <li>If you know the work's file name, you may enter it directly in the [target?] field.<br/>
-        Otherwise, open the works browser by clicking the [link?] button. 
-        In the works browser, locate and click the desired work. It may be helpful to 
-        narrow the search to a specific file collection or enter search terms such as the title. 
-        Please note that the file browser may need some time to update.<br/>
+      <li>Select the "has part:" relation ("part" in this case is not to be understood musically).<br/>
+        <img src="../images/manual/anthology_relation.png" alt="create a work-to-work relation" class="illustration"/>    
       </li>
-      <li>Repeat this with each of the contained works and save your work.</li>
+      <li>Open the works browser by clicking the "Select file..." button. 
+        In the works browser, locate and click the desired work.<br/> 
+        It may be convenient to narrow the search to a specific file collection or enter search terms such as the title. <br/>
+        Please note that the file browser may need some time to load and to update.<br/>
+        <img src="../images/manual/anthology_work_selection.png" alt="works browser" class="illustration"/><br/>    
+        (If you know the work's file name, you may also enter it in @target using the <a href="attribute_editor">attribute editor</a>).
+      </li>
+      <li>Repeat this with each of the contained works and save your work. You should end up with something like this:<br/> 
+        <img src="../images/manual/anthology_relations.png" alt="work-to-work relations" class="illustration"/>    
+      </li>
       <li>Add any other desired information about the anthology, such as title, source descriptions etc.</li>
     </ul>
     <p>Remember that relations are bidirectional. In order to create links both ways (from the anthology to the individual works
       and back), edit each of the contained works to add a relation back to the anthology. 
-      You have easy access to the contained works by using the "Go to..." button</p>
-    <p>In the HTML preview, the reprint will be displayed after the original source:
-      <img src="..." alt="HTML preview: Reprint"/>
-    </p>
+      You have easy access to the contained works (and back) using the " <img src="../images/go_to_link.png" alt="Go to link"/> Go to..." button.</p>
+    
+    <p>In the HTML preview, the result could look something like the following:</p>
+    <p><img src="../images/manual/anthology_html.png" alt="work-to-work relations" class="illustration"/></p>
     
     <p class="footer">2012 Danish Centre for Music Publication | The Royal Library,
       Copenhagen | <a name="www.kb.dk" id="www.kb.dk"

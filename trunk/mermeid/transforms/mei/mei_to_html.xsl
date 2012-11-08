@@ -1585,7 +1585,11 @@
 				<xsl:if test="not(@label) or @label=''">Title page</xsl:if>
 				<xsl:apply-templates select="@label"/>
 				<xsl:text>: </xsl:text>
-				<xsl:apply-templates select="m:p"/>
+				<xsl:for-each select="m:p">
+					<p class="titlepage">
+						<xsl:apply-templates/>
+					</p>
+				</xsl:for-each>
 				<xsl:text>
 				</xsl:text>
 			</p>

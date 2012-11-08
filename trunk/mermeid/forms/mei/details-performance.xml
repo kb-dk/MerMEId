@@ -198,31 +198,17 @@
                                 <dcm:create ref="t:listBibl[@type='reviews']"
                                     nodeset="t:bibl"
                                     label="Add review"
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']/t:bibl[1]"/>
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']/t:bibl[1]"/>
                                 <dcm:create nodeset="t:listBibl[@type='reviews']"
                                     label="Add review"
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']"/>
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']"/>
                                 <xf:repeat nodeset="t:listBibl[@type='reviews']/t:bibl" id="repeat-review">
                                     <h:fieldset>
-                                        <h:legend>Review <dcm:element-buttons triggers="up down copy add" nodeset="t:bibl"
+                                        <h:legend>Review <dcm:element-buttons triggers="up down copy add del-parent-with-last" nodeset="t:bibl"
                                             index="repeat-review"
-                                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']/t:bibl[1]"/>
-                                            <xf:trigger appearance="minimal" class="non-standard_button">
-                                                <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-                                                <xf:action ref=".[count(../t:bibl)=1]" 
-                                                    ev:event="DOMActivate">
-                                                    <xf:delete ev:event="DOMActivate" nodeset="../../t:listBibl[@type='reviews']"/>
-                                                    <xf:dispatch name="xforms-value-changed" target="form-group"/>
-                                                </xf:action>
-                                                <xf:action ref=".[count(../t:bibl)&gt;1]" 
-                                                    ev:event="DOMActivate">
-                                                    <xf:delete ev:event="DOMActivate" nodeset="."
-                                                        at="index('repeat-review')"/>
-                                                    <xf:dispatch name="xforms-value-changed" target="form-group"/>
-                                                </xf:action>
-                                            </xf:trigger>                                            
-                                            <dcm:id ref="."/>
-                                            <dcm:attribute-editor ref="."/>
+                                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='reviews']/t:bibl[1]"/>
+                                            <dcm:id/>
+                                            <dcm:attribute-editor/>
                                         </h:legend>
                                         <xf:input ref="t:title[@level='a']" class="long">
                                             <xf:label class="fixed_width">Title <h:a class="help">?<h:span class="comment">The
@@ -278,7 +264,7 @@
                                 <h:legend>Evidence <h:a class="help">?<h:span class="comment">A list of references to bibliographic items 
                                     serving as evidence for this performance, such as concert programmes, announcements, or secondary literature</h:span></h:a></h:legend>
                                 <dcm:create nodeset="t:listBibl[@type='evidence']"
-                                    label="Add bibliography (evidence)"
+                                    label="Add evidence bibliography"
                                     origin="instance('empty-instance')/m:meiHead/m:WorkDesc/m:work/m:expressionList/m:expression/m:history/m:eventList[@type='performances']/m:event/t:listBibl[@type='evidence']"/>
                                 
                                 <xf:group ref="t:listBibl[@type='evidence']">
@@ -294,15 +280,15 @@
                                         </xf:trigger>
                                     </xf:group>
                                     
-                                    <xf:repeat id="repeat-references"
-                                        nodeset="instance('bibliography-instance')/t:listBibl[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]/t:bibl">
+                                    <xf:repeat id="repeat-evidence-references"
+                                        nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work//m:event[@xml:id=instance('temp')/id]/t:listBibl[@type='evidence']/t:bibl">
                                         <h:fieldset>
                                             <h:legend>
                                                 <xf:output value="translate(concat(translate(substring(@type,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(@type,2)),'_',' ')"/>
                                                 <dcm:element-buttons 
                                                     triggers="up down copy" 
                                                     nodeset="t:bibl" 
-                                                    index="repeat-references"
+                                                    index="repeat-evidence-references"
                                                     origin="instance('temp')/t:listBibl/t:bibl"/><xf:trigger appearance="minimal"
                                                         class="non-standard_button">
                                                         <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/></xf:label>
@@ -312,40 +298,37 @@
                                                     </xf:trigger><dcm:element-buttons 
                                                         triggers="remove" 
                                                         nodeset="t:bibl" 
-                                                        index="repeat-references"
+                                                        index="repeat-evidence-references"
                                                         origin="instance('temp')/t:listBibl/t:bibl"/>
                                             </h:legend>
                                             <h:div class="vertical_spacer"> </h:div>
-                                            <xf:switch>
+                                            <!-- title header -->
+                                            <xf:repeat nodeset="t:author"><xf:output 
+                                                value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
+                                                    value="."/></xf:repeat><xf:output 
+                                                        value="if (normalize-space(t:author[1]) and not(normalize-space(t:name[@role='recipient']))) then ': ' else ''"/>
+                                            <xf:output value="if (normalize-space(t:name[@role='recipient'])) then concat(' to ',t:name[@role='recipient']) else ''"/>
+                                            <h:i><xf:output value="t:title[@level='a']"/></h:i><xf:output 
+                                                value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='j'])) then concat('. ',t:title[@level='j']) else t:title[@level='j']"/>
+                                            <xf:output value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='m'])) then concat('. ',t:title[@level='m']) else t:title[@level='m']"/>
+                                            <xf:output value="if (normalize-space(t:date)) then concat('(',normalize-space(t:date),')') else ''"/>
+                                            <!-- end header -->
+                                            <xf:group ref=".[normalize-space(concat(t:author[1],t:name[@role='recipient'],t:title[@level='a'],t:title[@level='j'],t:title[@level='m'],t:date))='']"> [No description] </xf:group>                                            <xf:switch>
                                                 <xf:case id="hide_reference">
-                                                    <h:div style="float:right">
                                                         <xf:trigger>
                                                             <xf:label>Show details</xf:label>
                                                             <xf:action ev:event="DOMActivate">
                                                                 <xf:toggle case="show_reference"/>
                                                             </xf:action>
                                                         </xf:trigger>
-                                                    </h:div>
-                                                    <xf:repeat nodeset="t:author"><xf:output 
-                                                        value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
-                                                            value="."/></xf:repeat><xf:output 
-                                                                value="if (normalize-space(t:author[1]) and not(normalize-space(t:name[@role='recipient']))) then ': ' else ''"/>
-                                                    <xf:output value="if (normalize-space(t:name[@role='recipient'])) then concat(' to ',t:name[@role='recipient']) else ''"/>
-                                                    <h:i><xf:output value="t:title[@level='a']"/></h:i><xf:output 
-                                                        value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='j'])) then concat('. ',t:title[@level='j']) else t:title[@level='j']"/>
-                                                    <xf:output value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='m'])) then concat('. ',t:title[@level='m']) else t:title[@level='m']"/>
-                                                    <xf:output value="if (normalize-space(t:date)) then concat('(',normalize-space(t:date),')') else ''"/>
-                                                    <xf:group ref=".[normalize-space(concat(t:author[1],t:name[@role='recipient'],t:title[@level='a'],t:title[@level='j'],t:title[@level='m'],t:date))='']"> [No description] </xf:group>
                                                 </xf:case>
                                                 <xf:case id="show_reference">
-                                                    <h:div style="float:right">
                                                         <xf:trigger>
                                                             <xf:label>Hide details</xf:label>
                                                             <xf:action ev:event="DOMActivate">
                                                                 <xf:toggle case="hide_reference"/>
                                                             </xf:action>
                                                         </xf:trigger>
-                                                    </h:div>
                                                     <xi:include href="includes/bibl-input.xml" parse="xml"/>
                                                 </xf:case>
                                             </xf:switch>
@@ -353,8 +336,61 @@
                                     </xf:repeat>
                                 </xf:group>
                                 
+
                                 <!-- reference types menu -->
                                 <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
+                                    close="true" draggable="true" visible="false">
+                                    <h:div class="blocklabel">Add new reference:</h:div>
+                                    <h:br clear="all"/>
+                                    <xf:repeat nodeset="instance('bibl-type-instance')/t:listBibl/t:bibl[not(@type=parent::node()/preceding-sibling::t:listBibl/t:bibl/@type)]" 
+                                        id="ref-type-menu-repeat">
+                                        <xf:trigger submission="replace-form-with" appearance="minimal" class="non-standard_trigger">
+                                            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="translate(@type,'_',' ')"/></xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xxf:variable name="origin" select="."/>
+                                                <xf:toggle case="hide_ref_types"/>
+                                                <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work//m:event[@xml:id=instance('temp')/id]/t:listBibl[@type='evidence']" 
+                                                    nodeset="t:bibl" 
+                                                    at="index('repeat-evidence-references')"
+                                                    position="after" 
+                                                    origin="$origin"/>
+                                                <xf:dispatch name="id-update" target="form-group"/>
+                                                <xxf:hide dialog="add-ref-dialog"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <h:br clear="all"/>
+                                    </xf:repeat>
+                                    <!-- standard references quick-add menu -->
+                                    <xf:group ref=".[count(instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']])&gt;0]">
+                                        <h:hr style="margin:10px 0px;"/>
+                                        <h:div class="blocklabel">Add from this collections's standard references:</h:div>
+                                        <h:br clear="all"/>
+                                        <xf:repeat nodeset="instance('bibliography-instance')/t:listBibl[not(@type) or @type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']]" 
+                                            id="std-bibl-repeat">
+                                            <xf:repeat nodeset="t:bibl" id="std-bibl-menu-repeat">
+                                                <xf:trigger submission="replace-form-with" appearance="minimal">
+                                                    <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="t:abbr"/></xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xxf:variable name="origin" select="."/>
+                                                        <xf:insert context="instance('data-instance')/m:meiHead/m:WorkDesc/m:work//m:event[@xml:id=instance('temp')/id]/t:listBibl[@type='evidence']"
+                                                            nodeset="t:bibl"
+                                                            at="index('repeat-evidence-references')" 
+                                                            position="after" 
+                                                            origin="$origin"/>
+                                                        <xf:dispatch name="id-update" target="form-group"/>
+                                                        <xxf:hide dialog="add-ref-dialog"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <h:br clear="all"/>
+                                            </xf:repeat>
+                                        </xf:repeat>
+                                    </xf:group>
+                                </xxf:dialog>
+                                <!-- end menu -->
+                                
+
+                                <!-- reference types menu -->
+<!--                                <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
                                     close="true" draggable="true" visible="false">
                                     <h:div class="blocklabel">Add new reference:</h:div>
                                     <h:br clear="all"/>
@@ -363,12 +399,14 @@
                                             <xf:trigger submission="replace-form-with" appearance="minimal">
                                                 <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="translate(@type,'_',' ')"/></xf:label>
                                                 <xf:action ev:event="DOMActivate">
+                                                    <xf:message value="concat('title:',instance('data-instance')/m:meiHead/m:WorkDesc/m:work//m:event[@xml:id=instance('temp')/id]//text())"/>
+                                                    <xf:message value="concat('id:',instance('temp')/id)"/>
                                                     <xf:toggle case="hide_ref_types"/>
-                                                    <xf:insert context="instance('bibliography-instance')/t:listBibl[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]" 
+                                                    <xf:insert context="instance('data-instance')/m:meiHead/m:WorkDesc/m:work//m:event[@xml:id=instance('temp')/id]/t:listBibl[@type='evidence']" 
                                                         nodeset="t:bibl" 
                                                         at="index('repeat-references')"
                                                         position="after" 
-                                                        origin="instance('bibl-type-instance')/t:listBibl[index('ref-type-menu-listbibl-repeat')]/t:bibl[index('ref-type-menu-bibl-repeat')]"/>
+                                                        origin="instance('bibl-type-instance')/t:listBibl[index('ref-type-menu-listbibl-repeat')]/t:bibl[not(@type=parent::node()/preceding-sibling::t:listBibl/t:bibl/@type)][index('ref-type-menu-bibl-repeat')]"/>
                                                     <xf:dispatch name="id-update" target="form-group"/>
                                                     <xxf:hide dialog="add-ref-dialog"/>
                                                 </xf:action>
@@ -376,7 +414,7 @@
                                             <h:br clear="all"/>
                                         </xf:repeat>
                                     </xf:repeat>
-                                </xxf:dialog>
+                                </xxf:dialog>-->
                                 <!-- end menu -->
                                 
                             </h:fieldset>
