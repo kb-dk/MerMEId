@@ -2,6 +2,8 @@
 <properties>
   <comment>HTTP Filter parameters</comment>
 
+  <entry key="filter">filter/</entry>
+
 <!--
 
 The filter is meant to operate on top of an eXist XML database
@@ -11,7 +13,7 @@ The filter is meant to operate on top of an eXist XML database
   <entry key="exist.host">mei.example.org</entry>
   <entry key="exist.port">8080</entry>
   <entry key="exist.realm">exist</entry>
-  <entry key="exist.context">/exist/rest/db/dcm</entry>
+  <entry key="exist.context">/exist/rest/db</entry>
   <entry key="exist.user">admin</entry>
   <entry key="exist.password">your very secret password goes here</entry>
 
@@ -19,11 +21,13 @@ The filter is meant to operate on top of an eXist XML database
 
 get is the retrieval filter
 
+entry key="exist.context"
+/exist/rest/db/dcm
 -->
 
-  <entry key="get">http://mei.example.org/editor/transforms/mei/filter_get.xsl</entry>
-  <entry key="get.mime">application/xml</entry>
-  <entry key="get.charset">UTF-8</entry>
+  <entry key="get.dcm">http://mei.example.org/editor/transforms/mei/filter_get.xsl</entry>
+  <entry key="get.dcm.mime">application/xml</entry>
+  <entry key="get.dcm.charset">UTF-8</entry>
 
 <!--
 
@@ -31,9 +35,9 @@ put is for updating
 
 -->
 
-  <entry key="put">http://mei.example.org/editor/transforms/mei/filter_put.xsl</entry>
-  <entry key="put.mime">application/xml</entry>
-  <entry key="put.charset">UTF-8</entry>
+  <entry key="put.dcm">http://mei.example.org/editor/transforms/mei/filter_put.xsl</entry>
+  <entry key="put.dcm.mime">application/xml</entry>
+  <entry key="put.dcm.charset">UTF-8</entry>
 
 <!--
 

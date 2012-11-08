@@ -222,7 +222,7 @@ public class FilterUtilityMethods  {
 	javax.xml.transform.dom.DOMSource source = 
 	    new javax.xml.transform.dom.DOMSource(source_dom);
 
-	logger.debug("We've source");
+	logger.debug("We've got source DOM");
 
 	javax.xml.transform.dom.DOMResult result = 
 	    new javax.xml.transform.dom.DOMResult();
@@ -232,7 +232,7 @@ public class FilterUtilityMethods  {
 	javax.xml.transform.stream.StreamSource xsl_source =
 	    new javax.xml.transform.stream.StreamSource(xsl_name);
 
-	logger.debug("We've xsl");
+	logger.debug("We've got the xsl");
 
 	try {
 	    javax.xml.transform.Transformer transformer = 
