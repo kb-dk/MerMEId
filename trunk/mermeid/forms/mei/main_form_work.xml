@@ -329,9 +329,9 @@
 								</xf:group>
 								<xf:group ref="@target[normalize-space()]">
 									<xf:output value="."/>
-									<xf:trigger>
-										<xf:label><h:img src="http:/editor/images/go_to_link.png" 
-											title="Go to linked file"/> Go to...</xf:label>
+									<xf:trigger appearance="minimal">
+										<xf:label><h:span style="vertical-align:bottom;"><h:img src="http:/editor/images/go_to_link.png" 
+											title="Go to linked resource"/></h:span></xf:label>
 										<xf:action ev:event="DOMActivate">
 											<xxf:variable name="uri" 
 												select="concat(

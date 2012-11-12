@@ -36,10 +36,7 @@
         <xf:repeat nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source" id="repeat-sources">
           <h:tr class="hoverclass">
             <h:td class="number_cell">
-              <xf:output value="position()"/>&#160;
-              <xf:group ref=".[not(*)]">
-                <h:img src="http:/editor/images/link.png" title="External source description (link)"/>&#160;
-              </xf:group>
+              <xf:output value="position()"/>
             </h:td>
             <h:td>
               <dcm:id ref="."/>
@@ -103,7 +100,7 @@
               <xf:group ref=".[not(*)]">
                 <!-- external source data -->
                 <xf:trigger appearance="minimal">
-                  <xf:label><h:img src="http:/editor/images/edit.gif" title="Go to external source"/></xf:label>
+                  <xf:label><h:img src="http:/editor/images/go_to_link.png" title="Go to external source"/></xf:label>
                   <xf:action ev:event="DOMActivate">
                     <xxf:variable name="uri" 
                       select="concat(

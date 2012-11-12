@@ -275,7 +275,6 @@
       </xf:item>      
     </xf:select>
     <!-- code inspector -->
-    <!-- disabled due to performance problems 
     <h:div class="vertical_spacer"/>
     <xf:select appearance="full" ref="instance('parameters')/dcm:code_inspector">
       <xf:action ev:event="xforms-value-changed">
@@ -285,10 +284,12 @@
         <xf:label>Enable code inspector <h:a class="help">?<h:span class="comment">The
           code inspector allows you to inspect your XML data as you edit.<h:br/>
           The code inspector will be displayed at the bottom of the page.<h:br/>
+          Please note: The code inspector has occasionally proved to require extreme server resources,
+          sometimes even causing the server to crash. Use it carefully (and of course completely at own risk).
           </h:span></h:a></xf:label>
         <xf:value>true</xf:value>
       </xf:item>      
-    </xf:select>-->
+    </xf:select>
     <!-- end code inspector -->
   </xxf:dialog>
   

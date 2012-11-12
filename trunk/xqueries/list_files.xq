@@ -250,7 +250,7 @@ type="text/css"/>
 </head>
 <body>
 <div style="float:right;">
-<a href="/editor/manual/" target="_blank"><img src="/editor/images/help.png" title="help" alt="help"/></a>
+<a href="/editor/manual/" target="_blank"><img src="/editor/images/help.png" title="help" alt="help" border="0"/></a>
 </div>
 <img src="/editor/images/mermeid_30px.png" title="MerMEId - Metadata Editor and Repository for MEI Data" alt="MerMEId Logo"/>
 <hr/>
