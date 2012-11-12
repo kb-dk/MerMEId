@@ -25,7 +25,9 @@ public class NewFileServlet extends javax.servlet.http.HttpServlet {
 	throws javax.servlet.ServletException, java.io.IOException 
     {        
 
-	String pattern = this.props.getProperty("create");
+	String requestUri = utilities.uriConstructor(request,response);
+
+	String pattern = this.props.getProperty("create." + utilities.getBase());
 
 	com.damnhandy.uri.template.impl.RFC6570UriTemplate template = 
 	    new com.damnhandy.uri.template.impl.RFC6570UriTemplate(pattern);
