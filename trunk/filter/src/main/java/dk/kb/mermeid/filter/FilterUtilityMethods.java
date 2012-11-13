@@ -135,7 +135,7 @@ public class FilterUtilityMethods  {
 	java.io.StringWriter outdata = new java.io.StringWriter();
 	java.io.Writer  out          = response.getWriter();
 
-	this.doTransform(this.props.getProperty("put" + this.getBase()),in,outdata);
+	this.doTransform(this.props.getProperty("put." + this.getBase()),in,outdata);
 
 	String result      = outdata.getBuffer().toString();  
 
@@ -342,18 +342,25 @@ public class FilterUtilityMethods  {
 	    basedOn     = "pathInfo";
 	    path        = protocol + host + pathInfo;
 	} else {
+
+	    logger.info("uriConstructor pathInfo : " + pathInfo); 
+	    logger.info("uriConstructor filter context : " + 
+			this.props.getProperty("filter"));
+
 	    String file = pathInfo.substring(
                                    pathInfo.lastIndexOf(
 			                   this.props.getProperty("filter")));
-	    String base = file.replaceAll("/([^/]+)$","");
-
-	    this.setBase(base);
+	    String base = pathInfo.replaceAll("/([^/]+)$","");
+	    this.setBase(base.replaceAll("/",""));
 
 	    basedOn     = "context";
 
 	    host        = this.props.getProperty("exist.host");
 
 	    String portNumber = this.props.getProperty("exist.port");
+	    logger.info("uriConstructor base : " + base); 
+	    logger.info("uriConstructor file : " + file); 
+
 	    logger.info("port number: " + portNumber); 
 
 	    port        = java.lang.Integer.parseInt(portNumber);
