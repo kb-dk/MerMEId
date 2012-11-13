@@ -573,6 +573,9 @@ a.popup span.comment {
     /* For non-CSS3 FireFox */
     -moz-box-shadow: 7px 7px 10px 5px #333;
     -moz-border-radius: 4px;
+    /* For MSIE 6-8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333')"; 
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333'); 
 }
 
 a.popup span.comment {

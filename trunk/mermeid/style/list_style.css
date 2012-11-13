@@ -164,6 +164,9 @@ a.help span.comment, a.help_plain span.comment {
     /* For non-CSS3 FireFox */
     -moz-box-shadow: 10px 10px 10px #333;
     -moz-border-radius: 4px;
+    /* For MSIE 6-8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333')"; 
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333'); 
 }
 
 a.help span.comment {

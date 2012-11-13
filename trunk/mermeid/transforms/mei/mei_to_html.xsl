@@ -1399,7 +1399,6 @@
 
 
 				<!-- source location and identifiers -->
-				<xsl:variable name="components" select="count(../../m:componentGrp/m:item[//text()])"/>
 				<xsl:for-each select="m:physDesc/m:physLoc">
 					<xsl:for-each
 						select="m:repository[m:corpName[text()]|m:identifier[text() and (not(@type) or @type='')]]">
@@ -1525,7 +1524,7 @@
 
 
 	<xsl:template match="m:source/m:componentGrp | m:item/m:componentGrp">
-		<xsl:variable name="labels" select="count(m:item[@label!=''])"/>
+		<xsl:variable name="labels" select="count(m:item[@label!=''] | m:source[@label!=''])"/>
 		<xsl:choose>
 			<xsl:when test="count(m:item)&gt;1">
 				<table cellpadding="0" cellspacing="0" border="0" class="source_component_list">
@@ -1549,7 +1548,7 @@
 				</table>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:apply-templates select="m:item"/>
+				<xsl:apply-templates select="m:item | m:source"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

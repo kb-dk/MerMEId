@@ -548,20 +548,19 @@
                                 </xf:group>
                             </xf:group>
                         </h:fieldset>
-                            
-                        <dcm:create
-                            nodeset="m:physDesc"
-                            label="Add physical description"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc"/>
-                        <xf:group ref="m:physDesc">
-                            <h:fieldset>
-                                <h:legend>Physical description 
-                                    <h:a class="help">?<h:span class="comment">Describes features shared by all copies of this source. <h:br/>
-                                        For details on a specific item (a specific copy, or a manuscript), use the "Items" section below.</h:span></h:a>
-                                    <dcm:attribute-editor ref="."/>
-                                </h:legend>
-                                <h:div class="vertical_spacer"> </h:div>
-                                
+                        
+                        <h:fieldset>
+                            <h:legend>Physical description 
+                                <h:a class="help">?<h:span class="comment">Describes features shared by all copies of this source. <h:br/>
+                                    For details on a specific item (a specific copy, or a manuscript), use the "Items" section below.</h:span></h:a>
+                                <dcm:attribute-editor ref="."/>
+                            </h:legend>
+                            <h:div class="vertical_spacer"> </h:div>
+                            <dcm:create
+                                nodeset="m:physDesc"
+                                label="Add physical description"
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc"/>
+                            <xf:group ref="m:physDesc">
                                 <h:div>
                                     <dcm:create
                                         nodeset="m:extent"
@@ -672,9 +671,10 @@
                                         <dcm:attribute-editor/>
                                     </xf:repeat>
                                 </h:div>
-                                
-                            </h:fieldset>
-                            
+                            </xf:group>
+                        </h:fieldset>
+                        
+                        <xf:group ref="m:physDesc">
                             <h:fieldset>
                                 <h:legend>Title page 
                                     <h:a class="help">?<h:span class="comment">Transcription of the source's title page. Multiple title pages
@@ -709,7 +709,6 @@
                                     <h:hr/> 
                                 </xf:repeat>
                             </h:fieldset>
-
                         </xf:group>
                         
                         <h:fieldset>
@@ -723,17 +722,13 @@
                             <h:div class="vertical_spacer"> </h:div>
                             <dcm:create
                                 nodeset="m:pubStmt"
-                                label="Add publication/creation data"
+                                label="Add publication/creation"
                                 origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt"/>
-                            <dcm:create ref="m:pubStmt"
-                                nodeset="m:respStmt"
-                                label="Add publication/creation data"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:respStmt"/>
                             <xf:repeat nodeset="m:pubStmt" id="repeat-source-publication">
                                 <h:div>
                                     <dcm:create 
                                         nodeset="m:respStmt"
-                                        label="Add publication/creation data"
+                                        label="Add publication/creation"
                                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:respStmt"/>
                                     <dcm:create ref="m:respStmt"
                                         nodeset="m:corpName"
@@ -791,8 +786,8 @@
                         
                              
                         <!-- Components -->
-                        <h:fieldset class="item-components">
-                            <h:legend class="item-components">Components <h:a 
+                        <h:fieldset class="source-components">
+                            <h:legend class="source-components">Components <h:a 
                                 class="help">?<h:span class="comment">Descriptions of the individual parts that 
                                 constitute a composite source</h:span></h:a>
                                 <dcm:id ref="m:componentGrp"/>
@@ -806,10 +801,10 @@
                             <dcm:create ref="m:componentGrp"
                                 nodeset="m:item"
                                 label="Add component"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentGrp/m:item"/>
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentGrp/m:source"/>
                             <xf:group ref=".[m:componentGrp]">
                                 <h:table class="component_list" cellpadding="0" cellspacing="0" border="0">
-                                    <xf:repeat nodeset="m:componentGrp/m:item" id="repeat-source-component">
+                                    <xf:repeat nodeset="m:componentGrp/m:source" id="repeat-source-component">
                                         <h:tr class="component">
                                             <h:td class="{if(position()=last()) then 'last_cell' else 'index_cell'}">
                                                 <h:img src="http:/editor/images/tree-1.png" alt="component" border="0"/>
@@ -821,7 +816,7 @@
                                                             triggers="up down copy add remove" 
                                                             nodeset="m:item" 
                                                             index="repeat-source-component"
-                                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:itemList/m:item/m:componentGrp/m:item"/>
+                                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentGrp/m:source"/>
                                                         <dcm:attribute-editor/>
                                                     </h:span>
                                                     <h:div class="vertical_spacer"/>
@@ -862,12 +857,12 @@
                                                             <dcm:create
                                                                 nodeset="m:notesStmt"
                                                                 label="Add description"
-                                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp/m:item/m:notesStmt"/>
+                                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp/m:source/m:notesStmt"/>
                                                             <xf:group ref="m:notesStmt">
                                                                 <dcm:create
                                                                     nodeset="m:annot"
                                                                     label="Add description"
-                                                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp/m:item/m:notesStmt/m:annot[1]"/>
+                                                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp/m:source/m:notesStmt/m:annot[1]"/>
                                                                 <xf:repeat nodeset="m:annot[@type='source_description']" id="component-description">
                                                                     <xf:textarea ref="." class="mediumheight" mediatype="text/html"/>
                                                                     <dcm:attribute-editor/>
@@ -875,7 +870,7 @@
                                                                         triggers="remove"
                                                                         nodeset="m:annot[@type='source_description']"
                                                                         index="component-description"
-                                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp/m:item/m:notesStmt/m:annot[1]"/>
+                                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp/m:source/m:notesStmt/m:annot[1]"/>
                                                                 </xf:repeat>
                                                             </xf:group>
                                                             

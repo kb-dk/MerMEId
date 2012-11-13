@@ -8,6 +8,20 @@
     xmlns:t="http://www.tei-c.org/ns/1.0" 
     exclude-result-prefixes="m xsl xs">
     
+    <!-- 
+    Transformation from MEI 2010 to MEI 2012 metadata.
+    Caution: This transform is made specifically for transforming metadata created using 
+    the 2010 version of MerMEId. Metadata from other applications may or may not 
+    be successfully transformed with it. 
+    Be aware, for instance, that this transform deletes all contents in <music>.
+
+    Sigfrid Lundberg (slu@kb.dk) 
+    & Axel Teich Geertinger (atge@kb.dk)
+    Danish Centre for Music Publication
+    The Royal Library 
+    Copenhagen 2012    
+    -->
+    
     <xsl:output method="xml" encoding="UTF-8" indent="yes" xml:space="default"/>
     <xsl:strip-space elements="*"/>
         
