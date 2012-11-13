@@ -96,7 +96,7 @@ declare function app:delete-document-reference($doc as node()) as node() {
 	let $form-id := util:document-name($doc)
 	let $form := 
 	<form id="del{$form-id}" 
-        action="http://{request:get-header('HOST')}/filter/delete/{util:document-name($doc)}"
+        action="http://{request:get-header('HOST')}/filter/delete/dcm/{util:document-name($doc)}"
 	method="get" 
 	style="display:inline;">
 	
@@ -332,7 +332,7 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 {app:list-title()}
 {
 	<a title="Add new file" href="#" class="addLink" 
-	onclick="location.href='/filter/new/'; return false;"><img 
+	onclick="location.href='/filter/new/dcm/'; return false;"><img 
 	src="/editor/images/new.gif" alt="New file" border="0" /></a>
 }
 </h2>
