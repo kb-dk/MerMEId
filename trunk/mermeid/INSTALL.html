@@ -138,13 +138,13 @@
 	    mermeid
 	  </td>
 	  <td>the forms. The configuration here lives in
-	  <kbd><a href="mermeid/forms/mermeid_configuration.xml">mermeid/forms/mermeid_configuration.xml</a></kbd>
+	  <kbd><a href="forms/mermeid_configuration.xml">forms/mermeid_configuration.xml</a></kbd>
 	  </td>
 	</tr>
 	<tr>
 	  <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">orbeon</td>
 
-	  <td>A <a href="orbeon/mei_form.jsp">JSP script</a> which should be
+	  <td>A <a href="../orbeon/mei_form.jsp">JSP script</a> which should be
 	  installed as &lt;your
 	  tomcat&gt;/webapps/orbeon/xforms-jsp/mei-form/index.jsp -- this is
 	  basically an xinclude processor</td>
@@ -163,11 +163,10 @@
       </table>
 
       <p>In addition, there are a number of files.  <a
-      href="build-distro.sh">build-distro.sh</a>, editor.war <a
-      href="INSTALL.html">INSTALL.html</a> and <a
-      href="README.html">README.html</a>.</p>
+      href="../build-distro.sh">build-distro.sh</a>, editor.war <a
+      href="INSTALL.html">INSTALL.html (this file)</a>.</p>
 
-      <p>Here you have a choice. You can deliver the form through Apache
+      <p>You have a choice. You can deliver the form through Apache
       HTTPD. That is an advantage if you are developer and need to customize
       the code code. But if you like to keep it as it is, then it might be
       easier to deploye it in your tomcat. </p>
@@ -304,9 +303,10 @@
 	  installation and configuration.</li>
 
 	  <li><strong>Load some content:</strong>
-	  <p>After configuring eXist, it is just to populate the database
-	  with some content. You can do that using the client, or a command
-	  line tool, xquery/load_exist.pl</p>
+	  <p>After configuring eXist, it is just to populate the database with
+	  some content. The easiest way to do that is to use the admin client
+	  (see above). The fastest way is perhaps the command line tool,
+	  xquery/load_exist.pl</p>
 
 	  <pre>
 	    cd xquery
