@@ -19,7 +19,7 @@ done
 
 echo "We are about to build a $F_FILE filter and $M_FILE MerMEId"
 
-if [ -f "local_config/http_filter.xml_$F_FILE" && -f "local_config/mermeid_configuration.xml_$M_FILE" ] ; then
+if  [ ! -f "local_config/http_filter.xml_$F_FILE" ] || [ ! -f "local_config/mermeid_configuration.xml_$M_FILE" ] ; then  
     echo "No valid configuration"
     exit 1
 fi
@@ -27,12 +27,18 @@ fi
 rm mermeid.tar.bz2
 rm -rf MerMEId ; mkdir MerMEId
 
+cp "local_config/http_filter.xml_$F_FILE" filter/src/main/resources/http_filter.xml 
+(cd filter ; ~/mvnsh/bin/mvn install)
+
 tar cf - `find . -type f -print | \
     grep -v MerMEId | \
     grep -v svn | \
     grep -v local_config | \
     grep -v cms `  | (cd MerMEId ; tar xvf - )
 
+
+cp "local_config/mermeid_configuration.xml_$M_FILE" \
+    MerMEId/mermeid/forms/mei/mermeid_configuration.xml
 
 (cd MerMEId/mermeid ; jar cf ../editor.war .)
 tar jcvf mermeid.tar.bz2 MerMEId

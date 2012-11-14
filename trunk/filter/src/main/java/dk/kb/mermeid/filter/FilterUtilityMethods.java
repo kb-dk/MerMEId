@@ -50,12 +50,21 @@ public class FilterUtilityMethods  {
 	throws java.io.IOException 
     {
 
-	String newRequest  = this.uriConstructor(request,response);
+	String newRequest = this.uriConstructor(request,response);
 
-	java.lang.String    mime    = this.props.getProperty("get.mime");
-	java.lang.String    charset = this.props.getProperty("get.charset");
+	String mime       = this.props.getProperty("get." 
+						   + this.getBase() 
+						   + ".mime");
 
-	request.setCharacterEncoding("UTF-8");
+	String charset    = this.props.getProperty("get." 
+						   + this.getBase()
+						   + ".charset");
+
+	logger.debug("request parsing gives: base=" +  this.getBase());
+	logger.debug("Configuration says: mime=" + mime); 
+	logger.debug("Configuration says: charset=" + charset); 
+
+	request.setCharacterEncoding(charset);
 
 	org.apache.commons.httpclient.HttpClient httpClient = 
 	    new org.apache.commons.httpclient.HttpClient();
@@ -116,6 +125,16 @@ public class FilterUtilityMethods  {
 
 	String targetUri  = this.uriConstructor(request,response);	
 
+	String mime       = this.props.getProperty("get." 
+						   + this.getBase() 
+						   + ".mime");
+
+	String charset    = this.props.getProperty("get." 
+						   + this.getBase()
+						   + ".charset");
+
+	String contentType = mime;
+
 	org.apache.commons.httpclient.HttpClient httpClient = 
 	    new org.apache.commons.httpclient.HttpClient();
 
@@ -138,8 +157,6 @@ public class FilterUtilityMethods  {
 	this.doTransform(this.props.getProperty("put." + this.getBase()),in,outdata);
 
 	String result      = outdata.getBuffer().toString();  
-
-	String contentType = this.props.getProperty("put.mime");
 
         org.apache.commons.httpclient.
 	    methods.

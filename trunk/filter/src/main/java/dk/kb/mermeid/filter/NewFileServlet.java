@@ -35,7 +35,7 @@ public class NewFileServlet extends javax.servlet.http.HttpServlet {
 	String file = IdGenerator.getInstance().getId() + ".xml";
 
 	java.util.Map<String,Object> parameters 
-	    = Configuration.getInstance().propertyMap("create");
+	    = Configuration.getInstance().propertyMap("create." + utilities.getBase());
 
 	parameters.put("doc",file);
 
