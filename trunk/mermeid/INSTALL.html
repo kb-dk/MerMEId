@@ -404,6 +404,16 @@ ProxyPass /filter  "ajp://mei.example.org:8009/filter"
 
     <br style="clear:both;"/>
 
+      <div style="width:50%; float: right;">
+
+      <img src="images/manual/setting_exist_permissions.png" 
+	   alt="setting permission"
+	   title="setting permissions in eXist" 
+	   width="100%" />
+      <p>Figure 3. Setting the permissions in eXist DB.</p>
+      </div>
+
+
     <div id="security">
       <h2>7. Authentication &amp; Security</h2>
 
@@ -444,6 +454,9 @@ ProxyPass /filter  "ajp://mei.example.org:8009/filter"
       <kbd>magic_word</kbd>. The <kbd>htpasswd</kbd> utility should come with
       the Apache distribution. You could obviously use any AAI scheme
       supported by the web server.</p>
+
+      <p>For the system to be secure, you need to set the update and write
+      permissions in the eXist database. See Figure 3.</p>
 
     </div>
 
