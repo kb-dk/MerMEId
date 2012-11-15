@@ -97,6 +97,8 @@
         validate="false"
         relevant="false"
         xxf:calculate="false"
+	xxf:username="{instance('parameters')/dcm:filter_user}"
+	xxf:password="{instance('parameters')/dcm:filter_password}"
         resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
         method="put"
         replace="instance">
