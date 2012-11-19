@@ -346,6 +346,12 @@ public class FilterUtilityMethods  {
 	    host = host + ":" + port;
 	}
 
+	String remoteUser  = "we are anonymous";
+	
+	if(request.getRemoteUser() != null) {
+	    remoteUser = request.getRemoteUser();
+	}
+
 	java.lang.String context = this.props.getProperty("exist.context",null);
 	String path              = "";
 
@@ -360,6 +366,7 @@ public class FilterUtilityMethods  {
 	    path        = protocol + host + pathInfo;
 	} else {
 
+	    logger.info("remote user : " + remoteUser ); 
 	    logger.info("uriConstructor pathInfo : " + pathInfo); 
 	    logger.info("uriConstructor filter context : " + 
 			this.props.getProperty("filter"));

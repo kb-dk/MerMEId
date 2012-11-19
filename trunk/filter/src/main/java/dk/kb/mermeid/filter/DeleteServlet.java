@@ -41,8 +41,7 @@ public class DeleteServlet extends javax.servlet.http.HttpServlet {
 
 	String targetUri = this.utilities.uriConstructor(request,response);
 
-
-	logger.debug("Sending request to URI: " + targetUri); 
+	logger.debug("Sending DELETE request to : " + targetUri); 
 
 	//create a method object
 	org.apache.commons.httpclient.methods.DeleteMethod delete_method =
