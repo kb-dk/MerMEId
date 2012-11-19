@@ -91,14 +91,17 @@
         validate="false"
         resource="{instance('temp')/target_uri}"
         replace="instance" instance="empty-instance"/>
+
+<!-- Wasn't needed
+xxf:username="{instance('parameters')/dcm:filter_user}"
+xxf:password="{instance('parameters')/dcm:filter_password}"
+-->
     
     <xf:submission id="save-to-file"
         ref="instance('data-instance')"
         validate="false"
         relevant="false"
         xxf:calculate="false"
-	xxf:username="{instance('parameters')/dcm:filter_user}"
-	xxf:password="{instance('parameters')/dcm:filter_password}"
         resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
         method="put"
         replace="instance">
