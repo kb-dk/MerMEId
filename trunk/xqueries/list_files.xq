@@ -97,7 +97,7 @@ declare function app:delete-document-reference($doc as node()) as node() {
 	let $form := 
 	<form id="del{$form-id}" 
         action="http://{request:get-header('HOST')}/filter/delete/dcm/{util:document-name($doc)}"
-	method="get" 
+	method="post" 
 	style="display:inline;">
 	
 	<input 

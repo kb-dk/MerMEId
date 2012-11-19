@@ -23,7 +23,7 @@ public class DeleteServlet extends javax.servlet.http.HttpServlet {
     }
 
 
-    public void doGet(javax.servlet.http.HttpServletRequest request,
+    public void doPost(javax.servlet.http.HttpServletRequest request,
 		      javax.servlet.http.HttpServletResponse response) 
 	throws javax.servlet.ServletException, java.io.IOException 
     {        
