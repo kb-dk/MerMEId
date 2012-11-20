@@ -173,19 +173,15 @@ xxf:password="{instance('parameters')/dcm:filter_password}"
       <xxf:variable name="last_revision" 
         select="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]"/>
       <xxf:variable name="today" select="substring-before(now(), 'T')"/>
-      <xf:action if="$last_revision/m:date!=$today or ($last_revision/m:date=$today and $last_revision/*/*/text())">
-        <xf:action if="$last_revision/m:date!=''">
+      <xf:action if="$last_revision/@isodate!=$today or ($last_revision/@isodate=$today and ($last_revision/m:changeDesc/m:p/text() or $last_revision/@resp!=''))">
+        <xf:action if="$last_revision/@isodate!=''">
           <xf:insert nodeset="instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
             position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
-          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
-            value="$today"/>
-          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date/@isodate"
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
             value="$today"/>
         </xf:action>
-        <xf:action if="$last_revision/m:date=''">
-          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
-            value="$today"/>
-          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date/@isodate"
+        <xf:action if="$last_revision/@isodate=''">
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
             value="$today"/>
         </xf:action>
       </xf:action>

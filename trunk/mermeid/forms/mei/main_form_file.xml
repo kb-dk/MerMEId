@@ -347,9 +347,9 @@
 				<h:span class="fixed_width">&#160;Responsible </h:span>
 				<xf:repeat nodeset="m:change" id="repeat-change">
 					<h:div>
-						<xf:input ref="m:date" class="mediumshort"/>
+						<xf:input ref="@isodate" class="mediumshort"/>
 						<xf:input ref="m:changeDesc/m:p" class="maxlong"/>
-						<xf:input ref="m:respStmt/m:persName" class="mediumshort"/>
+						<xf:input ref="@resp" class="mediumshort"/>
 						<dcm:element-buttons triggers="delete" 
 							nodeset="m:change"
 							index="repeat-change"
@@ -365,7 +365,7 @@
 							<xf:insert nodeset="m:change" context="." at="last()" position="after"
 								origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
 							<xf:setvalue
-								ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/m:date"
+								ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
 								value="substring-before(now(), 'T')"/>
 						</xf:action>
 					</xf:trigger>

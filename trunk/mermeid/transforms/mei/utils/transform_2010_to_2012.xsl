@@ -1182,12 +1182,21 @@
         </revisionDesc>
     </xsl:template>    
     
+    <xsl:template match="m:change">
+        <change>
+            <xsl:apply-templates select="@*"/>
+            <xsl:attribute name="isodate" select="m:date"/>
+            <xsl:attribute name="resp" select="m:respstmt/m:persname"/>
+            <xsl:apply-templates select="m:changedesc"/>
+        </change>
+    </xsl:template>
+    
     <xsl:template match="m:changedesc">
         <changeDesc>
             <xsl:apply-templates/>
         </changeDesc>
     </xsl:template>    
-        
+                
     <xsl:template match="m:extptr">
         <xsl:if test="@target!='' or @xl:href!=''">
             <ptr>

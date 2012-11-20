@@ -31,7 +31,6 @@
     <xsl:variable name="new_doc">
       <xsl:apply-templates select="*" mode="convertEntities"/>
     </xsl:variable>
-    <!--<xsl:copy-of select="$new_doc"/>-->
     <xsl:apply-templates select="exsl:node-set($new_doc)" mode="html2mei"/>
   </xsl:template>
   
@@ -262,35 +261,47 @@
 
 
   <xsl:template match="m:revisionDesc" mode="convertEntities">
-    <xsl:if test="$user">
-      <xsl:element name="revisionDesc">
-	<xsl:for-each select="m:change">
-	  <xsl:choose>
-	    <xsl:when test="position()&lt;last()">
-	      <xsl:apply-templates select="."/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <change>
-		<xsl:copy-of select="@*"/>
-		<respStmt>
-		  <persName>
-		    <xsl:value-of select="$user"/>
-		  </persName>
-		</respStmt>
-		<changeDesc>
-		  <p>
-		    <xsl:value-of select="m:changeDesc/m:p"/>
-		  </p>
-		</changeDesc>
-		<date>
-		  <xsl:value-of select="m:date"/>
-		</date>
-	      </change>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:for-each>
-      </xsl:element>
-    </xsl:if>
+    <xsl:element name="revisionDesc">
+      <xsl:choose>
+        <xsl:when test="$user">
+          <xsl:for-each select="m:change">
+            <xsl:choose>
+              <xsl:when test="position()&lt;last()">
+                <xsl:apply-templates select="."/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:variable name="today" select="@isodate"/>
+                <xsl:variable name="prevChange" select="preceding-sibling::node()[1]"/>
+                <xsl:if test="m:changeDesc//text() or $prevChange/@isodate!=$today or $prevChange/@resp!=$user">
+                  <change>
+                    <xsl:copy-of select="@*"/>
+                    <xsl:attribute name="isodate"><xsl:value-of select="@isodate"/></xsl:attribute>
+                    <xsl:attribute name="resp">
+                        <xsl:choose>
+                          <xsl:when test="normalize-space(@resp)">
+                            <xsl:value-of select="@resp"/>
+                          </xsl:when>
+                          <xsl:otherwise>
+                            <xsl:value-of select="$user"/>
+                          </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    <changeDesc>
+                      <p>
+                        <xsl:value-of select="m:changeDesc/m:p"/>
+                      </p>
+                    </changeDesc>
+                  </change>
+                </xsl:if>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:element>
   </xsl:template>
   
  <xsl:template match="@*|node()" mode="html2mei">

@@ -1595,7 +1595,7 @@
 		</xsl:for-each>
 
 		<xsl:for-each select="m:plateNum[text()]">
-			<p>Pl. No. <xsl:apply-templates select="."/>.</p>
+			<p>Pl. no. <xsl:apply-templates select="."/>.</p>
 		</xsl:for-each>
 
 		<xsl:apply-templates select="m:handList[m:hand/@medium!='' or m:hand/text()]"/>
@@ -2061,15 +2061,13 @@
 	</xsl:template>
 
 	<xsl:template match="m:revisionDesc">
-		<xsl:apply-templates select="m:change[normalize-space(m:date)!=''][last()]" mode="last"/>
+		<xsl:apply-templates select="m:change[normalize-space(@isodate)!=''][last()]" mode="last"/>
 	</xsl:template>
 
 	<xsl:template match="m:revisionDesc/m:change" mode="last">
 		<div class="latest_revision">
-			<br/>Last changed <xsl:value-of select="m:date"/>
-			<xsl:if test="normalize-space(m:respStmt/m:persName)"> by <i><xsl:value-of select="m:respStmt/m:persName"
-					/></i>
-			</xsl:if>
+			<br/>Last changed <xsl:value-of select="@isodate"/>
+			<xsl:if test="normalize-space(@resp)"> by <i><xsl:value-of select="@resp"/></i></xsl:if>
 		</div>
 	</xsl:template>
 
