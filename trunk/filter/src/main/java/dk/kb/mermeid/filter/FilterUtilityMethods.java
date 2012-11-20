@@ -21,6 +21,7 @@ public class FilterUtilityMethods  {
     */
 
     private String database = "";
+    private String user     = "";
     private String record   = "";
 
     private javax.xml.parsers.DocumentBuilderFactory dfactory  =
@@ -263,6 +264,8 @@ public class FilterUtilityMethods  {
 		logger.debug("we've made transformer");
 	    }
 
+	    transformer.setParameter("user", this.getUser());
+
 	    transformer.transform(source, result); 
 
             logger.debug("we've transformed it");
@@ -316,9 +319,19 @@ public class FilterUtilityMethods  {
     public void setBase(String base) {
 	this.database = base;
     }
+
     public String getBase() {
 	return this.database;
     }
+
+    public void setUser(String user) {
+	this.user = user;
+    }
+
+    public String getUser() {
+	return this.user;
+    }
+
 
     public String getRecord() {
 	return this.record;
@@ -350,6 +363,7 @@ public class FilterUtilityMethods  {
 	
 	if(request.getRemoteUser() != null) {
 	    remoteUser = request.getRemoteUser();
+	    this.setUser(remoteUser);
 	}
 
 	java.lang.String context = this.props.getProperty("exist.context",null);

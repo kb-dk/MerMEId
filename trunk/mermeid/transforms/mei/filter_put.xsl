@@ -261,7 +261,7 @@
   <!-- end utilities -->
 
 
-  <xsl:template match="m:revisionDesc">
+  <xsl:template match="m:revisionDesc" mode="convertEntities">
     <xsl:if test="$user">
       <xsl:element name="revisionDesc">
 	<xsl:for-each select="m:change">
@@ -278,7 +278,9 @@
 		  </persName>
 		</respStmt>
 		<changeDesc>
-		  <xsl:value-of select="m:changeDesc"/>
+		  <p>
+		    <xsl:value-of select="m:changeDesc/m:p"/>
+		  </p>
 		</changeDesc>
 		<date>
 		  <xsl:value-of select="m:date"/>
