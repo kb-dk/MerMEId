@@ -17,6 +17,8 @@
   xmlns:exsl="http://exslt.org/common"
   exclude-result-prefixes="xsl m t exsl"
   version="1.0">
+
+  <xsl:param name="user" select="''"/>
   
   <xsl:output method="xml"
     encoding="UTF-8"
@@ -257,6 +259,37 @@
     </xsl:choose>
   </xsl:template>
   <!-- end utilities -->
+
+
+  <xsl:template match="m:revisionDesc">
+    <xsl:if test="$user">
+      <xsl:element name="revisionDesc">
+	<xsl:for-each select="m:change">
+	  <xsl:choose>
+	    <xsl:when test="position()&lt;last()">
+	      <xsl:apply-templates select="."/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <change>
+		<xsl:copy-of select="@*"/>
+		<respStmt>
+		  <persName>
+		    <xsl:value-of select="$user"/>
+		  </persName>
+		</respStmt>
+		<changeDesc>
+		  <xsl:value-of select="m:changeDesc"/>
+		</changeDesc>
+		<date>
+		  <xsl:value-of select="m:date"/>
+		</date>
+	      </change>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:element>
+    </xsl:if>
+  </xsl:template>
   
  <xsl:template match="@*|node()" mode="html2mei">
     <xsl:copy>
