@@ -436,11 +436,13 @@ ProxyPass /filter  "ajp://mei.example.org:8009/filter"
 	  <kbd>/filter</kbd>. Currently we do this using basic
 	  authentication. We put the following in our apache configuration:
 	  <pre>
-&lt;LocationMatch ^/+(orbeon/xforms-jsp/mei-form|filter)/+.*>
-  AuthType Basic
-  AuthName "MerMEId users &amp; developers."
-  AuthUserFile /home/xml-store/passwordfile
-  Require valid-user 
+&lt;LocationMatch ^/+(orbeon|filter)/+.*>
+  &lt;Limit POST PUT DELETE>
+    AuthType Basic
+    AuthName "MerMEId users &amp; developers."
+    AuthUserFile /home/xml-store/passwordfile
+    Require valid-user 
+  &lt;/Limit>
 &lt;/LocationMatch>
 	  </pre>
 	</li>
