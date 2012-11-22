@@ -21,6 +21,7 @@ echo "We are about to build a $F_FILE filter and $M_FILE MerMEId"
 
 if  [ ! -f "local_config/http_filter.xml_$F_FILE" ] || [ ! -f "local_config/mermeid_configuration.xml_$M_FILE" ] ; then  
     echo "No valid configuration"
+    echo "usage: build-distro.sh -f filterconfiguration -m formconfiguration "
     exit 1
 fi
 
