@@ -148,6 +148,8 @@ xxf:password="{instance('parameters')/dcm:filter_password}"
       replace="instance"/>
 
     <xf:submission id="load-fileList"
+      xxf:username="{instance('parameters')/dcm:exist_user}"
+      xxf:password="{instance('parameters')/dcm:exist_pwd}"
       method="get" 
       serialization="none" 
       validate="false"
