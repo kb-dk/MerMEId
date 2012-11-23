@@ -43,11 +43,6 @@
         <identifier type="file_collection" xml:id=""/>
       </seriesStmt>
       <notesStmt>
-        <annot type="bibliography" xml:id="">
-          <listBibl type="primary" xmlns="http://www.tei-c.org/ns/1.0" xml:id=""/>          
-          <listBibl type="secondary" xmlns="http://www.tei-c.org/ns/1.0" xml:id=""/>          
-          <listBibl type="documentation" xmlns="http://www.tei-c.org/ns/1.0" xml:id=""/>          
-        </annot>
         <annot type="private_notes" xml:id=""/>
       </notesStmt>
       <sourceDesc>
@@ -270,6 +265,16 @@
         <langUsage>
           <language xml:id="en">English</language>
         </langUsage>
+        
+        <biblList>
+          <head>Bibliography</head>
+        </biblList>
+        <biblList>
+          <head>Primary Texts</head>
+        </biblList>
+        <biblList>
+          <head>Documentation</head>
+        </biblList>
         
         <notesStmt>
           <annot type="links" xml:id="">

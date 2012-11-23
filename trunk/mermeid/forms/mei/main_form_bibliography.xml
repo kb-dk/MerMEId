@@ -14,51 +14,42 @@
     
     <h:br/>
     <h:div>
-      <dcm:create ref="instance('data-instance')/m:meiHead/m:fileDesc" 
-        nodeset="m:notesStmt"
+      <dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work" 
+        nodeset="m:biblList"
         label="Add bibliography"
-        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt"/>
-      <dcm:create ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt" 
-        nodeset="m:annot[@type='bibliography']"
-        label="Add bibliography"
-        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']"/>
+        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]"/>
     </h:div>
     
-    <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']">
+    <xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work[m:biblList]">
       
       <!-- reference types menu -->
       <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
         close="true" draggable="true" visible="false">
         <h:div class="blocklabel">Add new reference:</h:div>
         <h:br clear="all"/>
-        <xf:repeat nodeset="instance('bibl-type-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]/@type]/t:bibl" 
+        <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl" 
           id="ref-type-menu-repeat">
           <xf:trigger submission="replace-form-with" appearance="minimal" class="non-standard_trigger">
-            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="translate(@type,'_',' ')"/></xf:label>
+            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/>
+              <xf:output value="if (m:genre[2]!='') then concat('(',m:genre[2],')') else ''"></xf:output>
+            </xf:label>
             <xf:action ev:event="DOMActivate">
               <xf:toggle case="hide_ref_types"/>
-              <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]" 
-                nodeset="t:bibl" 
+              <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)&gt;0">
+                <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]" 
+                nodeset="m:bibl" 
                 at="index('repeat-references')"
                 position="after" 
-                origin="instance('bibl-type-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]/@type]/t:bibl[index('ref-type-menu-repeat')]"/>
-              <xf:dispatch name="id-update" target="form-group"/>
-              <xxf:hide dialog="add-ref-dialog"/>
-            </xf:action>
-          </xf:trigger>
-          <h:br clear="all"/>
-        </xf:repeat>
-        <xf:repeat nodeset="instance('bibl-type-instance')/t:listBibl[not(@type)]/t:bibl" id="ref-type-menu-repeat2">
-          <xf:output value="concat('listbibltype: ',instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]/@type"/>
-          <xf:trigger submission="replace-form-with" appearance="minimal">
-            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="translate(@type,'_',' ')"/></xf:label>
-            <xf:action ev:event="DOMActivate">
-              <xf:toggle case="hide_ref_types"/>
-              <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]" 
-                nodeset="t:bibl" 
-                at="index('repeat-references')"
-                position="after" 
-                origin="instance('bibl-type-instance')/t:listBibl[not(@type)]/t:bibl[index('ref-type-menu-repeat2')]"/>
+                origin="instance('bibl-type-instance')/m:biblList[index('repeat-listbibl')]/m:bibl[index('ref-type-menu-repeat')]"/>
+                </xf:action>
+              <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)=0">
+                <!-- first <bibl> is inserted after <head>  -->
+                <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]" 
+                  nodeset="*" 
+                  at="last()"
+                  position="after" 
+                  origin="instance('bibl-type-instance')/m:biblList[index('repeat-listbibl')]/m:bibl[index('ref-type-menu-repeat')]"/>
+              </xf:action>
               <xf:dispatch name="id-update" target="form-group"/>
               <xxf:hide dialog="add-ref-dialog"/>
             </xf:action>
@@ -66,21 +57,31 @@
           <h:br clear="all"/>
         </xf:repeat>
         <!-- standard references quick-add menu -->
-        <xf:group ref=".[count(instance('bibliography-instance')/t:listBibl[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']])&gt;0]">
+        <xf:group ref=".[count(instance('bibliography-instance')/m:biblList[m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']])&gt;0]">
           <h:hr style="margin:10px 0px;"/>
           <h:div class="blocklabel">Add from this collections's standard references:</h:div>
           <h:br clear="all"/>
-          <xf:repeat nodeset="instance('bibliography-instance')/t:listBibl[not(@type) or @type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']]" 
+          <xf:repeat nodeset="instance('bibliography-instance')/m:biblList[not(normalize-space(m:head)) or m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']]" 
             id="std-bibl-repeat">
-            <xf:repeat nodeset="t:bibl" id="std-bibl-menu-repeat">
+            <xf:repeat nodeset="m:bibl" id="std-bibl-menu-repeat">
               <xf:trigger submission="replace-form-with" appearance="minimal">
                 <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="t:abbr"/></xf:label>
                 <xf:action ev:event="DOMActivate">
-                  <xf:insert context="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[index('repeat-listbibl')]"
-                    nodeset="t:bibl"
+                  <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)&gt;0">
+                    <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]"
+                    nodeset="m:bibl"
                     at="index('repeat-references')" 
                     position="after" 
-                    origin="instance('bibliography-instance')/t:listBibl[not(@type) or @type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']][index('std-bibl-repeat')]/t:bibl[index('std-bibl-menu-repeat')]"/>
+                    origin="instance('bibliography-instance')/m:listBibl[not(normalize-space(m:head)) or m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']][index('std-bibl-repeat')]/m:bibl[index('std-bibl-menu-repeat')]"/>
+                  </xf:action>
+                  <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)=0">
+                    <!-- first <bibl> is inserted after <head>  -->
+                    <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]"
+                      nodeset="*"
+                      at="last()" 
+                      position="after" 
+                      origin="instance('bibliography-instance')/m:listBibl[not(normalize-space(m:head)) or m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']][index('std-bibl-repeat')]/m:bibl[index('std-bibl-menu-repeat')]"/>
+                  </xf:action>
                   <xf:dispatch name="id-update" target="form-group"/>
                   <xxf:hide dialog="add-ref-dialog"/>
                 </xf:action>
@@ -92,32 +93,52 @@
       </xxf:dialog>
       <!-- end menu -->
                   
-      <xf:repeat nodeset="t:listBibl" id="repeat-listbibl">
+      <xf:repeat nodeset="m:biblList" id="repeat-listbibl">
         <h:fieldset>
           <h:legend>
-            <xf:output value="concat(translate(substring(@type,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(@type,2,string-length(@type)-1))"/> 
-            <xf:output ref=".[count(@type)&lt;1]" value="'Bibliography'"/>
-            <xf:group ref=".[@type='documentation' or @type='evidence']">
-              <h:a class="help">?<h:span class="comment">A list of supplementary, documentary material or evidence (for instance, evidence 
-                for the existence of a work now lost). Performance evidence should be given with the individual performances at the 
-                "History" tab.</h:span></h:a>
-            </xf:group>
-            <dcm:element-buttons triggers="remove" 
-              nodeset="t:listBibl" 
-              origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[1]" 
+            <xf:output value="if (normalize-space(m:head)) then m:head else '[Bibliography]'"/>
+            <h:a class="help">?<h:span class="comment">A list of bibliographic references related to the work.
+              These may range from documentary materiale (for instance, evidence 
+              for the existence of a work now lost) and primary texts such as the comsposer's letters mentioning this   
+              work, to secondary literature (for instance, analytical or historical surveys). <h:br/>
+              Multiple bibliographies may be created to group different types of references.<h:br/> 
+              References related to specific performances (reviews or evidence) may be given with the individual performances at the 
+              "History" tab instead.</h:span></h:a>
+            <dcm:element-buttons triggers="add up down remove" 
+              nodeset="m:biblList" 
+              origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]" 
               index="repeat-listbibl"/>
+            <dcm:id/>
+            <dcm:attribute-editor/>
           </h:legend>
           <h:div class="vertical_spacer"/>
-          <xf:trigger ref=".[not(t:bibl)]">
+          <h:div>
+            <dcm:create 
+              nodeset="m:head"
+              label="Add heading"
+              origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]/m:head"/>
+            <xf:repeat nodeset="m:head" id="repeat-bibl-head">
+              <xf:input ref=".">
+                <xf:label>Heading: <h:a class="help">?<h:span class="comment">A heading for this bibliography for display. 
+                  If multiple bibliographies are used, the heading may be used to distinguish different types of bibliographic
+                  lists, e.g. "Primary Texts", "Bibliography", and "Documentation".</h:span></h:a></xf:label>
+              </xf:input>
+              <dcm:element-buttons triggers="remove" nodeset="m:head" index="repeat-bibl-head" origin="m:dummy"/>
+              <dcm:id/>
+              <dcm:attribute-editor/>
+            </xf:repeat>
+          </h:div>
+          <h:div class="vertical_spacer"/>
+          <xf:trigger ref=".[not(m:bibl)]">
             <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> Add reference</xf:label>
             <xf:action ev:event="DOMActivate">
               <xxf:show dialog="add-ref-dialog"/>
             </xf:action>
           </xf:trigger>
-          <xf:group ref=".[t:bibl]">
+          <xf:group ref=".[m:bibl]">
             <h:span class="blocklabel strong">References</h:span>
             <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
-              <xf:repeat nodeset="t:bibl" id="repeat-references">
+              <xf:repeat nodeset="m:bibl" id="repeat-references">
                 <h:tr class="hoverclass">
                   <h:td class="number_cell">
                     <xf:output value="position()"/>&#160;
@@ -125,21 +146,27 @@
                   <h:td nowrap="nowrap">
                     <dcm:id ref="."/>
                     <dcm:attribute-editor ref="."/>
-                    &#160;  
-                    <xf:output value="concat('[',translate(@type,'_',' '),'] ')"/>&#160;
+                    &#160;
+                    <xf:repeat nodeset="m:genre">
+                      <xf:output value="if (position()=2) then ' (' else ''"/>
+                      <xf:output value="concat(translate(substring(.,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(.,2))"/>&#160;
+                      <xf:output value="if (position()&gt;1 and position()!=last()) then ', ' else ''"/>
+                      <xf:output value="if (position()&gt;1 and position()=last()) then ')' else ''"/>
+                    </xf:repeat>
                   </h:td>
                   <h:td>  
-                    <xf:repeat nodeset="t:author"><xf:output 
+                    <xf:repeat nodeset="m:creator"><xf:output 
                       value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
                         value="."/></xf:repeat><xf:output 
-                          value="if (normalize-space(t:author[1]) and not(normalize-space(t:name[@role='recipient']))) then ': ' else ''"/>
-                    <xf:output value="if (normalize-space(t:name[@role='recipient'])) then concat(' to ',t:name[@role='recipient']) else ''"/>
-                    <h:i><xf:output value="t:title[@level='a']"/></h:i><xf:output 
-                      value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='j'])) then concat('. ',t:title[@level='j']) else t:title[@level='j']"/>
-                    <xf:output value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='m'])) then concat('. ',t:title[@level='m']) else t:title[@level='m']"/>
-                    <xf:output value="if (normalize-space(t:date)) then concat('(',normalize-space(t:date),')') else ''"/>
-                    <xf:group ref=".[normalize-space(concat(t:author[1],t:name[@role='recipient'],t:title[@level='a'],t:title[@level='j'],t:title[@level='m'],t:date))='']"> [No description] </xf:group>
-                  </h:td>
+                          value="if (normalize-space(m:creator[1]) and not(normalize-space(m:recipient[1]))) then ': ' else ''"/>
+                    <xf:output value="if (normalize-space(m:recipient[1])) then concat(' to ',m:recipient[1]) else ''"/>
+                    <h:i><xf:output value="m:title[@level='a']"/></h:i><xf:output 
+                      value="if (normalize-space(m:title[@level='a'][1]) and normalize-space(m:title[@level='j'][1])) then concat('. ',m:title[@level='j'][1]) else m:title[@level='j']"/>
+                    <xf:output value="if (normalize-space(m:title[@level='a'][1]) and normalize-space(m:title[@level='m'][1])) then concat('. ',m:title[@level='m'][1]) else m:title[@level='m']"/>
+                    <xf:output value="if (normalize-space(m:creation[1]/m:date[1])) then concat('(',normalize-space(m:creation[1]/m:date[1]),')') else ''"/>
+                    <xf:output value="if (normalize-space(m:imprint[1]/m:date[1])) then concat('(',normalize-space(m:imprint[1]/m:date[1]),')') else ''"/>
+                    <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient[1],m:title[@level='a'][1],m:title[@level='j'][1],m:title[@level='m'][1],m:creation[1]/m:date[1],m:imprint[1]/m:date[1]))='']"> [No description] </xf:group>
+                  </h:td>                  
                   <h:td nowrap="nowrap">
                     <xf:group ref=".[instance('temp')/file_exists='true']">
                       <xf:trigger appearance="minimal">
@@ -165,7 +192,7 @@
                     triggers="up down copy" 
                     nodeset="t:bibl" 
                     index="repeat-references"
-                    origin="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[1]/t:bibl[1]"/><xf:trigger appearance="minimal"
+                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]/m:bibl[1]"/><xf:trigger appearance="minimal"
                       class="non-standard_button">
                       <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/></xf:label>
                       <xf:action ev:event="DOMActivate">
@@ -173,32 +200,17 @@
                       </xf:action>
                     </xf:trigger><dcm:element-buttons 
                       triggers="remove" 
-                      nodeset="t:bibl" 
+                      nodeset="m:bibl" 
                       index="repeat-references"
-                      origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[1]/t:bibl[1]"/>
+                      origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]/m:bibl[1]"/>
                   </h:td>
                 </h:tr>
               </xf:repeat>
             </h:table>
           </xf:group>
         </h:fieldset>
-      </xf:repeat>
+      </xf:repeat> 
       
-      <h:div>
-        <dcm:create nodeset="t:listBibl[@type='primary']"
-          label="Primary bibliography"
-          origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='primary']"/>
-      </h:div>
-      <h:div>
-        <dcm:create nodeset="t:listBibl[@type='secondary']"
-          label="Secondary bibliography"
-          origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='secondary']"/>
-      </h:div>
-        <h:div>
-        <dcm:create nodeset="t:listBibl[@type='documentation']"
-          label="Documentary material"
-          origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl[@type='documentation']"/>
-      </h:div>
     </xf:group>
     
   </h:div>  

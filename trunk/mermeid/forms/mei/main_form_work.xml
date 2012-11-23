@@ -322,7 +322,7 @@
 										<xf:label>Select file...</xf:label>
 										<xf:action ev:event="DOMActivate">
 											<xxf:show dialog="relation_dialog"/>
-											<xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq')"/>
+											<xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?get=works')"/>
 											<xf:send submission="load-fileList"/>
 										</xf:action>
 									</xf:trigger>
@@ -582,7 +582,7 @@
 				<xf:setvalue ref="instance('temp')/target_uri" 
 					value="concat(
 					instance('parameters')/dcm:server_name,
-					'storage/cross-link.xq?query=',instance('temp')/query,
+					'storage/cross-link.xq?get=works&amp;query=',instance('temp')/query,
 					'&amp;subject=',instance('temp')/series,
 					'&amp;page=',instance('temp')/page)"/>
 				<xf:send submission="load-fileList"/>

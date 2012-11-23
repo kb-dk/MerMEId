@@ -1,199 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0">
+<mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="2012">
   <!-- Bibliographic reference type definitions -->
   <!-- DCM 2012 -->
   
-
-  <!-- special reference types for primary texts-->
-  <listBibl type="primary">
+  <biblList>    
     
-    <bibl type="Letter" xml:id="">
-      <author/>
-      <name role="recipient"/>
-      <date/>
-      <geogName/>
-      <msIdentifier>
+    <bibl xml:id="">
+      <genre>letter</genre>
+      <creator/>
+      <recipient/>
+      <creation>
+        <date isodate=""/>
+        <geogName/>
+      </creation>
+      <physLoc>
         <repository/>
-        <idno/>
-      </msIdentifier>
-      <note/>
-      <ref target=""/>
-      <ref type="editions">
+        <identifier/>
+      </physLoc>
+      <annot/>
+      <ptr target=""/>
+      <relatedItem rel="host">
         <bibl>
-          <title type="short_title"/>
+          <title/>
           <biblScope/>
         </bibl>
-      </ref>
+      </relatedItem>
     </bibl>
-    
-    <bibl type="Diary_entry" xml:id="">
-      <author/>
-      <date/>
-      <geogName/>
-      <msIdentifier>
-        <repository/>
-        <idno/>
-      </msIdentifier>
-      <note/>
-      <ref target=""/>
-      <ref type="editions">
-        <bibl>
-          <title type="short_title"/>
-          <biblScope/>
-        </bibl>
-      </ref>
-    </bibl>
-    
-  </listBibl>
-
-
-  <!-- special reference types for secondary texts -->
-  <listBibl type="secondary">
         
-    <bibl type="Web_resource" xml:id="">
-      <author/>
-      <date/>
+    <bibl xml:id="">
+      <genre>diary entry</genre>
+      <creator/>
+      <creation>
+        <date isodate=""/>
+        <geogName/>
+      </creation>
+      <physLoc>
+        <repository/>
+        <identifier/>
+      </physLoc>
+      <annot/>
+      <ptr target=""/>
+      <relatedItem rel="host">
+        <bibl>
+          <title/>
+          <biblScope/>
+        </bibl>
+      </relatedItem>
+    </bibl>
+    
+    <bibl xml:id="">
+      <genre>article</genre>
+      <genre>journal</genre>
+      <creator/>
       <title level="a"/>
       <title level="j"/>
+      <editor/>
+      <biblScope unit="vol"/>
+      <biblScope unit="issue"/>
+      <biblScope unit="page"/>
+      <imprint>
+        <date/>
+        <pubPlace/>
+        <publisher/>
+      </imprint>
+      <ptr target=""/>
+      <relatedItem rel="host">
+        <bibl>
+          <title/>
+          <biblScope/>
+        </bibl>
+      </relatedItem>
+    </bibl>
+    
+    <bibl xml:id="">
+      <genre>book</genre>
+      <creator/>
+      <title level="a"/>
+      <title level="s"/>
+      <editor/>
+      <biblScope unit="vol"/>
+      <biblScope unit="issue"/>
+      <biblScope unit="page"/>
+      <imprint>
+        <date/>
+        <pubPlace/>
+        <publisher/>
+      </imprint>
+      <ptr target=""/>
+    </bibl>
+    
+    <bibl xml:id="">
+      <genre>article</genre>
+      <genre>book</genre>
+      <creator/>
+      <title level="a"/>
       <title level="m"/>
       <title level="s"/>
       <editor/>
-      <biblScope type="vol"/>
-      <biblScope type="issue"/>
-      <publisher/>
-      <ref target=""/>
+      <biblScope unit="vol"/>
+      <biblScope unit="issue"/>
+      <biblScope unit="page"/>
+      <imprint>
+        <date/>
+        <pubPlace/>
+        <publisher/>
+      </imprint>
+      <ptr target=""/>
     </bibl>
     
-  </listBibl>
-  
-  <!-- special reference types for documentational material -->
-  <listBibl type="documentation" xml:id="">
-    
-    <bibl type="Letter">
-      <author/>
-      <name role="recipient"/>
-      <date/>
-      <geogName/>
-      <msIdentifier>
-        <repository/>
-        <idno/>
-      </msIdentifier>
-      <note/>
-      <ref target=""/>
-      <ref type="editions">
-        <bibl>
-          <title type="short_title"/>
-          <biblScope/>
-        </bibl>
-      </ref>
-    </bibl>
-    
-    <bibl type="Diary_entry" xml:id="">
-      <author/>
-      <date/>
-      <geogName/>
-      <msIdentifier>
-        <repository/>
-        <idno/>
-      </msIdentifier>
-      <note/>
-      <ref target=""/>
-      <ref type="editions">
-        <bibl>
-          <title type="short_title"/>
-          <biblScope/>
-        </bibl>
-      </ref>
-    </bibl>
-    
-    <bibl type="Concert_programme" xml:id="">
-      <date/>
-      <title/>
-      <geogName/>
-      <msIdentifier>
-        <repository/>
-        <idno/>
-      </msIdentifier>
-      <note/>
-      <ref target=""/>
-    </bibl>
-  </listBibl>
+    <bibl xml:id="">
+      <genre>article</genre>
+      <genre>newspaper</genre>
+      <creator/>
+      <title level="a"/>
+      <title level="j"/>
+      <editor/>
+      <biblScope unit="vol"/>
+      <biblScope unit="issue"/>
+      <biblScope unit="page"/>
+      <imprint>
+        <date/>
+      </imprint>
+      <ptr target=""/>
+    </bibl>    
 
-  <!-- general reference types -->
-  <listBibl>
-    
-    <bibl type="Journal_article" xml:id="">
-      <author/>
-      <date/>
+        
+    <bibl xml:id="">
+      <genre>web site</genre>
+      <creator/>
       <title level="a"/>
       <title level="j"/>
-      <editor/>
-      <biblScope type="vol"/>
-      <biblScope type="issue"/>
-      <biblScope type="pp"/>
-      <pubPlace/>
-      <publisher/>
-      <ref target=""/>
-      <ref type="editions">
-        <bibl>
-          <title type="short_title"/>
-          <biblScope/>
-        </bibl>
-      </ref>
-    </bibl>
-    
-    <bibl type="Monograph" xml:id="">
-      <author/>
-      <date/>
       <title level="m"/>
       <title level="s"/>
       <editor/>
-      <biblScope type="vol"/>
-      <biblScope type="issue"/>
-      <biblScope type="pp"/>
-      <pubPlace/>
-      <publisher/>
-      <ref target=""/>
-    </bibl>
-    
-    <bibl type="Article_in_book" xml:id="">
-      <author/>
-      <date/>
-      <title level="a"/>
-      <title level="m"/>
-      <title level="s"/>
-      <editor/>
-      <biblScope type="vol"/>
-      <biblScope type="issue"/>
-      <biblScope type="pp"/>
-      <pubPlace/>
-      <publisher/>
-      <ref target=""/>
-      <ref type="editions">
-        <bibl>
-          <title type="short_title"/>
-          <biblScope/>
-        </bibl>
-      </ref>
-    </bibl>
-    
-    <bibl type="Newspaper_article" xml:id="">
-      <author/>
-      <date/>
-      <title level="a"/>
-      <title level="j"/>
-      <biblScope type="vol"/>
-      <biblScope type="issue"/>
-      <biblScope type="pp"/>
-      <ref target=""/>
-      <ref type="editions">
-        <bibl>
-          <title type="short_title"/>
-          <biblScope/>
-        </bibl>
-      </ref>
-    </bibl>
-    
-  </listBibl>
+      <biblScope unit="vol"/>
+      <biblScope unit="issue"/>
+      <imprint>
+        <date/>
+        <publisher/>
+      </imprint>
+      <ptr target=""/>
+    </bibl>    
   
-</TEI>
+    <bibl xml:id="">
+      <genre>concert programme</genre>
+      <title/>
+      <imprint>
+        <date/>
+        <geogName/>
+      </imprint>
+      <physLoc>
+        <repository/>
+        <identifier/>
+      </physLoc>
+      <annot/>
+      <ptr target=""/>
+    </bibl>
+
+  </biblList>
+  
+</mei>

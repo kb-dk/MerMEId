@@ -6,7 +6,7 @@
     xmlns:xl="http://www.w3.org/1999/xlink" 
     xmlns:m="http://www.music-encoding.org/ns/mei" 
     xmlns:t="http://www.tei-c.org/ns/1.0" 
-    exclude-result-prefixes="m xsl xs">
+    exclude-result-prefixes="m t xsl xs">
     
     <!-- 
     Transformation from MEI 2010 to MEI 2012 metadata.
@@ -508,61 +508,6 @@
             <xsl:if test="not(m:annot[@type='private_notes']) and not(m:annot[@type='private_notes']='')">
                 <annot type="private_notes"/>
             </xsl:if>
-            <!-- move bibliography from <front> to meiHead/fileDesc/notesStmt -->
-            <annot type="bibliography">
-                <!-- add primary bibliography if missing -->
-                <xsl:if test="not(//m:music/m:front/t:div[t:head='Bibliography']/t:listBibl[@type='primary'])">
-                    <listBibl type="primary" xmlns="http://www.tei-c.org/ns/1.0">
-                        <xsl:attribute name="xml:id">
-                            <xsl:value-of select="concat('listBibl_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
-                        </xsl:attribute>
-                        <bibl type="Letter">
-                            <xsl:attribute name="xml:id">
-                                <xsl:value-of select="concat('bibl_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
-                            </xsl:attribute>
-                            <author/>
-                            <name role="recipient"/>
-                            <date/>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository/>
-                                <idno/>
-                            </msIdentifier>
-                            <note/>
-                            <ref target=""/>
-                            <ref type="editions">
-                                <bibl>
-                                    <title type="short_title"/>
-                                    <biblScope/>
-                                </bibl>
-                            </ref>
-                        </bibl>
-                    </listBibl>
-                </xsl:if>
-                <xsl:apply-templates select="//m:music/m:front/t:div[t:head='Bibliography']/t:listBibl"/>
-                <!-- add bibliography containing documentary material -->
-                <xsl:if test="not(//m:music/m:front/t:div[t:head='Bibliography']/t:listBibl[@type='documentation'])">
-                    <listBibl type="documentation" xmlns="http://www.tei-c.org/ns/1.0">
-                        <xsl:attribute name="xml:id">
-                            <xsl:value-of select="concat('listBibl_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
-                        </xsl:attribute>
-                        <bibl type="Concert_programme">
-                            <xsl:attribute name="xml:id">
-                                <xsl:value-of select="concat('bibl_',generate-id(.))"/>
-                            </xsl:attribute>
-                            <date/>
-                            <title/>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository/>
-                                <idno/>
-                            </msIdentifier>
-                            <note/>
-                            <ref target=""/>
-                        </bibl>
-                    </listBibl>                
-                </xsl:if>
-            </annot>
         </notesStmt>
     </xsl:template>   
 
@@ -571,29 +516,31 @@
         <xsl:apply-templates select="m:annot[@type='links']"/>
     </xsl:template>   
     
-    
     <xsl:template match="m:music/m:front/t:div[t:head='Bibliography']/t:listBibl">
-        <listBibl xmlns="http://www.tei-c.org/ns/1.0">
+        <biblList>
             <xsl:if test="not(@xml:id)">
                 <xsl:attribute name="xml:id">
-                    <xsl:value-of select="concat('listBibl_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
+                    <xsl:value-of select="concat('biblList_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
                 </xsl:attribute>
             </xsl:if>
-            <!-- add @type "secondary" to existing bibliography if missing -->
-            <xsl:if test="not(@type)">
-                <xsl:attribute name="type">secondary</xsl:attribute>
-            </xsl:if>
-            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="@*[name()!='type']"/>
             <xsl:choose>
-                <!-- skip empty refs, but keep at least one for validity -->
-                <xsl:when test="count(t:bibl[*//text()])&gt;0">
-                    <xsl:apply-templates select="t:bibl[*//text()]"/>
+                <xsl:when test="not(@type) or contains(@type,'econdary')">
+                    <head>Bibliography</head>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:apply-templates select="t:bibl[1]"/>
+                    <xsl:choose>
+                        <xsl:when test="contains(@type,'rimary')">
+                            <head>Primary texts</head>
+                        </xsl:when>
+                        <xsl:when test="contains(@type,'ocument')">
+                            <head>Documentation</head>
+                        </xsl:when>
+                    </xsl:choose>
                 </xsl:otherwise>
             </xsl:choose>
-        </listBibl>
+            <xsl:apply-templates select="t:bibl[*//text()]"/>
+        </biblList>
     </xsl:template>
     
     <xsl:template match="m:langusage">
@@ -667,10 +614,16 @@
                         </event>
                     </eventList>
                 </history>
+
                 <xsl:apply-templates select="m:langusage"/>
+
+                <!-- move bibliographies from <front> to <work> -->
+                <xsl:apply-templates select="//m:music/m:front/t:div[t:head='Bibliography']/t:listBibl"/>
+                                
                 <notesStmt>
                     <xsl:apply-templates select="//m:meihead/m:filedesc/m:notesstmt" mode="work"/>
                 </notesStmt>
+
                 <classification>
                     <xsl:apply-templates select="m:classification/m:classcode"/>
                     <xsl:if test="not(m:classification/m:classcode[@xml:id='DcmCompletenessClass'])">
@@ -857,14 +810,15 @@
             </xsl:choose>
             <xsl:apply-templates select="*[name(.)!='bibl' and name(.)!='title']"/>
             <xsl:if test="t:bibl[*//text()]">
-                <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0">
+                <biblList>
                     <xsl:if test="not(@xml:id)">
                         <xsl:attribute name="xml:id">
-                            <xsl:value-of select="concat('listBibl_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
+                            <xsl:value-of select="concat('biblList_',generate-id(.))"/><xsl:number level="any" count="//node()"/>
                         </xsl:attribute>
                     </xsl:if>
+                    <head>Reviews</head>
                     <xsl:apply-templates select="t:bibl"/>
-                </listBibl>
+                </biblList>
             </xsl:if>
         </event>
     </xsl:template>
@@ -1113,47 +1067,137 @@
         </graphic> 
     </xsl:template>
     
-    <xsl:template name="t:bibl">
-        <xsl:apply-templates select="@*|*"/>
-    </xsl:template>
-
-    <xsl:template match="t:bibl/@type">
+    
+    <!-- translate <TEI:listBibl> to MEI namespace -->
+    
+    <xsl:template match="t:bibl">
+        <bibl>
+            <xsl:apply-templates select="@*[name()!='type']"/>
             <xsl:choose>
-                <xsl:when test=".='Journal Article' or .='Journal article'">
-                    <xsl:attribute name="type">Journal_article</xsl:attribute>
+                <xsl:when test="contains(@type,'etter')">
+                    <genre>letter</genre>
                 </xsl:when>
-                <xsl:when test=".='Diary Entry' or .='Diary entry'">
-                    <xsl:attribute name="type">Diary_entry</xsl:attribute>
+                <xsl:when test="contains(@type,'iary')">
+                    <genre>diary entry</genre>
+                    <creation>
+                        <xsl:apply-templates select="t:date"/>
+                        <xsl:apply-templates select="t:geogName"/>
+                    </creation>
                 </xsl:when>
-                <xsl:when test=".='Article in Book' or .='Article in book'">
-                    <xsl:attribute name="type">Article_in_book</xsl:attribute>
+                <xsl:when test="contains(@type,'ournal')">
+                    <genre>article</genre>
+                    <genre>journal</genre>
+                </xsl:when>
+                <xsl:when test="contains(@type,'ewspaper')">
+                    <genre>article</genre>
+                    <genre>newspaper</genre>
+                </xsl:when>
+                <xsl:when test="contains(@type,'rticle in')">
+                    <genre>article</genre>
+                    <genre>book</genre>
+                </xsl:when>
+                <xsl:when test="contains(@type,'resource')">
+                    <genre>web site</genre>
+                </xsl:when>
+                <xsl:when test="contains(@type,'rogramme')">
+                    <genre>concert programme</genre>
+                </xsl:when>
+                <xsl:when test="contains(@type,'onograph')">
+                    <genre>book</genre>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:attribute name="type"><xsl:value-of select="."/></xsl:attribute>
+                    <genre><xsl:value-of select="@type"/></genre>
                 </xsl:otherwise>
             </xsl:choose>
+            <xsl:apply-templates select="t:author|t:name|t:editor|t:title"/>
+            <xsl:choose>
+                <xsl:when test="contains(@type,'etter') or contains(@type,'iary')">
+                    <creation>
+                        <xsl:apply-templates select="t:date"/>
+                        <xsl:apply-templates select="t:geogName"/>
+                    </creation>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:if test="t:date/text() or t:publisher/text() or t:pubPlace/text()">
+                        <imprint>
+                            <xsl:apply-templates select="t:date"/>
+                            <xsl:apply-templates select="t:pubPlace"/>
+                            <xsl:apply-templates select="t:publisher"/>
+                        </imprint>
+                    </xsl:if>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:apply-templates select="t:note|t:ref"/>
+        </bibl>
+    </xsl:template>
+
+    <xsl:template match="t:author">
+        <creator><xsl:apply-templates/></creator>
+    </xsl:template>
+
+    <xsl:template match="t:name[@role='recipient']">
+        <recipient><xsl:apply-templates/></recipient>
+    </xsl:template>
+
+    <xsl:template match="t:editor">
+        <xsl:if test="text()">
+            <editor><xsl:apply-templates/></editor>
+        </xsl:if>
     </xsl:template>
     
-    <xsl:template match="t:biblScope/@type">
-        <xsl:choose>
-            <xsl:when test=".='pages'">
-                <xsl:attribute name="type">pp</xsl:attribute>
-            </xsl:when>
-            <xsl:when test=".='volume'">
-                <xsl:attribute name="type">vol</xsl:attribute>
-            </xsl:when>
-            <xsl:when test=".='number'">
-                <xsl:attribute name="type">issue</xsl:attribute>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:copy><xsl:value-of select="."/></xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>        
+    <xsl:template match="t:msIdentifier">
+        <physLoc>
+            <repository><xsl:value-of select="t:repository"/></repository>
+            <identifier><xsl:value-of select="t:idno"/></identifier>
+        </physLoc>
+    </xsl:template>
+
+    <xsl:template match="t:note">
+        <xsl:if test="text()">
+            <annot><xsl:apply-templates/></annot>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="t:ref">
+        <xsl:if test="@target!=''">
+            <ptr><xsl:attribute name="target" select="@target"/></ptr>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="t:ref[@type='editions' and //text()]">
+        <relatedItem rel="host">
+            <bibl>
+                <title><xsl:value-of select="t:bibl/t:title"/></title>
+                <xsl:apply-templates select="t:bibl/t:biblScope"/>
+            </bibl>
+        </relatedItem>
+    </xsl:template>
+    
+    <xsl:template match="t:biblScope">
+        <biblScope>
+            <xsl:choose>
+                <xsl:when test="@type='pages'">
+                    <xsl:attribute name="unit">pp</xsl:attribute>
+                </xsl:when>
+                <xsl:when test="@type='volume'">
+                    <xsl:attribute name="unit">vol</xsl:attribute>
+                </xsl:when>
+                <xsl:when test="@type='number'">
+                    <xsl:attribute name="unit">issue</xsl:attribute>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:if test="@type!=''">
+                        <xsl:attribute name="unit"><xsl:value-of select="@type"/></xsl:attribute>
+                    </xsl:if>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:apply-templates/>
+        </biblScope>
     </xsl:template>
     
     <xsl:template match="t:repository">
         <!-- some CNW-specific replacements ... -->
-        <repository xmlns="http://www.tei-c.org/ns/1.0">
+        <repository>
             <xsl:choose>
                 <xsl:when test="contains(.,'DK-K ')">
                     <xsl:value-of select="concat(substring-after(.,'DK-K '),', Copenhagen')"></xsl:value-of>
@@ -1168,6 +1212,13 @@
         </repository>
     </xsl:template>
     
+    <xsl:template match="t:*">
+        <xsl:element name="{local-name()}">
+            <xsl:apply-templates select="@*|node()"/>
+        </xsl:element>
+    </xsl:template>
+
+    <!-- end changing namespace -->
     
     <xsl:template match="m:filedesc/m:pubstmt/m:identifier">
         <identifier>
@@ -1210,35 +1261,14 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="m:date">
-        <xsl:apply-templates select="." mode="regularize">
-            <xsl:with-param name="isodate">isodate</xsl:with-param>
-            <xsl:with-param name="notbefore">notbefore</xsl:with-param>
-            <xsl:with-param name="notafter">notafter</xsl:with-param>
-            <xsl:with-param name="namespace">http://www.music-encoding.org/ns/mei</xsl:with-param>
-        </xsl:apply-templates>
-    </xsl:template>
-
-    <xsl:template match="t:date">
-        <xsl:apply-templates select="." mode="regularize">
-            <xsl:with-param name="isodate">when-iso</xsl:with-param>
-            <xsl:with-param name="notbefore">notBefore-iso</xsl:with-param>
-            <xsl:with-param name="notafter">notAfter-iso</xsl:with-param>
-            <xsl:with-param name="namespace">http://www.tei-c.org/ns/1.0</xsl:with-param>
-        </xsl:apply-templates>
-    </xsl:template>
-    
-    <xsl:template match="m:date|t:date" mode="regularize">
-        <xsl:param name="isodate"/>
-        <xsl:param name="notbefore"/>
-        <xsl:param name="notafter"/>
-        <xsl:param name="namespace"/>
-        <xsl:element name="date" namespace="{$namespace}">
+    <xsl:template match="m:date|t:date">
+        <!-- TEI dates are moved to MEI namespace -->
+        <date>
             <xsl:variable name="datestring" select="."/>
             <!-- try to fill in @isodate or @notbefore/@notafter -->
             <xsl:choose>
                 <xsl:when test="$datestring castable as xs:date">
-                    <xsl:attribute name="{$isodate}"><xsl:value-of select="."/></xsl:attribute>
+                    <xsl:attribute name="isodate"><xsl:value-of select="."/></xsl:attribute>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:variable name="datepieces" select="tokenize(normalize-space($datestring),'-')"/>
@@ -1254,7 +1284,7 @@
                                             <xsl:choose>
                                                 <xsl:when test="$datepieces[3]='??'">
                                                     <!-- YYYY-MM-??: one month -->
-                                                    <xsl:attribute name="{$isodate}" select="concat($datepieces[1],'-',$datepieces[2])"/>
+                                                    <xsl:attribute name="isodate" select="concat($datepieces[1],'-',$datepieces[2])"/>
                                                     <!--
                                                     <xsl:attribute name="{$notbefore}" select="xs:date(concat($datepieces[1],'-',$datepieces[2],'-01'))"/>
                                                     <xsl:attribute name="{$notafter}" select="xs:date(concat($datepieces[1],'-',$datepieces[2],'-',$days_in_month[xs:integer($datepieces[2])]))"/>
@@ -1265,7 +1295,7 @@
                                         <xsl:otherwise>
                                             <xsl:if test="$datepieces[2]='??'">
                                                 <!-- YYYY-??-??: one year -->
-                                                <xsl:attribute name="{$isodate}" select="$datepieces[1]"/>
+                                                <xsl:attribute name="isodate" select="$datepieces[1]"/>
                                                 <!-- 
                                                 <xsl:attribute name="{$notbefore}" select="xs:date(concat($datepieces[1],'-01-01'))"/>
                                                 <xsl:attribute name="{$notafter}" select="xs:date(concat($datepieces[1],'-12-31'))"/>
@@ -1279,8 +1309,8 @@
                                     <xsl:choose>
                                         <xsl:when test="$datepieces[2] castable as xs:integer and string-length($datepieces[2])=4">
                                             <!-- YYYY-YYYY: use year range -->
-                                            <xsl:attribute name="{$notbefore}" select="$datepieces[1]"/>
-                                            <xsl:attribute name="{$notafter}" select="$datepieces[2]"/>
+                                            <xsl:attribute name="notbefore" select="$datepieces[1]"/>
+                                            <xsl:attribute name="notafter" select="$datepieces[2]"/>
                                             <!--
                                             <xsl:attribute name="{$notbefore}" select="xs:date(concat($datepieces[1],'-01-01'))"/>
                                             <xsl:attribute name="{$notafter}" select="xs:date(concat($datepieces[2],'-12-31'))"/>
@@ -1289,8 +1319,8 @@
                                         <xsl:when test="$datepieces[2] castable as xs:integer and string-length($datepieces[2])=2">
                                             <xsl:if test="xs:integer(substring($datepieces[1],3,2)) &lt; xs:integer($datepieces[2])">
                                                 <!-- YYYY-YY: use year range -->
-                                                <xsl:attribute name="{$notbefore}" select="$datepieces[1]"/>
-                                                <xsl:attribute name="{$notafter}" select="concat(substring($datepieces[1],1,2),$datepieces[2])"/>
+                                                <xsl:attribute name="notbefore" select="$datepieces[1]"/>
+                                                <xsl:attribute name="notafter" select="concat(substring($datepieces[1],1,2),$datepieces[2])"/>
                                                 <!--
                                                 <xsl:attribute name="{$notbefore}" select="xs:date(concat($datepieces[1],'-01-01'))"/>
                                                 <xsl:attribute name="{$notafter}" select="xs:date(concat(substring($datepieces[1],1,2),$datepieces[2],'-12-31'))"/>
@@ -1303,15 +1333,15 @@
                                     <xsl:choose>
                                         <xsl:when test="number($datepieces[1]) and string-length(normalize-space($datepieces[1]))=4">
                                             <!-- YYYY: use one year -->
-                                            <xsl:attribute name="{$isodate}" select="normalize-space($datepieces[1])"/>
+                                            <xsl:attribute name="isodate" select="normalize-space($datepieces[1])"/>
                                             <!--
                                             <xsl:attribute name="{$notbefore}" select="xs:date(concat(normalize-space($datepieces[1]),'-01-01'))"/>
                                             <xsl:attribute name="{$notafter}" select="xs:date(concat(normalize-space($datepieces[1]),'-12-31'))"/>
                                             -->
                                         </xsl:when>
                                         <xsl:otherwise>
-                                            <xsl:attribute name="{$notbefore}" select="''"/>
-                                            <xsl:attribute name="{$notafter}" select="''"/>
+                                            <xsl:attribute name="notbefore" select="''"/>
+                                            <xsl:attribute name="notafter" select="''"/>
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:otherwise>
@@ -1320,7 +1350,7 @@
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:value-of select="."/>
-        </xsl:element>
+        </date>
     </xsl:template>
     
     <!-- CAUTION! THIS DELETES ALL CONTENTS IN <music>! -->
