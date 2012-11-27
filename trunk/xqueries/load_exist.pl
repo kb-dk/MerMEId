@@ -63,41 +63,48 @@ if(open FIND,$files) {
 	chomp $file;
 	print STDERR "$file\n";
 
+	my $content = "";
 	if (open CONTENT,"<$file") {
-	    my $content = "";
 	    while(my $line = <CONTENT>) {
 		$content .= $line;
 	    }
+	    close CONTENT;
+	}
 
-	    $file =~ s/$source/$target/;
-	    my $req_uri = $scheme . $host_port . $context . $file;
-	    print STDERR $req_uri . "\n";
+	my $localcopy = $file;
+	$file =~ s/$source/$target/;
+	my $req_uri = $scheme . $host_port . $context . $file;
+	print STDERR $req_uri . "\n";
 
 # Create a request
 
-	    my $req = new HTTP::Request();
-	    $req->uri($req_uri);
-	    if($load) {
-		$req->method("PUT");
-		$req->content($content);
-	    } elsif($delete) {
-		$req->method("DELETE");
-	    } else {
-		$req->method("GET");
-	    }
-	    $req->header( "Contnent-Type" => $suffixes{$suffix} );
+	my $req = new HTTP::Request();
+	$req->uri($req_uri);
+	if($load) {
+	    $req->method("PUT");
+	    $req->content($content);
+	} elsif($delete) {
+	    $req->method("DELETE");
+	} else {
+	    $req->method("GET");
+	}
+	$req->header( "Content-Type" => $suffixes{$suffix} );
 
 # Pass request to the user agent and get a response back
-	    my $res = $ua->request($req);
+	my $res = $ua->request($req);
 
 ## Check the outcome of the response
-	    if ($res->is_success) {
-		print STDERR "Success ", $res->status_line, "\n";
-	    } else {
-		print STDERR "Failure ", $res->status_line, "\n";
+	if ($res->is_success) {
+	    print STDERR "Success ", $res->status_line, "\n";
+	    if($get) {
+		if (open CONTENT,">$localcopy") {
+		    print CONTENT $res->content();
+		}
 	    }
-	    close CONTENT;
+	} else {
+	    print STDERR "Failure ", $res->status_line, "\n";
 	}
+
     }
 }
 
