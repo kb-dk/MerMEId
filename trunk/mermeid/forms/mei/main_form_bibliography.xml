@@ -30,8 +30,9 @@
         <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl" 
           id="ref-type-menu-repeat">
           <xf:trigger submission="replace-form-with" appearance="minimal" class="non-standard_trigger">
-            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/>
-              <xf:output value="if (m:genre[2]!='') then concat('(',m:genre[2],')') else ''"></xf:output>
+            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output 
+              value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
+                value="if (m:genre[2]!='') then concat(', ',m:genre[2]) else ''"></xf:output>
             </xf:label>
             <xf:action ev:event="DOMActivate">
               <xf:toggle case="hide_ref_types"/>
@@ -147,12 +148,9 @@
                     <dcm:id ref="."/>
                     <dcm:attribute-editor ref="."/>
                     &#160;
-                    <xf:repeat nodeset="m:genre">
-                      <xf:output value="if (position()=2) then ' (' else ''"/>
-                      <xf:output value="concat(translate(substring(.,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(.,2))"/>&#160;
-                      <xf:output value="if (position()&gt;1 and position()!=last()) then ', ' else ''"/>
-                      <xf:output value="if (position()&gt;1 and position()=last()) then ')' else ''"/>
-                    </xf:repeat>
+                    <xf:repeat nodeset="m:genre"><xf:output 
+                      value="if (position()&gt;1) then ', ' else ''"/>
+                      <xf:output value="concat(translate(substring(.,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(.,2))"/></xf:repeat>
                   </h:td>
                   <h:td>  
                     <xf:repeat nodeset="m:creator"><xf:output 

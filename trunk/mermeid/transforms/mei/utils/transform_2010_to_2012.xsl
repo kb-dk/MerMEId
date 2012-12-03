@@ -823,6 +823,7 @@
         </event>
     </xsl:template>
         
+      
     <xsl:template match="m:event/m:title">
         <title>
             <xsl:apply-templates select="@*"/>
@@ -888,7 +889,7 @@
     </xsl:template>
     
     <xsl:template match="m:staffdef" mode="instrVoice">
-            <instrVoice>
+        <instrVoice>
                 <xsl:choose>
                     <xsl:when test="contains(parent::node()/@label.full,'Soloists')">
                         <xsl:attribute name="solo">true</xsl:attribute>
@@ -903,7 +904,7 @@
                 <xsl:variable name="instrString" select="normalize-space(concat(@label.abbr,' ',@label.full))"/>
                 <xsl:variable name="instrCount">
                     <xsl:call-template name="instrNumber">
-                        <xsl:with-param name="input" select="$instrString"></xsl:with-param>
+                        <xsl:with-param name="input" select="$instrString"/>
                     </xsl:call-template>
                 </xsl:variable>    
                 <xsl:attribute name="count">
@@ -913,9 +914,9 @@
                     </xsl:choose>
                 </xsl:attribute>
                 <xsl:call-template name="instrName">
-                    <xsl:with-param name="input" select="$instrString"></xsl:with-param>
+                    <xsl:with-param name="input" select="$instrString"/>
                 </xsl:call-template>
-            </instrVoice>
+        </instrVoice>
     </xsl:template>
     
     <xsl:template name="instrNumber">
@@ -1072,7 +1073,7 @@
     
     <xsl:template match="t:bibl">
         <bibl>
-            <xsl:apply-templates select="@*[name()!='type']"/>
+            <xsl:copy-of select="@*[name(.)!='type']"/>
             <xsl:choose>
                 <xsl:when test="contains(@type,'etter')">
                     <genre>letter</genre>
@@ -1127,7 +1128,7 @@
                     </xsl:if>
                 </xsl:otherwise>
             </xsl:choose>
-            <xsl:apply-templates select="t:note|t:ref"/>
+            <xsl:apply-templates select="t:biblScope|t:msIdentifier|t:note|t:ref"/>
         </bibl>
     </xsl:template>
 
@@ -1177,7 +1178,7 @@
         <biblScope>
             <xsl:choose>
                 <xsl:when test="@type='pages'">
-                    <xsl:attribute name="unit">pp</xsl:attribute>
+                    <xsl:attribute name="unit">page</xsl:attribute>
                 </xsl:when>
                 <xsl:when test="@type='volume'">
                     <xsl:attribute name="unit">vol</xsl:attribute>

@@ -5,7 +5,7 @@
     xmlns:xl="http://www.w3.org/1999/xlink" 
     xmlns:m="http://www.music-encoding.org/ns/mei" 
     xmlns:t="http://www.tei-c.org/ns/1.0" 
-    exclude-result-prefixes="m xsl"
+    exclude-result-prefixes="t m xsl"
     version="2.0">
     
     <xsl:template match="@*|*">
@@ -50,9 +50,9 @@
         <xsl:if test="contains($input,'brass')">of</xsl:if>
         <xsl:if test="contains($input,'timp.') or contains($input,'timpani')">pa</xsl:if>
         <xsl:if test="contains($input,'xyl')">pb</xsl:if>
-        <xsl:if test="contains($input,'tamb') or contains($input,'flute')">pd</xsl:if>
+        <xsl:if test="contains($input,'tamb') or contains($input,'gr.c.')">pd</xsl:if>
         <xsl:if test="contains($input,'perc')">pn</xsl:if>
-        <xsl:if test="contains($input,'ptti')">pz</xsl:if>
+        <xsl:if test="contains($input,'ptti') or contains($input,'trgl.') or contains($input,'cast.')">pz</xsl:if>
         <xsl:if test="contains($input,'vl.') or contains($input,'violin')">sa</xsl:if>
         <xsl:if test="contains($input,'vla.') or contains($input,'va.') or contains($input,'viola')">sb</xsl:if>
         <xsl:if test="contains($input,'vlc.') or contains($input,'vc.') or contains($input,'cello')">sc</xsl:if>

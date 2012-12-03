@@ -260,6 +260,37 @@
               <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
             </event>
           </eventList>
+          <eventList type="performances" xml:id="">
+            <event xml:id="">
+              <title xml:id=""/>
+              <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+              <geogName role="venue" xml:id=""/>
+              <geogName role="place" xml:id=""/>
+              <corpName role="ensemble" xml:id=""/>
+              <persName role="conductor" xml:id=""/>
+              <biblList xml:id="">
+                <head>Reviews</head>
+                <bibl xml:id="">
+                  <genre>article</genre>
+                  <genre>journal</genre>
+                  <creator/>
+                  <date isodate="" notbefore="" notafter=""/>
+                  <title level="a"/>
+                  <title level="j"/>
+                  <editor/>
+                  <biblScope unit="vol"/>
+                  <biblScope unit="issue"/>
+                  <biblScope unit="page"/>
+                  <pubPlace/>
+                  <publisher/>
+                  <ptr target="" label=""/>
+                </bibl>
+              </biblList>
+              <biblList xml:id="">
+                <head>Evidence</head>
+              </biblList>
+            </event>
+          </eventList>
         </history>
         
         <langUsage>
@@ -274,6 +305,41 @@
         </biblList>
         <biblList>
           <head>Documentation</head>
+        </biblList>
+        <biblList>
+          <bibl xml:id="">
+            <genre/>
+            <creator/>
+            <creation>
+              <date isodate=""/>
+              <geogName/>
+            </creation>
+            <physLoc>
+              <repository/>
+              <identifier/>
+            </physLoc>
+            <annot/>
+            <title level="a"/>
+            <title level="m"/>
+            <title level="s"/>
+            <title level="j"/>
+            <editor/>
+            <biblScope unit="vol"/>
+            <biblScope unit="issue"/>
+            <biblScope unit="page"/>
+            <imprint>
+              <date/>
+              <pubPlace/>
+              <publisher/>
+            </imprint>
+            <ptr target="" label=""/>
+            <relatedItem rel="host">
+              <bibl>
+                <title/>
+                <biblScope/>
+              </bibl>
+            </relatedItem>
+          </bibl>
         </biblList>
         
         <notesStmt>
@@ -297,6 +363,7 @@
 
         <expressionList>
           <expression xml:id="" analog="frbr:expression" n="">
+            <identifier type=""/>
             <titleStmt>
               <title xml:lang="en" xml:id=""/>
               <respStmt>
@@ -335,7 +402,7 @@
                       <biblScope type="pp"/>
                       <pubPlace/>
                       <publisher/>
-                      <ref target=""/>
+                      <ptr target=""/>
                     </bibl>
                   </listBibl>
                   <listBibl type="evidence" xmlns="http://www.tei-c.org/ns/1.0" xml:id=""/>

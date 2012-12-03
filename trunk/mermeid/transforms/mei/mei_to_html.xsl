@@ -325,9 +325,20 @@
 					<xsl:apply-templates select="m:tempo"/>
 				</xsl:with-param>
 			</xsl:apply-templates>
-
+			
+			<xsl:if test="m:identifier/text()">
+				<p>
+					<xsl:for-each select="m:identifier[text()]">
+						<xsl:value-of select="concat(@type,' ',.)"/>
+						<xsl:if test="position()&lt;last()">
+							<br/>
+						</xsl:if>
+					</xsl:for-each>
+				</p>
+			</xsl:if>
+			
 			<!-- performers -->
-			<xsl:apply-templates select="m:perfMedium[*//m:instrVoice/text()]"/>
+			<xsl:apply-templates select="m:perfMedium[*//text()]"/>
 
 			<!-- meter, key, incipit – only relevant at this level in single movement works -->
 			<xsl:apply-templates select="m:tempo[text()]"/>
@@ -875,7 +886,7 @@
 		<p>
 			<span class="label">Key: </span>
 			<xsl:value-of select="translate(@pname,'abcdefgh','ABCDEFGH')"/>
-			<xsl:if test="@accid">
+			<xsl:if test="@accid and @accid!='n'">
 				<xsl:call-template name="key_accidental">
 					<xsl:with-param name="attr" select="@accid"/>
 				</xsl:call-template>
@@ -919,8 +930,7 @@
 		<xsl:for-each select="m:instrumentation[*]">
 			<p>
 				<xsl:if test="position()=1 and $full">
-					<span class="label">Instrumentation: </span>
-					<br/>
+					<span class="label">Instrumentation: </span><br/>
 				</xsl:if>
 				<xsl:apply-templates select="m:instrVoiceGrp"/>
 				<xsl:apply-templates select="m:instrVoice[not(@solo='true')][text()]"/>

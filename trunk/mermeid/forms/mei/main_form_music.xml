@@ -78,6 +78,45 @@
 						</xf:group>
 					</xf:group>
 					
+					<xf:group ref=".[number($num_ex)&gt;1 or m:identifier[normalize-space(.)!='']]">
+						<h:div class="blocklabel">Identification</h:div>
+						<dcm:create 
+							nodeset="m:identifier"
+							label="Add identifier"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:identifier"/>
+						<xf:group ref="m:identifier">
+							<xf:group ref=".[number($num_ex)=1 and .!='']">
+								<h:a class="help_plain"><h:img src="http:/editor/images/warning.png" 
+									alt="warning"/><h:span class="comment">
+										When only one version is given, 
+										no version identifier should normally be entered.
+									</h:span></h:a>
+							</xf:group>
+							<h:div class="blocklabel">
+								<h:span class="fixed_width"> List name <h:a class="help">?<h:span class="comment">Name of a
+									list, catalogue or other numbering system identifying this version (e.g. "Opus",
+									"CNW", "BWV", "Neue Mozart-Ausgabe" etc.)
+								</h:span></h:a></h:span>
+								<h:span class="fixed_width"> No. <h:a class="help">?<h:span class="comment">The work's number or
+									signature in the list identifying it</h:span></h:a>
+								</h:span>
+							</h:div>
+						</xf:group>
+						<xf:repeat nodeset="m:identifier" id="work-id-repeat">
+							<h:div>					
+								<xf:input ref="@type" class="mediumshort"/>
+								<xf:input ref="." class="mediumshort"/>
+								<dcm:element-buttons 
+									triggers="add remove" 
+									nodeset="m:identifier" 
+									index="work-id-repeat"
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:identifier"/>
+								<dcm:attribute-editor ref="."/>
+							</h:div>
+						</xf:repeat>
+						
+					</xf:group>
+					
 					<h:fieldset>
 						<h:legend>Music metadata
 							<h:a class="help">?<h:span class="comment">Use at this level only with single-movement works, 

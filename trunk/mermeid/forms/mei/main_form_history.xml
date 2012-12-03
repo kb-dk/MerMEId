@@ -117,72 +117,67 @@
 			</h:fieldset>
 			
 			<!-- List work level performances -->
-			<!-- disabled 
-				<h:fieldset>
-				<h:legend>Performances
-				<dcm:attribute-editor ref="."/>
+			
+			<h:fieldset>
+				<h:legend>Performances (work) <h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
+					Listing performances of individual versions requires that versions  
+					have been defined (on the Music tab) and that they have been given a title 
+					in order to make them recognizable as versions.</h:span></h:a>
+					<dcm:attribute-editor ref="."/>
 				</h:legend>
-				<h:br/>
+				<h:div class="vertical_spacer"/> 
 				<dcm:create 
-				nodeset="m:eventList[@type='performances']"
-				label="Add performance"
-				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']"/>
+					nodeset="m:eventList[@type='performances']"
+					label="Add performance"
+					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']"/>
 				<dcm:create ref="m:eventList[@type='performances']" 
-				nodeset="m:event"
-				label="Add performance"
-				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+					nodeset="m:event"
+					label="Add performance"
+					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
 				<xf:group ref="m:eventList[@type='performances']">
-				<h:div class="strong">
-				Level: Work 
-				<h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
-				Listing performances of individual versions requires that versions  
-				have been defined (on the Music tab) and that they have been given a title 
-				in order to make them recognizable as versions.</h:span></h:a>
-				</h:div>
-				<h:br/>
-				<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
-				<xf:repeat nodeset="m:event" id="repeat-work-performance">
-				<h:tr class="hoverclass">
-				<h:td class="number_cell">
-				<xf:output value="position()"/>&#160;
-				</h:td>
-				<h:td>
-				<dcm:id ref="."/>&#160;
-				<xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
-				<xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
-				<xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
-				&#160;
-				</h:td>
-				<h:td>
-				<xf:group ref=".[instance('temp')/file_exists='true']">
-				<xf:trigger>
-				<xf:label><h:img src="http:/editor/images/edit.gif" title="Open performance editor"/> Edit</xf:label>
-				<xf:action ev:event="DOMActivate">
-				<xxf:variable name="uri" 
-				select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-performance.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
-				<xf:action if="instance('temp')/changed='true'">
-				<xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
-				<xxf:show dialog="exit-warning-dialog"/>
-				</xf:action>	
-				<xf:action if="instance('temp')/changed='false'">
-				<xf:load resource="{$uri}" show="replace"/>
-				</xf:action>
-				</xf:action>
-				</xf:trigger>
+					<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
+						<xf:repeat nodeset="m:event" id="repeat-work-performance">
+							<h:tr class="hoverclass">
+								<h:td class="number_cell">
+									<xf:output value="position()"/>&#160;
+								</h:td>
+								<h:td>
+									<dcm:id ref="."/>&#160;
+									<xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
+									<xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
+									<xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [Empty] </xf:group>
+									&#160;
+								</h:td>
+								<h:td>
+									<xf:group ref=".[instance('temp')/file_exists='true']">
+										<xf:trigger appearance="minimal">
+											<xf:label><h:img src="http:/editor/images/edit.gif" title="Open performance editor"/></xf:label>
+											<xf:action ev:event="DOMActivate">
+												<xxf:variable name="uri" 
+													select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-performance.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
+												<xf:action if="instance('temp')/changed='true'">
+													<xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+													<xxf:show dialog="exit-warning-dialog"/>
+												</xf:action>	
+												<xf:action if="instance('temp')/changed='false'">
+													<xf:load resource="{$uri}" show="replace"/>
+												</xf:action>
+											</xf:action>
+										</xf:trigger>
+									</xf:group>
+									<xf:group ref=".[instance('temp')/file_exists!='true']">
+										<h:small>File must be saved before performances can be edited</h:small>
+									</xf:group>
+								</h:td>
+								<h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add del-parent-with-last" nodeset="m:event" index="repeat-work-performance" 
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+									<dcm:attribute-editor ref="."/>
+								</h:td>
+							</h:tr>
+						</xf:repeat>
+					</h:table>
 				</xf:group>
-				<xf:group ref=".[instance('temp')/file_exists!='true']">
-				<h:small>File must be saved before performances can be edited</h:small>
-				</xf:group>
-				</h:td>
-				<h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add del-parent-with-last" nodeset="m:event" index="repeat-work-performance" 
-				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
-				<dcm:attribute-editor ref="."/>
-				</h:td>
-				</h:tr>
-				</xf:repeat>
-				</h:table>
-				</xf:group>
-				</h:fieldset>-->
+			</h:fieldset>
 			
 			
 		</xf:group> 
@@ -192,19 +187,16 @@
 				<h:fieldset>
 					<!-- get expression title -->
 					<xxf:variable name="title" select="m:titleStmt/m:title[1]"/>
-					<h:legend>Performances
+					<h:legend>Performances (version)
 						<xf:group ref=".[normalize-space($title)!='']">
 							<xf:output value="concat(' - ',$title)"/>
 						</xf:group>
+						<h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
+							Listing performances of individual versions requires that versions  
+							have been defined (on the Music tab) and that they have been given a title 
+							in order to make them recognizable as versions.</h:span></h:a>
 						<dcm:attribute-editor ref="m:history/m:eventList[@type='performances']"/>
 					</h:legend>
-					<!--<h:p class="blocklabel">
-						Level: Version 
-						<h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
-						Listing performances of individual versions requires that versions  
-						have been defined (on the Music tab) and that they have been given a title 
-						in order to make them recognizable as versions.</h:span></h:a>
-						</h:p>-->
 					<dcm:create nodeset="m:history"
 						label="Add performances"
 						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history"/>

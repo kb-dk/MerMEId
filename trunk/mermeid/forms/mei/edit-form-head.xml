@@ -88,9 +88,6 @@
     <xf:instance id="mei_attr_list" 
       src="/editor/forms/mei/model/MEI_attr_list.xml"/>
     
-    <xf:instance id="tei_attr_list" 
-      src="/editor/forms/mei/model/TEI_attr_list.xml"/>    
-    
     <xf:instance id="parameters" 
       xmlns="http://www.kb.dk/dcm"
       src="/editor/forms/mei/mermeid_configuration.xml"/>
@@ -229,7 +226,6 @@ xxf:password="{instance('parameters')/dcm:filter_password}"
   <xi:include href="includes/create.xbl" parse="xml"/>
   <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
   <xi:include href="includes/date_editor.xbl" parse="xml"/>
-  <xi:include href="includes/tei_date_editor.xbl" parse="xml"/>
   <xi:include href="includes/relator.xbl" parse="xml"/>
   <xi:include href="includes/performance_list.xbl" parse="xml"/>
   <xi:include href="includes/item.xbl" parse="xml"/>

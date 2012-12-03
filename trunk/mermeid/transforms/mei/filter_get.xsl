@@ -78,11 +78,12 @@
 		</xsl:element>
 	</xsl:template>    
 	
-	<xsl:template match="t:ref" mode="header">
-		<!-- TEI bibl elements are not included in the empty model, so special handling is needed -->
-		<xsl:element name="ref" namespace="{namespace-uri()}">
+	<xsl:template match="m:ptr" mode="header">
+		<!-- bibl elements are not included in the empty model, so special handling is needed -->
+		<xsl:element name="ptr" namespace="http://www.music-encoding.org/ns/mei">
 			<xsl:copy-of select="@*"/>
 			<xsl:if test="not(@target)"><xsl:attribute name="target"/></xsl:if>
+			<xsl:if test="not(@label)"><xsl:attribute name="label"/></xsl:if>
 			<xsl:apply-templates/>
 		</xsl:element>
 	</xsl:template>

@@ -41,9 +41,12 @@
         <xi:include href="includes/element_buttons.xbl" parse="xml"/>
         <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
         <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
-        <xi:include href="includes/tei_date_editor.xbl" parse="xml"/>
+        <xi:include href="includes/date_editor.xbl" parse="xml"/>
         <xi:include href="includes/id.xbl" parse="xml"/>
+        <xi:include href="includes/create.xbl" parse="xml"/>
         <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
+        <xi:include href="includes/bibl-input.xbl" parse="xml"/>
+        
     </h:head>
     
     <h:body class="bibliography" onload="initialize();">
@@ -88,33 +91,35 @@
                     </xf:trigger>
                 </h:div>
 
-                <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl/t:bibl[@xml:id=instance('temp')/id]">
+                <xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList/m:bibl[@xml:id=instance('temp')/id]">
                     <h:h3>
-                        <xf:repeat nodeset="t:author"><xf:output 
+                        <xf:repeat nodeset="m:creator"><xf:output 
                             value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
                             value="."/></xf:repeat><xf:output 
-                                value="if (normalize-space(t:author[1]) and not(normalize-space(t:name[@role='recipient']))) then ': ' else ''"/>
-                        <xf:output value="if (normalize-space(t:name[@role='recipient'])) then concat(' to ',t:name[@role='recipient']) else ''"/>
-                        <h:i><xf:output value="t:title[@level='a']"/></h:i><xf:output 
-                            value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='j'])) then concat('. ',t:title[@level='j']) else t:title[@level='j']"/>
-                        <xf:output value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='m'])) then concat('. ',t:title[@level='m']) else t:title[@level='m']"/>
-                        <xf:output value="if (normalize-space(t:date)) then concat('(',normalize-space(t:date),')') else ''"/>
-                        <xf:group ref=".[normalize-space(concat(t:author[1],t:name[@role='recipient'],t:title[@level='a'],t:title[@level='j'],t:title[@level='m'],t:date))='']"> [No description] </xf:group>
+                                value="if (normalize-space(m:creator[1]) and not(normalize-space(m:recipient))) then ': ' else ''"/>
+                        <xf:output value="if (normalize-space(m:recipient)) then concat(' to ',m:recipient) else ''"/>
+                        <h:i><xf:output value="m:title[@level='a']"/></h:i><xf:output 
+                            value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='j'])) then concat('. ',m:title[@level='j']) else m:title[@level='j']"/>
+                        <xf:output value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='m'])) then concat('. ',m:title[@level='m']) else m:title[@level='m']"/>
+                        <xf:output value="if (normalize-space(m:date)) then concat('(',normalize-space(m:date),')') else ''"/>
+                        <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient,m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:date))='']"> [No description] </xf:group>
                         <dcm:id ref="."/>
                         <dcm:attribute-editor ref="."/>
                     </h:h3>                
                     
                     <h:fieldset>
                         <h:legend>
-                            <xf:output value="translate(concat(translate(substring(@type,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(@type,2)),'_',' ')"/> 
+                            <xf:output 
+                                value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
+                                    value="if (m:genre[2]!='') then concat(', ',m:genre[2]) else ''"/>
                         </h:legend>
                         <h:div class="vertical_spacer"> </h:div>
-                        <xi:include href="includes/bibl-input.xml" parse="xml"/>
+                        <dcm:bibl-input/>
                     </h:fieldset>
-
+                    
                 </xf:group>
                 
-                <xf:group ref=".[not(instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/t:listBibl/t:bibl[@xml:id=instance('temp')/id])]">
+                <xf:group ref=".[not(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList/m:bibl[@xml:id=instance('temp')/id])]">
                     <h:h3>Item not found</h:h3>
                     <h:p>Did you remember to save your work before you opened the details editor?</h:p>
                     <h:p>Please click the "Discard" button to return to the list.</h:p>
