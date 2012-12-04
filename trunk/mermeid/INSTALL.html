@@ -521,10 +521,14 @@ xsltproc --stringparam base_uri http://mei.example.org/storage/dcm/ transforms/m
 if ! [ -d ./db/dcm ]; then
 mkdir -p ./db/dcm
 fi
-lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285256669.xml ./db/dcm/1285256669.xml
-lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285323711.xml ./db/dcm/1285323711.xml
-lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285750781.xml ./db/dcm/1285750781.xml
-lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1289382773.xml ./db/dcm/1289382773.xml
+lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285256669.xml \
+./db/dcm/1285256669.xml
+lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285323711.xml \
+./db/dcm/1285323711.xml
+lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285750781.xml \
+./db/dcm/1285750781.xml
+lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1289382773.xml \
+./db/dcm/1289382773.xml
 
 ...
 </pre>
