@@ -3,8 +3,8 @@
 	       xmlns:e="http://exist.sourceforge.net/NS/exist"
 	       version="1.0">
 
+  <xsl:param name="base_uri"  select="'http://kb-cop.kb.dk:8080/exist/rest'"/>
   <xsl:variable name="collection" select="/e:result/e:collection/@name" />
-  <xsl:variable name="host_port"  select="'http://kb-cop.kb.dk:8080/exist/rest'"/>
 
   <xsl:output encoding="UTF-8"
 	      method="text"/>
@@ -18,7 +18,7 @@ fi
 <xsl:for-each select="//e:resource">
 <xsl:sort select="@name"/>
 <xsl:value-of 
-select="concat('lwp-mirror ',$host_port,$collection,'/',@name,' .',
+select="concat('lwp-mirror ',$base_uri,$collection,'/',@name,' .',
 		  $collection,'/',@name)"/><xsl:text>
 </xsl:text></xsl:for-each>
 
