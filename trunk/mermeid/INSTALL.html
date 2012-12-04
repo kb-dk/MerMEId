@@ -484,8 +484,53 @@ ProxyPass /filter  "ajp://mei.example.org:8009/filter"
       <h2>8. Backup &amp; restore</h2>
 
       <p>At DCM we have eXist DB and its application server on a Linux machine
-      that are backup-ed regularly. In addition we take a backup using the admin client 
-      </p>
+      that are backup-ed regularly. In addition we take a backup of the
+      XML-files using the admin client. See Figure 4. It is also possible to
+      add the content of an entire directory to the database through the client.</p>
+
+      <p>We have some other simple tools:</p>
+
+      <ul>
+	<li>The load_exist.pl (see above)can be used to retrieve files as well
+	as storing them</li>
+
+	<li>
+	  <a
+	  href="transforms/mei/utils/backup_exist.xsl">transforms/mei/utils/backup_exist.xsl</a>
+	  can be used for making backup of a large number of files in a
+	  directory on eXist. It transforms an eXist directory listing into a
+	  shell script that uses lwp-mirror to mirror individual files. First
+	  generate the script
+
+	  <pre>
+xsltproc --stringparam base_uri http://mei.example.org/storage/dcm/ transforms/mei/utils/backup_exist.xsl http://distest.kb.dk/storage/dcm/  > backup.sh
+	  </pre>
+
+	  Then make it executable and run it
+
+	  <pre>
+	    chmod a+x backup.sh
+	    ./backup.sh
+	  </pre>
+
+	  The script contains code as below.
+
+<pre>
+#!/bin/sh
+
+if ! [ -d ./db/dcm ]; then
+mkdir -p ./db/dcm
+fi
+lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285256669.xml ./db/dcm/1285256669.xml
+lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285323711.xml ./db/dcm/1285323711.xml
+lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285750781.xml ./db/dcm/1285750781.xml
+lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1289382773.xml ./db/dcm/1289382773.xml
+
+...
+</pre>
+</li>
+
+      </ul>
 
     </div>
 
