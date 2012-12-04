@@ -18,7 +18,7 @@ fi
 <xsl:for-each select="//e:resource">
 <xsl:sort select="@name"/>
 <xsl:value-of 
-select="concat('lwp-request -m GET ',$host_port,$collection,'/',@name,' &gt; .',
+select="concat('lwp-mirror ',$host_port,$collection,'/',@name,' .',
 		  $collection,'/',@name)"/><xsl:text>
 </xsl:text></xsl:for-each>
 

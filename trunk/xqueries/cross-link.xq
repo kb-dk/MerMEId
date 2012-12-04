@@ -2,7 +2,9 @@ xquery version "1.0" encoding "UTF-8";
 
 (: Search the a mei document store and return the data as an atom feed :)
 
-import module namespace list="http://kb.dk/this/getlist-sources" at "./main_loop_sources.xqm";
+import module namespace source_list="http://kb.dk/this/getlist-sources" at
+"./main_loop_sources.xqm";
+import module namespace work_list="http://kb.dk/this/getlist" at "./main_loop.xqm";
 
 declare default element namespace "http://www.kb.dk/dcm";
 declare namespace transform="http://exist-db.org/xquery/transform";
@@ -22,7 +24,7 @@ declare variable $query    := request:get-parameter("query",    "");
 
 declare variable $document := request:get-parameter("document", "");
 
-
+declare variable $works    := request:get-parameter("get", "");
 
 declare variable $page     := 
                  request:get-parameter("page","1")          cast as xs:integer;
@@ -76,10 +78,14 @@ declare function app:opensearch-header($total as xs:integer,
 <fileList>
 {
   let $list := 
-	if($target) then
-	  list:get-reverse-links($target)
-	else
-	  list:getlist($coll,$query)
+	if($works) then
+          work_list:getlist($coll,$query)
+        else
+	  if($target) then
+	     source_list:get-reverse-links($target)
+	  else
+    	     source_list:getlist($coll,$query)
+
 
 
   let $intotal := fn:count($list/m:meiHead)
@@ -99,6 +105,6 @@ declare function app:opensearch-header($total as xs:integer,
      for $doc at $count in $list[position() = ($from to $to)]
         return
 	app:format-doc($doc)
-)
+     )
 }
 </fileList>

@@ -1,5 +1,6 @@
 #!/bin/sh
 
+#
 # A shell script that builds the distribution or installation package
 # 
 # ./build-distro.sh -f distro \
@@ -7,6 +8,9 @@
 #
 # -f is the filter config file to be used
 # -m is the mermeid config file to be used
+#
+# The strings distro, dev and test can currently be used, it is the last part
+# of the file names in the local_config directory.
 #
 
 while getopts "f:m:" flag
