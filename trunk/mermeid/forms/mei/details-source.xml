@@ -728,13 +728,9 @@
                                 <h:div>
                                     <dcm:create 
                                         nodeset="m:respStmt"
-                                        label="Add publication/creation"
-                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:respStmt"/>
-                                    <dcm:create ref="m:respStmt"
-                                        nodeset="m:corpName"
                                         label="Add publisher"
-                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:respStmt/m:corpName"/>
-                                    <xf:repeat nodeset="m:respStmt/m:corpName" id="repeat-respstmt-corpname">
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:publisher"/>
+                                    <xf:repeat nodeset="m:publisher" id="repeat-publisher">
                                         <xf:input ref="." class="mediumlong">
                                             <xf:label class="fixed_width">Publisher </xf:label>
                                         </xf:input>
@@ -742,17 +738,17 @@
                                         <dcm:attribute-editor/>
                                         <dcm:element-buttons
                                             triggers="remove" 
-                                            nodeset="m:corpName" 
-                                            index="repeat-respstmt-corpname"
-                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:respStmt/m:corpName"/>
+                                            nodeset="m:publisher" 
+                                            index="repeat-publisher"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:publisher"/>
                                     </xf:repeat>
                                 </h:div>
                                 <h:div>
                                     <dcm:create 
-                                        nodeset="m:geogName"
+                                        nodeset="m:pubPlace"
                                         label="Add place"
-                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:geogName"/>
-                                    <xf:repeat nodeset="m:geogName" id="repeat-geogname">
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:pubPlace"/>
+                                    <xf:repeat nodeset="m:geogName" id="repeat-pubPlace">
                                         <xf:input ref="." class="mediumlong">
                                             <xf:label class="fixed_width">Place </xf:label>
                                         </xf:input>
@@ -760,9 +756,9 @@
                                         <dcm:attribute-editor/>
                                         <dcm:element-buttons
                                             triggers="remove" 
-                                            nodeset="m:geogName" 
-                                            index="repeat-geogname"
-                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:geogName"/>
+                                            nodeset="m:pubPlace" 
+                                            index="repeat-pubPlace"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:pubPlace"/>
                                     </xf:repeat>
                                 </h:div>
                                 <dcm:create 

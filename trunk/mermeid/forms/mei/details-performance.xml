@@ -210,7 +210,43 @@
                                             <dcm:id/>
                                             <dcm:attribute-editor/>
                                         </h:legend>
-                                        <dcm:bibl-input/>                                        
+                                        <h:div class="vertical_spacer"/>
+                                        <!-- title header -->
+                                        <xf:repeat nodeset="m:creator"><xf:output 
+                                            value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
+                                                value="."/></xf:repeat><xf:output 
+                                                    value="if (normalize-space(m:creator[1]) and not(normalize-space(m:recipient))) then ': ' else ''"/>
+                                        <xf:output value="if (normalize-space(m:recipient)) then concat(' to ',m:recipient) else ''"/>
+                                        <h:i><xf:output value="m:title[@level='a']"/></h:i><xf:output 
+                                            value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='j'])) then concat('. ',m:title[@level='j']) else m:title[@level='j']"/>
+                                        <xf:output value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='m'])) then concat('. ',m:title[@level='m']) else m:title[@level='m']"/>
+                                        <xf:output value="if (normalize-space(m:imprint/m:date)) then concat('(',normalize-space(m:imprint/m:date),')') else ''"/>
+                                        <!-- end header -->
+                                        <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient[1],m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:imprint/m:date[1]))='']"> [No description] </xf:group>                           
+                                        <h:div class="vertical_spacer"/> 
+                                        <xf:switch>
+                                            <xf:case id="hide_review_reference">
+                                                <h:div>
+                                                    <xf:trigger>
+                                                        <xf:label>Show details</xf:label>
+                                                        <xf:action ev:event="DOMActivate">
+                                                            <xf:toggle case="show_review_reference"/>
+                                                        </xf:action>
+                                                    </xf:trigger>
+                                                </h:div>
+                                            </xf:case>
+                                            <xf:case id="show_review_reference">
+                                                <h:div>
+                                                    <xf:trigger>
+                                                        <xf:label>Hide details</xf:label>
+                                                        <xf:action ev:event="DOMActivate">
+                                                            <xf:toggle case="hide_review_reference"/>
+                                                        </xf:action>
+                                                    </xf:trigger>
+                                                </h:div>
+                                                <dcm:bibl-input/>
+                                            </xf:case>
+                                        </xf:switch>
                                     </h:fieldset>
                                 </xf:repeat>
                             </h:fieldset>
@@ -225,9 +261,6 @@
                                 
                                 <xf:group ref="m:biblList[m:head='Evidence']">
                                     <xf:group ref=".[not(m:bibl)]">
-                                        <!--<h:div>
-                                            [None]<h:br/>&#160;
-                                            </h:div>-->
                                         <xf:trigger class="create_button">
                                             <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> Add reference</xf:label>
                                             <xf:action ev:event="DOMActivate">
@@ -269,24 +302,30 @@
                                             <h:i><xf:output value="m:title[@level='a']"/></h:i><xf:output 
                                                 value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='j'])) then concat('. ',m:title[@level='j']) else m:title[@level='j']"/>
                                             <xf:output value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='m'])) then concat('. ',m:title[@level='m']) else m:title[@level='m']"/>
-                                            <xf:output value="if (normalize-space(m:date)) then concat('(',normalize-space(m:date),')') else ''"/>
+                                            <xf:output value="if (normalize-space(m:imprint/m:date)) then concat('(',normalize-space(m:imprint/m:date),')') else ''"/>
                                             <!-- end header -->
-                                            <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient,m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:date))='']"> [No description] </xf:group>                                            <xf:switch>
-                                                <xf:case id="hide_reference">
+                                            <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient[1],m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:imprint/m:date[1]))='']"> [No description] </xf:group>                           
+                                            <h:div class="vertical_spacer"/> 
+                                            <xf:switch>
+                                                <xf:case id="hide_evidence_reference">
+                                                    <h:div>
                                                         <xf:trigger>
                                                             <xf:label>Show details</xf:label>
                                                             <xf:action ev:event="DOMActivate">
-                                                                <xf:toggle case="show_reference"/>
+                                                                <xf:toggle case="show_evidence_reference"/>
                                                             </xf:action>
                                                         </xf:trigger>
+                                                    </h:div>
                                                 </xf:case>
-                                                <xf:case id="show_reference">
+                                                <xf:case id="show_evidence_reference">
+                                                    <h:div>
                                                         <xf:trigger>
                                                             <xf:label>Hide details</xf:label>
                                                             <xf:action ev:event="DOMActivate">
-                                                                <xf:toggle case="hide_reference"/>
+                                                                <xf:toggle case="hide_evidence_reference"/>
                                                             </xf:action>
                                                         </xf:trigger>
+                                                    </h:div>
                                                     <dcm:bibl-input/>
                                                 </xf:case>
                                             </xf:switch>

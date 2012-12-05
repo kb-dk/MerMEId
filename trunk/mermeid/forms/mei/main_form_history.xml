@@ -119,10 +119,9 @@
 			<!-- List work level performances -->
 			
 			<h:fieldset>
-				<h:legend>Performances (work) <h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
-					Listing performances of individual versions requires that versions  
-					have been defined (on the Music tab) and that they have been given a title 
-					in order to make them recognizable as versions.</h:span></h:a>
+				<h:legend>Performances (work) <h:a class="help">?<h:span class="comment">Performances 
+					may be listed at work level and at version level. 
+					Versions are defined on the Music tab.</h:span></h:a>
 					<dcm:attribute-editor ref="."/>
 				</h:legend>
 				<h:div class="vertical_spacer"/> 
@@ -192,9 +191,7 @@
 							<xf:output value="concat(' - ',$title)"/>
 						</xf:group>
 						<h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
-							Listing performances of individual versions requires that versions  
-							have been defined (on the Music tab) and that they have been given a title 
-							in order to make them recognizable as versions.</h:span></h:a>
+							Versions are defined on the Music tab.</h:span></h:a>
 						<dcm:attribute-editor ref="m:history/m:eventList[@type='performances']"/>
 					</h:legend>
 					<dcm:create nodeset="m:history"

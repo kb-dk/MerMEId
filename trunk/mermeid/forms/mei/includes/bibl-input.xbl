@@ -100,7 +100,7 @@
                                 </xf:repeat>
                             </h:fieldset>
 
-                            <xf:group ref="m:imprint/m:date[../m:genre='newspaper']">
+                            <xf:group ref="m:imprint/m:date[../../m:genre='newspaper']">
                                 <!-- newspaper article date here -->
                                 <h:div>
                                     <dcm:date-editor ref=".">
@@ -288,9 +288,14 @@
                                 <dcm:attribute-editor ref="m:recipient"/>
                                 <h:br clear="all"/>
                             </xf:group>
-                            <dcm:date-editor ref="m:date">
+                            <dcm:date-editor ref="m:creation/m:date">
                                 <xf:label class="fixed_width">Date </xf:label>
                             </dcm:date-editor>
+                            <h:div>
+                                <xf:input ref="m:creation/m:geogName">
+                                    <xf:label class="fixed_width">Place </xf:label>
+                                </xf:input>
+                            </h:div>
 
                             <h:fieldset>
                                 <h:legend>Location</h:legend>
