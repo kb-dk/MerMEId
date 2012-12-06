@@ -105,33 +105,6 @@
                         </h:legend>
                         <h:div class="vertical_spacer"> </h:div>
                         <h:div class="perf_body">
-                            <!-- input+select emulating selection="open" behaviour -->
-                            <h:span class="selection_open">
-                                <xf:input ref="m:title">
-                                    <xf:label class="fixed_width">Description <h:a class="help">?<h:span class="comment">Optional. 
-                                        Other values than the ones on the list may be entered, e.g. "First
-                                        known performance" or "First performance in Denmark"</h:span></h:a></xf:label>
-                                </xf:input>
-                                <!-- set tabindex to 1000 to skip the select on tabbing -->
-                                <xf:select1 ref="m:title" tabindex="1000">
-                                    <xf:item>
-                                        <xf:label> </xf:label>
-                                        <xf:value/>
-                                    </xf:item>
-                                    <xf:item>
-                                        <xf:value>First performance</xf:value>
-                                        <xf:label>First performance</xf:label>
-                                    </xf:item>
-                                    <xf:item>
-                                        <xf:value>First public performance</xf:value>
-                                        <xf:label>First public performance</xf:label>
-                                    </xf:item>
-                                </xf:select1>
-                            </h:span>
-                            <!-- end selection="open" -->
-                            <dcm:attribute-editor ref="m:title"/>
-                            
-                            <h:br clear="all"/>
                             <h:div>
                                 <dcm:date-editor ref="m:date">
                                     <xf:label class="fixed_width">Date</xf:label>
@@ -173,25 +146,38 @@
                                     <h:br/>
                                 </xf:repeat>
                             </h:div>
-
                             <h:br clear="all"/>
-                            
+                            <h:div class="blocklabel strong">Description <h:a class="help">?<h:span class="comment">
+                                An optional description of the event, e.g. "First performance in Denmark".</h:span></h:a></h:div>
+                            <dcm:create
+                                nodeset="m:p"
+                                label="Add description"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:p"/>
+                            <xf:repeat nodeset="m:p">
+                                <h:div>
+                                    <xf:textarea ref="." class="notes" mediatype="text/html">
+                                        <xf:label/>
+                                    </xf:textarea>
+                                    <dcm:attribute-editor/>
+                                </h:div>
+                            </xf:repeat>
+                            <h:br clear="all"/>
                             <!--<xf:select1 ref="@evidence" class="maxlong">
                                 <xf:label class="fixed_width">Evidence <h:a class="help">?<h:span class="comment">Pointer to a bibliographic 
-                                    reference serving as main evidence for this performance.<h:br/>
-                                    Go to the "Bibliography" tab to add references to the list.
+                                reference serving as main evidence for this performance.<h:br/>
+                                Go to the "Bibliography" tab to add references to the list.
                                 </h:span></h:a> </xf:label>
                                 <xf:item>
-                                    <xf:label/>
-                                    <xf:value/>
+                                <xf:label/>
+                                <xf:value/>
                                 </xf:item>
                                 <xf:itemset nodeset="/m:mei/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='bibliography']/m:biblList/m:bibl[*//text()]">
-                                    <xf:label><xf:output value="concat('[',translate(@type,'_',' '),'] ', m:creator,': ',m:recipient,' ',m:title[@level='a'],' ',m:title[@level='j'],' ',m:title[@level='m'],' ',m:date)"/></xf:label>
-                                    <xf:value ref="@xml:id"/>
+                                <xf:label><xf:output value="concat('[',translate(@type,'_',' '),'] ', m:creator,': ',m:recipient,' ',m:title[@level='a'],' ',m:title[@level='j'],' ',m:title[@level='m'],' ',m:date)"/></xf:label>
+                                <xf:value ref="@xml:id"/>
                                 </xf:itemset>
-                            </xf:select1>
-                            <h:br clear="all"/>-->
-
+                                </xf:select1>
+                                <h:br clear="all"/>-->
+                            
                             <h:fieldset>
                                 <h:legend>Reviews</h:legend>
                                 <h:div class="vertical_spacer"/>
@@ -250,8 +236,8 @@
                                     </h:fieldset>
                                 </xf:repeat>
                             </h:fieldset>
-   
-   
+                            
+                            
                             <h:fieldset>
                                 <h:legend>Evidence <h:a class="help">?<h:span class="comment">A list of references to bibliographic items 
                                     serving as evidence for this performance, such as concert programmes, announcements, or secondary literature</h:span></h:a></h:legend>
@@ -333,7 +319,7 @@
                                     </xf:repeat>
                                 </xf:group>
                                 
-
+                                
                                 <!-- reference types menu -->
                                 <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
                                     close="true" draggable="true" visible="false">
@@ -386,36 +372,36 @@
                                     </xf:group>
                                 </xxf:dialog>
                                 <!-- end menu -->
-
+                                
                                 <!-- reference types menu -->
-<!--                                <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
+                                <!--                                <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
                                     close="true" draggable="true" visible="false">
                                     <h:div class="blocklabel">Add new reference:</h:div>
                                     <h:br clear="all"/>
                                     <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList" id="ref-type-menu-listbibl-repeat">
-                                        <xf:repeat nodeset="m:bibl[not(@type=parent::node()/preceding-sibling::m:biblList/m:bibl/@type)]" id="ref-type-menu-bibl-repeat">
-                                            <xf:trigger submission="replace-form-with" appearance="minimal">
-                                                <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="translate(@type,'_',' ')"/></xf:label>
-                                                <xf:action ev:event="DOMActivate">
-                                                    <xf:message value="concat('title:',instance('data-instance')/m:meiHead/m:WorkDesc/m:work//m:event[@xml:id=instance('temp')/id]//text())"/>
-                                                    <xf:message value="concat('id:',instance('temp')/id)"/>
-                                                    <xf:toggle case="hide_ref_types"/>
-                                                    <xf:insert context="instance('data-instance')/m:meiHead/m:WorkDesc/m:work//m:event[@xml:id=instance('temp')/id]/m:biblList[m:head='Evidence']" 
-                                                        nodeset="m:bibl" 
-                                                        at="index('repeat-references')"
-                                                        position="after" 
-                                                        origin="instance('bibl-type-instance')/m:biblList[index('ref-type-menu-listbibl-repeat')]/m:bibl[not(@type=parent::node()/preceding-sibling::m:biblList/m:bibl/@type)][index('ref-type-menu-bibl-repeat')]"/>
-                                                    <xf:dispatch name="id-update" target="form-group"/>
-                                                    <xxf:hide dialog="add-ref-dialog"/>
-                                                </xf:action>
-                                            </xf:trigger>
-                                            <h:br clear="all"/>
-                                        </xf:repeat>
+                                    <xf:repeat nodeset="m:bibl[not(@type=parent::node()/preceding-sibling::m:biblList/m:bibl/@type)]" id="ref-type-menu-bibl-repeat">
+                                    <xf:trigger submission="replace-form-with" appearance="minimal">
+                                    <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="translate(@type,'_',' ')"/></xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                    <xf:message value="concat('title:',instance('data-instance')/m:meiHead/m:WorkDesc/m:work//m:event[@xml:id=instance('temp')/id]//text())"/>
+                                    <xf:message value="concat('id:',instance('temp')/id)"/>
+                                    <xf:toggle case="hide_ref_types"/>
+                                    <xf:insert context="instance('data-instance')/m:meiHead/m:WorkDesc/m:work//m:event[@xml:id=instance('temp')/id]/m:biblList[m:head='Evidence']" 
+                                    nodeset="m:bibl" 
+                                    at="index('repeat-references')"
+                                    position="after" 
+                                    origin="instance('bibl-type-instance')/m:biblList[index('ref-type-menu-listbibl-repeat')]/m:bibl[not(@type=parent::node()/preceding-sibling::m:biblList/m:bibl/@type)][index('ref-type-menu-bibl-repeat')]"/>
+                                    <xf:dispatch name="id-update" target="form-group"/>
+                                    <xxf:hide dialog="add-ref-dialog"/>
+                                    </xf:action>
+                                    </xf:trigger>
+                                    <h:br clear="all"/>
                                     </xf:repeat>
-                                </xxf:dialog>-->
+                                    </xf:repeat>
+                                    </xxf:dialog>-->
                                 <!-- end menu -->
                             </h:fieldset>
-                        
+                            
                         </h:div>
                     </h:fieldset>
                 </xf:group>
@@ -433,8 +419,8 @@
         
         <xi:include href="includes/code-inspector.xml" parse="xml"/>
         <h:br clear="all"/>        
-
+        
         <xi:include href="edit-form-footer.xml" parse="xml"/>
-
+        
     </h:body>
 </h:html>

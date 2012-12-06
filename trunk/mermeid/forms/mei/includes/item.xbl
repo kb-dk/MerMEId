@@ -60,7 +60,6 @@
                     <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
                 </xf:action>
                 
-                
             </xf:model>
         </xbl:implementation>
         <xbl:template>
@@ -80,12 +79,12 @@
                     </xxf:variable>
                     
                     <xf:group ref="$binding">
-                        <xf:input ref="m:titleStmt/m:title" class="maxlong">
-                            <xf:label class="fixed_width">Title <h:a class="help">?<h:span 
-                                class="comment">An optional heading identifying the item, e.g. "Score, 1st edition, Carl Nielsen's copy</h:span></h:a>
+                        <xf:input ref="@label" class="maxlong">
+                            <xf:label class="fixed_width">Label <h:a class="help">?<h:span 
+                                class="comment">An optional label for this item, e.g. "Carl Nielsen's copy"</h:span></h:a>
                             </xf:label>
                         </xf:input>
-                        <dcm:attribute-editor ref="m:titleStmt/m:title"/>
+                        <dcm:attribute-editor/>
                         
                         <!-- location -->
                         <h:div>
@@ -96,7 +95,7 @@
                             <xf:group ref="m:physDesc/m:physLoc">
                                 <dcm:create 
                                     nodeset="m:repository"
-                                    label="Add repository"
+                                    label="Add location"
                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository"/>
                                 <xf:repeat nodeset="m:repository" id="physdesc-physloc">
                                     <h:hr/>
@@ -139,7 +138,7 @@
                                             <!-- input/select emulating selection="open" behaviour -->
                                             <h:span class="selection_open_short">
                                                 <xf:input ref="@xl:title">
-                                                    <xf:label class="fixed_width">Resource type <h:a class="help">?<h:span class="comment">A descriptive label for the link to the resource. 
+                                                    <xf:label class="fixed_width">Label <h:a class="help">?<h:span class="comment">A descriptive label for the link to the resource. 
                                                         Select from list or enter a custom text.</h:span></h:a></xf:label>
                                                 </xf:input>
                                                 <!-- set tabindex to 1000 to skip the select on tabbing -->
@@ -166,34 +165,9 @@
                                             <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>
-                                    <!--
-                                        <xf:group ref="m:identifier[normalize-space(@analog)]">
-                                        <h:span class="blocklabel">Other identifiers <h:a class="help">?<h:span 
-                                        class="comment">Other identifiers than the repository's own shelf mark, 
-                                        e.g. RISM identifiers or other catalogue numbers identifying this specific item</h:span></h:a></h:span>
-                                        </xf:group>
-                                        <xf:repeat nodeset="m:identifier[normalize-space(@analog)]" id="physloc-identifier-repeat">
-                                        <xf:input ref="@analog">
-                                        <xf:label>Label <h:a class="help">?<h:span 
-                                        class="comment">The name of the catalogue or list identifying this 
-                                        specific item, e.g. "RISM" (but please note that RISM identifiers 
-                                        of printed sources should be entered under "Publication" at 
-                                        source level (above) rather than on individual copies)</h:span></h:a></xf:label>
-                                        </xf:input>
-                                        <xf:input ref="." class="mediumlong">
-                                        <xf:label> no. <h:a class="help">?<h:span 
-                                        class="comment">The item's number in the catalogue or list</h:span></h:a></xf:label>
-                                        </xf:input>
-                                        <dcm:element-buttons 
-                                        triggers="add delete" 
-                                        nodeset="m:identifier" 
-                                        index="physloc-identifier-repeat"
-                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:identifier[@analog][1]"/>
-                                        <dcm:attribute-editor ref="."/>
-                                        <h:br clear="all"/>
-                                        </xf:repeat>-->
                                 </xf:repeat>
                             </xf:group>
+                            <h:hr/>
                         </h:div>
                         
                         <!-- identifiers -->
@@ -278,7 +252,7 @@
                                                             nodeset="m:event" 
                                                             index="physdesc-provenance"
                                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>
-                                                        <dcm:attribute-editor ref="."/>
+                                                        <dcm:attribute-editor/>
                                                     </h:legend>
                                                     <h:div>
                                                         <dcm:date-editor ref="m:date">
@@ -286,10 +260,11 @@
                                                                 or date span of the event</h:span></h:a></xf:label>
                                                         </dcm:date-editor>
                                                     </h:div>
-                                                    <xf:input ref="m:title" class="maxlong">
-                                                        <xf:label class="fixed_width">Description <h:a class="help">?<h:span class="comment">Description of the event "Purchased by The Royal Library from John Doe"</h:span></h:a></xf:label>
+                                                    <xf:input ref="m:p" class="maxlong">
+                                                        <xf:label class="fixed_width">Description <h:a class="help">?<h:span class="comment">Description of the event,
+                                                            e.g. "Purchased by The Royal Library from John Doe"</h:span></h:a></xf:label>
                                                     </xf:input>
-                                                    <dcm:attribute-editor ref="m:title"/>
+                                                    <dcm:attribute-editor ref="m:p"/>
                                                 </h:fieldset>
                                             </xf:repeat>
                                         </xf:group> 
@@ -463,35 +438,6 @@
                                         </h:div>
                                     </h:fieldset>
                                 </xf:group>
-                                
-                                <h:fieldset>
-                                    <h:legend>Persons <h:a class="help">?<h:span class="comment">Lists persons with 
-                                        connection to this item, e.g. a former owner.  
-                                        Scribes are identified below under "List of hands" 
-                                        and should not be listed here.</h:span></h:a>
-                                        <dcm:attribute-editor ref="m:titleStmt/m:respStmt"/>
-                                    </h:legend>
-                                    <dcm:create ref="m:titleStmt"
-                                        nodeset="m:respStmt"
-                                        label="Add person"
-                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt"/>
-                                    <xf:group ref="m:titleStmt/m:respStmt">
-                                        <dcm:create 
-                                            nodeset="m:persName"
-                                            label="Add person"
-                                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt"/>
-                                        <xf:repeat nodeset="m:persName" id="repeat-component-respstmt-person">
-                                            <dcm:relator ref="."/>
-                                            <dcm:element-buttons 
-                                                triggers="add remove" 
-                                                nodeset="m:persName" 
-                                                index="repeat-component-respstmt-person"
-                                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
-                                            <dcm:attribute-editor ref="."/>
-                                            <h:br/>
-                                        </xf:repeat>
-                                    </xf:group>
-                                </h:fieldset>
                                 
                                 <h:span class="blocklabel">General description <h:a class="help">?<h:span class="comment">Text 
                                     describing or introducing to the item, its history, its significance etc.<br/>

@@ -226,6 +226,15 @@
             <xsl:apply-templates/>
         </publisher>
     </xsl:template>
+    
+    <xsl:template match="m:corpname[name(..)!='respstmt']">
+        <corpName>
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates/>
+        </corpName>
+    </xsl:template>
+    
+    
 
     <xsl:template match="m:pubstmt/m:geogname">
         <pubPlace>
@@ -319,23 +328,21 @@
             </physDesc>
             <xsl:apply-templates select="m:notesstmt|m:classification"/>
             <!-- add item level -->
+            <xsl:if test="m:physdesc/m:physloc//text() or m:physdesc/m:provenance//text() or m:physdesc/m:handlist//text()">
             <itemList>
                 <item>
-                    <titleStmt>
-                        <title/>
-                    </titleStmt>
                     <physDesc>
                         <condition/>
-                        <xsl:apply-templates select="m:physdesc/m:physloc"/>
                         <xsl:apply-templates select="m:physdesc/m:provenance"/>
                         <extent unit="pages"/>
                         <dimensions unit="cm"/>
                         <xsl:apply-templates select="m:physdesc/m:handlist"/>
                         <physMedium/>
                     </physDesc>
-                    <notesStmt/>
+                    <xsl:apply-templates select="m:physdesc/m:physloc"/>
                 </item>
             </itemList>
+            </xsl:if>
             <relationList>
                 <relation rel="isEmbodimentOf" target="#expression_1"/>
             </relationList>
@@ -383,21 +390,16 @@
                 </identifier>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:if test="normalize-space(.)">
-                    <identifier>
-                        <xsl:value-of select="."/>
-                    </identifier>
-                </xsl:if>
+                <identifier>
+                    <xsl:value-of select="."/>
+                </identifier>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
     <xsl:template match="m:provenance/m:eventlist/m:event">
         <event>
-            <title>
-                <xsl:value-of select="."/>
-            </title>
-            <!-- move dates from <event> to <date> -->
+            <!-- move date attributes from <event> to <date> -->
             <date>
                 <xsl:variable name="notbefore" select="normalize-space(@notbefore)"/>
                 <xsl:variable name="notafter" select="normalize-space(@notafter)"/>
@@ -464,6 +466,7 @@
             <geogName role=""/>
             <corpName role=""/>
             <persName role=""/>
+            <p><xsl:value-of select="."/></p>
         </event>
     </xsl:template>
 
@@ -641,12 +644,6 @@
                         <geogName/>
                     </creation>
                     <xsl:apply-templates select="m:creation/m:p[@type='note']"/>
-                    <eventList type="history">
-                        <event>
-                            <title/>
-                            <date/>
-                        </event>
-                    </eventList>
                 </history>
 
                 <xsl:apply-templates select="m:langusage"/>
@@ -694,16 +691,33 @@
                                 </xsl:choose>
                             </respStmt>
                         </titleStmt>
-                        <history>
-                            <creation>
-                                <date/>
-                                <geogName/>
-                            </creation>
-                            <p/>
-                            <eventList type="performances">
-                                <xsl:apply-templates select="m:eventlist/m:event"/>
-                            </eventList>
-                        </history>
+                        <incip>
+                            <incipText>
+                                <xsl:choose>
+                                    <xsl:when
+                                        test="$num_movements=1 and //m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p">
+                                        <xsl:apply-templates
+                                            select="//m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p"
+                                        />
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <p xml:lang="en"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </incipText>
+                            <xsl:choose>
+                                <xsl:when
+                                    test="$num_movements=1 and //m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr">
+                                    <xsl:apply-templates
+                                        select="//m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr"
+                                    />
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <graphic target="" xl:title="" targettype="lowres"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <score/>
+                        </incip>
                         <xsl:choose>
                             <!-- insert main key at top level only if there is no more than one "sub-work" -->
                             <xsl:when test="$num_subworks=1">
@@ -727,6 +741,16 @@
                                 <meter/>
                             </xsl:otherwise>
                         </xsl:choose>
+                        <history>
+                            <creation>
+                                <date/>
+                                <geogName/>
+                            </creation>
+                            <p/>
+                            <eventList type="performances">
+                                <xsl:apply-templates select="m:eventlist/m:event"/>
+                            </eventList>
+                        </history>
                         <perfMedium analog="marc:048">
                             <castList>
                                 <!-- list cast at top level if there is no more than one work component OR if instrumentation is indicated on first component only-->
@@ -789,33 +813,6 @@
                                 <term/>
                             </termList>
                         </classification>
-                        <incip>
-                            <incipText>
-                                <xsl:choose>
-                                    <xsl:when
-                                        test="$num_movements=1 and //m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p">
-                                        <xsl:apply-templates
-                                            select="//m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p"
-                                        />
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <p xml:lang="en"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </incipText>
-                            <xsl:choose>
-                                <xsl:when
-                                    test="$num_movements=1 and //m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr">
-                                    <xsl:apply-templates
-                                        select="//m:music/m:body/m:mdiv/m:score/m:section/m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr"
-                                    />
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <graphic target="" xl:title="" targettype="lowres"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            <score/>
-                        </incip>
                         <componentGrp>
                             <xsl:if test="$num_movements&gt;1 or $num_subworks&gt;1">
                                 <xsl:choose>
@@ -858,27 +855,25 @@
 
     <xsl:template match="m:profiledesc/m:eventlist/m:event">
         <event>
+            <xsl:apply-templates select="*[name(.)!='bibl' and name(.)!='title']"/>
             <xsl:choose>
                 <xsl:when test="m:title='Other performance'">
                     <!-- delete "Other performance" titles -->
-                    <title/>
                 </xsl:when>
                 <xsl:when test="m:title='First performance'">
                     <xsl:choose>
                         <xsl:when test="*[name(.)!='title']//text()">
-                            <xsl:apply-templates select="m:title"/>
+                            <p><xsl:value-of select="m:title"/>.</p>
                         </xsl:when>
                         <xsl:otherwise>
                             <!-- delete "First performance" titles if no other data on the event -->
-                            <title/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:apply-templates select="m:title"/>
+                    <p><xsl:value-of select="m:title"/></p>
                 </xsl:otherwise>
             </xsl:choose>
-            <xsl:apply-templates select="*[name(.)!='bibl' and name(.)!='title']"/>
             <xsl:if test="t:bibl[*//text()]">
                 <biblList>
                     <xsl:if test="not(@xml:id)">
@@ -892,17 +887,6 @@
                 </biblList>
             </xsl:if>
         </event>
-    </xsl:template>
-
-
-    <xsl:template match="m:event/m:title">
-        <title>
-            <xsl:apply-templates select="@*"/>
-            <!-- The title "Other performance" is removed -->
-            <xsl:if test=".!='Other performance'">
-                <xsl:value-of select="."/>
-            </xsl:if>
-        </title>
     </xsl:template>
 
     <xsl:template match="m:app/m:rdg[@type='metadata']" mode="TempoMeter">
@@ -1081,6 +1065,27 @@
                     </xsl:choose>
                 </respStmt>
             </titleStmt>
+            <incip>
+                <incipText>
+                    <xsl:choose>
+                        <xsl:when test="m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p">
+                            <xsl:apply-templates select="m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <p xml:lang="en"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </incipText>
+                <xsl:choose>
+                    <xsl:when test="m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr">
+                        <xsl:apply-templates select="m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <graphic target="" xl:title="" targettype="lowres"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <score/>
+            </incip>      
             <xsl:choose>
                 <!-- insert main key at this level if there is more than one "sub-work" or movements-->
                 <xsl:when test="$num_subworks&gt;1 or $num_movements&gt;1">
@@ -1132,27 +1137,6 @@
                     </xsl:if>
                 </instrumentation>
             </perfMedium>
-            <incip>
-                <incipText>
-                    <xsl:choose>
-                        <xsl:when test="m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p">
-                            <xsl:apply-templates select="m:app/m:rdg[@type='incipit']/m:div[@type='text_incipit']/m:p"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <p xml:lang="en"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </incipText>
-                <xsl:choose>
-                    <xsl:when test="m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr">
-                        <xsl:apply-templates select="m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <graphic target="" xl:title="" targettype="lowres"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-                <score/>
-            </incip>
             <componentGrp>
                 <!-- dig one expression level deeper if we are at sub-work level (i.e. if context is m:score) -->
                 <xsl:apply-templates select="m:section" mode="expression"/>

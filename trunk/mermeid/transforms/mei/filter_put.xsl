@@ -48,7 +48,7 @@
   
   <!-- Remove empty attributes -->
   <xsl:template match="m:identifier/@type|@unit|@pname|@accid|@mode|@count|@sym|@code|@solo|
-    @n|@evidence|@target|@targettype|
+    @n|@evidence|@target|@targettype|@resp|
     @notbefore|@notafter|@reg|@isodate|@startdate|@enddate|@notAfter-iso|@notBefore-iso|@when-iso|
     @xml:lang">
     <xsl:if test="normalize-space(.)">

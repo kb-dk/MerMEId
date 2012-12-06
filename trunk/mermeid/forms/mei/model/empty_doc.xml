@@ -92,9 +92,6 @@
           <itemList>
             <item label="" target="" xml:id="">
               <identifier type=""/>
-              <titleStmt>
-                <title xml:id=""/>
-              </titleStmt>
               <pubStmt>
                 <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
               </pubStmt>
@@ -113,7 +110,7 @@
                 <provenance>
                   <eventList xml:id="">
                     <event xml:id="" evidence="">
-                      <title xml:id=""/>
+                      <p xml:id=""/>
                       <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
                       <geogName role="" xml:id=""/>
                       <corpName role="" xml:id=""/>
@@ -138,9 +135,6 @@
               </notesStmt>
               <componentGrp>
                 <item label="" target="" xml:id="" >
-                  <titleStmt>
-                    <title xml:id=""/>
-                  </titleStmt>
                   <pubStmt>
                     <respStmt>
                       <corpName role="publisher" xml:id=""/>
@@ -164,11 +158,11 @@
                     <provenance>
                       <eventList xml:id="">
                         <event xml:id="" evidence="">
-                          <title xml:id=""/>
                           <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
                           <geogName role="" xml:id=""/>
                           <corpName role="" xml:id=""/>
                           <persName role="" xml:id=""/>
+                          <p/>
                         </event>
                       </eventList>
                     </provenance>
@@ -256,18 +250,18 @@
           <p/>
           <eventList type="history" xml:id="">
             <event evidence="" xml:id="">
-              <title xml:id=""/>
               <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+              <p xml:id=""/>
             </event>
           </eventList>
           <eventList type="performances" xml:id="">
             <event xml:id="">
-              <title xml:id=""/>
               <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
               <geogName role="venue" xml:id=""/>
               <geogName role="place" xml:id=""/>
               <corpName role="ensemble" xml:id=""/>
               <persName role="conductor" xml:id=""/>
+              <p xml:id=""/>
               <biblList xml:id="">
                 <head>Reviews</head>
                 <bibl xml:id="">
@@ -370,6 +364,17 @@
                 <persName role="" xml:id=""/>
               </respStmt>
             </titleStmt>
+            <incip xml:id="">     
+              <incipText xml:id=""> 
+                <p xml:lang="en"/>
+              </incipText>
+              <graphic target="" xl:title="" targettype="lowres" xml:id=""/>
+              <incipCode analog=""/>
+              <score xml:id=""/>
+            </incip>
+            <key pname="" accid="" mode=""/>
+            <tempo/>
+            <meter count="" unit="" sym=""/>
             <history xml:id="">
               <creation xml:id="">
                 <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
@@ -378,40 +383,42 @@
               <p/>
               <eventList type="history" xml:id="">
                 <event xml:id="">
-                  <title xml:id=""/>
                   <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+                  <p xml:id=""/>
                 </event>
               </eventList>
               <eventList type="performances" xml:id="">
                 <event xml:id="">
-                  <title xml:id=""/>
                   <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
                   <geogName role="venue" xml:id=""/>
                   <geogName role="place" xml:id=""/>
                   <corpName role="ensemble" xml:id=""/>
                   <persName role="conductor" xml:id=""/>
-                  <listBibl type="reviews" xmlns="http://www.tei-c.org/ns/1.0" xml:id="">
-                    <bibl type="Journal_article" xml:id="">
-                      <author/>
-                      <date when-iso="" notBefore-iso="" notAfter-iso=""/>
+                  <p xml:id=""/>
+                  <biblList xml:id="">
+                    <head>Reviews</head>
+                    <bibl xml:id="">
+                      <genre>article</genre>
+                      <genre>journal</genre>
+                      <creator/>
+                      <date isodate="" notbefore="" notafter=""/>
                       <title level="a"/>
                       <title level="j"/>
                       <editor/>
-                      <biblScope type="vol"/>
-                      <biblScope type="issue"/>
-                      <biblScope type="pp"/>
+                      <biblScope unit="vol"/>
+                      <biblScope unit="issue"/>
+                      <biblScope unit="page"/>
                       <pubPlace/>
                       <publisher/>
-                      <ptr target=""/>
+                      <ptr target="" label=""/>
                     </bibl>
-                  </listBibl>
-                  <listBibl type="evidence" xmlns="http://www.tei-c.org/ns/1.0" xml:id=""/>
+                  </biblList>
+                  <biblList xml:id="">
+                    <head>Evidence</head>
+                  </biblList>
                 </event>
               </eventList>
             </history>
-            <key pname="" accid="" mode=""/>
-            <tempo/>
-            <meter count="" unit="" sym=""/>
             <perfMedium analog="marc:048" authority="marcmusperf" xml:id="">
               <castList>
                 <castItem xml:id="" n="">
@@ -435,15 +442,6 @@
                 <term/>
               </termList>
             </classification>
-            
-            <incip xml:id="">     
-              <incipText xml:id=""> 
-                <p xml:lang="en"/>
-              </incipText>
-              <graphic target="" xl:title="" targettype="lowres" xml:id=""/>
-              <incipCode analog=""/>
-              <score xml:id=""/>
-            </incip>
             
             <!-- top-level components -->            
             <componentGrp>
