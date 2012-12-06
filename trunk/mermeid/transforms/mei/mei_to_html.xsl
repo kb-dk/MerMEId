@@ -1532,7 +1532,7 @@ The Royal Library, Copenhagen
     </xsl:if>
 
     <xsl:for-each select="m:titlePage[//text()]">
-      <p>
+      <div>
 	<xsl:if test="not(@label) or @label=''">Title page</xsl:if>
 	<xsl:apply-templates select="@label"/>
 	<xsl:text>: </xsl:text>
@@ -1543,7 +1543,7 @@ The Royal Library, Copenhagen
 	</xsl:for-each>
 	<xsl:text>
 	</xsl:text>
-      </p>
+      </div>
     </xsl:for-each>
 
     <xsl:for-each select="m:plateNum[text()]">
