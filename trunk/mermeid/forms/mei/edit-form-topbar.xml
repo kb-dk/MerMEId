@@ -224,6 +224,7 @@
   <!-- Dialog for editing session settings and opening standard (template) data editors -->
   <xxf:dialog id="settings-dialog" appearance="full" level="modal">
     <xf:label>MerMEId settings</xf:label>
+    <!-- to be implemented
     <xf:trigger appearance="minimal">
       <xf:label><h:img src="http:/editor/images/expand.png" title="Edit"/> Edit standard bibliographic references <h:a class="help">?<h:span class="comment">For each 
       file collection (series), a list of frequently used bibliographic references may be available when adding
@@ -235,61 +236,69 @@
       </xf:action>
     </xf:trigger>
     <h:br/>
-<!--    <xf:trigger appearance="minimal">
+    -->
+    <!--    
+      <xf:trigger appearance="minimal">
       <xf:label><h:img src="http:/editor/images/expand.png" title="Edit"/> Edit standard instrumentations <h:a class="help">?<h:span 
-        class="comment">Edit the standard ensembles and instrument groups available when adding new instruments 
-        at the "Music" tab.</h:span></h:a></xf:label>
+      class="comment">Edit the standard ensembles and instrument groups available when adding new instruments 
+      at the "Music" tab.</h:span></h:a></xf:label>
       <xf:action ev:event="DOMActivate">
-        <xf:insert context="." origin="xxf:set-session-attribute('return_url',instance('parameters')/dcm:this_page)"/>
-        <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-instrumentations.xml"></xf:load>
+      <xf:insert context="." origin="xxf:set-session-attribute('return_url',instance('parameters')/dcm:this_page)"/>
+      <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-instrumentations.xml"></xf:load>
       </xf:action>
-    </xf:trigger>-->
-    <h:hr/>
-    <xf:select appearance="full" ref="instance('parameters')/dcm:show_id">
-      <xf:action ev:event="xforms-value-changed">
-        <xf:insert context="." origin="xxf:set-session-attribute('show_id',instance('parameters')/dcm:show_id)"/>
-      </xf:action>
-      <xf:item>
-        <xf:label>Show xml:id values <h:a class="help">?<h:span class="comment">Displays an ID icon 
-          (<h:img src="http:/editor/images/id.png" border="0" alt="ID Icon"/>) next to selected elements.
-          The element's xml:id attribute value is displayed when moving the cursor over the icon.
-        </h:span></h:a></xf:label>
-        <xf:value>true</xf:value>
-      </xf:item>      
-    </xf:select>
+      </xf:trigger>
+    <h:hr/>-->
+    <xf:group ref=".[contains(instance('parameters')/dcm:id_main_switch,'true')]">
+      <xf:select appearance="full" ref="instance('parameters')/dcm:show_id">
+        <xf:action ev:event="xforms-value-changed">
+          <xf:insert context="." origin="xxf:set-session-attribute('show_id',instance('parameters')/dcm:show_id)"/>
+        </xf:action>
+        <xf:item>
+          <xf:label>Show xml:id values <h:a class="help">?<h:span class="comment">Displays an ID icon 
+            (<h:img src="http:/editor/images/id.png" border="0" alt="ID Icon"/>) next to selected elements.
+            The element's xml:id attribute value is displayed when moving the cursor over the icon.
+          </h:span></h:a></xf:label>
+          <xf:value>true</xf:value>
+        </xf:item>      
+      </xf:select>
+    </xf:group>
     <h:div class="vertical_spacer"/>
     <!--
-    <h:p><b>Advanced settings</b></h:p>-->
-    <xf:select appearance="full" ref="instance('parameters')/dcm:attr_editor">
-      <xf:action ev:event="xforms-value-changed">
-        <xf:insert context="." origin="xxf:set-session-attribute('attr_editor',instance('parameters')/dcm:attr_editor)"/>
-      </xf:action>
-      <xf:item>
-        <xf:label>Enable attribute editor <h:a class="help_plain"><h:img 
-          src="http:/editor/images/warning.png" alt="warning"/><h:span class="comment">This enables changing or adding
-            all possible attributes according to the XML schema. Changing attributes may compromise the validity 
-            of your data and affect the way MerMEId displays them. 
-            Use the attribute editor only if you know what you are doing.
-          </h:span></h:a></xf:label>
-        <xf:value>true</xf:value>
-      </xf:item>      
-    </xf:select>
+      <h:p><b>Advanced settings</b></h:p>-->
+    <xf:group ref=".[contains(instance('parameters')/dcm:attr_editor_main_switch,'true')]">
+      <xf:select appearance="full" ref="instance('parameters')/dcm:attr_editor">
+        <xf:action ev:event="xforms-value-changed">
+          <xf:insert context="." origin="xxf:set-session-attribute('attr_editor',instance('parameters')/dcm:attr_editor)"/>
+        </xf:action>
+        <xf:item>
+          <xf:label>Enable attribute editor <h:a class="help_plain"><h:img 
+            src="http:/editor/images/warning.png" alt="warning"/><h:span class="comment">This enables changing or adding
+              all possible attributes according to the XML schema. Changing attributes may compromise the validity 
+              of your data and affect the way MerMEId displays them. 
+              Use the attribute editor only if you know what you are doing.
+            </h:span></h:a></xf:label>
+          <xf:value>true</xf:value>
+        </xf:item>      
+      </xf:select>
+    </xf:group>
     <!-- code inspector -->
-    <h:div class="vertical_spacer"/>
-    <xf:select appearance="full" ref="instance('parameters')/dcm:code_inspector">
-      <xf:action ev:event="xforms-value-changed">
-        <xf:insert context="." origin="xxf:set-session-attribute('code_inspector',instance('parameters')/dcm:code_inspector)"/>
-      </xf:action>
-      <xf:item>
-        <xf:label>Enable code inspector <h:a class="help">?<h:span class="comment">The
-          code inspector allows you to inspect your XML data as you edit.<h:br/>
-          The code inspector will be displayed at the bottom of the page.<h:br/>
-          Please note: The code inspector has occasionally proved to require extreme server resources,
-          sometimes even causing the server to crash. Use it carefully (and of course completely at own risk).
+    <xf:group ref=".[contains(instance('parameters')/dcm:code_inspector_main_switch,'true')]">
+      <h:div class="vertical_spacer"/>
+      <xf:select appearance="full" ref="instance('parameters')/dcm:code_inspector">
+        <xf:action ev:event="xforms-value-changed">
+          <xf:insert context="." origin="xxf:set-session-attribute('code_inspector',instance('parameters')/dcm:code_inspector)"/>
+        </xf:action>
+        <xf:item>
+          <xf:label>Enable code inspector <h:a class="help">?<h:span class="comment">The
+            code inspector allows you to inspect your XML data as you edit.<h:br/>
+            The code inspector will be displayed at the bottom of the page.<h:br/>
+            Please note: The code inspector has occasionally proved to require extreme server resources,
+            sometimes even causing the server to crash. Use it carefully (and of course completely at own risk).
           </h:span></h:a></xf:label>
-        <xf:value>true</xf:value>
-      </xf:item>      
-    </xf:select>
+          <xf:value>true</xf:value>
+        </xf:item>      
+      </xf:select>
+    </xf:group>
     <!-- end code inspector -->
   </xxf:dialog>
   

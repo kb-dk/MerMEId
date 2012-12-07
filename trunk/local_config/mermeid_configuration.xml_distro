@@ -20,19 +20,19 @@
   <!-- These are not used, since we protect the service in other ways.
        But we keep them for the time being. -->
 
-  <!-- default editor settings -->
-  <!-- (set boolean values to 'true' or nothing)  -->
-  
+  <!-- Default editor settings - (set boolean values to 'true' or nothing)  -->
   <!-- Enable attribute editor? -->
-  <attr_editor/>
+  <attr_editor_main_switch>true</attr_editor_main_switch>
   <!-- Enable xml:id display component? -->
-  <show_id/>
-  <!-- Enable Orbeon XForms code inspector? -->
-  <code_inspector/>
+  <id_main_switch>true</id_main_switch>
+  <!-- Enable code inspector component? -->
+  <code_inspector_main_switch/>
   
-  
-  <!-- some elements used internally by XForms - not for user configuration -->
+  <!-- Some elements used internally by XForms - not for user configuration -->
   <xml_file/>
   <this_page/>
+  <attr_editor/>
+  <show_id/>
+  <code_inspector/>
   
 </parameters>

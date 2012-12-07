@@ -23,29 +23,7 @@
             <xbl:style/>
         </xbl:resources>
         <xbl:implementation>
-            <xf:model>
-                <xf:instance id="bibl-type-instance" xmlns="http://www.music-encoding.org/ns/mei"
-                    src="/../editor/forms/mei/model/bibl_reference_types.xml" xxf:readonly="true"/>
-
-                <xf:instance id="temp">
-                    <temp>
-                        <counter/>
-                    </temp>
-                </xf:instance>
-
-                <!-- local copy of editor settings instance -->
-                <!-- needed to get settings into inner scope -->
-                <xf:instance xmlns="http://www.kb.dk/dcm" id="parameters"
-                    src="/../editor/forms/mei/mermeid_configuration.xml"> </xf:instance>
-
-                <xf:action ev:event="xforms-model-construct-done">
-                    <!-- get settings from session variables -->
-                    <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
-                    <xf:setvalue ref="instance('parameters')/dcm:attr_editor"
-                        value="xxf:get-session-attribute('attr_editor')"/>
-                </xf:action>
-
-            </xf:model>
+            <xf:model/>
         </xbl:implementation>
         <xbl:template>
             <!-- outer group -->

@@ -20,11 +20,11 @@
     
     <xf:model>
         
-        <xf:instance xmlns="http://www.tei-c.org/ns/1.0" 
+        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="bibliography-instance" 
             src="/../editor/forms/mei/model/standard_bibliography.xml"/>
         
-        <xf:instance xmlns="http://www.tei-c.org/ns/1.0" 
+        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="bibl-type-instance" 
             src="/../editor/forms/mei/model/bibl_reference_types.xml" 
             xxf:readonly="true"/>
@@ -46,9 +46,6 @@
         <xf:instance id="mei_attr_list" 
             src="/../editor/forms/mei/model/MEI_attr_list.xml"/>
         
-        <xf:instance id="tei_attr_list" 
-            src="/../editor/forms/mei/model/TEI_attr_list.xml"/>    
-        
         <xf:instance id="parameters" 
             xmlns="http://www.kb.dk/dcm"
             src="/../editor/forms/mei/mermeid_configuration.xml" parse="xml"/>
@@ -68,19 +65,24 @@
                 <target_uri/>
                 <collection/>
                 <new/>
-                <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="">
-                    <bibl type="Monograph">
-                        <abbr/>
-                        <author/>
-                        <date/>
-                        <title level="m"/>
+                <biblList>
+                    <bibl xml:id="">
+                        <genre>book</genre>
+                        <creator/>
+                        <title level="a"/>
+                        <title level="s"/>
                         <editor/>
-                        <biblScope type="pages"/>
-                        <pubPlace/>
-                        <publisher/>
-                        <ref target=""/>
+                        <biblScope unit="vol"/>
+                        <biblScope unit="issue"/>
+                        <biblScope unit="page"/>
+                        <imprint>
+                            <date/>
+                            <pubPlace/>
+                            <publisher/>
+                        </imprint>
+                        <ptr target="" label=""/>
                     </bibl>
-                </listBibl>
+                </biblList>
             </temp>
         </xf:instance> 
         
@@ -141,7 +143,7 @@
     <xi:include href="includes/element_buttons.xbl" parse="xml"/>
     <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
     <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
-    <xi:include href="includes/tei_date_editor.xbl" parse="xml"/>
+    <xi:include href="includes/date_editor.xbl" parse="xml"/>
     <xi:include href="includes/id.xbl" parse="xml"/>
     <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
 </h:head>
