@@ -88,23 +88,23 @@
                         
                         <!-- location -->
                         <h:div>
-                            <dcm:create ref="m:physDesc"
+                            <dcm:create 
                                 nodeset="m:physLoc"
                                 label="Add location"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:physLoc"/>
-                            <xf:group ref="m:physDesc/m:physLoc">
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physLoc"/>
+                            <xf:group ref="m:physLoc">
                                 <dcm:create 
                                     nodeset="m:repository"
                                     label="Add location"
-                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository"/>
-                                <xf:repeat nodeset="m:repository" id="physdesc-physloc">
+                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
+                                <xf:repeat nodeset="m:repository" id="repeat-physloc">
                                     <h:hr/>
                                     <h:span class="blocklabel strong">Location 
                                         <dcm:element-buttons 
                                             triggers="remove" 
                                             nodeset="m:repository" 
-                                            index="physdesc-physloc"
-                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository"/>
+                                            index="repeat-physloc"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
                                     </h:span>
                                     <xf:input ref="m:corpName" class="mediumlong">
                                         <xf:label class="fixed_width">Repository  
@@ -127,8 +127,8 @@
                                     <dcm:create 
                                         nodeset="m:ptr"
                                         label="Add link"
-                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:ptr"/>                                            
-                                    <xf:repeat nodeset="m:ptr" id="physdesc-physloc-extptr">
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository/m:ptr"/>                                            
+                                    <xf:repeat nodeset="m:ptr" id="repeat-physloc-extptr">
                                         <h:div>
                                             <xf:input ref="@target" class="mediumlong">
                                                 <xf:label class="fixed_width">URI 
@@ -137,12 +137,12 @@
                                             </xf:input>
                                             <!-- input/select emulating selection="open" behaviour -->
                                             <h:span class="selection_open_short">
-                                                <xf:input ref="@xl:title">
+                                                <xf:input ref="@label">
                                                     <xf:label class="fixed_width">Label <h:a class="help">?<h:span class="comment">A descriptive label for the link to the resource. 
                                                         Select from list or enter a custom text.</h:span></h:a></xf:label>
                                                 </xf:input>
                                                 <!-- set tabindex to 1000 to skip the select on tabbing -->
-                                                <xf:select1 ref="@xl:title" tabindex="1000">
+                                                <xf:select1 ref="@label" tabindex="1000">
                                                     <xf:item>
                                                         <xf:label>Facsimile</xf:label>
                                                         <xf:value>Facsimile</xf:value>
@@ -160,8 +160,8 @@
                                             <dcm:element-buttons 
                                                 triggers="add remove" 
                                                 nodeset="m:ptr" 
-                                                index="physdesc-physloc-extptr"
-                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physLoc/m:repository/m:ptr[1]"/>
+                                                index="repeat-physloc-extptr"
+                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository/m:ptr[1]"/>
                                             <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>
@@ -480,7 +480,7 @@
                                                         resource, e.g. "http://example.com/source_description.pdf"</h:span></h:a>
                                                     </xf:label>
                                                 </xf:input>
-                                                <xf:input ref="@xl:title">
+                                                <xf:input ref="@label">
                                                     <xf:label>Label <h:a class="help">?<h:span class="comment">A short, 
                                                         descriptive text which may serve
                                                         as the link text, e.g. "The Carl Nielsen Edition's source description"</h:span></h:a></xf:label>
@@ -672,7 +672,7 @@
                                                                                                 resource, e.g. "http://example.com/source_description.pdf"</h:span></h:a>
                                                                                             </xf:label>
                                                                                         </xf:input>
-                                                                                        <xf:input ref="@xl:title">
+                                                                                        <xf:input ref="@label">
                                                                                             <xf:label>Label <h:a class="help">?<h:span class="comment">A short, 
                                                                                                 descriptive text which may serve
                                                                                                 as the link text, e.g. "The Carl Nielsen Edition's source description"</h:span></h:a></xf:label>

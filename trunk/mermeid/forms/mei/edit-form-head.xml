@@ -129,12 +129,6 @@
       resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
       replace="instance" instance="data-instance"/>
 
-
-<!-- Wasn't needed
-xxf:username="{instance('parameters')/dcm:filter_user}"
-xxf:password="{instance('parameters')/dcm:filter_password}"
--->
-    
     <xf:submission id="save-to-file"
       ref="instance('data-instance')"
       validate="false"
@@ -168,7 +162,13 @@ xxf:password="{instance('parameters')/dcm:filter_password}"
         '&amp;doc=',instance('parameters')/dcm:xml_file)"/>
       <!-- load XML data -->
       <xf:send submission="load-data-submission"/>
+      
       <!-- automatically add change entry in revisionDesc -->
+      <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc/m:change)=0">
+        <xf:insert context="instance('data-instance')/m:meiHead/m:revisionDesc" 
+          nodeset="m:change" 
+          origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
+      </xf:action>
       <xxf:variable name="last_revision" 
         select="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]"/>
       <xxf:variable name="today" select="substring-before(now(), 'T')"/>
@@ -184,6 +184,8 @@ xxf:password="{instance('parameters')/dcm:filter_password}"
             value="$today"/>
         </xf:action>
       </xf:action>
+      <!-- end revisionDesc entry -->
+      
       <!-- check list of language declarations -->
       <xf:dispatch name="language-update" target="form-group"/>
       <!-- get lists of linking sources -->

@@ -164,7 +164,7 @@
 				<xsl:value-of select="concat('color:',@color,';')"/>
 			</xsl:if>
 		</xsl:variable>&lt;span style="<xsl:value-of select="$atts"/>"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
-	<!--
+	<!-- this one must be limited to operate only within blocks of HTML ...
 		<xsl:template match="m:persName|m:corpName|m:name|m:ptr|m:address|m:bibl|m:date|m:geogName|m:title|m:quote" mode="mei2html">
 		<xsl:variable name="atts">
 		<xsl:for-each select="@*">

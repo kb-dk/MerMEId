@@ -165,12 +165,12 @@
 									</xf:input>
 									<!-- input/select emulating selection="open" behaviour -->
 									<h:span class="selection_open_short">
-										<xf:input ref="m:ptr/@xl:title">
+										<xf:input ref="m:ptr/@label">
 											<xf:label>Link label 
 												<h:a class="help">?<h:span class="comment">A descriptive label for the link. 
 													Select from list or enter a custom text.</h:span></h:a></xf:label>
 										</xf:input>
-										<xf:select1 ref="m:ptr/@xl:title" tabindex="1000">
+										<xf:select1 ref="m:ptr/@label" tabindex="1000">
 											<xf:item>
 												<xf:label>WWW</xf:label>
 												<xf:value>WWW</xf:value>
@@ -187,7 +187,7 @@
 											<xf:insert context="parent::node()" 
 												origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr][1]"
 												nodeset="m:addrLine[m:ptr][index('repeat-addr-ptr')]"/>
-											<xf:setvalue ref="../m:addrLine[m:ptr][index('repeat-addr-ptr')]/m:ptr/@xl:title" value="''"/>
+											<xf:setvalue ref="../m:addrLine[m:ptr][index('repeat-addr-ptr')]/m:ptr/@label" value="''"/>
 											<xf:setvalue ref="../m:addrLine[m:ptr][index('repeat-addr-ptr')]/m:ptr/@target" value="''"/>
 										</xf:action>
 									</xf:trigger>
@@ -341,8 +341,8 @@
 				<h:div class="vertical_spacer"/>
 				<h:span class="fixed_width">Date <h:a class="help">?<h:span class="comment">Use date
 					format YYYY-MM-DD, e.g. 2011-04-30. A new row with today's date is
-					automatically created when opening the document. Use "Add change"-button 
-					to add rows manually.</h:span></h:a></h:span>
+					automatically created when opening the document. Your login name is automatically added on saving. 
+					Use "Add change"-button to add rows manually.</h:span></h:a></h:span>
 				<h:span class="fixed_width_maxlong" style="display:inline-block;">Description </h:span>
 				<h:span class="fixed_width">&#160;Responsible </h:span>
 				<xf:repeat nodeset="m:change" id="repeat-change">
@@ -350,7 +350,7 @@
 						<xf:input ref="@isodate" class="mediumshort"/>
 						<xf:input ref="m:changeDesc/m:p" class="maxlong"/>
 						<xf:input ref="@resp" class="mediumshort"/>
-						<dcm:element-buttons triggers="delete" 
+						<dcm:element-buttons triggers="remove" 
 							nodeset="m:change"
 							index="repeat-change"
 							origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>

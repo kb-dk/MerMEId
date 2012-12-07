@@ -219,15 +219,7 @@
 				<p>
 					<img src="/editor/images/html_link.png" title="Link to external resource"/>
 					<xsl:for-each select="m:ptr[@target!='']">
-						<xsl:element name="a">
-							<xsl:attribute name="href">
-								<xsl:value-of select="@target"/>
-							</xsl:attribute>
-							<xsl:apply-templates select="@xl:title"/>
-							<xsl:if test="not(@xl:title) or @xl:title=''">
-								<xsl:value-of select="@target"/>
-							</xsl:if>
-						</xsl:element>
+						<xsl:apply-templates select="."/>
 					</xsl:for-each>
 				</p>
 			</xsl:for-each>
@@ -480,7 +472,7 @@
 										<xsl:value-of select="m:ptr/text()"/>
 									</xsl:when>
 									<xsl:otherwise>
-										<xsl:value-of select="m:ptr/@xl:title"/>
+										<xsl:value-of select="m:ptr/@label"/>
 									</xsl:otherwise>
 								</xsl:choose>
 								<xsl:text>: </xsl:text>
@@ -1337,11 +1329,9 @@
 					</div>
 				</xsl:for-each>
 
-
-				<xsl:comment> physical description </xsl:comment>
 				<xsl:for-each select="m:physDesc">
 					<xsl:apply-templates select="."/>
-				</xsl:for-each>
+				</xsl:for-each>				
 
 				<xsl:for-each select="m:notesStmt">
 					<xsl:for-each select="m:annot[text()]">
@@ -1352,13 +1342,7 @@
 					<xsl:for-each select="m:annot[@type='links'][m:ptr[@target!='']]">
 						<p>
 							<xsl:for-each select="m:ptr[@target!='']">
-								<img src="/editor/images/html_link.png" title="Link to external resource"/>
-								<xsl:element name="a">
-									<xsl:attribute name="href">
-										<xsl:apply-templates select="@target"/>
-									</xsl:attribute>
-									<xsl:apply-templates select="@xl:title"/>
-								</xsl:element>
+								<xsl:apply-templates select="."/>
 							</xsl:for-each>
 						</p>
 					</xsl:for-each>
@@ -1366,7 +1350,7 @@
 
 
 				<!-- source location and identifiers -->
-				<xsl:for-each select="m:physDesc/m:physLoc">
+				<xsl:for-each select="m:physLoc">
 					<xsl:for-each
 						select="m:repository[m:corpName[text()]|m:identifier[text() and (not(@type) or @type='')]]">
 						<div>
@@ -1388,13 +1372,7 @@
 							</xsl:for-each>
 
 							<xsl:for-each select="m:ptr[normalize-space(@target)]">
-								<img src="/editor/images/html_link.png" title="Link to external resource"/>
-								<xsl:element name="a">
-									<xsl:attribute name="href">
-										<xsl:value-of select="@target"/>
-									</xsl:attribute>
-									<xsl:value-of select="@xl:title"/>
-								</xsl:element>
+								<xsl:apply-templates select="."/>
 								<xsl:choose>
 									<xsl:when test="position()=last()">
 										<xsl:text>. </xsl:text>
@@ -1462,6 +1440,7 @@
 					and substring-after(@target,'#')=$source_id]]">
 					<xsl:if test="position()=1">
 						<xsl:if test="not(m:titleStmt/m:title/text())">
+							<br/>
 							<p class="p_heading">Reprint:</p>
 						</xsl:if>
 					</xsl:if>
@@ -1548,15 +1527,15 @@
 			</p>
 		</xsl:if>
 
-		<xsl:for-each select="m:titlePage[//text()]">
+		<xsl:for-each select="m:titlePage[m:p//text()]">
 			<div>
 				<xsl:if test="not(@label) or @label=''">Title page</xsl:if>
-				<xsl:apply-templates select="@label"/>
+				<xsl:value-of select="@label"/>
 				<xsl:text>: </xsl:text>
-				<xsl:for-each select="m:p">
-					<p class="titlepage">
+				<xsl:for-each select="m:p[//text()]">
+					<span class="titlepage">
 						<xsl:apply-templates/>
-					</p>
+					</span>
 				</xsl:for-each>
 				<xsl:text>
 				</xsl:text>
@@ -1564,7 +1543,7 @@
 		</xsl:for-each>
 
 		<xsl:for-each select="m:plateNum[text()]">
-			<p>Pl. no. <xsl:apply-templates select="."/>.</p>
+			<p>Pl. no. <xsl:apply-templates/>.</p>
 		</xsl:for-each>
 
 		<xsl:apply-templates select="m:handList[m:hand/@medium!='' or m:hand/text()]"/>
@@ -2020,14 +1999,7 @@
 				</xsl:attribute>
 				<xsl:choose>
 					<xsl:when test="normalize-space(@label)!=''">
-						<xsl:call-template name="capitalize">
-							<xsl:with-param name="str" select="@label"/>
-						</xsl:call-template>
-					</xsl:when>
-					<xsl:when test="normalize-space(@xl:title)!=''">
-						<xsl:call-template name="capitalize">
-							<xsl:with-param name="str" select="@xl:title"/>
-						</xsl:call-template>
+						<xsl:value-of select="@label"/>
 					</xsl:when>
 					<xsl:when test="normalize-space(@targettype)!=''">
 						<xsl:call-template name="capitalize">
@@ -2035,7 +2007,14 @@
 						</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:value-of select="@xl:href"/>
+						<xsl:choose>
+							<xsl:when test="normalize-space(@target)">
+								<xsl:value-of select="@target"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="@xl:href"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:otherwise>
 				</xsl:choose>
 			</a>

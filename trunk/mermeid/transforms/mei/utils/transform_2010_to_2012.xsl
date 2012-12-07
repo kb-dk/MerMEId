@@ -139,8 +139,8 @@
               <addrLine>Søren Kierkegaards Plads 1</addrLine>
               <addrLine>P.O. Box 2149</addrLine>
               <addrLine>DK - 1016 Copenhagen K</addrLine>
-              <addrLine><ptr target="http://www.kb.dk/dcm" xl:title="WWW"/></addrLine>
-              <addrLine><ptr target="mailto://foa-dcm@kb.dk" xl:title="E-mail"/></addrLine>
+              <addrLine><ptr target="http://www.kb.dk/dcm" label="WWW"/></addrLine>
+              <addrLine><ptr target="mailto://foa-dcm@kb.dk" label="E-mail"/></addrLine>
             </address>
             </corpName>
             <!-- add names of editors involved -->
@@ -463,18 +463,15 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </date>
-            <geogName role=""/>
-            <corpName role=""/>
-            <persName role=""/>
             <p><xsl:value-of select="."/></p>
         </event>
     </xsl:template>
 
     <xsl:template match="m:physdesc">
         <physDesc>
-            <condition/>
-            <xsl:apply-templates/>
+            <xsl:apply-templates select="*[name()!='physLoc']"/>
         </physDesc>
+        <xsl:apply-templates select="m:physLoc"/>
     </xsl:template>
 
     <xsl:template match="@unit">
@@ -504,10 +501,6 @@
     </xsl:template>
 
     <xsl:template match="m:physmedium">
-        <!-- add <watermark> -->
-        <watermark>
-            <ptr/>
-        </watermark>
         <physMedium>
             <xsl:apply-templates/>
         </physMedium>
@@ -713,7 +706,7 @@
                                     />
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <graphic target="" xl:title="" targettype="lowres"/>
+                                    <graphic target="" label="" targettype="lowres"/>
                                 </xsl:otherwise>
                             </xsl:choose>
                             <score/>
@@ -1081,7 +1074,7 @@
                         <xsl:apply-templates select="m:app/m:rdg[@type='incipit']/m:annot[@type='links']/m:extptr"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <graphic target="" xl:title="" targettype="lowres"/>
+                        <graphic target="" label="" targettype="lowres"/>
                     </xsl:otherwise>
                 </xsl:choose>
                 <score/>
@@ -1373,19 +1366,29 @@
         <xsl:if test="@target!='' or @xl:href!=''">
             <ptr>
                 <!-- rename attributes -->
-                <xsl:copy-of select="@*[name()!='xl:href' and name()!='targettype']"/>
+                <xsl:copy-of select="@*[name()!='xl:href' and name()!='xl:title' and name()!='targettype']"/>
                 <xsl:attribute name="target">
                     <xsl:value-of select="@xl:href"/>
                 </xsl:attribute>
-                <xsl:attribute name="xl:title">
-                    <xsl:value-of
-                        select="concat(translate(substring(@targettype,1,1), 'abcdefghijklmnopqrstuvwxyzæøå', 'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ'), 
-                    substring(@targettype, 2))"
-                    />
+                <xsl:attribute name="label">
+                    <xsl:choose>
+                        <xsl:when test="@xl:title and @xl:title!=''">
+                            <xsl:value-of
+                                select="concat(translate(substring(@xl:title,1,1), 'abcdefghijklmnopqrstuvwxyzæøå', 'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ'), 
+                                substring(@xl:title, 2))"/>
+                        </xsl:when>
+                        <xsl:when test="@targettype and @targettype!=''">
+                            <xsl:value-of
+                                select="concat(translate(substring(@targettype,1,1), 'abcdefghijklmnopqrstuvwxyzæøå', 'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ'), 
+                                substring(@targettype, 2))"/>
+                        </xsl:when>
+                        <xsl:otherwise/>
+                    </xsl:choose>
                 </xsl:attribute>
             </ptr>
         </xsl:if>
     </xsl:template>
+    
 
     <xsl:template match="m:date|t:date">
         <!-- TEI dates are moved to MEI namespace -->
@@ -1487,6 +1490,21 @@
             </xsl:choose>
             <xsl:value-of select="."/>
         </date>
+    </xsl:template>
+    
+    <!-- avoid double escaping ampersands -->
+    <xsl:template match="text()[contains(.,'amp;amp;')]">
+        <xsl:call-template name="amp">
+            <xsl:with-param name="string" select="."/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template name="amp">
+        <xsl:param name="string"/>
+        <xsl:value-of select="substring-before($string,'amp;amp;')"/>amp;<xsl:call-template 
+            name="amp">
+            <xsl:with-param name="string" select="substring-after(.,'amp;amp;')"/>
+        </xsl:call-template>
     </xsl:template>
 
     <!-- CAUTION! THIS DELETES ALL CONTENTS IN <music>! -->

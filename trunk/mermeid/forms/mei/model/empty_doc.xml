@@ -25,8 +25,8 @@
             <expan/>
             <address>
               <addrLine/>
-              <addrLine><ptr target="" xl:title="WWW"/></addrLine>
-              <addrLine><ptr target="" xl:title="E-mail"/></addrLine>
+              <addrLine><ptr target="" label="WWW"/></addrLine>
+              <addrLine><ptr target="" label="E-mail"/></addrLine>
             </address>
           </corpName>
           <persName role="editor" xml:id=""/>
@@ -75,7 +75,7 @@
           <notesStmt>
             <annot type="source_description" xml:id=""/>
             <annot type="links" xml:id="">
-              <ptr target="" mimetype="" xl:title="" xml:id=""/>
+              <ptr target="" mimetype="" label="" xml:id=""/>
             </annot>
           </notesStmt>
           <classification>
@@ -92,21 +92,11 @@
           <itemList>
             <item label="" target="" xml:id="">
               <identifier type=""/>
-              <pubStmt>
-                <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-              </pubStmt>
               <physDesc>
                 <condition xml:id=""/>
                 <titlePage label="" xml:id="">
                   <p/>
                 </titlePage>
-                <physLoc>
-                  <repository>
-                    <corpName xml:id=""/>
-                    <identifier xml:id=""/>
-                    <ptr target="" mimetype="" xl:title="Library record" xml:id=""/>
-                  </repository>
-                </physLoc>
                 <provenance>
                   <eventList xml:id="">
                     <event xml:id="" evidence="">
@@ -127,34 +117,26 @@
                 <physMedium/>
                 <plateNum/>
               </physDesc>
+              <physLoc>
+                <repository>
+                  <corpName xml:id=""/>
+                  <identifier xml:id=""/>
+                  <ptr target="" mimetype="" label="Library record" xml:id=""/>
+                </repository>
+              </physLoc>
               <notesStmt>
                 <annot type="source_description" xml:id=""/>
                 <annot type="links" xml:id="">
-                  <ptr target="" mimetype="" xl:title="" xml:id=""/>
+                  <ptr target="" mimetype="" label="" xml:id=""/>
                 </annot>
               </notesStmt>
               <componentGrp>
                 <item label="" target="" xml:id="" >
-                  <pubStmt>
-                    <respStmt>
-                      <corpName role="publisher" xml:id=""/>
-                    </respStmt>
-                    <geogName xml:id=""/>
-                    <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-                  </pubStmt>
                   <physDesc>
                     <condition/>
                     <titlePage label="" xml:id="">
                       <p/>
                     </titlePage>
-                    <physLoc>
-                      <repository>
-                        <corpName xml:id=""/>
-                        <identifier xml:id=""/>
-                        <ptr target="" mimetype="" xl:title="Library record" xml:id=""/>
-                        <ptr target="" mimetype="" xl:title="Facsimile" xml:id=""/>
-                      </repository>
-                    </physLoc>
                     <provenance>
                       <eventList xml:id="">
                         <event xml:id="" evidence="">
@@ -175,10 +157,17 @@
                     <physMedium/>
                     <plateNum/>
                   </physDesc>
+                  <physLoc>
+                    <repository>
+                      <corpName xml:id=""/>
+                      <identifier xml:id=""/>
+                      <ptr target="" mimetype="" label="Library record" xml:id=""/>
+                    </repository>
+                  </physLoc>
                   <notesStmt>
                     <annot type="source_description" xml:id=""/>
                     <annot type="links" xml:id="">
-                      <ptr target="" mimetype="" xl:title="" xml:id=""/>
+                      <ptr target="" mimetype="" label="" xml:id=""/>
                     </annot>
                   </notesStmt>
                 </item>                
@@ -338,7 +327,7 @@
         
         <notesStmt>
           <annot type="links" xml:id="">
-            <ptr target="" mimetype="" xl:title="External description" xml:id=""/> 
+            <ptr target="" mimetype="" label="External description" xml:id=""/> 
           </annot>
           <annot type="general_description" xml:id=""/> 
         </notesStmt>        
@@ -368,7 +357,7 @@
               <incipText xml:id=""> 
                 <p xml:lang="en"/>
               </incipText>
-              <graphic target="" xl:title="" targettype="lowres" xml:id=""/>
+              <graphic target="" label="" targettype="lowres" xml:id=""/>
               <incipCode analog=""/>
               <score xml:id=""/>
             </incip>
@@ -463,8 +452,8 @@
                   <incipText xml:id=""> 
                     <p xml:lang="en"/>
                   </incipText>
-                  <graphic target="" xl:title="" targettype="lowres" xml:id=""/>
-                  <graphic target="" xl:title="" targettype="hires" xml:id=""/>
+                  <graphic target="" label="" targettype="lowres" xml:id=""/>
+                  <graphic target="" label="" targettype="hires" xml:id=""/>
                   <incipCode analog=""/>
                   <score xml:id=""/>
                 </incip>
