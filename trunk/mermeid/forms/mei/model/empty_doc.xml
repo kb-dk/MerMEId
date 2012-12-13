@@ -120,9 +120,11 @@
               <physLoc>
                 <repository>
                   <corpName xml:id=""/>
-                  <identifier xml:id=""/>
-                  <ptr target="" mimetype="" label="Library record" xml:id=""/>
+                  <geogName xml:id=""/>
+                  <identifier authority="RISM" authURI="http://www.rism.info" xml:id=""/>
                 </repository>
+                <identifier xml:id=""/>
+                <ptr target="" mimetype="" label="Library record" xml:id=""/>
               </physLoc>
               <notesStmt>
                 <annot type="source_description" xml:id=""/>
@@ -160,9 +162,11 @@
                   <physLoc>
                     <repository>
                       <corpName xml:id=""/>
-                      <identifier xml:id=""/>
-                      <ptr target="" mimetype="" label="Library record" xml:id=""/>
+                      <geogName xml:id=""/>
+                      <identifier auth="RISM" authURI="http://www.rism.info" xml:id=""/>
                     </repository>
+                    <identifier xml:id=""/>
+                    <ptr target="" mimetype="" label="Library record" xml:id=""/>
                   </physLoc>
                   <notesStmt>
                     <annot type="source_description" xml:id=""/>
@@ -298,7 +302,11 @@
               <geogName/>
             </creation>
             <physLoc>
-              <repository/>
+              <repository>
+                <corpName xml:id=""/>
+                <geogName xml:id=""/>
+                <identifier authority="RISM" authURI="http://www.rism.info/"/>
+              </repository>
               <identifier/>
             </physLoc>
             <annot/>
@@ -340,7 +348,7 @@
           <classCode xml:id="DcmStateClass"/>
           <classCode xml:id="DcmCompletenessClass"/>
           <termList>
-            <term></term>
+            <term/>
           </termList>
         </classification>
 

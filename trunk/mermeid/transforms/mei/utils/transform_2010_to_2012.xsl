@@ -227,14 +227,12 @@
         </publisher>
     </xsl:template>
     
-    <xsl:template match="m:corpname[name(..)!='respstmt']">
+    <xsl:template match="m:corpname[name(..)!='respstmt' and name(..)!='repository']">
         <corpName>
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates/>
         </corpName>
     </xsl:template>
-    
-    
 
     <xsl:template match="m:pubstmt/m:geogname">
         <pubPlace>
@@ -332,10 +330,7 @@
             <itemList>
                 <item>
                     <physDesc>
-                        <condition/>
                         <xsl:apply-templates select="m:physdesc/m:provenance"/>
-                        <extent unit="pages"/>
-                        <dimensions unit="cm"/>
                         <xsl:apply-templates select="m:physdesc/m:handlist"/>
                         <physMedium/>
                     </physDesc>
@@ -378,24 +373,6 @@
     <!-- Plate numbers are moved to <physDesc>  -->
     <xsl:template match="m:pubstmt/m:identifier[@type='plate_no']"/>
 
-
-    <xsl:template match="m:repository/m:identifier">
-        <!-- Some CNW-specfic cleaning going on here; should do no harm in other contexts -->
-        <xsl:apply-templates select="@*"/>
-        <xsl:choose>
-            <xsl:when test="contains(.,'[')">
-                <!-- put CNU Source references in [] (like "[CNU Source A]")into their own <identifier> -->
-                <identifier>
-                    <xsl:value-of select="normalize-space(substring-before(.,'['))"/>
-                </identifier>
-            </xsl:when>
-            <xsl:otherwise>
-                <identifier>
-                    <xsl:value-of select="."/>
-                </identifier>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
 
     <xsl:template match="m:provenance/m:eventlist/m:event">
         <event>
@@ -493,13 +470,45 @@
         </physLoc>
     </xsl:template>
 
-    <xsl:template match="m:respository">
-        <xsl:apply-templates select="@*"/>
-        <xsl:apply-templates select="m:corpname"/>
+    <xsl:template match="m:repository">
+        <repository>
+            <xsl:apply-templates select="@*|*[local-name()!='identifier' and local-name()!='extptr']"/>
+        </repository>
+        <!-- move shelf mark and fulltext links out of <repository> -->
         <xsl:apply-templates select="m:identifier"/>
         <xsl:apply-templates select="m:extptr"/>
     </xsl:template>
 
+    <xsl:template match="m:repository/m:identifier">
+        <!-- Some CNW-specfic cleaning; probably doesn't do any harm in other contexts -->
+        <xsl:apply-templates select="@*"/>
+        <xsl:choose>
+            <xsl:when test="contains(.,'[')">
+                <!-- put CNU Source references in [] (like "[CNU Source A]")into their own <identifier> -->
+                <identifier>
+                    <xsl:value-of select="normalize-space(substring-before(.,'['))"/>
+                </identifier>
+            </xsl:when>
+            <xsl:otherwise>
+                <identifier>
+                    <xsl:value-of select="."/>
+                </identifier>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="m:repository/m:corpname">
+            <!-- try to distiguish RISM sigla from written-out archive names -->
+            <xsl:choose>
+                <xsl:when test="matches(.,'[A-Z]{1,3}-[A-Z]{1,3}[a-z]*')">
+                    <identifier authority="RISM" authURI="http://www.rism.info"><xsl:value-of select="."/></identifier>
+                </xsl:when>
+                <xsl:otherwise>
+                    <corpName><xsl:value-of select="."/></corpName>
+                </xsl:otherwise>
+            </xsl:choose>
+    </xsl:template>
+    
     <xsl:template match="m:physmedium">
         <physMedium>
             <xsl:apply-templates/>
@@ -1248,7 +1257,15 @@
     <xsl:template match="t:msIdentifier">
         <physLoc>
             <repository>
-                <xsl:value-of select="t:repository"/>
+                <!-- try to distiguish RISM sigla from written-out archive names -->
+                <xsl:choose>
+                    <xsl:when test="matches(t:repository,'[A-Z]{1,3}-[A-Z]{1,3}[a-z]*')">
+                        <identifier authority="RISM" authURI="http://www.rism.info/"><xsl:value-of select="t:repository"/></identifier>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <corpName><xsl:value-of select="t:repository"/></corpName>
+                    </xsl:otherwise>
+                </xsl:choose>
             </repository>
             <identifier>
                 <xsl:value-of select="t:idno"/>

@@ -97,74 +97,98 @@
                                     nodeset="m:repository"
                                     label="Add location"
                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
-                                <xf:repeat nodeset="m:repository" id="repeat-physloc">
+                                <xf:repeat nodeset="m:repository" id="repeat-repository">
                                     <h:hr/>
-                                    <h:span class="blocklabel strong">Location 
+                                    <h:span class="blocklabel strong">Location <h:a class="help">?<h:span
+                                        class="comment">The library, archive or other repository holding this
+                                        item. The name or RISM siglum may be given, or both.</h:span></h:a>
                                         <dcm:element-buttons 
                                             triggers="remove" 
                                             nodeset="m:repository" 
-                                            index="repeat-physloc"
+                                            index="repeat-repository"
                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
                                     </h:span>
-                                    <xf:input ref="m:corpName" class="mediumlong">
+<!--                                    <xf:input ref="m:corpName" class="mediumlong">
                                         <xf:label class="fixed_width">Repository  
                                             <h:a class="help">?<h:span class="comment">The library, archive or
                                                 other repository holding this item, e.g. "DK-Kk" or "State Archive, Copenhagen"</h:span></h:a>
                                         </xf:label>
                                     </xf:input>
-                                    <dcm:attribute-editor ref="m:corpName"/>
-                                    <xf:input ref="m:identifier">
-                                        <xf:label>Shelfmark 
-                                            <h:a class="help">?<h:span class="comment">The shelfmark or other signature
-                                                identfying this item in the repository</h:span></h:a>
-                                        </xf:label>
-                                    </xf:input>
-                                    <dcm:attribute-editor ref="m:identifier"/>
-                                    <h:br clear="all"/>
-                                    <xf:label class="blocklabel">External links 
-                                        <h:a class="help">?<h:span class="comment">Links pointing to representations (facsimile,
-                                            transcription, library catalogue etc.) of this particular item</h:span></h:a></xf:label>
-                                    <dcm:create 
-                                        nodeset="m:ptr"
-                                        label="Add link"
-                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository/m:ptr"/>                                            
-                                    <xf:repeat nodeset="m:ptr" id="repeat-physloc-extptr">
-                                        <h:div>
-                                            <xf:input ref="@target" class="mediumlong">
-                                                <xf:label class="fixed_width">URI 
-                                                    <h:a class="help">?<h:span class="comment">Link address</h:span></h:a>
-                                                </xf:label>
+                                    <dcm:attribute-editor ref="m:corpName"/>-->
+                                    <h:div>
+                                        <dcm:create  
+                                            nodeset="m:corpName"
+                                            label="Add repository name"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:itemList/m:item/m:physLoc/m:repository/m:corpName"/>
+                                        <xf:input ref="m:corpName" class="maxlong">
+                                            <xf:label class="fixed_width">Repository name </xf:label>
+                                        </xf:input>
+                                        <dcm:attribute-editor ref="m:corpName"/>
+                                    </h:div>
+                                    <h:div>
+                                        <dcm:create  
+                                            nodeset="m:identifier"
+                                            label="Add RISM siglum"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:itemList/m:item/m:physLoc/m:repository/m:identifier"/>
+                                        <dcm:attribute-editor ref="m:identifier"/>
+                                        <xf:input ref="m:identifier[@authority='RISM' or @authority='rism']">
+                                            <xf:label class="fixed_width">RISM siglum </xf:label>
+                                        </xf:input>
+                                        <dcm:attribute-editor ref="m:physLoc/m:repository/m:identifier[@authority='RISM' or @authority='rism']"/>
+                                    </h:div>
+                                    
+                                </xf:repeat>
+                                <xf:input ref="m:identifier">
+                                    <xf:label class="fixed_width">Shelfmark 
+                                        <h:a class="help">?<h:span class="comment">The shelfmark or other signature
+                                            identifying this item in the repository</h:span></h:a>
+                                    </xf:label>
+                                </xf:input>
+                                <dcm:attribute-editor ref="m:identifier"/>
+                                <h:br clear="all"/>
+                                <xf:label class="blocklabel">External links 
+                                    <h:a class="help">?<h:span class="comment">Links pointing to representations (facsimile,
+                                        transcription, library catalogue etc.) of this particular item</h:span></h:a></xf:label>
+                                <dcm:create 
+                                    nodeset="m:ptr"
+                                    label="Add link"
+                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository/m:ptr"/>                                            
+                                <xf:repeat nodeset="m:ptr" id="repeat-physloc-extptr">
+                                    <h:div>
+                                        <xf:input ref="@target" class="mediumlong">
+                                            <xf:label>URI 
+                                                <h:a class="help">?<h:span class="comment">Link address</h:span></h:a>
+                                            </xf:label>
+                                        </xf:input>
+                                        <!-- input/select emulating selection="open" behaviour -->
+                                        <h:span class="selection_open_short">
+                                            <xf:input ref="@label">
+                                                <xf:label class="fixed_width">Label <h:a class="help">?<h:span class="comment">A descriptive label for the link to the resource. 
+                                                    Select from list or enter a custom text.</h:span></h:a></xf:label>
                                             </xf:input>
-                                            <!-- input/select emulating selection="open" behaviour -->
-                                            <h:span class="selection_open_short">
-                                                <xf:input ref="@label">
-                                                    <xf:label class="fixed_width">Label <h:a class="help">?<h:span class="comment">A descriptive label for the link to the resource. 
-                                                        Select from list or enter a custom text.</h:span></h:a></xf:label>
-                                                </xf:input>
-                                                <!-- set tabindex to 1000 to skip the select on tabbing -->
-                                                <xf:select1 ref="@label" tabindex="1000">
-                                                    <xf:item>
-                                                        <xf:label>Facsimile</xf:label>
-                                                        <xf:value>Facsimile</xf:value>
-                                                    </xf:item>
-                                                    <xf:item>
-                                                        <xf:label>Transcription</xf:label>
-                                                        <xf:value>Transcription</xf:value>
-                                                    </xf:item>
-                                                    <xf:item>
-                                                        <xf:label>Library record</xf:label>
-                                                        <xf:value>Library record</xf:value>
-                                                    </xf:item>
-                                                </xf:select1>
-                                            </h:span>
-                                            <dcm:element-buttons 
-                                                triggers="add remove" 
-                                                nodeset="m:ptr" 
-                                                index="repeat-physloc-extptr"
-                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository/m:ptr[1]"/>
-                                            <dcm:attribute-editor/>
-                                        </h:div>
-                                    </xf:repeat>
+                                            <!-- set tabindex to 1000 to skip the select on tabbing -->
+                                            <xf:select1 ref="@label" tabindex="1000">
+                                                <xf:item>
+                                                    <xf:label>Facsimile</xf:label>
+                                                    <xf:value>Facsimile</xf:value>
+                                                </xf:item>
+                                                <xf:item>
+                                                    <xf:label>Transcription</xf:label>
+                                                    <xf:value>Transcription</xf:value>
+                                                </xf:item>
+                                                <xf:item>
+                                                    <xf:label>Library record</xf:label>
+                                                    <xf:value>Library record</xf:value>
+                                                </xf:item>
+                                            </xf:select1>
+                                        </h:span>
+                                        <dcm:element-buttons 
+                                            triggers="add remove" 
+                                            nodeset="m:ptr" 
+                                            index="repeat-physloc-extptr"
+                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository/m:ptr[1]"/>
+                                        <dcm:attribute-editor/>
+                                    </h:div>
                                 </xf:repeat>
                             </xf:group>
                             <h:hr/>

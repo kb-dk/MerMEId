@@ -272,11 +272,12 @@
               <xsl:otherwise>
                 <xsl:variable name="today" select="@isodate"/>
                 <xsl:variable name="prevChange" select="preceding-sibling::node()[1]"/>
-                <xsl:if test="m:changeDesc//text() or $prevChange/@isodate!=$today or $prevChange/@resp!=$user">
-                  <change>
-                    <xsl:copy-of select="@*"/>
-                    <xsl:attribute name="isodate"><xsl:value-of select="@isodate"/></xsl:attribute>
-                    <xsl:attribute name="resp">
+                <xsl:choose>
+                  <xsl:when test="m:changeDesc//text() or $prevChange/@isodate!=$today or $prevChange/@resp!=$user">
+                    <change>
+                      <xsl:copy-of select="@*"/>
+                      <xsl:attribute name="isodate"><xsl:value-of select="@isodate"/></xsl:attribute>
+                      <xsl:attribute name="resp">
                         <xsl:choose>
                           <xsl:when test="normalize-space(@resp)">
                             <xsl:value-of select="@resp"/>
@@ -285,20 +286,24 @@
                             <xsl:value-of select="$user"/>
                           </xsl:otherwise>
                         </xsl:choose>
-                    </xsl:attribute>
-                    <changeDesc>
-                      <p>
-                        <xsl:value-of select="m:changeDesc/m:p"/>
-                      </p>
-                    </changeDesc>
-                  </change>
-                </xsl:if>
+                      </xsl:attribute>
+                      <changeDesc>
+                        <p>
+                          <xsl:value-of select="m:changeDesc/m:p"/>
+                        </p>
+                      </changeDesc>
+                    </change>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:apply-templates select="."/>
+                  </xsl:otherwise>
+                </xsl:choose>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates/>
+          <xsl:apply-templates select="."/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:element>

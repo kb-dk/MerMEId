@@ -276,13 +276,30 @@
                             </h:div>
 
                             <h:fieldset>
-                                <h:legend>Location</h:legend>
-                                <xf:input ref="m:physLoc/m:repository">
-                                    <xf:label class="fixed_width_mediumlong">Repository name <h:a class="help">?<h:span
-                                                class="comment">The library, archive or other repository holding this
-                                                item, e.g. "DK-Kk"</h:span></h:a></xf:label>
-                                </xf:input>
-                                <dcm:attribute-editor ref="m:physLoc/m:repository"/>
+                                <h:legend>Location <h:a class="help">?<h:span
+                                    class="comment">The library, archive or other repository holding this
+                                    item. The name or RISM siglum may be given, or both.</h:span></h:a>
+                                </h:legend>
+                                <h:div>
+                                    <dcm:create ref="m:physLoc/m:repository" 
+                                        nodeset="m:corpName"
+                                        label="Add repository name"
+                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc][1]/m:physLoc/m:repository/m:corpName"/>
+                                    <xf:input ref="m:physLoc/m:repository/m:corpName">
+                                        <xf:label class="fixed_width_mediumlong">Repository name </xf:label>
+                                    </xf:input>
+                                    <dcm:attribute-editor ref="m:physLoc/m:repository/m:corpName"/>
+                                </h:div>
+                                <h:div>
+                                    <dcm:create ref="m:physLoc/m:repository" 
+                                        nodeset="m:identifier"
+                                        label="Add RISM siglum"
+                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:identifier][1]/m:physLoc/m:repository/m:identifier[@authority='RISM']"/>
+                                    <xf:input ref="m:physLoc/m:repository/m:identifier[@authority='RISM' or @authority='rism']">
+                                        <xf:label class="fixed_width_mediumlong">RISM siglum </xf:label>
+                                    </xf:input>
+                                    <dcm:attribute-editor ref="m:physLoc/m:repository/m:identifier[@authority='RISM' or @authority='rism']"/>
+                                </h:div>
                                 <xf:input ref="m:physLoc/m:identifier">
                                     <xf:label>Shelfmark <h:a class="help">?<h:span class="comment">The shelfmark or
                                                 other signature identfying the item in the
