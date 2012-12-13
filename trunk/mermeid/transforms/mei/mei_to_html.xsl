@@ -1348,43 +1348,11 @@
 					</xsl:for-each>
 				</xsl:for-each>
 
-
 				<!-- source location and identifiers -->
 				<xsl:for-each select="m:physLoc">
-					<xsl:for-each
-						select="m:repository[m:corpName[text()]|m:identifier[text() and (not(@type) or @type='')]]">
-						<div>
-							<xsl:for-each select="m:corpName[text()]|m:identifier[text() and (not(@type) or @type='')]">
-								<xsl:choose>
-									<xsl:when test="name(.)='corpName'">
-										<em>
-											<xsl:apply-templates select="."/>
-										</em>
-										<xsl:text> </xsl:text>
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:apply-templates select="."/>
-									</xsl:otherwise>
-								</xsl:choose>
-								<xsl:if test="position()=last()">
-									<xsl:text>. </xsl:text>
-								</xsl:if>
-							</xsl:for-each>
-
-							<xsl:for-each select="m:ptr[normalize-space(@target)]">
-								<xsl:apply-templates select="."/>
-								<xsl:choose>
-									<xsl:when test="position()=last()">
-										<xsl:text>. </xsl:text>
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:text>, </xsl:text>
-									</xsl:otherwise>
-								</xsl:choose>
-							</xsl:for-each>
-
-						</div>
-					</xsl:for-each>
+					<div>
+						<xsl:apply-templates select="."/>
+					</div>
 				</xsl:for-each>
 
 				<xsl:for-each select="m:physDesc/m:provenance[*//text()]">
@@ -1409,7 +1377,8 @@
 						<xsl:choose>
 							<!-- some CNW-specific styling here -->
 							<xsl:when test="@type='CNU Source'">
-								<b><xsl:apply-templates select="."/></b>. </xsl:when>
+								<b><xsl:apply-templates select="."/></b>. 
+							</xsl:when>
 							<xsl:otherwise>
 								<xsl:apply-templates select="."/>. </xsl:otherwise>
 						</xsl:choose>
@@ -1526,7 +1495,7 @@
 				</xsl:text>
 			</p>
 		</xsl:if>
-
+		
 		<xsl:for-each select="m:titlePage[m:p//text()]">
 			<div>
 				<xsl:if test="not(@label) or @label=''">Title page</xsl:if>
@@ -1541,14 +1510,41 @@
 				</xsl:text>
 			</div>
 		</xsl:for-each>
-
 		<xsl:for-each select="m:plateNum[text()]">
 			<p>Pl. no. <xsl:apply-templates/>.</p>
 		</xsl:for-each>
-
 		<xsl:apply-templates select="m:handList[m:hand/@medium!='' or m:hand/text()]"/>
-
 	</xsl:template>
+
+	<xsl:template match="m:physLoc">
+		<!-- locations - both for <source>, <item> and <bibl> -->
+		<xsl:for-each select="m:repository[*//text()]">
+			<xsl:if test="m:corpName[text()]or m:identifier[text()]">
+				<xsl:choose>
+					<xsl:when test="m:corpName[text()]">
+						<xsl:apply-templates select="m:corpName[text()]"/>
+						<xsl:if test="m:identifier[text()]">
+							(<em><xsl:apply-templates select="m:identifier[text()]"/></em>)
+						</xsl:if>
+						<xsl:text> </xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="m:identifier[text()]">
+							<em><xsl:apply-templates select="m:identifier[text()]"/></em><xsl:text> </xsl:text>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:if>
+		</xsl:for-each>
+		<xsl:apply-templates select="m:identifier"/><xsl:if 
+			test="m:identifier[text()] or m:repository[*//text()]">. </xsl:if>
+		<xsl:for-each select="m:ptr[@target!='']">
+			<xsl:apply-templates select="."/>
+			<xsl:if test="position()!=last()">
+				<xsl:text>, </xsl:text>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:template>	
 
 	<!-- format scribe's name and medium -->
 	<xsl:template match="m:hand" mode="scribe">
@@ -1594,43 +1590,35 @@
 
 
 	<xsl:template match="m:biblList">
-
-		<xsl:variable name="bib_id" select="concat('bib',generate-id(.),position())"/>
-
-		<xsl:text>
-		</xsl:text>
-
-		<script type="application/javascript"><xsl:text>
-			openness["</xsl:text><xsl:value-of select="$bib_id"/><xsl:text>"]=false;
-			</xsl:text></script>
-		<xsl:text>
-		</xsl:text>
-
-		<div class="fold">
-
-			<p class="p_heading" id="p{$bib_id}" title="Click to open" onclick="toggle('{$bib_id}')">
-				<img style="display:inline" id="img{$bib_id}" border="0" src="/editor/images/plus.png" alt="+"/>
-				<xsl:call-template name="print_bibliography_type"/>
-			</p>
-
-			<div class="folded_content" style="display:none">
-				<xsl:attribute name="id">
-					<xsl:value-of select="$bib_id"/>
-				</xsl:attribute>
-
-				<xsl:apply-templates select="." mode="bibl_paragraph"/>
-
+		<xsl:if test="m:bibl/*[local-name()!='genre']//text()">
+			<xsl:variable name="bib_id" select="concat('bib',generate-id(.),position())"/>
+			<xsl:text>
+			</xsl:text>
+			<script type="application/javascript"><xsl:text>
+				openness["</xsl:text><xsl:value-of select="$bib_id"/><xsl:text>"]=false;
+				</xsl:text></script>
+			<xsl:text>
+			</xsl:text>
+			<div class="fold">
+				<p class="p_heading" id="p{$bib_id}" title="Click to open" onclick="toggle('{$bib_id}')">
+					<img style="display:inline" id="img{$bib_id}" border="0" src="/editor/images/plus.png" alt="+"/>
+					<xsl:call-template name="print_bibliography_type"/>
+				</p>
+				<div class="folded_content" style="display:none">
+					<xsl:attribute name="id">
+						<xsl:value-of select="$bib_id"/>
+					</xsl:attribute>
+					<xsl:apply-templates select="." mode="bibl_paragraph"/>
+				</div>
 			</div>
-
-		</div>
-
+		</xsl:if>
 	</xsl:template>
 
 	<!-- render bibliography items as paragraphs or tables -->
 	<xsl:template match="m:biblList" mode="bibl_paragraph">
 		<!-- Letters and diary entries are listed first under separate headings -->
 		<xsl:if
-			test="count(m:bibl[m:genre='letter' and normalize-space(concat(m:creator,m:recipient,m:creation/m:date))]) &gt; 0">
+			test="count(m:bibl[m:genre='letter' and *[local-name()!='genre']//text()]) &gt; 0">
 			<p class="p_subheading">Letters:</p>
 			<table class="letters">
 				<xsl:for-each select="m:bibl[m:genre='letter' and *[local-name()!='genre']//text()]">
@@ -1679,17 +1667,9 @@
 						<xsl:if test="m:biblScope[@unit='vol']/text()">, Vol. <xsl:apply-templates
 								select="m:biblScope[@unit='vol']"/>
 						</xsl:if> ) </xsl:if>
-					<xsl:if
-						test="normalize-space(concat(m:imprint/m:publisher,m:imprint/m:pubPlace,m:imprint/m:date))!=''"
-						>. <xsl:if test="m:imprint/m:publisher/text()">
-							<xsl:apply-templates select="m:imprint/m:publisher"/>, </xsl:if>
-						<xsl:if test="m:imprint/m:pubPlace/text()">
-							<xsl:value-of select="normalize-space(m:imprint/m:pubPlace)"/>
-						</xsl:if>
-						<xsl:if test="m:imprint/m:date/text()"><xsl:text> </xsl:text>
-							<xsl:apply-templates select="m:imprint/m:date"/>
-						</xsl:if>
-					</xsl:if>
+					<xsl:apply-templates select="m:imprint">
+						<xsl:with-param name="append_to_text">true</xsl:with-param>
+					</xsl:apply-templates>
 					<xsl:choose>
 						<xsl:when test="normalize-space(m:title[@level='s'])=''">
 							<xsl:apply-templates select="current()" mode="volumes_pages"/>
@@ -1782,7 +1762,7 @@
 					<xsl:if
 						test="normalize-space(concat(m:biblScope[normalize-space()], m:imprint/m:publisher, m:imprint/m:pubPlace))"
 						>. </xsl:if>
-					<xsl:if test="normalize-space(m:biblScope[@unit='vol'])">, vol.<xsl:value-of
+					<xsl:if test="normalize-space(m:biblScope[@unit='vol'])">, Vol.<xsl:value-of
 							select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>
 					<xsl:if test="normalize-space(m:imprint/m:publisher)">
 						<xsl:value-of select="normalize-space(m:imprint/m:publisher)"/>
@@ -1800,75 +1780,52 @@
 			<xsl:when test="m:genre='letter'">
 				<tr>
 					<td class="date_col">
-						<xsl:if test="normalize-space(m:creation/m:date)!=''">
-							<xsl:apply-templates select="m:creation/m:date"/></xsl:if><xsl:if
-							test="normalize-space(m:creation/m:geogName) and normalize-space(m:creation/m:date)">,
-							</xsl:if><xsl:if test="normalize-space(m:creation/m:geogName)!=''"><xsl:apply-templates
-								select="m:creation/m:geogName"/>
-						</xsl:if>&#160;&#160; </td>
+							<xsl:apply-templates select="m:creation/m:date[text()]"/><xsl:if
+							test="m:creation/m:geogName/text() and m:creation/m:date/text()">, </xsl:if>
+							<xsl:apply-templates select="m:creation/m:geogName/text()"/>&#160;&#160; 
+					</td>
 					<td>
-						<xsl:if test="normalize-space(m:creator)!=''">
+						<xsl:if test="m:creator/text()">
 							<xsl:choose>
-								<xsl:when test="normalize-space(m:creation/m:date)!=''"> from </xsl:when>
+								<xsl:when test="m:creation/m:date/text()"> from </xsl:when>
 								<xsl:otherwise>From </xsl:otherwise>
 							</xsl:choose>
 							<xsl:value-of select="m:creator"/>
 						</xsl:if>
-						<xsl:if test="normalize-space(m:recipient)!=''">
+						<xsl:if test="m:recipient/text()">
 							<xsl:choose>
-								<xsl:when test="normalize-space(m:creator)!=''"> to </xsl:when>
+								<xsl:when test="m:creator/text()"> to </xsl:when>
 								<xsl:otherwise>To</xsl:otherwise>
 							</xsl:choose>
 							<xsl:value-of select="m:recipient"/>
-						</xsl:if>, <xsl:if
-							test="normalize-space(concat(m:physLoc/m:repository, m:physLoc/m:identifier))">
-							<em><xsl:value-of select="m:physLoc/m:repository"/>
-							</em>
-							<xsl:if
-								test="normalize-space(m:physLoc/m:repository) and normalize-space(m:physLoc/m:identifier)">
-								<xsl:text> </xsl:text>
-							</xsl:if>
-							<xsl:value-of select="m:physLoc/m:identifier"/>
-						</xsl:if>
-						<xsl:if test="normalize-space(m:relatedItem[@rel='host']/m:bibl/m:title)">
-							<xsl:apply-templates select="m:relatedItem[@rel='host']"/>
-						</xsl:if>
-						<xsl:apply-templates select="m:ptr"/>. </td>
+						</xsl:if><xsl:if test="(m:creator/text() or m:recipient/text()) and m:physLoc//text()">, </xsl:if> 
+						<xsl:apply-templates select="m:physLoc[*//text()]"/>
+						<xsl:apply-templates select="m:relatedItem[@rel='host' and *//text()]"/>
+						<xsl:apply-templates select="m:ptr"/> 
+					</td>
 				</tr>
 			</xsl:when>
 
 			<xsl:when test="m:genre='diary entry'">
 				<tr>
 					<td class="date_col">
-						<xsl:if test="normalize-space(m:creation/m:date)!=''">
-							<xsl:apply-templates select="m:creation/m:date"/></xsl:if><xsl:if
-							test="normalize-space(m:creation/m:geogName) and normalize-space(m:creation/m:date)">,
-							</xsl:if><xsl:if test="normalize-space(m:creation/m:geogName)!=''"><xsl:apply-templates
-								select="m:creation/m:geogName"/>
-						</xsl:if>&#160;&#160; </td>
+						<xsl:apply-templates select="m:creation/m:date[text()]"/><xsl:if
+							test="m:creation/m:geogName/text() and m:creation/m:date/text()">, </xsl:if>
+						<xsl:apply-templates select="m:creation/m:geogName/text()"/>&#160;&#160; 
+					</td>
 					<td>
 						<!-- do not display name if it is the composer's own diary -->
 						<xsl:if
-							test="normalize-space(m:creator)!='' and m:creator!=/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']">
+							test="m:creator/text() and m:creator!=/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']">
 							<xsl:text> </xsl:text>
 							<xsl:value-of select="m:creator"/>
-							<xsl:if test="normalize-space(concat(m:physLoc/m:repository, m:physLoc/m:identifier))">,
+							<xsl:if test="m:physLoc//text()">,
 							</xsl:if>
 						</xsl:if>
-						<xsl:if test="normalize-space(concat(m:physLoc/m:repository, m:physLoc/m:identifier))">
-							<em>
-								<xsl:value-of select="m:physLoc/m:repository"/>
-							</em>
-							<xsl:if
-								test="normalize-space(m:physLoc/m:repository) and normalize-space(m:physLoc/m:identifier)">
-								<xsl:text> </xsl:text>
-							</xsl:if>
-							<xsl:value-of select="m:physLoc/m:identifier"/>
-						</xsl:if>
-						<xsl:if test="normalize-space(m:relatedItem[@rel='host']/m:bibl/m:title)">
-							<xsl:apply-templates select="m:relatedItem[@rel='host']"/>
-						</xsl:if>
-						<xsl:apply-templates select="m:ptr"/>. </td>
+						<xsl:apply-templates select="m:physLoc[*//text()]"/>
+						<xsl:apply-templates select="m:relatedItem[@rel='host' and *//text()]"/>
+						<xsl:apply-templates select="m:ptr"/> 
+					</td>
 				</tr>
 			</xsl:when>
 
@@ -1877,25 +1834,31 @@
 				<xsl:if test="normalize-space(m:title)!=''">
 					<em><xsl:value-of select="m:title"/></em>
 				</xsl:if>
-				<xsl:if test="normalize-space(m:biblScope[@unit='vol'])">, vol.<xsl:value-of
-						select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>. <xsl:if
-					test="normalize-space(m:imprint/m:publisher)">
-					<xsl:value-of select="normalize-space(m:imprint/m:publisher)"/>, </xsl:if>
-				<xsl:if test="normalize-space(m:imprint/m:pubPlace)">
-					<xsl:value-of select="normalize-space(m:imprint/m:pubPlace)"/></xsl:if>
+				<xsl:if test="normalize-space(m:biblScope[@unit='vol'])">, Vol.<xsl:value-of
+						select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>. 
+				<xsl:apply-templates select="m:imprint"/>
 				<xsl:if test="normalize-space(m:creation/m:date)">
 					<xsl:apply-templates select="m:creation/m:date"/></xsl:if>
-				<xsl:if test="normalize-space(m:imprint/m:date)">
-					<xsl:apply-templates select="m:imprint/m:date"/></xsl:if>
 				<xsl:if test="normalize-space(m:biblScope[@unit='page'])">, p. <xsl:value-of
 						select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>. * </xsl:otherwise>
 		</xsl:choose>
 		<!-- links to full text (exception: letters and diary entries handled elsewhere) -->
-		<xsl:if test="normalize-space(m:ptr/@target) and not(m:genre='diary entry' or m:genre='letter')">
+		<xsl:if test="not(m:genre='diary entry' or m:genre='letter')">
 			<xsl:apply-templates select="m:ptr"/>
 		</xsl:if>
 	</xsl:template>
-
+	
+	<!-- imprint -->
+	<xsl:template match="m:imprint[*//text()]">
+		<xsl:param name="append_to_text"/>
+		<xsl:if test="$append_to_text='true'">. </xsl:if>
+		<xsl:if test="m:publisher/text()">
+			<xsl:apply-templates select="m:publisher"/>, </xsl:if>
+		<xsl:value-of select="m:pubPlace"/>
+		<xsl:if test="m:date/text()">
+			<xsl:text> </xsl:text>
+			<xsl:apply-templates select="m:date[text()]"/></xsl:if>
+	</xsl:template>
 
 	<xsl:template name="list_seperator">
 		<xsl:if test="position() &gt; 1">
@@ -1943,21 +1906,10 @@
 			<xsl:if test="position() &gt; 1">,<xsl:text> </xsl:text></xsl:if>
 			<xsl:value-of select="m:title"/>
 			<xsl:apply-templates select="." mode="volumes_pages"/>
-			<!--<xsl:for-each select="m:biblScope">
-				<xsl:choose>
-				<xsl:when test="@unit='page'">, p. </xsl:when>
-				<xsl:when test="@unit='vol'">, vol. </xsl:when>
-				<xsl:when test="@unit='issue'"> no. </xsl:when>
-				<xsl:when test="normalize-space(@unit)">, <xsl:value-of select="@unit"/> </xsl:when>
-				<xsl:otherwise><xsl:text> </xsl:text></xsl:otherwise>
-				</xsl:choose>
-				<xsl:value-of select="."/>
-				</xsl:for-each>-->
 		</xsl:for-each>) </xsl:template>
 
 
 	<!-- format volume, issue and page numbers -->
-
 	<xsl:template mode="volumes_pages" match="*">
 		<xsl:variable name="number_of_volumes" select="m:biblScope[@unit='vol'][text()]"/>
 		<xsl:variable name="number_of_pages" select="count(m:biblScope[@unit='page' and normalize-space(.)!=''])"/>
@@ -1983,11 +1935,29 @@
 	</xsl:template>
 
 	<!-- display external link -->
-	<xsl:template match="m:ptr">
-		<xsl:if test="normalize-space(@target) or normalize-space(@xl:href)">
-			<img src="/editor/images/html_link.png" title="Link to external resource"/>
-			<a target="_blank">
-				<xsl:attribute name="href">
+	<xsl:template match="m:ptr[@target!='' or @xl:href!='']">
+		<img src="/editor/images/html_link.png" title="Link to external resource"/>
+		<a target="_blank">
+			<xsl:attribute name="href">
+				<xsl:choose>
+					<xsl:when test="normalize-space(@target)">
+						<xsl:value-of select="@target"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="@xl:href"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:attribute>
+			<xsl:choose>
+				<xsl:when test="normalize-space(@label)!=''">
+					<xsl:value-of select="@label"/>
+				</xsl:when>
+				<xsl:when test="normalize-space(@targettype)!=''">
+					<xsl:call-template name="capitalize">
+						<xsl:with-param name="str" select="@targettype"/>
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:otherwise>
 					<xsl:choose>
 						<xsl:when test="normalize-space(@target)">
 							<xsl:value-of select="@target"/>
@@ -1996,35 +1966,15 @@
 							<xsl:value-of select="@xl:href"/>
 						</xsl:otherwise>
 					</xsl:choose>
-				</xsl:attribute>
-				<xsl:choose>
-					<xsl:when test="normalize-space(@label)!=''">
-						<xsl:value-of select="@label"/>
-					</xsl:when>
-					<xsl:when test="normalize-space(@targettype)!=''">
-						<xsl:call-template name="capitalize">
-							<xsl:with-param name="str" select="@targettype"/>
-						</xsl:call-template>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:choose>
-							<xsl:when test="normalize-space(@target)">
-								<xsl:value-of select="@target"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="@xl:href"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:otherwise>
-				</xsl:choose>
-			</a>
-		</xsl:if>
+				</xsl:otherwise>
+			</xsl:choose>
+		</a>
 	</xsl:template>
-
+	
 	<xsl:template match="m:revisionDesc">
 		<xsl:apply-templates select="m:change[normalize-space(@isodate)!=''][last()]" mode="last"/>
 	</xsl:template>
-
+	
 	<xsl:template match="m:revisionDesc/m:change" mode="last">
 		<div class="latest_revision">
 			<br/>Last changed <xsl:value-of select="@isodate"/>

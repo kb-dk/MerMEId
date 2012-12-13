@@ -259,7 +259,6 @@
   </xsl:template>
   <!-- end utilities -->
 
-
   <xsl:template match="m:revisionDesc" mode="convertEntities">
     <xsl:element name="revisionDesc">
       <xsl:choose>
@@ -272,32 +271,31 @@
               <xsl:otherwise>
                 <xsl:variable name="today" select="@isodate"/>
                 <xsl:variable name="prevChange" select="preceding-sibling::node()[1]"/>
-                <xsl:choose>
-                  <xsl:when test="m:changeDesc//text() or $prevChange/@isodate!=$today or $prevChange/@resp!=$user">
-                    <change>
-                      <xsl:copy-of select="@*"/>
-                      <xsl:attribute name="isodate"><xsl:value-of select="@isodate"/></xsl:attribute>
-                      <xsl:attribute name="resp">
-                        <xsl:choose>
-                          <xsl:when test="normalize-space(@resp)">
-                            <xsl:value-of select="@resp"/>
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:value-of select="$user"/>
-                          </xsl:otherwise>
-                        </xsl:choose>
-                      </xsl:attribute>
-                      <changeDesc>
-                        <p>
-                          <xsl:value-of select="m:changeDesc/m:p"/>
-                        </p>
-                      </changeDesc>
-                    </change>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:apply-templates select="."/>
-                  </xsl:otherwise>
-                </xsl:choose>
+                <xsl:if test="m:changeDesc//text() 
+                  or $prevChange/@isodate!=$today 
+                  or $prevChange/@resp!=$user 
+                  or count(../m:change)=1
+                  or (not(m:changeDesc//text()) and $prevChange/m:changeDesc!='')">
+                  <change>
+                    <xsl:copy-of select="@*"/>
+                    <xsl:attribute name="isodate"><xsl:value-of select="@isodate"/></xsl:attribute>
+                    <xsl:attribute name="resp">
+                      <xsl:choose>
+                        <xsl:when test="normalize-space(@resp)">
+                          <xsl:value-of select="@resp"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="$user"/>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:attribute>
+                    <changeDesc>
+                      <p>
+                        <xsl:value-of select="m:changeDesc/m:p"/>
+                      </p>
+                    </changeDesc>
+                  </change>
+                </xsl:if>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>

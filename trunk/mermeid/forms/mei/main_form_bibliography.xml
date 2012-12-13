@@ -25,6 +25,13 @@
       <!-- reference types menu -->
       <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
         close="true" draggable="true" visible="false">
+        
+        
+        
+        <h:h1>E: <xf:output value="name(instance('bibl-type-instance')/*[1])"></xf:output></h:h1>
+        
+        
+        
         <h:div class="blocklabel">Add new reference:</h:div>
         <h:br clear="all"/>
         <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl" 
@@ -41,7 +48,7 @@
                 nodeset="m:bibl" 
                 at="index('repeat-references')"
                 position="after" 
-                origin="instance('bibl-type-instance')/m:biblList[index('repeat-listbibl')]/m:bibl[index('ref-type-menu-repeat')]"/>
+                origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-repeat')]"/>
                 </xf:action>
               <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)=0">
                 <!-- first <bibl> is inserted after <head>  -->
@@ -49,7 +56,7 @@
                   nodeset="*" 
                   at="last()"
                   position="after" 
-                  origin="instance('bibl-type-instance')/m:biblList[index('repeat-listbibl')]/m:bibl[index('ref-type-menu-repeat')]"/>
+                  origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-repeat')]"/>
               </xf:action>
               <xf:dispatch name="id-update" target="form-group"/>
               <xxf:hide dialog="add-ref-dialog"/>
