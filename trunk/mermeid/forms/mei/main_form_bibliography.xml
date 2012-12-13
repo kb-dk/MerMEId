@@ -25,13 +25,6 @@
       <!-- reference types menu -->
       <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
         close="true" draggable="true" visible="false">
-        
-        
-        
-        <h:h1>E: <xf:output value="name(instance('bibl-type-instance')/*[1])"></xf:output></h:h1>
-        
-        
-        
         <h:div class="blocklabel">Add new reference:</h:div>
         <h:br clear="all"/>
         <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl" 
