@@ -138,9 +138,12 @@
       method="put"
       replace="instance"/>
 
+<!--  xxf:username="{instance('parameters')/dcm:exist_user}"
+      xxf:password="{instance('parameters')/dcm:exist_pwd}"-->
+
     <xf:submission id="load-fileList"
-      xxf:username="{instance('parameters')/dcm:exist_user}"
-      xxf:password="{instance('parameters')/dcm:exist_pwd}"
+      xxf:username=""
+      xxf:password=""
       method="get" 
       serialization="none" 
       validate="false"
