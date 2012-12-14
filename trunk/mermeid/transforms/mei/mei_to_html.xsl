@@ -1126,11 +1126,14 @@
 						<xsl:when test="@role!=preceding-sibling::*[1]/@role or position()=1">
 							<xsl:choose>
 								<xsl:when test="@role=following-sibling::*[1]/@role">
-									<xsl:value-of select="concat(@role,'s')"/><xsl:text>: </xsl:text>
+									<xsl:if test="name()='persName'">
+										<xsl:value-of select="concat(@role,'s')"/><xsl:text>: </xsl:text>
+									</xsl:if>
 									<xsl:apply-templates select="."/>, </xsl:when>
 								<xsl:otherwise>
-									<xsl:value-of select="@role"/>
-									<xsl:text>: </xsl:text>
+									<xsl:if test="name()='persName'">
+										<xsl:value-of select="@role"/><xsl:text>: </xsl:text>
+									</xsl:if>
 									<xsl:apply-templates select="."/>
 									<xsl:if test="following-sibling::m:persName/text()">; </xsl:if>
 								</xsl:otherwise>
@@ -1538,7 +1541,7 @@
 		</xsl:for-each>
 		<xsl:apply-templates select="m:identifier"/><xsl:if 
 			test="m:identifier[text()] or m:repository[*//text()]">. </xsl:if>
-		<xsl:for-each select="m:ptr[@target!='']">
+		<xsl:for-each select="m:repository/m:ptr[@target!='']">
 			<xsl:apply-templates select="."/>
 			<xsl:if test="position()!=last()">
 				<xsl:text>, </xsl:text>
@@ -1762,19 +1765,8 @@
 					<xsl:if
 						test="normalize-space(concat(m:biblScope[normalize-space()], m:imprint/m:publisher, m:imprint/m:pubPlace))"
 						>. </xsl:if>
-					<xsl:if test="normalize-space(m:biblScope[@unit='vol'])">, Vol.<xsl:value-of
-							select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>
-					<xsl:if test="normalize-space(m:imprint/m:publisher)">
-						<xsl:value-of select="normalize-space(m:imprint/m:publisher)"/>
-						<xsl:if test="normalize-space(concat(m:imprint/m:pubPlace,m:biblScope[@unit='page']))">,
-						</xsl:if>
-					</xsl:if>
-					<xsl:if test="normalize-space(m:imprint/m:pubPlace)">
-						<xsl:value-of select="normalize-space(m:imprint/m:pubPlace)"/></xsl:if>
-					<xsl:if test="normalize-space(m:imprint/m:date)">
-						<xsl:apply-templates select="m:imprint/m:date"/></xsl:if>
-					<xsl:if test="normalize-space(m:biblScope[@unit='page'])">, p. <xsl:value-of
-							select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>. </xsl:if>
+					<xsl:apply-templates select="." mode="volumes_pages"/>
+				</xsl:if>
 			</xsl:when>
 
 			<xsl:when test="m:genre='letter'">
@@ -1801,6 +1793,7 @@
 						</xsl:if><xsl:if test="(m:creator/text() or m:recipient/text()) and m:physLoc//text()">, </xsl:if> 
 						<xsl:apply-templates select="m:physLoc[*//text()]"/>
 						<xsl:apply-templates select="m:relatedItem[@rel='host' and *//text()]"/>
+						<xsl:apply-templates select="m:annot"/>
 						<xsl:apply-templates select="m:ptr"/> 
 					</td>
 				</tr>
@@ -1814,16 +1807,16 @@
 						<xsl:apply-templates select="m:creation/m:geogName/text()"/>&#160;&#160; 
 					</td>
 					<td>
-						<!-- do not display name if it is the composer's own diary -->
-						<xsl:if
-							test="m:creator/text() and m:creator!=/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']">
+						<!-- optional: do not display name if it is the composer's own diary -->
+						<!--<xsl:if test="m:creator/text() and m:creator!=/*//m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']">-->
 							<xsl:text> </xsl:text>
 							<xsl:value-of select="m:creator"/>
 							<xsl:if test="m:physLoc//text()">,
 							</xsl:if>
-						</xsl:if>
+						<!--</xsl:if>-->
 						<xsl:apply-templates select="m:physLoc[*//text()]"/>
 						<xsl:apply-templates select="m:relatedItem[@rel='host' and *//text()]"/>
+						<xsl:apply-templates select="m:annot"/>
 						<xsl:apply-templates select="m:ptr"/> 
 					</td>
 				</tr>
@@ -1844,8 +1837,15 @@
 		</xsl:choose>
 		<!-- links to full text (exception: letters and diary entries handled elsewhere) -->
 		<xsl:if test="not(m:genre='diary entry' or m:genre='letter')">
+			<xsl:apply-templates select="m:annot"/>
 			<xsl:apply-templates select="m:ptr"/>
 		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template match="m:bibl/m:annot">
+		<div>
+			<xsl:apply-templates/>
+		</div>
 	</xsl:template>
 	
 	<!-- imprint -->
@@ -1910,24 +1910,45 @@
 
 
 	<!-- format volume, issue and page numbers -->
-	<xsl:template mode="volumes_pages" match="*">
-		<xsl:variable name="number_of_volumes" select="m:biblScope[@unit='vol'][text()]"/>
-		<xsl:variable name="number_of_pages" select="count(m:biblScope[@unit='page' and normalize-space(.)!=''])"/>
+	<xsl:template mode="volumes_pages" match="m:bibl">
+		<xsl:variable name="number_of_volumes" select="count(m:biblScope[@unit='vol' and text()])"/>
 		<xsl:choose>
-			<xsl:when test="$number_of_volumes &gt; 0">: <xsl:for-each select="m:biblScope[@unit='vol']">
-					<xsl:if test="position() &gt; 1">; </xsl:if> Vol. <xsl:value-of select="."/>
-					<xsl:if test="normalize-space(../m:biblScope[@unit='issue'][position()])">/<xsl:value-of
-							select="normalize-space(../m:biblScope[@unit='issue'][position()])"/></xsl:if>
-					<xsl:if test="normalize-space(../m:biblScope[@unit='page'][position()])">, p. <xsl:value-of
-							select="normalize-space(../m:biblScope[@unit='page'][position()])"/></xsl:if>
+			<xsl:when test="$number_of_volumes &gt; 0">: <xsl:for-each select="m:biblScope[@unit='vol' and text()]">
+					<xsl:if test="position()&gt;1">; </xsl:if> Vol. <xsl:value-of select="."/>
+					<xsl:if test="../m:biblScope[@unit='issue'][position()]/text()">/<xsl:value-of
+							select="../m:biblScope[@unit='issue'][position()]"/></xsl:if>
+					<xsl:if test="../m:biblScope[@unit='page'][position()]/text()">, p. <xsl:value-of
+							select="../m:biblScope[@unit='page'][position()]"/></xsl:if>
 				</xsl:for-each>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">, p. <xsl:value-of
-						select="m:biblScope[@unit='page']"/>
-				</xsl:if>
+				<xsl:variable name="number_of_issues" select="count(m:biblScope[@unit='issue' and text()])"/>
+				<xsl:choose>
+					<xsl:when test="$number_of_issues &gt; 0"><xsl:for-each select="m:biblScope[@unit='issue' and text()]">
+						<xsl:if test="position()&gt;1">; </xsl:if><xsl:value-of	select="."/>
+						<xsl:if test="../m:biblScope[@unit='page'][position()]/text()">, p. <xsl:value-of
+							select="../m:biblScope[@unit='page'][position()]"/></xsl:if>
+						</xsl:for-each>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:for-each select="m:biblScope[@unit='page' and text()]">
+							<xsl:if test="position()=1">, p. </xsl:if>
+							<xsl:if test="position()&gt;1">; </xsl:if>
+							<xsl:value-of select="."/>
+						</xsl:for-each>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:otherwise>
 		</xsl:choose>
+		<xsl:for-each select="m:biblScope[@unit and (@unit!='vol' and @unit!='issue' and @unit!='page')]">
+			<xsl:text> </xsl:text>
+			<xsl:choose>
+				<xsl:when test="@unit='no'">no.</xsl:when>
+				<xsl:otherwise><xsl:value-of select="@unit"/></xsl:otherwise>
+			</xsl:choose>
+			<xsl:text> </xsl:text>
+			<xsl:value-of select="."/>
+		</xsl:for-each>
 		<xsl:for-each select="m:biblScope[not(@unit)]">
 			<xsl:text> </xsl:text>
 			<xsl:value-of select="."/>

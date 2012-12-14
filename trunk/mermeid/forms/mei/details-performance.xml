@@ -183,10 +183,10 @@
                                 <h:div class="vertical_spacer"/>
                                 <dcm:create ref="m:biblList[m:head='Reviews']"
                                     nodeset="m:bibl"
-                                    label="Add review"
+                                    label="Add reference"
                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:biblList[m:head='Reviews']/m:bibl[1]"/>
                                 <dcm:create nodeset="m:biblList[m:head='Reviews']"
-                                    label="Add review"
+                                    label="Add reviews"
                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:biblList[m:head='Reviews']"/>
                                 <xf:repeat nodeset="m:biblList[m:head='Reviews']/m:bibl" id="repeat-review">
                                     <h:fieldset>
@@ -243,7 +243,7 @@
                                     serving as evidence for this performance, such as concert programmes, announcements, or secondary literature</h:span></h:a></h:legend>
                                 <dcm:create nodeset="m:biblList[m:head='Evidence']"
                                     label="Add evidence bibliography"
-                                    origin="instance('empty-instance')/m:meiHead/m:WorkDesc/m:work//m:eventList[@type='performances']/m:event/m:biblList[m:head='Evidence']"/>
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:biblList[m:head='Evidence']"/>
                                 
                                 <xf:group ref="m:biblList[m:head='Evidence']">
                                     <xf:group ref=".[not(m:bibl)]">

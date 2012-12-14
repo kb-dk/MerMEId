@@ -229,7 +229,10 @@
     
     <xsl:template match="m:corpname[name(..)!='respstmt' and name(..)!='repository']">
         <corpName>
-            <xsl:copy-of select="@*"/>
+            <xsl:copy-of select="@*[name()!='type']"/>
+            <xsl:if test="@type">
+                <xsl:attribute name="role"><xsl:value-of select="@type"/></xsl:attribute>
+            </xsl:if>
             <xsl:apply-templates/>
         </corpName>
     </xsl:template>
@@ -473,10 +476,10 @@
     <xsl:template match="m:repository">
         <repository>
             <xsl:apply-templates select="@*|*[local-name()!='identifier' and local-name()!='extptr']"/>
+            <xsl:apply-templates select="m:extptr"/>
         </repository>
-        <!-- move shelf mark and fulltext links out of <repository> -->
+        <!-- move shelf mark out of <repository> -->
         <xsl:apply-templates select="m:identifier"/>
-        <xsl:apply-templates select="m:extptr"/>
     </xsl:template>
 
     <xsl:template match="m:repository/m:identifier">

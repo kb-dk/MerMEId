@@ -54,12 +54,31 @@
     <xsl:if test="normalize-space(.)">
       <xsl:copy-of select="."/>
     </xsl:if>
-  </xsl:template>    
+  </xsl:template>
+  
+  <!-- Clean-up double-escaped ampersands (&amp;amp;) -->
+  <xsl:template match="text()[contains(.,'&amp;amp;')]">
+    <xsl:call-template name="cleanup_amp">
+      <xsl:with-param name="string" select="."/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="cleanup_amp">
+    <xsl:param name="string"/>
+    <xsl:variable name="remainder" select="substring-after($string,'&amp;amp;')"/>
+    <xsl:value-of select="substring-before($string,'&amp;amp;')"/>&amp;<xsl:choose>
+      <xsl:when test="contains($remainder,'&amp;amp;')"><xsl:call-template 
+        name="cleanup_amp">
+        <xsl:with-param name="string" select="$remainder"/></xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise><xsl:value-of select="$remainder"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
   
   <!-- Remove empty elements -->
   <xsl:template match="m:castList[not(*)]"/>
   
-  <!-- delete duplicate language definitions (fixes an xforms problem) -->
+  <!-- Delete duplicate language definitions (fixes an xforms problem) -->
   <xsl:template match="m:mei/m:meiHead/m:workDesc/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
 
   <!-- END CLEANING -->
