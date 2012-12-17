@@ -44,11 +44,11 @@
         src="/../editor/forms/mei/model/bibl_reference_types.xml" 
         xxf:readonly="true"/>
     
-    <xf:instance xmlns="http://www.tei-c.org/ns/1.0" 
-        id="bibliography-instance" 
-        src="/../editor/forms/mei/model/standard_bibliography.xml" 
-        xxf:readonly="true"/>
-    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+        id="bibliography-instance">
+        <mei/>
+    </xf:instance>
+        
     <xf:instance id="mei_attr_list" 
         src="/../editor/forms/mei/model/MEI_attr_list.xml"/>
     
@@ -92,10 +92,15 @@
         resource="{instance('temp')/target_uri}"
         replace="instance" instance="empty-instance"/>
 
-<!-- Wasn't needed
-xxf:username="{instance('parameters')/dcm:filter_user}"
-xxf:password="{instance('parameters')/dcm:filter_password}"
--->
+    <xf:submission id="load-bibliography"
+        xxf:username=""
+        xxf:password=""
+        method="get" 
+        serialization="none" 
+        validate="false"
+        resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml"
+        replace="instance" 
+        instance="bibliography-instance"/>
     
     <xf:submission id="save-to-file"
         ref="instance('data-instance')"
@@ -113,6 +118,8 @@ xxf:password="{instance('parameters')/dcm:filter_password}"
         <xf:setvalue ref="instance('temp')/id" value="xxf:get-request-parameter('id')"/>
         <!-- store XML data file name -->
         <xf:setvalue ref="instance('parameters')/dcm:xml_file" value="xxf:get-request-parameter('doc')"/>
+        <!-- load standard bibliography -->
+        <xf:send submission="load-bibliography"/>
         <!-- load XML data -->
         <xf:send submission="load-data-submission"/>
         <!-- load empty model XML data -->

@@ -79,12 +79,12 @@
       id="bibl-type-instance" 
       src="/editor/forms/mei/model/bibl_reference_types.xml" 
       xxf:readonly="true"/>
-    
+
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
-      id="bibliography-instance" 
-      src="/editor/forms/mei/model/standard_bibliography.xml" 
-      xxf:readonly="true"/>
-        
+      id="bibliography-instance">
+      <mei/>
+    </xf:instance>
+
     <xf:instance id="mei_attr_list" 
       src="/editor/forms/mei/model/MEI_attr_list.xml"/>
     
@@ -138,9 +138,6 @@
       method="put"
       replace="instance"/>
 
-<!--  xxf:username="{instance('parameters')/dcm:exist_user}"
-      xxf:password="{instance('parameters')/dcm:exist_pwd}"-->
-
     <xf:submission id="load-fileList"
       xxf:username=""
       xxf:password=""
@@ -150,6 +147,16 @@
       resource="{instance('temp')/target_uri}"
       replace="instance" 
       instance="XMLfiles"/>
+
+    <xf:submission id="load-bibliography"
+      xxf:username=""
+      xxf:password=""
+      method="get" 
+      serialization="none" 
+      validate="false"
+      resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml"
+      replace="instance" 
+      instance="bibliography-instance"/>
     
     <!-- "onload" xforms actions -->
     <xf:action ev:event="xforms-model-construct-done">
@@ -163,6 +170,8 @@
       <xf:setvalue ref="instance('parameters')/dcm:this_page" value="concat(
         instance('parameters')/dcm:orbeon_dir,'?uri=',xxf:get-request-parameter('uri'),
         '&amp;doc=',instance('parameters')/dcm:xml_file)"/>
+      <!-- load standard bibliography -->
+      <xf:send submission="load-bibliography"/>
       <!-- load XML data -->
       <xf:send submission="load-data-submission"/>
       

@@ -834,18 +834,17 @@
                                 </xsl:choose>
                             </xsl:if>
                         </componentGrp>
-                        <relationList>
-                            <relation rel="hasReproduction" label="Edited score" targettype="edited_score">
-                                <xsl:attribute name="target">
-                                    <xsl:if
-                                        test="count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='edited_score'])=1">
+                        <xsl:if test="count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='edited_score'])=1">
+                            <relationList>
+                                <relation rel="hasReproduction" label="Edited score" targettype="edited_score">
+                                    <xsl:attribute name="target">
                                         <xsl:value-of
                                             select="//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='edited_score']/m:annot/m:extptr/@xl:href"
                                         />
-                                    </xsl:if>
-                                </xsl:attribute>
-                            </relation>
-                        </relationList>
+                                    </xsl:attribute>
+                                </relation>
+                            </relationList>
+                        </xsl:if>
                     </expression>
                 </expressionList>
             </work>
@@ -1146,19 +1145,16 @@
                 <!-- dig one expression level deeper if we are at sub-work level (i.e. if context is m:score) -->
                 <xsl:apply-templates select="m:section" mode="expression"/>
             </componentGrp>
+            <xsl:if
+                test="(count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='edited_score'])&gt;1 
+                or name(node())='section')
+                and m:app/m:rdg[@type='edited_score']/m:annot/m:extptr/@xl:href!=''">
             <relationList>
                 <relation rel="hasReproduction" label="Score" targettype="edited_score">
-                    <xsl:attribute name="target"/>
-                    <xsl:if
-                        test="count(//m:music/m:body/m:mdiv/m:score/m:app/m:rdg[@type='edited_score'])&gt;1 or name(node())='section'">
-                        <xsl:if test="m:app/m:rdg[@type='edited_score']/m:annot/m:extptr/@xl:href!=''">
-                            <xsl:attribute name="target">
-                                <xsl:value-of select="m:app/m:rdg[@type='edited_score']/m:annot/m:extptr/@xl:href"/>
-                            </xsl:attribute>
-                        </xsl:if>
-                    </xsl:if>
+                    <xsl:attribute name="target"><xsl:value-of select="m:app/m:rdg[@type='edited_score']/m:annot/m:extptr/@xl:href"></xsl:value-of></xsl:attribute>
                 </relation>
             </relationList>
+                </xsl:if>
         </expression>
     </xsl:template>
 

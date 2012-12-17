@@ -320,7 +320,9 @@
           </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates select="."/>
+          <xsl:for-each select="m:change">
+            <xsl:apply-templates select="."/>
+          </xsl:for-each>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:element>

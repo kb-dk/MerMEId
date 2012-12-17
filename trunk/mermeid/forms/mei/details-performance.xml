@@ -327,6 +327,7 @@
                                     <h:br clear="all"/>
                                     <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl[count(m:genre[.=parent::node()/preceding-sibling::m:biblList/m:bibl/m:genre])=0]" 
                                         id="ref-type-menu-repeat">
+<!--
                                         <xf:trigger submission="replace-form-with" appearance="minimal" class="non-standard_trigger">
                                             <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output 
                                                 value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
@@ -342,10 +343,39 @@
                                                 <xf:dispatch name="id-update" target="form-group"/>
                                                 <xxf:hide dialog="add-ref-dialog"/>
                                             </xf:action>
+                                        </xf:trigger>-->
+                                        
+                                        <xf:trigger submission="replace-form-with" appearance="minimal" class="non-standard_trigger">
+                                            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output 
+                                                value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
+                                                    value="if (m:genre[2]!='') then concat(', ',m:genre[2]) else ''"></xf:output>
+                                            </xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:toggle case="hide_ref_types"/>
+                                                <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work//m:event[@xml:id=instance('temp')/id]/m:biblList[m:head='Evidence']/m:bibl)&gt;0">
+                                                    <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work//m:event[@xml:id=instance('temp')/id]/m:biblList[m:head='Evidence']" 
+                                                        nodeset="m:bibl" 
+                                                        at="index('repeat-evidence-references')"
+                                                        position="after" 
+                                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-repeat')]"/>
+                                                </xf:action>
+                                                <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work//m:event[@xml:id=instance('temp')/id]/m:biblList[m:head='Evidence']/m:bibl)=0">
+                                                    <!-- first <bibl> is inserted after <head>  -->
+                                                    <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work//m:event[@xml:id=instance('temp')/id]/m:biblList[m:head='Evidence']" 
+                                                        nodeset="*" 
+                                                        at="last()"
+                                                        position="after" 
+                                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-repeat')]"/>
+                                                </xf:action>
+                                                <xf:dispatch name="id-update" target="form-group"/>
+                                                <xxf:hide dialog="add-ref-dialog"/>
+                                            </xf:action>
                                         </xf:trigger>
+                                        
                                         <h:br clear="all"/>
                                     </xf:repeat>
                                     <!-- standard references quick-add menu -->
+                                    <!--
                                     <xf:group ref=".[count(instance('bibliography-instance')/m:biblList[@type=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']])&gt;0]">
                                         <h:hr style="margin:10px 0px;"/>
                                         <h:div class="blocklabel">Add from this collections's standard references:</h:div>
@@ -362,6 +392,45 @@
                                                             at="index('repeat-evidence-references')" 
                                                             position="after" 
                                                             origin="$origin"/>
+                                                        <xf:dispatch name="id-update" target="form-group"/>
+                                                        <xxf:hide dialog="add-ref-dialog"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <h:br clear="all"/>
+                                            </xf:repeat>
+                                        </xf:repeat>
+                                        </xf:group>-->
+                                    <xf:group ref=".[count(instance('bibliography-instance')/m:biblList[m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']])&gt;0 
+                                        or instance('bibliography-instance')/m:biblList[not(normalize-space(m:head))]/m:bibl//text()]">
+                                        <h:hr style="margin:10px 0px;"/>
+                                        <h:div class="blocklabel">Add from this collections's standard references:</h:div>
+                                        <h:br clear="all"/>
+                                        <xf:repeat nodeset="instance('bibliography-instance')/m:biblList[not(normalize-space(m:head)) or m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']]" 
+                                            id="std-bibl-repeat">
+                                            <xf:repeat nodeset="m:bibl" id="std-bibl-menu-repeat">
+                                                <xf:trigger submission="replace-form-with" appearance="minimal">
+                                                    <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> 
+                                                        <xf:output ref="m:creator[text()]" value="concat(.[1],': ')"/>
+                                                        <xf:output ref="m:editor[text() and not(../m:creator[text()])]" value="concat(.[1],': ')"/>
+                                                        <xf:output ref="m:title[text() and string-length()&gt;40][1]" value="concat(substring(.,1,40),'...')"/>
+                                                        <xf:output ref="m:title[text() and string-length()&lt;41][1]" value="."/>
+                                                    </xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work//m:event[@xml:id=instance('temp')/id]/m:biblList[m:head='Evidence']/m:bibl)&gt;0">
+                                                            <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work//m:event[@xml:id=instance('temp')/id]/m:biblList[m:head='Evidence']"
+                                                                nodeset="m:bibl"
+                                                                at="index('repeat-evidence-references')" 
+                                                                position="after" 
+                                                                origin="instance('bibliography-instance')/m:biblList[not(normalize-space(m:head)) or m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']][index('std-bibl-repeat')]/m:bibl[index('std-bibl-menu-repeat')]"/>
+                                                        </xf:action>
+                                                        <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work//m:event[@xml:id=instance('temp')/id]/m:biblList[m:head='Evidence']/m:bibl)=0">
+                                                            <!-- first <bibl> is inserted after <head>  -->
+                                                            <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work//m:event[@xml:id=instance('temp')/id]/m:biblList[m:head='Evidence']"
+                                                                nodeset="*"
+                                                                at="last()" 
+                                                                position="after" 
+                                                                origin="instance('bibliography-instance')/m:biblList[not(normalize-space(m:head)) or m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']][index('std-bibl-repeat')]/m:bibl[index('std-bibl-menu-repeat')]"/>
+                                                        </xf:action>
                                                         <xf:dispatch name="id-update" target="form-group"/>
                                                         <xxf:hide dialog="add-ref-dialog"/>
                                                     </xf:action>
