@@ -37,6 +37,7 @@ cp "local_config/http_filter.xml_$F_FILE" filter/src/main/resources/http_filter.
 
 tar cf - `find . -type f -print | \
     grep -v MerMEId | \
+    grep -v ebook | \
     grep -v svn | \
     grep -v local_config | \
     grep -v cms `  | (cd MerMEId ; tar xvf - )
