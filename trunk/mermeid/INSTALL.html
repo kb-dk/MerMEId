@@ -171,7 +171,7 @@
       easier to deploye it in your tomcat. </p>
 
       <pre>
-	cp editor.war /&lt;PATH TO YOUR&gt;/tomcat6/webapps/exist.war
+	cp editor.war /&lt;PATH TO YOUR&gt;/tomcat6/webapps/editor.war
       </pre>
 
       <p>See below how apache is configured in the two cases.</p>
@@ -301,6 +301,10 @@
 	  <a href="#appendix">configuration files</a> Figure 2 shows the client after
 	  installation and configuration.</li>
 
+	  <li><strong>Create a collection called library</strong>. Used to
+	  keep a standard set of bibliographic references that are often
+	  used.</li>
+
 	  <li><strong>Load some content:</strong>
 	  <p>After configuring eXist, it is just to populate the database with
 	  some content. The easiest way to do that is to use the admin client
@@ -312,10 +316,23 @@
 	    ./load_exist.pl --user admin \
 	    --password your_own_very_secret_password \
 	    --host-port mei.example.org:8080 \
-	    --load examples \
+	    --load dcm \
 	    --context /exist/rest/db/dcm \
 	    --suffix xml
 	  </pre>
+
+	  <p>and</p>
+
+	  <pre>
+	    cd xquery
+	    ./load_exist.pl --user admin \
+	    --password your_own_very_secret_password \
+	    --host-port mei.example.org:8080 \
+	    --load library \
+	    --context /exist/rest/db/library \
+	    --suffix xml
+	  </pre>
+
 
 	  <p>Please note that we've folded the command line using '\' just for
 	  typographical reasons.</p>
