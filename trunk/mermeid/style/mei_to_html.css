@@ -45,7 +45,7 @@ h3 {
 }
 
 h4 {
-    font-size: 1.1em;
+    font-size: 1em;
 }
 
 h5 {
@@ -195,7 +195,7 @@ table.source_component_list td.label_cell {
 
 /* Styling the header with the catalogue's name 
    and the works's number in it. 
-   For series specific styling, use the series identifier as a class name. */
+   For series-specific styling, use the series identifier as a class name. */
 .series_header {
     /* shared by all series */
     background-color : #84a48a;
@@ -226,8 +226,6 @@ table.source_component_list td.label_cell {
 	src: url('fonts/Hnias.eot');
 	src: local('Hnias Regular'), local('Hnias'), url('fonts/Hnias.ttf') format('truetype');
 } 
-
-
 /* End embedded font */
 
 .accidental {
@@ -262,6 +260,7 @@ table.source_component_list td.label_cell {
     position:relative;
     top: .2em;
 }
+
 /* css for help pop-ups */
 a.help {
     text-decoration : none;

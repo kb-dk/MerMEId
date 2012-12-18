@@ -494,7 +494,7 @@
 				<p>
 					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName[text()]">
 						<xsl:value-of select="."/>
-						<xsl:if test="normalize-space(@role)">(<xsl:value-of select="@role"/>)</xsl:if>
+						<xsl:if test="normalize-space(@role)"> (<xsl:value-of select="@role"/>)</xsl:if>
 						<xsl:if test="position()!=last()">
 							<br/>
 						</xsl:if>
@@ -1003,7 +1003,7 @@
 		<xsl:text>
 		</xsl:text>
 
-		<div class="fold" style="display:block;">
+		<div class="fold">
 			<p class="p_heading" id="p{$historydiv_id}" title="Click to open" onclick="toggle('{$historydiv_id}')">
 				<img id="img{$historydiv_id}" class="noprint" style="display:inline" border="0"
 					src="/editor/images/plus.png" alt="+"/> History </p>
@@ -1069,12 +1069,11 @@
 
 		<xsl:variable name="source_id" select="concat('source',generate-id(.),position())"/>
 
-		<div class="fold">
-			<xsl:text>
-			</xsl:text>
-			<script type="application/javascript"><xsl:text>
+		<script type="application/javascript"><xsl:text>
 				openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;
 				</xsl:text></script>
+		
+		<div class="fold">
 			<xsl:text>
 			</xsl:text>
 			<p class="p_heading" id="p{$source_id}" title="Click to open" onclick="toggle('{$source_id}')">
@@ -1396,7 +1395,7 @@
 					<xsl:when
 						test="local-name()='source' and 
 						(count(m:itemList/m:item[//text()])&gt;1 or 
-						m:itemList/m:item/m:titleStmt/m:title/text())">
+						(m:itemList/m:item/@label and m:itemList/m:item/@label!=''))">
 						<xsl:apply-templates select="m:componentGrp"/>
 						<xsl:apply-templates select="m:itemList"/>
 					</xsl:when>
@@ -1427,7 +1426,7 @@
 
 	<xsl:template match="m:itemList">
 		<xsl:choose>
-			<xsl:when test="count(m:item)&gt;1 or m:item/m:titleStmt/m:title/text()">
+			<xsl:when test="count(m:item)&gt;1 or (m:item/@label and m:item/@label!='')">
 				<ul class="item_list">
 					<xsl:for-each select="m:item">
 						<li>
@@ -1532,14 +1531,14 @@
 						<xsl:text> </xsl:text>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:if test="m:identifier[text()]">
-							<em><xsl:apply-templates select="m:identifier[text()]"/></em><xsl:text> </xsl:text>
-						</xsl:if>
+						<xsl:for-each select="m:identifier[text()]">
+							<em><xsl:apply-templates select="."/></em><xsl:text> </xsl:text>
+						</xsl:for-each>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:if>
 		</xsl:for-each>
-		<xsl:apply-templates select="m:identifier"/><xsl:if 
+		<xsl:value-of select="m:identifier"/><xsl:if 
 			test="m:identifier[text()] or m:repository[*//text()]">. </xsl:if>
 		<xsl:for-each select="m:repository/m:ptr[@target!='']">
 			<xsl:apply-templates select="."/>
@@ -1547,7 +1546,14 @@
 				<xsl:text>, </xsl:text>
 			</xsl:if>
 		</xsl:for-each>
+		<xsl:for-each select="m:ptr[@target!='']">
+			<xsl:apply-templates select="."/>
+			<xsl:if test="position()!=last()">
+				<xsl:text>, </xsl:text>
+			</xsl:if>
+		</xsl:for-each>
 	</xsl:template>	
+
 
 	<!-- format scribe's name and medium -->
 	<xsl:template match="m:hand" mode="scribe">
