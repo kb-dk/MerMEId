@@ -166,7 +166,7 @@
   
   <h:p id="view_menu">
     <!-- test -->
-    <!-- filter ignores anything before the last "/", so this doesn't work yet -->
+    <!-- to be implemented -->
     <!--<xf:submit submission="save-to-file" appearance="minimal">
       <xf:label>SAVE AS TEMPLATE</xf:label>
       <xf:action ev:event="DOMActivate">
@@ -224,8 +224,7 @@
   <!-- Dialog for editing session settings and opening standard (template) data editors -->
   <xxf:dialog id="settings-dialog" appearance="full" level="modal">
     <xf:label>MerMEId settings</xf:label>
-    <!-- to be implemented
-    <xf:trigger appearance="minimal">
+    <!--<xf:trigger appearance="minimal">
       <xf:label><h:img src="http:/editor/images/expand.png" title="Edit"/> Edit standard bibliographic references <h:a class="help">?<h:span class="comment">For each 
       file collection (series), a list of frequently used bibliographic references may be available when adding
       a new reference at the "Bibliography" tab. The lists may be edited using this menu option.<h:br/>
@@ -235,9 +234,8 @@
         <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-references.xml"></xf:load>
       </xf:action>
     </xf:trigger>
-    <h:br/>
-    -->
-    <!--    
+    <h:br/>-->
+    <!-- to be implemented     
       <xf:trigger appearance="minimal">
       <xf:label><h:img src="http:/editor/images/expand.png" title="Edit"/> Edit standard instrumentations <h:a class="help">?<h:span 
       class="comment">Edit the standard ensembles and instrument groups available when adding new instruments 
@@ -246,8 +244,9 @@
       <xf:insert context="." origin="xxf:set-session-attribute('return_url',instance('parameters')/dcm:this_page)"/>
       <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-instrumentations.xml"></xf:load>
       </xf:action>
-      </xf:trigger>
-    <h:hr/>-->
+      </xf:trigger>-->
+    
+    <!--<h:hr/>-->
     <xf:group ref=".[contains(instance('parameters')/dcm:id_main_switch,'true')]">
       <xf:select appearance="full" ref="instance('parameters')/dcm:show_id">
         <xf:action ev:event="xforms-value-changed">

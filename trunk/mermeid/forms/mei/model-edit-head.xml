@@ -20,14 +20,15 @@
     
     <xf:model>
         
-        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
-            id="bibliography-instance" 
-            src="/../editor/forms/mei/model/standard_bibliography.xml"/>
+        <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+            id="bibliography-instance">
+            <mei/>
+        </xf:instance>
         
-        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+        <!--<xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="bibl-type-instance" 
             src="/../editor/forms/mei/model/bibl_reference_types.xml" 
-            xxf:readonly="true"/>
+            xxf:readonly="true"/>-->
         
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="instrumentation"
@@ -92,15 +93,14 @@
         
         <!-- submissions - loading and saving data -->            
         
-        <xf:submission id="save-to-file"
+        <xf:submission id="save-bibliography"
             ref="instance('bibliography-instance')"
             validate="false"
             relevant="false"
             xxf:calculate="false"
-            resource="{instance('temp')/target_uri}" 
+            resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml" 
             method="put"
-            replace="instance">
-        </xf:submission>
+            replace="instance"/>        
         
         <xf:submission id="load-fileList"
             method="get" 
@@ -109,6 +109,16 @@
             resource="{instance('temp')/target_uri}"
             replace="instance" 
             instance="XMLfiles"/>
+        
+        <xf:submission id="load-bibliography"
+            xxf:username=""
+            xxf:password=""
+            method="get" 
+            serialization="none" 
+            validate="false"
+            resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml"
+            replace="instance" 
+            instance="bibliography-instance"/>
         
         <!-- "onload" xforms actions -->
         <xf:action ev:event="xforms-model-construct-done">
@@ -123,6 +133,8 @@
                 instance('parameters')/dcm:server_name,
                 'storage/cross-link.xq?query=',instance('temp')/query,
                 '&amp;subject=dummy')"/>
+            <!-- load standard bibliography -->
+            <xf:send submission="load-bibliography"/>
         </xf:action>
         
         <xf:action ev:event="xforms-submit-done">

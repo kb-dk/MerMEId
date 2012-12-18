@@ -155,9 +155,10 @@
                     <dcm:id ref="."/>
                     <dcm:attribute-editor ref="."/>
                     &#160;
+                    <h:span class="genre">
                     <xf:repeat nodeset="m:genre"><xf:output 
                       value="if (position()&gt;1) then ', ' else ''"/>
-                      <xf:output value="concat(translate(substring(.,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(.,2))"/></xf:repeat>
+                      <xf:output value="concat(translate(substring(.,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(.,2))"/></xf:repeat></h:span>
                   </h:td>
                   <h:td>  
                     <xf:repeat nodeset="m:creator"><xf:output 

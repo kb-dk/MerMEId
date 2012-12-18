@@ -28,23 +28,23 @@
             <h:div class="inputdiv">
                 
                 <h:div style="float:right">
-                    <xf:submit submission="save-to-file">
+                    <xf:submit submission="save-bibliography">
                         <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
-                        <xf:action ev:event="DOMActivate">
+                        <!--<xf:action ev:event="DOMActivate">
                             <xf:setvalue ref="instance('temp')/target_uri" 
                                 value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>
-                        </xf:action>
+                        </xf:action>-->
                     </xf:submit>
-                    <xf:submit submission="save-to-file">
+                    <xf:submit submission="save-bibliography">
                         <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
                         <xf:action ev:event="DOMActivate">
-                            <xf:setvalue ref="instance('temp')/target_uri" 
-                                value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>
+                            <!--<xf:setvalue ref="instance('temp')/target_uri" 
+                                value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>-->
                             <xf:load resource="{xxf:get-session-attribute('return_url')}" show="replace"/>
                         </xf:action>
                     </xf:submit>
                     <xf:trigger>
-                        <xf:label><h:img src="http:/editor/images/close.gif" alt="Cancel (close)"/> Cancel</xf:label>
+                        <xf:label><h:img src="http:/editor/images/discard.png" alt="Discard changes"/> Discard changes</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:load resource="{xxf:get-session-attribute('return_url')}" show="replace"/>
                         </xf:action>
@@ -60,7 +60,7 @@
                             <xf:label>General (available in all collections)</xf:label>
                             <xf:value/>
                         </xf:item>
-                        <xf:itemset nodeset="instance('bibliography-instance')/t:listBibl">
+                        <xf:itemset nodeset="instance('bibliography-instance')/m:biblList">
                             <xf:label><xf:output value="@type"/></xf:label>
                             <xf:value ref="@type"></xf:value>
                         </xf:itemset>
@@ -73,17 +73,17 @@
                         </xf:action> 
                     </xf:trigger>
                     <xf:group ref=".[instance('XMLfiles')/* and 
-                        not(instance('XMLfiles')/dcm:collections/dcm:collection[count(.[.=instance('bibliography-instance')/t:listBibl/@type])=0])]">
+                        not(instance('XMLfiles')/dcm:collections/dcm:collection[count(.[.=instance('bibliography-instance')/m:biblList/m:head])=0])]">
                         <h:div>No (other) file collections found.</h:div>
                     </xf:group>
-                    <xf:group ref=".[instance('XMLfiles')/dcm:collections/dcm:collection[count(.[.=instance('bibliography-instance')/t:listBibl/@type])=0]]">                   
+                    <xf:group ref=".[instance('XMLfiles')/dcm:collections/dcm:collection[count(.[.=instance('bibliography-instance')/m:biblList/m:head])=0]]">                   
                         <xf:select1 ref="instance('temp')/new">
                             <xf:label>Or add new collection bibliography: </xf:label>
                             <xf:item>
                                 <xf:label>- Please select -</xf:label>
                                 <xf:value/>
                             </xf:item>
-                            <xf:itemset nodeset="instance('XMLfiles')/dcm:collections/dcm:collection[count(.[.=instance('bibliography-instance')/t:listBibl/@type])=0]">
+                            <xf:itemset nodeset="instance('XMLfiles')/dcm:collections/dcm:collection[count(.[.=instance('bibliography-instance')/m:biblList/m:head])=0]">
                                 <xf:label><xf:output value="."/></xf:label>
                                 <xf:value ref="."></xf:value>
                             </xf:itemset>
@@ -91,20 +91,20 @@
                         <xf:trigger>
                             <xf:label>Add</xf:label>
                             <xf:action ev:event="DOMActivate" if="normalize-space(instance('temp')/new) 
-                                and instance('bibliography-instance')/t:listBibl[@type=instance('temp')/new]">
+                                and instance('bibliography-instance')/m:biblList[@type=instance('temp')/new]">
                                 <xf:message>Collection already exists</xf:message>
                                 <xf:setvalue ref="instance('temp')/collection" value="instance('temp')/new"/>
                             </xf:action>
                             <xf:action ev:event="DOMActivate" if="normalize-space(instance('temp')/new) 
-                                and not (instance('bibliography-instance')/t:listBibl[@type=instance('temp')/new])">
+                                and not (instance('bibliography-instance')/m:biblList[@type=instance('temp')/new])">
                                 <xf:insert
                                     context="instance('bibliography-instance')"
-                                    nodeset="t:listBibl"
+                                    nodeset="m:biblList"
                                     at="last()"
                                     position="after"
-                                    origin="instance('temp')/t:listBibl"
+                                    origin="instance('temp')/m:biblList"
                                 />
-                                <xf:setvalue ref="instance('bibliography-instance')/t:listBibl[last()]/@type" value="instance('temp')/new"/>
+                                <xf:setvalue ref="instance('bibliography-instance')/m:biblList[last()]/@type" value="instance('temp')/new"/>
                                 <xf:setvalue ref="instance('temp')/collection" value="instance('temp')/new"/>
                             </xf:action>
                         </xf:trigger>
@@ -119,7 +119,7 @@
                         References for all collections
                     </xf:group>
                 </h:h3>
-                <xf:group ref=".[not(instance('bibliography-instance')/t:listBibl[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]/t:bibl)]">
+                <xf:group ref=".[not(instance('bibliography-instance')/m:biblList[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]/m:bibl)]">
                     <h:div>
                         [None]<h:br/>&#160;
                     </h:div>
@@ -131,15 +131,18 @@
                     </xf:trigger>
                 </xf:group>
                 <xf:repeat id="repeat-references"
-                    nodeset="instance('bibliography-instance')/t:listBibl[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]/t:bibl">
+                    nodeset="instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]/m:bibl">
                     <h:fieldset>
                         <h:legend>
-                            <xf:output value="translate(concat(translate(substring(@type,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(@type,2)),'_',' ')"/>
+                            <h:span class="genre">
+                                <xf:repeat nodeset="m:genre"><xf:output 
+                                    value="if (position()&gt;1) then ', ' else ''"/>
+                                <xf:output value="concat(translate(substring(.,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(.,2))"/></xf:repeat></h:span>
                             <dcm:element-buttons 
                                 triggers="up down copy" 
-                                nodeset="t:bibl" 
+                                nodeset="m:bibl" 
                                 index="repeat-references"
-                                origin="instance('temp')/t:listBibl/t:bibl"/><xf:trigger appearance="minimal"
+                                origin="instance('temp')/m:biblList/m:bibl"/><xf:trigger appearance="minimal"
                                     class="non-standard_button">
                                     <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -147,9 +150,9 @@
                                     </xf:action>
                                 </xf:trigger><dcm:element-buttons 
                                     triggers="remove" 
-                                    nodeset="t:bibl" 
+                                    nodeset="m:bibl" 
                                     index="repeat-references"
-                                    origin="instance('temp')/t:listBibl/t:bibl"/>
+                                    origin="instance('temp')/m:biblList/m:bibl"/>
                         </h:legend>
                         <h:div class="vertical_spacer"> </h:div>
                         <xf:switch>
@@ -196,17 +199,17 @@
             close="true" draggable="true" visible="false">
             <h:div class="blocklabel">Add new reference:</h:div>
             <h:br clear="all"/>
-            <xf:repeat nodeset="instance('bibl-type-instance')/t:listBibl" id="ref-type-menu-listbibl-repeat">
-                <xf:repeat nodeset="t:bibl[not(@type=parent::node()/preceding-sibling::t:listBibl/t:bibl/@type)]" id="ref-type-menu-bibl-repeat">
+            <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList" id="ref-type-menu-listbibl-repeat">
+                <xf:repeat nodeset="m:bibl[not(@type=parent::node()/preceding-sibling::m:biblList/m:bibl/@type)]" id="ref-type-menu-bibl-repeat">
                     <xf:trigger submission="replace-form-with" appearance="minimal">
                         <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="translate(@type,'_',' ')"/></xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xf:toggle case="hide_ref_types"/>
-                            <xf:insert context="instance('bibliography-instance')/t:listBibl[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]" 
-                                nodeset="t:bibl" 
+                            <xf:insert context="instance('bibliography-instance')/m:biblList[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]" 
+                                nodeset="m:bibl" 
                                 at="index('repeat-references')"
                                 position="after" 
-                                origin="instance('bibl-type-instance')/t:listBibl[index('ref-type-menu-listbibl-repeat')]/t:bibl[index('ref-type-menu-bibl-repeat')]"/>
+                                origin="instance('bibl-type-instance')/m:biblList[index('ref-type-menu-listbibl-repeat')]/m:bibl[index('ref-type-menu-bibl-repeat')]"/>
                             <xf:dispatch name="id-update" target="form-group"/>
                             <xxf:hide dialog="add-ref-dialog"/>
                         </xf:action>
