@@ -310,15 +310,15 @@
 
 				<xsl:variable name="mdiv_id" select="concat('movements',generate-id(),position())"/>
 
+				<xsl:text>
+				</xsl:text>
+				<script type="application/javascript"><xsl:text>openness["</xsl:text><xsl:value-of select="$mdiv_id"/><xsl:text>"]=false;</xsl:text></script>
+				<xsl:text>
+				</xsl:text>
+				
 				<div class="fold">
 
 					<p class="p_heading" id="p{$mdiv_id}" onclick="toggle('{$mdiv_id}')" title="Click to open">
-						<xsl:text>
-						</xsl:text><script type="application/javascript"><xsl:text>
-							openness["</xsl:text><xsl:value-of select="$mdiv_id"/><xsl:text>"]=false;
-							</xsl:text></script>
-						<xsl:text>
-						</xsl:text>
 						<img class="noprint" style="display:inline;" id="img{$mdiv_id}" border="0"
 							src="/editor/images/plus.png" alt="-"/> Music </p>
 
@@ -344,14 +344,12 @@
 					and m:source/m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
 					<xsl:variable name="source_id" select="concat('version_source',generate-id(.),$expression_id)"/>
 
+					<xsl:text>
+					</xsl:text>
+					<script type="application/javascript"><xsl:text>openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;</xsl:text></script>
+					<xsl:text>
+					</xsl:text>
 					<div class="fold">
-						<xsl:text>
-						</xsl:text>
-						<script type="application/javascript"><xsl:text>
-							openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;
-							</xsl:text></script>
-						<xsl:text>
-						</xsl:text>
 						<p class="p_heading" id="p{$source_id}" title="Click to open" onclick="toggle('{$source_id}')">
 							<img class="noprint" style="display:inline;" border="0" id="img{$source_id}" alt="+"
 								src="/editor/images/plus.png"/> Sources </p>
@@ -433,8 +431,8 @@
 					<em>Series:</em>
 					<br/>
 				</p>
-				<p>
-					<xsl:for-each select="m:meiHead/m:fileDesc/m:seriesStmt/m:title">
+				<xsl:for-each select="m:meiHead/m:fileDesc/m:seriesStmt/m:title//text()">
+					<p>
 						<xsl:value-of select="."/>
 						<xsl:for-each
 							select="../identifier[normalize-space(@type) and @type!='file_collection' and text()]">
@@ -446,23 +444,26 @@
 						<xsl:if test="position()!=last()">
 							<br/>
 						</xsl:if>
-					</xsl:for-each>
-				</p>
+					</p>
+				</xsl:for-each>
 			</xsl:if>
-			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt//text()">
+			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/*[name()!='resp']//text()">
 				<p>
 					<em>File publication:</em>
 				</p>
 				<p>
-					<xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:expan"/>
-					<xsl:choose>
-						<xsl:when test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:expan/text()">
-								(<xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:abbr"/>) </xsl:when>
-						<xsl:otherwise>
-							<xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:abbr"/>
-						</xsl:otherwise>
-					</xsl:choose>
-					<br/>
+					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName[//text()]">
+						<xsl:choose>
+							<xsl:when test="text() or m:expan/text()">
+								<xsl:apply-templates select="text()"/>
+								<xsl:apply-templates select="m:expan"/>
+								<xsl:if test="m:abbr/text()"> (<xsl:value-of select="m:abbr"/>)</xsl:if><br/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:if test="m:abbr/text()"><xsl:value-of select="m:abbr"/><br/></xsl:if>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:for-each>
 					<xsl:for-each
 						select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr/@target or text()]">
 						<xsl:choose>
@@ -527,51 +528,24 @@
 					<div class="p_heading">
 						<xsl:choose>
 							<xsl:when test="@rel='hasPart'">Contains:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='isPartOf'">Contained in:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='hasAlternate'">Alternate version:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='isAlternateOf'">Alternate version of:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='hasArrangement'">Arrangement:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='isArrangementOf'">Arrangement of:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='hasRevision'">Revised version:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='isRevisionOf'">Revised version of:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='hasImitation'">Imitation:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='isImitationOf'">Imitation of:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='hasTranslation'">Translated version:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='isTranslationOf'">Translation of:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='hasAdaptation'">Adaptation:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='isAdaptationOf'">Adaptation of:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='hasAbridgement'">Abridged version:</xsl:when>
-						</xsl:choose>
-						<xsl:choose>
 							<xsl:when test="@rel='isAbridgementOf'">Abridged version of:</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="@rel"/>
+							</xsl:otherwise>
 						</xsl:choose>
 					</div>
 					<xsl:for-each select="../m:relation[@rel=$rel]">
@@ -1072,7 +1046,6 @@
 		<script type="application/javascript"><xsl:text>
 				openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;
 				</xsl:text></script>
-		
 		<div class="fold">
 			<xsl:text>
 			</xsl:text>
@@ -1093,7 +1066,7 @@
 							<xsl:apply-templates
 								select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
 						</xsl:when>
-						<xsl:when test="m:titleStmt/m:title/text()">
+						<xsl:when test="*//text()">
 							<xsl:apply-templates select="."/>
 						</xsl:when>
 					</xsl:choose>
@@ -1245,7 +1218,7 @@
 
 	<!-- source-related templates -->
 
-	<xsl:template match="m:source|m:item">
+	<xsl:template match="m:source[*//text()]|m:item[*//text()]">
 		<xsl:param name="mode" select="''"/>
 		<xsl:variable name="source_id" select="@xml:id"/>
 		<xsl:if
@@ -1314,7 +1287,7 @@
 					<xsl:call-template name="list_agents"/>
 				</xsl:for-each>
 
-				<xsl:for-each select="m:pubStmt[//text()]">
+				<xsl:for-each select="m:pubStmt[normalize-space(concat(m:publisher, m:date, m:pubPlace))]">
 					<xsl:comment>publication</xsl:comment>
 					<div>
 						<xsl:if test="m:publisher/text()">
@@ -1325,8 +1298,7 @@
 						</xsl:if>
 						<xsl:apply-templates select="m:pubPlace"/>
 						<xsl:text> </xsl:text>
-						<xsl:apply-templates select="m:date"/>
-						<xsl:if test="normalize-space(concat(m:publisher, m:date, m:pubPlace))">.</xsl:if>
+						<xsl:apply-templates select="m:date"/>.
 						<!--<xsl:call-template name="list_agents"/>-->
 					</div>
 				</xsl:for-each>
@@ -1336,7 +1308,7 @@
 				</xsl:for-each>				
 
 				<xsl:for-each select="m:notesStmt">
-					<xsl:for-each select="m:annot[text()]">
+					<xsl:for-each select="m:annot[text() or *//text()]">
 						<p>
 							<xsl:apply-templates select="."/>
 						</p>
@@ -1351,7 +1323,7 @@
 				</xsl:for-each>
 
 				<!-- source location and identifiers -->
-				<xsl:for-each select="m:physLoc">
+				<xsl:for-each select="m:physLoc[m:repository//text() or m:identifier/text() or m:ptr/@target]">
 					<div>
 						<xsl:apply-templates select="."/>
 					</div>
@@ -1516,8 +1488,23 @@
 			<p>Pl. no. <xsl:apply-templates/>.</p>
 		</xsl:for-each>
 		<xsl:apply-templates select="m:handList[m:hand/@medium!='' or m:hand/text()]"/>
+		<xsl:apply-templates select="m:physMedium"/>
+		<xsl:apply-templates select="m:watermark"/>
+		<xsl:apply-templates select="m:condition"/>
 	</xsl:template>
-
+	
+	<xsl:template match="m:physMedium[text()]">
+		<div><xsl:apply-templates/></div>
+	</xsl:template>
+	
+	<xsl:template match="m:watermark[text()]">
+		<div><xsl:apply-templates/></div>
+	</xsl:template>
+	
+	<xsl:template match="m:condition[text()]">
+		<div><xsl:apply-templates/></div>
+	</xsl:template>
+	
 	<xsl:template match="m:physLoc">
 		<!-- locations - both for <source>, <item> and <bibl> -->
 		<xsl:for-each select="m:repository[*//text()]">
@@ -1538,7 +1525,7 @@
 				</xsl:choose>
 			</xsl:if>
 		</xsl:for-each>
-		<xsl:value-of select="m:identifier"/><xsl:if 
+		<xsl:apply-templates select="m:identifier"/><xsl:if 
 			test="m:identifier[text()] or m:repository[*//text()]">. </xsl:if>
 		<xsl:for-each select="m:repository/m:ptr[@target!='']">
 			<xsl:apply-templates select="."/>
@@ -1813,14 +1800,13 @@
 						<xsl:apply-templates select="m:creation/m:geogName/text()"/>&#160;&#160; 
 					</td>
 					<td>
-						<!-- optional: do not display name if it is the composer's own diary -->
-						<!--<xsl:if test="m:creator/text() and m:creator!=/*//m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']">-->
+						<!-- do not display name if it is the composer's own diary -->
+						<xsl:if test="not(m:creator/text()) or (m:creator/text() and m:creator!=/*//m:work/m:titleStmt/m:respStmt/m:persName[@role='composer'])">
 							<xsl:text> </xsl:text>
 							<xsl:value-of select="m:creator"/>
-							<xsl:if test="m:physLoc//text()">,
-							</xsl:if>
-						<!--</xsl:if>-->
-						<xsl:apply-templates select="m:physLoc[*//text()]"/>
+							<xsl:if test="m:physLoc[m:repository//text() or m:identifier/text() or m:ptr/@target]">, </xsl:if>
+						</xsl:if>
+						<xsl:apply-templates select="m:physLoc[m:repository//text() or m:identifier/text() or m:ptr/@target]"/>
 						<xsl:apply-templates select="m:relatedItem[@rel='host' and *//text()]"/>
 						<xsl:apply-templates select="m:annot"/>
 						<xsl:apply-templates select="m:ptr"/> 
