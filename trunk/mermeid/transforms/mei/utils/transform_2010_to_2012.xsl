@@ -1258,11 +1258,11 @@
             <repository>
                 <!-- try to distiguish RISM sigla from written-out archive names -->
                 <xsl:choose>
-                    <xsl:when test="matches(t:repository,'[A-Z]{1,3}-[A-Z]{1,3}[a-z]*')">
-                        <identifier authority="RISM" authURI="http://www.rism.info/"><xsl:value-of select="t:repository"/></identifier>
+                    <xsl:when test="matches(t:repository,'[A-Z]{1,3}-[A-Z]{1,3}[a-z]*') and string-length(t:repository) &lt; 10">
+                        <identifier authority="RISM" authURI="http://www.rism.info/"><xsl:apply-templates select="t:repository"/></identifier>
                     </xsl:when>
                     <xsl:otherwise>
-                        <corpName><xsl:value-of select="t:repository"/></corpName>
+                        <corpName><xsl:apply-templates select="t:repository"/></corpName>
                     </xsl:otherwise>
                 </xsl:choose>
             </repository>
@@ -1289,14 +1289,16 @@
     </xsl:template>
 
     <xsl:template match="t:ref[@type='editions' and //text()]">
-        <relatedItem rel="host">
-            <bibl>
-                <title>
-                    <xsl:value-of select="t:bibl/t:title"/>
-                </title>
-                <xsl:apply-templates select="t:bibl/t:biblScope"/>
-            </bibl>
-        </relatedItem>
+        <xsl:for-each select="t:bibl">
+            <relatedItem rel="host">
+                <bibl>
+                    <title>
+                        <xsl:value-of select="t:title"/>
+                    </title>
+                    <xsl:apply-templates select="t:biblScope"/>
+                </bibl>
+            </relatedItem>
+        </xsl:for-each>
     </xsl:template>
 
     <xsl:template match="t:biblScope">
@@ -1325,19 +1327,17 @@
 
     <xsl:template match="t:repository">
         <!-- some CNW-specific replacements ... -->
-        <repository>
-            <xsl:choose>
-                <xsl:when test="contains(.,'DK-K ')">
-                    <xsl:value-of select="concat(substring-after(.,'DK-K '),', Copenhagen')"/>
-                </xsl:when>
-                <xsl:when test="contains(.,'DK-O ')">
-                    <xsl:value-of select="concat(substring-after(.,'DK-O '),', Odense')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="."/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </repository>
+        <xsl:choose>
+            <xsl:when test="contains(.,'DK-K ')">
+                <xsl:value-of select="concat(substring-after(.,'DK-K '),', Copenhagen')"/>
+            </xsl:when>
+            <xsl:when test="contains(.,'DK-O ')">
+                <xsl:value-of select="concat(substring-after(.,'DK-O '),', Odense')"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="t:*">

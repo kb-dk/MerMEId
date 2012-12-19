@@ -1785,7 +1785,16 @@
 							<xsl:value-of select="m:recipient"/>
 						</xsl:if><xsl:if test="(m:creator/text() or m:recipient/text()) and m:physLoc//text()">, </xsl:if> 
 						<xsl:apply-templates select="m:physLoc[*//text()]"/>
-						<xsl:apply-templates select="m:relatedItem[@rel='host' and *//text()]"/>
+						
+						<xsl:for-each select="m:relatedItem[@rel='host' and *//text()]">
+							<xsl:if test="position()=1"> (</xsl:if>
+							<xsl:if test="position() &gt; 1">,<xsl:text> </xsl:text></xsl:if>
+							<xsl:value-of select="m:bibl/m:title"/>
+							<xsl:apply-templates select="m:bibl" mode="volumes_pages"/>
+							<xsl:if test="position()=last()">)</xsl:if>
+						</xsl:for-each>
+												
+						<!--<xsl:apply-templates select="m:relatedItem[@rel='host' and *//text()]"/>-->
 						<xsl:apply-templates select="m:annot"/>
 						<xsl:apply-templates select="m:ptr"/> 
 					</td>
@@ -1801,13 +1810,21 @@
 					</td>
 					<td>
 						<!-- do not display name if it is the composer's own diary -->
-						<xsl:if test="not(m:creator/text()) or (m:creator/text() and m:creator!=/*//m:work/m:titleStmt/m:respStmt/m:persName[@role='composer'])">
+						<xsl:if test="m:creator/text() or (m:creator/text() and m:creator!=/*//m:work/m:titleStmt/m:respStmt/m:persName[@role='composer'])">
 							<xsl:text> </xsl:text>
 							<xsl:value-of select="m:creator"/>
 							<xsl:if test="m:physLoc[m:repository//text() or m:identifier/text() or m:ptr/@target]">, </xsl:if>
 						</xsl:if>
 						<xsl:apply-templates select="m:physLoc[m:repository//text() or m:identifier/text() or m:ptr/@target]"/>
-						<xsl:apply-templates select="m:relatedItem[@rel='host' and *//text()]"/>
+						<xsl:for-each select="m:relatedItem[@rel='host' and *//text()]">
+							<xsl:if test="position()=1"> (</xsl:if>
+							<xsl:if test="position() &gt; 1">;<xsl:text> </xsl:text></xsl:if>
+							<xsl:value-of select="m:bibl/m:title"/>
+							<xsl:apply-templates select="m:bibl" mode="volumes_pages"/>
+							<xsl:if test="position()=last()">)</xsl:if>
+						</xsl:for-each>
+						
+						<!--<xsl:apply-templates select="m:relatedItem[@rel='host' and *//text()]"/>-->
 						<xsl:apply-templates select="m:annot"/>
 						<xsl:apply-templates select="m:ptr"/> 
 					</td>
@@ -1891,14 +1908,6 @@
 			</xsl:if>
 		</xsl:for-each>
 	</xsl:template>
-
-	<!-- list editions of letters, diaries etc. -->
-	<xsl:template match="m:relatedItem[@rel='host']">
-		<xsl:variable name="number_of_editions" select="count(m:bibl)"/> (<xsl:for-each select="m:bibl">
-			<xsl:if test="position() &gt; 1">,<xsl:text> </xsl:text></xsl:if>
-			<xsl:value-of select="m:title"/>
-			<xsl:apply-templates select="." mode="volumes_pages"/>
-		</xsl:for-each>) </xsl:template>
 
 
 	<!-- format volume, issue and page numbers -->
