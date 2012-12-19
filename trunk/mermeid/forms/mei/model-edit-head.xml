@@ -25,10 +25,10 @@
             <mei/>
         </xf:instance>
         
-        <!--<xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="bibl-type-instance" 
             src="/../editor/forms/mei/model/bibl_reference_types.xml" 
-            xxf:readonly="true"/>-->
+            xxf:readonly="true"/>
         
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="instrumentation"
@@ -66,23 +66,8 @@
                 <target_uri/>
                 <collection/>
                 <new/>
-                <biblList>
-                    <bibl xml:id="">
-                        <genre>book</genre>
-                        <creator/>
-                        <title level="a"/>
-                        <title level="s"/>
-                        <editor/>
-                        <biblScope unit="vol"/>
-                        <biblScope unit="issue"/>
-                        <biblScope unit="page"/>
-                        <imprint>
-                            <date/>
-                            <pubPlace/>
-                            <publisher/>
-                        </imprint>
-                        <ptr target="" label=""/>
-                    </bibl>
+                <biblList xmlns="http://www.music-encoding.org/ns/mei">
+                    <head/>
                 </biblList>
             </temp>
         </xf:instance> 
@@ -94,6 +79,8 @@
         <!-- submissions - loading and saving data -->            
         
         <xf:submission id="save-bibliography"
+            xxf:username=""
+            xxf:password=""
             ref="instance('bibliography-instance')"
             validate="false"
             relevant="false"
@@ -101,8 +88,10 @@
             resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml" 
             method="put"
             replace="instance"/>        
-        
+                
         <xf:submission id="load-fileList"
+            xxf:username=""
+            xxf:password=""
             method="get" 
             serialization="none" 
             validate="false"
@@ -154,9 +143,12 @@
     <!-- XBL components -->
     <xi:include href="includes/element_buttons.xbl" parse="xml"/>
     <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
+    <xi:include href="includes/create.xbl" parse="xml"/>
     <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
     <xi:include href="includes/date_editor.xbl" parse="xml"/>
     <xi:include href="includes/id.xbl" parse="xml"/>
     <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
+    <xi:include href="includes/bibl-input.xbl" parse="xml"/>
+    
 </h:head>
 

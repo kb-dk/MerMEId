@@ -32,8 +32,8 @@
                         <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
                         <!--<xf:action ev:event="DOMActivate">
                             <xf:setvalue ref="instance('temp')/target_uri" 
-                                value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>
-                        </xf:action>-->
+                            value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>
+                            </xf:action>-->
                     </xf:submit>
                     <xf:submit submission="save-bibliography">
                         <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
@@ -61,8 +61,8 @@
                             <xf:value/>
                         </xf:item>
                         <xf:itemset nodeset="instance('bibliography-instance')/m:biblList">
-                            <xf:label><xf:output value="@type"/></xf:label>
-                            <xf:value ref="@type"></xf:value>
+                            <xf:label><xf:output value="m:head"/></xf:label>
+                            <xf:value ref="m:head"></xf:value>
                         </xf:itemset>
                     </xf:select1>
                     <h:div class="vertical_spacer"/>
@@ -91,12 +91,12 @@
                         <xf:trigger>
                             <xf:label>Add</xf:label>
                             <xf:action ev:event="DOMActivate" if="normalize-space(instance('temp')/new) 
-                                and instance('bibliography-instance')/m:biblList[@type=instance('temp')/new]">
+                                and instance('bibliography-instance')/m:biblList[m:head=instance('temp')/new]">
                                 <xf:message>Collection already exists</xf:message>
                                 <xf:setvalue ref="instance('temp')/collection" value="instance('temp')/new"/>
                             </xf:action>
                             <xf:action ev:event="DOMActivate" if="normalize-space(instance('temp')/new) 
-                                and not (instance('bibliography-instance')/m:biblList[@type=instance('temp')/new])">
+                                and not(instance('bibliography-instance')/m:biblList[m:head=instance('temp')/new])">
                                 <xf:insert
                                     context="instance('bibliography-instance')"
                                     nodeset="m:biblList"
@@ -104,7 +104,7 @@
                                     position="after"
                                     origin="instance('temp')/m:biblList"
                                 />
-                                <xf:setvalue ref="instance('bibliography-instance')/m:biblList[last()]/@type" value="instance('temp')/new"/>
+                                <xf:setvalue ref="instance('bibliography-instance')/m:biblList[last()]/m:head" value="instance('temp')/new"/>
                                 <xf:setvalue ref="instance('temp')/collection" value="instance('temp')/new"/>
                             </xf:action>
                         </xf:trigger>
@@ -119,7 +119,7 @@
                         References for all collections
                     </xf:group>
                 </h:h3>
-                <xf:group ref=".[not(instance('bibliography-instance')/m:biblList[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]/m:bibl)]">
+                <xf:group ref=".[not(instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]/m:bibl)]">
                     <h:div>
                         [None]<h:br/>&#160;
                     </h:div>
@@ -137,7 +137,7 @@
                             <h:span class="genre">
                                 <xf:repeat nodeset="m:genre"><xf:output 
                                     value="if (position()&gt;1) then ', ' else ''"/>
-                                <xf:output value="concat(translate(substring(.,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(.,2))"/></xf:repeat></h:span>
+                                    <xf:output value="concat(translate(substring(.,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(.,2))"/></xf:repeat></h:span>
                             <dcm:element-buttons 
                                 triggers="up down copy" 
                                 nodeset="m:bibl" 
@@ -165,16 +165,17 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </h:div>
-                                <xf:repeat nodeset="t:author"><xf:output 
+                                <xf:repeat nodeset="m:creator"><xf:output 
                                     value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
                                         value="."/></xf:repeat><xf:output 
-                                            value="if (normalize-space(t:author[1]) and not(normalize-space(t:name[@role='recipient']))) then ': ' else ''"/>
-                                <xf:output value="if (normalize-space(t:name[@role='recipient'])) then concat(' to ',t:name[@role='recipient']) else ''"/>
-                                <h:i><xf:output value="t:title[@level='a']"/></h:i><xf:output 
-                                    value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='j'])) then concat('. ',t:title[@level='j']) else t:title[@level='j']"/>
-                                <xf:output value="if (normalize-space(t:title[@level='a']) and normalize-space(t:title[@level='m'])) then concat('. ',t:title[@level='m']) else t:title[@level='m']"/>
-                                <xf:output value="if (normalize-space(t:date)) then concat('(',normalize-space(t:date),')') else ''"/>
-                                <xf:group ref=".[normalize-space(concat(t:author[1],t:name[@role='recipient'],t:title[@level='a'],t:title[@level='j'],t:title[@level='m'],t:date))='']"> [No description] </xf:group>
+                                            value="if (normalize-space(m:creator[1]) and not(normalize-space(m:recipient[1]))) then ': ' else ''"/>
+                                <xf:output value="if (normalize-space(m:recipient[1])) then concat(' to ',m:recipient[1]) else ''"/>
+                                <h:i><xf:output value="m:title[@level='a']"/></h:i><xf:output 
+                                    value="if (normalize-space(m:title[@level='a'][1]) and normalize-space(m:title[@level='j'][1])) then concat('. ',m:title[@level='j'][1]) else m:title[@level='j']"/>
+                                <xf:output value="if (normalize-space(m:title[@level='a'][1]) and normalize-space(m:title[@level='m'][1])) then concat('. ',m:title[@level='m'][1]) else m:title[@level='m']"/>
+                                <xf:output value="if (normalize-space(m:creation[1]/m:date[1])) then concat('(',normalize-space(m:creation[1]/m:date[1]),')') else ''"/>
+                                <xf:output value="if (normalize-space(m:imprint[1]/m:date[1])) then concat('(',normalize-space(m:imprint[1]/m:date[1]),')') else ''"/>
+                                <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient[1],m:title[@level='a'][1],m:title[@level='j'][1],m:title[@level='m'][1],m:creation[1]/m:date[1],m:imprint[1]/m:date[1]))='']"> [No description] </xf:group>
                             </xf:case>
                             <xf:case id="show_reference">
                                 <h:div style="float:right">
@@ -185,7 +186,7 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </h:div>
-                                <xi:include href="includes/bibl-input.xbl" parse="xml"/>
+                                <dcm:bibl-input/>
                             </xf:case>
                         </xf:switch>
                     </h:fieldset>
@@ -197,25 +198,36 @@
         <!-- reference types menu -->
         <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
             close="true" draggable="true" visible="false">
-            <h:div class="blocklabel">Add new reference:</h:div>
-            <h:br clear="all"/>
-            <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList" id="ref-type-menu-listbibl-repeat">
-                <xf:repeat nodeset="m:bibl[not(@type=parent::node()/preceding-sibling::m:biblList/m:bibl/@type)]" id="ref-type-menu-bibl-repeat">
-                    <xf:trigger submission="replace-form-with" appearance="minimal">
-                        <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output ref="translate(@type,'_',' ')"/></xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:toggle case="hide_ref_types"/>
-                            <xf:insert context="instance('bibliography-instance')/m:biblList[@type=instance('temp')/collection or (not(@type) and instance('temp')/collection='')]" 
+            <xf:label>Add reference</xf:label>
+            <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl" id="ref-type-menu-bibl-repeat">
+                <xf:trigger submission="replace-form-with" appearance="minimal">
+                    <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output 
+                        value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
+                            value="if (m:genre[2]!='') then concat(', ',m:genre[2]) else ''"></xf:output>
+                    </xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xf:toggle case="hide_ref_types"/>
+                        <xf:action if="count(instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]/m:bibl)&gt;0">
+                            <xf:insert context="instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]" 
                                 nodeset="m:bibl" 
                                 at="index('repeat-references')"
                                 position="after" 
-                                origin="instance('bibl-type-instance')/m:biblList[index('ref-type-menu-listbibl-repeat')]/m:bibl[index('ref-type-menu-bibl-repeat')]"/>
-                            <xf:dispatch name="id-update" target="form-group"/>
-                            <xxf:hide dialog="add-ref-dialog"/>
+                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-bibl-repeat')]"/>
                         </xf:action>
-                    </xf:trigger>
-                    <h:br clear="all"/>
-                </xf:repeat>
+                        <xf:action if="count(instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]/m:bibl)=0">
+                            <!-- first <bibl> is inserted after <head>  -->
+                            <xf:insert context="instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]" 
+                                nodeset="*" 
+                                at="last()"
+                                position="after" 
+                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-bibl-repeat')]"/>
+                        </xf:action>
+                        <xf:dispatch name="id-update" target="form-group"/>
+                        <xxf:hide dialog="add-ref-dialog"/>
+                    </xf:action>
+                </xf:trigger>
+                
+                <h:br clear="all"/>
             </xf:repeat>
         </xxf:dialog>
         <!-- end menu -->

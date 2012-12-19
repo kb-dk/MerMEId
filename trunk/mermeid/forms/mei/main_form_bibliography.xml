@@ -25,8 +25,7 @@
       <!-- reference types menu -->
       <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
         close="true" draggable="true" visible="false">
-        <h:div class="blocklabel">Add new reference:</h:div>
-        <h:br clear="all"/>
+        <xf:label>Add reference</xf:label>
         <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl" 
           id="ref-type-menu-repeat">
           <xf:trigger submission="replace-form-with" appearance="minimal" class="non-standard_trigger">
