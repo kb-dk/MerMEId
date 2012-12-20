@@ -17,9 +17,16 @@
     
     <xi:include href="model-edit-head.xml" parse="xml"/>
     
+    
     <h:body class="file">
         
         <xf:group id="form-group">
+
+            <!-- "onload" xforms actions -->
+            <xf:action ev:event="xforms-ready" ev:observer="main_model">
+                <!-- search for file collections without a bibliography -->
+                <xf:send submission="load-fileList"/>
+            </xf:action>
             
             <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
             <xxf:variable name="uri" 
@@ -55,7 +62,7 @@
                 
                 <h:div>
                     <xf:select1 ref="instance('temp')/collection" class="maxlong">
-                        <xf:label>Select existing file collection bibliography: </xf:label>
+                        <xf:label class="fixed_width_maxlong">Select existing file collection bibliography: </xf:label>
                         <xf:item>
                             <xf:label>General (available in all collections)</xf:label>
                             <xf:value/>
@@ -78,7 +85,7 @@
                     </xf:group>
                     <xf:group ref=".[instance('XMLfiles')/dcm:collections/dcm:collection[count(.[.=instance('bibliography-instance')/m:biblList/m:head])=0]]">                   
                         <xf:select1 ref="instance('temp')/new">
-                            <xf:label>Or add new collection bibliography: </xf:label>
+                            <xf:label class="fixed_width_maxlong">Or add new collection bibliography: </xf:label>
                             <xf:item>
                                 <xf:label>- Please select -</xf:label>
                                 <xf:value/>
