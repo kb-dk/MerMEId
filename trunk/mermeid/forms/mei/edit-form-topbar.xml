@@ -227,8 +227,8 @@
     <xf:trigger appearance="minimal">
       <xf:label><h:img src="http:/editor/images/expand.png" title="Edit"/> Edit standard bibliographic references <h:a class="help">?<h:span class="comment">For each 
       file collection (series), a list of frequently used bibliographic references may be available when adding
-      a new reference at the "Bibliography" tab. The lists may be edited using this menu option.<h:br/>
-      Files are associated with a file collection by specifying a file collection name at the "File" tab.</h:span></h:a></xf:label>
+      a new reference at the "Bibliography" tab. The lists may be edited using this menu option.</h:span></h:a>
+      </xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:insert context="." origin="xxf:set-session-attribute('return_url',instance('parameters')/dcm:this_page)"/>
         <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-references.xml"></xf:load>
