@@ -1400,7 +1400,7 @@
 		<xsl:choose>
 			<xsl:when test="count(m:item)&gt;1 or (m:item/@label and m:item/@label!='')">
 				<ul class="item_list">
-					<xsl:for-each select="m:item">
+					<xsl:for-each select="m:item[*//text()]">
 						<li>
 							<xsl:apply-templates select="."/>
 						</li>
@@ -1408,7 +1408,7 @@
 				</ul>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:apply-templates select="m:item"/>
+				<xsl:apply-templates select="m:item[*//text()]"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

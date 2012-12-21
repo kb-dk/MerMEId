@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml"
+  xmlns:xf="http://www.w3.org/2002/xforms"
+  xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+  xmlns:xbl="http://www.w3.org/ns/xbl"
+  xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+  xmlns:dcm="http://www.kb.dk/dcm"
+  xmlns:ev="http://www.w3.org/2001/xml-events"
+  xmlns:zs="http://www.loc.gov/zing/srw/">
+  
+  <!--
+    Component to select a RISM siglum from lists of countries and archives.
+    Danish Centre for Music Publication (DCM) 
+    Axel Teich Geertinger, 2012
+    atge@kb.dk
+  -->
+  
+  <xbl:binding id="dcm-rism-sigla-binding" element="dcm|rism-sigla">
+    
+    <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+      <display-name lang="en">RISM sigla selection component</display-name>
+    </metadata>
+    
+    <xbl:resources>
+      <xbl:style/>
+    </xbl:resources>
+    <xbl:implementation>
+      <!-- Local model -->
+      <xf:model id="rism-model">
+        
+        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+          id="rism-country-instance">
+          <mei/>
+        </xf:instance>
+        
+        <xf:instance xmlns="http://www.loc.gov/zing/srw/"
+          id="rism-sigla-instance">
+          <rism/>
+        </xf:instance>
+        
+        <xf:instance id="local-temp">
+          <country_code/>
+          <archive_code/>
+        </xf:instance>
+        
+        <xf:submission id="load-rism-countries"
+          xxf:username=""
+          xxf:password=""
+          method="get" 
+          serialization="none" 
+          validate="false"
+          resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/RISM_country_codes.xml"
+          replace="instance" 
+          instance="bibliography-instance"/>
+        
+        <xf:submission id="load-rism-sigla"
+          xxf:username=""
+          xxf:password=""
+          method="get" 
+          serialization="none" 
+          validate="false"
+          resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/{instance('local-temp')/country_code}.xml"
+          replace="instance" 
+          instance="bibliography-instance"/>
+
+        <!-- "onload" xforms actions -->
+        <xf:action ev:event="xforms-model-construct-done">
+          <!-- load rism country list -->
+          <xf:send submission="load-rism-countries"/>
+        </xf:action>
+        
+      </xf:model>
+    </xbl:implementation>
+    <xbl:template>
+      <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
+        <xf:group ref=".[instance('parameters')/dcm:show_id='true']">
+          <xf:group appearance="xxf:internal" xxbl:scope="inner">
+            <xxf:variable name="binding" as="node()?">
+              <xxf:sequence select="." xxbl:scope="outer"/>
+            </xxf:variable>
+            <xf:select1 ref="instance('local-temp')/country" xxf:refresh-items="false" class="short">
+              <xf:label/>
+              <xf:item>
+                <xf:label>- Select country -</xf:label>
+                <xf:value/>
+              </xf:item>
+              <xf:itemset nodeset="instance('rism-country-instance')">
+                <xf:label><xf:output value="m:li/m:geogName"/></xf:label>
+                <xf:value ref="@dbkey"></xf:value>
+              </xf:itemset>
+            </xf:select1>          
+            <xf:input class="short" ref="$binding"/>
+          </xf:group>
+        </xf:group>
+      </xf:group>
+    </xbl:template>
+  </xbl:binding>
+</xbl:xbl>

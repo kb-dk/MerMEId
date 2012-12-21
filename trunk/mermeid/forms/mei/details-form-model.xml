@@ -8,7 +8,7 @@
         id="data-instance">
         <mei/>
     </xf:instance>
-    
+
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
         id="empty-instance" 
         src="/../editor/forms/mei/model/empty_doc.xml"
@@ -98,7 +98,7 @@
         resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml"
         replace="instance" 
         instance="bibliography-instance"/>
-    
+
     <xf:submission id="save-to-file"
         ref="instance('data-instance')"
         validate="false"

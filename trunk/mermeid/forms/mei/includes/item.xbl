@@ -7,7 +7,9 @@
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
     xmlns:xbl="http://www.w3.org/ns/xbl" 
     xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
-    xmlns:dcm="http://www.kb.dk/dcm">
+    xmlns:dcm="http://www.kb.dk/dcm"
+    xmlns:marc="http://www.loc.gov/MARC21/slim"
+    xmlns:zs="http://www.loc.gov/zing/srw/">
     
     <!--
         Component generating source item list
@@ -38,9 +40,41 @@
                 <xf:instance id="empty-instance" xmlns="http://www.music-encoding.org/ns/mei"
                     src="/../editor/forms/mei/model/empty_doc.xml" xxf:readonly="true"/>
                 
+                <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+                    id="rism-country-instance">
+                    <list/>
+                </xf:instance>
+                
+                <xf:instance xmlns="http://www.loc.gov/zing/srw/"
+                    id="rism-sigla-instance">
+                    <searchRetrieveResponse/>
+                </xf:instance>
+                
+                <xf:submission id="load-rism-countries"
+                    xxf:username=""
+                    xxf:password=""
+                    method="get" 
+                    serialization="none" 
+                    validate="false"
+                    resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/RISM_country_codes.xml"
+                    replace="instance" 
+                    instance="rism-country-instance"/>
+                
+                <xf:submission id="load-rism-sigla"
+                    xxf:username=""
+                    xxf:password=""
+                    method="get" 
+                    serialization="none" 
+                    validate="false"
+                    resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/{instance('temp')/country_code}.xml"
+                    replace="instance" 
+                    instance="rism-sigla-instance"/>
+                
                 <xf:instance id="temp">
                     <temp>
                         <counter/>
+                        <country_code/>
+                        <archive_code/>
                     </temp>
                 </xf:instance> 
                 
@@ -58,6 +92,8 @@
                     <!-- get settings from session variables -->
                     <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
                     <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
+                    <!-- load rism country list -->
+                    <xf:send submission="load-rism-countries"/>
                 </xf:action>
                 
             </xf:model>
@@ -123,11 +159,74 @@
                                             nodeset="m:identifier"
                                             label="Add RISM siglum"
                                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:itemList/m:item/m:physLoc/m:repository/m:identifier"/>
-                                        <dcm:attribute-editor ref="m:identifier"/>
                                         <xf:input ref="m:identifier[@authority='RISM' or @authority='rism']">
                                             <xf:label class="fixed_width">RISM siglum </xf:label>
                                         </xf:input>
-                                        <dcm:attribute-editor ref="m:physLoc/m:repository/m:identifier[@authority='RISM' or @authority='rism']"/>
+                                        
+                                        <!-- testing RISM sigla input -->
+                                        <xf:trigger>
+                                            <xf:label>Select from list</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xxf:variable name="siglum" select="normalize-space(m:identifier[@authority='RISM' or @authority='rism'][1])"/>
+                                                <xf:setvalue ref="instance('temp')/archive_code" value="$siglum"/>
+                                                <xf:setvalue ref="instance('temp')/country_code" value="substring-before($siglum,'-')"/>
+                                                <xxf:show dialog="rism-dialog"/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <xxf:dialog id="rism-dialog" appearance="full" level="modal"
+                                            close="true" draggable="true" visible="false">
+                                            <xf:label>RISM sigla selection</xf:label>         
+                                            <xf:select1 ref="instance('temp')/country_code" xxf:refresh-items="false" class="maxlong">
+                                                <xf:label class="fixed_width">Country</xf:label>
+                                                <xf:action ev:event="xforms-value-changed">
+                                                    <xf:send submission="load-rism-sigla"/>
+                                                </xf:action>
+                                                <xf:item>
+                                                    <xf:label>- Select country -</xf:label>
+                                                    <xf:value/>
+                                                </xf:item>
+                                                <xf:itemset nodeset="instance('rism-country-instance')/m:li">
+                                                    <xf:label><xf:output value="m:geogName"/></xf:label>
+                                                    <xf:value ref="m:geogName/@dbkey"></xf:value>
+                                                </xf:itemset>
+                                            </xf:select1>      
+                                            <h:br/>&#160;
+                                            <h:br/>
+                                            <xf:select1 ref="instance('temp')/archive_code" class="maxlong">
+                                                <xf:label class="fixed_width">Archive</xf:label>
+                                                <xf:item>
+                                                    <xf:label>- Select archive -</xf:label>
+                                                    <xf:value/>
+                                                </xf:item>
+                                                <xf:itemset nodeset="instance('rism-sigla-instance')/zs:records/zs:record">
+                                                    <xf:label>
+                                                        <xf:output value="zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='g']"/>: 
+                                                        <xf:output value="zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='c']"/>, 
+                                                        <xf:output value="zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='a']"/>
+                                                    </xf:label>
+                                                    <xf:value ref="zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='g']"></xf:value>
+                                                </xf:itemset>
+                                            </xf:select1>    
+                                            <h:br/>
+                                            <xf:trigger>
+                                                <xf:label> OK </xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:setvalue ref="m:identifier[@authority='RISM' or @authority='rism']" value="instance('temp')/archive_code"></xf:setvalue>
+                                                    <xxf:hide dialog="rism-dialog"/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                            <xf:trigger>
+                                                <xf:label> Cancel </xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xxf:hide dialog="rism-dialog"/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                        </xxf:dialog>
+
+                                        <!-- end RISM sigla test -->
+                                        
+                                        <dcm:attribute-editor ref="m:identifier[@authority='RISM' or @authority='rism']"/>
+                                        
                                     </h:div>
                                     
                                     <dcm:create 
