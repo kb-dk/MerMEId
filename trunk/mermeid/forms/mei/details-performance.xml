@@ -288,6 +288,7 @@
                                             <h:i><xf:output value="m:title[@level='a']"/></h:i><xf:output 
                                                 value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='j'])) then concat('. ',m:title[@level='j']) else m:title[@level='j']"/>
                                             <xf:output value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='m'])) then concat('. ',m:title[@level='m']) else m:title[@level='m']"/>
+                                            <xf:output value="if (normalize-space(m:title[not(@level)])) then m:title[not(@level)] else ''"/>
                                             <xf:output value="if (normalize-space(m:imprint/m:date)) then concat('(',normalize-space(m:imprint/m:date),')') else ''"/>
                                             <!-- end header -->
                                             <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient[1],m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:imprint/m:date[1]))='']"> [No description] </xf:group>                           
