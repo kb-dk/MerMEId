@@ -156,8 +156,6 @@
                 </xsl:when>
                 <xsl:when test="$collection='GW'">
                     <persName role="editor">Niels Bo Foltmann</persName>
-                    <persName role="editor">Axel Teich Geertinger</persName>
-                    <persName role="editor">Anne Ørbæk Jensen</persName>
                 </xsl:when>
                 <xsl:when test="$collection='HartW'">
                     <persName role="editor">Inger Sørensen</persName>

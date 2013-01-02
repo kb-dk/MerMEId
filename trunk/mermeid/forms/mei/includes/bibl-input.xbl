@@ -266,7 +266,7 @@
                                         label="Add repository name"
                                         origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc][1]/m:physLoc/m:repository/m:corpName"/>
                                     <xf:input ref="m:physLoc/m:repository/m:corpName" class="maxlong">
-                                        <xf:label class="fixed_width_mediumlong">Repository name </xf:label>
+                                        <xf:label class="fixed_width">Repository name </xf:label>
                                     </xf:input>
                                     <dcm:attribute-editor ref="m:physLoc/m:repository/m:corpName"/>
                                 </h:div>
@@ -275,9 +275,7 @@
                                         nodeset="m:identifier[@authority='RISM']"
                                         label="Add RISM siglum"
                                         origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:identifier][1]/m:physLoc/m:repository/m:identifier[@authority='RISM']"/>
-                                    <xf:input ref="m:physLoc/m:repository/m:identifier[@authority='RISM' or @authority='rism']" class="short">
-                                        <xf:label class="fixed_width_mediumlong">RISM siglum </xf:label>
-                                    </xf:input>
+                                    <dcm:rism-sigla ref="m:physLoc/m:repository/m:identifier[@authority='RISM' or @authority='rism']"/>
                                     <dcm:attribute-editor ref="m:physLoc/m:repository/m:identifier[@authority='RISM' or @authority='rism']"/>
                                 </h:div>
                                 <dcm:create ref="m:physLoc" 
@@ -285,7 +283,7 @@
                                     label="Add shelf mark"
                                     origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:identifier][1]/m:physLoc/m:identifier"/>
                                 <xf:input ref="m:physLoc/m:identifier" class="maxlong">
-                                    <xf:label class="fixed_width_mediumlong">Shelfmark <h:a class="help">?<h:span class="comment">The shelfmark or
+                                    <xf:label class="fixed_width">Shelfmark <h:a class="help">?<h:span class="comment">The shelfmark or
                                         other signature identfying the item in the
                                         repository</h:span></h:a></xf:label>
                                 </xf:input>
@@ -295,18 +293,24 @@
                                         nodeset="m:ptr"
                                         label="Add link to library record"
                                         origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:ptr][1]/m:physLoc/m:ptr"/>
-                                    <xf:repeat nodeset="m:physLoc/m:ptr">
+                                    <xf:repeat nodeset="m:physLoc/m:ptr" id="bibl-repository-ptr">
                                         <h:div>
                                             <xf:input ref="@target" class="maxlong">
-                                                <xf:label class="fixed_width_mediumlong">Library record URI <h:a class="help">?<h:span
-                                                    class="comment">Link address (URI) to the library's online catalogue record 
-                                                    for this item</h:span></h:a></xf:label>
+                                                <xf:label class="fixed_width">URI <h:a class="help">?<h:span
+                                                    class="comment">Link address to the repository or the repository's 
+                                                    online catalogue, e.g. "http://www.example.org/catalogue?item=123"</h:span></h:a></xf:label>
                                             </xf:input>
                                             <xf:input ref="@label" class="long">
-                                                <xf:label>Link label <h:a class="help">?<h:span class="comment">A label to
-                                                    be displayed as the link text, e.g. "Library record"</h:span></h:a></xf:label>
+                                                <xf:label>Link label <h:a class="help">?<h:span class="comment">A 
+                                                    descriptive label for the link to the resource, e.g. 
+                                                    "Archive's website" or "Library record"</h:span></h:a></xf:label>
                                             </xf:input>
-                                            <dcm:attribute-editor ref="."/>
+                                            <dcm:element-buttons 
+                                                triggers="add remove" 
+                                                nodeset="m:ptr" 
+                                                index="bibl-repository-ptr"
+                                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:ptr][1]/m:physLoc/m:ptr"/>
+                                            <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>
                                 </h:div>
@@ -324,7 +328,7 @@
                                 <xf:repeat nodeset="m:relatedItem[@rel='host']/m:bibl" id="repeat-letter-editions">
                                     <h:div>
                                         <xf:input ref="m:title" class="maxlong">
-                                            <xf:label class="fixed_width">Title <h:a class="help">?<h:span class="comment">The title or a
+                                            <xf:label>Title <h:a class="help">?<h:span class="comment">The title or a
                                                 short-hand reference to the publication quoting or transcribing
                                                 this item, e.g. "CNB" or "Mozart:
                                                 Briefe"</h:span></h:a></xf:label>

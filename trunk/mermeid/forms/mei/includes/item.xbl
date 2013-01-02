@@ -127,7 +127,7 @@
                             <dcm:create 
                                 nodeset="m:physLoc"
                                 label="Add location"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physLoc"/>
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:itemList/m:item/m:source/m:physLoc"/>
                             <xf:group ref="m:physLoc">
                                 <dcm:create 
                                     nodeset="m:repository"
@@ -191,8 +191,6 @@
                                             </h:div>
                                         </xf:repeat>
                                     </h:div>                                            
-                                    
-                                    
                                 </xf:repeat>
                                 <h:div>
                                     <dcm:create 
