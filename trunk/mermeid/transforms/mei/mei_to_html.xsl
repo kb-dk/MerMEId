@@ -215,10 +215,9 @@
 					<xsl:apply-templates select="m:annot[@type='general_description']"/>
 				</p>
 			</xsl:if>
-			<xsl:for-each select="m:annot[@type='links'][m:ptr[@target!='']]">
+			<xsl:for-each select="m:annot[@type='links'][m:ptr[normalize-space(@target)]]">
 				<p>
-					<img src="/editor/images/html_link.png" title="Link to external resource"/>
-					<xsl:for-each select="m:ptr[@target!='']">
+					<xsl:for-each select="m:ptr[normalize-space(@target)]">
 						<xsl:apply-templates select="."/>
 					</xsl:for-each>
 				</p>
@@ -1313,9 +1312,9 @@
 							<xsl:apply-templates select="."/>
 						</p>
 					</xsl:for-each>
-					<xsl:for-each select="m:annot[@type='links'][m:ptr[@target!='']]">
+					<xsl:for-each select="m:annot[@type='links'][m:ptr[normalize-space(@target)]]">
 						<p>
-							<xsl:for-each select="m:ptr[@target!='']">
+							<xsl:for-each select="m:ptr[normalize-space(@target)]">
 								<xsl:apply-templates select="."/>
 							</xsl:for-each>
 						</p>
@@ -1527,13 +1526,13 @@
 		</xsl:for-each>
 		<xsl:apply-templates select="m:identifier"/><xsl:if 
 			test="m:identifier[text()] or m:repository[*//text()]">. </xsl:if>
-		<xsl:for-each select="m:repository/m:ptr[@target!='']">
+		<xsl:for-each select="m:repository/m:ptr[normalize-space(@target)]">
 			<xsl:apply-templates select="."/>
 			<xsl:if test="position()!=last()">
 				<xsl:text>, </xsl:text>
 			</xsl:if>
 		</xsl:for-each>
-		<xsl:for-each select="m:ptr[@target!='']">
+		<xsl:for-each select="m:ptr[normalize-space(@target)]">
 			<xsl:apply-templates select="."/>
 			<xsl:if test="position()!=last()">
 				<xsl:text>, </xsl:text>
@@ -1957,7 +1956,7 @@
 	</xsl:template>
 
 	<!-- display external link -->
-	<xsl:template match="m:ptr[@target!='' or @xl:href!='']">
+	<xsl:template match="m:ptr[normalize-space(@target) or normalize-space(@xl:href)]">
 		<img src="/editor/images/html_link.png" title="Link to external resource"/>
 		<a target="_blank">
 			<xsl:attribute name="href">
@@ -1971,10 +1970,10 @@
 				</xsl:choose>
 			</xsl:attribute>
 			<xsl:choose>
-				<xsl:when test="normalize-space(@label)!=''">
+				<xsl:when test="normalize-space(@label)">
 					<xsl:value-of select="@label"/>
 				</xsl:when>
-				<xsl:when test="normalize-space(@targettype)!=''">
+				<xsl:when test="normalize-space(@targettype)">
 					<xsl:call-template name="capitalize">
 						<xsl:with-param name="str" select="@targettype"/>
 					</xsl:call-template>

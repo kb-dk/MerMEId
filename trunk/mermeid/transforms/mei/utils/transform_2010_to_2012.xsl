@@ -1379,7 +1379,7 @@
     </xsl:template>
 
     <xsl:template match="m:extptr">
-        <xsl:if test="@target!='' or @xl:href!=''">
+        <xsl:if test="normalize-space(@target) or normalize-space(@xl:href)">
             <ptr>
                 <!-- rename attributes -->
                 <xsl:copy-of select="@*[name()!='xl:href' and name()!='xl:title' and name()!='targettype']"/>
