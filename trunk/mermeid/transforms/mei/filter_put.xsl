@@ -146,11 +146,13 @@
           </xsl:when>
           <xsl:otherwise>
             <!-- No end element. Something like &lt;br/&gt;, &lt;br&gt; or &lt;img src=""/&gt; assumed -->                        
-            <xsl:element name="{$element}" namespace="http://www.w3.org/1999/xhtml">
-              <xsl:call-template name="addAttributes">
-                <xsl:with-param name="attrString" select="$attributes"/>
-              </xsl:call-template>
-            </xsl:element>
+	    <xsl:if test="string-length($element) &gt; 0">
+	      <xsl:element name="{$element}" namespace="http://www.w3.org/1999/xhtml">
+		<xsl:call-template name="addAttributes">
+		  <xsl:with-param name="attrString" select="$attributes"/>
+		</xsl:call-template>
+	      </xsl:element>
+	    </xsl:if>
             <xsl:call-template name="replace_nodes">
               <xsl:with-param name="text" select="substring-after($text,'&gt;')"/>
             </xsl:call-template>

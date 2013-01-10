@@ -39,17 +39,18 @@ if ( open($in,"$find |") ) {
 	my $num_suffix = 0;
 	my $in         = $source.$num_suffix;
 	my $out        = "";
-	print "#$source\n";
+	print "#$source ";
 	system "cp $source $in";
-	for(my $i=0;$i<$#sheet_list;$i++) {
+	for(my $i=0;$i<=$#sheet_list;$i++) {
 	    my $stylesheet = $sheet_list[$i];
 	    $num_suffix    = $i;
 	    $in            = $source.$num_suffix;
 	    $num_suffix++;
 	    $out           = $source.$num_suffix;
-	    system "saxon $in $stylesheet > $out"
+	    system "saxon $in $stylesheet > $out";
+	    print $stylesheet . " ";
 	}
-
+	print "\n";
 	system "mv $out $source";
 	system 'rm '.$source."[0-9]";
     }
