@@ -78,10 +78,10 @@
 		<div class="settings colophon">
 			<a
 				href="javascript:loadcssfile('/editor/style/html_hide_languages.css'); hide('load_alt_lang_css'); show('remove_alt_lang_css')"
-				id="load_alt_lang_css">Hide alternative languages</a>
+				id="load_alt_lang_css" class="noprint">Hide alternative languages</a>
 			<a style="display:none"
 				href="javascript:removecssfile('/editor/style/html_hide_languages.css'); hide('remove_alt_lang_css'); show('load_alt_lang_css')"
-				id="remove_alt_lang_css">Show alternative languages</a>
+				id="remove_alt_lang_css" class="noprint">Show alternative languages</a>
 		</div>
 
 		<xsl:for-each select="m:meiHead/

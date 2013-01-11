@@ -217,15 +217,20 @@ table.source_component_list td.label_cell {
 @font-face {
 	font-family: 'Euterpe';
 	src: url('fonts/Euterpe.eot');
-	src: local('Euterpe Regular'), local('Euterpe'), url('fonts/Euterpe.ttf') format('truetype'), 
-	       url('fonts/Euterpe.woff') format('woff'), url('fonts/Euterpe.svg') format('svg');
+	src: local('Euterpe Regular'), local('Euterpe'),
+	       url('fonts/Euterpe.eot?#iefix') format('embedded-opentype'),
+	       url('fonts/Euterpe.ttf') format('truetype'), 
+	       url('fonts/Euterpe.woff') format('woff'), 
+	       url('fonts/Euterpe.svg#Euterpe') format('svg');
 } 
 
 /* Runes font */
 @font-face {
 	font-family: 'Hnias';
 	src: url('fonts/Hnias.eot');
-	src: local('Hnias Regular'), local('Hnias'), url('fonts/Hnias.ttf') format('truetype');
+	src: local('Hnias Regular'), local('Hnias'), 
+	   url('fonts/Hnias.eot?#iefix') format('embedded-opentype'),
+	   url('fonts/Hnias.ttf') format('truetype');
 } 
 /* End embedded font */
 
