@@ -1644,7 +1644,7 @@
 	<!-- bibliographic record formatting template -->
 	<xsl:template match="m:bibl">
 		<xsl:choose>
-			<xsl:when test="m:genre='book'">
+			<xsl:when test="m:genre='book' and not(m:genre='article')">
 				<xsl:if test="m:title[@level='m']/text()">
 					<!-- show entry only if a title is stated -->
 					<xsl:choose>
@@ -1727,14 +1727,17 @@
 					</xsl:if>. </xsl:if>
 			</xsl:when>
 
-			<xsl:when test="m:genre='journal' and m:genre='article'">
+			<xsl:when test="(m:genre='journal' or m:genre='newspaper') and m:genre='article'">
 				<!-- show entry only if a title or journal/newspaper name is stated -->
 				<xsl:if test="m:title[@level='a']/text()|m:title[@level='j']/text()">
 					<xsl:if test="normalize-space(m:title[@level='a'])!=''">
 						<xsl:if test="m:creator/text()">
 							<xsl:call-template name="list_authors"/>
 						</xsl:if> '<xsl:value-of select="m:title[@level='a']/text()"/>'<xsl:if
-							test="m:title[@level='j']/text()">, in: </xsl:if>
+							test="m:title[@level='j']/text()"><xsl:choose>
+								<xsl:when test="m:genre='journal'">, in: </xsl:when>
+								<xsl:otherwise>. </xsl:otherwise>
+							</xsl:choose></xsl:if>
 					</xsl:if>
 					<xsl:if test="m:title[@level='j']/text()">
 						<em><xsl:apply-templates select="m:title[@level='j']"/></em>

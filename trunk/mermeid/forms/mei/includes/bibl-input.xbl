@@ -45,7 +45,7 @@
                     <xf:group ref="$binding">
                         
                         
-                        <xf:group ref="m:creator[not(../m:genre='newspaper') and not(../m:genre='letter') and not(../m:genre='diary entry') and not(contains(../m:genre,'concert program'))]">
+                        <xf:group ref="m:creator[not(../m:genre='newspaper') and not(../m:genre='letter') and not(../m:genre='diary entry') and not(../m:genre[contains(.,'concert program')])]">
                             <!-- authors are listed elsewhere if newspaper article -->
                             <h:fieldset>
                                 <h:legend>Authors</h:legend>
@@ -113,7 +113,7 @@
                             </xf:group>
                         </xf:group>
                         
-                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(contains(m:genre,'concert program'))]">
+                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(../m:genre[contains(.,'concert program')])]">
                             
                             <h:fieldset>
                                 <h:legend>Volume etc. <h:a class="help">?<h:span class="comment">Volume and issue no. to
@@ -204,7 +204,7 @@
                             </xf:group>
                         </xf:group>
                         
-                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(contains(m:genre,'concert program'))]">
+                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(../m:genre[contains(.,'concert program')])]">
                             <h:fieldset>
                                 <h:legend>Link to fulltext</h:legend>
                                 <dcm:create nodeset="m:ptr" label="Add link to fulltext"
@@ -254,7 +254,7 @@
                             </h:div>
                         </xf:group>
                         
-                        <xf:group ref=".[m:genre='letter' or m:genre='diary entry' or contains(m:genre,'concert program')]">
+                        <xf:group ref=".[m:genre='letter' or m:genre='diary entry' or m:genre[contains(.,'concert program')]]">
                             <h:fieldset>
                                 <h:legend>Item location <h:a class="help">?<h:span
                                     class="comment">The library, archive or other repository holding this
