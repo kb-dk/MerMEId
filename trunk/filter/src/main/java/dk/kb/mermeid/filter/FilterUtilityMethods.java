@@ -1,7 +1,8 @@
 package dk.kb.mermeid.filter;
 
 /**
- * This servlet implements a filter like HTTP proxy
+ * <p>This class implements the filter mechanisms in the filter
+ * application.</p>
  * @author Sigfrid Lundberg (slu@kb.dk)
  * @version $Revision$
  * Last modified $Date$
@@ -42,12 +43,15 @@ public class FilterUtilityMethods  {
     }
 
     /**
-     * HTTP GET
-     * This method sends a request, collects what is returned, xslt transforms
-     * that and return it to the client
+     * <p><strong>HTTP GET</strong> This method sends a request to the
+     * corresponding URI at the CRUD server. The function then receives what
+     * is returned and xslt transforms it and sends it to the client</p>
+     * @param request
+     * @param response
      */
-    public void recieveAndFilterData(javax.servlet.http.HttpServletRequest  request,
-				      javax.servlet.http.HttpServletResponse response  ) 
+    public void 
+	recieveAndFilterData(javax.servlet.http.HttpServletRequest  request,
+			     javax.servlet.http.HttpServletResponse response  ) 
 	throws java.io.IOException 
     {
 
@@ -211,7 +215,13 @@ public class FilterUtilityMethods  {
 
     }    
 
-
+    /**
+     * <p>This method reads indata, transforms it, and writes it to an output
+     * stream.</p>
+     * @param xsl_name
+     * @param in
+     * @param out
+     */
     public void doTransform(String xsl_name, 
 			     java.io.InputStream in,
 			     java.io.Writer out)
@@ -281,6 +291,10 @@ public class FilterUtilityMethods  {
 	
     }
 
+    /**
+     * <p>This could be used for benchmarking. Cannot see that it is called though.</p>
+     * @see setStart()
+     */
     public void workDone() {
 	java.lang.Long completed = System.currentTimeMillis() - this.start;
 	if(logger.isInfoEnabled()){ 
@@ -288,8 +302,13 @@ public class FilterUtilityMethods  {
 	}
     }
 
+    /**
+     * <p>Serializes a DOM and writes it to a writer.</p>
+     * @param doc
+     * @param out
+     */
     public void serialize(org.w3c.dom.Document doc,
-			  java.io.Writer  out ) {
+			  java.io.Writer       out ) {
         try {
             org.w3c.dom.bootstrap.DOMImplementationRegistry registry =
 		org.w3c.dom.bootstrap.DOMImplementationRegistry.newInstance();
@@ -316,32 +335,39 @@ public class FilterUtilityMethods  {
 
     }
 
+    /**
+     * <p>Set the database, i.e., the eXist collection.</p>
+     * @param base
+     */
     public void setBase(String base) {
 	this.database = base;
     }
 
+    /**
+     * <p>Get the databaes, i.e., the eXist collection</p>
+     * @return database
+     */
     public String getBase() {
 	return this.database;
     }
 
+    /**
+     * <p>An authenticated user's UID can be read from the HTTP header. We save 
+     * that here.</p>
+     * @param user
+     */
     public void setUser(String user) {
 	this.user = user;
     }
 
+    /**
+     * <p>An authenticated user's UID can be read from the HTTP header. We can get
+     * that here again.</p>
+     * @return user
+     */
     public String getUser() {
 	return this.user;
     }
-
-
-    public String getRecord() {
-	return this.record;
-    }
-
-    public void setRecord(String record) {
-	this.record = record;
-    }
-
-
 
     public String uriConstructor(javax.servlet.http.HttpServletRequest  request,
 				  javax.servlet.http.HttpServletResponse response ) {

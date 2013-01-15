@@ -1,9 +1,9 @@
 package dk.kb.mermeid.filter;
 
 /**
- * When recieving a get request, this gateway sends a HTTP DELETE request to
- * the corresponding entity in an eXist-Open database. I.e., this is really a
- * deletion proxy for a CRUD environment ...
+ * <p>When recieving a <strong>GET</strong> request matching the /delete/*
+ * URI pattern, this gateway sends a HTTP DELETE request to
+ * the corresponding entity in the CRUD engine.</p>
  * @author Sigfrid Lundberg (slu@kb.dk)
  * @version $Revision$
  * Last modified $Date$

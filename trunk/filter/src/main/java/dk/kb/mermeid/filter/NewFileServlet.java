@@ -1,7 +1,9 @@
 package dk.kb.mermeid.filter;
 
 /**
- * This servlet implements a filter like HTTP proxy
+ * <p>This servlet accepts <strong>GET</strong> requests on URIs matching the
+ * /new/* pattern.  It will as a response generate a new unique URI and
+ * redirect a client to it.</p>
  * @author Sigfrid Lundberg (slu@kb.dk)
  * @version $Revision$
  * Last modified $Date$

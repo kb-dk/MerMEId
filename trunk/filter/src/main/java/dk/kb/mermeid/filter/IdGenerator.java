@@ -1,5 +1,11 @@
 package dk.kb.mermeid.filter;
 
+/**
+ * <p>This a utility that generates application wide unique numeric IDs for
+ * use in the NewFileServlet. It is using the singleton pattern to ensure that
+ * time and a counter generates IDs that are indeed unique. The recipe for
+ * this was found on the Internet.</p>
+ */
 public class IdGenerator {
 
     private static org.apache.log4j.Logger logger = 
