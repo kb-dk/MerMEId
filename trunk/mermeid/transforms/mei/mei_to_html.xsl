@@ -569,8 +569,29 @@
 
 	<xsl:template match="m:expression">
 		<!-- display title etc. only with components or versions -->
-		<xsl:apply-templates
-			select="m:titleStmt[ancestor-or-self::*[local-name()='componentGrp'] or count(../m:expression)&gt;1]"/>
+		<xsl:if test="ancestor-or-self::*[local-name()='componentGrp'] or count(../m:expression)&gt;1">
+			<xsl:if test="@n!='' or m:titleStmt//text()">
+				<xsl:variable name="level">
+					<!-- expression headings start with <H3>, decreasing in size with each level -->
+					<xsl:choose>
+						<xsl:when test="ancestor-or-self::*[local-name()='componentGrp']">
+							<xsl:value-of select="count(ancestor-or-self::*[local-name()='componentGrp'])+2"/>
+						</xsl:when>
+						<xsl:otherwise>3</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:variable name="element" select="concat('h',$level)"/>
+				<xsl:element name="{$element}">
+					<xsl:if test="@n!=''">
+						<strong>
+							<xsl:value-of select="@n"/><xsl:text>. </xsl:text>
+						</strong>
+					</xsl:if>
+					<xsl:apply-templates select="m:titleStmt[//text()]"/>
+				</xsl:element>
+			</xsl:if>
+		</xsl:if>
+		
 		<xsl:apply-templates
 			select="m:perfMedium[m:instrumentation[m:instrVoice or m:instrVoiceGrp] or m:castList/m:castItem]"
 			mode="subLevel"/>
@@ -581,58 +602,32 @@
 		<xsl:apply-templates select="m:componentGrp"/>
 	</xsl:template>
 
+
 	<xsl:template match="m:expression/m:titleStmt">
-		<xsl:variable name="level">
-			<!-- expression headings start with <H3>, decreasing in size with each level -->
-			<xsl:choose>
-				<xsl:when test="ancestor-or-self::*[local-name()='componentGrp']">
-					<xsl:value-of select="count(ancestor-or-self::*[local-name()='componentGrp'])+2"/>
-				</xsl:when>
-				<xsl:otherwise>3</xsl:otherwise>
-			</xsl:choose>
-		</xsl:variable>
-		<xsl:variable name="element" select="concat('h',$level)"/>
-		<xsl:if test="concat(../@n,m:title)!=''">
-			<xsl:element name="{$element}">
+		<xsl:if test="m:title/text()">
+			<xsl:for-each select="m:title[text()]">
 				<xsl:choose>
-					<xsl:when test="../@n!='' and m:title=''">
-						<strong>
-							<xsl:value-of select="../@n"/>
-						</strong>
+					<xsl:when test="position()&gt;1">
+						<span class="alternative_language">
+							<xsl:text>[</xsl:text>
+							<xsl:value-of select="@xml:lang"/>
+							<xsl:text>] </xsl:text>
+							<xsl:apply-templates/>
+							<xsl:if test="position()&lt;last()">
+								<br/>
+							</xsl:if>
+						</span>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:if test="m:title/text()">
-							<xsl:for-each select="m:title[text()]">
-								<xsl:choose>
-									<xsl:when test="position()&gt;1">
-										<span class="alternative_language">
-											<xsl:text>[</xsl:text>
-											<xsl:value-of select="@xml:lang"/>
-											<xsl:text>] </xsl:text>
-											<xsl:apply-templates/>
-											<xsl:if test="position()&lt;last()">
-												<br/>
-											</xsl:if>
-										</span>
-									</xsl:when>
-									<xsl:otherwise>
-										<strong>
-											<xsl:value-of select="../@n"/>
-											<xsl:if test="../@n!=''">
-												<xsl:text>. </xsl:text>
-											</xsl:if>
-											<xsl:apply-templates/>
-											<xsl:if test="position()&lt;last()">
-												<br/>
-											</xsl:if>
-										</strong>
-									</xsl:otherwise>
-								</xsl:choose>
-							</xsl:for-each>
+						<strong>
+							<xsl:apply-templates/>
+						</strong>
+						<xsl:if test="position()&lt;last()">
+							<br/>
 						</xsl:if>
 					</xsl:otherwise>
 				</xsl:choose>
-			</xsl:element>
+			</xsl:for-each>
 		</xsl:if>
 	</xsl:template>
 
