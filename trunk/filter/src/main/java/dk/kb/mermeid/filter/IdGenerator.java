@@ -3,8 +3,7 @@ package dk.kb.mermeid.filter;
 /**
  * <p>This a utility that generates application wide unique numeric IDs for
  * use in the NewFileServlet. It is using the singleton pattern to ensure that
- * time and a counter generates IDs that are indeed unique. The recipe for
- * this was found on the Internet.</p>
+ * at each time the generated IDs are unique.</p>
  */
 public class IdGenerator {
 
@@ -34,6 +33,7 @@ public class IdGenerator {
 
     /**
      * <p>Here we calculate the ID as a java.lang.Long, and return it as a string</p>
+     *
      * @return an ID which is unique application wide as a string
      */
     public java.lang.String getId() {
