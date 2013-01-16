@@ -7,74 +7,12 @@
   </head>
   <body>
 
-    <p style="text-align:right;">
-      <a href="../README.html">Project root</a>
-    </p>
-
     <h1>xml_store <kbd>filter</kbd></h1>
 
-    <p><kbd>filter</kbd> is a supporting web application to the mermeid MEI
-    editing system. The two most important functions is to transform documents
-    in between the editor and an XML CRUD engine. It supports HTTP
-    <kbd>GET</kbd> and <kbd>PUT</kbd>.</p>
+    <ul>
+      <li><a href="../mermeid/INSTALL.html">Installation guide</a></li>
+      <li><a href="src/main/java/dk/kb/mermeid/filter/package.html">package.html</a></li>
+    </ul>
 
-    <p>It offers full CRUD support through three servlets</p>
-
-    <table>
-      <tr>
-	<th>Create</th>
-	<td>dk.kb.mermeid.filter.NewFileServlet</td>
-	<td>Supports GET and PUT.</td>
-      </tr>
-      <tr>
-	<th>Retrieve, Update</th>
-	<td>dk.kb.mermeid.filter.HttpFilter</td>
-      </tr>
-      <tr>
-	<th>Delete</th>
-	<td>dk.kb.mermeid.filter.DeleteServlet</td>
-      </tr>
-    </table>
-
-    <h2>Create using GET</h2>
-
-    <p>Typically a new document is created by POSTing it to a CRUD engine. It
-    will assign a name to the document and store it. eXist XML database does
-    do this. Instead we have ensured that the mermeid form can survive an edit
-    request for a named non-existing document. The NewFileServlet creates new
-    unique file names and redirects a client to a form editing such a
-    document. After the user has completed the editing, the form PUTs the
-    content through filter to the database.</p>
-
-    <h2>Retrieval using GET</h2>
-
-    <p>Retrieves the document from the XML store and, XSL transforms it by
-    means of an XSLT scripts named in a JAVA and finally it delivers it to an
-    HTTP client</p>
-
-    <p>filter parses the request, and will assume that the string after the
-    last slash ('/') is an unique file name (or really a record ID) that can
-    be used for retrieval in the XML database. The string between the two last
-    slashes is regarded as the database name. I.e.:</p>
-
-    <pre>
-      http://example.org/context/&lt;database name&gt;/&lt;record ID&gt;
-    </pre>
-
-    <h2>Update using PUT</h2>
-
-    <p>filter accepts PUT requests to any URI. It will XSL transform the
-    content and save it into the database.</p>
-
-    <p>Requests are parsed exactly as for GET requests</p>
-
-    <h2>Deleting using GET</h2>
-
-    <p>Ordinary browsers do not support HTTP DELETE request. We think that is
-    good. The eXist XML database do, however. filter can delete documents by
-    sending a DELETE request an URI corresponding to a GET request from a user
-    client. The DeleteServlet is basically a GET to DELETE gateway.</p>
-
-    
   </body>
 </html>
