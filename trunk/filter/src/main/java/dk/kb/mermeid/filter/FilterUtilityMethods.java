@@ -38,16 +38,21 @@ public class FilterUtilityMethods  {
     private java.util.Properties props = null;
     private java.lang.Long       start = null;
 
+    /**
+     * <p>Constructor. It gets the properties from the Configuration singleton.</p>
+     * @see Configuration
+     */
     public FilterUtilityMethods() {
 	this.props = Configuration.getInstance().getConstants();
     }
 
     /**
-     * <p><strong>HTTP GET</strong> This method sends a request to the
-     * corresponding URI at the CRUD server. The function then receives what
-     * is returned and xslt transforms it and sends it to the client</p>
-     * @param request
-     * @param response
+     * <p>used when the server recieves an HTTP GET This method sends a
+     * request to the corresponding URI at the CRUD server. The function then
+     * receives what is returned and xslt transforms it and sends it to the
+     * client</p>
+     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to the client 
      */
     public void 
 	recieveAndFilterData(javax.servlet.http.HttpServletRequest  request,
@@ -122,6 +127,8 @@ public class FilterUtilityMethods  {
     /**
      * Here we recieve data wia a PUT request. We xslt transform these data
      * and forward them somewhere else on the net again using a PUT
+     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to the client 
      */
     public void filterAndSubmitData(javax.servlet.http.HttpServletRequest  request,
 				     javax.servlet.http.HttpServletResponse response  ) 
@@ -292,17 +299,6 @@ public class FilterUtilityMethods  {
     }
 
     /**
-     * <p>This could be used for benchmarking. Cannot see that it is called though.</p>
-     * @see setStart()
-     */
-    public void workDone() {
-	java.lang.Long completed = System.currentTimeMillis() - this.start;
-	if(logger.isInfoEnabled()){ 
-	    logger.info(".. work done in " + completed + " ms"); 
-	}
-    }
-
-    /**
      * <p>Serializes a DOM and writes it to a writer.</p>
      * @param doc
      * @param out
@@ -332,7 +328,6 @@ public class FilterUtilityMethods  {
         } catch (java.lang.IllegalAccessException accessPrblm) {
             logger.error(accessPrblm.getMessage());
         }
-
     }
 
     /**
@@ -369,6 +364,11 @@ public class FilterUtilityMethods  {
 	return this.user;
     }
 
+    /**
+     * <p>Here we recast the incoming URI to a URI in the crud engine.</p> </p>
+     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to the client 
+     */
     public String uriConstructor(javax.servlet.http.HttpServletRequest  request,
 				  javax.servlet.http.HttpServletResponse response ) {
 	
@@ -438,6 +438,12 @@ public class FilterUtilityMethods  {
 
     }
 
+    /**
+     * <p>When talking to the remote server we have to authenticate. Here we
+     * handle those gory details.</p>
+     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param client an apache commons HTTP client object
+     */
     public void setCredentials(javax.servlet.http.HttpServletRequest    request,
 				org.apache.commons.httpclient.HttpClient client) {
 
@@ -463,8 +469,33 @@ public class FilterUtilityMethods  {
 
     }
 
+    /**
+     * <p>Used for logging and benchmarking of how long the processing
+     * takes. Called when starting the processing of a request</p>
+     * @param start - The time we start as a Long
+     */
     void setStart(java.lang.Long start) {
 	this.start = start;
+    }
+
+    /**
+     * <p>Used for logging and benchmarking of how long the processing
+     * takes. Called when starting the processing of a request. More
+     * clever. It calculates start time itself ;)</p>
+     */
+    public void setStart() {
+	this.setStart(System.currentTimeMillis());
+    }
+
+    /**
+     * <p>Used for logging and benchmarking of how long the processing
+     * takes. When the start has been set using, it will add a time entry to
+     * the log.</p>
+     * @see #setStart()
+     */
+    public void workDone() {
+	java.lang.Long time = System.currentTimeMillis() - this.start;
+	logger.debug("Work completed " + time);
     }
 
 }

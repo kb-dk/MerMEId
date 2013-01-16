@@ -34,7 +34,9 @@ public class HttpFilter extends javax.servlet.http.HttpServlet {
 
 
     /**
-     * Class Constructor
+     * <p>Class Constructor. Does really nothing except reading the
+     * Configuration</p>
+     * @see Configuration
      */
     public HttpFilter() {
 	this.props = Configuration.getInstance().getConstants();
@@ -61,6 +63,11 @@ public class HttpFilter extends javax.servlet.http.HttpServlet {
 	return this.srvConf;
     }
 
+    /**
+     * <p>Called by the servlet container for each GET request</p>
+     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to the client 
+     */
     public void doGet(javax.servlet.http.HttpServletRequest request,
 		      javax.servlet.http.HttpServletResponse response) 
 	throws javax.servlet.ServletException, java.io.IOException 
@@ -71,6 +78,11 @@ public class HttpFilter extends javax.servlet.http.HttpServlet {
 	this.utilities.recieveAndFilterData(request,response);
     }
 
+    /**
+     * <p>Called by the servlet container for each GET request</p>
+     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to the client 
+     */
     public void doPost(javax.servlet.http.HttpServletRequest request,
 		       javax.servlet.http.HttpServletResponse response) 
 	throws javax.servlet.ServletException, java.io.IOException
