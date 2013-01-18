@@ -188,6 +188,9 @@
 	    that. The advantage is that you get all the java needed without
 	    further ado.
 	  </p>
+
+	  <p>
+	  </p>
 	  <p>
 	    In the following we assume that tomcat lives in 
 	  </p>
@@ -463,6 +466,31 @@ ProxyPass /filter  "ajp://mei.example.org:8009/filter"
   &lt;/Limit>
 &lt;/LocationMatch>
 	  </pre>
+
+	  <p>Note that you need to set</p>
+
+	  <pre>
+	    tomcatAuthentication="false"
+	  </pre>
+	  
+	  <p>On the appropriate entry in <kbd>&lt;your
+	  tomcat&gt;/conf/server.xml</kbd>, i.e. change from</p>
+
+	  <pre>
+	    &lt;Connector port="8009" 
+		       protocol="AJP/1.3" 
+		       redirectPort="8443"  /&gt;
+	  </pre>
+
+	  <p>to</p>
+
+	  <pre>
+	    &lt;Connector port="8009" 
+		       protocol="AJP/1.3" 
+		       redirectPort="8443" 
+		       tomcatAuthentication="false" /&gt;
+	  </pre>
+
 	</li>
       </ol>
 
