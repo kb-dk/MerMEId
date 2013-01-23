@@ -12,13 +12,21 @@
   
   <h:div class="inputdiv">
     
-    <h:br/>
-    <h:div>
-      <dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work" 
+    <xf:group ref="instance('data-instance')/m:meiHead[not(m:workDesc/m:work/m:biblList)]">
+      <h:div class="vertical_spacer"/>
+      <dcm:create 
+        nodeset="m:workDesc"
+        label="Add basic work metadata"
+        origin="instance('reduced-template')/m:meiHead/m:workDesc"/>
+      <dcm:create ref="m:workDesc"
+        nodeset="m:work"
+        label="Add basic work metadata"
+        origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work"/>
+      <dcm:create ref="m:workDesc/m:work" 
         nodeset="m:biblList"
         label="Add bibliography"
         origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]"/>
-    </h:div>
+    </xf:group>
     
     <xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work[m:biblList]">
       

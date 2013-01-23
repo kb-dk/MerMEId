@@ -8,272 +8,280 @@
 	xmlns:dcm="http://www.kb.dk/dcm"
 	xmlns:m="http://www.music-encoding.org/ns/mei">
 	<h:div class="inputdiv">
-		<dcm:create ref="instance('data-instance')/m:meiHead/m:fileDesc"
-			nodeset="m:seriesStmt"
-			label="Add series information"
-			origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt"/>
-		<xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt">
+		
+		<xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc">
+			
 			<h:fieldset>
-				<h:legend>Series  
+				<h:legend>Series
+					<dcm:attribute-editor ref="m:seriesStmt"/>
+				</h:legend>
+				<dcm:create 
+					nodeset="m:seriesStmt"
+					label="Add series information"
+					origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt"/>
+				
+				<xf:group ref="m:seriesStmt">
+					<h:div>
+						<dcm:create 
+							nodeset="m:title"
+							label="Add series title"
+							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:title"/>
+						<xf:repeat nodeset="m:title" id="repeat-seriestitle">
+							<xf:input ref="." class="maxlong">
+								<xf:label class="fixed_width">Series title <h:a class="help">?<h:span class="comment">E.g. 
+									"Complete Edition of the Works of Carl Nielsen" or "Niels W. Gade Thematic Catalogue"</h:span></h:a>
+								</xf:label>
+							</xf:input>
+							<dcm:attribute-editor/>
+							<dcm:element-buttons triggers="remove"
+								nodeset="m:title"
+								index="repeat-seriestitle"
+								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:title"/>
+						</xf:repeat>
+					</h:div>
+					<dcm:create 
+						nodeset="m:identifier[@type='file_collection']"
+						label="Add file collection identifier"
+						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>                        
+					<xf:group ref=".[not(m:identifier[@type='file_collection'])]">
+						<h:a class="help_plain"><h:img src="http:/editor/images/warning.png" 
+							alt="warning"/><h:span class="comment">If you want MerMEId to organize
+								your files into different collections or series, a file collection 
+								identifier should be added.
+								If you do not need to distinguish between different collections of files, 
+								an identifier may not be needed.
+							</h:span></h:a>
+					</xf:group>
+					<xf:repeat
+						nodeset="m:identifier[@type='file_collection']"
+						id="repeat-collection">
+						<h:div>
+							<xf:input ref=".">
+								<xf:label class="fixed_width">File collection <h:a class="help">?<h:span class="comment">An optional,
+									machine-readable identifier of the collection(s) of files, in which this file is to be used, 
+									e.g. "CNW" or "BWV". The collection identifier enables
+									the co-existence of several	catalogues or collections in MerMEId.<h:br/>
+									If used, the identifier will cause a button with the collection's identifier 
+									to appear on the file list. Use the button to find all files belonging to the same collection.
+									The collection identifier also makes the corresponding list of standard references
+									(if any) available on the bibliography tab when adding a reference.
+								</h:span></h:a></xf:label>
+							</xf:input>
+							<dcm:element-buttons-typed triggers="add remove" 
+								nodeset="m:identifier[@type='file_collection']"
+								index="repeat-collection"
+								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
+							<xf:group ref=".[count(../m:identifier[@type='file_collection'][normalize-space(.)!=''])=0]">
+								<h:a class="help_plain"><h:img src="http:/editor/images/warning.png" 
+									alt="warning"/><h:span class="comment">If you want MerMEId to organize
+										your files into different collections or series, a file collection 
+										identifier should be added.
+										If you do not need to distinguish between different collections of files, 
+										an identifier may not be needed.
+									</h:span></h:a>
+							</xf:group>
+							<dcm:attribute-editor ref="."/>
+						</h:div>
+					</xf:repeat>
+				</xf:group>
+			</h:fieldset>
+			
+			<h:fieldset>
+				<h:legend>File publication 
 					<dcm:attribute-editor ref="."/>
 				</h:legend>
-				<h:div>
-					<dcm:create 
-						nodeset="m:title"
-						label="Add series title"
-						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:title"/>
-					<xf:repeat nodeset="m:title" id="repeat-seriestitle">
-						<xf:input ref="." class="maxlong">
-							<xf:label class="fixed_width">Series title <h:a class="help">?<h:span class="comment">E.g. 
-								"Complete Edition of the Works of Carl Nielsen" or "Niels W. Gade Thematic Catalogue"</h:span></h:a>
-							</xf:label>
-						</xf:input>
-						<dcm:attribute-editor/>
-						<dcm:element-buttons triggers="remove"
-							nodeset="m:title"
-							index="repeat-seriestitle"
-							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:title"/>
-					</xf:repeat>
-				</h:div>
-				<xf:group ref=".[not(m:identifier[@type='file_collection'])]">
-					<h:a class="help_plain"><h:img src="http:/editor/images/warning.png" 
-						alt="warning"/><h:span class="comment">If no identifier is indicated, 
-							MerMEId will not display this file as belonging to any series.
-							For other purposes, or if you do not need to distinguish between   
-							different collections of files, no identifier may be needed.
-						</h:span></h:a>
-				</xf:group>
 				<dcm:create 
-					nodeset="m:identifier[@type='file_collection']"
-					label="Add file collection identifier"
-					origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>                        
-				<xf:repeat
-					nodeset="m:identifier[@type='file_collection']"
-					id="repeat-collection">
-					<h:div>
-						<xf:group ref=".[count(../m:identifier[@type='file_collection'][normalize-space(.)!=''])=0]">
-							<h:a class="help_plain"><h:img src="http:/editor/images/warning.png" 
-								alt="warning"/><h:span class="comment">If no identifier is indicated, 
-									MerMEId will not display this file as belonging to any series.
-									For other purposes, or if you do not need to distinguish between   
-									different collections of files, this field may be left empty.
-								</h:span></h:a>
-						</xf:group>
-						<xf:input ref=".">
-							<xf:label class="fixed_width">File collection <h:a class="help">?<h:span class="comment">An optional,
-								machine-readable identifier of the collection(s) of files, in which this file is to be used, 
-								e.g. "CNW" or "BWV". The collection identifier enables
-								the co-existence of several	catalogues or collections in MerMEId.<h:br/>
-								If used, the identifier will cause a button with the collection's identifier 
-								to appear on the file list. Use the button to find all files belonging to the same collection.
-								The collection identifier also makes the corresponding list of standard references
-								(if any) available on the bibliography tab when adding a reference.
-							</h:span></h:a></xf:label>
-						</xf:input>
-						<dcm:element-buttons-typed triggers="add remove" 
-							nodeset="m:identifier[@type='file_collection']"
-							index="repeat-collection"
-							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
-						<dcm:attribute-editor ref="."/>
-					</h:div>
-				</xf:repeat>
-			</h:fieldset>
-		</xf:group>
-		
-		<h:fieldset>
-			<h:legend>File publication 
-				<dcm:attribute-editor ref="."/>
-			</h:legend>
-			<dcm:create ref="instance('data-instance')/m:meiHead/m:fileDesc"
-				nodeset="m:pubStmt"
-				label="Add publisher"
-				origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt"/>                        
-			<xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:pubStmt">
-				<dcm:create 
-					nodeset="m:respStmt"
+					nodeset="m:pubStmt"
 					label="Add publisher"
-					origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt"/>                        
-				<xf:group ref="m:respStmt">
-					<h:span class="blocklabel strong">Institutions <h:a class="help">?<h:span class="comment">The institutions, 
-						organisations or companies publishing this file</h:span></h:a>
-					</h:span>
+					origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt"/>                        
+				<xf:group ref="m:pubStmt">
 					<dcm:create 
-						nodeset="m:corpName"
-						label="Add publishing institution"
-						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName"/>                        
-					<xf:repeat nodeset="m:corpName" id="repeat-corpname">
-						<h:fieldset>
-							<h:legend>Institution
-								<dcm:element-buttons triggers="add up down remove" 
-									nodeset="m:corpName" 
-									index="repeat-corpname"
-									origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName"/>
-							</h:legend>
-							<h:div>
-								<xf:input ref="m:expan" class="maxlong">
-									<xf:label class="fixed_width">Name <h:a class="help">?<h:span class="comment">E.g. "Danish Centre for Music Publication"</h:span></h:a>
-									</xf:label>
-								</xf:input>
-								<dcm:attribute-editor ref="m:expan"/>
-								<xf:input ref="m:abbr" class="short"><xf:label> Short name <h:a class="help">?<h:span class="comment">Abbreviated 
-									name of the institution, e.g. "DCM"</h:span></h:a></xf:label></xf:input>
-								<dcm:attribute-editor ref="m:abbr"/>
-							</h:div>
-							<dcm:create 
-								nodeset="m:address"
-								label="Add address"
-								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address"/>                        
-							<dcm:create ref="m:address"
-								nodeset="m:addrLine[not(m:ptr)]"
-								label="Add address line"
-								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[not(m:ptr)]"/>                        
-							<xf:repeat nodeset="m:address/m:addrLine[not(m:ptr)]" id="repeat-addrLine">
-								<xxf:variable name="pos" select="position()"/>
+						nodeset="m:respStmt"
+						label="Add publisher"
+						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt"/>                        
+					<xf:group ref="m:respStmt">
+						<h:span class="blocklabel strong">Institutions <h:a class="help">?<h:span class="comment">The institutions, 
+							organisations or companies publishing this file</h:span></h:a>
+						</h:span>
+						<dcm:create 
+							nodeset="m:corpName"
+							label="Add publishing institution"
+							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName"/>                        
+						<xf:repeat nodeset="m:corpName" id="repeat-corpname">
+							<h:fieldset>
+								<h:legend>Institution
+									<dcm:element-buttons triggers="add up down remove" 
+										nodeset="m:corpName" 
+										index="repeat-corpname"
+										origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName"/>
+								</h:legend>
 								<h:div>
-									<xf:input ref="." class="maxlong">
-										<xf:label class="fixed_width"><xf:output value="if ($pos=1) then 'Address' else ''"/></xf:label>
-									</xf:input>&#160;
-									<xf:trigger appearance="minimal" class="non-standard_button">
-										<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
-										<xf:action ev:event="DOMActivate">
-											<xf:insert context="parent::node()" 
-												origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[1]"
-												nodeset="m:addrLine[not(m:ptr)][index('repeat-addrLine')]"/>
-											<xf:setvalue ref="../m:addrLine[not(m:ptr)][index('repeat-addrLine')]" value="''"/>
-										</xf:action>
-									</xf:trigger>
-									<dcm:element-buttons triggers="remove" 
-										nodeset="m:addrLine"
-										index="repeat-addrLine"
-										origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[1]"/>
-									<dcm:attribute-editor ref="."/>
-								</h:div>
-							</xf:repeat>
-							<h:div>
-								<dcm:create ref="m:address"
-									nodeset="m:addrLine[m:ptr]"
-									label="Add URI (link)"
-									origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr][1]"/>
-							</h:div>
-							<xf:repeat nodeset="m:address/m:addrLine[m:ptr]" id="repeat-addr-ptr">
-								<h:div>
-									<xf:input ref="m:ptr/@target" class="maxlong">
-										<xf:label class="fixed_width">URI 
-											<h:a class="help">?<h:span class="comment">Link or mail address, e.g. 
-												"http://www.example.com" or "mailto://someone@example.com"</h:span></h:a>
+									<xf:input ref="m:expan" class="maxlong">
+										<xf:label class="fixed_width">Name <h:a class="help">?<h:span class="comment">E.g. "Danish Centre for Music Publication"</h:span></h:a>
 										</xf:label>
 									</xf:input>
-									<!-- input/select emulating selection="open" behaviour -->
-									<h:span class="selection_open_short">
-										<xf:input ref="m:ptr/@label">
-											<xf:label>Link label 
-												<h:a class="help">?<h:span class="comment">A descriptive label for the link. 
-													Select from list or enter a custom text.</h:span></h:a></xf:label>
-										</xf:input>
-										<xf:select1 ref="m:ptr/@label" tabindex="1000">
-											<xf:item>
-												<xf:label>WWW</xf:label>
-												<xf:value>WWW</xf:value>
-											</xf:item>
-											<xf:item>
-												<xf:label>E-mail</xf:label>
-												<xf:value>E-mail</xf:value>
-											</xf:item>
-										</xf:select1>
-									</h:span>
-									<xf:trigger appearance="minimal" class="non-standard_button">
-										<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
-										<xf:action ev:event="DOMActivate">
-											<xf:insert context="parent::node()" 
-												origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr][1]"
-												nodeset="m:addrLine[m:ptr][index('repeat-addr-ptr')]"/>
-											<xf:setvalue ref="../m:addrLine[m:ptr][index('repeat-addr-ptr')]/m:ptr/@label" value="''"/>
-											<xf:setvalue ref="../m:addrLine[m:ptr][index('repeat-addr-ptr')]/m:ptr/@target" value="''"/>
-										</xf:action>
-									</xf:trigger>
-									<dcm:element-buttons triggers="remove" 
-										nodeset="m:addrLine"
-										index="repeat-addr-ptr"
-										origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr][1]"/>
-									<dcm:attribute-editor ref="m:ptr"/>
+									<dcm:attribute-editor ref="m:expan"/>
+									<xf:input ref="m:abbr" class="short"><xf:label> Short name <h:a class="help">?<h:span class="comment">Abbreviated 
+										name of the institution, e.g. "DCM"</h:span></h:a></xf:label></xf:input>
+									<dcm:attribute-editor ref="m:abbr"/>
 								</h:div>
-							</xf:repeat>	
-						</h:fieldset>
-					</xf:repeat>
-					<h:br/>
-					<xf:group ref=".[not(m:persName)]">
-						<h:span class="blocklabel strong">Persons <h:a class="help">?<h:span 
-							class="comment">Persons involved in the publication
-							of this file</h:span></h:a>
-						</h:span>
-						<h:div>
-							<dcm:create 
-								nodeset="m:persName"
-								label="Add person"
-								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName"/>
-						</h:div>							
-					</xf:group>
-					<xf:repeat nodeset="m:persName" id="repeat-file-publication-person">
-						<xxf:variable name="pos" select="position()"/>
-						<xf:group ref=".[$pos=1]">
-							<h:div class="blocklabel">
-								<h:span class="fixed_width no_margin">&#160;</h:span>
-								<h:span class="fixed_width_long">Name</h:span>
-								<h:span class="fixed_width"> Role <h:a class="help">?<h:span class="comment">Specifies the 
-									person's role in the process of producing this file, e.g. "editor". 
-									The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
-								</h:span>
-							</h:div>
-						</xf:group>
-						<h:span class="blocklabel fixed_width no_margin strong"><xf:group ref=".[$pos=1]">Persons <h:a class="help">?<h:span 
-							class="comment">Persons involved in the publication
-							of this file</h:span></h:a></xf:group></h:span>
-						<dcm:relator ref="."/>&#160;
-						<dcm:element-buttons 
-							triggers="add up down remove" 
-							nodeset="m:persName" 
-							index="repeat-file-publication-person"
-							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName[1]"/>
-						<dcm:attribute-editor ref="."/>
+								<dcm:create 
+									nodeset="m:address"
+									label="Add address"
+									origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address"/>                        
+								<dcm:create ref="m:address"
+									nodeset="m:addrLine[not(m:ptr)]"
+									label="Add address line"
+									origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[not(m:ptr)]"/>                        
+								<xf:repeat nodeset="m:address/m:addrLine[not(m:ptr)]" id="repeat-addrLine">
+									<xxf:variable name="pos" select="position()"/>
+									<h:div>
+										<xf:input ref="." class="maxlong">
+											<xf:label class="fixed_width"><xf:output value="if ($pos=1) then 'Address' else ''"/></xf:label>
+										</xf:input>&#160;
+										<xf:trigger appearance="minimal" class="non-standard_button">
+											<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+											<xf:action ev:event="DOMActivate">
+												<xf:insert context="parent::node()" 
+													origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[1]"
+													nodeset="m:addrLine[not(m:ptr)][index('repeat-addrLine')]"/>
+												<xf:setvalue ref="../m:addrLine[not(m:ptr)][index('repeat-addrLine')]" value="''"/>
+											</xf:action>
+										</xf:trigger>
+										<dcm:element-buttons triggers="remove" 
+											nodeset="m:addrLine"
+											index="repeat-addrLine"
+											origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[1]"/>
+										<dcm:attribute-editor ref="."/>
+									</h:div>
+								</xf:repeat>
+								<h:div>
+									<dcm:create ref="m:address"
+										nodeset="m:addrLine[m:ptr]"
+										label="Add URI (link)"
+										origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr][1]"/>
+								</h:div>
+								<xf:repeat nodeset="m:address/m:addrLine[m:ptr]" id="repeat-addr-ptr">
+									<h:div>
+										<xf:input ref="m:ptr/@target" class="maxlong">
+											<xf:label class="fixed_width">URI 
+												<h:a class="help">?<h:span class="comment">Link or mail address, e.g. 
+													"http://www.example.com" or "mailto://someone@example.com"</h:span></h:a>
+											</xf:label>
+										</xf:input>
+										<!-- input/select emulating selection="open" behaviour -->
+										<h:span class="selection_open_short">
+											<xf:input ref="m:ptr/@label">
+												<xf:label>Link label 
+													<h:a class="help">?<h:span class="comment">A descriptive label for the link. 
+														Select from list or enter a custom text.</h:span></h:a></xf:label>
+											</xf:input>
+											<xf:select1 ref="m:ptr/@label" tabindex="1000">
+												<xf:item>
+													<xf:label>WWW</xf:label>
+													<xf:value>WWW</xf:value>
+												</xf:item>
+												<xf:item>
+													<xf:label>E-mail</xf:label>
+													<xf:value>E-mail</xf:value>
+												</xf:item>
+											</xf:select1>
+										</h:span>
+										<xf:trigger appearance="minimal" class="non-standard_button">
+											<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+											<xf:action ev:event="DOMActivate">
+												<xf:insert context="parent::node()" 
+													origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr][1]"
+													nodeset="m:addrLine[m:ptr][index('repeat-addr-ptr')]"/>
+												<xf:setvalue ref="../m:addrLine[m:ptr][index('repeat-addr-ptr')]/m:ptr/@label" value="''"/>
+												<xf:setvalue ref="../m:addrLine[m:ptr][index('repeat-addr-ptr')]/m:ptr/@target" value="''"/>
+											</xf:action>
+										</xf:trigger>
+										<dcm:element-buttons triggers="remove" 
+											nodeset="m:addrLine"
+											index="repeat-addr-ptr"
+											origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr][1]"/>
+										<dcm:attribute-editor ref="m:ptr"/>
+									</h:div>
+								</xf:repeat>	
+							</h:fieldset>
+						</xf:repeat>
 						<h:br/>
+						<xf:group ref=".[not(m:persName)]">
+							<h:span class="blocklabel strong">Persons <h:a class="help">?<h:span 
+								class="comment">Persons involved in the publication
+								of this file</h:span></h:a>
+							</h:span>
+							<h:div>
+								<dcm:create 
+									nodeset="m:persName"
+									label="Add person"
+									origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName"/>
+							</h:div>							
+						</xf:group>
+						<xf:repeat nodeset="m:persName" id="repeat-file-publication-person">
+							<xxf:variable name="pos" select="position()"/>
+							<xf:group ref=".[$pos=1]">
+								<h:div class="blocklabel">
+									<h:span class="fixed_width no_margin">&#160;</h:span>
+									<h:span class="fixed_width_long">Name</h:span>
+									<h:span class="fixed_width"> Role <h:a class="help">?<h:span class="comment">Specifies the 
+										person's role in the process of producing this file, e.g. "editor". 
+										The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+									</h:span>
+								</h:div>
+							</xf:group>
+							<h:span class="blocklabel fixed_width no_margin strong"><xf:group ref=".[$pos=1]">Persons <h:a class="help">?<h:span 
+								class="comment">Persons involved in the publication
+								of this file</h:span></h:a></xf:group></h:span>
+							<dcm:relator ref="."/>&#160;
+							<dcm:element-buttons 
+								triggers="add up down remove" 
+								nodeset="m:persName" 
+								index="repeat-file-publication-person"
+								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName[1]"/>
+							<dcm:attribute-editor ref="."/>
+							<h:br/>
+						</xf:repeat>
+						<h:br/>
+						
+					</xf:group>
+					<h:div class="vertical_spacer"/>
+					<dcm:create 
+						nodeset="m:date"
+						label="Add publication date"
+						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:date"/>
+					<xf:repeat nodeset="m:date" id="repeat-pubdate">
+						<dcm:date-editor ref="." class="mediumshort">
+							<xf:label class="fixed_width">Date </xf:label>
+						</dcm:date-editor>
+						<dcm:element-buttons triggers="remove"
+							nodeset="m:date" index="repeat-pubdate"
+							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:date"/>
 					</xf:repeat>
 					<h:br/>
-					
+					<dcm:create 
+						nodeset="m:availability"
+						label="Add use restrictions info"
+						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:availability"/>                        
+					<dcm:create ref="m:availability"
+						nodeset="m:useRestrict"
+						label="Add use restrictions info"
+						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:useRestrict"/>        
+					<xf:repeat nodeset="m:availability/m:useRestrict" id="repeat-userestrict">
+						<xf:input ref="." class="maxlong">
+							<xf:label class="fixed_width">Restrictions <h:br/>of use <h:a class="help">?<h:span class="comment">A statement
+								explaining any restrictions to the use of this file, e.g. a copyright notice or a license statement.</h:span></h:a></xf:label>
+						</xf:input>
+						<dcm:element-buttons triggers="remove" 
+							nodeset="m:useRestrict" 
+							index="repeat-userestrict"
+							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:useRestrict"/>
+					</xf:repeat>
 				</xf:group>
-				<h:div class="vertical_spacer"/>
-				<dcm:create 
-					nodeset="m:date"
-					label="Add publication date"
-					origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:date"/>
-				<xf:repeat nodeset="m:date" id="repeat-pubdate">
-					<dcm:date-editor ref="." class="mediumshort">
-						<xf:label class="fixed_width">Date </xf:label>
-					</dcm:date-editor>
-					<dcm:element-buttons triggers="remove"
-						nodeset="m:date" index="repeat-pubdate"
-						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:date"/>
-				</xf:repeat>
-				<h:br/>
-				<dcm:create 
-					nodeset="m:availability"
-					label="Add use restrictions info"
-					origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:availability"/>                        
-				<dcm:create ref="m:availability"
-					nodeset="m:useRestrict"
-					label="Add use restrictions info"
-					origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:useRestrict"/>        
-				<xf:repeat nodeset="m:availability/m:useRestrict" id="repeat-userestrict">
-					<xf:input ref="." class="maxlong">
-						<xf:label class="fixed_width">Restrictions <h:br/>of use <h:a class="help">?<h:span class="comment">A statement
-							explaining any restrictions to the use of this file, e.g. a copyright notice or a license statement.</h:span></h:a></xf:label>
-					</xf:input>
-					<dcm:element-buttons triggers="remove" 
-						nodeset="m:useRestrict" 
-						index="repeat-userestrict"
-						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:useRestrict"/>
-				</xf:repeat>
-			</xf:group>
-		</h:fieldset>
+			</h:fieldset>
+			
+		</xf:group>
 		
 		<h:fieldset>
 			<h:legend>Encoding</h:legend>

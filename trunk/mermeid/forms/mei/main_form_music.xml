@@ -7,8 +7,29 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	id="music-div">
 	
-	<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList">
-		<h:div class="inputdiv">
+	<h:div class="inputdiv">
+		
+		<xf:group ref="instance('data-instance')/m:meiHead[not(m:workDesc/m:work/m:expressionList/m:expression)]">
+			<h:div class="vertical_spacer"/>
+			<dcm:create 
+				nodeset="m:workDesc"
+				label="Add basic work metadata"
+				origin="instance('reduced-template')/m:meiHead/m:workDesc"/>
+			<dcm:create ref="m:workDesc"
+				nodeset="m:work"
+				label="Add basic work metadata"
+				origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work"/>
+			<dcm:create ref="m:workDesc/m:work"
+				nodeset="m:expressionList"
+				label="Add basic music metadata"
+				origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList"/>
+			<dcm:create ref="m:workDesc/m:work/m:expressionList"
+				nodeset="m:expression"
+				label="Add basic music metadata"
+				origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression"/>
+		</xf:group>
+		
+		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList">
 			
 			<xf:repeat nodeset="m:expression" id="repeat-expression">
 				<h:fieldset>
@@ -831,7 +852,7 @@
 											</xf:group>
 										</h:td>
 										<h:td class="buttons_cell" style="text-align:right;">
-					
+											
 											<h:img src="http:/editor/images/arrow_left_disabled.png" class="button_patch"/>
 											
 											<xxf:variable name="tooManySublevels" select="m:componentGrp/m:expression/m:componentGrp/m:expression"/> 
@@ -916,7 +937,7 @@
 																</xf:group>
 															</h:td>
 															<h:td class="buttons_cell" style="text-align:right;">
-											
+																
 																<xf:trigger appearance="minimal">
 																	<xf:label><h:img src="http:/editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
 																	<xf:action ev:event="DOMActivate">
@@ -1029,7 +1050,7 @@
 																					<h:img src="http:/editor/images/arrow_right_disabled.png" class="button_patch"/>
 																					
 																					<dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list3" 
-																					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>
+																						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>
 																					<dcm:attribute-editor ref="."/>
 																				</h:td>
 																			</h:tr>
@@ -1052,14 +1073,12 @@
 						</xf:group>
 					</h:fieldset>
 					
-					
-					
-					
 				</h:fieldset>
 			</xf:repeat>
 			
-		</h:div>
-	</xf:group>
+		</xf:group>
+		
+	</h:div>
 	
 	<xi:include href="includes/code-inspector.xml" parse="xml"/>
 	<h:br clear="all"/>

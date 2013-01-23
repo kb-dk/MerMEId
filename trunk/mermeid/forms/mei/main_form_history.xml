@@ -12,10 +12,22 @@
 	
 	<h:div class="inputdiv">
 		
-		<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work" 
-			nodeset="m:history"
-			label="Add history"
-			origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history"/>
+		<xf:group ref="instance('data-instance')/m:meiHead[not(m:workDesc/m:work/m:history)]">
+			<h:div class="vertical_spacer"/>
+			<dcm:create 
+				nodeset="m:workDesc"
+				label="Add basic work metadata"
+				origin="instance('reduced-template')/m:meiHead/m:workDesc"/>
+			<dcm:create ref="m:workDesc"
+				nodeset="m:work"
+				label="Add basic work metadata"
+				origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work"/>
+			<dcm:create ref="m:workDesc/m:work" 
+				nodeset="m:history"
+				label="Add history metadata"
+				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history"/>
+		</xf:group>
+		
 		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:history">
 			<h:fieldset>
 				<h:legend>Creation</h:legend>
