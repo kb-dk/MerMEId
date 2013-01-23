@@ -138,6 +138,10 @@
                                         relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
                                     </h:span>
                                 </h:div>
+                                <dcm:create
+                                    nodeset="m:persName"
+                                    label="Add person"
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:persName[1]"/>
                                 <xf:repeat nodeset="m:persName" id="performance-relators-repeat">
                                     <dcm:relator ref="."/>
                                     <dcm:element-buttons triggers="add delete" nodeset="m:persName" index="performance-relators-repeat"
