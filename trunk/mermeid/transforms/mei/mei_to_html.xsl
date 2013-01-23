@@ -242,10 +242,9 @@
 				test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
 				or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0">
 				<xsl:apply-templates
-					select="m:meiHead[count(m:workDesc/m:work/m:expressionList/m:expression)&lt;2]/
-					m:fileDesc/
-					m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"
-				/>
+					select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']">
+					<xsl:with-param name="global">true</xsl:with-param>
+				</xsl:apply-templates>
 			</xsl:if>
 		</xsl:if>
 
@@ -259,13 +258,13 @@
 			<!-- show title/tempo/number as heading only if more than one version -->
 			<xsl:if test="count(../m:expression)&gt;1">
 				<p>&#160;</p>
-				<h3>
+				<h2>
 					<xsl:apply-templates select="m:titleStmt">
 						<xsl:with-param name="tempo">
 							<xsl:apply-templates select="m:tempo"/>
 						</xsl:with-param>
 					</xsl:apply-templates>
-				</h3>
+				</h2>
 			</xsl:if>
 			
 			<xsl:if test="m:identifier/text()">
@@ -838,33 +837,35 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-
+	
 	<!-- work-related templates -->
-
+	
 	<!-- perfMedium templates -->
 	<xsl:template match="m:perfMedium">
 		<xsl:param name="full" select="true()"/>
-		<xsl:for-each select="m:instrumentation[*]">
-			<p>
-				<xsl:if test="position()=1 and $full">
-					<span class="label">Instrumentation: </span>
-					<br/>
-				</xsl:if>
-				<xsl:apply-templates select="m:instrVoiceGrp"/>
-				<xsl:apply-templates select="m:instrVoice[not(@solo='true')][text()]"/>
-				<xsl:if test="count(m:instrVoice[@solo='true'])&gt;0">
-					<xsl:if test="count(m:instrVoice[not(@solo='true')])&gt;0">
+		<div class="perfmedium">
+			<xsl:for-each select="m:instrumentation[*]">
+				<p>
+					<xsl:if test="position()=1 and $full">
+						<span class="label">Instrumentation: </span>
 						<br/>
 					</xsl:if>
-					<span class="p_heading:">Soloist<xsl:if test="count(m:instrVoice[@solo='true'])&gt;1"
-						>s</xsl:if>:</span>
-					<xsl:apply-templates select="m:instrVoice[@solo='true'][text()]"/>
-				</xsl:if>
-			</p>
-		</xsl:for-each>
-		<xsl:apply-templates select="m:castList[*//text()]">
-			<xsl:with-param name="full" select="$full"/>
-		</xsl:apply-templates>
+					<xsl:apply-templates select="m:instrVoiceGrp"/>
+					<xsl:apply-templates select="m:instrVoice[not(@solo='true')][text()]"/>
+					<xsl:if test="count(m:instrVoice[@solo='true'])&gt;0">
+						<xsl:if test="count(m:instrVoice[not(@solo='true')])&gt;0">
+							<br/>
+						</xsl:if>
+						<span class="p_heading:">Soloist<xsl:if test="count(m:instrVoice[@solo='true'])&gt;1"
+							>s</xsl:if>:</span>
+						<xsl:apply-templates select="m:instrVoice[@solo='true'][text()]"/>
+					</xsl:if>
+				</p>
+			</xsl:for-each>
+			<xsl:apply-templates select="m:castList[*//text()]">
+				<xsl:with-param name="full" select="$full"/>
+			</xsl:apply-templates>
+		</div>
 	</xsl:template>
 
 	<xsl:template match="m:instrVoiceGrp">
@@ -1050,9 +1051,8 @@
 
 	<!-- sources -->
 	<xsl:template match="m:sourceDesc">
-
+		<xsl:param name="global"/>
 		<xsl:variable name="source_id" select="concat('source',generate-id(.),position())"/>
-
 		<script type="application/javascript"><xsl:text>
 				openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;
 				</xsl:text></script>
@@ -1064,8 +1064,11 @@
 					src="/editor/images/plus.png"/> Sources </p>
 
 			<div id="{$source_id}" style="display:none;" class="folded_content">
-				<!-- skip reproductions (=reprints) here -->
-				<xsl:for-each select="m:source[not(m:relationList/m:relation[@rel='isReproductionOf'])]">
+				<!-- Skip reproductions (=reprints) here. -->
+				<!-- If listing global sources, list only those not referring to a specific version (if more than one) -->
+				<xsl:for-each select="m:source[not(m:relationList/m:relation[@rel='isReproductionOf'])]
+					[$global!='true' or ($global='true' and (count(//m:work/m:expressionList/m:expression)&lt;2
+					or not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)))]">
 					<xsl:choose>
 						<xsl:when test="@target!=''">
 							<!-- get external source description -->

@@ -2,7 +2,7 @@
     <meiHead>
         <fileDesc>
             <titleStmt>
-                <title xml:lang="da">Sommersang </title>
+                <title xml:lang="da">[Part of a song cycle:] Sommersang </title>
             </titleStmt>
             <pubStmt>
                 <respStmt xml:id="respStmt_eaad9cce">
@@ -16,10 +16,10 @@
                             <addrLine>P.O. Box 2149</addrLine>
                             <addrLine>DK - 1016 Copenhagen K</addrLine>
                             <addrLine>
-                                <ptr target="http://www.kb.dk/dcm" xl:title="WWW"/>
+                                <ptr label="" target="http://www.kb.dk/dcm" xl:title="WWW"/>
                             </addrLine>
                             <addrLine>
-                                <ptr target="mailto://foa-dcm@kb.dk" xl:title="E-mail"/>
+                                <ptr label="" target="mailto://foa-dcm@kb.dk" xl:title="E-mail"/>
                             </addrLine>
                         </address>
                     </corpName>
@@ -29,11 +29,11 @@
                     <persName role="editor" xml:id="persName_d48bff31">Niels Krabbe</persName>
                     <persName role="editor" xml:id="persName_bce6dd04">Elly Bruunshuus Petersen</persName>
                 </respStmt>
-                <date/>
+                <date isodate="2013">2013</date>
                 <availability>
                     <acqSource/>
                     <accessRestrict/>
-                    <useRestrict/>
+                    <useRestrict>For demonstration purposes only</useRestrict>
                 </availability>
             </pubStmt>
             <seriesStmt>
@@ -41,7 +41,6 @@
                 <identifier type="file_collection" xml:id="identifier_56a9ff02">Demo</identifier>
             </seriesStmt>
             <notesStmt>
-                <annot type="private_notes" xml:id="annot_1a44971a"/>
                 <annot type="bibliography" xml:id="annot_e930c906">
                     <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="primary" xml:id="listBibl_d1e218">
                         <bibl type="Letter" xml:id="bibl_d1e101">
@@ -56,7 +55,7 @@
                             <note/>
                             <ref/>
                             <ref type="editions">
-                                <bibl xmlns:t="http://www.tei-c.org/ns/1.0" xml:id="bibl_d1e130">
+                                <bibl xml:id="bibl_d1e130">
                                     <title type="short_title">CNB</title>
                                     <biblScope>IV/4</biblScope>
                                 </bibl>
@@ -67,111 +66,15 @@
                     <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="documentation" xml:id="listBibl_d1e37"/>
                 </annot>
             </notesStmt>
-            <sourceDesc>
-                <source analog="frbr:manifestation" label="" xml:id="source_d1e42">
-                    <identifier type=""/>
-                    <titleStmt>
-                        <title xml:id="title_d462b13b"/>
-                        <respStmt>
-                            <persName role="composer" xml:id="persName_ac28c00b"/>
-                        </respStmt>
-                    </titleStmt>
-                    <pubStmt>
-                        <respStmt>
-                            <corpName role="publisher" xml:id="corpName_dd6fdd0f"/>
-                        </respStmt>
-                        <geogName xml:id="geogName_a4c7cad3"/>
-                        <date/>
-                    </pubStmt>
-                    <physDesc>
-                        <titlePage label="Title page" xml:id="titlePage_b9f7aaa6">
-                            <p/>
-                        </titlePage>
-                        <extent unit="pages"/>
-                        <dimensions unit="cm"/>
-                        <watermark xml:id="watermark_603ea505">
-                            <ptr mimetype="" xl:title="" xml:id="ptr_9d04088a"/>
-                        </watermark>
-                        <physMedium/>
-                        <plateNum/>
-                    </physDesc>
-                    <notesStmt>
-                        <annot type="source_description" xml:id="annot_429d09ef"/>
-                        <annot type="links" xml:id="annot_43f42e3d">
-                            <ptr mimetype="" xl:title="" xml:id="ptr_5862d220"/>
-                        </annot>
-                    </notesStmt>
-                    <classification>
-                        <termList>
-                            <term classcode="DcmContentClass"/>
-                            <term classcode="DcmPresentationClass"/>
-                            <term classcode="DcmAuthorityClass"/>
-                            <term classcode="DcmScoringClass"/>
-                            <term classcode="DcmStateClass"/>
-                            <term classcode="DcmCompletenessClass"/>
-                        </termList>
-                    </classification>
-                    <itemList>
-                        <item label="" xml:id="item_d1e279">
-                            <identifier type=""/>
-                            <titleStmt>
-                                <title xml:id="title_6c2ebc26"/>
-                            </titleStmt>
-                            <pubStmt>
-                                <date/>
-                            </pubStmt>
-                            <physDesc>
-                                <condition xml:id="condition_b0659f9f"/>
-                                <physLoc>
-                                    <repository>
-                                        <corpName xml:id="corpName_1628cc54"/>
-                                        <identifier xml:id="identifier_f689a591"/>
-                                        <ptr mimetype="" xl:title="Facsimile" xml:id="ptr_91d96034"/>
-                                        <ptr mimetype="" xl:title="Transcription" xml:id="ptr_c41ef174"/>
-                                    </repository>
-                                </physLoc>
-                                <provenance>
-                                    <eventList xml:id="eventList_ec90441a">
-                                        <event xml:id="event_d1e315">
-                                            <title xml:id="title_c7435c6c"/>
-                                            <date/>
-                                            <geogName role="" xml:id="geogName_129163c4"/>
-                                            <corpName role="" xml:id="corpName_9ead587e"/>
-                                            <persName role="" xml:id="persName_0a7c608d"/>
-                                        </event>
-                                    </eventList>
-                                </provenance>
-                                <extent unit="pages"/>
-                                <dimensions unit="cm"/>
-                                <handList xml:id="handList_58d0813d">
-                                    <hand initial="true" medium="ink" xml:id="hand_123cf6fa"/>
-                                </handList>
-                                <physMedium/>
-                            </physDesc>
-                            <notesStmt>
-                                <annot type="source_description" xml:id="annot_9ad6b6dd"/>
-                                <annot type="links" xml:id="annot_599aab16">
-                                    <ptr mimetype="" xl:title="" xml:id="ptr_e9f5bb78"/>
-                                </annot>
-                            </notesStmt>
-                            <componentGrp/>
-                        </item>
-                    </itemList>
-                    <componentGrp/>
-                    <relationList>
-                        <relation label="" rel="isEmbodimentOf" target="#expression_1" xml:id="relation_d7959f08"/>
-                    </relationList>
-                </source>
-            </sourceDesc>
         </fileDesc>
         <encodingDesc>
             <appInfo>
-                <application version="0.1">
+                <application version="2013">
                     <name>MerMEId</name>
                 </application>
             </appInfo>
             <projectDesc xml:id="projectDesc_ac86ee01">
-                <p>Metadata created using MerMEId 0.1.</p>
+                <p>Metadata created using MerMEId 2013</p>
             </projectDesc>
         </encodingDesc>
         <workDesc>
@@ -182,7 +85,7 @@
                 <identifier type="CNS">238</identifier>
                 <identifier type="Demo">6</identifier>
                 <titleStmt>
-                    <title xml:id="title_97a27ee7" xml:lang="da">Sommersang </title>
+                    <title xml:id="title_97a27ee7" xml:lang="da">[Part of a song cycle:] Sommersang </title>
                     <title xml:id="title_3d5cea53" xml:lang="en">Summer Song</title>
                     <title type="alternative" xml:id="title_2de49e59" xml:lang="da">Fyldt med Blomster blusser Æbletræets Gren</title>
                     <title type="alternative" xml:id="title_75d5d0e4" xml:lang="en">Filled with flowers flushes branch of apple tree</title>
@@ -214,6 +117,8 @@
                 </langUsage>
                 <notesStmt>
                     <annot type="links" xml:id="annot_528d08ae"/>
+                    <annot type="general_description" xml:id="annot_3afac8db">This file demonstrates how to use relations to other files (works), for 
+instance to describe a song cycle, collection, or anthology. </annot>
                 </notesStmt>
                 <classification>
                     <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmContentClass"/>
@@ -240,7 +145,7 @@
                             <p/>
                         </history>
                         <tempo>Allegro ma non troppo</tempo>
-                        <meter meter.count="12" meter.unit="8"/>
+                        <meter count="12" meter.count="12" meter.unit="8" unit="8"/>
                         <perfMedium analog="marc:048" xml:id="perfMedium_5ed80e74">
                             <performer xml:id="performer_d1e587">
                                 <instrVoice count="1" reg="vn" solo="false" xml:id="instrVoice_9abbdd57">voice</instrVoice>
@@ -254,15 +159,14 @@
                                 <term/>
                             </termList>
                         </classification>
-                        <castList/>
                         <incip xml:id="incip_fee2db7e">
                             <incipText xml:id="incipText_db08b831">
                                 <p xml:lang="da">Fyldt med Blomster blusser Æbletræets Gren</p>
                                 <p xml:lang="en">Filled with flower flushes</p>
                             </incipText>
-                            <graphic target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_128.png" targettype="lowres" xl:title="" xml:id="graphic_c00bc3b8"/>
-                            <graphic target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_128.png" targettype="hires" xl:title="" xml:id="graphic_b3088538"/>
-                            <graphic target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_128.png" targettype="print" xl:title="" xml:id="graphic_5c9d417a"/>
+                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_128.png" targettype="lowres" xl:title="" xml:id="graphic_c00bc3b8"/>
+                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_128.png" targettype="hires" xl:title="" xml:id="graphic_b3088538"/>
+                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_128.png" targettype="print" xl:title="" xml:id="graphic_5c9d417a"/>
                             <score xml:id="score_4bdcc26e"/>
                         </incip>
                         <componentGrp/>
@@ -275,77 +179,10 @@
             </work>
         </workDesc>
         <revisionDesc>
-            <change xml:id="change_d1e643">
-                <respStmt>
-                    <persName role="" xml:id="persName_bfe6128f"/>
-                </respStmt>
+            <change isodate="2013-01-23" resp="axel" xml:id="change_34fa34de">
                 <changeDesc>
                     <p/>
                 </changeDesc>
-                <date/>
-            </change>
-            <change xml:id="change_d1e658">
-                <respStmt>
-                    <persName role="" xml:id="persName_30d9cb2a">ebp</persName>
-                </respStmt>
-                <changeDesc>
-                    <p>tab.1</p>
-                </changeDesc>
-                <date reg="2011-11-10">2011-11-10</date>
-            </change>
-            <change xml:id="change_d1e676">
-                <respStmt>
-                    <persName role="" xml:id="persName_a9c7166a"/>
-                </respStmt>
-                <changeDesc>
-                    <p/>
-                </changeDesc>
-                <date reg="2012-01-17">2012-01-17</date>
-            </change>
-            <change xml:id="change_d1e692">
-                <respStmt>
-                    <persName role="" xml:id="persName_7408a2d0"/>
-                </respStmt>
-                <changeDesc>
-                    <p/>
-                </changeDesc>
-                <date reg="2012-01-17">2012-01-17</date>
-            </change>
-            <change xml:id="change_d1e708">
-                <respStmt>
-                    <persName role="" xml:id="persName_9aa94472"/>
-                </respStmt>
-                <changeDesc>
-                    <p/>
-                </changeDesc>
-                <date reg="2012-02-23">2012-02-23</date>
-            </change>
-            <change xml:id="change_d1e725">
-                <respStmt>
-                    <persName role="" xml:id="persName_9a9b1790"/>
-                </respStmt>
-                <changeDesc>
-                    <p/>
-                </changeDesc>
-                <date reg="2012-05-09">2012-05-09</date>
-            </change>
-            <change xml:id="change_d1e741">
-                <respStmt>
-                    <persName role="" xml:id="persName_1674464b"/>
-                </respStmt>
-                <changeDesc>
-                    <p/>
-                </changeDesc>
-                <date reg="2012-09-03">2012-09-03</date>
-            </change>
-            <change xml:id="change_34fa34de">
-                <respStmt>
-                    <persName xml:id="persName_e0d9145f"/>
-                </respStmt>
-                <changeDesc>
-                    <p/>
-                </changeDesc>
-                <date>2012-09-19</date>
             </change>
         </revisionDesc>
     </meiHead>
