@@ -257,12 +257,17 @@
 			m:expressionList/
 			m:expression">
 			<!-- show title/tempo/number as heading only if more than one version -->
-			<xsl:apply-templates select="m:titleStmt[count(../../m:expression)&gt;1]">
-				<xsl:with-param name="tempo">
-					<xsl:apply-templates select="m:tempo"/>
-				</xsl:with-param>
-			</xsl:apply-templates>
-
+			<xsl:if test="count(../m:expression)&gt;1">
+				<p>&#160;</p>
+				<h3>
+					<xsl:apply-templates select="m:titleStmt">
+						<xsl:with-param name="tempo">
+							<xsl:apply-templates select="m:tempo"/>
+						</xsl:with-param>
+					</xsl:apply-templates>
+				</h3>
+			</xsl:if>
+			
 			<xsl:if test="m:identifier/text()">
 				<p>
 					<xsl:for-each select="m:identifier[text()]">
@@ -498,6 +503,17 @@
 						<xsl:if test="position()!=last()">
 							<br/>
 						</xsl:if>
+					</xsl:for-each>
+				</p>
+				<p>
+					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:acqSource[text()]">
+						<br/><xsl:value-of select="."/>
+					</xsl:for-each>
+					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:accessRestrict[text()]">
+						<br/><xsl:value-of select="."/>
+					</xsl:for-each>
+					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:useRestrict[text()]">
+						<br/><xsl:value-of select="."/>
 					</xsl:for-each>
 				</p>
 			</xsl:if>
