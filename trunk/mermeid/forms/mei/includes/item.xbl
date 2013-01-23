@@ -127,7 +127,7 @@
                             <dcm:create 
                                 nodeset="m:physLoc"
                                 label="Add location"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:itemList/m:item/m:source/m:physLoc"/>
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc"/>
                             <xf:group ref="m:physLoc">
                                 <dcm:create 
                                     nodeset="m:repository"
@@ -138,11 +138,22 @@
                                     <h:span class="blocklabel strong">Location <h:a class="help">?<h:span
                                         class="comment">The library, archive or other repository holding this
                                         item. The name or RISM siglum may be given, or both.</h:span></h:a>
-                                        <dcm:element-buttons 
-                                            triggers="remove" 
-                                            nodeset="m:repository" 
-                                            index="repeat-repository"
-                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
+                                        <xf:group ref=".[count(m:repository)&lt;2]">
+                                            <xf:trigger appearance="minimal">
+                                                <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:delete nodeset="parent::node()"/>
+                                                    <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                                                </xf:action>
+                                            </xf:trigger>                           
+                                        </xf:group>
+                                        <xf:group ref=".[count(m:repository)&gt;1]">
+                                            <dcm:element-buttons 
+                                                triggers="remove" 
+                                                nodeset="m:repository" 
+                                                index="repeat-repository"
+                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
+                                        </xf:group>
                                     </h:span>
                                     <h:div>
                                         <dcm:create  
