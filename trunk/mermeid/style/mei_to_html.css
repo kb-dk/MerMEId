@@ -232,15 +232,17 @@ table.source_component_list td.label_cell {
 	       url('fonts/Euterpe.svg#Euterpe') format('svg');
 } 
 
-/* Runes font */
+/* Runic font */
 @font-face {
 	font-family: 'Hnias';
 	src: url('fonts/Hnias.eot');
 	src: local('Hnias Regular'), local('Hnias'), 
-	   url('fonts/Hnias.eot?#iefix') format('embedded-opentype'),
-	   url('fonts/Hnias.ttf') format('truetype');
+	       url('fonts/Hnias.eot?#iefix') format('embedded-opentype'),
+	       url('fonts/Hnias.ttf') format('truetype'), 
+	       url('fonts/Hnias.woff') format('woff'), 
+	       url('fonts/Hnias.svg#Hnias') format('svg');
 } 
-/* End embedded font */
+/* End embedded fonts */
 
 .accidental {
     position: relative;
