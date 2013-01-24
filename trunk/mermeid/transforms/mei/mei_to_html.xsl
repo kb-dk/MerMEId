@@ -278,6 +278,9 @@
 				</p>
 			</xsl:if>
 
+			<!-- persons -->
+			<xsl:apply-templates select="m:titleStmt/m:respStmt[m:persName]"/>
+
 			<!-- performers -->
 			<xsl:apply-templates select="m:perfMedium[*//text()]"/>
 
@@ -532,7 +535,30 @@
 
 
 	<!-- SUB-TEMPLATES -->
-
+	
+	<xsl:template match="m:titleStmt/m:respStmt[m:persName[text()]]">
+		<p>
+			<xsl:for-each select="m:persName[text()]">
+				<xsl:if test="@role and @role!=''">
+					<span class="p_heading">
+						<xsl:choose>
+							<xsl:when test="@role='author'">Text author</xsl:when>
+							<xsl:otherwise>
+								<xsl:call-template name="capitalize">
+									<xsl:with-param name="str" select="@role"/>
+								</xsl:call-template>
+							</xsl:otherwise>
+						</xsl:choose>
+						<xsl:text>: </xsl:text>
+					</span>
+				</xsl:if>
+				<xsl:apply-templates select="."/>
+				<br/>
+			</xsl:for-each>
+		</p>
+	</xsl:template>
+	
+	
 	<xsl:template match="m:relationList" mode="external">
 		<xsl:for-each select="m:relation[@target!='']">
 			<xsl:variable name="rel" select="@rel"/>
@@ -607,6 +633,7 @@
 			</xsl:if>
 		</xsl:if>
 		
+		<xsl:apply-templates select="m:titleStmt/m:respStmt[m:persName]"/>
 		<xsl:apply-templates
 			select="m:perfMedium[m:instrumentation[m:instrVoice or m:instrVoiceGrp] or m:castList/m:castItem]"
 			mode="subLevel"/>
