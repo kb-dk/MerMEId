@@ -212,9 +212,12 @@
     
     <xf:action ev:event="xforms-submit-error"  ev:propagate="stop">
       <xxf:variable name="code" select="event('response-status-code')"/>
-      <xf:action if="$code!=404">
+      <!-- This is an odd way of doing it. xforms-submit-error events should
+           not include submissions resulting in 200 OK, and there isn't any
+           200 not OK -->
+      <xf:action if="$code!=404 and $code!=200">
         <xf:message>An error occurred (<xf:output value="$code"/>)
-          <!--<h:br/>File:<xf:output value="instance('temp')/target_uri"/>--></xf:message>
+          <h:br/>File:<xf:output value="instance('temp')/target_uri"/></xf:message>
       </xf:action>
       <!-- Load empty instance if loading fails (i.e. document does not exist yet) -->
       <xf:action if="$code=404">
