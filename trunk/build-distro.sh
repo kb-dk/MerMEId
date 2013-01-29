@@ -47,6 +47,10 @@ tar cf - `find . -type f -print | \
 cp "local_config/mermeid_configuration.xml_$M_FILE" \
     MerMEId/mermeid/forms/mei/mermeid_configuration.xml
 
+cp "local_config/standard_bibliography.xml_$M_FILE" \
+    erMEId/xqueries/library/standard_bibliography.xml
+
+
 (cd MerMEId/mermeid ; jar cf ../editor.war .)
 tar jcvf mermeid.tar.bz2 MerMEId
 
