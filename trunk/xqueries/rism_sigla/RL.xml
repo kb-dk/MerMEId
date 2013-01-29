@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
   <zs:version>1.1</zs:version>
   <zs:numberOfRecords>3</zs:numberOfRecords>
-  <zs:records>
-    <zs:record>
+  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -41,6 +40,5 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>2</zs:recordPosition>
-    </zs:record>
-  </zs:records>
+    </zs:record></zs:records>
 </zs:searchRetrieveResponse>

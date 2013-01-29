@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
   <zs:version>1.1</zs:version>
   <zs:numberOfRecords>10</zs:numberOfRecords>
-  <zs:records>
-    <zs:record>
+  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -46,8 +45,81 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>2</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+    </zs:record><zs:record>
+      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordData>
+        <record xmlns="http://www.loc.gov/MARC21/slim">
+          <leader>00527nz a2200145 4500</leader>
+          <controlfield tag="001">30003742</controlfield>
+          <controlfield tag="003">RISM</controlfield>
+          <controlfield tag="005">20121108</controlfield>
+          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
+          <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">Lithuania</subfield>
+          </datafield>
+          <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Lietuvos mokslų akademija Vrublevskių biblioteka</subfield>
+            <subfield code="c">Vilnius</subfield>
+            <subfield code="g">LT-Va</subfield>
+          </datafield>
+          <datafield tag="410" ind1="2" ind2=" ">
+            <subfield code="a">Lietuvos mokslų akademija biblioteka</subfield>
+          </datafield>
+          <datafield tag="410" ind1="2" ind2=" ">
+            <subfield code="a">Lithuanian Academy of Sciences, Library</subfield>
+          </datafield>
+          <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Lietuvos mokslų akademija, vrublevskių biblioteka, Žygimantų 1/8, 01102 Vilnius,
+              Lithuania</subfield>
+            <subfield code="u">http://www.mab.lt/</subfield>
+          </datafield>
+          <datafield tag="852" ind1="2" ind2=" ">
+            <subfield code="b">54.6883871, 25.2875165</subfield>
+          </datafield>
+          <idzebra xmlns="http://www.indexdata.dk/zebra/">
+            <size>527</size>
+            <score>788</score>
+            <localnumber>836172</localnumber>
+            <filename>sigla/sigla.mrc</filename>
+          </idzebra>
+        </record>
+      </zs:recordData>
+      <zs:recordPosition>10</zs:recordPosition>
+    </zs:record><zs:record>
+      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordData>
+        <record xmlns="http://www.loc.gov/MARC21/slim">
+          <leader>00433nz a2200121 4500</leader>
+          <controlfield tag="001">30070234</controlfield>
+          <controlfield tag="003">RISM</controlfield>
+          <controlfield tag="005">20121108</controlfield>
+          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
+          <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">Lithuania</subfield>
+          </datafield>
+          <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Šv. Pranciškaus ir Šv. Bernardino vienuolynas</subfield>
+            <subfield code="c">Vilnius</subfield>
+            <subfield code="g">LT-Vb</subfield>
+          </datafield>
+          <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Šv. Pranciškaus ir Šv. Bernardino, vienuolynas, Maironio g. 10, 01124 Vilnius,
+              Lithuania</subfield>
+            <subfield code="u">http://www.ofm.lt/bendruomenes/vilnius</subfield>
+          </datafield>
+          <datafield tag="852" ind1="2" ind2=" ">
+            <subfield code="b">54.6825108, 25.2929056</subfield>
+          </datafield>
+          <idzebra xmlns="http://www.indexdata.dk/zebra/">
+            <size>433</size>
+            <score>788</score>
+            <localnumber>834620</localnumber>
+            <filename>sigla/sigla.mrc</filename>
+          </idzebra>
+        </record>
+      </zs:recordData>
+      <zs:recordPosition>6</zs:recordPosition>
+    </zs:record><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -90,43 +162,7 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>5</zs:recordPosition>
-    </zs:record>
-    <zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00433nz a2200121 4500</leader>
-          <controlfield tag="001">30070234</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Lithuania</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
-            <subfield code="a">Šv. Pranciškaus ir Šv. Bernardino vienuolynas</subfield>
-            <subfield code="c">Vilnius</subfield>
-            <subfield code="g">LT-Vb</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
-            <subfield code="e">Šv. Pranciškaus ir Šv. Bernardino, vienuolynas, Maironio g. 10, 01124 Vilnius,
-              Lithuania</subfield>
-            <subfield code="u">http://www.ofm.lt/bendruomenes/vilnius</subfield>
-          </datafield>
-          <datafield tag="852" ind1="2" ind2=" ">
-            <subfield code="b">54.6825108, 25.2929056</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>433</size>
-            <score>788</score>
-            <localnumber>834620</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>6</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+    </zs:record><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -162,47 +198,5 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>9</zs:recordPosition>
-    </zs:record>
-    <zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00527nz a2200145 4500</leader>
-          <controlfield tag="001">30003742</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Lithuania</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
-            <subfield code="a">Lietuvos mokslų akademija Vrublevskių biblioteka</subfield>
-            <subfield code="c">Vilnius</subfield>
-            <subfield code="g">LT-Va</subfield>
-          </datafield>
-          <datafield tag="410" ind1="2" ind2=" ">
-            <subfield code="a">Lietuvos mokslų akademija biblioteka</subfield>
-          </datafield>
-          <datafield tag="410" ind1="2" ind2=" ">
-            <subfield code="a">Lithuanian Academy of Sciences, Library</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
-            <subfield code="e">Lietuvos mokslų akademija, vrublevskių biblioteka, Žygimantų 1/8, 01102 Vilnius,
-              Lithuania</subfield>
-            <subfield code="u">http://www.mab.lt/</subfield>
-          </datafield>
-          <datafield tag="852" ind1="2" ind2=" ">
-            <subfield code="b">54.6883871, 25.2875165</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>527</size>
-            <score>788</score>
-            <localnumber>836172</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>10</zs:recordPosition>
-    </zs:record>
-  </zs:records>
+    </zs:record></zs:records>
 </zs:searchRetrieveResponse>

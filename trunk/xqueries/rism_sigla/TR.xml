@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
   <zs:version>1.1</zs:version>
   <zs:numberOfRecords>15</zs:numberOfRecords>
-  <zs:records>
-    <zs:record>
+  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -35,8 +34,7 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>2</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+    </zs:record><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -71,8 +69,7 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>3</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+    </zs:record><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -104,8 +101,39 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>4</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+    </zs:record><zs:record>
+      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordData>
+        <record xmlns="http://www.loc.gov/MARC21/slim">
+          <leader>00314nz a2200121 4500</leader>
+          <controlfield tag="001">30003215</controlfield>
+          <controlfield tag="003">RISM</controlfield>
+          <controlfield tag="005">20121108</controlfield>
+          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
+          <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">Turkey</subfield>
+          </datafield>
+          <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Köprülü kütüphanesi</subfield>
+            <subfield code="c">Istanbul</subfield>
+            <subfield code="g">TR-Ik</subfield>
+          </datafield>
+          <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Köprülü kütüphanesi, Istanbul, TR -</subfield>
+          </datafield>
+          <datafield tag="852" ind1="2" ind2=" ">
+            <subfield code="b">41.008109, 28.9725245</subfield>
+          </datafield>
+          <idzebra xmlns="http://www.indexdata.dk/zebra/">
+            <size>314</size>
+            <score>788</score>
+            <localnumber>833021</localnumber>
+            <filename>sigla/sigla.mrc</filename>
+          </idzebra>
+        </record>
+      </zs:recordData>
+      <zs:recordPosition>15</zs:recordPosition>
+    </zs:record><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -134,8 +162,7 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>5</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+    </zs:record><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -167,8 +194,7 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>6</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+    </zs:record><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -203,8 +229,7 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>7</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+    </zs:record><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -236,8 +261,39 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>8</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+    </zs:record><zs:record>
+      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordData>
+        <record xmlns="http://www.loc.gov/MARC21/slim">
+          <leader>00311nz a2200121 4500</leader>
+          <controlfield tag="001">30003221</controlfield>
+          <controlfield tag="003">RISM</controlfield>
+          <controlfield tag="005">20121108</controlfield>
+          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
+          <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">Turkey</subfield>
+          </datafield>
+          <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Veliyuddin kütüphanesi</subfield>
+            <subfield code="c">Istanbul</subfield>
+            <subfield code="g">TR-Iv</subfield>
+          </datafield>
+          <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Veliyuddin kütüphanesi, Istanbul, TR -</subfield>
+          </datafield>
+          <datafield tag="852" ind1="2" ind2=" ">
+            <subfield code="b">41.00527, 28.97696</subfield>
+          </datafield>
+          <idzebra xmlns="http://www.indexdata.dk/zebra/">
+            <size>311</size>
+            <score>788</score>
+            <localnumber>830084</localnumber>
+            <filename>sigla/sigla.mrc</filename>
+          </idzebra>
+        </record>
+      </zs:recordData>
+      <zs:recordPosition>11</zs:recordPosition>
+    </zs:record><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -278,41 +334,7 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>9</zs:recordPosition>
-    </zs:record>
-    <zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00311nz a2200121 4500</leader>
-          <controlfield tag="001">30003221</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Turkey</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
-            <subfield code="a">Veliyuddin kütüphanesi</subfield>
-            <subfield code="c">Istanbul</subfield>
-            <subfield code="g">TR-Iv</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
-            <subfield code="e">Veliyuddin kütüphanesi, Istanbul, TR -</subfield>
-          </datafield>
-          <datafield tag="852" ind1="2" ind2=" ">
-            <subfield code="b">41.00527, 28.97696</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>311</size>
-            <score>788</score>
-            <localnumber>830084</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>11</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+    </zs:record><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -341,39 +363,5 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>12</zs:recordPosition>
-    </zs:record>
-    <zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00314nz a2200121 4500</leader>
-          <controlfield tag="001">30003215</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Turkey</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
-            <subfield code="a">Köprülü kütüphanesi</subfield>
-            <subfield code="c">Istanbul</subfield>
-            <subfield code="g">TR-Ik</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
-            <subfield code="e">Köprülü kütüphanesi, Istanbul, TR -</subfield>
-          </datafield>
-          <datafield tag="852" ind1="2" ind2=" ">
-            <subfield code="b">41.008109, 28.9725245</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>314</size>
-            <score>788</score>
-            <localnumber>833021</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>15</zs:recordPosition>
-    </zs:record>
-  </zs:records>
+    </zs:record></zs:records>
 </zs:searchRetrieveResponse>

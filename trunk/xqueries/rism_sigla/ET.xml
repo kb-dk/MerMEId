@@ -1,39 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
   <zs:version>1.1</zs:version>
   <zs:numberOfRecords>3</zs:numberOfRecords>
-  <zs:records>
-    <zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00256nz a2200109 4500</leader>
-          <controlfield tag="001">30003554</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Ethiopia</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
-            <subfield code="a">Monastery</subfield>
-            <subfield code="c">St. Sabas</subfield>
-            <subfield code="g">ET-SS</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
-            <subfield code="e">Monastery, St. Sabas, Aethiopien</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>256</size>
-            <score>843</score>
-            <localnumber>829759</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>1</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -66,8 +35,7 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>2</zs:recordPosition>
-    </zs:record>
-    <zs:record>
+    </zs:record><zs:record>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
         <record xmlns="http://www.loc.gov/MARC21/slim">
@@ -102,6 +70,34 @@
         </record>
       </zs:recordData>
       <zs:recordPosition>3</zs:recordPosition>
-    </zs:record>
-  </zs:records>
+    </zs:record><zs:record>
+      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordData>
+        <record xmlns="http://www.loc.gov/MARC21/slim">
+          <leader>00256nz a2200109 4500</leader>
+          <controlfield tag="001">30003554</controlfield>
+          <controlfield tag="003">RISM</controlfield>
+          <controlfield tag="005">20121108</controlfield>
+          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
+          <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">Ethiopia</subfield>
+          </datafield>
+          <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Monastery</subfield>
+            <subfield code="c">St. Sabas</subfield>
+            <subfield code="g">ET-SS</subfield>
+          </datafield>
+          <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Monastery, St. Sabas, Aethiopien</subfield>
+          </datafield>
+          <idzebra xmlns="http://www.indexdata.dk/zebra/">
+            <size>256</size>
+            <score>843</score>
+            <localnumber>829759</localnumber>
+            <filename>sigla/sigla.mrc</filename>
+          </idzebra>
+        </record>
+      </zs:recordData>
+      <zs:recordPosition>1</zs:recordPosition>
+    </zs:record></zs:records>
 </zs:searchRetrieveResponse>
