@@ -189,9 +189,9 @@
 					</h:table>
 				</xf:group>
 			</h:fieldset>
-			
-			
 		</xf:group> 
+		
+		<!-- List expression-level performances -->
 		
 		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">			
 			<xf:repeat nodeset="m:expressionList/m:expression" id="repeat-expression-performances">		

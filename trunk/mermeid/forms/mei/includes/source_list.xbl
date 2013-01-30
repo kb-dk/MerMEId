@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
+    xmlns:xbl="http://www.w3.org/ns/xbl" 
+    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+    xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <!--
+        Component generating a list of sources.
+        
+        A variable named "expression" must be in scope, controlling the sources listed:
+        'all'       lists all sources
+        'global'    lists global sources (i.e. without an "isEmbodimentOf" relation to an expression), and
+        [#IDREF]    (e.g., $expression='#expression_1234') lists the sources associated with the specific expression identified by the IDREF   
+        
+        Example:
+        <xxf:variable name="expression" select="'global'"/>
+        <dcm:source-list/>
+        
+        Danish Centre for Music Publication (DCM) 
+        Axel Teich Geertinger, 2013
+        atge@kb.dk       
+        
+    -->
+    
+    <xbl:binding id="dcm-source-list-binding" element="dcm|source-list">
+        <!-- Orbeon Form Builder Component Metadata -->
+        <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+            <display-name lang="en">Source list</display-name>
+        </metadata>
+        <xbl:resources>
+            <xbl:style> 
+                .xbl-dcm-source-list .level { margin-top: 5px; }
+                .xbl-dcm-source-list .heading { font-weight: bold; }
+            </xbl:style>
+        </xbl:resources>
+        <xbl:implementation>
+            <xf:model>
+                <xf:instance id="temp">
+                    <temp-values>
+                        <changed>false</changed>
+                        <change_marker>*</change_marker>
+                        <etc>...</etc>
+                        <target_uri/>
+                        <file_exists>true</file_exists>
+                        <counter/>
+                        <max/>
+                        <query/>
+                        <series/>
+                        <page/>
+                        <value/>
+                        <instrumentation/>
+                    </temp-values>
+                </xf:instance>
+                
+                <xf:instance id="XMLfiles" 
+                    xmlns="http://www.kb.dk/dcm">
+                    <fileList/>
+                </xf:instance>
+                
+                <xf:submission id="load-fileList"
+                    xxf:username=""
+                    xxf:password=""
+                    method="get" 
+                    serialization="none" 
+                    validate="false"
+                    resource="{instance('temp')/target_uri}"
+                    replace="instance" 
+                    instance="XMLfiles"/>
+                
+            </xf:model>
+        </xbl:implementation>
+        <xbl:template>
+            <!-- outer group -->
+            <xf:group xxbl:scope="outer" xbl:attr="model context ref bind">
+
+                <!-- Inner group -->
+                <xf:group appearance="xxf:internal" xxbl:scope="inner">
+                    
+                    <!-- Variables pointing to external single-node bindings -->
+                    <xxf:variable name="binding" as="node()?">
+                        <xxf:sequence select="." xxbl:scope="outer"/>
+                    </xxf:variable>
+                    <!-- copy variables to inner scope -->
+                    <xxf:variable name="expression">
+                        <xxf:sequence select="$expression" xxbl:scope="outer"/>
+                    </xxf:variable>
+                    <xxf:variable name="parameters" as="node()?">
+                        <xxf:sequence select="instance('parameters')" xxbl:scope="outer"/>
+                    </xxf:variable>
+                    <xxf:variable name="reduced-template" as="node()?">
+                        <xxf:sequence select="instance('reduced-template')" xxbl:scope="outer"/>
+                    </xxf:variable>
+                    <xxf:variable name="empty-instance" as="node()?">
+                        <xxf:sequence select="instance('empty-instance')" xxbl:scope="outer"/>
+                    </xxf:variable>
+                    <xxf:variable name="data-instance" as="node()?">
+                        <xxf:sequence select="instance('data-instance')" xxbl:scope="outer"/>
+                    </xxf:variable>
+                    <xxf:variable name="nodeset" as="node()?">
+                        <xxf:sequence select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
+                            m:source[$expression='all'] | 
+                            m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])]" xxbl:scope="outer"></xxf:sequence>
+                    </xxf:variable>
+                    
+
+                    <xf:group ref="$binding">
+                        
+                        <xf:trigger ref=".[not($nodeset)]" class="create_button">
+                            <xf:label><h:img src="http:/editor/images/add.gif" title="Add source"></h:img> Add source</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xxf:show dialog="add_source_dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                        
+                        <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
+                            <xf:repeat nodeset="$nodeset" id="repeat-sources">
+                                <h:tr class="hoverclass">
+                                    <h:td class="number_cell">
+                                        <xf:output value="position()"/>
+                                    </h:td>
+                                    <h:td>
+                                        <dcm:id ref="."/>
+                                        &#160;
+                                        <xf:group ref=".[not(@target) or @target='']">
+                                            <!-- source data included in this file -->
+                                            <xf:output value="m:titleStmt/m:title"/>
+                                            <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
+                                        </xf:group>
+                                        <xf:group ref=".[@target!='']">
+                                            <!-- external source data -->
+                                            <xf:output value="@label"/>
+                                            <xf:group ref=".[normalize-space(@label)='']"> [No description] </xf:group>
+                                            <xf:trigger appearance="minimal">
+                                                <xf:label><h:img src="http:/editor/images/update.png" title="Update title (re-read from external file)"/></xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xxf:variable name="source_id" select="substring-after(@target,'#')"/>
+                                                    <xxf:variable name="doc" select="substring-before(@target,'#')"/>
+                                                    <xf:setvalue ref="instance('temp')/target_uri" 
+                                                        value="concat($parameters/dcm:server_name,$parameters/dcm:document_root,$doc)"/>
+                                                    <xf:send submission="load-fileList"/>
+                                                    <xf:setvalue ref="@label" value="instance('XMLfiles')//m:source[@xml:id=$source_id]/m:titleStmt/m:title"/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                        </xf:group>
+                                        &#160;
+                                        
+                                        <!-- reverse linking disabled due to performance problems
+                                            
+                                            <dcm:linked-sources id="linking_sources"
+                                            query="concat(
+                                            $parameters/dcm:server_name,
+                                            'storage/cross-link.xq?target=',
+                                            $parameters/dcm:xml_file,
+                                            '%23',
+                                            @xml:id)"
+                                            />
+                                        -->              
+                                        
+                                    </h:td>
+                                    <h:td>
+                                        <xf:group ref=".[not(@target) or @target='']">
+                                            <!-- sources included in this file -->
+                                            <xf:trigger appearance="minimal">
+                                                <xf:label><h:img src="http:/editor/images/edit.gif" title="Edit this source"/></xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xxf:variable name="uri" 
+                                                        select="concat($parameters/dcm:orbeon_dir,'?uri=',$parameters/dcm:form_home,'details-source.xml&amp;doc=',$parameters/dcm:xml_file,'&amp;id=',@xml:id)"/>
+                                                    <xf:action if="instance('temp')/changed='true'">
+                                                        <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+                                                        <xxf:show dialog="exit-warning-dialog"/>
+                                                    </xf:action>	
+                                                    <xf:action if="instance('temp')/changed='false'">
+                                                        <xf:load resource="{$uri}" show="replace"/>
+                                                    </xf:action>
+                                                </xf:action>
+                                            </xf:trigger>
+                                        </xf:group>
+                                        <xf:group ref=".[@target!='']">
+                                            <!-- external source data -->
+                                            <xf:trigger appearance="minimal">
+                                                <xf:label><h:img src="http:/editor/images/go_to_link.png" title="Go to external source"/></xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xxf:variable name="uri" 
+                                                        select="concat(
+                                                        $parameters/dcm:orbeon_dir,
+                                                        '?uri=',
+                                                        $parameters/dcm:form_home,
+                                                        'details-source.xml&amp;doc=',
+                                                        substring-before(@target,'#'),
+                                                        '&amp;id=',
+                                                        substring-after(@target,'#'))"/>
+                                                    <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+                                                    <xxf:show dialog="leave-warning-dialog"></xxf:show>
+                                                </xf:action>
+                                            </xf:trigger>
+                                        </xf:group>
+                                    </h:td>
+                                    <h:td class="buttons_cell">
+                                        <!-- modified copy of elements_buttons_typed.xbl  -->
+                                        <xf:group ref="." class="xbl-dcm-element-buttons">
+                                            <h:span class="editmenu">
+                                                <xf:group ref="." class="button_group">
+                                                    <xf:repeat nodeset=".[empty(preceding-sibling::m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
+                                                        preceding-sibling::m:source[$expression='all'] | 
+                                                        preceding-sibling::m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])])]">
+                                                        <h:img src="http:/editor/images/arrow_up_disabled.gif" class="button_patch"/>
+                                                    </xf:repeat>
+                                                    <xf:trigger appearance="minimal"
+                                                        ref=".[exists(preceding-sibling::m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
+                                                        preceding-sibling::m:source[$expression='all'] | 
+                                                        preceding-sibling::m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])])]">
+                                                        <xf:label><h:img src="http:/editor/images/arrow_up.gif" alt="Up" title="Move up"/></xf:label>
+                                                        <xf:recalculate ev:event="DOMFocusIn"/>
+                                                        <xf:action ev:event="DOMActivate">
+                                                            <xf:insert context="parent::node()"
+                                                                origin="$nodeset[index('repeat-sources')]"
+                                                                nodeset="$nodeset[index('repeat-sources')-2]"/>
+                                                            <xf:delete nodeset="." at="index('repeat-sources')"/> 
+                                                            <xf:dispatch name="xforms-value-changed" targetid="form-group"/>
+                                                        </xf:action>
+                                                    </xf:trigger>
+                                                </xf:group>
+                                                <xf:group ref="." class="button_group">
+                                                    <xf:repeat nodeset=".[empty(following-sibling::m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
+                                                        following-sibling::m:source[$expression='all'] | 
+                                                        following-sibling::m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])])]">
+                                                        <h:img src="http:/editor/images/arrow_down_disabled.gif" class="button_patch"/>
+                                                    </xf:repeat>
+                                                    <xf:trigger appearance="minimal" ref=".[exists(following-sibling::m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
+                                                        following-sibling::m:source[$expression='all'] | 
+                                                        following-sibling::m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])])]">
+                                                        <xf:label><h:img src="http:/editor/images/arrow_down.gif" alt="Down" title="Move down"/></xf:label>
+                                                        <xf:action ev:event="DOMActivate">
+                                                            <xf:insert context="parent::node()" 
+                                                                origin="$nodeset[index('repeat-sources')]"
+                                                                nodeset="$nodeset[index('repeat-sources')+1]"/>
+                                                            <xf:delete nodeset="." at="index('repeat-sources')-2"/>
+                                                            <xf:dispatch name="xforms-value-changed" targetid="form-group"/>
+                                                        </xf:action>
+                                                    </xf:trigger>
+                                                </xf:group>                    
+                                                <xf:group ref="." class="button_group">
+                                                    <xf:trigger appearance="minimal">
+                                                        <xf:label><h:img src="http:/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
+                                                        <xf:action ev:event="DOMActivate">
+                                                            <xf:insert context="parent::node()" 
+                                                                origin="$nodeset[index('repeat-sources')]"
+                                                                nodeset="$nodeset[index('repeat-sources')]"/>
+                                                            <xxf:variable name="added_nodeset" as="node()?" 
+                                                                select="$binding/m:source[(m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression])
+                                                                or $expression='all' or ($expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!='']))]
+                                                                [index('repeat-sources')+1]"/>
+                                                            <xf:setvalue ref="instance('temp')/counter" value="count($added_nodeset//@xml:id)"/>
+                                                            <xf:action while="instance('temp')/counter &gt; 0">
+                                                                <xf:setvalue ref="$added_nodeset//@xml:id[.!='']" value="''"/>
+                                                                <xf:setvalue ref="instance('temp')/counter" value=". - 1"/>
+                                                            </xf:action>                                  
+                                                            <xf:dispatch name="id-update" targetid="form-group"/>
+                                                        </xf:action>
+                                                    </xf:trigger>
+                                                </xf:group>
+                                                <xf:group ref="." class="button_group">
+                                                    <xf:trigger appearance="minimal">
+                                                        <xf:label><h:img src="http:/editor/images/add.gif" title="Add source"/></xf:label>
+                                                        <xf:action ev:event="DOMActivate">
+                                                            <xxf:show dialog="add_source_dialog"/>
+                                                        </xf:action>
+                                                    </xf:trigger>
+                                                </xf:group>
+                                                <xf:group ref="." class="button_group">
+                                                    <xxf:variable name="number" select="count(parent::node()/*)"/>
+                                                    <xf:trigger appearance="minimal">
+                                                        <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                                                        <xf:action if="$number=1" ev:event="DOMActivate">
+                                                            <xf:delete nodeset="parent::node()"/>
+                                                            <xf:dispatch name="xforms-value-changed" targetid="form-group"/>
+                                                        </xf:action>
+                                                        <xf:action if="$number&gt;1" ev:event="DOMActivate">
+                                                            <xf:delete nodeset="." at="index('repeat-sources')"/>
+                                                            <xf:dispatch name="xforms-value-changed" targetid="form-group"/>
+                                                        </xf:action>
+                                                    </xf:trigger> 
+                                                </xf:group>
+                                            </h:span>
+                                        </xf:group>
+                                        <!-- end element buttons -->
+                                        
+                                        <dcm:attribute-editor ref="."/>
+                                    </h:td>
+                                </h:tr>
+                            </xf:repeat>
+                        </h:table>                                    
+                        
+                        
+                        <xxf:dialog id="add_source_dialog">
+                            <xf:label>Add source</xf:label>
+                            <h:p>Sources may be added either by entering new data in this file<h:br/>
+                                or by referring to an existing source in another file.</h:p>
+                            <h:div style="text-align:center">
+                                <xf:trigger class="long">
+                                    <xf:label><h:img src="http:/editor/images/add.gif" title="Add new source"/> Add new source </xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:insert context="$binding" 
+                                            nodeset="$nodeset[index('repeat-sources')]"
+                                            origin="$reduced-template/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/>
+                                        <xxf:variable name="added_nodeset" as="node()?" 
+                                            select="$binding/m:source[(m:relationList/m:relation[@rel='isEmbodimentOf' and (@target=$expression or @target='')])
+                                            or $expression='all' or ($expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!='']))]
+                                            [index('repeat-sources')+1]"/>
+                                        <xf:action if="$expression!='all' and $expression!='global'">
+                                            <xf:setvalue ref="$added_nodeset/m:relationList/m:relation[@rel='isEmbodimentOf']/@target"
+                                                value="$expression"/>
+                                        </xf:action>
+                                        <xf:dispatch name="id-update" targetid="form-group"/>
+                                        <xxf:hide dialog="add_source_dialog"></xxf:hide>
+                                    </xf:action>
+                                </xf:trigger>
+                                <h:br/>
+                                <xf:trigger class="long">
+                                    <xf:label><h:img src="http:/editor/images/add_link.png" 
+                                        title="Add source as link to an external description"/> Add link to external source</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xxf:hide dialog="add_source_dialog"></xxf:hide>
+                                        <xf:setvalue ref="instance('temp')/target_uri" value="concat($parameters/dcm:server_name,'storage/cross-link.xq')"/>
+                                        <xf:send submission="load-fileList"/>
+                                        <xxf:show dialog="source_reference_dialog"/>
+                                    </xf:action>
+                                </xf:trigger> 
+                            </h:div>
+                        </xxf:dialog>
+                        <!--
+                            <xxf:dialog appearance="full" id="link_type_dialog">
+                            <xf:select ref="instance('temp')/value" appearance="full">
+                            <xf:itemset>
+                            vælg hvilken type link der skal oprettes her 
+                            </xf:itemset>
+                            </xf:select>
+                            </xxf:dialog>
+                        -->
+                        
+                        <xxf:dialog id="source_reference_dialog" appearance="full">
+                            <xf:label>External source description</xf:label>
+                            <xf:select1 ref="instance('temp')/series" class="mediumshort">
+                                <xf:label>Series:</xf:label>
+                                <xf:action ev:event="DOMActivate xforms-value-changed">
+                                    <xf:setvalue ref="instance('temp')/page" value="1"/>
+                                    <xf:dispatch name="send-query" targetid="source_search"></xf:dispatch>
+                                </xf:action>
+                                <xf:item>
+                                    <xf:label>[ All ]</xf:label>
+                                    <xf:value/>
+                                </xf:item>
+                                <xf:itemset nodeset="instance('XMLfiles')/dcm:collections/dcm:collection">
+                                    <xf:label><xf:output value="."/></xf:label>
+                                    <xf:value><xf:output value="."/></xf:value>
+                                </xf:itemset>
+                            </xf:select1> &#160;&#160;&#160;&#160;
+                            <xf:input ref="instance('temp')/query">
+                                <xf:label>Keywords <h:a class="help">?<span class="comment search" 
+                                    style="width: 350px">
+                                    Narrow your search by adding keywords, e.g. part of the title.<h:br/>
+                                    Search is case insensitive. 
+                                    Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<br/>
+                                    <span class="help_table">
+                                        <span class="help_example">
+                                            <span class="help_label">carl or nielsen</span>
+                                            <span class="help_value">Boolean OR (default)</span>
+                                        </span>                        
+                                        <span class="help_example">
+                                            <span class="help_label">carl and nielsen</span>
+                                            <span class="help_value">Boolean AND</span>
+                                        </span>
+                                        <span class="help_example">
+                                            <span class="help_label">"carl nielsen"</span>
+                                            <span class="help_value">Exact phrase</span>
+                                        </span>
+                                        <span class="help_example">
+                                            <span class="help_label">niels*</span>
+                                            <span class="help_value">Match any number of characters. Finds Niels, Nielsen and Nielsson</span>
+                                        </span>
+                                        <span class="help_example">
+                                            <span class="help_label">niels?n</span>
+                                            <span class="help_value">Match 1 character. Finds Nielsen and Nielson, but not Nielsson</span>
+                                        </span>
+                                    </span>
+                                </span></h:a>:
+                                </xf:label>
+                            </xf:input>
+                            <xf:trigger id="source_search">
+                                <xf:label>Search</xf:label>
+                                <xf:action ev:event="DOMActivate">
+                                    <xf:setvalue ref="instance('temp')/page" value="1"/>
+                                </xf:action>
+                                <xf:action ev:event="DOMActivate send-query">
+                                    <xf:setvalue ref="instance('temp')/target_uri" 
+                                        value="concat(
+                                        $parameters/dcm:server_name,
+                                        'storage/cross-link.xq?query=',instance('temp')/query,
+                                        '&amp;subject=',instance('temp')/series,
+                                        '&amp;page=',instance('temp')/page)"/>
+                                    <xf:send submission="load-fileList"/>
+                                </xf:action>
+                            </xf:trigger>
+                            <xxf:variable name="page" select="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
+                            <xxf:variable name="max_page" select="floor(instance('XMLfiles')/opensearch:totalResults div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
+                            <h:p>Found <xf:output value="instance('XMLfiles')/opensearch:totalResults"/> record(s).
+                                <xf:group ref=".[$max_page &gt; 1]">
+                                    Displaying page <xf:output value="$page"/> of <xf:output value="$max_page"/>.
+                                </xf:group>
+                                <xf:trigger ref=".[$page &gt; 1]">
+                                    <xf:label>&lt;&lt;</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:setvalue ref="instance('temp')/page" 
+                                            value="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)"/>
+                                        <xf:dispatch name="send-query" target="source_search"></xf:dispatch>
+                                    </xf:action>
+                                </xf:trigger>
+                                <xf:trigger ref=".[$page &lt; $max_page]">
+                                    <xf:label>&gt;&gt;</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:setvalue ref="instance('temp')/page" 
+                                            value="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)+2"/>
+                                        <xf:dispatch name="send-query" targetid="source_search"></xf:dispatch>
+                                    </xf:action>
+                                </xf:trigger>
+                            </h:p>
+                            <h:div class="file_ref_list">
+                                <xf:repeat nodeset="instance('XMLfiles')/dcm:file" id="repeat-ref-files">
+                                    <h:div>
+                                        <xf:switch>
+                                            <xf:case id="hide_source_refs" selected="true()">
+                                                <xf:trigger appearance="minimal">
+                                                    <xf:label><h:img src="http:/editor/images/expand.png" title="Show sources"/>
+                                                        <xf:output value="concat(dcm:composer,': ',dcm:title)"/></xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:toggle case="show_source_refs"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                            </xf:case>
+                                            <xf:case id="show_source_refs">
+                                                <xf:trigger appearance="minimal">
+                                                    <xf:label><h:img src="http:/editor/images/collapse.png" title="Hide sources"/>
+                                                        <xf:output value="concat(dcm:composer,': ',dcm:title)"/></xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:toggle case="hide_source_refs"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                                <h:ul>
+                                                    <xf:repeat nodeset="dcm:sources/dcm:source" id="repeat-refs">
+                                                        <h:li>
+                                                            <xf:trigger appearance="minimal" hint="Add reference to this source and close">
+                                                                <xf:label>
+                                                                    <xf:output value="dcm:title"/>
+                                                                </xf:label>
+                                                                <xf:action ev:event="DOMActivate">
+                                                                    <xf:insert context="$binding" 
+                                                                        nodeset="$nodeset[index('repeat-sources')]"
+                                                                        origin="$empty-instance/m:meiHead/m:fileDesc/m:sourceDesc/m:source[2]"/>
+                                                                    <xxf:variable name="added_nodeset" as="node()?" 
+                                                                        select="$binding/m:source[(m:relationList/m:relation[@rel='isEmbodimentOf' and (@target=$expression or @target='')])
+                                                                        or $expression='all' or ($expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!='']))]
+                                                                        [index('repeat-sources')+1]"/>
+                                                                    <xf:setvalue ref="$added_nodeset/@target"
+                                                                        value="concat(
+                                                                        instance('XMLfiles')/dcm:file[index('repeat-ref-files')]/dcm:link/@href,
+                                                                        '#',
+                                                                        instance('XMLfiles')/dcm:file[index('repeat-ref-files')]/dcm:sources/dcm:source[index('repeat-refs')]/@ref)"/>
+                                                                    <xf:setvalue ref="$added_nodeset/@label"
+                                                                        value="instance('XMLfiles')/dcm:file[index('repeat-ref-files')]/dcm:sources/dcm:source[index('repeat-refs')]/dcm:title"/>
+                                                                    <xf:action if="$expression!='all' and $expression!='global'">
+                                                                        <xf:setvalue ref="$added_nodeset/m:relationList/m:relation[@rel='isEmbodimentOf']/@target"
+                                                                            value="$expression"/>
+                                                                    </xf:action>
+                                                                    <xf:dispatch name="id-update" targetid="form-group"/>
+                                                                    <xxf:hide dialog="source_reference_dialog"/>
+                                                                </xf:action>
+                                                            </xf:trigger>
+                                                            <h:a class="help_plain"><h:img src="http:/editor/images/id.png" style="margin-bottom: -2px;"/><h:span 
+                                                                class="comment" style="margin-top:0px; margin-left:-10px">ID: <xf:output value="../../dcm:link/@href"/>#<xf:output value="@ref"/></h:span></h:a>
+                                                        </h:li>
+                                                    </xf:repeat>
+                                                </h:ul>
+                                            </xf:case>
+                                        </xf:switch>
+                                    </h:div>
+                                </xf:repeat>
+                            </h:div>
+                        </xxf:dialog>
+                        
+                        
+                        
+                        
+                        
+                        <xxf:dialog id="leave-warning-dialog" appearance="full">
+                            <!-- The requested URI must be stored in instance('temp')/target_uri prior to opening the dialog -->
+                            <xf:label>Warning – Editing external source</xf:label>
+                            <h:p>The description of this source is contained in another file.<br/> 
+                                Editing an external source means that the present file will be closed and the file containing the <br/>
+                                actual source description will be opened for editing instead. <h:br/>
+                                Before you continue, make sure you are entitled to make changes in the file you are about to open.<h:br/>
+                                If you need to update the title of this source reference after editing, return to this file <br/>
+                                and click the "Update" button next to the reference to get the updated title.
+                            </h:p>
+                            <h:p>Do you want to proceed?</h:p>    
+                            <xf:trigger>
+                                <xf:label>Yes</xf:label>
+                                <xf:action ev:event="DOMActivate">
+                                    <xxf:hide dialog="leave-warning-dialog"/>
+                                    <xf:action if="instance('temp')/changed='true'">
+                                        <xxf:show dialog="exit-warning-dialog"/>
+                                    </xf:action>	
+                                    <xf:action if="instance('temp')/changed='false'">
+                                        <xf:load resource="{instance('temp')/target_uri}" show="replace"/>
+                                    </xf:action>
+                                </xf:action>
+                            </xf:trigger>
+                            <xf:trigger>
+                                <xf:label>No</xf:label>
+                                <xf:action ev:event="DOMActivate">
+                                    <xxf:hide dialog="leave-warning-dialog"/>
+                                </xf:action>
+                            </xf:trigger>
+                        </xxf:dialog>
+                        
+                    </xf:group>
+                    
+                </xf:group>
+            </xf:group>            
+        </xbl:template>
+    </xbl:binding>
+</xbl:xbl>
+

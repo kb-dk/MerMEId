@@ -25,7 +25,7 @@
         Example: 
         <xf:repeat nodeset="m:titlestmt/m:title[@type='main']" id="main_titles">
             <xf:input ref="."/>
-            <dcm:element-buttons 
+            <dcm:element-buttons-typed 
                 triggers="add delete copy" 
                 nodeset="m:title[@type='main']" 
                 index="main_titles"
