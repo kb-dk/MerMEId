@@ -139,7 +139,7 @@
     
     <xf:action ev:event="xforms-submit-error">
         <xxf:variable name="code" select="event('response-status-code')"/>
-        <xf:action>
+        <xf:action if="$code!=404 and $code!=200">
             <xf:message>An error occurred (<xf:output value="$code"/>)</xf:message>
         </xf:action>
     </xf:action>
