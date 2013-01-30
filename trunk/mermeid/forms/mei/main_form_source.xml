@@ -34,6 +34,10 @@
           <xxf:variable name="expression" select="'all'"/>
           <dcm:source-list ref="m:sourceDesc" id="all_sources_list">
             <xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
+            <xf:action ev:event="save-data">
+              <xf:dispatch name="save" targetid="save-button"/>
+              <xf:load resource="{event('goto-uri')}" show="replace"/>
+            </xf:action>
           </dcm:source-list>
         </h:fieldset>
       </xf:group>
@@ -62,6 +66,10 @@
           <xxf:variable name="expression" select="'global'"/>
           <dcm:source-list ref="m:sourceDesc" id="global_sources_list">
             <xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
+            <xf:action ev:event="save-data">
+              <xf:dispatch name="save" targetid="save-button"/>
+              <xf:load resource="{event('goto-uri')}" show="replace"/>
+            </xf:action>
           </dcm:source-list>
         </h:fieldset>
       </xf:group>
@@ -94,6 +102,10 @@
             <xxf:variable name="expression" select="concat('#',@xml:id)"/>
             <dcm:source-list ref="/*//m:fileDesc/m:sourceDesc" id="expression_sources_list">
               <xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
+              <xf:action ev:event="save-data">
+                <xf:dispatch name="save" targetid="save-button"/>
+                <xf:load resource="{event('goto-uri')}" show="replace"/>
+              </xf:action>
             </dcm:source-list>
           </h:fieldset>
         </xf:repeat>

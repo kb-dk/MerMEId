@@ -177,12 +177,13 @@
       </xf:submit>--> 
     <!-- end test -->    
     
-    <xf:submit submission="save-to-file" appearance="minimal">
+    <xf:trigger appearance="minimal" id="save-button">
       <xf:label><h:img src="http:/editor/images/save.gif" alt="Save" title="Save file"/></xf:label>
-      <xf:action ev:event="DOMActivate">
+      <xf:action ev:event="DOMActivate save">
+        <xf:send submission="save-to-file"/>
         <xf:dispatch name="language-update" target="form-group"/>
       </xf:action>
-    </xf:submit><h:a 
+    </xf:trigger><h:a 
       href="http:/storage/present.xq?doc={instance('parameters')/dcm:xml_file}"
       class="xforms-trigger" 
       target="view_{instance('parameters')/dcm:xml_file}"><h:img 
