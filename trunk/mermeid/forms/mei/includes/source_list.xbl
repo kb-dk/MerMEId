@@ -18,8 +18,8 @@
         
         Example:
         <xf:group ref="m:sourceDesc">
-          <xxf:variable name="expression" select="'global'"/>
-          <dcm:source-list/>
+        <xxf:variable name="expression" select="'global'"/>
+        <dcm:source-list/>
         </xf:group>
         
         Danish Centre for Music Publication (DCM) 
@@ -41,7 +41,7 @@
         </xbl:resources>
         <xbl:implementation>
             <xf:model>
-                               
+                
                 <xf:instance id="XMLfiles" 
                     xmlns="http://www.kb.dk/dcm">
                     <fileList/>
@@ -60,15 +60,40 @@
                 <xf:instance id="local-temp">
                     <temp-values>
                         <target_uri/>
+                        <itemList xmlns="http://www.music-encoding.org/ns/mei">
+                            <!-- empty item template -->
+                            <item label="" target="" xml:id="">
+                                <identifier type=""/>
+                                <physDesc/>
+                                <physLoc>
+                                    <repository>
+                                        <corpName xml:id=""/>
+                                        <geogName xml:id=""/>
+                                        <identifier authority="RISM" authURI="http://www.rism.info" xml:id=""/>
+                                        <ptr target="" mimetype="" label="" xml:id=""/>
+                                    </repository>
+                                    <identifier xml:id=""/>
+                                </physLoc>
+                                <componentGrp/>
+                            </item>
+                        </itemList>
+                        <relationList xmlns="http://www.music-encoding.org/ns/mei">
+                            <relation rel="isEmbodimentOf" target="" xml:id="" label=""/>
+                        </relationList>
                     </temp-values>
                 </xf:instance>
+                
+                <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+                    id="empty-instance"
+                    src="/../editor/forms/mei/model/empty_doc.xml" 
+                    xxf:readonly="true"/>
                 
             </xf:model>
         </xbl:implementation>
         <xbl:template>
             <!-- outer group -->
             <xf:group xxbl:scope="outer" xbl:attr="model context ref bind">
-
+                
                 <!-- Inner group -->
                 <xf:group appearance="xxf:internal" xxbl:scope="inner">
                     
@@ -86,9 +111,10 @@
                     <xxf:variable name="reduced-template" as="node()?">
                         <xxf:sequence select="instance('reduced-template')" xxbl:scope="outer"/>
                     </xxf:variable>
-                    <xxf:variable name="empty-instance" as="node()?">
+                    <!--
+                        <xxf:variable name="empty-instance" as="node()?">
                         <xxf:sequence select="instance('empty-instance')" xxbl:scope="outer"/>
-                    </xxf:variable>
+                        </xxf:variable>-->
                     <xxf:variable name="data-instance" as="node()?">
                         <xxf:sequence select="instance('data-instance')" xxbl:scope="outer"/>
                     </xxf:variable>
@@ -114,34 +140,36 @@
                             <xf:repeat nodeset="$nodeset" id="repeat-sources">
                                 <h:tr class="hoverclass">
                                     <h:td class="number_cell">
+                                        <dcm:id/>
                                         <xf:output value="position()"/>
                                     </h:td>
                                     <h:td>
                                         <dcm:id ref="."/>
                                         &#160;
-                                        <xf:group ref=".[not(@target) or @target='']">
-                                            <!-- source data included in this file -->
-                                            <xf:output value="m:titleStmt/m:title"/>
-                                            <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
-                                        </xf:group>
-                                        <xf:group ref=".[@target!='']">
-                                            <!-- external source data -->
-                                            <xf:output value="@label"/>
-                                            <xf:group ref=".[normalize-space(@label)='']"> [No description] </xf:group>
-                                            <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="http:/editor/images/update.png" title="Update title (re-read from external file)"/></xf:label>
-                                                <xf:action ev:event="DOMActivate">
-                                                    <xxf:variable name="source_id" select="substring-after(@target,'#')"/>
-                                                    <xxf:variable name="doc" select="substring-before(@target,'#')"/>
-                                                    <xf:setvalue ref="instance('local-temp')/target_uri" 
-                                                        value="concat($parameters/dcm:server_name,$parameters/dcm:document_root,$doc)"/>
-                                                    <xf:send submission="load-fileList"/>
-                                                    <xf:setvalue ref="@label" value="instance('XMLfiles')//m:source[@xml:id=$source_id]/m:titleStmt/m:title"/>
-                                                </xf:action>
-                                            </xf:trigger>
-                                        </xf:group>
+                                        <h:span class="strong">
+                                            <xf:group ref=".[not(@target) or @target='']">
+                                                <!-- source data included in this file -->
+                                                <xf:output value="m:titleStmt/m:title"/>
+                                                <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
+                                            </xf:group>
+                                            <xf:group ref=".[@target!='']">
+                                                <!-- external source data -->
+                                                <xf:output value="@label"/>
+                                                <xf:group ref=".[normalize-space(@label)='']"> [No description] </xf:group>
+                                                <xf:trigger appearance="minimal">
+                                                    <xf:label><h:img src="http:/editor/images/update.png" title="Update title (re-read from external file)"/></xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xxf:variable name="source_id" select="substring-after(@target,'#')"/>
+                                                        <xxf:variable name="doc" select="substring-before(@target,'#')"/>
+                                                        <xf:setvalue ref="instance('local-temp')/target_uri" 
+                                                            value="concat($parameters/dcm:server_name,$parameters/dcm:document_root,$doc)"/>
+                                                        <xf:send submission="load-fileList"/>
+                                                        <xf:setvalue ref="@label" value="instance('XMLfiles')//m:source[@xml:id=$source_id]/m:titleStmt/m:title"/>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                            </xf:group>
+                                        </h:span>
                                         &#160;
-                                        
                                         <!-- reverse linking disabled due to performance problems
                                             
                                             <dcm:linked-sources id="linking_sources"
@@ -152,8 +180,7 @@
                                             '%23',
                                             @xml:id)"
                                             />
-                                        -->              
-                                        
+                                        -->        
                                     </h:td>
                                     <h:td>
                                         <xf:group ref=".[not(@target) or @target='']">
@@ -197,6 +224,51 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
+                                        
+                                        <!-- change isEmbodimentOf relation -->
+                                        <xf:group ref=".[count($data-instance//m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
+                                            <h:a class="popup"><h:img src="http:/editor/images/expand.png" alt="Move to"/>Move<h:span 
+                                                class="comment">
+                                                <h:div>
+                                                    <h:p class="blocklabel strong" style="font-size:.9em;">Move this source to</h:p>
+                                                    <h:div>
+                                                        <xf:trigger ref=".[m:relationList/m:relation[@rel='isEmbodimentOf']/@target!='']">
+                                                            <xf:label>Work (no specific version)</xf:label>
+                                                            <xf:action ev:event="DOMActivate">
+                                                                <xf:delete ref="m:relationList/m:relation[@rel='isEmbodimentOf']"/>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </h:div>
+                                                    <xxf:variable name="source" select="@xml:id"/>
+                                                    <xxf:variable name="target" select="substring-after(m:relationList/m:relation[@rel='isEmbodimentOf']/@target,'#')"/>
+                                                    <xf:repeat nodeset="$data-instance//m:workDesc/m:work/m:expressionList/m:expression[@xml:id!=$target or not($target)]">
+                                                        <xxf:variable name="exp" select="@xml:id"/>
+                                                        <xxf:variable name="title" select="if (m:titleStmt/m:title/text()) then m:titleStmt/m:title else concat('[',$exp,']')"/>
+                                                        <h:div>
+                                                            <xf:trigger>
+                                                                <xf:label><xf:output value="$title"/></xf:label>
+                                                                <xf:action ev:event="DOMActivate">
+                                                                    <xf:action if="not($data-instance//m:source[@xml:id=$source]/m:relationList)">
+                                                                        <xf:insert context="$data-instance//m:source[@xml:id=$source]" at="last()" position="after"
+                                                                         origin="instance('local-temp')/m:relationList"/>
+                                                                    </xf:action>
+                                                                    <xf:action if="$data-instance//m:source[@xml:id=$source][m:relationList and not(m:relationList/m:relation[@rel='isEmbodimentOf'])]">
+                                                                        <xf:insert context="$data-instance//m:source[@xml:id=$source]/m:relationList" at="last()" position="after"
+                                                                            origin="instance('local-temp')/m:relationList/m:relation[@rel='isEmbodimentOf']"/>
+                                                                    </xf:action>
+                                                                    <xf:setvalue 
+                                                                        ref="$data-instance//m:source[@xml:id=$source]/m:relationList/m:relation[@rel='isEmbodimentOf']/@target"
+                                                                        value="concat('#',$exp)"/>
+                                                                </xf:action>
+                                                            </xf:trigger>
+                                                        </h:div>
+                                                    </xf:repeat>
+                                                </h:div>
+                                            </h:span></h:a>
+                                        </xf:group>
+                                        <!-- end change relation -->
+                                        
+                                        <dcm:attribute-editor/>
                                     </h:td>
                                     <h:td class="buttons_cell">
                                         <!-- modified copy of elements_buttons_typed.xbl  -->
@@ -287,10 +359,89 @@
                                             </h:span>
                                         </xf:group>
                                         <!-- end element buttons -->
-                                        
-                                        <dcm:attribute-editor ref="."/>
                                     </h:td>
                                 </h:tr>
+                                
+                                <!-- Items -->
+                                <xf:group ref=".[not(@target) or @target='']">
+                                    <h:tr class="item_row">
+                                        <h:td/>
+                                        <h:td colspan="3">
+                                            <h:table>
+                                                <h:tr>
+                                                    <h:td>
+                                                        <h:div style="padding-top:2px;">&#160;Items:
+                                                            <h:a class="help">?<h:span class="comment">Items are the individual exemplars (copies)
+                                                                of a source, e.g. a specific copy of a printed source. Since manuscripts are unique, 
+                                                                they are sources having only one item.<h:br/>
+                                                                Information specific to individual copies, such as location and condition, 
+                                                                is given at item level.                                                    
+                                                            </h:span></h:a>
+                                                            <dcm:create nodeset="m:itemList" label="Add itemList" 
+                                                                origin="instance('local-temp')/m:itemList"/>
+                                                            <dcm:create ref="m:itemList" 
+                                                                nodeset="m:item" label="Add item" 
+                                                                origin="instance('local-temp')/m:itemList/m:item"/>
+                                                        </h:div>
+                                                    </h:td>
+                                                    <h:td>
+                                                        <xf:group ref="m:itemList[m:item]">
+                                                            <h:table style="width:auto;">
+                                                                <xf:repeat nodeset="m:item" id="repeat-items">
+                                                                    <h:tr class="hoverclass">
+                                                                        <h:td>
+                                                                            <h:ul style="margin:0; padding-left:15px;">
+                                                                                <h:li>
+                                                                                    <dcm:id/>
+                                                                                    <xf:group ref=".[not(@label) or @label='']">
+                                                                                        <xf:group ref="m:physLoc[m:repository/m:identifier/text() or m:identifier/text()]">
+                                                                                            <xf:output value="concat(m:repository/m:identifier[1],' ',m:identifier[1])"/>
+                                                                                        </xf:group>
+                                                                                        <xf:group ref=".[not(m:physLoc[m:repository/m:identifier/text() or m:identifier/text()])]">
+                                                                                            [No item label or identifier]
+                                                                                        </xf:group>
+                                                                                    </xf:group>
+                                                                                    <xf:output value="@label"/>
+                                                                                </h:li>
+                                                                            </h:ul>
+                                                                        </h:td>
+                                                                        <h:td class="buttons_cell" style="width: auto;">
+                                                                            <xf:trigger appearance="minimal">
+                                                                                <xf:label><h:img src="http:/editor/images/edit.gif" title="Edit this item"/></xf:label>
+                                                                                <xf:action ev:event="DOMActivate">
+                                                                                    <xxf:variable name="uri" 
+                                                                                        select="concat($parameters/dcm:orbeon_dir,'?uri=',$parameters/dcm:form_home,'details-item.xml&amp;doc=',$parameters/dcm:xml_file,'&amp;id=',@xml:id)"/>
+                                                                                    <xf:action if="$temp/changed='true'">
+                                                                                        <xf:setvalue ref="$temp/target_uri" value="$uri"/>
+                                                                                        <xxf:show dialog="exit-warning-dialog"/>
+                                                                                    </xf:action>	
+                                                                                    <xf:action if="$temp/changed='false'">
+                                                                                        <xf:load resource="{$uri}" show="replace"/>
+                                                                                    </xf:action>
+                                                                                </xf:action>
+                                                                            </xf:trigger>
+                                                                        </h:td>
+                                                                        <h:td class="buttons_cell">
+                                                                            <dcm:element-buttons triggers="up down add copy remove"
+                                                                                nodeset="m:item"
+                                                                                index="repeat-items"
+                                                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[m:itemList/m:item][1]/m:itemList/m:item[last()]"/>
+                                                                        </h:td>
+                                                                        <h:td>
+                                                                            <dcm:attribute-editor/>
+                                                                        </h:td>
+                                                                    </h:tr>
+                                                                </xf:repeat>
+                                                            </h:table>
+                                                        </xf:group>
+                                                    </h:td>
+                                                </h:tr>
+                                            </h:table>
+                                        </h:td>
+                                    </h:tr>
+                                </xf:group>
+                                <!-- End items -->
+                                
                             </xf:repeat>
                         </h:table>                                    
                         
@@ -331,15 +482,6 @@
                                 </xf:trigger> 
                             </h:div>
                         </xxf:dialog>
-                        <!--
-                            <xxf:dialog appearance="full" id="link_type_dialog">
-                            <xf:select ref="$temp/value" appearance="full">
-                            <xf:itemset>
-                            vælg hvilken type link der skal oprettes her 
-                            </xf:itemset>
-                            </xf:select>
-                            </xxf:dialog>
-                        -->
                         
                         <xxf:dialog id="source_reference_dialog" appearance="full">
                             <xf:label>External source description</xf:label>
@@ -458,7 +600,7 @@
                                                                 <xf:action ev:event="DOMActivate">
                                                                     <xf:insert context="$binding" 
                                                                         nodeset="$nodeset[index('repeat-sources')]"
-                                                                        origin="$empty-instance/m:meiHead/m:fileDesc/m:sourceDesc/m:source[2]"/>
+                                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[2]"/>
                                                                     <xxf:variable name="added_nodeset" as="node()?" 
                                                                         select="$binding/m:source[(m:relationList/m:relation[@rel='isEmbodimentOf' and (@target=$expression or @target='')])
                                                                         or $expression='all' or ($expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!='']))]
@@ -489,7 +631,6 @@
                                 </xf:repeat>
                             </h:div>
                         </xxf:dialog>
-                                                
                         
                         <xxf:dialog id="leave-warning-dialog" appearance="full">
                             <!-- The requested URI must be stored in $temp/target_uri prior to opening the dialog -->
@@ -535,11 +676,11 @@
                                 <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
                                 <xf:action ev:event="DOMActivate">
                                     <!--<xf:send submission="save-to-file"/>
-                                    <xf:load resource="{$temp/target_uri}" show="replace"/>-->
+                                        <xf:load resource="{$temp/target_uri}" show="replace"/>-->
                                     <xf:dispatch name="save-data" targetid="dcm-source-list-binding" target="dcm-source-list-binding">
                                         <xxf:context name="goto-uri" select="$temp/target_uri"/>
                                     </xf:dispatch>
-                                        
+                                    
                                     <xxf:hide dialog="exit-warning-dialog"/>
                                 </xf:action>
                             </xf:trigger>

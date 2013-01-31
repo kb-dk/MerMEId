@@ -101,8 +101,8 @@
                             </xf:action>
                             
                             <!-- end moving -->
-                            <xf:dispatch name="id-update" target="form-group"/>
-                            <xf:dispatch name="dcm-create" target="dcm-create-binding"/>
+                            <xf:dispatch name="id-update" targetid="form-group" target="form-group"/>
+                            <xf:dispatch name="dcm-create" targetid="dcm-create-binding" target="dcm-create-binding"/>
                         </xf:action>
                     </xf:trigger>
                 </xf:group>

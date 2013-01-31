@@ -118,7 +118,11 @@
                         <h:legend>Source 
                             <h:a class="help">?<h:span class="comment">A source corresponds to the FRBR "manifestation" level. At this level, therefore, 
                                 only information common to all copies of this source should be entered. <h:br/>
-                                Information about individual copies (including their location) should be given at "Item" level below.</h:span></h:a>
+                                Information about individual copies (including their location) should be given at "item" level.                                <h:br/>
+                                Manuscripts are somewhat special, being sources having only one item. Manuscripts, too, 
+                                will have some information at source level and some (such as location) at item level, though
+                                the distinction is less clear than with printed sources. 
+                                </h:span></h:a>
                         </h:legend>
                         <h:div class="vertical_spacer"> </h:div>
                         
@@ -134,70 +138,6 @@
                         <dcm:id ref="m:titleStmt/m:title"/>
                         <dcm:attribute-editor ref="m:titleStmt/m:title"/>
                                  
-                        <h:fieldset>
-                            <h:legend>Relations <h:a class="help">?<h:span class="comment">Defines relations between
-                                sources (for instance, marking this source as a reprint of another source) or between 
-                                sources and versions of the work (to define that this source represents a particular version 
-                                of the work).<h:br/>
-                                To define this source as a reprint, choose the relation "is reproduction of" and choose the 
-                                source describing the first edition as the target. 
-                                <h:br/>
-                                To define which version is embodied by this source, select "is embodiment of" as the relation and the 
-                                relevant version of the work as the target.
-                                <h:br/>
-                                <h:br/>Depending on the encoding pratice of your project, relations may or may not 
-                                be defined mutually, i.e. the opposite relation may be defined on the target.<h:br/>
-                                The list is based on FRBR relations (see http://www.ifla.org/files/cataloguing/frbr/frbr_2008.pdf).
-                            </h:span></h:a></h:legend>
-                            <dcm:create 
-                                nodeset="m:relationList"
-                                label="Add relation"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:relationList"/>
-                            <dcm:create ref="m:relationList"
-                                nodeset="m:relation"
-                                label="Add relation"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:relationList/m:relation"/>
-                            <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
-                                <xf:repeat nodeset="m:relationList/m:relation" id="work_relations">
-                                    <xxf:variable name="this_id" select="../../@xml:id"/>
-                                    <h:tr>
-                                        <h:td>
-                                            <h:span>This source </h:span>
-                                            <xi:include href="includes/relation_select.xml" parse="xml"/>
-                                            <xf:select1 ref="@target" class="long">
-                                                <xf:label/> 
-                                                <xf:item>
-                                                    <xf:label>- select target -</xf:label>
-                                                    <xf:value/>
-                                                </xf:item>
-                                                <xf:itemset nodeset="instance('data-instance')//m:source/@xml:id[.!=$this_id] | instance('data-instance')//m:expression/@xml:id">
-                                                    <xf:label><xf:output value="concat(../m:titleStmt/m:title[1],' (',.,')')"/></xf:label>
-                                                    <xf:value ref="concat('#',.)"/>
-                                                </xf:itemset>
-                                            </xf:select1>
-                                        </h:td>
-                                        <!--<h:td>
-                                            <xf:input ref="@label" class="long">
-                                            <xf:label> Link label <h:a class="help">?<h:span class="comment">The text to be 
-                                            displayed as the link text</h:span></h:a></xf:label>
-                                            </xf:input>
-                                            </h:td>-->
-                                        <h:td style="vertical-align:top; white-space:nowrap;">
-                                            <h:span class="editmenu">
-                                                <dcm:element-buttons 
-                                                    triggers="up down add del-parent-with-last" 
-                                                    nodeset="m:relation" 
-                                                    index="work_relations"
-                                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList/m:relation"/>
-                                                <dcm:attribute-editor ref="."/>
-                                            </h:span>
-                                        </h:td>
-                                    </h:tr>
-                                </xf:repeat>
-                            </h:table>
-                        </h:fieldset>
-                        
-                        
               
                         <!-- Source classification -->
                         <!-- For now, editing classification requires either the DCM classcodes being defined already 
@@ -424,12 +364,13 @@
                         
                         <!-- identifiers -->
                         <h:fieldset>
-                            <h:legend>Identification <h:a class="help">?<h:span class="comment">Identifiers other than the repository's own shelf mark, 
-                                e.g. RISM identifiers or other catalogue numbers identifying this specific item<h:br/>
+                            <h:legend>Identification <h:a class="help">?<h:span class="comment">Identifiers other than 
+                                item-specific ones. For instance, RISM identifiers of prints can be entered here. 
+                                <h:br/>
                                 With manuscripts, RISM identifiers should be given at 
-                                item level (below).<h:br/>
+                                item level.<h:br/>
                                 A source's shelf mark within an archive should not be entered here; place it  
-                                in the "Location" section at item level (below) instead. 
+                                in the "Location" section at item level instead. 
                             </h:span></h:a></h:legend>
                             <dcm:create
                                 nodeset="m:identifier"
@@ -788,7 +729,67 @@
                             </xf:repeat>
                         </h:fieldset>
                         
-                             
+                        
+                        <h:fieldset>
+                            <h:legend>Relations <h:a class="help">?<h:span class="comment">Defines relations between
+                                this source and other sources, versions (FRBR: "expressions") of this work, other works etc.<h:br/>
+                                Currently only two relations have a visible effect in MerMEId: the relation "is reproduction of"
+                                pointing to another source marks this source as being a reprint of the other source; 
+                                the "is embodiment of" relation pointing to an expression (version) of the works is used to 
+                                specify which particular version of the work is embodied by this source.<h:br/>
+                                <h:br/>Depending on the encoding pratice of your project, relations may or may not 
+                                be defined mutually, i.e. the opposite relation may be defined on the target.<h:br/>
+                                The list is based on FRBR relations (see http://www.ifla.org/files/cataloguing/frbr/frbr_2008.pdf).
+                            </h:span></h:a></h:legend>
+                            <dcm:create 
+                                nodeset="m:relationList"
+                                label="Add relation"
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:relationList"/>
+                            <dcm:create ref="m:relationList"
+                                nodeset="m:relation"
+                                label="Add relation"
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:relationList/m:relation"/>
+                            <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
+                                <xf:repeat nodeset="m:relationList/m:relation" id="work_relations">
+                                    <xxf:variable name="this_id" select="../../@xml:id"/>
+                                    <h:tr>
+                                        <h:td>
+                                            <h:span>This source </h:span>
+                                            <xi:include href="includes/relation_select.xml" parse="xml"/>
+                                            <xf:select1 ref="@target" class="long">
+                                                <xf:label/> 
+                                                <xf:item>
+                                                    <xf:label>- select target -</xf:label>
+                                                    <xf:value/>
+                                                </xf:item>
+                                                <xf:itemset nodeset="instance('data-instance')//m:source/@xml:id[.!=$this_id] | instance('data-instance')//m:expression/@xml:id">
+                                                    <xf:label><xf:output value="concat(../m:titleStmt/m:title[1],' (',.,')')"/></xf:label>
+                                                    <xf:value ref="concat('#',.)"/>
+                                                </xf:itemset>
+                                            </xf:select1>
+                                        </h:td>
+                                        <!--<h:td>
+                                            <xf:input ref="@label" class="long">
+                                            <xf:label> Link label <h:a class="help">?<h:span class="comment">The text to be 
+                                            displayed as the link text</h:span></h:a></xf:label>
+                                            </xf:input>
+                                            </h:td>-->
+                                        <h:td style="vertical-align:top; white-space:nowrap;">
+                                            <h:span class="editmenu">
+                                                <dcm:element-buttons 
+                                                    triggers="up down add del-parent-with-last" 
+                                                    nodeset="m:relation" 
+                                                    index="work_relations"
+                                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList/m:relation"/>
+                                                <dcm:attribute-editor/>
+                                            </h:span>
+                                        </h:td>
+                                    </h:tr>
+                                </xf:repeat>
+                            </h:table>
+                        </h:fieldset>
+                        
+                        
                         <!-- Components -->
                         <h:fieldset class="source-components">
                             <h:legend class="source-components">Components <h:a 
@@ -969,45 +970,7 @@
                             </xf:group>
                         </h:fieldset>
                         <!-- End components -->
-                        
-                        
-                        <!-- Items -->
-                        <h:fieldset class="items" id="items">
-                            <h:legend class="items">Items
-                                <h:a class="help">?<h:span class="comment">A list of individual copies of the source. 
-                                    Manuscript sources will only have one such item.<h:br/>
-                                    If the item consists of several components with different physical appearance, 
-                                    the distinct features of each component may be specified using the item's "Components" section.<h:br/>
-                                </h:span></h:a>
-                                <dcm:id ref="m:itemList"/>
-                                <dcm:attribute-editor ref="m:itemList"/>
-                            </h:legend>
-                            <h:div class="vertical_spacer"> </h:div>
-                            <dcm:create
-                                nodeset="m:itemList"
-                                label="Add items"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList"/>
-                            <dcm:create ref="m:itemList"
-                                nodeset="m:item"
-                                label="Add item"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item"/>
-                            <xf:repeat nodeset="m:itemList/m:item" id="repeat-item">
-                                <h:fieldset>
-                                    <h:legend>Item  
-                                        <dcm:element-buttons 
-                                            triggers="up down copy add remove" 
-                                            nodeset="m:item" 
-                                            index="repeat-item"
-                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item[1]"/>
-                                        <dcm:id/>
-                                        <dcm:attribute-editor/>
-                                    </h:legend>
-                                    <h:div class="vertical_spacer"> </h:div>
-                                    <h:div class="vertical_spacer"> </h:div>
-                                    <dcm:item ref="."/>
-                                </h:fieldset>
-                            </xf:repeat>
-                        </h:fieldset>
+                    
                     </h:fieldset>
                     
                 </xf:group>

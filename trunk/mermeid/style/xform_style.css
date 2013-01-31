@@ -369,52 +369,6 @@ span.no_margin {
     margin: 0px;
     padding: 0px;
 }
-/* css for emulating <xforms:select1 selection="open"> */
-span.selection_open,
-span.selection_open_short {
-    white-space: nowrap; 
-}
-
-span.selection_open input,
-span.selection_open_short input {
-    position:absolute;
-    z-index:+1;
-    margin: 0px;
-    padding: 1px 0px 0px 1px; 
-    margin: 5px 0px 0px 4px;
-    height: 16px;
-    border:none;
-}
-
-span.selection_open select,
-span.selection_open_short select {
-    position: relative;
-    height: 20px;
-}
-
-span.selection_open select {
-    width: 268px;  
-}
-
-span.selection_open_short select {
-    width: 168px;    
-}
-
-span.selection_open_long select {
-    width: 418px;    
-}
-
-span.selection_open input {
-    width: 246px;    
-}
-
-span.selection_open_short input {
-    width: 146px;    
-}
-
-span.selection_open_long input {
-    width: 396px;    
-}
 
 /* fixed width for some elements for alignment */
 .fixed_width, .fixed_width_short,
@@ -442,6 +396,15 @@ table.element_list td {
     border-top: 1px dotted #999;
     margin: 0px;
     padding: 2px;
+}
+
+table.element_list tr.item_row td {
+    border: 0;
+}
+
+table.element_list table tr td {
+    padding: 0 2px;
+    vertical-align: top;
 }
 
 #music-case table.element_list td {
@@ -528,7 +491,7 @@ div.about_header, div.about_footer {
 
 /* css for help and warning pop-ups */
 
-a.help, a.help_plain, a.warning, a.popup {
+a.help, a.help_plain, a.warning {
     text-decoration: none;
     text-align: left;
     vertical-align:text-top;
@@ -593,6 +556,10 @@ a.popup span.comment {
 a.popup span.comment {
     background-color: #ccc;
     cursor: default;
+    font-size: 1em;
+    margin-top:0px;
+    margin-left:-100px;
+    width: auto;
 }
 
 a:hover.help span.comment, a:hover.help_plain span.comment, 
