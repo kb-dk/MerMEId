@@ -21,7 +21,7 @@
 }
 
 /* override controls style */
-.xforms-input, .xforms-textarea, .xforms-select1 {
+.xforms-input, .xforms-select1 {
     width: inherit;
     height: inherit;
     margin: inherit;
@@ -91,7 +91,7 @@ div.inputdiv {
 }
 
 fieldset {
-    padding: 0px 5px 5px 5px;
+    padding: 0px 3px 5px 5px;
     margin: 26px 0px 5px 0px;
     background-color: #e8e8e8 !important; 
     border: 1px solid #999999;
@@ -105,18 +105,24 @@ fieldset fieldset {
     margin: 26px 2px 0px 0px;
 }
 
-fieldset fieldset, fieldset fieldset legend,
-fieldset fieldset fieldset fieldset fieldset, fieldset fieldset fieldset fieldset fieldset legend {
-    background-color: #cccccc !important;
+fieldset fieldset {
+    background-color: #ddd !important;
 }
 
-fieldset fieldset fieldset, fieldset fieldset fieldset legend,
-fieldset fieldset fieldset fieldset fieldset fieldset, 
-fieldset fieldset fieldset fieldset fieldset fieldset legend {
-    background-color: #dddddd !important;
+fieldset legend
+fieldset fieldset legend,
+fieldset fieldset fieldset legend,
+fieldset fieldset fieldset fieldset legend {
+    background-color: #bbb !important;
 }
 
-fieldset fieldset fieldset fieldset, fieldset fieldset fieldset fieldset legend {
+
+fieldset fieldset fieldset, 
+fieldset fieldset fieldset fieldset fieldset fieldset {
+    background-color: #ccc !important;
+}
+
+fieldset fieldset fieldset fieldset {
     background-color: #e8e8e8 !important;
 }
 
@@ -142,6 +148,19 @@ fieldset.componentGrp, legend.componentGrp {
 
 legend {
     position:relative;
+    background-color: #aaa; 
+    font-weight: bold;
+    border: #aaa solid 1px;
+    border-bottom: none;
+    height: 18px;
+    padding: 3px 4px 1px 4px;
+    margin: -20px -6px 2px -6px;
+    width: 100%;
+}
+
+/*
+ legend {
+    position:relative;
     background-color: #e8e8e8; 
     font-weight: bold;
     border: #999999 solid 1px;
@@ -151,10 +170,10 @@ legend {
     margin: -21px 0px 0px -6px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    /* For non-CSS3 FireFox */
     -moz-border-radius-topleft: 4px;
     -moz-border-radius-topright: 4px;
 }
+ */
  
 table, tr, td {
     margin: 0px;
@@ -257,7 +276,7 @@ a.element-button {
 legend .xforms-trigger img,
 legend .xforms-group img {
     margin-top: 0px;
-    vertical-align: baseline;
+    vertical-align: top; 
 }
 
 
@@ -440,6 +459,11 @@ table.element_list tr {
 table.element_list .xbl-dcm-element-buttons {
    /* display:block; */
     height: 22px;
+}
+
+table.element_list td.no_border {
+    border: none;
+    padding: 0px 2px;
 }
 
 /* file reference list*/
