@@ -61,6 +61,11 @@ td {
     border-top: 1px solid #999;
 }
 
+td p 
+{
+    margin: 0;
+}
+
 button {
     padding: 0px;
 }
@@ -82,6 +87,10 @@ td.buttons input, td.buttons img {
 td.buttons input:hover, td.buttons img:hover {
     border: 1px solid #999999;
     padding: 2px;
+}
+
+table.result_table td {
+    padding:3px;
 }
 
 tbody tr.result:hover {

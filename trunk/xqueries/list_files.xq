@@ -242,20 +242,22 @@ declare function app:navigation(
 <link rel="styleSheet" 
 href="/editor/style/list_style.css" 
 type="text/css"/>
+<link rel="styleSheet" 
+href="/editor/style/xform_style.css" 
+type="text/css"/>
 
 <script type="text/javascript" src="/editor/js/confirm.js">
 //
 </script>
 
 </head>
-<body>
+<body class="list_files">
 <div style="float:right;">
 <a href="/editor/manual/" target="_blank"><img src="/editor/images/help.png" title="help" alt="help" border="0"/></a>
 </div>
 <img src="/editor/images/mermeid_30px.png" title="MerMEId - Metadata Editor and Repository for MEI Data" alt="MerMEId Logo"/>
 <hr/>
 <form action="" method="get" class="search">
-<fieldset>
 <input name="query"  value='{request:get-parameter("query","")}'/>
 <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
 <input type="submit" value="Search"               />
@@ -286,7 +288,6 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 </span>
 </span>
 </a>
-</fieldset>
 </form>
 
 <p>
@@ -328,14 +329,16 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	return $link
 }
 </p> 
-<h2>
+<br style="clear:both;"/>
+<fieldset>
+<legend>
 {app:list-title()}
 {
 	<a title="Add new file" href="#" class="addLink" 
 	onclick="location.href='/filter/new/dcm/'; return false;"><img 
 	src="/editor/images/new.gif" alt="New file" border="0" /></a>
 }
-</h2>
+</legend>
 
 {
 	let $list := loop:getlist($coll,$query)
@@ -356,5 +359,6 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 
 
 }
+</fieldset>
 </body>
 </html>
