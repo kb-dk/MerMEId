@@ -4,7 +4,7 @@ body {
     line-height : 1.4em;
     font-family: verdana, arial, helvetica, sans-serif;
     font-size: .8em;
-    
+    background-color: #e5e1bf;
 }
 
 p {
@@ -59,6 +59,17 @@ sup {
 ul {
     margin-top: 0px;
     padding-left: 1em;
+}
+
+.hr {
+    border-top: 1px solid #999;
+    width: 100%;
+}
+
+.main {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #999;
 }
 
 .p_heading, .p_subheading, .movement_heading {
@@ -207,7 +218,8 @@ table.source_component_list td.label_cell {
 .series_header {
     /* shared by all series */
     background-color : #84a48a;
-    padding:2px;
+    padding: 4px 8px;
+    margin: -10px -10px 0 -10px;
     color : white;
     font-weight : bold;
     font-size : 1.5em;
@@ -330,16 +342,17 @@ a:hover.help span.comment {
     .noprint {
         display : none;
     }
+    
+    body {
+        background-color: #fff;
+    }
+    
     p {
         margin-top : 0.2em;
         margin-bottom : 0em;
     }
     .p_heading {
         margin-top : 0.2em;
-    }
-    .cnw_number {
-        background-color: white;
-        color : black;
     }
     div.source {
         padding-bottom : 0.2em;

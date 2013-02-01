@@ -34,7 +34,9 @@
 				<xsl:call-template name="make_html_head"/>
 			</head>
 			<body>
-				<xsl:call-template name="make_html_body"/>
+				<div class="main">
+					<xsl:call-template name="make_html_body"/>
+				</div>
 			</body>
 		</html>
 	</xsl:template>
@@ -427,7 +429,7 @@
 		<!-- colophon -->
 		<div class="colophon">
 			<br/>
-			<hr/>
+			<div class="hr"/>
 			<xsl:if test="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()]">
 				<p>
 					<em>File title:</em>
