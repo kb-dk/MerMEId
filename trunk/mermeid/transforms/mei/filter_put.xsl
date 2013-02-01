@@ -47,7 +47,7 @@
   </xsl:template>
   
   <!-- Remove empty attributes -->
-  <xsl:template match="m:identifier/@type|@unit|@pname|@accid|@mode|@count|@sym|@code|@solo|
+  <xsl:template match="m:identifier/@type[.='']|@unit[.='']|@pname|@accid|@mode|@count|@sym|@code|@solo|
     @n|@evidence|@target|@targettype|@resp|
     @notbefore|@notafter|@reg|@isodate|@startdate|@enddate|@notAfter-iso|@notBefore-iso|@when-iso|
     @xml:lang">

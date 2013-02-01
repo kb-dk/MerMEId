@@ -523,7 +523,9 @@
                                                     + VIII"</h:span></h:a></xf:label>
                                             </xf:input>
                                             <xf:input ref="@unit">
-                                                <xf:label>Unit <h:a class="help">?<h:span class="comment">Usually "pages" or "folios"</h:span></h:a></xf:label>
+                                                <xf:label>Unit <h:a class="help">?<h:span class="comment">Usually "pages" or "folios"
+                                                    <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
+                                                    Please use underscore _ instead.</h:span></h:a></xf:label>
                                             </xf:input>
                                             <dcm:element-buttons 
                                                 triggers="remove" 
@@ -549,7 +551,9 @@
                                                     "23.5x34"</h:span></h:a></xf:label>
                                             </xf:input>
                                             <xf:input ref="@unit">
-                                                <xf:label>Unit <h:a class="help">?<h:span class="comment">Unit of measurement, usually "cm"</h:span></h:a></xf:label>
+                                                <xf:label>Unit <h:a class="help">?<h:span class="comment">Unit of measurement, usually "cm"
+                                                    <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
+                                                    Please use underscore _ instead.</h:span></h:a></xf:label>
                                             </xf:input>
                                             <dcm:element-buttons 
                                                 triggers="remove" 

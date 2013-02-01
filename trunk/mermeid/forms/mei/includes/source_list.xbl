@@ -401,7 +401,7 @@
                                                                                         <xf:group ref="m:physLoc[m:repository//text() or m:identifier/text()]">
                                                                                             <xf:output value="concat(m:repository/*[text()][1],' ',m:identifier[1])"/>
                                                                                         </xf:group>
-                                                                                        <xf:group ref=".[not(m:physLoc[m:repository//text() or m:identifier/text()])]">
+                                                                                        <xf:group ref=".[not(m:physLoc[*//text()])]">
                                                                                             [No item label or identifier]
                                                                                         </xf:group>
                                                                                     </xf:group>

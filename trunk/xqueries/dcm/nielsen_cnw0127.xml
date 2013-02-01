@@ -16,10 +16,10 @@
                             <addrLine>P.O. Box 2149</addrLine>
                             <addrLine>DK - 1016 Copenhagen K</addrLine>
                             <addrLine>
-                                <ptr label="" target="http://www.kb.dk/dcm" xl:title="WWW"/>
+                                <ptr label="WWW" target="http://www.kb.dk/dcm"/>
                             </addrLine>
                             <addrLine>
-                                <ptr label="" target="mailto://foa-dcm@kb.dk" xl:title="E-mail"/>
+                                <ptr label="E-mail" target="mailto://foa-dcm@kb.dk"/>
                             </addrLine>
                         </address>
                     </corpName>
@@ -40,33 +40,7 @@
                 <title xml:id="title_dadc493a">MerMEId Demo Files</title>
                 <identifier type="file_collection" xml:id="identifier_f7f0e644">Demo</identifier>
             </seriesStmt>
-            <notesStmt>
-                <annot type="bibliography" xml:id="annot_9c6b0df2">
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="primary" xml:id="listBibl_d1e223">
-                        <bibl type="Letter" xml:id="bibl_d1e101">
-                            <author>Bror Beckman</author>
-                            <name role="recipient">Carl Nielsen</name>
-                            <date when-iso="1897-03-16">1897-03-16</date>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository>S-Skma</repository>
-                                <idno>Bror Beckmans arkiv</idno>
-                            </msIdentifier>
-                            <note/>
-                            <ref/>
-                            <ref type="editions">
-                                <bibl xml:id="bibl_d1e130">
-                                    <title type="short_title">CNB</title>
-                                    <biblScope>I/619</biblScope>
-                                </bibl>
-                            </ref>
-                        </bibl>
-                    </listBibl>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="secondary" xml:id="listBibl_d1e245"/>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="documentation" xml:id="listBibl_d1e35"/>
-                </annot>
-            </notesStmt>
-        </fileDesc>
+         </fileDesc>
         <encodingDesc>
             <appInfo>
                 <application version="2013">
@@ -97,22 +71,35 @@
                     <creation xml:id="creation_5916d80b">
                         <date notafter="1896-12-31" notbefore="1895-01-01">1895-1896</date>
                     </creation>
-                    <eventList type="performances" xml:id="eventList_b23b0ea9">
-                        <event xml:id="event_d1e447">
-                            <title xml:id="title_8537758a">First performance</title>
-                            <date reg=" 1898-02-03"> 1898-02-03</date>
-                            <geogName role="venue" xml:id="geogName_f377a061">The Concert Palæ (Koncertpalæet)</geogName>
-                            <geogName role="place" xml:id="geogName_3e92fd26"/>
-                            <corpName role="ensemble" xml:id="corpName_d1727f44"/>
-                            <persName role="soloist" xml:id="persName_90915f1c">Margrethe Boye-Jensen</persName>
-                            <persName role="soloist" xml:id="persName_c3037ef6">Adolfa Johnsson</persName>
-                        </event>
-                    </eventList>
                 </history>
                 <langUsage>
                     <language xml:id="da">Danish</language>
                     <language xml:id="en">English</language>
                 </langUsage>
+                <biblList xml:id="listBibl_fdf6019a-8c0c-4d46-b6e7-e74d132a0cd7244">
+                    <head>Primary texts</head>
+                    <bibl xml:id="bibl_d1e254249">
+                        <genre>letter</genre>
+                        <creator>Bror Beckman</creator>
+                        <recipient>Carl Nielsen</recipient>
+                        <creation>
+                            <date isodate="1897-03-16">1897-03-16</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">S-Skma</identifier>
+                            </repository>
+                            <identifier>Bror Beckmans arkiv</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e288282">
+                                <title>CNB</title>
+                                <biblScope>I/619</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                </biblList>
                 <notesStmt>
                     <annot type="links" xml:id="annot_eb044652"/>
                     <annot type="general_description" xml:id="annot_f864966a">This file demonstrates how to use relations to other files (works), for 
@@ -133,42 +120,58 @@ instance to describe a song cycle, collection, or anthology. </annot>
                 <expressionList>
                     <expression analog="frbr:expression" xml:id="expression_1">
                         <titleStmt>
-                            <title xml:id="title_9ddc79fb" xml:lang="en"/>
+                            <title xml:lang="da">Erindringens Sø</title>
+                            <title xml:lang="en">Lake of Memories</title>
+                            <respStmt>
+                                <persName role=""/>
+                            </respStmt>
                         </titleStmt>
-                        <history xml:id="history_2fbcc96b">
-                            <creation xml:id="creation_e99509bc">
+                        <incip>
+                            <incipText>
+                                <p xml:lang="da">Træd stille, min Veninde</p>
+                                <p xml:lang="en">Tread softly, my companion</p>
+                            </incipText>
+                            <graphic targettype="lowres" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_127.png"/>
+                            <graphic targettype="hires" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_127.png"/>
+                            <graphic targettype="print" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_127.png"/>
+                            <score/>
+                        </incip>
+                        <key/>
+                        <tempo>Adagio</tempo>
+                        <meter count="4" unit="2"/>
+                        <history>
+                            <creation>
                                 <date/>
-                                <geogName xml:id="geogName_c0807c24"/>
+                                <geogName/>
                             </creation>
                             <p/>
+                            <eventList type="performances">
+                                <event xml:id="event_d1e399391">
+                                    <date isodate=" 1898-02-03"> 1898-02-03</date>
+                                    <geogName role="venue">The Concert PÅalæ (Koncertpalæet)</geogName>
+                                    <geogName role="place"/>
+                                    <corpName role="ensemble"/>
+                                    <persName role="soloist">Margrethe Boye-Jensen</persName>
+                                    <persName role="soloist">Adolfa Johnsson</persName>
+                                    <p>First performance.</p>
+                                </event>
+                            </eventList>
                         </history>
-                        <tempo>Adagio</tempo>
-                        <meter count="4" meter.count="4" meter.unit="2" unit="2"/>
-                        <perfMedium analog="marc:048" xml:id="perfMedium_4b633597">
-                            <performer xml:id="performer_d1e584">
-                                <instrVoice count="1" reg="vn" solo="false" xml:id="instrVoice_9436fd86">voice</instrVoice>
-                            </performer>
-                            <performer xml:id="performer_d1e590">
-                                <instrVoice count="1" reg="ka" solo="false" xml:id="instrVoice_06b4d15a">pno.</instrVoice>
-                            </performer>
+                        <perfMedium analog="marc:048">
+                            <instrumentation>
+                                <instrVoice solo="false" count="1" code="vn">voice</instrVoice>
+                                <instrVoice solo="false" count="1" code="ka">pno.</instrVoice>
+                            </instrumentation>
                         </perfMedium>
                         <classification>
                             <termList>
                                 <term/>
                             </termList>
                         </classification>
-                        <incip xml:id="incip_32fde99d">
-                            <incipText xml:id="incipText_c6a7ab65">
-                                <p xml:lang="da">Træd stille, min Veninde</p>
-                                <p xml:lang="en">Tread softly, my companion</p>
-                            </incipText>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_127.png" targettype="lowres" xl:title="" xml:id="graphic_3bb403b1"/>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_127.png" targettype="hires" xl:title="" xml:id="graphic_1353c1df"/>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_127.png" targettype="print" xl:title="" xml:id="graphic_e7a9b9b4"/>
-                            <score xml:id="score_ab073ef7"/>
-                        </incip>
                         <componentGrp/>
-                        <relationList/>
+                        <relationList>
+                            <relation rel="hasReproduction" label="Edited score" targettype="edited_score"/>
+                        </relationList>
                     </expression>
                 </expressionList>
                 <relationList>

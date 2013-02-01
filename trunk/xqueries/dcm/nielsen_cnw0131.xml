@@ -16,10 +16,10 @@
                             <addrLine>P.O. Box 2149</addrLine>
                             <addrLine>DK - 1016 Copenhagen K</addrLine>
                             <addrLine>
-                                <ptr label="" target="http://www.kb.dk/dcm" xl:title="WWW"/>
+                                <ptr target="http://www.kb.dk/dcm" label="WWW"/>
                             </addrLine>
                             <addrLine>
-                                <ptr label="" target="mailto://foa-dcm@kb.dk" xl:title="E-mail"/>
+                                <ptr target="mailto://foa-dcm@kb.dk" label="E-mail"/>
                             </addrLine>
                         </address>
                     </corpName>
@@ -40,71 +40,6 @@
                 <title xml:id="title_a35b4b4e">MerMEId Demo Files</title>
                 <identifier type="file_collection" xml:id="identifier_4e29bf95">Demo</identifier>
             </seriesStmt>
-            <notesStmt>
-                <annot type="bibliography" xml:id="annot_b3c01645">
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="primary" xml:id="listBibl_d1e273">
-                        <bibl type="Letter" xml:id="bibl_d1e101">
-                            <author>Thorvald Otterström</author>
-                            <name role="recipient">Carl Nielsen</name>
-                            <date when-iso="1905-12-29">1905-12-29</date>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository>DK-Kk</repository>
-                                <idno>CNA IAb</idno>
-                            </msIdentifier>
-                            <note/>
-                            <ref/>
-                            <ref type="editions">
-                                <bibl xml:id="bibl_d1e130">
-                                    <title type="short_title">CNB</title>
-                                    <biblScope>II/550</biblScope>
-                                </bibl>
-                            </ref>
-                        </bibl>
-                        <bibl type="Letter" xml:id="bibl_d1e141">
-                            <author>Hugo Seligmann</author>
-                            <name role="recipient">Carl Nielsen</name>
-                            <date when-iso="1911-01-11">1911-01-11</date>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository>DK-Kk</repository>
-                                <idno>CNA IAb</idno>
-                            </msIdentifier>
-                            <note/>
-                            <ref/>
-                            <ref type="editions">
-                                <bibl xml:id="bibl_d1e170">
-                                    <title type="short_title">CNB</title>
-                                    <biblScope>IV/4</biblScope>
-                                </bibl>
-                            </ref>
-                        </bibl>
-                        <bibl type="Diary_entry" xml:id="bibl_d1e181">
-                            <author/>
-                            <date when-iso="1906-12-15">1906-12-15</date>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository>DK-Kk</repository>
-                                <idno>CNA IC</idno>
-                            </msIdentifier>
-                            <note/>
-                            <ref/>
-                            <ref type="editions">
-                                <bibl xml:id="bibl_d1e206">
-                                    <title type="short_title">CNB</title>
-                                    <biblScope>III/168</biblScope>
-                                </bibl>
-                                <bibl xml:id="bibl_d1e215">
-                                    <title type="short_title">T Sch</title>
-                                    <biblScope>231</biblScope>
-                                </bibl>
-                            </ref>
-                        </bibl>
-                    </listBibl>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="secondary" xml:id="listBibl_d1e339"/>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="documentation" xml:id="listBibl_d1e37"/>
-                </annot>
-            </notesStmt>
         </fileDesc>
         <encodingDesc>
             <appInfo>
@@ -117,70 +52,110 @@
             </projectDesc>
         </encodingDesc>
         <workDesc>
-            <work analog="frbr:work" xml:id="work_d1e473">
+            <work xml:id="work_d1e191187" analog="frbr:work">
                 <identifier type="Opus">10. 6</identifier>
                 <identifier type="CNW">131</identifier>
                 <identifier type="CNU">lll/4, 16</identifier>
                 <identifier type="CNS">147</identifier>
-                <identifier type="Demo">9</identifier>
                 <titleStmt>
-                    <title xml:id="title_44235b36" xml:lang="da">[Part of a song cycle:] Hilsen</title>
-                    <title xml:id="title_581a67c0" xml:lang="en">Greeting</title>
-                    <title type="alternative" xml:id="title_12c4e8b7" xml:lang="da">Den dovne Fjord som gynger</title>
-                    <title type="alternative" xml:id="title_b2088e8a" xml:lang="en">You idle bay that stretches</title>
+                    <title xml:lang="da">[Part of a song cycle:] Hilsen</title>
+                    <title xml:lang="en">Greeting</title>
+                    <title type="alternative" xml:lang="da">Den dovne Fjord som gynger</title>
+                    <title xml:lang="en" type="alternative">You idle bay that stretches</title>
                     <respStmt>
-                        <persName role="composer" xml:id="persName_a58ecfc1">Carl Nielsen</persName>
-                        <persName role="author" xml:id="persName_1026f9e9">Ludvig Holstein</persName>
+                        <persName role="composer">Carl Nielsen</persName>
+                        <persName role="author">Ludvig Holstein</persName>
                     </respStmt>
                 </titleStmt>
-                <history xml:id="history_d77b4c8f">
-                    <creation xml:id="creation_a5e71d7d">
-                        <date notafter="1896-12-31" notbefore="1895-01-01">1895-1896</date>
+                <history>
+                    <creation>
+                        <date notbefore="1894" notafter="1895">1894-1895</date>
+                        <geogName/>
                     </creation>
-                    <eventList type="performances" xml:id="eventList_c35fb313">
-                        <event xml:id="event_d1e536">
-                            <title xml:id="title_61af3e91">First performance</title>
-                            <date reg=" 1897-02-06"> 1897-02-06</date>
-                            <geogName role="venue" xml:id="geogName_7bbcbbd9">Wilhelm Hansen House Composers' Concert (Wilhelm Hansens Forlagskoncert)</geogName>
-                            <geogName role="place" xml:id="geogName_7d512c2a">Copenhagen</geogName>
-                            <corpName role="ensemble" xml:id="corpName_46fbfdc3"/>
-                            <persName role="conductor" xml:id="persName_b4553db4"/>
-                            <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="reviews" xml:id="listBibl_d1e132">
-                                <bibl type="Journal_article" xml:id="bibl_d1e557">
-                                    <author/>
-                                    <date when-iso="1897-02-07">1897-02-07</date>
-                                    <title level="a"/>
-                                    <title level="j">Politiken</title>
-                                    <editor/>
-                                    <biblScope type="vol"/>
-                                    <biblScope type="issue"/>
-                                    <biblScope type="pp"/>
-                                    <pubPlace/>
-                                    <publisher/>
-                                    <ref/>
-                                </bibl>
-                            </listBibl>
-                        </event>
-                        <event xml:id="event_d1e587">
-                            <title xml:id="title_0cc744f7">First public performance</title>
-                            <date reg="1898-02-03">1898-02-03</date>
-                            <geogName role="venue" xml:id="geogName_80117de7">The Concert Palæ (Koncertpalæet)</geogName>
-                            <geogName role="place" xml:id="geogName_2f300af6">Copenhagen</geogName>
-                            <corpName role="ensemble" xml:id="corpName_d940f2f0"/>
-                            <persName role="conductor" xml:id="persName_c4d1a7d2"/>
-                            <persName role="soloist" xml:id="persName_2eb20b96">Ida Møller</persName>
-                            <persName role="soloist" xml:id="persName_fed2d67d">Adolfa Johnsson</persName>
-                        </event>
-                    </eventList>
+                    <p/>
                 </history>
                 <langUsage>
                     <language xml:id="da">Danish</language>
                     <language xml:id="en">English</language>
                 </langUsage>
+                <biblList xml:id="listBibl_58972fae-cc9f-4cc7-be7b-17b27ee88247247">
+                    <head>Primary texts</head>
+                    <bibl xml:id="bibl_d1e257252">
+                        <genre>letter</genre>
+                        <creator>Thorvald Otterström</creator>
+                        <recipient>Carl Nielsen</recipient>
+                        <creation>
+                            <date isodate="1905-12-29">1905-12-29</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">DK-Kk</identifier>
+                            </repository>
+                            <identifier>CNA IAb</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e291285">
+                                <title>CNB</title>
+                                <biblScope>II/550</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                    <bibl xml:id="bibl_d1e302296">
+                        <genre>letter</genre>
+                        <creator>Hugo Seligmann</creator>
+                        <recipient>Carl Nielsen</recipient>
+                        <creation>
+                            <date isodate="1911-01-11">1911-01-11</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">DK-Kk</identifier>
+                            </repository>
+                            <identifier>CNA IAb</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e336329">
+                                <title>CNB</title>
+                                <biblScope>IV/4</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                    <bibl xml:id="bibl_d1e347340">
+                        <genre>diary entry</genre>
+                        <creator/>
+                        <creation>
+                            <date isodate="1906-12-15">1906-12-15</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">DK-Kk</identifier>
+                            </repository>
+                            <identifier>CNA IC</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e376369">
+                                <title>CNB</title>
+                                <biblScope>III/168</biblScope>
+                            </bibl>
+                        </relatedItem>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e389381">
+                                <title>T Sch</title>
+                                <biblScope>231</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                </biblList>
+                <biblList xml:id="listBibl_534bd594-951e-4d1f-8c24-c4b3eaa74163393">
+                    <head>Bibliography</head>
+                </biblList>
                 <notesStmt>
-                    <annot type="links" xml:id="annot_22f4db43"/>
-                    <annot type="general_description" xml:id="annot_a6cdca5f">This file demonstrates how to use relations to other files (works), for 
-instance to describe a song cycle, collection, or anthology. </annot>
+                    <annot type="general_description" xml:id="annot_52785f94">This file demonstrates how to use relations to other files (works), for 
+                        instance to describe a song cycle, collection, or anthology. </annot>
+                    <annot type="links"/>
                 </notesStmt>
                 <classification>
                     <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmContentClass"/>
@@ -190,6 +165,7 @@ instance to describe a song cycle, collection, or anthology. </annot>
                     <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmStateClass"/>
                     <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmCompletenessClass"/>
                     <termList>
+                        <term/>
                         <term>Vocal music</term>
                         <term>Song</term>
                     </termList>
@@ -197,42 +173,69 @@ instance to describe a song cycle, collection, or anthology. </annot>
                 <expressionList>
                     <expression analog="frbr:expression" xml:id="expression_1">
                         <titleStmt>
-                            <title xml:id="title_e6fafb0e" xml:lang="en"/>
+                            <title xml:lang="da">Hilsen</title>
+                            <title xml:lang="en">Greeting</title>
                         </titleStmt>
-                        <history xml:id="history_c3f9aa43">
-                            <creation xml:id="creation_70e27912">
-                                <date/>
-                                <geogName xml:id="geogName_9fe0e7d1"/>
-                            </creation>
-                            <p/>
-                        </history>
-                        <tempo>Quasi presto (ungdommelig bevæget)</tempo>
-                        <meter count="6" meter.count="6" meter.unit="8" unit="8"/>
-                        <perfMedium analog="marc:048" xml:id="perfMedium_4286c440">
-                            <performer xml:id="performer_d1e724">
-                                <instrVoice count="1" reg="vn" solo="false" xml:id="instrVoice_cae7a66c">voice</instrVoice>
-                            </performer>
-                            <performer xml:id="performer_d1e730">
-                                <instrVoice count="1" reg="ka" solo="false" xml:id="instrVoice_82fa978d">pno.</instrVoice>
-                            </performer>
-                        </perfMedium>
-                        <classification>
-                            <termList>
-                                <term/>
-                            </termList>
-                        </classification>
-                        <incip xml:id="incip_698d0930">
-                            <incipText xml:id="incipText_4ed31188">
+                        <incip>
+                            <incipText>
                                 <p xml:lang="da">Den dovne Fjord som gynger</p>
                                 <p xml:lang="en">You idle bay that stretches</p>
                             </incipText>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_131.png" targettype="lowres" xl:title="" xml:id="graphic_c553f399"/>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_131.png" targettype="hires" xl:title="" xml:id="graphic_3a8141af"/>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_131.png" targettype="print" xl:title="" xml:id="graphic_98de2455"/>
-                            <score xml:id="score_42ca1ad9"/>
+                            <graphic targettype="lowres" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_131.png"/>
+                            <graphic targettype="hires" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_131.png"/>
                         </incip>
-                        <componentGrp/>
-                        <relationList/>
+                        <tempo>Quasi presto (ungdommelig bevæget)</tempo>
+                        <meter count="6" unit="8"/>
+                        <history>
+                            <creation>
+                                <date/>
+                                <geogName/>
+                            </creation>
+                            <p/>
+                            <eventList type="performances">
+                                <event xml:id="event_d1e501490">
+                                    <date isodate=" 1897-02-06"> 1897-02-06</date>
+                                    <geogName role="venue">  	Wilhelm Hansen House Composers' Concert (Wilhelm Hansens Forlagskoncert), Copenhagen</geogName>
+                                    <geogName role="place">Copenhagen</geogName>
+                                    <corpName role="ensemble"/>
+                                    <p>First performance.</p>
+                                    <biblList xml:id="listBibl_592a2abf-9a1a-4b8f-87c0-23d75aa9a2e5506">
+                                        <head>Reviews</head>
+                                        <bibl xml:id="bibl_d1e523511">
+                                            <genre>article</genre>
+                                            <genre>journal</genre>
+                                            <creator/>
+                                            <title level="a"/>
+                                            <title level="j">Politiken</title>
+                                            <imprint>
+                                                <date isodate="1897-02-07">1897-02-07</date>
+                                                <pubPlace/>
+                                                <publisher/>
+                                            </imprint>
+                                            <biblScope unit="vol"/>
+                                            <biblScope unit="issue"/>
+                                            <biblScope unit="page"/>
+                                            <ptr/>
+                                        </bibl>
+                                    </biblList>
+                                </event>
+                                <event xml:id="event_d1e560547">
+                                    <date isodate="1898-02-03">1898-02-03</date>
+                                    <geogName role="venue">The Concert Palæ (Koncertpalæet)</geogName>
+                                    <geogName role="place">Copenhagen</geogName>
+                                    <corpName role="ensemble"/>
+                                    <persName role="soloist">Ida Møller</persName>
+                                    <persName role="soloist">Adolfa Johnsson</persName>
+                                    <p>First public performance</p>
+                                </event>
+                            </eventList>
+                        </history>
+                        <perfMedium analog="marc:048">
+                            <instrumentation>
+                                <instrVoice solo="false" count="1" code="vn">voice</instrVoice>
+                                <instrVoice solo="false" count="1" code="ka">pno.</instrVoice>
+                            </instrumentation>
+                        </perfMedium>
                     </expression>
                 </expressionList>
                 <relationList>

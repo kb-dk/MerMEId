@@ -232,16 +232,17 @@
                                     class="comment">Identifiers other than the repository's own shelf mark, 
                                     e.g. RISM identifiers or other catalogue numbers identifying this specific item<h:br/>
                                     With prints, RISM identifiers should be given at general 
-                                    source level (above).
+                                    source level.
                                 </h:span></h:a></h:span>
                             </xf:group>
                             <xf:repeat nodeset="m:identifier" id="repeat-item-identifier">
                                 <xf:input ref="@type" class="mediumshort">
                                     <xf:label class="fixed_width">List name <h:a class="help">?<h:span 
                                         class="comment">The name of the catalogue or list identifying this 
-                                        specific item, e.g. "RISM" (but please note that RISM identifiers 
-                                        of printed sources should be entered at 
-                                        source level (above) rather than on individual copies)</h:span></h:a></xf:label>
+                                        specific item, e.g. "RISM"
+                                        <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
+                                        Please use underscore _ instead.
+                                    </h:span></h:a></xf:label>
                                 </xf:input>
                                 <xf:input ref="." class="mediumlong">
                                     <xf:label> No. <h:a class="help">?<h:span class="comment">The number 
@@ -357,7 +358,9 @@
                                                     "VIII"</h:span></h:a></xf:label>
                                             </xf:input>
                                             <xf:input ref="@unit">
-                                                <xf:label>Unit <h:a class="help">?<h:span class="comment">Usually "pages" or "folios"</h:span></h:a></xf:label>
+                                                <xf:label>Unit <h:a class="help">?<h:span class="comment">Usually "pages" or "folios"
+                                                    <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
+                                                    Please use underscore _ instead.</h:span></h:a></xf:label>
                                             </xf:input>
                                             <dcm:attribute-editor/>                                                    
                                             <dcm:element-buttons  
@@ -381,7 +384,9 @@
                                                     of the source, usually given as height x width, e.g. "23.5x34"</h:span></h:a></xf:label>
                                             </xf:input>
                                             <xf:input ref="@unit">
-                                                <xf:label>Unit <h:a class="help">?<h:span class="comment">Unit of measurement, usually "cm" or "inches"</h:span></h:a></xf:label>
+                                                <xf:label>Unit <h:a class="help">?<h:span class="comment">Unit of measurement, usually "cm" or "inches"
+                                                    <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
+                                                    Please use underscore _ instead.</h:span></h:a></xf:label>
                                             </xf:input>
                                             <dcm:attribute-editor ref="."/>                                                    
                                             <dcm:element-buttons  

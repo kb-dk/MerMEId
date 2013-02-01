@@ -160,7 +160,8 @@
 		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier/text()">
 			<p>
 				<xsl:for-each select="m:meiHead/m:workDesc/m:work/m:identifier[text()]">
-					<xsl:value-of select="concat(@type,' ',.)"/>
+					<xsl:variable name="type"><xsl:apply-templates select="@type"/></xsl:variable>
+					<xsl:value-of select="concat($type,' ',.)"/>
 					<xsl:if test="position()&lt;last()">
 						<br/>
 					</xsl:if>
@@ -235,7 +236,7 @@
 				select="m:meiHead/
 				m:workDesc/
 				m:work/
-				m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event/*//text()]]"/>
+				m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event/*[name()!='biblList']//text()]]"/>
 
 			<!-- global sources -->
 			<xsl:if
@@ -258,19 +259,23 @@
 			<!-- show title/tempo/number as heading only if more than one version -->
 			<xsl:if test="count(../m:expression)&gt;1">
 				<p>&#160;</p>
-				<h2>
+				<xsl:variable name="title">
 					<xsl:apply-templates select="m:titleStmt">
 						<xsl:with-param name="tempo">
 							<xsl:apply-templates select="m:tempo"/>
 						</xsl:with-param>
 					</xsl:apply-templates>
-				</h2>
+				</xsl:variable>
+				<xsl:if test="normalize-space($title)">
+					<h2><xsl:value-of select="$title"/></h2>
+				</xsl:if>
 			</xsl:if>
 			
 			<xsl:if test="m:identifier/text()">
 				<p>
 					<xsl:for-each select="m:identifier[text()]">
-						<xsl:value-of select="concat(@type,' ',.)"/>
+						<xsl:variable name="type"><xsl:apply-templates select="@type"/></xsl:variable>
+						<xsl:value-of select="concat($type,' ',.)"/>
 						<xsl:if test="position()&lt;last()">
 							<br/>
 						</xsl:if>
@@ -338,7 +343,7 @@
 			<!-- version history -->
 			<xsl:if test="count(/m:mei/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
 				<xsl:apply-templates
-					select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*//text()]]]"/>
+					select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[name()!='biblList']//text()]]]"/>
 			</xsl:if>
 
 			<!-- version-specific sources -->
@@ -1237,7 +1242,7 @@
 					m:date[text()] |
 					m:identifier[text()]">
 					<xsl:if test="string-length(@type) &gt; 0">
-						<xsl:value-of select="@type"/>
+						<xsl:apply-templates select="@type"/>
 						<xsl:text>: </xsl:text>
 					</xsl:if>
 					<xsl:value-of select="."/>
@@ -1390,7 +1395,7 @@
 						<xsl:text> </xsl:text>
 						<xsl:choose>
 							<!-- some CNW-specific styling here -->
-							<xsl:when test="@type='CNU Source'">
+							<xsl:when test="@type='CNU_Source' or @type='CNU Source'">
 								<b><xsl:apply-templates select="."/></b>. 
 							</xsl:when>
 							<xsl:otherwise>
@@ -2045,6 +2050,10 @@
 			<br/>Last changed <xsl:value-of select="@isodate"/>
 			<xsl:if test="normalize-space(@resp)"> by <i><xsl:value-of select="@resp"/></i></xsl:if>
 		</div>
+	</xsl:template>
+
+	<xsl:template match="@type">
+		<xsl:value-of select="translate(.,'_',' ')"/>
 	</xsl:template>
 
 	<!-- GENERAL TOOL TEMPLATES -->

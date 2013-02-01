@@ -40,50 +40,6 @@
                 <title xml:id="title_3e9ec56b">MerMEId Demo Files</title>
                 <identifier type="file_collection" xml:id="identifier_12f81df9">Demo</identifier>
             </seriesStmt>
-            <notesStmt>
-                <annot type="bibliography" xml:id="annot_2ddfc2b3">
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="primary" xml:id="listBibl_d1e260">
-                        <bibl type="Letter" xml:id="bibl_d1e101">
-                            <author>Bror Beckman</author>
-                            <name role="recipient">Carl Nielsen</name>
-                            <date when-iso="1897-03-16">1897-03-16</date>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository>S-Skma</repository>
-                                <idno>Bror Beckmans arkiv</idno>
-                            </msIdentifier>
-                            <note/>
-                            <ref/>
-                            <ref type="editions">
-                                <bibl xml:id="bibl_d1e130">
-                                    <title type="short_title">CNB</title>
-                                    <biblScope>I/619</biblScope>
-                                </bibl>
-                            </ref>
-                        </bibl>
-                        <bibl type="Letter" xml:id="bibl_d1e141">
-                            <author>Thorvald Otterström</author>
-                            <name role="recipient">Carl Nielsen</name>
-                            <date when-iso="1905-12-29">1905-12-29</date>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository>DK-Kk</repository>
-                                <idno>CNA IAb</idno>
-                            </msIdentifier>
-                            <note/>
-                            <ref/>
-                            <ref type="editions">
-                                <bibl xml:id="bibl_d1e170">
-                                    <title type="short_title">CNB</title>
-                                    <biblScope>II/550</biblScope>
-                                </bibl>
-                            </ref>
-                        </bibl>
-                    </listBibl>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="secondary" xml:id="listBibl_d1e303"/>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="documentation" xml:id="listBibl_d1e37"/>
-                </annot>
-            </notesStmt>
         </fileDesc>
         <encodingDesc>
             <appInfo>
@@ -113,50 +69,91 @@
                         <persName role="author" xml:id="persName_a8d0ea02">Ludvig Holstein</persName>
                     </respStmt>
                 </titleStmt>
-                <history xml:id="history_2e771107">
-                    <creation xml:id="creation_f73d5249">
-                        <date notafter="1896-12-31" notbefore="1895-01-01">1895-1896</date>
+                <history>
+                    <creation>
+                        <date notbefore="1894" notafter="1895">1894-1895</date>
+                        <geogName/>
                     </creation>
-                    <eventList type="performances" xml:id="eventList_a05c3119">
-                        <event xml:id="event_d1e491">
-                            <title xml:id="title_e339436f">First performance</title>
-                            <date reg=" 1898-02-03"> 1898-02-03</date>
-                            <geogName role="venue" xml:id="geogName_c679d46d">The Concert Palæ (Koncertpalæet)</geogName>
-                            <geogName role="place" xml:id="geogName_26208504">Copenhagen</geogName>
-                            <corpName role="ensemble" xml:id="corpName_0bcbaaa9"/>
-                            <persName role="conductor" xml:id="persName_b083a2fd"/>
-                            <persName role="soloist" xml:id="persName_18a21ba9">Margrethe Boye-Jensen</persName>
-                            <persName role="soloist" xml:id="persName_0fe29109">Adolfa Johnsson</persName>
-                        </event>
-                        <event xml:id="event_d1e517">
-                            <title xml:id="title_38b12d78">First public performance</title>
-                            <date reg="1897-02-06">1897-02-06</date>
-                            <geogName role="venue" xml:id="geogName_0c30b5f7">Wilhelm Hansen House Composers' Concert (Wilhelm Hansens Forlagskoncert)</geogName>
-                            <geogName role="place" xml:id="geogName_7af608af">Copenhagen</geogName>
-                            <corpName role="ensemble" xml:id="corpName_b931a066"/>
-                            <persName role="conductor" xml:id="persName_ae12651d"/>
-                            <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="reviews" xml:id="listBibl_d1e159">
-                                <bibl type="Journal_article" xml:id="bibl_d1e538">
-                                    <author>Charles Kjerulf</author>
-                                    <date when-iso="1897-02-07">1897-02-07</date>
-                                    <title level="a"/>
-                                    <title level="j">Politiken</title>
-                                    <editor/>
-                                    <biblScope type="vol"/>
-                                    <biblScope type="issue"/>
-                                    <biblScope type="pp"/>
-                                    <pubPlace/>
-                                    <publisher/>
-                                    <ref/>
-                                </bibl>
-                            </listBibl>
-                        </event>
-                    </eventList>
+                    <p/>
                 </history>
                 <langUsage>
                     <language xml:id="da">Danish</language>
                     <language xml:id="en">English</language>
                 </langUsage>
+                <biblList xml:id="listBibl_58972fae-cc9f-4cc7-be7b-17b27ee88247247">
+                    <head>Primary texts</head>
+                    <bibl xml:id="bibl_d1e257252">
+                        <genre>letter</genre>
+                        <creator>Thorvald Otterström</creator>
+                        <recipient>Carl Nielsen</recipient>
+                        <creation>
+                            <date isodate="1905-12-29">1905-12-29</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">DK-Kk</identifier>
+                            </repository>
+                            <identifier>CNA IAb</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e291285">
+                                <title>CNB</title>
+                                <biblScope>II/550</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                    <bibl xml:id="bibl_d1e302296">
+                        <genre>letter</genre>
+                        <creator>Hugo Seligmann</creator>
+                        <recipient>Carl Nielsen</recipient>
+                        <creation>
+                            <date isodate="1911-01-11">1911-01-11</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">DK-Kk</identifier>
+                            </repository>
+                            <identifier>CNA IAb</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e336329">
+                                <title>CNB</title>
+                                <biblScope>IV/4</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                    <bibl xml:id="bibl_d1e347340">
+                        <genre>diary entry</genre>
+                        <creator/>
+                        <creation>
+                            <date isodate="1906-12-15">1906-12-15</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">DK-Kk</identifier>
+                            </repository>
+                            <identifier>CNA IC</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e376369">
+                                <title>CNB</title>
+                                <biblScope>III/168</biblScope>
+                            </bibl>
+                        </relatedItem>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e389381">
+                                <title>T Sch</title>
+                                <biblScope>231</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                </biblList>
+                <biblList xml:id="listBibl_534bd594-951e-4d1f-8c24-c4b3eaa74163393">
+                    <head>Bibliography</head>
+                </biblList>
                 <notesStmt>
                     <annot type="links" xml:id="annot_c67993ef"/>
                     <annot type="general_description" xml:id="annot_52785f94">This file demonstrates how to use relations to other files (works), for 
@@ -177,42 +174,74 @@ instance to describe a song cycle, collection, or anthology. </annot>
                 <expressionList>
                     <expression analog="frbr:expression" xml:id="expression_1">
                         <titleStmt>
-                            <title xml:id="title_c336e86f" xml:lang="en"/>
+                            <title xml:lang="da">Hilsen</title>
+                            <title xml:lang="en">Greeting</title>
                         </titleStmt>
-                        <history xml:id="history_481f315b">
-                            <creation xml:id="creation_60ebbfb2">
+                        <incip>
+                            <incipText>
+                                <p xml:lang="da">Den dovne Fjord som gynger</p>
+                                <p xml:lang="en">You idle bay that stretches</p>
+                            </incipText>
+                            <graphic targettype="lowres" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_131.png"/>
+                            <graphic targettype="hires" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_131.png"/>
+                            <graphic targettype="print" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_131.png"/>
+                            <score/>
+                        </incip>
+                        <tempo>Quasi presto (ungdommelig bevæget)</tempo>
+                        <meter count="6" unit="8"/>
+                        <history>
+                            <creation>
                                 <date/>
-                                <geogName xml:id="geogName_fb53b46a"/>
+                                <geogName/>
                             </creation>
                             <p/>
+                            <eventList type="performances">
+                                <event xml:id="event_d1e501490">
+                                    <date isodate=" 1897-02-06"> 1897-02-06</date>
+                                    <geogName role="venue">  	Wilhelm Hansen House Composers' Concert (Wilhelm Hansens Forlagskoncert), Copenhagen</geogName>
+                                    <geogName role="place">Copenhagen</geogName>
+                                    <corpName role="ensemble"/>
+                                    <p>First performance.</p>
+                                    <biblList xml:id="listBibl_592a2abf-9a1a-4b8f-87c0-23d75aa9a2e5506">
+                                        <head>Reviews</head>
+                                        <bibl xml:id="bibl_d1e523511">
+                                            <genre>article</genre>
+                                            <genre>journal</genre>
+                                            <creator/>
+                                            <title level="a"/>
+                                            <title level="j">Politiken</title>
+                                            <imprint>
+                                                <date isodate="1897-02-07">1897-02-07</date>
+                                                <pubPlace/>
+                                                <publisher/>
+                                            </imprint>
+                                            <biblScope unit="vol"/>
+                                            <biblScope unit="issue"/>
+                                            <biblScope unit="page"/>
+                                            <ptr/>
+                                        </bibl>
+                                    </biblList>
+                                </event>
+                                <event xml:id="event_d1e560547">
+                                    <date isodate="1898-02-03">1898-02-03</date>
+                                    <geogName role="venue">The Concert Palæ (Koncertpalæet)</geogName>
+                                    <geogName role="place">Copenhagen</geogName>
+                                    <corpName role="ensemble"/>
+                                    <persName role="soloist">Ida Møller</persName>
+                                    <persName role="soloist">Adolfa Johnsson</persName>
+                                    <p>First public performance</p>
+                                </event>
+                            </eventList>
                         </history>
-                        <tempo>Andante religioso</tempo>
-                        <meter meter.sym="common" sym="common"/>
-                        <perfMedium analog="marc:048" xml:id="perfMedium_fdb20d33">
-                            <performer xml:id="performer_d1e680">
-                                <instrVoice count="1" reg="vn" solo="false" xml:id="instrVoice_a1d24e50">voice</instrVoice>
-                            </performer>
-                            <performer xml:id="performer_d1e686">
-                                <instrVoice count="1" reg="ka" solo="false" xml:id="instrVoice_273ec1b3">pno.</instrVoice>
-                            </performer>
+                        <perfMedium analog="marc:048">
+                            <instrumentation>
+                                <instrVoice solo="false" count="1" code="vn">voice</instrVoice>
+                                <instrVoice solo="false" count="1" code="ka">pno.</instrVoice>
+                            </instrumentation>
                         </perfMedium>
-                        <classification>
-                            <termList>
-                                <term/>
-                            </termList>
-                        </classification>
-                        <incip xml:id="incip_b2fa3d99">
-                            <incipText xml:id="incipText_096c1521">
-                                <p xml:lang="da">Det gylden-hvide Himmellys</p>
-                                <p xml:lang="en">The light from heaven, golden white</p>
-                            </incipText>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_130.png" targettype="lowres" xl:title="" xml:id="graphic_8439ea1e"/>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_130.png" targettype="hires" xl:title="" xml:id="graphic_ce691fce"/>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_130.png" targettype="print" xl:title="" xml:id="graphic_8bddff44"/>
-                            <score xml:id="score_5655c0cf"/>
-                        </incip>
-                        <componentGrp/>
-                        <relationList/>
+                        <relationList>
+                            <relation rel="hasReproduction" label="Edited score" targettype="edited_score"/>
+                        </relationList>
                     </expression>
                 </expressionList>
                 <relationList>

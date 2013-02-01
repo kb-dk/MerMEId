@@ -6,8 +6,6 @@
     <link href="../style/tab_style.css" rel="stylesheet" type="text/css" />
     <link href="../style/list_style.css" rel="stylesheet" type="text/css" />
     <link href="../style/manual.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" href="../js/manual.js">
-    </script>
   </head>
   
   <body>
@@ -23,15 +21,15 @@
     <div class="toclink"><a href="index.html">Back to table of contents</a></div>
     
     <h2>Adding a reprint edition to a source</h2>
-    <p>A reprint is an unchanged reproduction of an earlier print. In <a class="help_plain" href="javascript:void();">FRBR<span class="comment">
+    <p>A reprint is an unchanged reproduction of an earlier print. In <a class="help_plain"><span style="text-decoration:underline">FRBR</span><span class="comment">
       Functional Requirements for Bibliographic Records<br/> as defined by the IFLA</span></a> terms, 
       it is a new manifestation, related to the original one as being a reproduction.</p>
-    <p>Thus, to add a reprint edition in MerMEId:</p>
+    <p>Thus, to add a reprint edition in MerMEId,</p>
     <ul>
       <li>Create a new source</li>
       <li>Save your work and open the new source for editing</li>
-      <li>Add a title or short description (simply "Reprint" in the example below)</li>
-      <li>In "Relations" near the top of the page, select "is reproduction of" as the relation and the original
+      <li>Add a title or short description (simply "Reprint", for example)</li>
+      <li>In "Relations" near the bottom of the page, select "is reproduction of" as the relation and the original
         source as the target of the relation. In the target selection list, sources are identified both by title and their 
         ID attribute (if you want to see your sources' IDs, turn on "show ID" in the MerMEId settings menu or 
         use the attribute editor, which also can be activated in the settings menu).<br/>
@@ -45,9 +43,10 @@
     <p>Remember that a relation is bidirectional. Depending on your project, 
       you may want to define the relation also the other way (from the original, pointing to the reprint).
       To do this, open the original source for editing, add the relation "has reproduction:", and select the 
-      reprint source as its target.</p>
+      reprint source as its target. Note, however, that this reverse relation has no visible effect in MerMEId.</p>
     
-    <p class="footer">2012 Danish Centre for Music Publication | The Royal Library,
+    <p class="footer"><a href="http://www.kb.dk/dcm" title="DCM"><img style="border: 0px; vertical-align:middle;" alt="DCM Logo" src="../images/dcm_logo_small.png"/></a> 
+      2013 Danish Centre for Music Publication | The Royal Library,
       Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
         href="http://www.kb.dk/dcm">www.kb.dk/dcm</a></p>
   </body>

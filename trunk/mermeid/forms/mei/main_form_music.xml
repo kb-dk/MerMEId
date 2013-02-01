@@ -32,6 +32,7 @@
 		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList">
 			
 			<xf:repeat nodeset="m:expression" id="repeat-expression">
+				
 				<h:fieldset>
 					<h:legend>Version
 						<dcm:id/>
@@ -60,6 +61,9 @@
 								want to distinguish different versions of the work. 
 								Otherwise leave empty.</h:span></h:a>
 						</h:div>
+						<dcm:create nodeset="m:titleStmt"
+							label="Add version title"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt"/>
 						<xf:group ref="m:titleStmt">
 							<xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
 								<h:div>
@@ -314,13 +318,24 @@
 						</xf:group>
 					</h:fieldset>
 					
-					<xf:group ref="m:titleStmt">
-						<h:div class="blocklabel">Persons <h:a class="help">?<h:span 
+					<h:fieldset>
+						<h:legend>Persons <h:a class="help">?<h:span 
 							class="comment">Persons with connection to this particular version
 							only, e.g. an arranger, or a text author in a collection of songs 
-							with different authors</h:span></h:a></h:div>	
-						<xf:repeat nodeset="m:respStmt/m:persName" id="version-relators-repeat">
-							<xf:group ref=".[position()=1]">
+							with different authors</h:span></h:a></h:legend>	
+						<dcm:create nodeset="m:titleStmt"
+							label="Add persons"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:titleStmt"/>
+						<xf:group ref="m:titleStmt">
+							<dcm:create 
+								nodeset="m:respStmt"
+								label="Add person"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt"/>
+							<dcm:create ref="m:respStmt"
+								nodeset="m:persName"
+								label="Add person"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
+							<xf:group ref=".[m:respStmt/m:persName]">
 								<h:div class="blocklabel">
 									<h:span class="fixed_width_long">Name</h:span>
 									<h:span> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
@@ -328,26 +343,21 @@
 									</h:span>
 								</h:div>
 							</xf:group>
-							<dcm:relator ref="."/>
-							<dcm:element-buttons 
-								triggers="add del-parent-with-last" 
-								nodeset="m:persName" 
-								index="version-relators-repeat"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
-							<dcm:attribute-editor ref="."/>
-							<h:br/>
-						</xf:repeat>
-						<dcm:create 
-							nodeset="m:respStmt"
-							label="Add person"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt"/>
-						<dcm:create ref="m:respStmt"
-							nodeset="m:persName"
-							label="Add person"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
-					</xf:group>
+							<xf:repeat nodeset="m:respStmt/m:persName" id="version-relators-repeat">
+								<dcm:relator ref="."/>
+								<dcm:element-buttons 
+									triggers="add del-parent-with-last" 
+									nodeset="m:persName" 
+									index="version-relators-repeat"
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
+								<dcm:attribute-editor ref="."/>
+								<h:br/>
+							</xf:repeat>
+						</xf:group>
+					</h:fieldset>
 					
-					<h:span class="blocklabel">Edited score</h:span>
+					<h:fieldset>
+					<h:legend>Edited score</h:legend>
 					<dcm:create  
 						nodeset="m:relationList"
 						label="Add link to edited score"
@@ -381,6 +391,8 @@
 						</xf:repeat>
 						<h:br/> 
 					</xf:group>
+					</h:fieldset>
+					
 					
 					<h:fieldset>                                                     
 						<h:legend>Instruments, singers and roles <h:a class="help">?<h:span 
@@ -1074,6 +1086,10 @@
 					</h:fieldset>
 					
 				</h:fieldset>
+				
+				<h:div class="vertical_spacer"/>
+				<h:div class="vertical_spacer"/>
+				
 			</xf:repeat>
 			
 		</xf:group>

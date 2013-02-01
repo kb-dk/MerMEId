@@ -62,6 +62,10 @@ a img {
     border: none;
 }
 
+pre, kbd {
+    font-size: 1.25em;
+}
+
 ul {
     padding-left: 25px;
     margin-left:0;
@@ -133,7 +137,8 @@ a.trigger img:hover {
 
 p.footer {
         border-top: 1px solid #666;
-        padding-top: 10px;
+        padding: 10px 20px 5px 20px;
+        margin: 10px -20px 5px -20px;
 }
 
 .footer, .footer a:link, .footer a:visited, .footer a:active {

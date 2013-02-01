@@ -16,10 +16,10 @@
                             <addrLine>P.O. Box 2149</addrLine>
                             <addrLine>DK - 1016 Copenhagen K</addrLine>
                             <addrLine>
-                                <ptr label="" target="http://www.kb.dk/dcm" xl:title="WWW"/>
+                                <ptr target="http://www.kb.dk/dcm" label="WWW"/>
                             </addrLine>
                             <addrLine>
-                                <ptr label="" target="mailto://foa-dcm@kb.dk" xl:title="E-mail"/>
+                                <ptr target="mailto://foa-dcm@kb.dk" label="E-mail"/>
                             </addrLine>
                         </address>
                     </corpName>
@@ -40,54 +40,6 @@
                 <title xml:id="title_0edbeff9">MerMEId Demo Files</title>
                 <identifier type="file_collection" xml:id="identifier_4e661349">Demo</identifier>
             </seriesStmt>
-            <notesStmt>
-                <annot type="bibliography" xml:id="annot_71afb4ec">
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="primary" xml:id="listBibl_d1e225">
-                        <bibl type="Letter" xml:id="bibl_d1e101">
-                            <author>Bror Beckman</author>
-                            <name role="recipient">Carl Nielsen</name>
-                            <date when-iso="1897-03-16">1897-03-16</date>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository>S-Skma</repository>
-                                <idno>Bror Beckmans arkiv</idno>
-                            </msIdentifier>
-                            <note/>
-                            <ref/>
-                            <ref type="editions">
-                                <bibl xml:id="bibl_d1e130">
-                                    <title type="short_title">CNB</title>
-                                    <biblScope>I/619</biblScope>
-                                </bibl>
-                            </ref>
-                        </bibl>
-                        <bibl type="Letter" xml:id="bibl_d1e141">
-                            <author>Carl Nielsen</author>
-                            <name role="recipient">A.C. Meyer</name>
-                            <date when-iso="1918-02-23">1918-02-23</date>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository>DK-Kk</repository>
-                                <idno>CNA IAd</idno>
-                            </msIdentifier>
-                            <note/>
-                            <ref/>
-                            <ref type="editions">
-                                <bibl xml:id="bibl_d1e170">
-                                    <title type="short_title">CNB</title>
-                                    <biblScope>VI/19</biblScope>
-                                </bibl>
-                                <bibl xml:id="bibl_d1e179">
-                                    <title type="short_title">M &amp; M</title>
-                                    <biblScope>171</biblScope>
-                                </bibl>
-                            </ref>
-                        </bibl>
-                    </listBibl>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="secondary" xml:id="listBibl_d1e273"/>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="documentation" xml:id="listBibl_d1e37"/>
-                </annot>
-            </notesStmt>
         </fileDesc>
         <encodingDesc>
             <appInfo>
@@ -116,27 +68,134 @@
                         <persName role="author" xml:id="persName_aa4c99dc">Ludvig Holstein</persName>
                     </respStmt>
                 </titleStmt>
-                <history xml:id="history_b1027cd1">
-                    <creation xml:id="creation_b4fe97fe">
-                        <date notafter="1896-12-31" notbefore="1895-01-01">1895-1896</date>
+                <history>
+                    <creation>
+                        <date notbefore="1894" notafter="1895">1894-1895</date>
+                        <geogName/>
                     </creation>
-                    <eventList type="performances" xml:id="eventList_e948296a">
-                        <event xml:id="event_d1e500">
-                            <title xml:id="title_b671dc04">First performance</title>
-                            <date reg=" 1898-02-03"> 1898-02-03</date>
-                            <geogName role="venue" xml:id="geogName_f4c6dab8">The Concert Palæ (Koncertpalæet)</geogName>
-                            <geogName role="place" xml:id="geogName_815f0379"/>
-                            <corpName role="ensemble" xml:id="corpName_781eca12"/>
-                            <persName role="conductor" xml:id="persName_30ad08d5"/>
-                            <persName role="soloist" xml:id="persName_58efae35">Margrethe Boye-Jensen</persName>
-                            <persName role="soloist" xml:id="persName_48a6ed68">Adolfa Johnsson</persName>
-                        </event>
-                    </eventList>
+                    <p/>
                 </history>
                 <langUsage>
                     <language xml:id="da">Danish</language>
                     <language xml:id="en">English</language>
                 </langUsage>
+                <biblList xml:id="listBibl_4b75cf74-2191-4325-ad02-6600d6d99e1c247">
+                    <head>Primary texts</head>
+                    <bibl xml:id="bibl_d1e257252">
+                        <genre>letter</genre>
+                        <creator>Bror Beckman</creator>
+                        <recipient>Carl Nielsen</recipient>
+                        <creation>
+                            <date isodate="1897-03-16">1897-03-16</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">S-Skma</identifier>
+                            </repository>
+                            <identifier>Bror Beckmans arkiv</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e291285">
+                                <title>CNB</title>
+                                <biblScope>I/619</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                    <bibl xml:id="bibl_d1e302296">
+                        <genre>letter</genre>
+                        <creator>Carl Nielsen</creator>
+                        <recipient>A.C. Meyer</recipient>
+                        <creation>
+                            <date isodate="1918-02-23">1918-02-23</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">DK-Kk</identifier>
+                            </repository>
+                            <identifier>CNA IAd</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e336329">
+                                <title>CNB</title>
+                                <biblScope>VI/19</biblScope>
+                            </bibl>
+                        </relatedItem>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e348341">
+                                <title>M &amp; M</title>
+                                <biblScope>171</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                    <bibl xml:id="bibl_d1e359352">
+                        <genre>letter</genre>
+                        <creator>Carl Nielsen</creator>
+                        <recipient>Julius Rabe</recipient>
+                        <creation>
+                            <date isodate="1925-07-01">1925-07-01</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">S-Skma</identifier>
+                            </repository>
+                            <identifier>Julius Rabes arkiv</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e393385">
+                                <title>CNB</title>
+                                <biblScope>VIII/387</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                    <bibl xml:id="bibl_d1e404396">
+                        <genre>letter</genre>
+                        <creator>Thorvald Aagaard</creator>
+                        <recipient>Carl Nielsen</recipient>
+                        <creation>
+                            <date isodate="1926-09-15">1926-09-15</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">DK-Kk</identifier>
+                            </repository>
+                            <identifier>CNA IAb</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e438429">
+                                <title>CNB</title>
+                                <biblScope>IX/353</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                    <bibl xml:id="bibl_d1e450440">
+                        <genre>letter</genre>
+                        <creator>Carl Nielsen</creator>
+                        <recipient>Thorvald Aagaard</recipient>
+                        <creation>
+                            <date isodate="1926-11-25">1926-11-25</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">DK-Kk</identifier>
+                            </repository>
+                            <identifier>CNA IAc</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e484473">
+                                <title>CNB</title>
+                                <biblScope>IX/401</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                </biblList>
+                <biblList xml:id="listBibl_e18f7bdd-43ba-45b9-a3a6-be8ff10abbab485">
+                    <head>Bibliography</head>
+                </biblList>
                 <notesStmt>
                     <annot type="links" xml:id="annot_a8509a4f"/>
                     <annot type="general_description" xml:id="annot_82846f19">This file demonstrates how to use relations to other files (works), for 
@@ -157,42 +216,48 @@ instance to describe a song cycle, collection, or anthology. </annot>
                 <expressionList>
                     <expression analog="frbr:expression" xml:id="expression_1">
                         <titleStmt>
-                            <title xml:id="title_9436f3af" xml:lang="en"/>
+                            <title xml:lang="da">Sang bag Ploven</title>
+                            <title xml:lang="en">Song behind the Plough</title>
                         </titleStmt>
-                        <history xml:id="history_07c96d56">
-                            <creation xml:id="creation_e9a4aa04">
-                                <date/>
-                                <geogName xml:id="geogName_858640a2"/>
-                            </creation>
-                            <p/>
-                        </history>
-                        <tempo>Allegro moderato</tempo>
-                        <meter meter.sym="common" sym="common"/>
-                        <perfMedium analog="marc:048" xml:id="perfMedium_05db78ca">
-                            <performer xml:id="performer_d1e636">
-                                <instrVoice count="1" reg="vn" solo="false" xml:id="instrVoice_222af7db">voice</instrVoice>
-                            </performer>
-                            <performer xml:id="performer_d1e642">
-                                <instrVoice count="1" reg="ka" solo="false" xml:id="instrVoice_eb627332">pno.</instrVoice>
-                            </performer>
-                        </perfMedium>
-                        <classification>
-                            <termList>
-                                <term/>
-                            </termList>
-                        </classification>
-                        <incip xml:id="incip_0f9e106b">
-                            <incipText xml:id="incipText_dd1a7047">
+                        <incip>
+                            <incipText>
                                 <p xml:lang="da">I Solen gaar jeg bag min Plov</p>
                                 <p xml:lang="en">In shining sun I steer my plough</p>
                             </incipText>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_129.png" targettype="lowres" xl:title="" xml:id="graphic_9d1d98bb"/>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_129.png" targettype="hires" xl:title="" xml:id="graphic_2da016e0"/>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_129.png" targettype="print" xl:title="" xml:id="graphic_9b2bc9e4"/>
-                            <score xml:id="score_31bcae7a"/>
+                            <graphic targettype="lowres" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_129.png"/>
+                            <graphic targettype="hires" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_129.png"/>
+                            <graphic targettype="print" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_129.png"/>
+                            <score/>
                         </incip>
-                        <componentGrp/>
-                        <relationList/>
+                        <tempo>Allegro moderato</tempo>
+                        <meter sym="common"/>
+                        <history>
+                            <creation>
+                                <date/>
+                                <geogName/>
+                            </creation>
+                            <p/>
+                            <eventList type="performances">
+                                <event xml:id="event_d1e596582">
+                                    <date isodate=" 1898-02-03"> 1898-02-03</date>
+                                    <geogName role="venue">The Concert Palæ (Koncertpalæet)</geogName>
+                                    <geogName role="place"/>
+                                    <corpName role="ensemble"/>
+                                    <persName role="soloist">Margrethe Boye-Jensen</persName>
+                                    <persName role="soloist">Adolfa Johnsson</persName>
+                                    <p>First performance.</p>
+                                </event>
+                            </eventList>
+                        </history>
+                        <perfMedium analog="marc:048">
+                            <instrumentation>
+                                <instrVoice solo="false" count="1" code="vn">voice</instrVoice>
+                                <instrVoice solo="false" count="1" code="ka">pno.</instrVoice>
+                            </instrumentation>
+                        </perfMedium>
+                        <relationList>
+                            <relation rel="hasReproduction" label="Edited score" targettype="edited_score"/>
+                        </relationList>
                     </expression>
                 </expressionList>
                 <relationList>

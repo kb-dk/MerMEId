@@ -16,10 +16,10 @@
                             <addrLine>P.O. Box 2149</addrLine>
                             <addrLine>DK - 1016 Copenhagen K</addrLine>
                             <addrLine>
-                                <ptr label="" target="http://www.kb.dk/dcm" xl:title="WWW"/>
+                                <ptr label="WWW" target="http://www.kb.dk/dcm"/>
                             </addrLine>
                             <addrLine>
-                                <ptr label="" target="mailto://foa-dcm@kb.dk" xl:title="E-mail"/>
+                                <ptr label="E-mail" target="mailto://foa-dcm@kb.dk"/>
                             </addrLine>
                         </address>
                     </corpName>
@@ -40,32 +40,6 @@
                 <title xml:id="title_f905d61d">MerMEId Demo Files</title>
                 <identifier type="file_collection" xml:id="identifier_56a9ff02">Demo</identifier>
             </seriesStmt>
-            <notesStmt>
-                <annot type="bibliography" xml:id="annot_e930c906">
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="primary" xml:id="listBibl_d1e218">
-                        <bibl type="Letter" xml:id="bibl_d1e101">
-                            <author>Hugo Seligmann</author>
-                            <name role="recipient">Carl Nielsen</name>
-                            <date when-iso="1911-01-11">1911-01-11</date>
-                            <geogName/>
-                            <msIdentifier>
-                                <repository>DK-Kk</repository>
-                                <idno>CNA IAb</idno>
-                            </msIdentifier>
-                            <note/>
-                            <ref/>
-                            <ref type="editions">
-                                <bibl xml:id="bibl_d1e130">
-                                    <title type="short_title">CNB</title>
-                                    <biblScope>IV/4</biblScope>
-                                </bibl>
-                            </ref>
-                        </bibl>
-                    </listBibl>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="secondary" xml:id="listBibl_d1e240"/>
-                    <listBibl xmlns="http://www.tei-c.org/ns/1.0" type="documentation" xml:id="listBibl_d1e37"/>
-                </annot>
-            </notesStmt>
         </fileDesc>
         <encodingDesc>
             <appInfo>
@@ -98,23 +72,35 @@
                     <creation xml:id="creation_f9cf9ac5">
                         <date notafter="1896-12-31" notbefore="1895-01-01">1895-1896</date>
                     </creation>
-                    <eventList type="performances" xml:id="eventList_01ebabac">
-                        <event xml:id="event_d1e451">
-                            <title xml:id="title_b1cb82be">First performance</title>
-                            <date reg=" 1898-02-03"> 1898-02-03</date>
-                            <geogName role="venue" xml:id="geogName_3ca09d33">The Concert Palæ (Koncertpalæet)</geogName>
-                            <geogName role="place" xml:id="geogName_9993ecff"/>
-                            <corpName role="ensemble" xml:id="corpName_62a93961"/>
-                            <persName role="conductor" xml:id="persName_894987ad"/>
-                            <persName role="soloist" xml:id="persName_9ebe2f24">Ida Møller</persName>
-                            <persName role="soloist" xml:id="persName_092170f8">Adolfa Johnsson</persName>
-                        </event>
-                    </eventList>
                 </history>
                 <langUsage>
                     <language xml:id="da">Danish</language>
                     <language xml:id="en">English</language>
                 </langUsage>
+                <biblList xml:id="listBibl_c61974e4-00fa-4640-ac53-a726080da8f2247">
+                    <head>Primary texts</head>
+                    <bibl xml:id="bibl_d1e257252">
+                        <genre>letter</genre>
+                        <creator>Hugo Seligmann</creator>
+                        <recipient>Carl Nielsen</recipient>
+                        <creation>
+                            <date isodate="1911-01-11">1911-01-11</date>
+                            <geogName/>
+                        </creation>
+                        <physLoc>
+                            <repository>
+                                <identifier authority="RISM" authURI="http://www.rism.info/">DK-Kk</identifier>
+                            </repository>
+                            <identifier>CNA IAb</identifier>
+                        </physLoc>
+                        <relatedItem rel="host">
+                            <bibl xml:id="bibl_d1e291285">
+                                <title>CNB</title>
+                                <biblScope>IV/4</biblScope>
+                            </bibl>
+                        </relatedItem>
+                    </bibl>
+                </biblList>
                 <notesStmt>
                     <annot type="links" xml:id="annot_528d08ae"/>
                     <annot type="general_description" xml:id="annot_3afac8db">This file demonstrates how to use relations to other files (works), for 
@@ -135,42 +121,58 @@ instance to describe a song cycle, collection, or anthology. </annot>
                 <expressionList>
                     <expression analog="frbr:expression" xml:id="expression_1">
                         <titleStmt>
-                            <title xml:id="title_ccec1072" xml:lang="en"/>
+                            <title xml:lang="da">Sommersang</title>
+                            <title xml:lang="en">Summer Song</title>
+                            <respStmt>
+                                <persName role=""/>
+                            </respStmt>
                         </titleStmt>
-                        <history xml:id="history_cc190e18">
-                            <creation xml:id="creation_816ca254">
+                        <incip>
+                            <incipText>
+                                <p xml:lang="da">Fyldt med Blomster blusser Æbletræets Gren</p>
+                                <p xml:lang="en">Filled with flower flushes</p>
+                            </incipText>
+                            <graphic targettype="lowres" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_128.png"/>
+                            <graphic targettype="hires" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_128.png"/>
+                            <graphic targettype="print" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_128.png"/>
+                            <score/>
+                        </incip>
+                        <key/>
+                        <tempo>Allegro ma non troppo</tempo>
+                        <meter count="12" unit="8"/>
+                        <history>
+                            <creation>
                                 <date/>
-                                <geogName xml:id="geogName_e15ce794"/>
+                                <geogName/>
                             </creation>
                             <p/>
+                            <eventList type="performances">
+                                <event xml:id="event_d1e403394">
+                                    <date isodate=" 1898-02-03"> 1898-02-03</date>
+                                    <geogName role="venue">The Concert Palæ (Koncertpalæet)</geogName>
+                                    <geogName role="place"/>
+                                    <corpName role="ensemble"/>
+                                    <persName role="soloist">Ida Møller</persName>
+                                    <persName role="soloist">Adolfa Johnsson</persName>
+                                    <p>First performance.</p>
+                                </event>
+                            </eventList>
                         </history>
-                        <tempo>Allegro ma non troppo</tempo>
-                        <meter count="12" meter.count="12" meter.unit="8" unit="8"/>
-                        <perfMedium analog="marc:048" xml:id="perfMedium_5ed80e74">
-                            <performer xml:id="performer_d1e587">
-                                <instrVoice count="1" reg="vn" solo="false" xml:id="instrVoice_9abbdd57">voice</instrVoice>
-                            </performer>
-                            <performer xml:id="performer_d1e593">
-                                <instrVoice count="1" reg="ka" solo="false" xml:id="instrVoice_0ca1b649">pno.</instrVoice>
-                            </performer>
+                        <perfMedium analog="marc:048">
+                            <instrumentation>
+                                <instrVoice solo="false" count="1" code="vn">voice</instrVoice>
+                                <instrVoice solo="false" count="1" code="ka">pno.</instrVoice>
+                            </instrumentation>
                         </perfMedium>
                         <classification>
                             <termList>
                                 <term/>
                             </termList>
                         </classification>
-                        <incip xml:id="incip_fee2db7e">
-                            <incipText xml:id="incipText_db08b831">
-                                <p xml:lang="da">Fyldt med Blomster blusser Æbletræets Gren</p>
-                                <p xml:lang="en">Filled with flower flushes</p>
-                            </incipText>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_128.png" targettype="lowres" xl:title="" xml:id="graphic_c00bc3b8"/>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_128.png" targettype="hires" xl:title="" xml:id="graphic_b3088538"/>
-                            <graphic label="" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_128.png" targettype="print" xl:title="" xml:id="graphic_5c9d417a"/>
-                            <score xml:id="score_4bdcc26e"/>
-                        </incip>
                         <componentGrp/>
-                        <relationList/>
+                        <relationList>
+                            <relation rel="hasReproduction" label="Edited score" targettype="edited_score"/>
+                        </relationList>
                     </expression>
                 </expressionList>
                 <relationList>
