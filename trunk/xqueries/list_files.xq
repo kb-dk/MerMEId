@@ -245,6 +245,12 @@ type="text/css"/>
 <link rel="styleSheet" 
 href="/editor/style/xform_style.css" 
 type="text/css"/>
+<link rel="styleSheet" 
+href="/editor/style/front_page.css" 
+type="text/css"/>
+<link rel="styleSheet" 
+href="/editor/style/manual.css" 
+type="text/css"/>
 
 <script type="text/javascript" src="/editor/js/confirm.js">
 //
@@ -252,11 +258,13 @@ type="text/css"/>
 
 </head>
 <body class="list_files">
+<div class="main">
+<div class="manual_header">
 <div style="float:right;">
 <a href="/editor/manual/" target="_blank"><img src="/editor/images/help.png" title="help" alt="help" border="0"/></a>
 </div>
 <img src="/editor/images/mermeid_30px.png" title="MerMEId - Metadata Editor and Repository for MEI Data" alt="MerMEId Logo"/>
-<hr/>
+</div>
 <form action="" method="get" class="search">
 <input name="query"  value='{request:get-parameter("query","")}'/>
 <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
@@ -329,16 +337,15 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	return $link
 }
 </p> 
-<br style="clear:both;"/>
-<fieldset>
-<legend>
+<div class="files_list" style="width:100%">
+<h2>
 {app:list-title()}
 {
 	<a title="Add new file" href="#" class="addLink" 
 	onclick="location.href='/filter/new/dcm/'; return false;"><img 
 	src="/editor/images/new.gif" alt="New file" border="0" /></a>
 }
-</legend>
+</h2>
 
 {
 	let $list := loop:getlist($coll,$query)
@@ -359,6 +366,13 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 
 
 }
-</fieldset>
+</div>
+</div>
+<div class="footer">
+           <a href="http://www.kb.dk/dcm" title="DCM"><img style="border: 0px; vertical-align:middle;" alt="DCM Logo" src="/editor/images/dcm_logo_small.png"/></a>
+            2013 Danish
+              Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
+</div>
+
 </body>
 </html>

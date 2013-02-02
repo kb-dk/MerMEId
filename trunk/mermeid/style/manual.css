@@ -1,12 +1,9 @@
-body {
-    background-color: #ddd;
-}
-
 div.manual_header {
-    margin: -20px;
-    margin-bottom: 10px;
-    padding: 10px 20px;
-    border-bottom: 1px solid #666;
+    background-color : #ddd;
+    padding: 4px 8px;
+    margin: -10px -10px 10px -10px;
+    font-weight : bold;
+    font-size : 1.5em;
 }
 
 div.toplink {
@@ -120,6 +117,11 @@ img.illustration {
     -moz-box-shadow: 10px 10px 10px #333;
 }
 
+.hr {
+    border-top: 1px solid #999;
+    width: 100%;
+}
+
 a.trigger {
     text-decoration: none;
     padding: 1px;
@@ -134,17 +136,6 @@ a.trigger img:hover {
     border:1px solid #999999;
     padding: 1px;
 }
-
-p.footer {
-        border-top: 1px solid #666;
-        padding: 10px 20px 5px 20px;
-        margin: 10px -20px 5px -20px;
-}
-
-.footer, .footer a:link, .footer a:visited, .footer a:active {
-    color: #888888;
-}
-
 
 
 /* SPECIAL SYMBOLS */

@@ -1,226 +1,228 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-  <title>MerMEId manual</title>
-  <link href="../style/tab_style.css" rel="stylesheet" type="text/css" />
-  <link href="../style/list_style.css" rel="stylesheet" type="text/css" />
-  <link href="../style/manual.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
-
-<div class="manual_header">
-
-<div class="close_div">
-<a href="javascript:window.close();" class="trigger"><img alt="Close"
-title="Close" src="../images/close.gif" width="12" height="12" /></a></div>
-<img alt="MerMEId" src="../images/mermeid_30px.png" width="130" height="23" />
-</div>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+    <title>MerMEId manual</title>
+    <link href="../style/tab_style.css" rel="stylesheet" type="text/css" />
+    <link href="../style/list_style.css" rel="stylesheet" type="text/css" />
+    <link href="../style/front_page.css" rel="stylesheet" type="text/css" />
+    <link href="../style/manual.css" rel="stylesheet" type="text/css" />
+  </head>
   
-  <div class="toclink"><a href="index.html">Back to table of contents</a></div>
-  
-<h2><a name="basics" id="basics">MerMEId basics</a></h2>
-
-<p>MerMEId (Metadata Editor and Repository for MEI data) is a tool for editing,
-(pre-)viewing and handling of music metadata based on <a 
-href="http://www.music-encoding.org" target="_blank" title="Music Encoding Initiative">MEI</a>. </p>
-
-<p>It consists of three main components: the MEI file browser, the metadata
-editing tool, and the HTML preview. </p>
-
-
-<h3><a name="File" id="File">File list</a></h3>
-
-<p>The usual way to start working with MerMEId would be to open the file list,
-usually located at http://[your hostname here]/storage/list_files.xq (<a
-href="/storage/list_files.xq" target="_blank">here</a>). You should then see a
-list of existing files in your collection (if any):</p>
-
-<p><img alt="" src="../images/manual/list_files.png" 
-border="0" class="illustration" /></p>
-
-<div>
-<map name="map" id="map" class="manual">
-  <area shape="rect" coords="10,57,303,91" alt="Collection buttons"
-  title="Collection buttons" href="javascript:void(0);" id="collButtons" />
-  <area shape="rect" coords="163,166 807,207" alt="result pages"
-  title="Result pages" href="javascript:void(0);" />
-  <area shape="rect" coords="164,229 429,403"
-  alt="Click any title in the list to see the HTML preview  (opens in a new browser tab)"
-  title="Click any title in the list to see the HTML preview  (opens in a new browser tab)"
-  href="javascript:void(0);" />
-  <area shape="rect" coords="818,229 842,406" alt="View XML source"
-  title="View XML source" href="javascript:void(0);" />
-  <area shape="rect" coords="860,229 882,406" alt="Open the file in the editor"
-  title="Open the file in the editor" href="javascript:void(0);" />
-  <area shape="rect" coords="907,229 927,406" alt="Delete the file"
-  title="Delete the file" href="javascript:void(0);" />
-  <area shape="rect" coords="642,44 943,84"
-  alt="Limit number of results by entering search keywords"
-  title="Limit number of results by entering search keywords"
-  href="javascript:void(0);" />
-  <area shape="rect" coords="10,94 126,130"
-  alt="Create a new file and open it in the editor"
-  title="Create a new file and open it in the editor"
-  href="javascript:void(0);" />
-</map>
-</div>
-
-<p>Collection buttons (in this example, "HartW", "CNW", "SchM", "GW", and "Demo") will
-be visible only if you have spefcified such collections in your files. Clicking
-them will reduce the list to show only files belonging to that collection.</p>
-
-<p>You may also limit the number of files displayed using the "Search" field
-in the upper right corner. Navigate through the result pages using the page
-numbers or the "Previous page" / "Next page" links.</p>
-
-<p>From the list, you have the following options:</p>
-<ul>
-  <li><strong>Add new file</strong>: Clicking the add new file button <img
-    alt="New file" src="../images/new.gif" width="16" height="16" /> will open
-    a new file in the metadata editor</li>
-  <li><strong>HTML preview</strong>:<strong></strong> Click the title of any
-    file to see its metadata displayed as formatted HTML.</li>
-  <li><strong>XML source</strong>: Click the XML view icon <img alt="XML"
-    src="../images/xml.gif" width="16" height="16" /> to see file's the plain
-    XML data</li>
-  <li><strong>Edit file</strong>: Click the edit icon <img alt="Edit"
-    src="../images/edit.gif" width="16" height="16" /> to open the file in the
-    metadata editor</li>
-  <li><strong>Delete file</strong>: Clicking the delete icon <img alt="Delete"
-    src="../images/delete.gif" width="16" height="16" /> will display a warning
-    that you are about to delete the selected file. Click "OK" to delete,
-    otherwise "Cancel". </li>
-</ul>
-
-
-<h3><a name="editor" id="editor">The editor &#x2013; general functionality and
-navigation</a></h3>
-
-<p>The editor (i.e. the forms for editing your data) is divided into a number
-of separate forms. You navigate through the main parts of it by clicking the
-tabs at the top of the page:</p>
-
-<p><img alt="Tabs" src="../images/manual/tabs.png" /></p>
-<ul class="important">
-  <li>Make sure to save any changes you have made before switching tabs.
-    Changing tabs without saving will cause any changes on the current tab to
-    be lost. A warning occurs if you are about to change tab without having
-    saved changes.</li>
-</ul>
-
-<p>Some general functions are found in the upper right corner of the form:</p>
-
-<table border="0">
-  <col />
-  <col />
-  <tbody>
-    <tr>
-      <td><img alt="Save" src="../images/save.gif" width="16" height="16"
-      /></td>
-      <td>Save file</td>
-    </tr>
-    <tr>
-      <td><img alt="HTML" src="../images/html.gif" width="16" height="16"
-      /></td>
-      <td>HTML preview</td>
-    </tr>
-    <tr>
-      <td><img alt="XML" src="../images/xml.gif" /></td>
-      <td>XML source view</td>
-    </tr>
-    <tr>
-      <td><img alt="Home" src="../images/home.gif" width="16" height="16"
-      /></td>
-      <td>Close the editor end return to file list</td>
-    </tr>
-    <tr>
-      <td><img alt="Settings" src="../images/settings.png" width="16"
-        height="16" /></td>
-      <td>Settings</td>
-    </tr>
-    <tr>
-      <td><img alt="Help" src="../images/help.png" width="16" height="16"
-      /></td>
-      <td>Open this manual</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Next to repeatable fields you will find a number of icons for adding,
-deleting and re-arranging items:</p>
-
-<table border="0">
-  <col />
-  <col />
-  <tbody>
-    <tr>
-      <td><img alt="Up" src="../images/arrow_up.gif" width="12" height="12"
-      /></td>
-      <td>Move up (change order of items)</td>
-    </tr>
-    <tr>
-      <td><img alt="Down" src="../images/arrow_down.gif" width="12" height="12"
-        /></td>
-      <td>Move down</td>
-    </tr>
-    <tr>
-      <td><img alt="Copy" src="../images/copy.gif" width="12" height="12"
-      /></td>
-      <td>Duplicate item (adds a copy of the current item)</td>
-    </tr>
-    <tr>
-      <td><img alt="Add" src="../images/add.gif" width="12" height="12" /></td>
-      <td>Add new item below the current one</td>
-    </tr>
-    <tr>
-      <td><img alt="Delete" src="../images/remove.gif" width="12" height="12"
-      /></td>
-      <td>Delete</td>
-    </tr>
-    <tr>
-      <td><img alt="Right arrow" src="../images/arrow_right.png"
-        width="12" height="12" /> </td>
-      <td>Shift this item to the right, making it a sub-component (child) of the item above (applies to music components only)
-      </td>
-    </tr>
-    <tr>
-      <td><img alt="Left arrow" src="../images/arrow_left.png"
-        width="12" height="12" /> </td>
-      <td>Shift this item to the left, i.e. up one level (applies to music components only)
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3><a name="HTML" id="HTML">HTML Preview</a></h3>
-
-<p>The purpose of the HTML preview is to give you an overview of the data you
-have entered. Your project may or may not use it as a basis for public display
-of your data as well, but probably this is not how your data will be displayed
-in the end. </p>
-
-<p><img alt="HTML preview" src="../images/manual/html_view.png" class="illustration" /></p>
-
-<p>If titles or other texts are given in more than one language, all other
-alternatives than the first one are shown in grey with an abbreviated
-indication of the language at the beginning. To hide these alternative language
-texts, click the "Hide alternative languages" link in the upper right
-corner.</p>
-
-<p>By default, only the headings of the main sections are shown. To view the
-contents, click the the expand icon <img alt="expand" src="../images/plus.png"
-width="10" height="10" /> or the heading. To hide the contents, click the
-heading again. The number of headings shown depends on which sections have any
-content.</p>
-
-<p>At the bottom of the page, in grey, metadata about the file are displayed
-(i.e. the colophon).</p>
-
-  <p class="footer"><a href="http://www.kb.dk/dcm" title="DCM"><img style="border: 0px; vertical-align:middle;" alt="DCM Logo" src="../images/dcm_logo_small.png"/></a> 
-    2013 Danish Centre for Music Publication | The Royal Library,
-Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
-href="http://www.kb.dk/dcm">www.kb.dk/dcm</a></p>
-</body>
+  <body>
+    <div class="main">
+      <div class="manual_header">
+        
+        <div class="close_div">
+          <a href="javascript:window.close();" class="trigger"><img alt="Close"
+            title="Close" src="../images/close.gif" width="12" height="12" /></a></div>
+        <img alt="MerMEId" src="../images/mermeid_30px.png" width="130" height="23" />
+      </div>
+      
+      <div class="toclink"><a href="index.html">Back to table of contents</a></div>
+      
+      <h2><a name="basics" id="basics">MerMEId basics</a></h2>
+      
+      <p>MerMEId (Metadata Editor and Repository for MEI data) is a tool for editing,
+        (pre-)viewing and handling of music metadata based on <a 
+          href="http://www.music-encoding.org" target="_blank" title="Music Encoding Initiative">MEI</a>. </p>
+      
+      <p>It consists of three main components: the MEI file browser, the metadata
+        editing tool, and the HTML preview. </p>
+      
+      
+      <h3><a name="File" id="File">File list</a></h3>
+      
+      <p>The usual way to start working with MerMEId would be to open the file list,
+        usually located at http://[your hostname here]/storage/list_files.xq (<a
+          href="/storage/list_files.xq" target="_blank">here</a>). You should then see a
+        list of existing files in your collection (if any):</p>
+      
+      <p><img alt="" src="../images/manual/list_files.png" 
+        border="0" class="illustration" /></p>
+      
+      <div>
+        <map name="map" id="map" class="manual">
+          <area shape="rect" coords="10,57,303,91" alt="Collection buttons"
+            title="Collection buttons" href="javascript:void(0);" id="collButtons" />
+          <area shape="rect" coords="163,166 807,207" alt="result pages"
+            title="Result pages" href="javascript:void(0);" />
+          <area shape="rect" coords="164,229 429,403"
+            alt="Click any title in the list to see the HTML preview  (opens in a new browser tab)"
+            title="Click any title in the list to see the HTML preview  (opens in a new browser tab)"
+            href="javascript:void(0);" />
+          <area shape="rect" coords="818,229 842,406" alt="View XML source"
+            title="View XML source" href="javascript:void(0);" />
+          <area shape="rect" coords="860,229 882,406" alt="Open the file in the editor"
+            title="Open the file in the editor" href="javascript:void(0);" />
+          <area shape="rect" coords="907,229 927,406" alt="Delete the file"
+            title="Delete the file" href="javascript:void(0);" />
+          <area shape="rect" coords="642,44 943,84"
+            alt="Limit number of results by entering search keywords"
+            title="Limit number of results by entering search keywords"
+            href="javascript:void(0);" />
+          <area shape="rect" coords="10,94 126,130"
+            alt="Create a new file and open it in the editor"
+            title="Create a new file and open it in the editor"
+            href="javascript:void(0);" />
+        </map>
+      </div>
+      
+      <p>Collection buttons (in this example, "HartW", "CNW", "SchM", "GW", and "Demo") will
+        be visible only if you have spefcified such collections in your files. Clicking
+        them will reduce the list to show only files belonging to that collection.</p>
+      
+      <p>You may also limit the number of files displayed using the "Search" field
+        in the upper right corner. Navigate through the result pages using the page
+        numbers or the "Previous page" / "Next page" links.</p>
+      
+      <p>From the list, you have the following options:</p>
+      <ul>
+        <li><strong>Add new file</strong>: Clicking the add new file button <img
+          alt="New file" src="../images/new.gif" width="16" height="16" /> will open
+          a new file in the metadata editor</li>
+        <li><strong>HTML preview</strong>:<strong></strong> Click the title of any
+          file to see its metadata displayed as formatted HTML.</li>
+        <li><strong>XML source</strong>: Click the XML view icon <img alt="XML"
+          src="../images/xml.gif" width="16" height="16" /> to see file's the plain
+          XML data</li>
+        <li><strong>Edit file</strong>: Click the edit icon <img alt="Edit"
+          src="../images/edit.gif" width="16" height="16" /> to open the file in the
+          metadata editor</li>
+        <li><strong>Delete file</strong>: Clicking the delete icon <img alt="Delete"
+          src="../images/delete.gif" width="16" height="16" /> will display a warning
+          that you are about to delete the selected file. Click "OK" to delete,
+          otherwise "Cancel". </li>
+      </ul>
+      
+      
+      <h3><a name="editor" id="editor">The editor &#x2013; general functionality and
+        navigation</a></h3>
+      
+      <p>The editor (i.e. the forms for editing your data) is divided into a number
+        of separate forms. You navigate through the main parts of it by clicking the
+        tabs at the top of the page:</p>
+      
+      <p><img alt="Tabs" src="../images/manual/tabs.png" /></p>
+      <ul class="important">
+        <li>Make sure to save any changes you have made before switching tabs.
+          Changing tabs without saving will cause any changes on the current tab to
+          be lost. A warning occurs if you are about to change tab without having
+          saved changes.</li>
+      </ul>
+      
+      <p>Some general functions are found in the upper right corner of the form:</p>
+      
+      <table border="0">
+        <col />
+        <col />
+        <tbody>
+          <tr>
+            <td><img alt="Save" src="../images/save.gif" width="16" height="16"
+            /></td>
+            <td>Save file</td>
+          </tr>
+          <tr>
+            <td><img alt="HTML" src="../images/html.gif" width="16" height="16"
+            /></td>
+            <td>HTML preview</td>
+          </tr>
+          <tr>
+            <td><img alt="XML" src="../images/xml.gif" /></td>
+            <td>XML source view</td>
+          </tr>
+          <tr>
+            <td><img alt="Home" src="../images/home.gif" width="16" height="16"
+            /></td>
+            <td>Close the editor end return to file list</td>
+          </tr>
+          <tr>
+            <td><img alt="Settings" src="../images/settings.png" width="16"
+              height="16" /></td>
+            <td>Settings</td>
+          </tr>
+          <tr>
+            <td><img alt="Help" src="../images/help.png" width="16" height="16"
+            /></td>
+            <td>Open this manual</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p>Next to repeatable fields you will find a number of icons for adding,
+        deleting and re-arranging items:</p>
+      
+      <table border="0">
+        <col />
+        <col />
+        <tbody>
+          <tr>
+            <td><img alt="Up" src="../images/arrow_up.gif" width="12" height="12"
+            /></td>
+            <td>Move up (change order of items)</td>
+          </tr>
+          <tr>
+            <td><img alt="Down" src="../images/arrow_down.gif" width="12" height="12"
+            /></td>
+            <td>Move down</td>
+          </tr>
+          <tr>
+            <td><img alt="Copy" src="../images/copy.gif" width="12" height="12"
+            /></td>
+            <td>Duplicate item (adds a copy of the current item)</td>
+          </tr>
+          <tr>
+            <td><img alt="Add" src="../images/add.gif" width="12" height="12" /></td>
+            <td>Add new item below the current one</td>
+          </tr>
+          <tr>
+            <td><img alt="Delete" src="../images/remove.gif" width="12" height="12"
+            /></td>
+            <td>Delete</td>
+          </tr>
+          <tr>
+            <td><img alt="Right arrow" src="../images/arrow_right.png"
+              width="12" height="12" /> </td>
+            <td>Shift this item to the right, making it a sub-component (child) of the item above (applies to music components only)
+            </td>
+          </tr>
+          <tr>
+            <td><img alt="Left arrow" src="../images/arrow_left.png"
+              width="12" height="12" /> </td>
+            <td>Shift this item to the left, i.e. up one level (applies to music components only)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h3><a name="HTML" id="HTML">HTML Preview</a></h3>
+      
+      <p>The purpose of the HTML preview is to give you an overview of the data you
+        have entered. Your project may or may not use it as a basis for public display
+        of your data as well, but probably this is not how your data will be displayed
+        in the end. </p>
+      
+      <p><img alt="HTML preview" src="../images/manual/html_view.png" class="illustration" /></p>
+      
+      <p>If titles or other texts are given in more than one language, all other
+        alternatives than the first one are shown in grey with an abbreviated
+        indication of the language at the beginning. To hide these alternative language
+        texts, click the "Hide alternative languages" link in the upper right
+        corner.</p>
+      
+      <p>By default, only the headings of the main sections are shown. To view the
+        contents, click the the expand icon <img alt="expand" src="../images/plus.png"
+          width="10" height="10" /> or the heading. To hide the contents, click the
+        heading again. The number of headings shown depends on which sections have any
+        content.</p>
+      
+      <p>At the bottom of the page, in grey, metadata about the file are displayed
+        (i.e. the colophon).</p>
+      
+    </div>
+    <p class="footer"><a href="http://www.kb.dk/dcm" title="DCM"><img style="border: 0px; vertical-align:middle;" alt="DCM Logo" src="../images/dcm_logo_small.png"/></a> 
+      2013 Danish Centre for Music Publication | The Royal Library,
+      Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
+        href="http://www.kb.dk/dcm">www.kb.dk/dcm</a></p>
+  </body>
 </html>
