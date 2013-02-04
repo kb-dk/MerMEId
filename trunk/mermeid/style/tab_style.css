@@ -5,10 +5,12 @@
 body.editor_body {   
     font-size: .8em;
     font-family: arial, helvetica, sans-serif;
-    background-color: #888;
     margin: 0px;
-    padding:0px;
-    width: 100%;
+    padding:0 20px 20px 20px;
+}
+
+body.editor_body, #view_menu_right_border {
+    background-color: #888;
 }
 
 a {
@@ -29,7 +31,8 @@ a {
 
 #tab-menu {
     height: 20px;
-    padding: 8px 0px 0px 0px;
+/*    padding: 8px 0px 0px 0px;*/
+    padding: 8px 20px 0px 20px;
     margin: 0px;
     background-color: #888;
 }
@@ -38,7 +41,7 @@ a {
 #view_menu {
     width: auto;
     margin: 0px;
-    padding: 3px 6px 0px 6px;
+    padding: 3px 0px 0px 6px;
     border: none;
     background-color: transparent;
     display: inline;
@@ -48,6 +51,14 @@ a {
 #view_menu label {
     border: 0px;
     background-color: transparent;    
+}
+
+#view_menu_right_border {
+    display: inline-block;
+    position: relative;
+    top: -3px;
+    height: 24px;
+    width: 20px;
 }
 
 #top_status_bar {
@@ -65,6 +76,11 @@ a {
 #settings-menu {
     float:right;
     width:200px;    
+}
+
+#work_identifier {
+    display: inline-block;
+    margin-left: 20px;    
 }
 
 #form-body {
@@ -85,12 +101,12 @@ a {
     display:inline;
     width:auto;
     font-weight: bold;
-    margin: 8px 0px 0px 0px;
+    margin: 8px 0px 0px -1px;
     padding: 4px 8px 4px 8px;
     height: 16px;
-    border-top: 1px solid #999999;
-    border-right: 1px solid #999999;
-    border-left: 1px solid #999999;
+    border-top: 1px solid #888;
+    border-right: 1px solid #888;
+    border-left: 1px solid #888;
     border-bottom: none;
     color: black;
     text-decoration: none;
@@ -123,7 +139,8 @@ div.top-bar-container {
     position:fixed;
     z-index:20;
     top: 28px;
-    left: 0px;
+/*    left:0; */
+    left: 20px;
     height: 24px;
     width: 100%;
     margin: 0px;
