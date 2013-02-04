@@ -53,57 +53,54 @@
     
     <h:body class="source" onload="initialize();">
         
-        <xf:group id="form-group">
+        <h:div class="main">
             
-            <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
-            <xxf:variable name="uri" 
-                select="concat(instance('parameters')/dcm:orbeon_dir,
-                '?uri=',
-                instance('parameters')/dcm:form_home,
-                'edit-source-case.xml&amp;doc=',
-                instance('parameters')/dcm:xml_file)"/>
-            
-            <h:div class="inputdiv">
+            <xf:group id="form-group">
                 
-                <xf:group id="editing_status"
-                    ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[normalize-space(.)][1]">
-                    <xf:output value="concat(substring(.,1,80), instance('temp')/etc[string-length(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[1])&gt;80], instance('temp')[changed='true']/change_marker)" id="work_identifier">
-                        <xf:label/> 
-                        <xf:action ev:event="xforms-value-changed">
-                            <xf:load resource="javascript:setPageTitle()"/>
-                        </xf:action>
-                    </xf:output>
-                </xf:group>
+                <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+                <xxf:variable name="uri" 
+                    select="concat(instance('parameters')/dcm:orbeon_dir,
+                    '?uri=',
+                    instance('parameters')/dcm:form_home,
+                    'edit-source-case.xml&amp;doc=',
+                    instance('parameters')/dcm:xml_file)"/>
                 
-                <h:div style="float:right">
-                    <xf:submit submission="save-to-file">
-                        <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
-                    </xf:submit>
-                    <xf:submit submission="save-to-file">
-                        <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:load resource="{$uri}" show="replace"/>
-                        </xf:action>
-                    </xf:submit>
-                    <xf:trigger>
-                        <xf:label><h:img src="http:/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:load resource="{$uri}" show="replace"/>
-                        </xf:action>
-                    </xf:trigger>
-                </h:div>
                 
-                <xf:group ref="instance('data-instance')//m:item[@xml:id=instance('temp')/id]">
-                    <h:div>
+                <h:div class="details_form_header">  
+                    
+                    <h:div style="float:right">
+                        <xf:submit submission="save-to-file">
+                            <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                        </xf:submit>
+                        <xf:submit submission="save-to-file">
+                            <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:load resource="{$uri}" show="replace"/>
+                            </xf:action>
+                        </xf:submit>
+                        <xf:trigger>
+                            <xf:label><h:img src="http:/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:load resource="{$uri}" show="replace"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </h:div>
+                    
+                    <xf:group ref="instance('data-instance')//m:item[@xml:id=instance('temp')/id]">
                         <h:h3 style="display:inline;">
                             <xf:output value="@label"/>
-                            <xf:group ref=".[normalize-space(@label)='' or not(@label)]"> [No description] </xf:group>
+                            <xf:group ref=".[normalize-space(@label)='' or not(@label)]"> [No item label] </xf:group>
+                            <xf:output value="if(instance('temp')[changed='true']) then '*' else''" id="work_identifier"/>
                             <dcm:id ref="."/>
                             <dcm:attribute-editor ref="."/>
                         </h:h3>                
-                    </h:div>
-                    <h:fieldset>
-                        <h:legend>Item 
+                    </xf:group>
+                    
+                </h:div>
+               
+                
+                <xf:group ref="instance('data-instance')//m:item[@xml:id=instance('temp')/id]">
+                        <h:span class="blocklabel strong">Item 
                             <h:a class="help">?<h:span class="comment">At item level, 
                                 information specific to an individual copy of a source should be entered. <h:br/>
                                 Information common to all copies of this source should be given at source level.<h:br/>
@@ -114,11 +111,9 @@
                                 If the item consists of several components with different physical appearance, 
                                 the distinct features of each component may be specified using the item's "Components" section.
                             </h:span></h:a>
-                        </h:legend>
+                        </h:span>
                         <h:div class="vertical_spacer"> </h:div>
                         <dcm:item ref="."/>
-                    </h:fieldset>
-                    
                 </xf:group>
                 
                 <xf:group ref=".[not(instance('data-instance')//m:item[@xml:id=instance('temp')/id])]">
@@ -127,13 +122,14 @@
                     <h:p>Please click the "Discard" button to return to the list.</h:p>
                 </xf:group>
                 
-            </h:div>
-            
-        </xf:group>
-        
-        <xi:include href="includes/code-inspector.xml" parse="xml"/>
-        <h:br clear="all"/>
+                
+            </xf:group>
+            <h:br style="clear:both"/>
+        </h:div>
         
         <xi:include href="edit-form-footer.xml" parse="xml"/>
+        
+        <xi:include href="includes/code-inspector.xml" parse="xml"/>
+        
     </h:body>
 </h:html>

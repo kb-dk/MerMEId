@@ -261,7 +261,7 @@ type="text/css"/>
 <div class="main">
 <div class="manual_header">
 <div style="float:right;">
-<a href="/editor/manual/" target="_blank"><img src="/editor/images/help.png" title="help" alt="help" border="0"/></a>
+<a href="/editor/manual/" target="_blank"><img src="/editor/images/help.png" title="Help - opens the manual in a new window or tab" alt="Help" border="0"/></a>
 </div>
 <img src="/editor/images/mermeid_30px.png" title="MerMEId - Metadata Editor and Repository for MEI Data" alt="MerMEId Logo"/>
 </div>

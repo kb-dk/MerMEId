@@ -89,11 +89,12 @@
                             <xf:group ref=".[m:genre='newspaper']">
                                 <xf:group ref="m:imprint/m:date">
                                     <!-- newspaper article date here -->
-                                    <h:div>
+                                    <h:fieldset>
+                                        <h:legend>Date</h:legend>
                                         <dcm:date-editor ref=".">
                                             <xf:label class="fixed_width">Date </xf:label>
                                         </dcm:date-editor>
-                                    </h:div>
+                                    </h:fieldset>
                                 </xf:group>
                                 <!-- newspaper article author here -->
                                 <h:fieldset>

@@ -115,15 +115,37 @@
                     </xxf:variable>
                     
                     <xf:group ref="$binding">
-                        <xf:input ref="@label" class="maxlong">
-                            <xf:label class="fixed_width">Label <h:a class="help">?<h:span 
-                                class="comment">An optional label for this item, e.g. "Carl Nielsen's copy"</h:span></h:a>
-                            </xf:label>
-                        </xf:input>
-                        <dcm:attribute-editor/>
                         
-                        <!-- location -->
-                        <h:div>
+                        <h:fieldset>
+                            <h:legend>Item label</h:legend>
+                            <xf:input ref="@label" class="maxlong">
+                                <xf:label class="fixed_width">Label <h:a class="help">?<h:span 
+                                    class="comment">An optional label for this item, e.g. "Carl Nielsen's copy"</h:span></h:a>
+                                </xf:label>
+                            </xf:input>
+                            <dcm:attribute-editor/>
+                        </h:fieldset>
+                        
+                        <h:fieldset>
+                            <h:legend>Location <h:a class="help">?<h:span
+                                class="comment">The library, archive or other repository holding this
+                                item. The name or RISM siglum may be given, or both.</h:span></h:a>
+                                <xf:group ref=".[count(m:repository)&lt;2]">
+                                    <xf:trigger appearance="minimal">
+                                        <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:delete nodeset="parent::node()"/>
+                                            <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                                        </xf:action>
+                                    </xf:trigger>                           
+                                </xf:group>
+                                <xf:group ref=".[count(m:repository)&gt;1]">
+                                    <dcm:element-buttons 
+                                        triggers="remove" 
+                                        nodeset="m:repository" 
+                                        index="repeat-repository"
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
+                                </xf:group></h:legend>
                             <dcm:create 
                                 nodeset="m:physLoc"
                                 label="Add location"
@@ -134,27 +156,6 @@
                                     label="Add location"
                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
                                 <xf:repeat nodeset="m:repository" id="repeat-repository">
-                                    <h:hr/>
-                                    <h:span class="blocklabel strong">Location <h:a class="help">?<h:span
-                                        class="comment">The library, archive or other repository holding this
-                                        item. The name or RISM siglum may be given, or both.</h:span></h:a>
-                                        <xf:group ref=".[count(m:repository)&lt;2]">
-                                            <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-                                                <xf:action ev:event="DOMActivate">
-                                                    <xf:delete nodeset="parent::node()"/>
-                                                    <xf:dispatch name="xforms-value-changed" target="form-group"/>
-                                                </xf:action>
-                                            </xf:trigger>                           
-                                        </xf:group>
-                                        <xf:group ref=".[count(m:repository)&gt;1]">
-                                            <dcm:element-buttons 
-                                                triggers="remove" 
-                                                nodeset="m:repository" 
-                                                index="repeat-repository"
-                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
-                                        </xf:group>
-                                    </h:span>
                                     <h:div>
                                         <dcm:create  
                                             nodeset="m:corpName"
@@ -219,22 +220,19 @@
                                 </h:div>
                             </xf:group>
                             <h:hr/>
-                        </h:div>
+                        </h:fieldset>
                         
-                        <!-- identifiers -->
-                        <h:div>
+                        <h:fieldset>
+                            <h:legend>Other identifiers <h:a class="help">?<h:span 
+                                class="comment">Identifiers other than the repository's own shelf mark, 
+                                e.g. RISM identifiers or other catalogue numbers identifying this specific item<h:br/>
+                                With prints, RISM identifiers should be given at general 
+                                source level.
+                            </h:span></h:a></h:legend>
                             <dcm:create
                                 nodeset="m:identifier"
                                 label="Add other identifiers"
                                 origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
-                            <xf:group ref=".[m:identifier]">
-                                <h:span class="blocklabel strong">Other identifiers <h:a class="help">?<h:span 
-                                    class="comment">Identifiers other than the repository's own shelf mark, 
-                                    e.g. RISM identifiers or other catalogue numbers identifying this specific item<h:br/>
-                                    With prints, RISM identifiers should be given at general 
-                                    source level.
-                                </h:span></h:a></h:span>
-                            </xf:group>
                             <xf:repeat nodeset="m:identifier" id="repeat-item-identifier">
                                 <xf:input ref="@type" class="mediumshort">
                                     <xf:label class="fixed_width">List name <h:a class="help">?<h:span 
@@ -256,7 +254,7 @@
                                 <dcm:attribute-editor ref="."/>
                                 <h:br clear="all"/>
                             </xf:repeat>
-                        </h:div>
+                        </h:fieldset>
                         
                         
                         <xf:group ref="m:physDesc">

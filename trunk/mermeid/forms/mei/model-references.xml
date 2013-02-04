@@ -18,7 +18,9 @@
     <xi:include href="model-edit-head.xml" parse="xml"/>
     
     
-    <h:body class="file">
+    <h:body>
+        
+        <h:div class="main">
         
         <xf:group id="form-group">
 
@@ -32,7 +34,8 @@
             <xxf:variable name="uri" 
                 select="xxf:get-session-attribute('return_url')"/>
             
-            <h:div class="inputdiv">
+                
+                <h:div class="details_form_header">
                 
                 <h:div style="float:right">
                     <xf:submit submission="save-bibliography">
@@ -58,7 +61,9 @@
                     </xf:trigger>
                 </h:div>
                 
-                <h:h2>Edit list of frequently used bibliographic references</h:h2>
+                <h:h3>Edit list of frequently used bibliographic references</h:h3>
+                
+                </h:div>
                 
                 <h:div>
                     <xf:select1 ref="instance('temp')/collection" class="maxlong">
@@ -155,11 +160,20 @@
                                     <xf:action ev:event="DOMActivate">
                                         <xxf:show dialog="add-ref-dialog"/>
                                     </xf:action>
-                                </xf:trigger><dcm:element-buttons 
-                                    triggers="remove" 
-                                    nodeset="m:bibl" 
-                                    index="repeat-references"
-                                    origin="instance('temp')/m:biblList/m:bibl"/>
+                                </xf:trigger><xf:group ref="." class="button_group">
+                                    <xxf:variable name="number" select="count(parent::node()/m:bibl)"/>
+                                    <xf:trigger appearance="minimal">
+                                        <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                                        <xf:action if="$number=1" ev:event="DOMActivate">
+                                            <xf:delete nodeset="parent::node()"/>
+                                            <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                                        </xf:action>
+                                        <xf:action if="$number&gt;1" ev:event="DOMActivate">
+                                            <xf:delete nodeset="." at="index('repeat-references')"/>
+                                            <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                                        </xf:action>
+                                    </xf:trigger> 
+                                </xf:group>
                         </h:legend>
                         <h:div class="vertical_spacer"> </h:div>
                         <xf:switch>
@@ -198,7 +212,6 @@
                         </xf:switch>
                     </h:fieldset>
                 </xf:repeat>
-            </h:div>
             
         </xf:group>
         
@@ -244,6 +257,8 @@
         </xf:group>
         
         <h:br clear="all"/>
+        
+        </h:div>
         
         <xi:include href="edit-form-footer.xml" parse="xml"/>
     </h:body>

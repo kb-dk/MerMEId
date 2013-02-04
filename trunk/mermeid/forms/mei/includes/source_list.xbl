@@ -149,12 +149,12 @@
                                                     <xf:group ref=".[not(@target) or @target='']">
                                                         <!-- source data included in this file -->
                                                         <xf:output value="m:titleStmt/m:title"/>
-                                                        <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
+                                                        <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No title] </xf:group>
                                                     </xf:group>
                                                     <xf:group ref=".[@target!='']">
                                                         <!-- external source data -->
                                                         <xf:output value="@label"/>
-                                                        <xf:group ref=".[normalize-space(@label)='']"> [No description] </xf:group>
+                                                        <xf:group ref=".[normalize-space(@label)='']"> [No title] </xf:group>
                                                         <xf:trigger appearance="minimal">
                                                             <xf:label><h:img src="http:/editor/images/update.png" title="Update title (re-read from external file)"/></xf:label>
                                                             <xf:action ev:event="DOMActivate">
@@ -180,6 +180,56 @@
                                                     @xml:id)"
                                                     />
                                                 -->
+                                                
+                                                <!-- edit buttons -->
+                                                <xf:group ref=".[not(@target) or @target='']">
+                                                    <!-- sources included in this file -->
+                                                    <xf:trigger appearance="minimal">
+                                                        <xf:label><h:img src="http:/editor/images/edit.gif"
+                                                            style="margin-top: -2px;"
+                                                            title="Edit this source"/></xf:label>
+                                                        <xf:action ev:event="DOMActivate">
+                                                            <xxf:variable name="uri" 
+                                                                select="concat($parameters/dcm:orbeon_dir,'?uri=',$parameters/dcm:form_home,'details-source.xml&amp;doc=',$parameters/dcm:xml_file,'&amp;id=',@xml:id)"/>
+                                                            <xf:action if="$temp/changed='true'">
+                                                                <xf:setvalue ref="$temp/target_uri" value="$uri"/>
+                                                                <xxf:show dialog="exit-warning-dialog"/>
+                                                            </xf:action>	
+                                                            <xf:action if="$temp/changed='false'">
+                                                                <xf:load resource="{$uri}" show="replace"/>
+                                                            </xf:action>
+                                                        </xf:action>
+                                                    </xf:trigger>
+                                                </xf:group>
+                                                <xf:group ref=".[@target!='']">
+                                                    <!-- external source data -->
+                                                    <xf:trigger appearance="minimal">
+                                                        <xf:label><h:img src="http:/editor/images/go_to_link.png" title="Go to external source"/></xf:label>
+                                                        <xf:action ev:event="DOMActivate">
+                                                            <xxf:variable name="uri" 
+                                                                select="concat(
+                                                                $parameters/dcm:orbeon_dir,
+                                                                '?uri=',
+                                                                $parameters/dcm:form_home,
+                                                                'details-source.xml&amp;doc=',
+                                                                substring-before(@target,'#'),
+                                                                '&amp;id=',
+                                                                substring-after(@target,'#'))"/>
+                                                            <xf:setvalue ref="$temp/target_uri" value="$uri"/>
+                                                            <xf:action if="$temp/changed='true'">
+                                                                <xxf:show dialog="exit-warning-dialog"/>
+                                                            </xf:action>	
+                                                            <xf:action if="$temp/changed='false'">
+                                                                <xxf:show dialog="leave-warning-dialog"/>
+                                                            </xf:action>
+                                                        </xf:action>
+                                                    </xf:trigger>
+                                                </xf:group>
+                                                <!-- end edit -->
+                                                
+                                                <dcm:attribute-editor/>
+                                                
+                                                
                                                 
                                                 <!-- change isEmbodimentOf relation -->
                                                 <xf:group ref=".[count($data-instance//m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
@@ -228,52 +278,6 @@
                                             </h:span>
                                         
                                             <h:div style="position:relative; display:inline-block; float:right;">
-                                                <xf:group ref=".[not(@target) or @target='']">
-                                                    <!-- sources included in this file -->
-                                                    <xf:trigger appearance="minimal">
-                                                        <xf:label><h:img src="http:/editor/images/edit.gif"
-                                                            style="margin-top: -2px;"
-                                                            title="Edit this source"/></xf:label>
-                                                        <xf:action ev:event="DOMActivate">
-                                                            <xxf:variable name="uri" 
-                                                                select="concat($parameters/dcm:orbeon_dir,'?uri=',$parameters/dcm:form_home,'details-source.xml&amp;doc=',$parameters/dcm:xml_file,'&amp;id=',@xml:id)"/>
-                                                            <xf:action if="$temp/changed='true'">
-                                                                <xf:setvalue ref="$temp/target_uri" value="$uri"/>
-                                                                <xxf:show dialog="exit-warning-dialog"/>
-                                                            </xf:action>	
-                                                            <xf:action if="$temp/changed='false'">
-                                                                <xf:load resource="{$uri}" show="replace"/>
-                                                            </xf:action>
-                                                        </xf:action>
-                                                    </xf:trigger>
-                                                </xf:group>
-                                                <xf:group ref=".[@target!='']">
-                                                    <!-- external source data -->
-                                                    <xf:trigger appearance="minimal">
-                                                        <xf:label><h:img src="http:/editor/images/go_to_link.png" title="Go to external source"/></xf:label>
-                                                        <xf:action ev:event="DOMActivate">
-                                                            <xxf:variable name="uri" 
-                                                                select="concat(
-                                                                $parameters/dcm:orbeon_dir,
-                                                                '?uri=',
-                                                                $parameters/dcm:form_home,
-                                                                'details-source.xml&amp;doc=',
-                                                                substring-before(@target,'#'),
-                                                                '&amp;id=',
-                                                                substring-after(@target,'#'))"/>
-                                                            <xf:setvalue ref="$temp/target_uri" value="$uri"/>
-                                                            <xf:action if="$temp/changed='true'">
-                                                                <xxf:show dialog="exit-warning-dialog"/>
-                                                            </xf:action>	
-                                                            <xf:action if="$temp/changed='false'">
-                                                                <xxf:show dialog="leave-warning-dialog"/>
-                                                            </xf:action>
-                                                        </xf:action>
-                                                    </xf:trigger>
-                                                </xf:group>
-                                                
-                                                <dcm:attribute-editor/>
-
                                                 <!-- modified copy of elements_buttons_typed.xbl  -->
                                                 <xf:group ref="." class="xbl-dcm-element-buttons">
                                                     <h:span class="editmenu">
@@ -368,13 +372,13 @@
                                 
                                 <!-- Items -->
                                 <xf:group ref=".[not(@target) or @target='']">
-                                    <h:table>
+                                    <h:table cellspacing="0" cellpadding="0" border="0">
                                     <h:tr class="item_row">
                                         <h:td>
-                                            <h:table>
+                                            <h:table cellspacing="0" cellpadding="0" border="0">
                                                 <h:tr>
                                                     <h:td style="vertical-align:top">
-                                                        <h:div style="padding-top:2px;">&#160;&#160;&#160;Items:
+                                                        <h:div style="padding:4px; 5px 0 10px;">&#160;&#160;&#160;Items:
                                                             <h:a class="help">?<h:span class="comment">Items are the individual exemplars (copies)
                                                                 of a source, e.g. a specific copy of a printed source. Since manuscripts are unique, 
                                                                 they are sources having only one item.<h:br/>
@@ -390,7 +394,7 @@
                                                     </h:td>
                                                     <h:td style="vertical-align:top">
                                                         <xf:group ref="m:itemList[m:item]">
-                                                            <h:table class="element_list">
+                                                            <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
                                                                 <xf:repeat nodeset="m:item" id="repeat-items">
                                                                     <h:tr class="hoverclass">
                                                                         <h:td class="no_border">

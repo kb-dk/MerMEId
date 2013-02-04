@@ -52,73 +52,70 @@
     
     <h:body class="bibliography" onload="initialize();">
         
-        <xf:group id="form-group">
+        <h:div class="main">
             
-            <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
-            <xxf:variable name="uri" 
-                select="concat(instance('parameters')/dcm:orbeon_dir,
-                '?uri=',
-                instance('parameters')/dcm:form_home,
-                'edit-bibliography-case.xml&amp;doc=',
-                instance('parameters')/dcm:xml_file)"/>
-            
-            <h:div class="inputdiv">
-
-                <xf:group id="editing_status"
-                    ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[normalize-space(.)][1]">
-                    <xf:output value="concat(substring(.,1,80), instance('temp')/etc[string-length(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[1])&gt;80], instance('temp')[changed='true']/change_marker)" id="work_identifier">
-                        <xf:label/> 
-                        <xf:action ev:event="xforms-value-changed">
-                            <xf:load resource="javascript:setPageTitle()"/>
-                        </xf:action>
-                    </xf:output>
-                </xf:group>
+            <xf:group id="form-group">
                 
-                <h:div style="float:right">
-                    <xf:submit submission="save-to-file">
-                        <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
-                    </xf:submit>
-                    <xf:submit submission="save-to-file">
-                        <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:load resource="{$uri}" show="replace"/>
-                        </xf:action>
-                    </xf:submit>
-                    <xf:trigger>
-                        <xf:label><h:img src="http:/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:load resource="{$uri}" show="replace"/>
-                        </xf:action>
-                    </xf:trigger>
+                <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+                <xxf:variable name="uri" 
+                    select="concat(instance('parameters')/dcm:orbeon_dir,
+                    '?uri=',
+                    instance('parameters')/dcm:form_home,
+                    'edit-bibliography-case.xml&amp;doc=',
+                    instance('parameters')/dcm:xml_file)"/>
+                
+                
+                <h:div class="details_form_header">
+                    
+                    <h:div style="float:right">
+                        <xf:submit submission="save-to-file">
+                            <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                        </xf:submit>
+                        <xf:submit submission="save-to-file">
+                            <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:load resource="{$uri}" show="replace"/>
+                            </xf:action>
+                        </xf:submit>
+                        <xf:trigger>
+                            <xf:label><h:img src="http:/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:load resource="{$uri}" show="replace"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </h:div>
+                    
+                    <xf:group id="editing_status" ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList/m:bibl[@xml:id=instance('temp')/id]">
+                        <h:h3>
+                            <xf:repeat nodeset="m:creator"><xf:output 
+                                value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
+                                    value="."/></xf:repeat><xf:output 
+                                        value="if (normalize-space(m:creator[1]) and not(normalize-space(m:recipient))) then ': ' else ''"/>
+                            <xf:output value="if (normalize-space(m:recipient)) then concat(' to ',m:recipient) else ''"/>
+                            <h:i><xf:output value="m:title[@level='a']">
+                            </xf:output></h:i><xf:output 
+                                value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='j'])) then concat('. ',m:title[@level='j']) else m:title[@level='j']"/>
+                            <xf:output value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='m'])) then concat('. ',m:title[@level='m']) else m:title[@level='m']"/>
+                            <xf:output value="if (normalize-space(m:title[not(@level)])) then m:title[not(@level)] else ''"/>
+                            <xf:output value="if (normalize-space(m:date)) then concat('(',normalize-space(m:date),')') else ''"/>
+                            <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient,m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:title[not(@level)],m:date))='']"> [No description] </xf:group>
+                            <xf:output value="if(instance('temp')[changed='true']) then '*' else''" id="work_identifier"/>
+                            <dcm:id ref="."/>
+                            <dcm:attribute-editor ref="."/>
+                        </h:h3>                
+                    </xf:group>
                 </h:div>
-
+                
+                
                 <xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList/m:bibl[@xml:id=instance('temp')/id]">
-                    <h:h3>
-                        <xf:repeat nodeset="m:creator"><xf:output 
-                            value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
-                            value="."/></xf:repeat><xf:output 
-                                value="if (normalize-space(m:creator[1]) and not(normalize-space(m:recipient))) then ': ' else ''"/>
-                        <xf:output value="if (normalize-space(m:recipient)) then concat(' to ',m:recipient) else ''"/>
-                        <h:i><xf:output value="m:title[@level='a']"/></h:i><xf:output 
-                            value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='j'])) then concat('. ',m:title[@level='j']) else m:title[@level='j']"/>
-                        <xf:output value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='m'])) then concat('. ',m:title[@level='m']) else m:title[@level='m']"/>
-                        <xf:output value="if (normalize-space(m:title[not(@level)])) then m:title[not(@level)] else ''"/>
-                        <xf:output value="if (normalize-space(m:date)) then concat('(',normalize-space(m:date),')') else ''"/>
-                        <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient,m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:title[not(@level)],m:date))='']"> [No description] </xf:group>
-                        <dcm:id ref="."/>
-                        <dcm:attribute-editor ref="."/>
-                    </h:h3>                
-                    
-                    <h:fieldset>
-                        <h:legend>
-                            <xf:output 
-                                value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
-                                    value="if (m:genre[2]!='') then concat(', ',m:genre[2]) else ''"/>
-                        </h:legend>
-                        <h:div class="vertical_spacer"> </h:div>
-                        <dcm:bibl-input/>
-                    </h:fieldset>
-                    
+                    <h:div class="blocklabel strong">Reference type: 
+                        <xf:output 
+                            value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
+                                value="if (m:genre[2]!='') then concat(', ',m:genre[2]) else ''"/>
+                    </h:div>
+                    <h:div class="vertical_spacer"/>
+                    <h:div class="vertical_spacer"/>
+                    <dcm:bibl-input/>
                 </xf:group>
                 
                 <xf:group ref=".[not(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList/m:bibl[@xml:id=instance('temp')/id])]">
@@ -127,13 +124,13 @@
                     <h:p>Please click the "Discard" button to return to the list.</h:p>
                 </xf:group>
                 
-            </h:div>
-            
-        </xf:group>
+            </xf:group>
+            <h:br style="clear:both"/>
+        </h:div>
+                
+        <xi:include href="edit-form-footer.xml" parse="xml"/>
 
         <xi:include href="includes/code-inspector.xml" parse="xml"/>
-        <h:br clear="all"/>
-        
-        <xi:include href="edit-form-footer.xml" parse="xml"/>
+
     </h:body>
 </h:html>

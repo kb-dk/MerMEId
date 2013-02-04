@@ -53,95 +53,97 @@
     
     <h:body class="source" onload="initialize();">
         
-        <xf:group id="form-group">
+        <h:div class="main">
             
-            <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
-            <xxf:variable name="uri" 
-                select="concat(instance('parameters')/dcm:orbeon_dir,
-                '?uri=',
-                instance('parameters')/dcm:form_home,
-                'edit-source-case.xml&amp;doc=',
-                instance('parameters')/dcm:xml_file)"/>
-            
-            <h:div class="inputdiv">
+            <xf:group id="form-group">
                 
-                <xf:group id="editing_status"
-                    ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[normalize-space(.)][1]">
-                    <xf:output value="concat(substring(.,1,80), instance('temp')/etc[string-length(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[1])&gt;80], instance('temp')[changed='true']/change_marker)" id="work_identifier">
-                        <xf:label/> 
-                        <xf:action ev:event="xforms-value-changed">
-                            <xf:load resource="javascript:setPageTitle()"/>
-                        </xf:action>
-                    </xf:output>
-                </xf:group>
+                <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+                <xxf:variable name="uri" 
+                    select="concat(instance('parameters')/dcm:orbeon_dir,
+                    '?uri=',
+                    instance('parameters')/dcm:form_home,
+                    'edit-source-case.xml&amp;doc=',
+                    instance('parameters')/dcm:xml_file)"/>
                 
-                <h:div style="float:right">
-                    <xf:submit submission="save-to-file">
-                        <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
-                    </xf:submit>
-                    <xf:submit submission="save-to-file">
-                        <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:load resource="{$uri}" show="replace"/>
-                        </xf:action>
-                    </xf:submit>
-                    <xf:trigger>
-                        <xf:label><h:img src="http:/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:load resource="{$uri}" show="replace"/>
-                        </xf:action>
-                    </xf:trigger>
-                </h:div>
-                     
-                <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=instance('temp')/id]">
-                    <h:div>
-                        <h:h3 style="display:inline;">
-                            <xf:output value="m:titleStmt/m:title"/>
-                            <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
-                            <dcm:id ref="."/>
-                            <dcm:attribute-editor ref="."/>
-                        </h:h3>                
-                        <!-- linking files disabled due to poor performance
-                        <h:span>
-                            <dcm:linked-sources id="linking_sources"
+                <h:div class="details_form_header">
+                    
+                    <h:div style="float:right">
+                        <xf:submit submission="save-to-file">
+                            <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                        </xf:submit>
+                        <xf:submit submission="save-to-file">
+                            <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:load resource="{$uri}" show="replace"/>
+                            </xf:action>
+                        </xf:submit>
+                        <xf:trigger>
+                            <xf:label><h:img src="http:/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:load resource="{$uri}" show="replace"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </h:div>
+                    
+                    <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=instance('temp')/id]">
+                        <h:div>
+                            <h:h3>
+                                <xf:output value="m:titleStmt/m:title"/>
+                                <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No description] </xf:group>
+                                <xf:output value="if(instance('temp')[changed='true']) then '*' else''" id="work_identifier"/>
+                                <dcm:id ref="."/>
+                                <dcm:attribute-editor ref="."/>
+                            </h:h3>                
+                            <!-- linking files disabled due to poor performance
+                                <h:span>
+                                <dcm:linked-sources id="linking_sources"
                                 query="concat(
                                 instance('parameters')/dcm:server_name,
                                 'storage/cross-link.xq?target=',
                                 instance('parameters')/dcm:xml_file,
                                 '%23',
                                 @xml:id)"
-                            />
-                        </h:span>
-                        -->
+                                />
+                                </h:span>
+                            -->
+                        </h:div>
+                    </xf:group>
+                </h:div>
+                
+                
+                <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=instance('temp')/id]">
+                    <h:div class="blocklabel strong">
+                        Source details <h:a class="help">?<h:span class="comment">A source corresponds to the FRBR "manifestation" level. At this level, therefore, 
+                            only information common to all copies of this source should be entered. <h:br/>
+                            Information about individual copies (including their location) should be given at "item" level. <h:br/>
+                            Manuscripts are somewhat special, being sources having only one item. Manuscripts, too, 
+                            will have some information at source level and some (such as location) at item level, though
+                            the distinction is less clear than with printed sources. 
+                        </h:span></h:a>
                     </h:div>
+                    
                     <h:fieldset>
-                        <h:legend>Source 
-                            <h:a class="help">?<h:span class="comment">A source corresponds to the FRBR "manifestation" level. At this level, therefore, 
-                                only information common to all copies of this source should be entered. <h:br/>
-                                Information about individual copies (including their location) should be given at "item" level.                                <h:br/>
-                                Manuscripts are somewhat special, being sources having only one item. Manuscripts, too, 
-                                will have some information at source level and some (such as location) at item level, though
-                                the distinction is less clear than with printed sources. 
-                                </h:span></h:a>
+                        <h:legend>
+                            Source title
                         </h:legend>
-                        <h:div class="vertical_spacer"> </h:div>
-                        
                         <dcm:create 
                             nodeset="m:titleStmt"
                             label="Add title"
                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt"/>
                         <xf:input ref="m:titleStmt/m:title" class="maxlong">
-                            <xf:label class="fixed_width_long">Short description or title <h:a class="help">?<h:span class="comment">A heading identifying the source, e.g. "Printed score, first
+                            <xf:label class="fixed_width_long">Short description or title <h:a class="help">?<h:span class="comment">A heading 
+                                identifying the source, e.g. "Printed score, first
                                 edition", "Autograph score, draft" or "Source A"</h:span></h:a>
                             </xf:label>
                         </xf:input>
                         <dcm:id ref="m:titleStmt/m:title"/>
                         <dcm:attribute-editor ref="m:titleStmt/m:title"/>
-                                 
-              
+                    </h:fieldset>
+                        
+                        
                         <!-- Source classification -->
                         <!-- For now, editing classification requires either the DCM classcodes being defined already 
-                        in <work> or that a termList exists already -->
+                            in <work> or that a termList exists already -->
                         <xf:group ref=".[m:classification/m:termList or //m:work/m:classification/m:classCode[@xml:id='DcmContentClass']]">
                             <h:fieldset>
                                 <h:legend>Classification
@@ -719,11 +721,11 @@
                                     label="Add date"
                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:date"/>
                                 <xf:repeat nodeset="m:date" id="repeat-pubdate">
-                                <dcm:date-editor ref=".">
-                                    <xf:label class="fixed_width">Date 
-                                        <h:a class="help">?<h:span class="comment">This field may be used for manuscript datings also.</h:span></h:a>
-                                    </xf:label>
-                                </dcm:date-editor>
+                                    <dcm:date-editor ref=".">
+                                        <xf:label class="fixed_width">Date 
+                                            <h:a class="help">?<h:span class="comment">This field may be used for manuscript datings also.</h:span></h:a>
+                                        </xf:label>
+                                    </dcm:date-editor>
                                     <dcm:element-buttons
                                         triggers="remove" 
                                         nodeset="m:date" 
@@ -798,7 +800,7 @@
                         <h:fieldset class="source-components">
                             <h:legend class="source-components">Components <h:a 
                                 class="help">?<h:span class="comment">Descriptions of the individual parts that 
-                                constitute a composite source</h:span></h:a>
+                                    constitute a composite source</h:span></h:a>
                                 <dcm:id ref="m:componentGrp"/>
                                 <dcm:attribute-editor ref="m:componentGrp"/>
                             </h:legend>
@@ -888,7 +890,7 @@
                                                                     <h:legend>Physical description
                                                                         <dcm:attribute-editor/>
                                                                     </h:legend>
-
+                                                                    
                                                                     <h:div>
                                                                         <dcm:create
                                                                             nodeset="m:extent"
@@ -961,7 +963,7 @@
                                                                             <dcm:attribute-editor/>
                                                                         </xf:repeat>
                                                                     </h:div>
-                                                                                                                 
+                                                                    
                                                                 </h:fieldset>
                                                             </xf:group>
                                                         </xf:case>
@@ -974,8 +976,7 @@
                             </xf:group>
                         </h:fieldset>
                         <!-- End components -->
-                    
-                    </h:fieldset>
+                        
                     
                 </xf:group>
                 
@@ -985,13 +986,14 @@
                     <h:p>Please click the "Discard" button to return to the list.</h:p>
                 </xf:group>
                 
-            </h:div>
-            
-        </xf:group>
-
-        <xi:include href="includes/code-inspector.xml" parse="xml"/>
-        <h:br clear="all"/>
+                
+            </xf:group>
+            <h:br style="clear:both"/>
+        </h:div>
         
         <xi:include href="edit-form-footer.xml" parse="xml"/>
+
+        <xi:include href="includes/code-inspector.xml" parse="xml"/>
+        
     </h:body>
 </h:html>
