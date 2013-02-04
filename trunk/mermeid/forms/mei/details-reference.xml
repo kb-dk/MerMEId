@@ -57,14 +57,9 @@
             <xf:group id="form-group">
                 
                 <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
-                <xxf:variable name="uri" 
-                    select="concat(instance('parameters')/dcm:orbeon_dir,
-                    '?uri=',
-                    instance('parameters')/dcm:form_home,
-                    'edit-bibliography-case.xml&amp;doc=',
-                    instance('parameters')/dcm:xml_file)"/>
-                
-                
+
+                <xxf:variable name="uri" select="instance('parameters')/dcm:return_uri"/>
+
                 <h:div class="details_form_header">
                     
                     <h:div style="float:right">
@@ -85,7 +80,7 @@
                         </xf:trigger>
                     </h:div>
                     
-                    <xf:group id="editing_status" ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList/m:bibl[@xml:id=instance('temp')/id]">
+                    <xf:group id="editing_status" ref="instance('data-instance')//m:bibl[@xml:id=instance('temp')/id]">
                         <h:h3>
                             <xf:repeat nodeset="m:creator"><xf:output 
                                 value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
@@ -107,7 +102,7 @@
                 </h:div>
                 
                 
-                <xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList/m:bibl[@xml:id=instance('temp')/id]">
+                <xf:group ref="instance('data-instance')//m:bibl[@xml:id=instance('temp')/id]">
                     <h:div class="blocklabel strong">Reference type: 
                         <xf:output 
                             value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
@@ -118,7 +113,7 @@
                     <dcm:bibl-input/>
                 </xf:group>
                 
-                <xf:group ref=".[not(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList/m:bibl[@xml:id=instance('temp')/id])]">
+                <xf:group ref=".[not(instance('data-instance')//m:bibl[@xml:id=instance('temp')/id])]">
                     <h:h3>Item not found</h:h3>
                     <h:p>Did you remember to save your work before you opened the details editor?</h:p>
                     <h:p>Please click the "Discard" button to return to the list.</h:p>
