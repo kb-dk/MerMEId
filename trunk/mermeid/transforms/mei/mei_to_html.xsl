@@ -14,6 +14,7 @@
 	xmlns:m="http://www.music-encoding.org/ns/mei" xmlns:t="http://www.tei-c.org/ns/1.0"
 	xmlns:dcm="http://www.kb.dk/dcm" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:foo="http://www.kb.dk/foo"
 	xmlns:exsl="http://exslt.org/common" xmlns:java="http://xml.apache.org/xalan/java"
+	xmlns:zs="http://www.loc.gov/zing/srw/" xmlns:marc="http://www.loc.gov/MARC21/slim" 
 	extension-element-prefixes="exsl java" exclude-result-prefixes="m xsl exsl foo java">
 
 	<xsl:output method="xml" encoding="UTF-8" cdata-section-elements="" omit-xml-declaration="yes"/>
@@ -26,6 +27,7 @@
 	<xsl:variable name="preferred_language">none</xsl:variable>
 	<xsl:variable name="settings"
 		select="document(concat('http://',$hostname,'/editor/forms/mei/mermeid_configuration.xml'))"/>
+	
 
 	<!-- CREATE HTML DOCUMENT -->
 	<xsl:template match="m:mei" xml:space="default">
@@ -1587,6 +1589,33 @@
 			</xsl:if>
 		</xsl:for-each>
 	</xsl:template>	
+	
+	<xsl:template match="m:identifier[@authority='RISM']">
+		<xsl:variable name="RISM_file_name" 
+			select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'rism_sigla/',
+			substring-before(.,'-'),'.xml'))"/>
+		<xsl:choose>
+			<xsl:when test="boolean(document($RISM_file_name))">
+				<xsl:variable name="RISM_file" select="document($RISM_file_name)"/>
+				<xsl:variable name="siglum" select="normalize-space(.)"/>
+				<xsl:choose>
+					<xsl:when test="$RISM_file//marc:datafield[marc:subfield[@code='g']=$siglum]">
+						<xsl:variable name="record" select="$RISM_file//marc:datafield[marc:subfield[@code='g']=$siglum]"/>
+						<a class="abbr"><xsl:value-of select="."/><span class="expan">
+								<xsl:value-of select="$record/marc:subfield[@code='a']"/>,
+								<xsl:value-of select="$record/marc:subfield[@code='c']"/>
+							</span></a>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="."/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="."/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 
 
 	<!-- format scribe's name and medium -->

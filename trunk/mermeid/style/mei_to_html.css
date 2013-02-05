@@ -117,6 +117,44 @@ ul {
     font-weight: bold;
 }
 
+a.abbr {
+    border-bottom: 1px dashed #666;
+    cursor: help;    
+}
+
+a:hover.abbr .expan {
+    visibility:visible;
+}
+
+.expan {
+    display:inline;
+    position: absolute;
+    visibility:hidden;
+    white-space: normal;
+    text-decoration:none;
+    color: black;
+    background-color:#ddd;
+    padding: 1px;
+    padding-bottom: 5px;
+    z-index:250;
+    padding: 8px 4px 4px 4px;
+    width: 200px;
+    margin-top: 20px;
+    margin-left: -5px;
+    border: 1px solid #ddd;
+    font-weight:normal;
+    font-style: normal;
+    text-align: left;
+    box-shadow: 7px 7px 10px 5px #333;
+    border-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 7px 7px 10px 5px #333;
+    -moz-border-radius: 4px;
+    /* For MSIE 6-8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333')"; 
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333'); 
+}
+
 div.perfmedium { 
     margin-top: 0.5em;
 }
