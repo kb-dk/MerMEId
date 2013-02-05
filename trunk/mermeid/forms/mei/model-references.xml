@@ -135,7 +135,7 @@
                     <h:div>
                         [None]<h:br/>&#160;
                     </h:div>
-                    <xf:trigger ref=".[instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection]]">
+                    <xf:trigger>
                         <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> Add reference</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xxf:show dialog="add-ref-dialog"/>
