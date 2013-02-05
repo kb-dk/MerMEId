@@ -21,48 +21,48 @@
     <h:body>
         
         <h:div class="main">
-        
-        <xf:group id="form-group">
-
-            <!-- "onload" xforms actions -->
-            <xf:action ev:event="xforms-ready" ev:observer="main_model">
-                <!-- search for file collections without a bibliography -->
-                <xf:send submission="load-fileList"/>
-            </xf:action>
             
-            <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
-            <xxf:variable name="uri" 
-                select="xxf:get-session-attribute('return_url')"/>
-            
+            <xf:group id="form-group">
+                
+                <!-- "onload" xforms actions -->
+                <xf:action ev:event="xforms-ready" ev:observer="main_model">
+                    <!-- search for file collections without a bibliography -->
+                    <xf:send submission="load-fileList"/>
+                </xf:action>
+                
+                <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+                <xxf:variable name="uri" 
+                    select="xxf:get-session-attribute('return_url')"/>
+                
                 
                 <h:div class="details_form_header">
-                
-                <h:div style="float:right">
-                    <xf:submit submission="save-bibliography">
-                        <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
-                        <!--<xf:action ev:event="DOMActivate">
-                            <xf:setvalue ref="instance('temp')/target_uri" 
-                            value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>
-                            </xf:action>-->
-                    </xf:submit>
-                    <xf:submit submission="save-bibliography">
-                        <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <!--<xf:setvalue ref="instance('temp')/target_uri" 
-                                value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>-->
-                            <xf:load resource="{xxf:get-session-attribute('return_url')}" show="replace"/>
-                        </xf:action>
-                    </xf:submit>
-                    <xf:trigger>
-                        <xf:label><h:img src="http:/editor/images/discard.png" alt="Discard changes"/> Discard changes</xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:load resource="{xxf:get-session-attribute('return_url')}" show="replace"/>
-                        </xf:action>
-                    </xf:trigger>
-                </h:div>
-                
-                <h:h3>Edit list of frequently used bibliographic references</h:h3>
-                
+                    
+                    <h:div style="float:right">
+                        <xf:submit submission="save-bibliography">
+                            <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                            <!--<xf:action ev:event="DOMActivate">
+                                <xf:setvalue ref="instance('temp')/target_uri" 
+                                value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>
+                                </xf:action>-->
+                        </xf:submit>
+                        <xf:submit submission="save-bibliography">
+                            <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <!--<xf:setvalue ref="instance('temp')/target_uri" 
+                                    value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>-->
+                                <xf:load resource="{xxf:get-session-attribute('return_url')}" show="replace"/>
+                            </xf:action>
+                        </xf:submit>
+                        <xf:trigger>
+                            <xf:label><h:img src="http:/editor/images/discard.png" alt="Discard changes"/> Discard changes</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:load resource="{xxf:get-session-attribute('return_url')}" show="replace"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </h:div>
+                    
+                    <h:h3>Edit list of frequently used bibliographic references</h:h3>
+                    
                 </h:div>
                 
                 <h:div>
@@ -135,13 +135,14 @@
                     <h:div>
                         [None]<h:br/>&#160;
                     </h:div>
-                    <xf:trigger >
+                    <xf:trigger ref=".[instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection]]">
                         <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> Add reference</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xxf:show dialog="add-ref-dialog"/>
                         </xf:action>
                     </xf:trigger>
                 </xf:group>
+                
                 <xf:repeat id="repeat-references"
                     nodeset="instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]/m:bibl">
                     <h:fieldset>
@@ -166,6 +167,7 @@
                                         <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                                         <xf:action if="$number=1" ev:event="DOMActivate">
                                             <xf:delete nodeset="parent::node()"/>
+                                            <xf:setvalue ref="instance('temp')/collection" value="''"/>
                                             <xf:dispatch name="xforms-value-changed" target="form-group"/>
                                         </xf:action>
                                         <xf:action if="$number&gt;1" ev:event="DOMActivate">
@@ -207,57 +209,59 @@
                                         </xf:action>
                                     </xf:trigger>
                                 </h:div>
+                                <h:br style="clear:both"/>
                                 <dcm:bibl-input/>
                             </xf:case>
                         </xf:switch>
                     </h:fieldset>
                 </xf:repeat>
-            
-        </xf:group>
-        
-        <!-- reference types menu -->
-        <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
-            close="true" draggable="true" visible="false">
-            <xf:label>Add reference</xf:label>
-            <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl" id="ref-type-menu-bibl-repeat">
-                <xf:trigger submission="replace-form-with" appearance="minimal">
-                    <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output 
-                        value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
-                            value="if (m:genre[2]!='') then concat(', ',m:genre[2]) else ''"></xf:output>
-                    </xf:label>
-                    <xf:action ev:event="DOMActivate">
-                        <xf:toggle case="hide_ref_types"/>
-                        <xf:action if="count(instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]/m:bibl)&gt;0">
-                            <xf:insert context="instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]" 
-                                nodeset="m:bibl" 
-                                at="index('repeat-references')"
-                                position="after" 
-                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-bibl-repeat')]"/>
-                        </xf:action>
-                        <xf:action if="count(instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]/m:bibl)=0">
-                            <!-- first <bibl> is inserted after <head>  -->
-                            <xf:insert context="instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]" 
-                                nodeset="*" 
-                                at="last()"
-                                position="after" 
-                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-bibl-repeat')]"/>
-                        </xf:action>
-                        <xf:dispatch name="id-update" target="form-group"/>
-                        <xxf:hide dialog="add-ref-dialog"/>
-                    </xf:action>
-                </xf:trigger>
                 
-                <h:br clear="all"/>
-            </xf:repeat>
-        </xxf:dialog>
-        <!-- end menu -->
-        
-        <xf:group ref=".[instance('parameters')/dcm:code_inspector='true']">
-            <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
-        </xf:group>
-        
-        <h:br clear="all"/>
-        
+                
+            </xf:group>
+            
+            <!-- reference types menu -->
+            <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
+                close="true" draggable="true" visible="false">
+                <xf:label>Add reference</xf:label>
+                <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl" id="ref-type-menu-bibl-repeat">
+                    <xf:trigger submission="replace-form-with" appearance="minimal">
+                        <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/> <xf:output 
+                            value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
+                                value="if (m:genre[2]!='') then concat(', ',m:genre[2]) else ''"></xf:output>
+                        </xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:toggle case="hide_ref_types"/>
+                            <xf:action if="count(instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]/m:bibl)&gt;0">
+                                <xf:insert context="instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]" 
+                                    nodeset="m:bibl" 
+                                    at="index('repeat-references')"
+                                    position="after" 
+                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-bibl-repeat')]"/>
+                            </xf:action>
+                            <xf:action if="count(instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]/m:bibl)=0">
+                                <!-- first <bibl> is inserted after <head>  -->
+                                <xf:insert context="instance('bibliography-instance')/m:biblList[m:head=instance('temp')/collection or (not(m:head) and instance('temp')/collection='')]" 
+                                    nodeset="*" 
+                                    at="last()"
+                                    position="after" 
+                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-bibl-repeat')]"/>
+                            </xf:action>
+                            <xf:dispatch name="id-update" target="form-group"/>
+                            <xxf:hide dialog="add-ref-dialog"/>
+                        </xf:action>
+                    </xf:trigger>
+                    
+                    <h:br clear="all"/>
+                </xf:repeat>
+            </xxf:dialog>
+            <!-- end menu -->
+            
+            <xf:group ref=".[instance('parameters')/dcm:code_inspector='true']">
+                <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+            </xf:group>
+            
+            <h:br clear="all"/>
+            
         </h:div>
         
         <xi:include href="edit-form-footer.xml" parse="xml"/>
