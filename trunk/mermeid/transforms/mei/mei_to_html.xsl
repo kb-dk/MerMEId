@@ -1601,7 +1601,7 @@
 				<xsl:choose>
 					<xsl:when test="$RISM_file//marc:datafield[marc:subfield[@code='g']=$siglum]">
 						<xsl:variable name="record" select="$RISM_file//marc:datafield[marc:subfield[@code='g']=$siglum]"/>
-						<a class="abbr"><xsl:value-of select="."/><span class="expan">
+						<a href="javascript:void(0);" class="abbr"><xsl:value-of select="."/><span class="expan">
 								<xsl:value-of select="$record/marc:subfield[@code='a']"/>,
 								<xsl:value-of select="$record/marc:subfield[@code='c']"/>
 							</span></a>
