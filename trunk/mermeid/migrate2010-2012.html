@@ -24,7 +24,7 @@
 
       <li>Make a backup of your collection using the recipe in the <a
       href="./INSTALL.html#backup_and_restore">INSTALL.html</a>. If you use
-      the eXist admin GUI, you'll get a zip archive. When unpacked your
+      the eXist admin GUI, you'll get a zip archive. When unpacked, your
       files will live in <kbd>migration/db/dcm/*xml</kbd></li>
 
       <li>copy the directory <kbd>MerMEId/mermeid/transforms/mei/utils</kbd>
@@ -37,7 +37,7 @@
 	<ul>
 	  <li>db (your records should be in db/dcm)</li>
 
-	  <li>utils a number of xsl scripts and a perl script called
+	  <li>utils, with a number of xsl scripts and a perl script called
 	  <kbd>sequential_transformer</kbd></li>
 
 	  <li>filter_put.xsl</li>
@@ -54,9 +54,10 @@
     <p>It takes some time, since there are four independent transforms to
     make. And there will be some warning messages because some scripts are XSL
     v2 and other v1, and saxon doesn't really like the latter. There will be
-    some intermediate results having a numeric suffix. If you successfully
-    reload the files having suffix *.xml into your database, then you've
-    migrated from mei 2010 to 2012.</p>
+    some intermediate results having a numeric suffix.</p>
+
+    <p>If you successfully reload the files having suffix *.xml into your
+    database, then you've migrated from mei 2010 to 2012.</p>
 
   </body> 
 </html>
