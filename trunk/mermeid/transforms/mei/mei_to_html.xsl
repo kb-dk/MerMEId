@@ -240,7 +240,7 @@
 				select="m:meiHead/
 				m:workDesc/
 				m:work/
-				m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event/*[name()!='biblList']//text()]]"/>
+				m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event/*[name()!='genre' and name()!='head']//text()]]"/>
 
 			<!-- global sources -->
 			<xsl:if
@@ -407,7 +407,7 @@
 				select="m:meiHead/
 				m:workDesc/
 				m:work/
-				m:history[m:creation[//text()] or m:p[text()] or m:eventList[m:event[*//text()]]]"/>
+				m:history[m:creation[//text()] or m:p[text()] or m:eventList[m:event/*[name()!='genre' and name()!='head']//text()]]"/>
 
 			<!-- global sources -->
 			<xsl:if
@@ -1058,11 +1058,14 @@
 				</xsl:for-each>
 				<!-- performances -->
 				<xsl:choose>
+					<!-- Only 1 expression, or work level performances -->
 					<xsl:when test="name(parent::node())='work' and count(../m:expressionList/m:expression)=1">
-						<xsl:apply-templates
-							select="../m:expressionList/m:expression/m:history/m:eventList[@type='performances' and m:event//text()]"
-						/>
+						<!-- Performances entered at work level -->
+						<xsl:apply-templates select="../m:expressionList/m:expression/m:history/m:eventList[@type='performances' and m:event//*[name()!='genre' and name()!='head']/text()]"/>
+						<!-- Performances entered at expression level -->
+						<xsl:apply-templates select="m:eventList[@type='performances' and m:event//*[name()!='genre' and name()!='head']/text()]"/>
 					</xsl:when>
+					<!-- Multiple expressions (versions) -->
 					<xsl:when
 						test="name(parent::node())!='work' and count(/m:mei/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression) &gt; 1">
 						<xsl:apply-templates select="m:eventList[@type='performances' and m:event//text()]"/>
@@ -1187,20 +1190,22 @@
 						select="/m:mei/m:meiHead//*[@xml:id=$evidence]"/>] </xsl:if>
 
 				<xsl:for-each select="m:biblList">
-
-					<xsl:variable name="no_of_reviews" select="count(m:bibl[m:title/text()])"/>
-					<xsl:if test="$no_of_reviews &gt; 0">
+					<xsl:variable name="no_of_refs" select="count(m:bibl[m:title/text()])"/>
+					<xsl:if test="$no_of_refs &gt; 0">
 						<xsl:choose>
-							<xsl:when test="$no_of_reviews = 1">
+							<xsl:when test="m:head='Reviews' and $no_of_refs = 1">
 								<br/>Review: </xsl:when>
 							<xsl:otherwise>
-								<br/>Reviews: </xsl:otherwise>
+								<br/><xsl:value-of select="m:head"/>: </xsl:otherwise>
 						</xsl:choose>
 						<xsl:for-each select="m:bibl[m:title/text()]">
-							<xsl:apply-templates select="."/>
+							<xsl:apply-templates select=".">
+								<xsl:with-param name="compact" select="'true'"/>
+							</xsl:apply-templates>
 						</xsl:for-each>
 					</xsl:if>
 				</xsl:for-each>
+
 			</td>
 		</tr>
 	</xsl:template>
@@ -1720,6 +1725,7 @@
 
 	<!-- bibliographic record formatting template -->
 	<xsl:template match="m:bibl">
+		<xsl:param name="compact" select="'false'"/>
 		<xsl:choose>
 			<xsl:when test="m:genre='book' and not(m:genre='article')">
 				<xsl:if test="m:title[@level='m']/text()">
@@ -1910,30 +1916,55 @@
 				</tr>
 			</xsl:when>
 
-			<xsl:otherwise>
-				<xsl:if test="normalize-space(m:creator)!=''"><xsl:apply-templates select="m:creator"/>: </xsl:if>
-				<xsl:if test="normalize-space(m:title)!=''">
+			<xsl:when test="contains(m:genre,'concert') and contains(m:genre,'program')">
+				<xsl:if test="m:editor//text()"><xsl:apply-templates select="m:editor"/> (ed.): </xsl:if>
+				<xsl:if test="m:title//text()">
 					<em><xsl:value-of select="m:title"/></em>
 				</xsl:if>
-				<xsl:if test="normalize-space(m:biblScope[@unit='vol'])">, Vol.<xsl:value-of
+				<xsl:if test="m:biblScope[@unit='vol']//text()">, Vol.<xsl:value-of
+					select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>. 
+				<xsl:apply-templates select="m:imprint"/>
+				<xsl:if test="m:creation/m:date//text()">
+					<xsl:apply-templates select="m:creation/m:date"/></xsl:if>
+				<xsl:if test="m:biblScope[@unit='page']//text()">, p. <xsl:value-of
+					select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>.
+			</xsl:when>
+
+			<xsl:otherwise>
+				<xsl:if test="m:creator//text()"><xsl:apply-templates select="m:creator"/>: </xsl:if>
+				<xsl:if test="m:title//text()">
+					<em><xsl:value-of select="m:title"/></em>
+				</xsl:if>
+				<xsl:if test="m:biblScope[@unit='vol']//text()">, Vol.<xsl:value-of
 						select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>. 
 				<xsl:apply-templates select="m:imprint"/>
-				<xsl:if test="normalize-space(m:creation/m:date)">
+				<xsl:if test="m:creation/m:date//text()">
 					<xsl:apply-templates select="m:creation/m:date"/></xsl:if>
-				<xsl:if test="normalize-space(m:biblScope[@unit='page'])">, p. <xsl:value-of
-						select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>. * </xsl:otherwise>
+				<xsl:if test="m:biblScope[@unit='page']//text()">, p. <xsl:value-of
+						select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>. * 
+			</xsl:otherwise>
 		</xsl:choose>
 		<!-- links to full text (exception: letters and diary entries handled elsewhere) -->
 		<xsl:if test="not(m:genre='diary entry' or m:genre='letter')">
-			<xsl:apply-templates select="m:annot"/>
+			<xsl:apply-templates select="m:annot">
+				<xsl:with-param name="compact" select="'true'"/>
+			</xsl:apply-templates>
 			<xsl:apply-templates select="m:ptr"/>
 		</xsl:if>
 	</xsl:template>
 	
 	<xsl:template match="m:bibl/m:annot">
-		<div>
-			<xsl:apply-templates/>
-		</div>
+		<xsl:param name="compact" select="'false'"/>
+		<xsl:choose>
+			<xsl:when test="$compact='true'">
+				<xsl:apply-templates/>
+			</xsl:when>
+			<xsl:otherwise>
+				<div>
+					<xsl:apply-templates/>
+				</div>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 	<!-- imprint -->
