@@ -39,6 +39,7 @@
         
         <!-- XBL components -->
         <xi:include href="includes/element_buttons.xbl" parse="xml"/>
+        <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
         <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
         <xi:include href="includes/date_editor.xbl" parse="xml"/>
         <xi:include href="includes/relator.xbl" parse="xml"/>
@@ -116,11 +117,23 @@
                             </xf:input>
                             <dcm:attribute-editor ref="m:geogName[@role='place']"/>
                             <h:br clear="all"/>
-                            
-                            <xf:input ref="m:corpName[@role='ensemble']" class="long">
+                    
+                    <dcm:create 
+                        nodeset="m:corpName[@role='ensemble']"
+                        label="Add ensemble"
+                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:corpName[@role='ensemble']"/>
+                    <xf:repeat nodeset="m:corpName[@role='ensemble']" id="repeat-performance-ensemble">
+                        <h:div>
+                            <xf:input ref="." class="long">
                                 <xf:label class="fixed_width">Ensemble</xf:label>
                             </xf:input>
+                            <dcm:element-buttons-typed triggers="up down add remove"
+                                nodeset="m:corpName[@role='ensemble']"
+                                index="repeat-performance-ensemble"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:corpName[@role='ensemble']"/>
                             <dcm:attribute-editor ref="m:corpName[@role='ensemble']"/>
+                        </h:div>                        
+                    </xf:repeat>
                             
                             <h:div class="persname-box">
                                 <h:div class="vertical_spacer"/>

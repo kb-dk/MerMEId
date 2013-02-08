@@ -1150,12 +1150,12 @@
 						<xsl:when test="@role!=preceding-sibling::*[1]/@role or position()=1">
 							<xsl:choose>
 								<xsl:when test="@role=following-sibling::*[1]/@role">
-									<xsl:if test="name()='persName'">
+									<xsl:if test="name()='persName' and normalize-space(@role)">
 										<xsl:value-of select="concat(@role,'s')"/><xsl:text>: </xsl:text>
 									</xsl:if>
 									<xsl:apply-templates select="."/>, </xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="name()='persName'">
+									<xsl:if test="name()='persName' and normalize-space(@role)">
 										<xsl:value-of select="@role"/><xsl:text>: </xsl:text>
 									</xsl:if>
 									<xsl:apply-templates select="."/>
