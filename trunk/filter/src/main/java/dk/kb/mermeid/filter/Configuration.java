@@ -63,14 +63,14 @@ public class Configuration {
     /**
      * @return the property names as an Enumeration of String
      */
-    private java.util.Enumeration<String> propertyNames() {
+    public java.util.Enumeration<String> propertyNames() {
         return (java.util.Enumeration<String>)this.props.propertyNames();
     }
 
     /**
      * @return parameters as a Map rather than properties
      */
-    private java.util.Map<String,Object> propertyMap(java.lang.String keyBase) {
+    public java.util.Map<String,Object> propertyMap(java.lang.String keyBase) {
 	java.util.HashMap<String,Object> map = new java.util.HashMap();
 	
 	java.util.Enumeration<String> enumeration = this.propertyNames();
