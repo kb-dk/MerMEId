@@ -33,8 +33,8 @@ rm mermeid.tar.bz2
 rm -rf MerMEId ; mkdir MerMEId
 
 cp "local_config/http_filter.xml_$F_FILE" filter/src/main/resources/http_filter.xml 
-(cd filter ; ./run_java_doc.sh)
 (cd filter ; ~/mvnsh/bin/mvn install)
+(cd filter ; ./run_java_doc.sh)
 cp filter/target/filter-1.0-SNAPSHOT.war MerMEId/filter.war
 (cd filter ; ~/mvnsh/bin/mvn clean)
 
