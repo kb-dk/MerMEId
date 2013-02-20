@@ -1556,7 +1556,7 @@
 	</xsl:template>
 	
 	<xsl:template match="m:condition[text()]">
-		<div><xsl:apply-templates/></div>
+		<div>Condition: <xsl:apply-templates/></div>
 	</xsl:template>
 	
 	<xsl:template match="m:physLoc">
