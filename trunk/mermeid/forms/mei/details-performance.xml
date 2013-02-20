@@ -297,66 +297,6 @@
                         <xf:repeat id="repeat-evidence-references"
                             nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work//m:event[@xml:id=instance('temp')/id]/m:biblList[m:head='Evidence']/m:bibl">
                             
-                            <!--
-                            <h:fieldset>
-                                <h:legend>
-                                    <xf:repeat nodeset="m:genre"><xf:output 
-                                        value="if (position()&gt;1) then ', ' else ''"/>
-                                        <xf:output value="concat(translate(substring(.,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(.,2))"/></xf:repeat>
-                                    <dcm:element-buttons 
-                                        triggers="up down copy" 
-                                        nodeset="m:bibl" 
-                                        index="repeat-evidence-references"
-                                        origin="instance('temp')/m:biblList/m:bibl"/><xf:trigger appearance="minimal"
-                                            class="non-standard_button">
-                                            <xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/></xf:label>
-                                            <xf:action ev:event="DOMActivate">
-                                                <xxf:show dialog="add-ref-dialog"/>
-                                            </xf:action>
-                                        </xf:trigger><dcm:element-buttons 
-                                            triggers="remove" 
-                                            nodeset="m:bibl" 
-                                            index="repeat-evidence-references"
-                                            origin="instance('temp')/m:biblList/m:bibl"/>
-                                </h:legend>
-                                <h:div class="vertical_spacer"/> 
-                                <xf:repeat nodeset="m:creator"><xf:output 
-                                    value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
-                                        value="."/></xf:repeat><xf:output 
-                                            value="if (normalize-space(m:creator[1]) and not(normalize-space(m:recipient))) then ': ' else ''"/>
-                                <xf:output value="if (normalize-space(m:recipient)) then concat(' to ',m:recipient) else ''"/>
-                                <h:i><xf:output value="m:title[@level='a']"/></h:i><xf:output 
-                                    value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='j'])) then concat('. ',m:title[@level='j']) else m:title[@level='j']"/>
-                                <xf:output value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='m'])) then concat('. ',m:title[@level='m']) else m:title[@level='m']"/>
-                                <xf:output value="if (normalize-space(m:title[not(@level)])) then m:title[not(@level)] else ''"/>
-                                <xf:output value="if (normalize-space(m:imprint/m:date)) then concat('(',normalize-space(m:imprint/m:date),')') else ''"/>
-                                <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient[1],m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:imprint/m:date[1]))='']"> [No description] </xf:group>                           
-                                <h:div class="vertical_spacer"/> 
-                                <xf:switch>
-                                    <xf:case id="hide_evidence_reference">
-                                        <h:div>
-                                            <xf:trigger>
-                                                <xf:label>Show details</xf:label>
-                                                <xf:action ev:event="DOMActivate">
-                                                    <xf:toggle case="show_evidence_reference"/>
-                                                </xf:action>
-                                            </xf:trigger>
-                                        </h:div>
-                                    </xf:case>
-                                    <xf:case id="show_evidence_reference">
-                                        <h:div>
-                                            <xf:trigger>
-                                                <xf:label>Hide details</xf:label>
-                                                <xf:action ev:event="DOMActivate">
-                                                    <xf:toggle case="hide_evidence_reference"/>
-                                                </xf:action>
-                                            </xf:trigger>
-                                        </h:div>
-                                        <dcm:bibl-input/>
-                                    </xf:case>
-                                </xf:switch>
-                            </h:fieldset>-->
-                            
                             <h:tr class="hoverclass">
                                 <h:td class="number_cell">
                                     <xf:output value="position()"/>&#160;
