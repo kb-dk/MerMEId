@@ -36,7 +36,11 @@ cp "local_config/http_filter.xml_$F_FILE" filter/src/main/resources/http_filter.
 (cd filter ; ./run_java_doc.sh)
 (cd filter ; ~/mvnsh/bin/mvn install)
 
+# We find everything, and greps away what we shouldn't distribute,
+# beginning with ourselves
+
 tar cf - `find . -type f -print | \
+    grep -v build-distro.sh | \
     grep -v MerMEId | \
     grep -v ebook | \
     grep -v svn | \
