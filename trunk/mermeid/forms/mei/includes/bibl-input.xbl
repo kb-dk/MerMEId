@@ -137,7 +137,7 @@
                                         </xf:input>
                                         <xf:trigger appearance="minimal">
                                             <xf:label>
-                                                <h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete"
+                                                <h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete"
                                                 />
                                             </xf:label>
                                             <xf:delete nodeset="../m:biblScope" at="index('repeat-bibl-biblscope')"
@@ -148,7 +148,7 @@
                                 </xf:repeat>
                                 <h:div class="vertical_spacer"/>
                                 <xf:trigger class="create_button">
-                                    <xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/> Add
+                                    <xf:label><h:img src="/../editor/images/add.gif" alt="Add" title="Add row"/> Add
                                         vol./issue/pages</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xxf:variable name="ref_type"

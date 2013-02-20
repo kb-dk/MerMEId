@@ -68,16 +68,16 @@
                     
                     <h:div style="float:right">
                         <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                            <xf:label><h:img src="/../editor/images/save_small.png" alt="Save"/> Save</xf:label>
                         </xf:submit>
                         <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                            <xf:label><h:img src="/../editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{$uri}" show="replace"/>
                             </xf:action>
                         </xf:submit>
                         <xf:trigger>
-                            <xf:label><h:img src="http:/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
+                            <xf:label><h:img src="/../editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{$uri}" show="replace"/>
                             </xf:action>
@@ -394,7 +394,7 @@
                                         <!-- the reference to the top level instrumentation is provided by the n attribute -->
                                         <xf:group ref=".[@xml:id=$thisInstrumentation/m:instrVoiceGrp/@n]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/>
+                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/>
                                                     <h:span>
                                                         <xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>
                                                         <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
@@ -407,7 +407,7 @@
                                         </xf:group>
                                         <xf:group ref=".[not(@xml:id=$thisInstrumentation/m:instrVoiceGrp/@n)]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this ensemble"/>
+                                                <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this ensemble"/>
                                                     <h:span class="disabled">
                                                         <xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>
                                                         <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
@@ -452,7 +452,7 @@
                                                 <h:div>&#160;&#160;&#160;&#160;
                                                     <xf:group ref=".[@xml:id=$thisEnsemble/m:instrVoice/@n]">
                                                         <xf:trigger appearance="minimal">
-                                                            <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
+                                                            <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
                                                                 <h:span>
                                                                     <xf:output value="@count"/>
                                                                     <xf:output value="."/>
@@ -466,7 +466,7 @@
                                                     </xf:group>
                                                     <xf:group ref=".[not(@xml:id=$thisEnsemble/m:instrVoice/@n)]">
                                                         <xf:trigger appearance="minimal">
-                                                            <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this performer"/>
+                                                            <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this performer"/>
                                                                 <h:span class="disabled">
                                                                     <xf:output value="@count"/>
                                                                     <xf:output value="."/>
@@ -516,7 +516,7 @@
                                     <h:div>
                                         <xf:group ref=".[@xml:id=$thisInstrumentation/m:instrVoice/@n]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
+                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
                                                     <h:span>
                                                         <xf:output value="@count"/>
                                                         <xf:output value="."/>
@@ -530,7 +530,7 @@
                                         </xf:group>
                                         <xf:group ref=".[not(@xml:id=$thisInstrumentation/m:instrVoice/@n)]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this performer"/>
+                                                <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this performer"/>
                                                     <h:span class="disabled">
                                                         <xf:output value="@count"/>
                                                         <xf:output value="."/>
@@ -593,7 +593,7 @@
                                     <h:div>
                                         <xf:group ref=".[@xml:id=$thisCastList/m:castItem/@n]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="http:/editor/images/yes.png" alt="yes" title="Click to remove this role"/>
+                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this role"/>
                                                     <h:span>
                                                         <xf:output value="m:role//text()[1]"/>
                                                     </h:span>
@@ -605,7 +605,7 @@
                                         </xf:group>
                                         <xf:group ref=".[not(@xml:id=$thisCastList/m:castItem/@n)]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="http:/editor/images/no.png" alt="no" title="Click to add this role"/>
+                                                <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this role"/>
                                                     <h:span class="disabled">
                                                         <xf:output value="m:role//text()[1]"/>
                                                     </h:span>

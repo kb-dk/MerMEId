@@ -211,7 +211,7 @@
                                     <xf:label class="dcm-date-editor-label">Date: </xf:label>
                                 </dcm:dropdown-month-date>
                                 <xf:trigger appearance="minimal">
-                                    <xf:label><h:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
+                                    <xf:label><h:img src="/../editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:setvalue ref="isodate" value="''"/>
                                     </xf:action>
@@ -226,7 +226,7 @@
                                         if you know the exact start date (or start month, or year) of the event</h:span></h:a></xf:label>
                                 </dcm:dropdown-month-date>
                                 <xf:trigger appearance="minimal">
-                                    <xf:label><h:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
+                                    <xf:label><h:img src="/../editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:setvalue ref="startdate" value="''"/>
                                     </xf:action>
@@ -237,7 +237,7 @@
                                         if you only know that the event could not have started before a certain date (or month, or year)</h:span></h:a></xf:label>
                                 </dcm:dropdown-month-date>
                                 <xf:trigger appearance="minimal">
-                                    <xf:label><h:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
+                                    <xf:label><h:img src="/../editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:setvalue ref="notbefore" value="''"/>
                                     </xf:action>
@@ -251,7 +251,7 @@
                                         if you know the exact end date (or end month, or year) of the event</h:span></h:a></xf:label>
                                 </dcm:dropdown-month-date>
                                 <xf:trigger appearance="minimal">
-                                    <xf:label><h:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
+                                    <xf:label><h:img src="/../editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:setvalue ref="enddate" value="''"/>
                                     </xf:action>
@@ -262,7 +262,7 @@
                                         if you only know that the event must have ended before a certain date (or month, or year)</h:span></h:a></xf:label>
                                 </dcm:dropdown-month-date>
                                 <xf:trigger appearance="minimal">
-                                    <xf:label><h:img src="http:/editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
+                                    <xf:label><h:img src="/../editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:setvalue ref="notafter" value="''"/>
                                     </xf:action>

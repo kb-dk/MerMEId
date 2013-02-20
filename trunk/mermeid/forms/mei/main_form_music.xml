@@ -68,7 +68,7 @@
 							<xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
 								<h:div>
 									<xf:group ref=".[number($num_ex)=1 and .!='']">
-										<h:a class="help_plain"><h:img src="http:/editor/images/warning.png" 
+										<h:a class="help_plain"><h:img src="/../editor/images/warning.png" 
 											alt="warning"/><h:span class="comment">
 												When only one version is given, 
 												no title should be entered at this level. <h:br/>
@@ -91,7 +91,7 @@
 											index="repeat-version-titles"
 											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
 										<xf:trigger appearance="minimal" class="non-standard_button">
-											<xf:label><img src="http:/editor/images/remove.gif" alt="Delete row"/></xf:label>
+											<xf:label><img src="/../editor/images/remove.gif" alt="Delete row"/></xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xf:setvalue ref="." value="''"/>
 											</xf:action>
@@ -111,7 +111,7 @@
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:identifier"/>
 						<xf:group ref="m:identifier">
 							<xf:group ref=".[number($num_ex)=1 and .!='']">
-								<h:a class="help_plain"><h:img src="http:/editor/images/warning.png" 
+								<h:a class="help_plain"><h:img src="/../editor/images/warning.png" 
 									alt="warning"/><h:span class="comment">
 										When only one version is given, 
 										no version identifier should normally be entered.
@@ -158,7 +158,7 @@
 								<xf:label class="fixed_width_short">Tempo</xf:label>
 							</xf:input>
 							<xf:trigger appearance="minimal" ref="m:tempo">
-								<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+								<xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 								<xf:action ev:event="DOMActivate">
 									<xf:delete nodeset="."/>
 								</xf:action>
@@ -188,7 +188,7 @@
 									</xf:item>
 								</xf:select1>
 								<xf:trigger appearance="minimal">
-									<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+									<xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 									<xf:action ev:event="DOMActivate">
 										<xf:delete nodeset="."/>
 									</xf:action>
@@ -204,7 +204,7 @@
 								<h:span class="fixed_width_short">Key</h:span>
 								<xi:include href="includes/key_select.xml" parse="xml"/>
 								<xf:trigger appearance="minimal">
-									<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+									<xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 									<xf:action ev:event="DOMActivate">
 										<xf:delete nodeset="."/>
 									</xf:action>
@@ -296,7 +296,7 @@
 						</h:div>
 						<xf:group ref=".[m:incip/m:incipText/m:p]">
 							<h:span class="blocklabel">Text incipit
-								<!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+								<!--<h:a class="help_plain"><h:img src="/../editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
 							</h:span>
 							<xf:repeat nodeset="m:incip/m:incipText/m:p" id="text-incipit-repeat" class="input_group">
 								<xf:input ref="." class="maxlong"><xf:label/></xf:input> 
@@ -425,7 +425,7 @@
 								<xf:label>Ensembles</xf:label>
 								<xf:repeat nodeset="instance('instrumentation')/m:instrVoiceGrp[@code]" id="ensemble-menu-repeat">
 									<xf:trigger submission="replace-form-with" appearance="minimal">
-										<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/>
+										<xf:label><h:img src="/../editor/images/add.gif" alt="Add"/>
 											<xf:output ref="if (m:head!='') then m:head else '[empty ensemble]'"/>
 										</xf:label>
 										<xf:action ev:event="DOMActivate">
@@ -446,7 +446,7 @@
 							<xf:group ref="m:instrumentation">
 								<h:div class="blocklabel strong">Ensembles </h:div>
 								<xf:trigger ref=".[count(m:instrVoiceGrp)=0]" class="create_button">
-									<xf:label><img src="http:/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
+									<xf:label><img src="/../editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
 									<xf:action ev:event="DOMActivate">
 										<xxf:show dialog="ensemble-menu"/>
 									</xf:action>
@@ -461,13 +461,13 @@
 												origin="instance('instrumentation')/m:instrVoiceGrp[1]"
 												index="repeat-ensemble"/><xf:trigger 
 													appearance="minimal" class="non-standard_button">
-													<xf:label><img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+													<xf:label><img src="/../editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xxf:show dialog="ensemble-menu"/>
 													</xf:action>
 												</xf:trigger>
 											<xf:trigger appearance="minimal">
-												<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+												<xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 												<xf:action ev:event="DOMActivate">
 													<xf:delete nodeset="." at="index('repeat-ensemble')"/>
 													<!-- remove references to deleted items -->
@@ -525,7 +525,7 @@
 											<xf:label>Performers</xf:label>
 											<xf:repeat nodeset="instance('instrumentation')/m:instrVoiceGrp[m:instrVoice]" id="ensemble-performer-menu-repeat">
 												<xf:trigger submission="replace-form-with" appearance="minimal">
-													<xf:label><h:img src="http:/editor/images/add.gif" alt="Add"/>
+													<xf:label><h:img src="/../editor/images/add.gif" alt="Add"/>
 														<xf:output ref="if (m:head!='') then m:head else '[single performer]'"/>
 													</xf:label>
 													<xf:action ev:event="DOMActivate">
@@ -548,7 +548,7 @@
 												by a list of performers, or both.</h:span></h:a></h:span>
 										</h:div>
 										<xf:trigger ref=".[count(m:instrVoice)=0]" style="margin-left: 8px;" class="create_button">
-											<xf:label><img src="http:/editor/images/list.png" alt="Add from list"/> Add performer(s)</xf:label>
+											<xf:label><img src="/../editor/images/list.png" alt="Add from list"/> Add performer(s)</xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xxf:show dialog="ensemble-performer-menu"/>
 											</xf:action>
@@ -577,7 +577,7 @@
 													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
 													index="repeat-ensemble-performer"/>
 												<xf:trigger>
-													<xf:label><img src="http:/editor/images/list.png" alt="Add" title="Add from list"/> Add from list</xf:label>
+													<xf:label><img src="/../editor/images/list.png" alt="Add" title="Add from list"/> Add from list</xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xxf:show dialog="ensemble-performer-menu"/>
 													</xf:action>
@@ -696,7 +696,7 @@
 											<!-- edit buttons --> 
 											<h:span class="editmenu" style="margin-left: 8px;">
 												<xf:trigger appearance="minimal" class="element-button">
-													<xf:label><h:img src="http:/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
+													<xf:label><h:img src="/../editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xxf:variable name="idx" select="index('repeat-role')"/>
 														<xf:insert context="parent::node()" nodeset="m:name" at="$idx"
@@ -707,7 +707,7 @@
 													</xf:action>
 												</xf:trigger>
 												<xf:trigger appearance="minimal" class="element-button">
-													<xf:label><h:img src="http:/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+													<xf:label><h:img src="/../editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xxf:variable name="idx" select="index('repeat-role')"/>
 														<xf:insert context="parent::node()" nodeset="m:name" at="$idx"
@@ -718,7 +718,7 @@
 													</xf:action>
 												</xf:trigger>
 												<xf:trigger appearance="minimal" class="element-button">
-													<xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+													<xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xxf:variable name="idx" select="index('repeat-role')"/>
 														<xf:delete nodeset="../m:name" at="$idx"/>
@@ -845,7 +845,7 @@
 										<h:td style="text-align:right;">
 											<xf:group ref=".[instance('temp')/file_exists='true']">
 												<xf:trigger appearance="minimal">
-													<xf:label><h:img src="http:/editor/images/edit.gif" title="Open component editor"/></xf:label>
+													<xf:label><h:img src="/../editor/images/edit.gif" title="Open component editor"/></xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xxf:variable name="uri" 
 															select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-expression.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
@@ -865,15 +865,15 @@
 										</h:td>
 										<h:td class="buttons_cell" style="text-align:right;">
 											
-											<h:img src="http:/editor/images/arrow_left_disabled.png" class="button_patch"/>
+											<h:img src="/../editor/images/arrow_left_disabled.png" class="button_patch"/>
 											
 											<xxf:variable name="tooManySublevels" select="m:componentGrp/m:expression/m:componentGrp/m:expression"/> 
 											<xxf:variable name="expTarget" select="preceding-sibling::m:expression[1][not($tooManySublevels)]"/>
 											<xf:group ref=".[not($expTarget)]">
-												<h:img src="http:/editor/images/arrow_right_disabled.png" class="button_patch"/><xf:output value="''"/>
+												<h:img src="/../editor/images/arrow_right_disabled.png" class="button_patch"/><xf:output value="''"/>
 											</xf:group>
 											<xf:trigger appearance="minimal" ref=".[$expTarget]">
-												<xf:label><h:img src="http:/editor/images/arrow_right.png" alt="move right" title="Make this a sub-component (child) of the above"/></xf:label>
+												<xf:label><h:img src="/../editor/images/arrow_right.png" alt="move right" title="Make this a sub-component (child) of the above"/></xf:label>
 												<xf:action ev:event="DOMActivate">
 													<xxf:variable name="expOrig" select="."/>
 													<xf:action if="not($expTarget/m:componentGrp)">
@@ -910,10 +910,10 @@
 														<h:tr class="hoverclass">
 															<h:td class="tree_cell">
 																<xf:group ref=".[count(following-sibling::*)=0]">
-																	<h:img class="tree" src="http:/editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
+																	<h:img class="tree" src="/../editor/images/tree-1.png" alt="sub-element"></h:img>&#160;
 																</xf:group>
 																<xf:group ref=".[count(following-sibling::*)!=0]">
-																	<h:img class="tree" src="http:/editor/images/tree-2.png" alt="sub-element"></h:img>&#160;
+																	<h:img class="tree" src="/../editor/images/tree-2.png" alt="sub-element"></h:img>&#160;
 																</xf:group>
 															</h:td>
 															<h:td>
@@ -930,7 +930,7 @@
 															<h:td style="text-align:right;">
 																<xf:group ref=".[instance('temp')/file_exists='true']">
 																	<xf:trigger appearance="minimal">
-																		<xf:label><h:img src="http:/editor/images/edit.gif" title="Open component editor"/></xf:label>
+																		<xf:label><h:img src="/../editor/images/edit.gif" title="Open component editor"/></xf:label>
 																		<xf:action ev:event="DOMActivate">
 																			<xxf:variable name="uri" 
 																				select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-expression.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
@@ -951,7 +951,7 @@
 															<h:td class="buttons_cell" style="text-align:right;">
 																
 																<xf:trigger appearance="minimal">
-																	<xf:label><h:img src="http:/editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
+																	<xf:label><h:img src="/../editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
 																	<xf:action ev:event="DOMActivate">
 																		<xxf:variable name="origin" select="."/>
 																		<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list1')" position="after"/>
@@ -962,10 +962,10 @@
 																<xxf:variable name="tooManySublevels" select="m:componentGrp/m:expression"/> 
 																<xxf:variable name="expTarget" select="preceding-sibling::m:expression[1][not($tooManySublevels)]"/>
 																<xf:group ref=".[not($expTarget)]">
-																	<h:img src="http:/editor/images/arrow_right_disabled.png" class="button_patch"/><xf:output value="''"/>
+																	<h:img src="/../editor/images/arrow_right_disabled.png" class="button_patch"/><xf:output value="''"/>
 																</xf:group>
 																<xf:trigger appearance="minimal" ref=".[$expTarget]">
-																	<xf:label><h:img src="http:/editor/images/arrow_right.png" alt="move right" title="Make this a sub-component (child) of the above"/></xf:label>
+																	<xf:label><h:img src="/../editor/images/arrow_right.png" alt="move right" title="Make this a sub-component (child) of the above"/></xf:label>
 																	<xf:action ev:event="DOMActivate">
 																		<xxf:variable name="expOrig" select="."/>
 																		<xf:action if="not($expTarget/m:componentGrp)">
@@ -1002,18 +1002,18 @@
 																			<h:tr class="hoverclass">
 																				<h:td class="tree_cell">
 																					<xf:group ref=".[count(../../following-sibling::*)!=0]">
-																						<h:img class="tree" src="http:/editor/images/tree-3.png" alt="sub-element"/>
+																						<h:img class="tree" src="/../editor/images/tree-3.png" alt="sub-element"/>
 																					</xf:group>
 																					<xf:group ref=".[count(../../following-sibling::*)=0]">
-																						<h:img class="tree" src="http:/editor/images/spacer.png" width="22" alt="spacer"/>
+																						<h:img class="tree" src="/../editor/images/spacer.png" width="22" alt="spacer"/>
 																					</xf:group>
 																				</h:td>
 																				<h:td class="tree_cell">
 																					<xf:group ref=".[count(following-sibling::*)=0]">
-																						<h:img class="tree" src="http:/editor/images/tree-1.png" alt="sub-element"/>
+																						<h:img class="tree" src="/../editor/images/tree-1.png" alt="sub-element"/>
 																					</xf:group>
 																					<xf:group ref=".[count(following-sibling::*)!=0]">
-																						<h:img class="tree" src="http:/editor/images/tree-2.png" alt="sub-element"/>
+																						<h:img class="tree" src="/../editor/images/tree-2.png" alt="sub-element"/>
 																					</xf:group>
 																				</h:td>
 																				<h:td>
@@ -1030,7 +1030,7 @@
 																				<h:td style="text-align:right;">
 																					<xf:group ref=".[instance('temp')/file_exists='true']">
 																						<xf:trigger appearance="minimal">
-																							<xf:label><h:img src="http:/editor/images/edit.gif" title="Open component editor"/></xf:label>
+																							<xf:label><h:img src="/../editor/images/edit.gif" title="Open component editor"/></xf:label>
 																							<xf:action ev:event="DOMActivate">
 																								<xxf:variable name="uri" 
 																									select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-expression.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
@@ -1051,7 +1051,7 @@
 																				<h:td class="buttons_cell" style="text-align:right;">
 																					
 																					<xf:trigger appearance="minimal">
-																						<xf:label><h:img src="http:/editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
+																						<xf:label><h:img src="/../editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
 																						<xf:action ev:event="DOMActivate">
 																							<xxf:variable name="origin" select="."/>
 																							<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list2')" position="after"/>
@@ -1059,7 +1059,7 @@
 																						</xf:action>
 																					</xf:trigger>
 																					
-																					<h:img src="http:/editor/images/arrow_right_disabled.png" class="button_patch"/>
+																					<h:img src="/../editor/images/arrow_right_disabled.png" class="button_patch"/>
 																					
 																					<dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list3" 
 																						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>

@@ -69,16 +69,16 @@
                     
                     <h:div style="float:right">
                         <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="http:/editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                            <xf:label><h:img src="/../editor/images/save_small.png" alt="Save"/> Save</xf:label>
                         </xf:submit>
                         <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="http:/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                            <xf:label><h:img src="/../editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{$uri}" show="replace"/>
                             </xf:action>
                         </xf:submit>
                         <xf:trigger>
-                            <xf:label><h:img src="http:/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
+                            <xf:label><h:img src="/../editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{$uri}" show="replace"/>
                             </xf:action>
@@ -148,7 +148,7 @@
                             <h:fieldset>
                                 <h:legend>Classification
                                     <xf:trigger appearance="minimal" ref="m:classification[//m:work/m:classification/m:classCode[@xml:id='DcmContentClass']]">
-                                        <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete"/></xf:label>
+                                        <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete"/></xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:delete nodeset="."/>
                                         </xf:action>
@@ -450,7 +450,7 @@
                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='source_description']"/>
                                 <xf:textarea ref="m:annot[@type='source_description']" mediatype="text/html"/>
                                 <xf:trigger appearance="minimal" ref="m:annot[@type='source_description']">
-                                    <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete"/></xf:label>
+                                    <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xxf:variable name="parent" select="parent::node()"/>
                                         <xf:delete nodeset="."/>
@@ -818,7 +818,7 @@
                                     <xf:repeat nodeset="m:componentGrp/m:source" id="repeat-source-component">
                                         <h:tr class="component">
                                             <h:td class="{if(position()=last()) then 'last_cell' else 'index_cell'}">
-                                                <h:img src="http:/editor/images/tree-1.png" alt="component" border="0"/>
+                                                <h:img src="/../editor/images/tree-1.png" alt="component" border="0"/>
                                             </h:td>
                                             <h:td>
                                                 <h:fieldset class="compact">
@@ -863,7 +863,7 @@
                                                             
                                                             <h:span class="blocklabel">Description <h:a class="help">?<h:span class="comment">A more
                                                                 detailed description of this component's contents.</h:span></h:a> 
-                                                                <!--<h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
+                                                                <!--<h:a class="help_plain"><h:img src="/../editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
                                                             </h:span>
                                                             <dcm:create
                                                                 nodeset="m:notesStmt"

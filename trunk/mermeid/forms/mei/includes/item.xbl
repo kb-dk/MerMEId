@@ -132,7 +132,7 @@
                                 item. The name or RISM siglum may be given, or both.</h:span></h:a>
                                 <xf:group ref=".[count(m:repository)&lt;2]">
                                     <xf:trigger appearance="minimal">
-                                        <xf:label><h:img src="http:/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                                        <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:delete nodeset="parent::node()"/>
                                             <xf:dispatch name="xforms-value-changed" target="form-group"/>
@@ -312,7 +312,7 @@
                                 <h:legend>Title page 
                                     <h:a class="help">?<h:span class="comment">Transcription of the item's title page. Multiple title pages
                                         may be added if necessary</h:span></h:a>
-                                    <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                                    <h:a class="help_plain"><h:img src="/../editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                                 </h:legend>
                                 <dcm:create nodeset="m:titlePage"
                                     label="Add title page"
@@ -553,7 +553,7 @@
                                     <xf:repeat nodeset="m:componentGrp/m:item" id="repeat-item-component">
                                         <h:tr class="component">
                                             <h:td class="{if(position()=last()) then 'last_cell' else 'index_cell'}">
-                                                <h:img src="http:/editor/images/tree-1.png" alt="component" border="0"/>
+                                                <h:img src="/../editor/images/tree-1.png" alt="component" border="0"/>
                                             </h:td>
                                             <h:td>
                                                 <h:fieldset class="compact">
@@ -603,7 +603,7 @@
                                                                         <h:legend>Title page 
                                                                             <h:a class="help">?<h:span class="comment">Transcription of the item's title page. Multiple title pages
                                                                                 may be added if necessary</h:span></h:a>
-                                                                            <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                                                                            <h:a class="help_plain"><h:img src="/../editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                                                                         </h:legend>
                                                                         <xf:repeat nodeset="m:titlePage" id="component-physdesc-titlepage">
                                                                             <xf:input ref="@label">
@@ -693,7 +693,7 @@
                                                                         Information on the item's physical appearance and condition should be given in the 
                                                                         "physical description" area below.
                                                                     </h:span></h:a> 
-                                                                        <h:a class="help_plain"><h:img src="http:/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
+                                                                        <h:a class="help_plain"><h:img src="/../editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                                                                     </h:span>
                                                                     <xf:textarea ref="m:annot[@type='source_description']" mediatype="text/html"/>
                                                                     <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
