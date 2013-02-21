@@ -13,15 +13,18 @@
 # of the file names in the local_config directory.
 #
 
-while getopts "f:m:" flag
+export D_PATH=MerMEId
+
+while getopts "f:m:d:" flag
 do
   case $flag in
     f) F_FILE=$OPTARG; export F_FILE ;;
     m) M_FILE=$OPTARG; export M_FILE ;;
+    d) D_PATH=$OPTARG; export D_PATH ;;
   esac
 done
 
-echo "We are about to build a $F_FILE filter and $M_FILE MerMEId"
+echo "We are about to build a $F_FILE filter and $M_FILE MerMEId in $D_PATH"
 
 if  [ ! -f "local_config/http_filter.xml_$F_FILE" ] || [ ! -f "local_config/mermeid_configuration.xml_$M_FILE" ] ; then  
     echo "No valid configuration"
@@ -30,12 +33,12 @@ if  [ ! -f "local_config/http_filter.xml_$F_FILE" ] || [ ! -f "local_config/merm
 fi
 
 rm mermeid.tar.bz2
-rm -rf MerMEId ; mkdir MerMEId
+rm -rf $D_PATH ; mkdir $D_PATH
 
 cp "local_config/http_filter.xml_$F_FILE" filter/src/main/resources/http_filter.xml 
 (cd filter ; ~/mvnsh/bin/mvn install)
 (cd filter ; ./run_java_doc.sh)
-cp filter/target/filter-1.0-SNAPSHOT.war MerMEId/filter.war
+cp filter/target/filter-1.0-SNAPSHOT.war $D_PATH/filter.war
 (cd filter ; ~/mvnsh/bin/mvn clean)
 
 # We find everything, and greps away what we shouldn't distribute,
@@ -43,22 +46,22 @@ cp filter/target/filter-1.0-SNAPSHOT.war MerMEId/filter.war
 
 tar cf - `find . -type f -print | \
     grep -v build-distro.sh | \
-    grep -v MerMEId | \
+    grep -v $D_PATH | \
     grep -v ebook | \
     grep -v svn | \
     grep -v local_config | \
-    grep -v cms `  | (cd MerMEId ; tar xvf - )
+    grep -v cms `  | (cd $D_PATH ; tar xvf - )
 
 
 cp "local_config/mermeid_configuration.xml_$M_FILE" \
-    MerMEId/mermeid/forms/mei/mermeid_configuration.xml
+    $D_PATH/mermeid/forms/mei/mermeid_configuration.xml
 
 cp "local_config/standard_bibliography.xml_$M_FILE" \
-    MerMEId/xqueries/library/standard_bibliography.xml
+    $D_PATH/xqueries/library/standard_bibliography.xml
 
 
-(cd MerMEId/mermeid ; jar cf ../editor.war .)
-tar jcvf mermeid.tar.bz2 MerMEId
+(cd $D_PATH/mermeid ; jar cf ../editor.war .)
+tar jcvf mermeid.tar.bz2 $D_PATH
 
 #
 # $Id$
