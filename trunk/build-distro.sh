@@ -109,10 +109,8 @@ if  [ "$M_FILE" = "demo" ]; then
 fi
 (cd "$D_PATH/MerMEId/mermeid" ; jar cf ../editor.war .)
 
-
-
 #
-# $Id: build-distro.sh 470 2013-02-20 10:03:30Z slu $
+# $Id$
 #
 
 
