@@ -36,8 +36,11 @@
         
         <div class="about_main">
             
-            <p style="text-align:center">Version: 2013 $Revision:$</p>
-            <p style="font-size:.8em">$Date::           $</p>
+            <p style="text-align:center">Version: 2013 
+                rev.<xf:output value="substring-before(substring-after('$Revision$','$Revision:: '),'$')"/>
+                (<xf:output value="substring-before(substring-after('$Date::             $','$Date::       $')"/>)
+            </p>
+            <p style=""></p>
 
             <p>MerMEId (Metadata Editor and Repository for MEI Data) is written
                 and distributed by:</p>
