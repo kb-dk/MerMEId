@@ -155,7 +155,7 @@
 								label="Add tempo"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:tempo"/>
 							<xf:input ref="m:tempo" class="maxlong">
-								<xf:label class="fixed_width_short">Tempo</xf:label>
+								<xf:label class="fixed_width">Tempo</xf:label>
 							</xf:input>
 							<xf:trigger appearance="minimal" ref="m:tempo">
 								<xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
@@ -171,8 +171,8 @@
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:meter"/>
 							<xf:group ref="m:meter">
 								<xf:input ref="@count" class="minimal_length">
-									<xf:label class="fixed_width_short">Metre</xf:label>
-								</xf:input>/ <xf:input ref="@unit" class="minimal_length"/> or symbol: 
+									<xf:label class="fixed_width">Metre</xf:label>
+								</xf:input>/<xf:input ref="@unit" class="minimal_length"/> or symbol: 
 								<xf:select1	ref="@sym" class="auto_length">
 									<xf:item>
 										<xf:label>-</xf:label>
@@ -201,7 +201,6 @@
 								label="Add main key"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:key"/>
 							<xf:group ref="m:key">
-								<h:span class="fixed_width_short">Key</h:span>
 								<xi:include href="includes/key_select.xml" parse="xml"/>
 								<xf:trigger appearance="minimal">
 									<xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
@@ -211,8 +210,35 @@
 								</xf:trigger>
 								<dcm:attribute-editor/>
 							</xf:group>
+							<h:br clear="all"/>
+							<dcm:create 
+								nodeset="m:extent"
+								label="Add duration"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:extent"/>
+							<xf:group ref="m:extent">
+								<xf:input ref=".">
+									<xf:label class="fixed_width">Duration <h:a class="help">?<h:span 
+										class="comment">Any indication of duration, like "01:23:00", "25'30''" or "approx. 10'". 
+										The unit of measurement (minutes, for instance) may be specified in the  
+									optional "unit" field.</h:span></h:a></xf:label>
+								</xf:input>
+								<xf:input ref="@unit">
+									<xf:label>Unit <h:a class="help">?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
+										<h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
+										Please use underscore _ instead.</h:span></h:a></xf:label>
+								</xf:input>
+								<xf:trigger appearance="minimal">
+									<xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+									<xf:action ev:event="DOMActivate">
+										<xf:delete nodeset="."/>
+									</xf:action>
+								</xf:trigger>
+								<dcm:attribute-editor/>
+							</xf:group>
+							
 						</h:div>   
 						
+						<h:div class="vertical_spacer"/>
 						<h:span class="blocklabel strong">Incipits <h:a class="help">?<h:span class="comment">Both 
 							music and text incipits may be added. Music incipits can be added as links to graphic files
 							or entered using an encoding such as <em>Plaine &amp; Easie Code</em>.

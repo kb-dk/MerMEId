@@ -297,6 +297,7 @@
 			<xsl:apply-templates select="m:tempo[text()]"/>
 			<xsl:apply-templates select="m:meter[normalize-space(concat(@count,@unit,@sym))]"/>
 			<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
+			<xsl:apply-templates select="m:extent"/>
 			<xsl:apply-templates select="m:incip"/>
 
 			<!-- external links -->
@@ -649,6 +650,7 @@
 		<xsl:apply-templates select="m:tempo[text()]"/>
 		<xsl:apply-templates select="m:meter[normalize-space(concat(@count,@unit,@sym))]"/>
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
+		<xsl:apply-templates select="m:extent"/>
 		<xsl:apply-templates select="m:incip"/>
 		<xsl:apply-templates select="m:componentGrp"/>
 	</xsl:template>
@@ -872,6 +874,11 @@
 				</xsl:element>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+	
+	
+	<xsl:template match="m:expression/m:extent[text()]">
+		<p>Duration: <xsl:apply-templates/>&#160;<xsl:apply-templates select="@unit"/></p>
 	</xsl:template>
 	
 	<!-- work-related templates -->

@@ -166,7 +166,7 @@
                     
                     <h:div>
                         <xf:input ref="@n" class="short">
-                            <xf:label class="fixed_width_short">No. <h:a class="help">?<h:span 
+                            <xf:label class="fixed_width">No. <h:a class="help">?<h:span 
                                 class="comment">Movement, section or scene numbers may be entered either here 
                                 or as part of the title</h:span></h:a></xf:label>
                         </xf:input>
@@ -174,14 +174,14 @@
                     <xf:group ref="m:titleStmt">
                         <xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
                             <h:div>
-                                <h:label class="fixed_width_short">Title</h:label><xi:include 
+                                <h:label class="fixed_width">Title</h:label><xi:include 
                                     href="includes/input_with_xmllang.xml" parse="xml"/>
                                 <dcm:element-buttons 
                                     triggers="all" 
                                     nodeset="m:title" 
                                     index="repeat-version-titles"
                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
-                                <dcm:attribute-editor ref="."/>
+                                <dcm:attribute-editor/>
                             </h:div>
                         </xf:repeat>
                     </xf:group>                                    
@@ -191,7 +191,7 @@
                             label="Add tempo"
                             origin="instance('empty-instance')/m:meiHead/m:workDesc//m:tempo[1]"/>
                         <xf:input ref="m:tempo" class="maxlong">
-                            <xf:label class="fixed_width_short">Tempo</xf:label>
+                            <xf:label class="fixed_width">Tempo</xf:label>
                         </xf:input>
                         <dcm:attribute-editor ref="m:tempo"/>
                         <h:br clear="all"/>  
@@ -199,8 +199,8 @@
                             label="Add meter"
                             origin="instance('empty-instance')/m:meiHead/m:workDesc//m:meter[1]"/>
                         <xf:input ref="m:meter/@count" class="minimal_length">
-                            <xf:label class="fixed_width_short">Metre</xf:label>
-                        </xf:input>/ <xf:input ref="m:meter/@unit" class="minimal_length"/> or symbol: 
+                            <xf:label class="fixed_width">Metre</xf:label>
+                        </xf:input>/<xf:input ref="m:meter/@unit" class="minimal_length"/> or symbol: 
                         <xf:select1	ref="m:meter/@sym" class="auto_length">
                             <xf:item>
                                 <xf:label>-</xf:label>
@@ -221,9 +221,33 @@
                         label="Add key"
                         origin="instance('empty-instance')/m:meiHead/m:workDesc//m:key[1]"/>
                     <xf:group ref="m:key">
-                        <h:label class="fixed_width_short">Key</h:label>
                         <xi:include href="includes/key_select.xml" parse="xml"/>
-                        <dcm:attribute-editor ref="."/>
+                        <dcm:attribute-editor/>
+                    </xf:group>
+                    <h:br clear="all"/>
+                    <dcm:create 
+                        nodeset="m:extent"
+                        label="Add duration"
+                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:extent"/>
+                    <xf:group ref="m:extent">
+                        <xf:input ref=".">
+                            <xf:label class="fixed_width">Duration <h:a class="help">?<h:span 
+                                class="comment">Any indication of the duration, like "01:23:00", "25'30''" or "approx. 10'". 
+                                The unit of measurement (minutes, for instance) may be specified in the  
+                                optional "unit" field.</h:span></h:a></xf:label>
+                        </xf:input>
+                        <xf:input ref="@unit">
+                            <xf:label>Unit <h:a class="help">?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
+                                <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
+                                Please use underscore _ instead.</h:span></h:a></xf:label>
+                        </xf:input>
+                        <xf:trigger appearance="minimal">
+                            <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:delete nodeset="."/>
+                            </xf:action>
+                        </xf:trigger>
+                        <dcm:attribute-editor/>
                     </xf:group>
                     
                     <h:fieldset>

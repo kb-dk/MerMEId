@@ -436,6 +436,7 @@
                 <instrVoice code="" count="1" solo="false" xml:id="" n=""/>
               </instrumentation>
             </perfMedium>
+            <extent unit=""/>
             <classification>
               <termList>
                 <term/>
@@ -451,13 +452,6 @@
                     <persName role="" xml:id=""/> 
                   </respStmt>
                 </titleStmt>
-                <key pname="" accid="" mode=""/>
-                <tempo/>
-                <meter count="" unit="" sym=""/>
-                <perfMedium analog="marc:048" authority="marcmusperf">
-                  <instrumentation/>
-                  <castList/>
-                </perfMedium>
                 <incip xml:id="">     
                   <incipText xml:id=""> 
                     <p xml:lang="en"/>
@@ -467,6 +461,14 @@
                   <incipCode analog=""/>
                   <score xml:id=""/>
                 </incip>
+                <key pname="" accid="" mode=""/>
+                <tempo/>
+                <meter count="" unit="" sym=""/>
+                <perfMedium analog="marc:048" authority="marcmusperf">
+                  <instrumentation/>
+                  <castList/>
+                </perfMedium>
+                <extent/>
 
                 <!-- next sub-level components -->
                 <componentGrp/>
@@ -495,7 +497,7 @@
     </revisionDesc>
     
   </meiHead>
-  <music>
-    
-  </music>
+
+  <music/>
+  
 </mei>
