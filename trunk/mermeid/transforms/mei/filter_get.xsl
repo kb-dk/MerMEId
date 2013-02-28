@@ -68,7 +68,7 @@
 			</xsl:for-each>
 			<xsl:choose>
 				<!-- component expressions need special treatment -->
-				<xsl:when test="local-name()='componentGrp'">
+				<xsl:when test="local-name(..)='expression' and local-name()='componentGrp'">
 					<xsl:apply-templates mode="component"/>
 				</xsl:when>
 				<xsl:otherwise>
