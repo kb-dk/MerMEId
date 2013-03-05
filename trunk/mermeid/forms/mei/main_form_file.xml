@@ -169,24 +169,11 @@
 													"http://www.example.com" or "mailto://someone@example.com"</h:span></h:a>
 											</xf:label>
 										</xf:input>
-										<!-- input/select emulating selection="open" behaviour -->
-										<h:span class="selection_open_short">
-											<xf:input ref="m:ptr/@label">
-												<xf:label>Link label 
-													<h:a class="help">?<h:span class="comment">A descriptive label for the link. 
-														Select from list or enter a custom text.</h:span></h:a></xf:label>
-											</xf:input>
-											<xf:select1 ref="m:ptr/@label" tabindex="1000">
-												<xf:item>
-													<xf:label>WWW</xf:label>
-													<xf:value>WWW</xf:value>
-												</xf:item>
-												<xf:item>
-													<xf:label>E-mail</xf:label>
-													<xf:value>E-mail</xf:value>
-												</xf:item>
-											</xf:select1>
-										</h:span>
+										<xf:input ref="m:ptr/@label">
+											<xf:label>Link label 
+												<h:a class="help">?<h:span class="comment">A descriptive label for the link. 
+													Select from list or enter a custom text.</h:span></h:a></xf:label>
+										</xf:input>
 										<xf:trigger appearance="minimal" class="non-standard_button">
 											<xf:label><h:img src="/../editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
 											<xf:action ev:event="DOMActivate">
