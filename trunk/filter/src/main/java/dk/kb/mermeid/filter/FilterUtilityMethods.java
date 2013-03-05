@@ -231,6 +231,7 @@ public class FilterUtilityMethods  {
      * @param xsl_name
      * @param in
      * @param out
+     * @param target is the URI of the XML document in the repository.
      */
     public void doTransform(String xsl_name, 
 			    java.io.InputStream in,
@@ -286,7 +287,16 @@ public class FilterUtilityMethods  {
 	    }
 
 	    transformer.setParameter("user", this.getUser());
+
+	    // We now pass the URI of the edited document to the xslt
+	    // processor. This makes it possible to do some clever document
+	    // merging and splitting, such that we don't need to send the
+	    // music to Orbeon.
+
 	    transformer.setParameter("target", target);
+
+	    // Here we do the transform
+
 	    transformer.transform(source, result); 
 
             logger.debug("we've transformed it");
