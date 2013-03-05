@@ -56,7 +56,7 @@ public class FilterUtilityMethods  {
      */
     public void 
 	recieveAndFilterData(javax.servlet.http.HttpServletRequest  request,
-			     javax.servlet.http.HttpServletResponse response  ) 
+			     javax.servlet.http.HttpServletResponse response ) 
 	throws java.io.IOException 
     {
 
@@ -111,7 +111,10 @@ public class FilterUtilityMethods  {
 	    response.setContentType(mime);
 	    response.setCharacterEncoding(charset);
 	    java.io.Writer out      = response.getWriter();
-	    this.doTransform(this.props.getProperty("get." + this.getBase()),in,out);
+	    this.doTransform(this.props.getProperty("get." + this.getBase()),
+			     in,
+			     out,
+			     newRequest);
 	    out.flush();
 	} else {
 	    response.setContentType("text/plain");
@@ -166,7 +169,7 @@ public class FilterUtilityMethods  {
 	java.io.StringWriter outdata = new java.io.StringWriter();
 	java.io.Writer  out          = response.getWriter();
 
-	this.doTransform(this.props.getProperty("put." + this.getBase()),in,outdata);
+	this.doTransform(this.props.getProperty("put." + this.getBase()),in,outdata,targetUri);
 
 	String result      = outdata.getBuffer().toString();  
 
@@ -230,8 +233,9 @@ public class FilterUtilityMethods  {
      * @param out
      */
     public void doTransform(String xsl_name, 
-			     java.io.InputStream in,
-			     java.io.Writer out)
+			    java.io.InputStream in,
+			    java.io.Writer out,
+			    java.lang.String target)
 	throws java.io.IOException
     {
 
@@ -282,7 +286,7 @@ public class FilterUtilityMethods  {
 	    }
 
 	    transformer.setParameter("user", this.getUser());
-
+	    transformer.setParameter("target", target);
 	    transformer.transform(source, result); 
 
             logger.debug("we've transformed it");

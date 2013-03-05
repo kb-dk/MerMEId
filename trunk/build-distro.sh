@@ -13,6 +13,15 @@
 # of the file names in the local_config directory.
 #
 
+# edit this, in case you don't have maven in your path, but installed
+# somewhere nonstandard
+export PATH="$HOME/mvnsh/bin/mvn:$PATH"
+
+###########
+#
+# No more configurable stuff
+#
+
 export D_PATH='.'
 export TAR='.'
 
@@ -65,10 +74,10 @@ echo "I'm in"
 echo `pwd`
 
 cp "local_config/http_filter.xml_$F_FILE" filter/src/main/resources/http_filter.xml 
-(cd filter ; ~/mvnsh/bin/mvn install)
+(cd filter ; mvn install)
 (cd filter ; ./run_java_doc.sh)
 cp filter/target/filter-1.0-SNAPSHOT.war "$D_PATH/MerMEId/filter.war"
-(cd filter ; ~/mvnsh/bin/mvn clean)
+(cd filter ; mvn clean)
 
 # We find everything, and greps away what we shouldn't distribute,
 # beginning with ourselves
