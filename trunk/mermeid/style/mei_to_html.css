@@ -244,12 +244,19 @@ div.source p {
 }
 
 table.source_component_list td {
+    padding-top: 10px;
     vertical-align: top;
 }
 
+table.source_component_list td h3, 
+table.source_component_list td h4,
+table.source_component_list td h5 {
+/* H3, H4, H5 padding set to 0 for vertical alignment with label cell */    
+    padding-top: 0px;
+}
+
 table.source_component_list td.label_cell {
-    /* padding-top must match that of H3, H4, H5 for alignment */
-    padding-top: 10px;
+    white-space: nowrap;
 }
 
 /* Styling the header with the catalogue's name 

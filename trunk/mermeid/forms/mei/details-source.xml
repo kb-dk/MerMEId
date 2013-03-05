@@ -168,7 +168,7 @@
                                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:classification/m:termList"/>
                                 </xf:group>
                                 <xf:group ref="m:classification/m:termList[m:term[contains(@classcode,'Dcm')]]">
-                                    <xf:select1 ref="m:term[@classcode='DcmContentClass']">
+                                    <xf:select1 ref="m:term[@classcode='DcmContentClass']" class="mediumlong">
                                         <xf:label class="fixed_width">Content</xf:label>
                                         <xf:item>
                                             <xf:value/>
@@ -185,7 +185,7 @@
                                     </xf:select1>
                                     <dcm:attribute-editor ref="m:term[@classcode='DcmContentClass']"/>
                                     <h:br clear="both"/>
-                                    <xf:select1 ref="m:term[@classcode='DcmPresentationClass']">
+                                    <xf:select1 ref="m:term[@classcode='DcmPresentationClass']" class="mediumlong">
                                         <xf:label class="fixed_width">Presentation <h:a class="help">?<h:span class="comment">Describes
                                             the source's basic mode of production (manuscript or print). <br/> "Print, specific copy" refers to a 
                                             specific copy of a printed source, e.g. the composer's own copy.</h:span></h:a></xf:label>
@@ -204,7 +204,7 @@
                                     </xf:select1>
                                     <dcm:attribute-editor ref="m:term[@classcode='DcmPresentationClass']"/>
                                     <h:br clear="both"/>
-                                    <xf:select1 ref="m:term[@classcode='DcmAuthorityClass']">
+                                    <xf:select1 ref="m:term[@classcode='DcmAuthorityClass']" class="mediumlong">
                                         <xf:label class="fixed_width">Authority <h:a class="help">?<h:span class="comment">For 
                                             use with manuscript sources. Describes the composer's degree of involvement
                                             in the production of the source. Thus, an arranger's
@@ -233,7 +233,7 @@
                                     </xf:select1>
                                     <dcm:attribute-editor ref="m:term[@classcode='DcmAuthorityClass']"/>
                                     <h:br clear="both"/>                        
-                                    <xf:select1 ref="m:term[@classcode='DcmScoringClass']">
+                                    <xf:select1 ref="m:term[@classcode='DcmScoringClass']" class="mediumlong">
                                         <xf:label class="fixed_width">Scoring</xf:label>
                                         <xf:item>
                                             <xf:value></xf:value>
@@ -270,7 +270,7 @@
                                     </xf:select1>
                                     <dcm:attribute-editor ref="m:term[@classcode='DcmScoringClass']"/>
                                     <h:br clear="both"/>
-                                    <xf:select1 ref="m:term[@classcode='DcmStateClass']">
+                                    <xf:select1 ref="m:term[@classcode='DcmStateClass']" class="mediumlong">
                                         <xf:label class="fixed_width">State</xf:label>
                                         <xf:item>
                                             <xf:value></xf:value>
@@ -303,7 +303,7 @@
                                     </xf:select1>
                                     <dcm:attribute-editor ref="m:term[@classcode='DcmStateClass']"/>
                                     <h:br clear="both"/>
-                                    <xf:select1 ref="m:term[@classcode='DcmCompletenessClass']">
+                                    <xf:select1 ref="m:term[@classcode='DcmCompletenessClass']" class="mediumlong">
                                         <xf:label class="fixed_width">Completeness <h:a class="help">?<h:span class="comment">Describes 
                                             the completeness of the source: "Complete" indicates that this source is complete (this would also be true
                                             with a single solo violin part from an orchestral work, if it is not the remainder of an originally larger 
@@ -966,6 +966,44 @@
                                                                     
                                                                 </h:fieldset>
                                                             </xf:group>
+                                                            
+                                                            <xf:group ref="m:physDesc">
+                                                                <h:fieldset>
+                                                                    <h:legend>Title page 
+                                                                        <h:a class="help">?<h:span class="comment">Transcription of the component's title page. 
+                                                                            Multiple title pages may be added if necessary</h:span></h:a>
+                                                                    </h:legend>
+                                                                    <h:div class="vertical_spacer"> </h:div>
+                                                                    <dcm:create
+                                                                        nodeset="m:titlePage"
+                                                                        label="Add title page"
+                                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
+                                                                    <xf:repeat nodeset="m:titlePage" id="component-physdesc-titlepage">
+                                                                        <xf:input ref="@label">
+                                                                            <xf:label>Label 
+                                                                                <h:a class="help">?<h:span class="comment">Optional label overriding the default "Title page" label, 
+                                                                                    e.g. "Secondary title page" or "title page after first fly leaf". 
+                                                                                    Especially, a label should be given to if more than one title page is quoted.</h:span></h:a>
+                                                                            </xf:label>
+                                                                        </xf:input>
+                                                                        <dcm:element-buttons 
+                                                                            triggers="up down add copy remove" 
+                                                                            nodeset="m:titlePage" 
+                                                                            index="component-physdesc-titlepage"
+                                                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
+                                                                        <dcm:id/>
+                                                                        <dcm:attribute-editor/>
+                                                                        <h:br/>
+                                                                        <dcm:create
+                                                                            nodeset="m:p"
+                                                                            label="Add transcript"
+                                                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage/m:p"/>
+                                                                        <xf:textarea ref="m:p" class="mediumheight" mediatype="text/html"/>
+                                                                        <h:hr/> 
+                                                                    </xf:repeat>
+                                                                </h:fieldset>
+                                                            </xf:group>
+                                                            
                                                         </xf:case>
                                                     </xf:switch>
                                                 </h:fieldset>

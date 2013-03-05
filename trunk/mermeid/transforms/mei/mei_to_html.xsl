@@ -1279,13 +1279,13 @@
 
 	<!-- source-related templates -->
 
-	<xsl:template match="m:source[*//text()]|m:item[*//text()]">
+	<xsl:template match="m:source[*[name()!='classification']//text()]|m:item[*//text()]">
 		<xsl:param name="mode" select="''"/>
 		<xsl:variable name="source_id" select="@xml:id"/>
-		<xsl:if
+		<!--<xsl:if
 			test="m:titleStmt/m:title/text() 
 			or local-name()='item'
-			or m:relationList/m:relation[@rel='isReproductionOf']">
+			or m:relationList/m:relation[@rel='isReproductionOf']">-->
 			<div>
 				<xsl:attribute name="id">
 					<xsl:choose>
@@ -1320,7 +1320,7 @@
 					</xsl:element>
 				</xsl:for-each>
 				<!-- item label -->
-				<xsl:if test="local-name()='item' and normalize-space(@label)">
+				<xsl:if test="local-name()='item' and normalize-space(@label) and name(..)!='componentGrp'">
 					<xsl:element name="{$heading_element}">
 						<xsl:value-of select="@label"/>
 					</xsl:element>
@@ -1454,7 +1454,7 @@
 				</xsl:for-each>
 
 			</div>
-		</xsl:if>
+		<!--</xsl:if>-->
 	</xsl:template>
 
 	<xsl:template match="m:itemList">
@@ -1476,20 +1476,20 @@
 
 
 	<xsl:template match="m:source/m:componentGrp | m:item/m:componentGrp">
-		<xsl:variable name="labels" select="count(m:item[@label!=''] | m:source[@label!=''])"/>
+		<xsl:variable name="labels" select="count(*[@label!=''])"/>
 		<xsl:choose>
-			<xsl:when test="count(m:item)&gt;1">
+			<xsl:when test="count(*)&gt;1">
 				<table cellpadding="0" cellspacing="0" border="0" class="source_component_list">
-					<xsl:for-each select="m:item">
+					<xsl:for-each select="m:item | m:source">
 						<tr>
 							<xsl:if test="$labels &gt; 0">
 								<td class="label_cell">
-									<xsl:for-each select="@label">
+									<xsl:if test="@label!=''">
 										<p>
-											<xsl:value-of select="."/>
+											<xsl:value-of select="@label"/>
 											<xsl:text>: </xsl:text>
 										</p>
-									</xsl:for-each>
+									</xsl:if>
 								</td>
 							</xsl:if>
 							<td>
