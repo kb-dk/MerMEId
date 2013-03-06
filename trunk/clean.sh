@@ -6,7 +6,7 @@
 
 # edit this, in case you don't have maven in your path, but installed
 # somewhere nonstandard
-export PATH="$HOME/mvnsh/bin/mvn:$PATH"
+export PATH="$HOME/mvnsh/bin/":$PATH
 
 #############
 # No configurations below
