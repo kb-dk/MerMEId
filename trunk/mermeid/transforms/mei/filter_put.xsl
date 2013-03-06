@@ -18,7 +18,8 @@
   exclude-result-prefixes="xsl m t exsl"
   version="1.0">
 
-  <xsl:param name="user" select="''"/>
+  <xsl:param name="user"   select="''"/>
+  <xsl:param name="target" select="''"/>
   
   <xsl:output method="xml"
     encoding="UTF-8"
@@ -31,9 +32,24 @@
     <xsl:variable name="new_doc">
       <xsl:apply-templates select="*" mode="convertEntities"/>
     </xsl:variable>
-    <xsl:apply-templates select="exsl:node-set($new_doc)" mode="html2mei"/>
+    <xsl:apply-templates select="exsl:node-set($new_doc)" 
+			 mode="html2mei"/>
+
   </xsl:template>
-  
+
+
+  <xsl:template match="m:music">
+    <music>
+      <xsl:choose>
+	<xsl:when test="string-length($target)&gt;0">
+	  <xsl:apply-templates select="document($target)/m:mei/m:music/*"/>	
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </music>
+  </xsl:template>
   
   <!-- CLEANING UP MEI -->
   

@@ -45,10 +45,16 @@
 	 xmlns:xl="http://www.w3.org/1999/xlink">
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates select="m:meiHead[2]" mode="header"/>
+      <!-- we remove the music when we deliver to the editor -->
       <xsl:apply-templates select="m:music"/>
     </mei>
   </xsl:template>
-  
+
+  <xsl:template match="m:music">
+    <music>
+      <xsl:comment>Now, we have to leave a placeholder for the music</xsl:comment>
+    </music>
+  </xsl:template>
 
   <!-- the actual copying from the model header to the data header -->
   <xsl:template match="*" mode="header">
