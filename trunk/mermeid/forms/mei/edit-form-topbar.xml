@@ -186,7 +186,7 @@
         <xf:dispatch name="language-update" target="form-group"/>
       </xf:action>
     </xf:trigger><h:a 
-      href="http:/storage/present.xq?doc={instance('parameters')/dcm:xml_file}"
+      href="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}present.xq?doc={instance('parameters')/dcm:xml_file}"
       class="xforms-trigger" 
       target="view_{instance('parameters')/dcm:xml_file}"><h:img 
         src="/../editor/images/html.gif" alt="HTML" title="View as HTML" border="0"/></h:a><h:a 
