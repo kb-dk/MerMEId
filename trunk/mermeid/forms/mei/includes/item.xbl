@@ -247,7 +247,7 @@
                                         identifying this particular source in the list, e.g. "A/II 1234"</h:span></h:a></xf:label>
                                 </xf:input>
                                 <dcm:element-buttons 
-                                    triggers="add remove" 
+                                    triggers="add remove up down" 
                                     nodeset="m:identifier" 
                                     index="repeat-item-identifier"
                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>

@@ -200,7 +200,7 @@
 						<xf:input ref="@type" class="mediumshort"/>
 						<xf:input ref="." class="mediumshort"/>
 						<dcm:element-buttons 
-							triggers="add remove" 
+							triggers="add remove up down" 
 							nodeset="m:identifier" 
 							index="work-id-repeat"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:identifier"/>
@@ -233,7 +233,7 @@
 					<xf:repeat nodeset="m:persName" id="relators-repeat">
 						<dcm:relator ref="."/>
 						<dcm:element-buttons 
-							triggers="add remove" 
+							triggers="add remove up down" 
 							nodeset="m:persName" 
 							index="relators-repeat"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
@@ -424,7 +424,7 @@
 						<h:div>
 							<xf:input ref="." class="long"/>
 							<dcm:element-buttons 
-								triggers="add del-parent-with-last" 
+								triggers="add del-parent-with-last up down" 
 								nodeset="m:term" 
 								index="repeat-work-terms"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term"/>

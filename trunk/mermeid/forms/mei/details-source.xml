@@ -389,7 +389,7 @@
                                         identifying this particular source in the list, e.g. "B 1234"</h:span></h:a></xf:label>
                                 </xf:input>
                                 <dcm:element-buttons 
-                                    triggers="add remove" 
+                                    triggers="add remove up down" 
                                     nodeset="m:identifier" 
                                     index="repeat-source-identifier"
                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
@@ -423,7 +423,7 @@
                             <xf:repeat nodeset="m:titleStmt/m:respStmt/m:persName" id="repeat-source-respstmt-person">
                                 <dcm:relator ref="."/>
                                 <dcm:element-buttons 
-                                    triggers="add del-parent-with-last" 
+                                    triggers="add del-parent-with-last up down" 
                                     nodeset="m:persName" 
                                     index="repeat-source-respstmt-person"
                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:respStmt/m:persName"/>
