@@ -201,7 +201,12 @@
   
   <!-- HTML -> MEI -->
   <xsl:template match="h:p"><xsl:element name="p" namespace="http://www.music-encoding.org/ns/mei"><xsl:apply-templates select="@*|node()"/></xsl:element></xsl:template>
-  <xsl:template match="h:br"><xsl:element name="lb" namespace="http://www.music-encoding.org/ns/mei"><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
+  <xsl:template match="h:br">
+    <!-- For some reason, the tinyMCE editor sometimes adds a line break at the end of the edited contents. Removing it here -->
+    <xsl:if test="following-sibling::node() or following-sibling::text()">
+      <xsl:element name="lb" namespace="http://www.music-encoding.org/ns/mei"><xsl:apply-templates select="node()"/></xsl:element>
+    </xsl:if>
+  </xsl:template>
   <xsl:template match="h:b|h:strong"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="fontweight">bold</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
   <xsl:template match="h:i|h:em"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="fontstyle">ital</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
   <xsl:template match="h:u"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="rend">underline</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
@@ -249,7 +254,7 @@
       <xsl:attribute name="target"><xsl:value-of select="@href"/></xsl:attribute>
       <xsl:attribute name="xl:show"><xsl:value-of select="@target"/></xsl:attribute>
       <xsl:attribute name="xl:title"><xsl:value-of select="@title"/></xsl:attribute>
-      <xsl:apply-templates select="node() | @*"/>
+      <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
   <xsl:template match="h:div[contains(@style,'text-align')]"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="halign"><xsl:value-of select="substring-before(substring-after(@style,'text-align:'),';')"/></xsl:attribute><xsl:apply-templates select="node() | @*"/></xsl:element></xsl:template>
@@ -268,7 +273,10 @@
   <xsl:template match="h:img">
     <xsl:element name="fig" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:element name="graphic">
+        <xsl:attribute name="label"><xsl:value-of select="@title"/></xsl:attribute>
+        <xsl:attribute name="xl:title"><xsl:value-of select="@alt"/></xsl:attribute>
         <xsl:attribute name="target"><xsl:value-of select="@src"/></xsl:attribute>
+        
       </xsl:element>
     </xsl:element>
   </xsl:template>
