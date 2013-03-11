@@ -112,6 +112,10 @@
 							<dcm:attribute-editor ref="."/>
 							<h:br clear="all"/>
 						</h:legend>
+						<dcm:create  
+							nodeset="m:date"
+							label="Add date"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:date"/>
 						<h:div>
 							<xf:group ref="m:date">
 								<xf:label class="fixed_width">Date <h:a class="help">?<h:span class="comment">Date 
@@ -119,11 +123,17 @@
 								<dcm:date-editor ref="."/>
 							</xf:group>
 						</h:div>
-						<xf:input ref="m:title" class="maxlong">
+						<!-- this will be changed to use <desc> instead of <p> -->
+						<dcm:create  
+							nodeset="m:p"
+							label="Add description"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:p"/>
+						<xf:input ref="m:p" class="maxlong">
 							<xf:label class="fixed_width">Description <h:a class="help">?<h:span class="comment">A description of the 
 								event, e.g. "Third movement finished" or "Arranged for piano by NN"</h:span></h:a></xf:label>
 						</xf:input>
-						<dcm:attribute-editor ref="m:title"/>
+						<dcm:attribute-editor ref="m:p"/>
+						<!-- end change -->
 					</h:fieldset>					
 				</xf:repeat>
 			</h:fieldset>
