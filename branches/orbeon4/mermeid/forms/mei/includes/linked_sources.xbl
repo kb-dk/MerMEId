@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml"
+  xmlns:xf="http://www.w3.org/2002/xforms"
+  xmlns:ev="http://www.w3.org/2001/xml-events" 
+  xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+  xmlns:xbl="http://www.w3.org/ns/xbl"
+  xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+  xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
+  xmlns:dcm="http://www.kb.dk/dcm">
+  
+  <!--
+    Component to display a list of sources pointing to the context node (must be <source>).
+    Danish Centre for Music Publication (DCM) 
+    Axel Teich Geertinger, 2012
+    atge@kb.dk
+  -->
+  
+  <xbl:binding id="dcm-linked-sources-binding" element="dcm|linked-sources">
+    
+    <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+      <display-name lang="en">List linking sources</display-name>
+    </metadata>
+    
+    <xbl:resources>
+      <xbl:style>
+        .dcm-linked-sources {
+        background-color: #aaaa33;
+        }
+      </xbl:style>
+    </xbl:resources>
+    <xbl:implementation>
+      <!-- Local model -->
+      <xf:model id="editor-model">
+        <xf:instance id="files" xmlns="http://www.kb.dk/dcm">
+          <fileList/>
+        </xf:instance>
+        
+        <xf:instance id="temp">
+          <temp-values>
+            <query_uri/>
+            <target_uri/>
+          </temp-values>
+        </xf:instance>
+        
+        <xf:submission id="load-sourceFileList"
+          method="get" 
+          serialization="none" 
+          validate="false"
+          resource="{instance('temp')/query_uri}"
+          replace="instance" 
+          instance="files"/>
+        
+      </xf:model>
+    </xbl:implementation>
+    
+    <xbl:template>
+      
+      <xf:group xbl:attr="model context ref bind" xxbl:scope="outer" id="outer-group"> 
+        <xxf:variable name="q_text" xbl:attr="xbl:text=query"/>
+        
+        <xf:group appearance="xxf:internal" xxbl:scope="inner" id="inner-group">
+          <xxf:variable name="query">
+            <xxf:sequence select="xxf:evaluate($q_text)" xxbl:scope="outer"/>
+          </xxf:variable>
+          <!-- bind to outer instances -->
+          <xxf:variable name="parameters" as="node()?">
+            <xxf:sequence select="instance('parameters')" xxbl:scope="outer"/>
+          </xxf:variable>
+          <xxf:variable name="changed">
+            <xxf:sequence select="instance('temp')/changed" xxbl:scope="outer"/>
+          </xxf:variable>
+          
+          <xf:action ev:event="xforms-enabled" ev:target="inner-group">
+            <!-- send query and load result into instance('files') -->
+            <xf:setvalue ref="instance('temp')/query_uri" value="$query"/>
+            <xf:send submission="load-sourceFileList"/>
+          </xf:action>
+          
+          <xf:group ref="instance('files')[dcm:file]">
+            <h:a class="help_plain"><h:img src="/../editor/images/link_warning.png" 
+              alt="files linking to this source"/><h:span class="comment" style="width:auto; margin-top:5px;">
+                There are files linking to this source description. <h:br/>
+                Deleting or altering this source will affect all files linking to it.<h:br/>
+                The following files are using this source description:<h:br/>
+                <xf:repeat nodeset="dcm:file">
+                  <xxf:variable name="ext_doc" select="dcm:link/@href"/>
+                  <h:span style="white-space:nowrap">
+                    <xf:output value="concat(dcm:composer,': ',dcm:title,' (',dcm:link/@href,')')"/>
+                    <xf:trigger>
+                      <xf:label>Edit</xf:label>
+                      <xf:action ev:event="DOMActivate">
+                        <xf:setvalue ref="instance('temp')/target_uri" 
+                          value="concat($parameters/dcm:orbeon_dir,'?uri=',$parameters/dcm:form_home,
+                          'edit-source-case.xml&amp;doc=',$ext_doc)"/>
+                        <xxf:show dialog="leave-warning-dialog"></xxf:show>
+                      </xf:action>
+                    </xf:trigger>
+                    <h:br/>
+                  </h:span>
+                </xf:repeat>
+                
+              </h:span>
+            </h:a>
+            
+            <xxf:dialog id="leave-warning-dialog" appearance="full">
+              <!-- The requested URI must be stored in instance('temp')/target_uri prior to opening the dialog -->
+              <xf:label>Warning – Edit linking file</xf:label>
+              <h:p>Editing the linking file means that the present file will be closed <h:br/>
+                and the file linking to this source will be opened for editing instead. 
+              </h:p>
+              <h:p>Do you want to proceed?</h:p>
+              <xf:trigger>
+                <xf:label>Yes</xf:label>
+                <xf:action ev:event="DOMActivate">
+                  <xxf:hide dialog="leave-warning-dialog"/>
+                  <xf:action if="$changed='true'">
+                    <xxf:show dialog="exit-warning-dialog"/>
+                  </xf:action>	
+                  <xf:action if="$changed='false'">
+                    <xf:load resource="{instance('temp')/target_uri}" show="replace"/>
+                  </xf:action>
+                </xf:action>
+              </xf:trigger>
+              <xf:trigger>
+                <xf:label>No</xf:label>
+                <xf:action ev:event="DOMActivate">
+                  <xxf:hide dialog="leave-warning-dialog"/>
+                </xf:action>
+              </xf:trigger>
+            </xxf:dialog>
+            
+            <xxf:dialog id="exit-warning-dialog" appearance="full">
+              <!-- The requested URI must be stored in instance('temp')/target_uri prior to opening the dialog -->
+              <xf:label>Warning</xf:label>
+              <h:p>You have unsaved changes. 
+                Do you want to proceed?
+              </h:p>
+              <h:p>Changes will be lost if you answer "Yes". <h:br/>
+                To keep changes, choose "No" and save your work.
+              </h:p>    
+<!--<xf:output value="instance('temp')/target_uri"/>-->              
+              <xf:trigger>
+                <xf:label>Yes</xf:label>
+                <xf:action ev:event="DOMActivate">
+                  <xf:load resource="{instance('temp')/target_uri}" show="replace"/>
+                  <xxf:hide dialog="exit-warning-dialog"/>
+                </xf:action>
+              </xf:trigger>
+              <xf:trigger>
+                <xf:label>No</xf:label>
+                <xf:action ev:event="DOMActivate">
+                  <xxf:hide dialog="exit-warning-dialog"/>
+                </xf:action>
+              </xf:trigger>
+            </xxf:dialog>
+            
+          </xf:group>
+        </xf:group>
+        
+      </xf:group>
+    </xbl:template>
+  </xbl:binding>
+</xbl:xbl>

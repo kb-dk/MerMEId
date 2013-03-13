@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml"
+  xmlns:xf="http://www.w3.org/2002/xforms"
+  xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+  xmlns:xbl="http://www.w3.org/ns/xbl"
+  xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+  xmlns:dcm="http://www.kb.dk/dcm">
+  
+  <!--
+    Component to display the context node's xml:id attribute.
+    Danish Centre for Music Publication (DCM) 
+    Axel Teich Geertinger, 2012
+    atge@kb.dk
+  -->
+  
+  <xbl:binding id="dcm-id-binding" element="dcm|id">
+    
+    <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+      <display-name lang="en">XML:ID display component</display-name>
+    </metadata>
+    
+    <xbl:resources>
+      <xbl:style>
+        .dcm_id { text-decoration: none; }
+        a.dcm_id img.id_card { vertical-align: text-bottom; }
+        a:hover.dcm_id span.comment { margin-top: -5px; margin-left: -10px; font-size:.9em; }        
+      </xbl:style>
+    </xbl:resources>
+    
+    <xbl:template>
+      <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
+        <xf:group ref=".[instance('parameters')/dcm:show_id='true']">
+          <xf:group appearance="xxforms:internal" xxbl:scope="inner">
+            <xxforms:variable name="binding" as="node()?">
+              <xxforms:sequence select="." xxbl:scope="outer"/>
+            </xxforms:variable>
+            <h:a class="dcm_id"><img src="/../editor/images/id.png" border="0" 
+              alt="ID" class="id_card"/><h:span class="comment">ID: <xf:output 
+                value="if ($binding/@xml:id) then $binding/@xml:id else 'ID missing'"/></h:span></h:a>          
+          </xf:group>
+        </xf:group>
+      </xf:group>
+    </xbl:template>
+  </xbl:binding>
+</xbl:xbl>

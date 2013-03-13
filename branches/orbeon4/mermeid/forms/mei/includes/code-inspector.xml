@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:div xmlns:xf="http://www.w3.org/2002/xforms" 
+    xmlns:h="http://www.w3.org/1999/xhtml">
+<!-- code inspector -->
+    <xf:group ref=".[instance('parameters')/dcm:code_inspector='true']">
+        <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+    </xf:group>
+<!-- end code inspector -->    
+</h:div>

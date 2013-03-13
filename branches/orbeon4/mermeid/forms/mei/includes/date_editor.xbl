@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xbl="http://www.w3.org/ns/xbl"
+    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <!--
+        Component to edit MEI dates and date ranges.
+        Danish Centre for Music Publication (DCM) / Axel Teich Geertinger, 2012
+    -->
+    
+    <xbl:binding id="dcm-date-editor-binding" element="dcm|date-editor">
+        
+        <!-- Orbeon Form Builder Component Metadata -->
+        <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+            <display-name lang="en">MEI Date and date range editor</display-name>
+            <template>
+                <dcm:date-editor>
+                    <xf:label ref=""/>
+                    <xf:hint ref=""/>
+                    <xf:help ref=""/>
+                    <xf:alert ref=""/>
+                </dcm:date-editor>
+            </template>
+        </metadata>
+        
+        <xbl:resources>
+            <xbl:style>
+                .dcm-date-editor-onform {
+                position:relative;
+                display:inline;
+                display:inline-block;
+                }
+                .dcm-date-editor-onform a.xforms-trigger, .dcm-date-editor-onform a.xforms-trigger:hover {
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-top: 1px solid #aaa;
+                border-radius: 2px;
+                -moz-border-radius: 2px;
+                display: inline-block;
+                min-width: 12em;
+                width: auto;
+                padding: 1px;
+                margin-left: -3px;
+                cursor:text;
+                }
+                .date_editor_heading { 
+                padding: 5px 0 5px 0;
+                margin: 0 0 15px 0;
+                border-bottom: 1px solid #999;
+                }
+                .date_editor_heading .xforms-select1-appearance-full { 
+                background-color: transparent;
+                }
+                .date_editor_heading .xforms-select1-appearance-full input { 
+                margin-top:-5px;
+                }
+                .xbl-dcm-date-editor .xforms-group {
+                height: auto;
+                padding: 0;
+                }
+                .xbl-dcm-date-editor a:hover.help { padding: 0px 2px 1px 2px; }
+                .dcm-date-input-box { margin:2px 0 2px 0; }
+                .dcm-date-editor-blocklabel { 
+                display: block; 
+                font-weight:normal;
+                padding-bottom: 3px;
+                }
+                .dcm-date-editor-label { 
+                display: inline-block;  
+                width: 7em; 
+                font-weight: normal; 
+                }
+                .dcm-date-input-box .display_input { margin-top: 10px; } 
+                .dcm-date-input-box .display_input input.xforms-input-input { width: 20em; } 
+                .xbl-dcm-date-editor button.xforms-trigger { padding: 0px; }
+                .dcm-date-editor-error { 
+                font-weight:bold; 
+                color: red; 
+                }
+            </xbl:style>
+        </xbl:resources>
+        <xbl:implementation>
+            <!-- Local model -->
+            <xf:model id="editor-model">
+                <xf:instance id="editor-instance">
+                    <editor_date>
+                        <isodate/>
+                        <notbefore/>
+                        <notafter/>
+                        <startdate/>
+                        <enddate/>
+                        <displayed_date/>
+                        <mode/>
+                        <month_days>
+                            <month>31</month>
+                            <month>28</month>
+                            <month>31</month>
+                            <month>30</month>
+                            <month>31</month>
+                            <month>30</month>
+                            <month>31</month>
+                            <month>31</month>
+                            <month>30</month>
+                            <month>31</month>
+                            <month>30</month>
+                            <month>31</month>
+                        </month_days>
+                        <is-valid/>
+                        <error_msg>Invalid date(s) entered</error_msg>
+                        <attributes isodate="" notbefore="" notafter="" startdate="" enddate=""/>
+                    </editor_date>
+                </xf:instance>
+                <xf:bind nodeset="instance('editor-instance')">
+                    <xf:bind id="isodate-bind" nodeset="isodate" type="xf:date" name="date"/>
+                    <xf:bind id="startdate-bind" nodeset="startdate" type="xf:date" name="date"/>
+                    <xf:bind id="enddate-bind" nodeset="enddate" type="xf:date" name="date"/>
+                    <xf:bind id="notafter-bind" nodeset="notafter" type="xf:date" name="date"/>
+                    <xf:bind id="notbefore-bind" nodeset="notbefore" type="xf:date" name="date"/>
+                    <xf:bind id="displayed-date-bind" nodeset="displayed_date" type="xf:string" name="string"/>
+                </xf:bind>
+            </xf:model>
+        </xbl:implementation>
+        <xbl:template>
+            <!-- Local controls -->
+            <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
+                <xbl:content includes="xforms|label,xforms|help,xforms|hint,xforms|alert"/>
+                
+                <!-- Inner group -->
+                <xf:group appearance="xxf:internal" xxbl:scope="inner" class="xbl-dcm-date-editor" id="inner_group">
+                    
+                    <!-- Variables pointing to external single-node bindings -->
+                    <xxf:variable name="binding" as="node()?">
+                        <xxf:sequence select="." xxbl:scope="outer"/>
+                    </xxf:variable>
+                    <xxf:variable name="isodate" as="node()?" select="$binding/@isodate"/>
+                    <xxf:variable name="startdate" as="node()?" select="$binding/@startdate"/>
+                    <xxf:variable name="enddate" as="node()?" select="$binding/@enddate"/>
+                    <xxf:variable name="notbefore" as="node()?" select="$binding/@notbefore"/>
+                    <xxf:variable name="notafter" as="node()?" select="$binding/@notafter"/>
+                    
+                    <!-- The on-form visible part -->
+                    <h:div class="dcm-date-editor-onform">
+                        
+                        <xf:trigger class="date-editor-output" appearance="minimal">
+                            <xf:label>
+                                <xf:output value="$binding">
+                                    <xf:label/>
+                                </xf:output>                                    
+                            </xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xxf:show dialog="date-editor-dialog"/>
+                                <xf:dispatch name="date-initialize" targetid="reset_button"/>
+                            </xf:action>
+                        </xf:trigger>
+                        <xf:group ref=".[normalize-space($isodate)]"> 
+                            [<xf:output value="$isodate"/>] 
+                        </xf:group>
+                        <xf:group ref=".[normalize-space(concat($notbefore,$notafter,$startdate,$enddate))]"> 
+                            [<xf:group ref=".[normalize-space($notbefore)]">Not before <xf:output value="$notbefore"/> – </xf:group><xf:group 
+                                ref=".[normalize-space($startdate)]"><xf:output value="$startdate"/> – </xf:group>
+                            <xf:group ref=".[normalize-space($notafter)]">Not after <xf:output value="$notafter"/></xf:group><xf:group 
+                                ref=".[normalize-space($enddate)]"><xf:output value="$enddate"/></xf:group>] 
+                        </xf:group>
+                        
+                        <xf:trigger>
+                            <xf:label>Edit</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xxf:show dialog="date-editor-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </h:div>
+                    
+                    <xxf:dialog id="date-editor-dialog" appearance="full" level="modal"
+                        close="true" draggable="true" visible="false">
+                        <xf:label>Edit date </xf:label>
+                        <xf:action ev:event="xxforms-dialog-open">
+                            <xf:dispatch name="date-initialize" targetid="reset_button"/>
+                        </xf:action>
+                        <h:div class="date_editor_heading">
+                            <xf:select1 appearance="full" ref="mode">
+                                <xf:label class="dcm-date-editor-label strong">Date type: </xf:label>
+                                <xf:item>
+                                    <xf:label>Single date</xf:label>
+                                    <xf:value>single</xf:value>
+                                </xf:item>
+                                <xf:item>
+                                    <xf:label>Date span</xf:label>
+                                    <xf:value>interval</xf:value>
+                                </xf:item>
+                            </xf:select1>
+                            &#160;
+                            <h:a 
+                                class="help">?<h:span 
+                                    class="comment">A date consists of a machine-readable part (in the upper part of the form) 
+                                    and a text intended for display (in the lower part).
+                                    Both parts must be filled in.<h:br/>
+                                    Start by choosing whether you intend to 
+                                    enter a single date (including dates like a single month or year) or a date span. <h:br/>
+                                    The day or both day and month fields may be left empty.
+                                </h:span></h:a>
+                        </h:div>
+                        
+                        <xf:group ref=".[instance('editor-instance')/mode='single']">
+                            <h:div class="dcm-date-input-box">
+                                <dcm:dropdown-month-date ref="isodate" xbl:attr="navindex navindex=tabindex">
+                                    <xf:label class="dcm-date-editor-label">Date: </xf:label>
+                                </dcm:dropdown-month-date>
+                                <xf:trigger appearance="minimal">
+                                    <xf:label><h:img src="/../editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:setvalue ref="isodate" value="''"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </h:div>
+                        </xf:group>
+                        <xf:group ref=".[instance('editor-instance')/mode='interval']">
+                            <h:div class="dcm-date-input-box" xbl:attr="navindex navindex=tabindex">
+                                <h:div class="blocklabel strong">Start</h:div>
+                                <dcm:dropdown-month-date ref="startdate">
+                                    <xf:label class="dcm-date-editor-label">Date: <h:a class="help">?<h:span class="comment">Use this 
+                                        if you know the exact start date (or start month, or year) of the event</h:span></h:a></xf:label>
+                                </dcm:dropdown-month-date>
+                                <xf:trigger appearance="minimal">
+                                    <xf:label><h:img src="/../editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:setvalue ref="startdate" value="''"/>
+                                    </xf:action>
+                                </xf:trigger>
+                                <h:br/>
+                                <dcm:dropdown-month-date ref="notbefore">
+                                    <xf:label class="dcm-date-editor-label">Not before: <h:a class="help">?<h:span class="comment">Use this 
+                                        if you only know that the event could not have started before a certain date (or month, or year)</h:span></h:a></xf:label>
+                                </dcm:dropdown-month-date>
+                                <xf:trigger appearance="minimal">
+                                    <xf:label><h:img src="/../editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:setvalue ref="notbefore" value="''"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </h:div>
+                            <h:hr/>
+                            <h:div class="dcm-date-input-box">
+                                <h:div class="blocklabel strong">End</h:div>
+                                <dcm:dropdown-month-date ref="enddate">
+                                    <xf:label class="dcm-date-editor-label">Date: <h:a class="help">?<h:span class="comment">Use this 
+                                        if you know the exact end date (or end month, or year) of the event</h:span></h:a></xf:label>
+                                </dcm:dropdown-month-date>
+                                <xf:trigger appearance="minimal">
+                                    <xf:label><h:img src="/../editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:setvalue ref="enddate" value="''"/>
+                                    </xf:action>
+                                </xf:trigger>
+                                <h:br/>
+                                <dcm:dropdown-month-date ref="notafter">
+                                    <xf:label class="dcm-date-editor-label">Not after: <h:a class="help">?<h:span class="comment">Use this 
+                                        if you only know that the event must have ended before a certain date (or month, or year)</h:span></h:a></xf:label>
+                                </dcm:dropdown-month-date>
+                                <xf:trigger appearance="minimal">
+                                    <xf:label><h:img src="/../editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:setvalue ref="notafter" value="''"/>
+                                    </xf:action>
+                                </xf:trigger>
+                            </h:div>
+                        </xf:group>
+                        <h:br/>
+                        <h:div class="dcm-date-input-box">
+                            <xf:input ref="displayed_date" class="display_input">
+                                <xf:label class="dcm-date-editor-blocklabel">Displayed date or text: 
+                                    <h:a class="help">?<h:span class="comment">Enter the date (or date span) in whatever form 
+                                    it is to be displayed, e.g. "1845-1846", "in late 1976", "1918-12-24" or "probably before 1888".</h:span></h:a>
+                                </xf:label>
+                            </xf:input> 
+                        </h:div>
+                        
+                        <h:div class="dcm-date-editor-error">
+                            <xf:switch>
+                                <xf:case id="hide_error"/>                                                
+                                <xf:case id="show_error">
+                                    <h:div class="dcm-date-input-box">
+                                        <xf:output value="instance('editor-instance')/error_msg"/>
+                                    </h:div>
+                                </xf:case>
+                            </xf:switch>
+                        </h:div>
+                        
+                        <!-- Editor OK/Reset/Cancel buttons -->
+                        <h:div class="dcm-date-input-box">
+                            <xf:trigger>
+                                <xf:label>OK</xf:label>
+                                <xf:action ev:event="DOMActivate">
+                                    <xf:setvalue ref="is-valid" value="'false'"/>
+                                    <xf:setvalue ref="error_msg" value="'Invalid date(s) entered'"/>
+                                    <xf:action if="mode='single'">
+                                        <xf:action if="normalize-space(isodate) and normalize-space(displayed_date)">
+                                            <xf:setvalue ref="is-valid" value="'true'"/>
+                                            <xf:setvalue ref="notafter" value="''"/>
+                                            <xf:setvalue ref="notbefore" value="''"/>
+                                            <xf:setvalue ref="startdate" value="''"/>
+                                            <xf:setvalue ref="enddate" value="''"/>
+                                        </xf:action>
+                                    </xf:action>
+                                    <xf:action if="mode='interval'">
+                                        <xf:action if="normalize-space(concat(notafter,notbefore,startdate,enddate)) and normalize-space(displayed_date)">
+                                            <xf:setvalue ref="is-valid" value="'true'"/>
+                                            <xf:setvalue ref="isodate" value="''"/>
+                                        </xf:action>
+                                    </xf:action>
+                                    <xf:action if="normalize-space(displayed_date)=''">
+                                        <xf:setvalue ref="error_msg" value="'A display value must be entered'"></xf:setvalue>
+                                    </xf:action>
+                                    <xf:action if="not(is-valid='true')">
+                                        <xf:toggle case="show_error"/>
+                                    </xf:action>
+                                    <xf:action if="is-valid='true'">
+                                        <!-- create the attributes needed if they don't exist -->
+                                        <xf:action if="count($binding/@isodate)!=1">
+                                            <xf:insert context="$binding" origin="instance('editor-instance')/attributes/@isodate"/>
+                                        </xf:action>
+                                        <xf:action if="count($binding/@notbefore)!=1">
+                                            <xf:insert context="$binding" origin="instance('editor-instance')/attributes/@notbefore"/>
+                                        </xf:action>
+                                        <xf:action if="count($binding/@notafter)!=1">
+                                            <xf:insert context="$binding" origin="instance('editor-instance')/attributes/@notafter"/>
+                                        </xf:action>
+                                        <xf:action if="count($binding/@startdate)!=1">
+                                            <xf:insert context="$binding" origin="instance('editor-instance')/attributes/@startdate"/>
+                                        </xf:action>
+                                        <xf:action if="count($binding/@enddate)!=1">
+                                            <xf:insert context="$binding" origin="instance('editor-instance')/attributes/@enddate"/>
+                                        </xf:action>
+                                        <!-- copy values to external node -->
+                                        <xf:setvalue ref="$binding" value="instance('editor-instance')/displayed_date"/>
+                                        <xf:setvalue ref="$binding/@isodate" value="instance('editor-instance')/isodate"/>
+                                        <xf:setvalue ref="$binding/@notbefore" value="instance('editor-instance')/notbefore"/>
+                                        <xf:setvalue ref="$binding/@notafter" value="instance('editor-instance')/notafter"/>
+                                        <xf:setvalue ref="$binding/@startdate" value="instance('editor-instance')/startdate"/>
+                                        <xf:setvalue ref="$binding/@enddate" value="instance('editor-instance')/enddate"/>
+                                        <!-- reset internal values -->
+                                        <xf:dispatch name="date-initialize" targetid="reset_button"/>
+                                        <!-- close editor -->
+                                        <xxf:hide dialog="date-editor-dialog"/>
+                                    </xf:action>
+                                </xf:action>
+                            </xf:trigger>
+                            <!-- re-read values from external node -->
+                            <xf:trigger id="reset_button">
+                                <xf:label>Reset</xf:label>
+                                <xf:action ev:event="DOMActivate date-initialize">
+                                    <xf:setvalue ref="displayed_date" value="$binding/string()"/>
+                                    <xf:setvalue ref="isodate" value="$isodate"/>
+                                    <xf:setvalue ref="notbefore" value="$notbefore"/>
+                                    <xf:setvalue ref="notafter" value="$notafter"/>
+                                    <xf:setvalue ref="startdate" value="$startdate"/>
+                                    <xf:setvalue ref="enddate" value="$enddate"/>
+                                    <xf:setvalue ref="mode" value="'single'"/>
+                                    <xf:action if="normalize-space(concat(notbefore,notafter,startdate,enddate))">
+                                        <xf:setvalue ref="mode" value="'interval'"/>
+                                    </xf:action>
+                                    <xf:toggle case="hide_error"/>
+                                </xf:action>
+                            </xf:trigger>
+                            <xf:trigger>
+                                <xf:label>Cancel</xf:label>
+                                <xf:action ev:event="DOMActivate">
+                                    <!-- reset internal values -->
+                                    <xf:dispatch name="date-initialize" targetid="reset_button"/>
+                                    <!-- close editor -->
+                                    <xxf:hide dialog="date-editor-dialog"/>
+                                </xf:action>
+                            </xf:trigger>    
+                            
+                        </h:div>
+                        <!-- Stop propagation of all UI events -->
+                        <xf:action ev:event="#all" ev:propagate="stop"/>
+                    </xxf:dialog>
+                    
+                </xf:group>
+                
+                
+                <dcm:attribute-editor ref="."/>
+                <!--<h:br/>-->
+                
+            </xf:group>
+        </xbl:template>
+    </xbl:binding>
+</xbl:xbl>

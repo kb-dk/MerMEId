@@ -1,0 +1,13 @@
+<collection xmlns="http://exist-db.org/collection-config/1.0">
+  <index xmlns:m="http://www.music-encoding.org/ns/mei">
+    <fulltext default="none" attributes="yes"/>
+    <lucene>
+      <analyzer class="org.apache.lucene.analysis.standard.StandardAnalyzer"/>
+      <text qname="m:mei" type="xs:string" />
+      <text qname="m:title"    boost="2.0" type="xs:string"  />
+      <text qname="m:persName" boost="2.0" type="xs:string"  />
+      <text qname="m:corpName" boost="2.0" type="xs:string"  />
+    </lucene>
+    <create path="source/@target"    type="xs:string" />
+  </index>
+</collection>

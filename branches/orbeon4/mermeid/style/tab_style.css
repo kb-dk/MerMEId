@@ -1,0 +1,237 @@
+@namespace xf url("http://www.w3.org/2002/xforms");
+@namespace h  url("http://www.w3.org/1999/xhtml");
+
+
+body.editor_body {   
+    font-size: .8em;
+    font-family: arial, helvetica, sans-serif;
+    margin: 0px;
+    padding:0 20px 20px 20px;
+}
+
+body.editor_body, #view_menu_right_border {
+    background-color: #888;
+}
+
+a {
+    color:black;
+    white-space: nowrap;
+}
+
+#top-bar {
+    width:100%;
+    position: absolute;
+    position: fixed;
+    padding: 0px;
+    margin: 0px;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+}
+
+#tab-menu {
+    height: 20px;
+/*    padding: 8px 0px 0px 0px;*/
+    padding: 8px 20px 0px 20px;
+    margin: 0px;
+    background-color: #888;
+}
+
+/* design menu elements */
+#view_menu {
+    width: auto;
+    margin: 0px;
+    padding: 0px 0px 0px 6px;
+    border: none;
+    background-color: transparent;
+    display: inline;
+    float: right;
+}
+
+#view_menu label {
+    border: 0px;
+    background-color: transparent;    
+}
+
+#view_menu_right_border {
+    display: inline-block;
+    height: 24px;
+    width: 20px;
+}
+
+#top_status_bar {
+    display: block;
+    position: absolute;
+    padding: 0px;
+    margin: 5px 5px 0px 10px;
+    text-align:left;
+    border: none;
+    background: none !important;
+    font-weight: bold;
+    font-size: .9em;
+}
+
+#settings-menu {
+    float:right;
+    width:200px;    
+}
+
+#work_identifier {
+    display: inline-block;
+    margin-left: 20px;    
+}
+
+#form-body {
+    /*width:100%;*/ 
+    margin: 40px 0px 0px 0px;
+    padding: 0px;
+}
+
+#form-body xf|trigger xf|label  {
+    display: inline; 
+    padding:0px;
+    margin:0px;
+}
+
+#identification-tab, #file-tab, 
+#source-tab, #work-tab, #bibliography-tab, #history-tab, #music-tab
+{
+    display:inline;
+    width:auto;
+    font-weight: bold;
+    margin: 8px 0px 0px -1px;
+    padding: 4px 8px 4px 8px;
+    height: 16px;
+    border-top: 1px solid #888;
+    border-right: 1px solid #888;
+    border-left: 1px solid #888;
+    border-bottom: none;
+    color: black;
+    text-decoration: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+}
+
+#file-tab:hover, 
+#source-tab:hover, #work-tab:hover, #bibliography-tab:hover, #history-tab:hover, #music-tab:hover
+{
+    border: 1px solid #ffffff;
+    border-bottom: none;
+}
+
+#file-div,
+#source-div, #work-div, 
+#bibliography-div, #history-div, #music-div
+{
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+/* container and background for top menu */
+div.top-bar-container {
+    position:fixed;
+    z-index:20;
+    top: 28px;
+    left: 20px;
+    height: 24px;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    background-color: transparent; 
+}
+
+div.top-bar-container div {
+    position:relative;
+    float: right;
+    height: 24px;
+    width: 100%;
+}
+
+#work-tab, #work-div, #work-border, .work {
+    background-color: #e5c2c4;
+}
+
+#music-tab,#music-div, #music-border, .music {
+    background-color: #cde1ee;
+}
+
+#source-tab, #source-div, #source-border, .source {
+    background-color: #9fe3c0;
+}
+
+#history-tab, #history-div, #history-border, .history {
+    background-color: #E8E89D;
+}
+
+#items.items, #items .items {
+    background-color: #9fe3c0 !important;
+}
+
+#bibliography-tab, #bibliography-div, #bibliography-border, .bibliography {
+    background-color: #e1c799;
+}
+
+#file-tab, #file-div, #file-border, .file {
+    background-color: #e5e1bf;
+}
+
+/* emphasize certain sub-blocks */
+.movement-fieldset, .movement-fieldset h|fieldset {
+    margin-right: 1em;
+    background-color: #ffffee;
+}
+
+.bibl-fieldset, .bibl-fieldset h|fieldset {
+    margin-right: 1em;
+    background-color: #ffdddd;
+}
+
+div.logo {
+    width:100%;
+    float:right;
+    margin: -24px 0px 0px 0px;
+    padding-right: 10px;
+    position:relative;
+    text-align: right;
+} 
+
+div.logo img {
+    padding: 5px;
+}
+
+div.logo img:hover {
+    padding: 4px;
+    border: 1px solid #999;
+} 
+
+.logo_color {
+    color: #76923C;
+}
+
+/* semi-transparent overlay disabling the form while saving */
+/*
+span.xforms-loading-loading {
+    position: fixed !important;
+    display: block !important;
+    z-index:30;
+    top: 0px !important;
+    left: 0px !important;
+    width: 100% !important;
+    min-height: 100%;
+    text-align: center;
+    overflow: visible;
+    padding: 0px;
+    margin: 0px;
+    color: white !important;
+    font-weight: bold !important;
+    background-color: transparent !important;
+    background-image: url('/editor/images/transparent-grey.png');
+    background-repeat: repeat ;
+}
+*/

@@ -1,0 +1,200 @@
+body {   
+    font-size: .8em;
+    font-family: arial, helvetica, sans-serif;
+    background-color: #e5e1bf;
+    padding:20px;
+    margin:0px;
+}
+
+h1 {
+    margin:0px;
+}
+
+h2 {
+    margin-bottom: 0;
+}
+
+p {
+    margin: 5px 0 5px 0;
+}
+
+a {
+    color:black;
+}
+
+a.addLink {
+    text-decoration: none;
+}
+
+a.addLink img {
+    padding: 2px;
+    border: none;
+    vertical-align:top;
+}
+
+a.addLink:hover img {
+    padding: 1px;
+    border: 1px solid #999;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    font-size: .8em;
+    font-weight: bold;
+    padding: .2em;
+    padding-left: .3em;
+    margin: 0em;
+    text-align: left;
+}
+
+td {
+    font-size: .8em;
+    padding: .2em;
+    padding-left: .3em;
+    margin: 0em;
+    border-top: 1px solid #999;
+}
+
+td p 
+{
+    margin: 0;
+}
+
+button {
+    padding: 0px;
+}
+
+td.buttons {
+    white-space: nowrap;
+}
+
+td.buttons form {
+    padding: 0em;
+    margin: 0em;
+}
+
+td.buttons input, td.buttons img {
+    padding:3px;
+    margin:0em;
+}
+
+td.buttons input:hover, td.buttons img:hover {
+    border: 1px solid #999999;
+    padding: 2px;
+}
+
+div.files_list table {
+    width: 100%;
+}
+
+table.result_table td {
+    padding:3px;
+}
+
+tbody tr.result:hover {
+    background-color: #ffffcc;
+}
+
+form.search {
+    width:auto;
+    float:right;
+}
+
+form.search fieldset {
+    display: inline;
+    border: none;
+    text-align: right;
+}
+
+.odd {
+    background-color: #ddd;
+}
+
+
+/* css for help pop-ups */
+
+
+a.help {
+    text-decoration: none;
+    text-align: left;
+    vertical-align:text-top;
+    color: #888888;
+    background-color: #ffffcc;
+    border: 1px solid #888888;
+    font-weight: bold;
+    padding-top: 0px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 1px;
+    font-size:.8em;   
+    cursor: help;
+    border-radius: 2px;
+    /* For non-CSS3 FireFox */
+    -moz-border-radius: 2px;    
+}
+
+a.help_plain {
+    cursor: help;
+}
+
+a.help span.comment, a.help_plain span.comment {
+    display:inline;
+    position: absolute;
+    visibility:hidden;
+    white-space: normal;
+    text-decoration:none;
+    color: black;
+    background-color:#dbd9ba;
+    padding: 1px;
+    z-index:250;
+    padding: 4px;
+    width: 200px;
+    margin-top: 20px;
+    margin-left: -5px;
+    border: 1px solid #ddd;
+    font-weight:normal;
+    box-shadow: 10px 10px 10px #333;
+    border-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 10px 10px 10px #333;
+    -moz-border-radius: 4px;
+    /* For MSIE 6-8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333')"; 
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333'); 
+}
+
+a.help span.comment {
+    font-size: 1.2em;
+}
+
+a:hover.help span.comment, a:hover.help_plain span.comment  {
+    visibility:visible;
+}
+
+form.search a.help span.comment {
+    width: 250px;
+    margin-left:-250px;
+}
+
+
+a.help .help_table {
+    display: table;
+}
+
+a.help .help_example {
+    display: table-row;
+}
+
+a.help .help_label, a.help .help_value {
+    padding-top: 6px;
+    display: table-cell;
+}
+
+form.search a.help .help_label {
+    padding-right: 8px;
+    white-space: nowrap;
+    font-family: courier, fixed, monospace;
+}
