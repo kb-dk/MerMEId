@@ -1,3 +1,140 @@
+2013-03-13 10:38  atge
+
+	* mermeid/images/Thumbs.db, mermeid/manual/attribute_editor.html:
+	  added a missing icon in the documentation
+
+2013-03-11 10:34  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/transforms/mei/filter_get.xsl,
+	  mermeid/transforms/mei/filter_put.xsl: fixed a few issues with
+	  HTML<->MEI conversion. There still seems to be some problem with
+	  the tinyMCE editor: some attribute values are lost on the way to
+	  the filter.
+
+2013-03-11 09:25  atge
+
+	* mermeid/forms/mei/main_form_history.xml,
+	  mermeid/transforms/mei/filter_get.xsl: added missing description
+	  field in history timeline events
+
+2013-03-07 09:28  atge
+
+	* mermeid/forms/mei/details-source.xml,
+	  mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/item.xbl,
+	  mermeid/forms/mei/main_form_work.xml: added up/down buttons to
+	  identifiers and persons
+
+2013-03-07 08:45  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/edit-form-topbar.xml: changed HTML view button
+	  to use configuration parameters rather than semi-relative url;
+	  should make it work in Safari too
+
+2013-03-06 13:38  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/manual/code_inspector.html: Manual now mentions that
+	  <music> is temporary emptied on loading
+
+2013-03-06 13:12  slu
+
+	* mermeid/transforms/mei/filter_get.xsl,
+	  mermeid/transforms/mei/filter_put.xsl: transform filters that
+	  handles the music section correctly. We now
+	  remove it before delivering it to the form and inserts it again
+	  from the
+	  database before saving the entire document again. The potentially
+	  very
+	  long music section doesn't reach orbeon.
+
+2013-03-06 09:03  slu
+
+	* clean.sh: silly bug in path
+
+2013-03-05 20:59  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/images/manual/code_inspector.png,
+	  mermeid/images/manual/code_inspector_settings.png,
+	  mermeid/manual/code_inspector.html, mermeid/manual/index.html:
+	  added code inspector to manual
+
+2013-03-05 20:57  atge
+
+	* local_config/mermeid_configuration.xml_demo,
+	  local_config/mermeid_configuration.xml_distro,
+	  mermeid/forms/mei/main_form_file.xml,
+	  mermeid/style/xform_style.css, xqueries/dcm/gade_comala.xml: just
+	  a little cleaning up
+
+2013-03-05 16:15  atge
+
+	* mermeid/forms/mei/details-source.xml,
+	  mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/model/empty_doc.xml,
+	  mermeid/style/mei_to_html.css, mermeid/style/xform_style.css,
+	  mermeid/transforms/mei/mei_to_html.xsl: fixed a bug in the way
+	  item and source component labels and titles are displayed in
+	  HTML; added title page to source components
+
+2013-03-05 14:30  slu
+
+	* mermeid/forms/mei/edit-form-footer.xml:
+
+2013-03-05 14:17  slu
+
+	* clean.sh, mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html:
+
+2013-03-05 13:13  slu
+
+	* filter/src/main/java/dk/kb/mermeid/filter/FilterUtilityMethods.java:
+	  OK, we should have fixed the filter servlet to enable clever
+	  merging.
+
+2013-03-05 12:08  slu
+
+	* ChangeLog, build-distro.sh,
+	  filter/src/main/java/dk/kb/mermeid/filter/FilterUtilityMethods.java,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html,
+	  mermeid/transforms/mei/filter_get.xsl, svn2cl, svn2cl/ChangeLog,
+	  svn2cl/NEWS, svn2cl/README, svn2cl/TODO, svn2cl/authors.xml,
+	  svn2cl/svn2cl.1, svn2cl/svn2cl.sh, svn2cl/svn2cl.xsl,
+	  svn2cl/svn2html.css, svn2cl/svn2html.xsl: adding stuff related to
+	  svn2cl
+
 2013-02-28 10:44  atge
 
 	* mermeid/forms/mei/edit-form-footer.xml,
