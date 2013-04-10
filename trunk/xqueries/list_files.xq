@@ -56,6 +56,34 @@ declare function app:format-reference(
 	return $ref
 };
 
+declare function app:get-publication-reference($doc as node() )  as node()* 
+        {
+	let $form:=
+	<form id="formcnw0096.xml" 
+	action="/filter/delete/dcm/cnw0096.xml" 
+	method="post" style="display:inline;">
+
+	<div id="sourcedivcnw0096.xml" 	style="display:inline;">
+
+	<input id="sourcecnw0096.xml" 
+	type="hidden" 
+	value="publish" 
+	name="http://disdev-01.kb.dk/storage/dcm/cnw0096.xml" 
+	title="file name"/>
+
+	<input id='checkboxcnw0096.xml'
+	onclick="add_publish('sourcedivcnw0096.xml',
+	'sourcecnw0096.xml','checkboxcnw0096.xml');" 
+	type="checkbox" 
+	name="button" 
+	value="" 
+	title="publish"/>
+
+	</div>
+	</form>
+	return $form
+};
+
 declare function app:get-edition-and-number($doc as node() ) as xs:string* {
 
 	let $c := 
@@ -74,6 +102,8 @@ declare function app:view-document-reference($doc as node()) as node() {
 	</a>
 	return $ref
 };
+
+
 
 declare function app:edit-form-reference($doc as node()) as node() {
 	(: 
@@ -268,6 +298,7 @@ type="text/css"/>
 <form action="" method="get" class="search">
 <input name="query"  value='{request:get-parameter("query","")}'/>
 <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
+<input name="itemsPerPage"  value='{$number}' type='hidden' />
 <input type="submit" value="Search"               />
 <input type="submit" value="Clear" onclick="this.form.query.value='';this.form.submit();return true;"/>
 <a class="help">?<span class="comment">Search is case insensitive. 
@@ -298,6 +329,55 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 </a>
 </form>
 
+
+<div style="float:right;text-align:center;">
+<form action="./list_files.xq">
+<select name="itemsPerPage" onchange="this.form.submit();return true;"> 
+{(
+	element option {attribute value {"10"},
+			if($number=10) then 
+			attribute selected {"selected"}
+			else
+			"",
+			"10 hits"},
+	element option {attribute value {"20"},
+			if($number=20) then 
+			attribute selected {"selected"}
+			else
+			"",
+			"20 hits"},
+	element option {attribute value {"50"},
+			if($number=50) then 
+			attribute selected {"selected"}
+			else
+			"",
+			"50 hits"},
+	element option {attribute value {"100"},
+			if($number=100) then 
+			attribute selected {"selected"}
+			else
+			"",
+			"100 hits"},
+	element option {attribute value {"5000"},
+			if($number=5000) then 
+			attribute selected {"selected"}
+			else
+			"",
+			"All hits"}
+)}
+</select>
+
+
+
+
+	  <input type="hidden" name="c"  value="{$coll}"/>
+	  <input type="hidden" name="query" value="{$query}"/>
+	  <input type="hidden" name="page" value="1" />
+
+      </form>
+    </div>
+
+
 <p>
 {
 
@@ -306,14 +386,14 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	let $querystring  := 
 	if($query) then
 	fn:string-join(
-		("c=",
-			$c,
-			"&amp;query=",
-			fn:escape-uri($query,true())),
+		("c=",$c,
+		"&amp;itemsPerPage=",$number cast as xs:string,	
+		"&amp;query=",
+		fn:escape-uri($query,true())),
 		""
 	)
 	else
-	fn:string-join(("c=",$c),"")
+	fn:string-join(("c=",$c,"&amp;itemsPerPage=",$number cast as xs:string),"")
 
 	return
 	if(not($coll=$c)) then 
