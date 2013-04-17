@@ -51,6 +51,7 @@ declare function app:format-reference(
 	</a>
 	</td>
 	<td>{app:edit-form-reference($doc)}</td>
+	<td>{app:get-publication-reference($doc)}</td>
 	<td>{app:delete-document-reference($doc)}</td>
 	</tr>
 	return $ref
@@ -60,24 +61,25 @@ declare function app:get-publication-reference($doc as node() )  as node()*
         {
 	let $form:=
 	<form id="formcnw0096.xml" 
-	action="/filter/delete/dcm/cnw0096.xml" 
-	method="post" style="display:inline;">
+	      action="./list_files.xq" 
+	      method="post" style="display:inline;">
+	   <div id="sourcediv{util:document-name($doc)}"
+ 	      style="display:inline;">
 
-	<div id="sourcedivcnw0096.xml" 	style="display:inline;">
+             <input id="source{util:document-name($doc)}" 
+	          type="hidden" 
+	          value="publish" 
+	          name="dcm/{util:document-name($doc)}" 
+	          title="file name"/>
 
-	<input id="sourcecnw0096.xml" 
-	type="hidden" 
-	value="publish" 
-	name="http://disdev-01.kb.dk/storage/dcm/cnw0096.xml" 
-	title="file name"/>
-
-	<input id='checkboxcnw0096.xml'
-	onclick="add_publish('sourcedivcnw0096.xml',
-	'sourcecnw0096.xml','checkboxcnw0096.xml');" 
-	type="checkbox" 
-	name="button" 
-	value="" 
-	title="publish"/>
+	     <input id='checkbox{util:document-name($doc)}'
+	          onclick="add_publish('sourcediv{util:document-name($doc)}',
+	                               'source{util:document-name($doc)}',
+	                               'checkbox{util:document-name($doc)}');" 
+	          type="checkbox" 
+	          name="button" 
+	          value="" 
+	          title="publish"/>
 
 	</div>
 	</form>
@@ -251,7 +253,48 @@ declare function app:navigation(
 					element p {
 						element strong {
 							$total," files"
-						}
+						},
+						(<form action="./list_files.xq" style="display:inline;">
+						<select name="itemsPerPage" onchange="this.form.submit();return true;"> 
+						{(
+								element option {attribute value {"10"},
+								      if($number=10) then 
+								      attribute selected {"selected"}
+								      else
+								      "",
+								      "10 per page"},
+								element option {attribute value {"20"},
+								      if($number=20) then 
+								      attribute selected {"selected"}
+								      else
+								      "",
+								      "20 per page"},
+								element option {attribute value {"50"},
+								      if($number=50) then 
+								      attribute selected {"selected"}
+								      else
+								      "",
+								      "50 per page"},
+								element option {attribute value {"100"},
+								      if($number=100) then 
+								      attribute selected {"selected"}
+								      else
+								      "",
+								      "100 per page"},
+								element option {attribute value {"5000"},
+								      if($number=5000) then 
+								      attribute selected {"selected"}
+								      else
+								      "",
+								      "all on one page"}
+								)}
+						</select>
+
+						<input type="hidden" name="c"  value="{$coll}"/>
+						<input type="hidden" name="query" value="{$query}"/>
+						<input type="hidden" name="page" value="1" />
+
+						</form>)
 					},
 					element p {$page_nav}},
 				element td {
@@ -329,55 +372,6 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 </a>
 </form>
 
-
-<div style="float:right;text-align:center;">
-<form action="./list_files.xq">
-<select name="itemsPerPage" onchange="this.form.submit();return true;"> 
-{(
-	element option {attribute value {"10"},
-			if($number=10) then 
-			attribute selected {"selected"}
-			else
-			"",
-			"10 hits"},
-	element option {attribute value {"20"},
-			if($number=20) then 
-			attribute selected {"selected"}
-			else
-			"",
-			"20 hits"},
-	element option {attribute value {"50"},
-			if($number=50) then 
-			attribute selected {"selected"}
-			else
-			"",
-			"50 hits"},
-	element option {attribute value {"100"},
-			if($number=100) then 
-			attribute selected {"selected"}
-			else
-			"",
-			"100 hits"},
-	element option {attribute value {"5000"},
-			if($number=5000) then 
-			attribute selected {"selected"}
-			else
-			"",
-			"All hits"}
-)}
-</select>
-
-
-
-
-	  <input type="hidden" name="c"  value="{$coll}"/>
-	  <input type="hidden" name="query" value="{$query}"/>
-	  <input type="hidden" name="page" value="1" />
-
-      </form>
-    </div>
-
-
 <p>
 {
 
@@ -417,6 +411,33 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	return $link
 }
 </p> 
+
+<br style="clear:both;"/>
+
+<form method="post" action="./publish.xq" >
+<div id="publish">
+
+<input type="submit" 
+	       name="publish" 
+	       value="publish selected files" />
+
+<input 
+	    onclick="check_all();return false;"
+	    type="button" 
+	    name="publish" 
+	    value="check all records" />
+
+<input 
+	    onclick="un_check_all();return false;"
+	    type="button" 
+	    name="publish" 
+	    value="&quot;uncheck&quot; all records" />
+
+	
+</div>
+</form>
+
+
 <div class="files_list" style="width:100%">
 <h2>
 {app:list-title()}
@@ -443,6 +464,8 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	}
 	</table>
 	</div>
+
+
 
 
 }
