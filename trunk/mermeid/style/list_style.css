@@ -114,8 +114,40 @@ form.search fieldset {
 }
 
 
-/* css for help pop-ups */
+/* styling "publish" checkboxes */
 
+label.publishedIsGreen,
+label.pendingIsYellow
+label.unpublishedIsRed { 
+    display: inline-block; 
+    cursor: pointer; 
+    margin: 0;
+    padding: 0 0 16px 0;
+}
+
+.publishedIsGreen input,
+.pendingIsYellow input,
+.unpublishedIsRed input { margin-right: 5px; }
+
+.has-js .publishedIsGreen input,
+.has-js .pendingIsYellow input,
+.has-js .unpublishedIsRed input { display:none; }
+
+.has-js .publishedIsGreen,
+.has-js .pendingIsYellow,
+.has-js .unpublishedIsRed { padding-left: 20px; }
+
+.has-js .publishedIsGreen { background: url('/editor/images/checkbox_green.png') no-repeat; }
+.has-js .pendingIsYellow  { background: url('/editor/images/checkbox_yellow.png') no-repeat; }
+.has-js .unpublishedIsRed { background: url('/editor/images/checkbox_red.png') no-repeat; }
+
+.has-js label.publishedIsGreen.c_on  { background: url('/editor/images/checkbox_green_checked.png') no-repeat; }
+.has-js label.pendingIsYellow.c_on   { background: url('/editor/images/checkbox_yellow_checked.png') no-repeat; }
+.has-js label.unpublishedIsRed.c_on  { background: url('/editor/images/checkbox_red_checked.png') no-repeat; }
+
+
+
+/* css for help pop-ups */
 
 a.help {
     text-decoration: none;
