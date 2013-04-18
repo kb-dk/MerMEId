@@ -11,6 +11,7 @@ declare namespace util="http://exist-db.org/xquery/util";
 declare namespace app="http://kb.dk/this/app";
 declare namespace m="http://www.music-encoding.org/ns/mei";
 declare namespace ft="http://exist-db.org/xquery/lucene";
+declare namespace ht="http://exist-db.org/xquery/httpclient";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 
@@ -22,6 +23,12 @@ request:get-parameter("itemsPerPage","20")   cast as xs:integer;
 
 declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
+
+declare function app:is-published($file as xs:string) as node() {
+	let $uri := concat("http://localhost:8080/rest/db/",$file) cast as xs:anyURI
+	let $head:=ht:head($uri, false(), () )
+	return $head
+};
 
 declare function app:format-reference(
 	$doc as node(),
@@ -59,23 +66,40 @@ declare function app:format-reference(
 
 declare function app:get-publication-reference($doc as node() )  as node()* 
         {
+	let $doc-name:=util:document-name($doc)
+	let $color_style := 
+	if(doc-available(concat("public/",$doc-name))) then
+	(
+		let $public_hash:=util:hash(doc(concat("public/",$doc-name)),'md5')
+		let $dcm_hash:=util:hash($doc,'md5')
+		return
+		if($dcm_hash=$public_hash) then
+		"publishedIsGreen"
+		else
+		"pendingIsYellow"
+	)
+	else
+	"unpublishedIsRed"
+
 	let $form:=
-	<form id="formcnw0096.xml" 
+	<form id="formsourcediv{$doc-name}"
 	      action="./list_files.xq" 
 	      method="post" style="display:inline;">
-	   <div id="sourcediv{util:document-name($doc)}"
+
+	   <div id="sourcediv{$doc-name}"
  	      style="display:inline;">
 
-             <input id="source{util:document-name($doc)}" 
+             <input id="source{$doc-name}" 
 	          type="hidden" 
 	          value="publish" 
-	          name="dcm/{util:document-name($doc)}" 
+	          name="dcm/{$doc-name}" 
 	          title="file name"/>
 
-	     <input id='checkbox{util:document-name($doc)}'
-	          onclick="add_publish('sourcediv{util:document-name($doc)}',
-	                               'source{util:document-name($doc)}',
-	                               'checkbox{util:document-name($doc)}');" 
+	     <input id='checkbox{$doc-name}'
+                  class="{$color_style}"
+	          onclick="add_publish('sourcediv{$doc-name}',
+	                               'source{$doc-name}',
+	                               'checkbox{$doc-name}');" 
 	          type="checkbox" 
 	          name="button" 
 	          value="" 
