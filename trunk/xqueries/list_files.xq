@@ -355,12 +355,12 @@ declare function app:navigation(
 	return $links
 
 };
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>
 {app:list-title()}
 </title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <link rel="styleSheet" 
 href="/editor/style/list_style.css" 
 type="text/css"/>

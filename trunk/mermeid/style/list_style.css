@@ -117,7 +117,7 @@ form.search fieldset {
 /* styling "publish" checkboxes */
 
 label.publishedIsGreen,
-label.pendingIsYellow
+label.pendingIsYellow,
 label.unpublishedIsRed { 
     display: inline-block; 
     cursor: pointer; 
@@ -131,7 +131,7 @@ label.unpublishedIsRed {
 
 .has-js .publishedIsGreen input,
 .has-js .pendingIsYellow input,
-.has-js .unpublishedIsRed input { display:none; }
+.has-js .unpublishedIsRed input { position:absolute; left: -1000px;}
 
 .has-js .publishedIsGreen,
 .has-js .pendingIsYellow,
