@@ -64,6 +64,15 @@ declare function app:format-reference(
 	return $ref
 };
 
+declare function app:pass-as-hidden() as node()* {
+	let $inputs :=
+	(<input name="c"            type="hidden" value="{$coll}"   />,
+	<input name="query"        type="hidden" value="{$query}"  />,
+	<input name="page"         type="hidden" value="{$page}"   />,
+	<input name="itemsPerPage" type="hidden" value="{$number}" />)
+	return $inputs
+};
+
 declare function app:get-publication-reference($doc as node() )  as node()* 
         {
 	let $doc-name:=util:document-name($doc)
@@ -95,15 +104,15 @@ declare function app:get-publication-reference($doc as node() )  as node()*
 	          name="dcm/{$doc-name}" 
 	          title="file name"/>
 
-	     <input id='checkbox{$doc-name}'
-                  class="{$color_style}"
+	     <label class="{$color_style}" for='checkbox{$doc-name}'>
+                  <input id='checkbox{$doc-name}'
 	          onclick="add_publish('sourcediv{$doc-name}',
 	                               'source{$doc-name}',
 	                               'checkbox{$doc-name}');" 
 	          type="checkbox" 
 	          name="button" 
 	          value="" 
-	          title="publish"/>
+	          title="publish"/></label>
 
 	</div>
 	</form>
@@ -140,12 +149,26 @@ declare function app:edit-form-reference($doc as node()) as node() {
 	 The old form is called edit_mei_form.xml the refactored one starts on
 	 edit-work-case.xml :)
 
+	let $form-id := util:document-name($doc)
 	let $ref := 
-	<a  title="Edit" 
-        href="/orbeon/xforms-jsp/mei-form/?uri=http://{request:get-header('HOST')}/editor/forms/mei/edit-work-case.xml&amp;doc={util:document-name($doc)}">
-	<img border="0" src="/editor/images/edit.gif" alt="edit" />
-	</a>
+	<form id="edit{$form-id}" 
+        action="/orbeon/xforms-jsp/mei-form/" style="display:inline;" method="get">
+
+	<input type="hidden"
+	       name="uri"
+	       value="http://{request:get-header('HOST')}/editor/forms/mei/edit-work-case.xml" />
+	<input type="hidden"
+	       name="doc"
+	       value="{util:document-name($doc)}" />
+	<input type="image"
+	       title="Edit" 
+	       src="/editor/images/edit.gif" 
+	       alt="Edit" />
+	{app:pass-as-hidden()}
+	</form>
+
 	return $ref
+
 };
 
 declare function app:delete-document-reference($doc as node()) as node() {
@@ -155,6 +178,8 @@ declare function app:delete-document-reference($doc as node()) as node() {
         action="http://{request:get-header('HOST')}/filter/delete/dcm/{util:document-name($doc)}"
 	method="post" 
 	style="display:inline;">
+
+	{app:pass-as-hidden()}
 	
 	<input 
 	type="hidden" 
@@ -353,6 +378,10 @@ type="text/css"/>
 //
 </script>
 
+<script type="text/javascript" src="/editor/js/checkbox.js">
+//
+</script>
+
 </head>
 <body class="list_files">
 <div class="main">
@@ -444,6 +473,8 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 <input type="submit" 
 	       name="publish" 
 	       value="publish selected files" />
+
+{app:pass-as-hidden()}
 
 <input 
 	    onclick="check_all();return false;"
