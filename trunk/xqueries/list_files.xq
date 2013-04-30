@@ -27,15 +27,6 @@ declare variable $to       :=  $from      + $number - 1;
 declare variable $published_only := 
 request:get-parameter("published_only","") cast as xs:string;
 
-
-
-(: Not used, but could be useful :)
-declare function app:is-published($file as xs:string) as node() {
-	let $uri := concat("http://localhost:8080/rest/db/",$file) cast as xs:anyURI
-	let $head:=ht:head($uri, false(), () )
-	return $head
-};
-
 declare function app:format-reference(
 	$doc as node(),
 	$pos as xs:integer ) as node() {
@@ -72,10 +63,12 @@ declare function app:format-reference(
 
 declare function app:pass-as-hidden() as node()* {
 	let $inputs :=
-	(<input name="c"            type="hidden" value="{$coll}"   />,
-	<input name="query"        type="hidden" value="{$query}"  />,
-	<input name="page"         type="hidden" value="{$page}"   />,
-	<input name="itemsPerPage" type="hidden" value="{$number}" />)
+	(
+	<input name="published_only" type="hidden" value="{$published_only}"   />,
+	<input name="c"              type="hidden" value="{$coll}"   />,
+	<input name="query"          type="hidden" value="{$query}"  />,
+	<input name="page"           type="hidden" value="{$page}"   />,
+	<input name="itemsPerPage"   type="hidden" value="{$number}" />)
 	return $inputs
 };
 
@@ -236,6 +229,9 @@ declare function app:navigation(
 	if(not($query)) then ""
 	else fn:concat("&amp;query=",$query)
 
+	let $status_part :=
+	fn:concat("&amp;published_only=",$published_only)
+
 	let $perpage  := fn:concat("&amp;itemsPerPage=",$number)
 	let $nextpage := ($page+1) cast as xs:string
 
@@ -251,6 +247,7 @@ declare function app:navigation(
 						$nextpage,
 						$perpage,
 						$collection,
+						$status_part,
 						$querypart),"")
 			},
 			("Next page")
@@ -287,6 +284,7 @@ declare function app:navigation(
 						"page=",xs:string($p),
 						$perpage,
 						$collection,
+						$status_part,
 						$querypart),"")},
 			($p)
 		}
@@ -345,6 +343,7 @@ declare function app:navigation(
 								)}
 						</select>
 
+						<input type="hidden" name="published_only"  value="{$published_only}"/>
 						<input type="hidden" name="c"  value="{$coll}"/>
 						<input type="hidden" name="query" value="{$query}"/>
 						<input type="hidden" name="page" value="1" />
@@ -400,6 +399,7 @@ type="text/css"/>
 <form action="" method="get" class="search">
 <input name="query"  value='{request:get-parameter("query","")}'/>
 <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
+<input name="published_only" value='{request:get-parameter("published_only","")}' type='hidden' />
 <input name="itemsPerPage"  value='{$number}' type='hidden' />
 <input type="submit" value="Search"               />
 <input type="submit" value="Clear" onclick="this.form.query.value='';this.form.submit();return true;"/>
@@ -440,13 +440,16 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	if($query) then
 	fn:string-join(
 		("c=",$c,
+		"&amp;published_only=",$published_only,
 		"&amp;itemsPerPage=",$number cast as xs:string,	
 		"&amp;query=",
 		fn:escape-uri($query,true())),
 		""
 	)
 	else
-	fn:string-join(("c=",$c,"&amp;itemsPerPage=",$number cast as xs:string),"")
+	concat("c=",$c,
+		"&amp;published_only=",$published_only,
+		"&amp;itemsPerPage="  ,$number cast as xs:string)
 
 	return
 	if(not($coll=$c)) then 
@@ -458,9 +461,9 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 
 	let $get-uri := 
 	if($query) then
-	fn:string-join(("?query=",fn:escape-uri($query,true())),"")
+	fn:string-join(("?published_only=",$published_only,"&amp;query=",fn:escape-uri($query,true())),"")
 	else
-	"?c="
+	concat("?c=&amp;published_only=",$published_only)
 
 	let $link := 
 	if($coll) then 
@@ -478,7 +481,7 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 
 <input type="submit" 
 	       name="publish" 
-	       value="publish selected files" />
+	       value="publish checked files" />
 
 {app:pass-as-hidden()}
 
