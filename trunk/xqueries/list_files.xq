@@ -24,6 +24,12 @@ request:get-parameter("itemsPerPage","20")   cast as xs:integer;
 declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
 
+declare variable $published_only := 
+request:get-parameter("published_only","") cast as xs:string;
+
+
+
+(: Not used, but could be useful :)
 declare function app:is-published($file as xs:string) as node() {
 	let $uri := concat("http://localhost:8080/rest/db/",$file) cast as xs:anyURI
 	let $head:=ht:head($uri, false(), () )
@@ -504,7 +510,7 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 </h2>
 
 {
-	let $list := loop:getlist($coll,$query)
+	let $list := loop:getlist($published_only,$coll,$query)
 	return
 	<div>
 	{app:navigation($list)}
