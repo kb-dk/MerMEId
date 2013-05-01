@@ -44,7 +44,7 @@ declare function app:format-reference(
 	</td>
 	<td>{app:view-document-reference($doc)}</td>
 	<td nowrap="nowrap">{app:get-edition-and-number($doc)} </td>
-	<td>
+	<td class="tools">
 	<a target="_blank"
         title="View XML source" 
         href="dcm/{util:document-name($doc)}">
@@ -54,9 +54,9 @@ declare function app:format-reference(
         title="View source" />
 	</a>
 	</td>
-	<td>{app:edit-form-reference($doc)}</td>
-	<td>{app:get-publication-reference($doc)}</td>
-	<td>{app:delete-document-reference($doc)}</td>
+	<td class="tools">{app:edit-form-reference($doc)}</td>
+	<td class="tools">{app:get-publication-reference($doc)}</td>
+	<td class="tools">{app:delete-document-reference($doc)}</td>
 	</tr>
 	return $ref
 };
@@ -192,7 +192,7 @@ declare function app:delete-document-reference($doc as node()) as node() {
 	<input 
     	onclick="{fn:concat('show_confirm(&quot;del',$form-id,'&quot;,&quot;',$doc//m:workDesc/m:work/m:titleStmt/m:title[string()]/string()[1],'&quot;);return false;')}" 
 	type="image" 
-	src="/editor/images/delete.gif"  
+	src="/editor/images/remove.gif"  
 	name="button"
 	value="delete"
 	title="Delete"/>
@@ -253,9 +253,13 @@ declare function app:navigation(
 						$status_part,
 						$querypart),"")
 			},
-			("Next page")
-		},
-		(" &gt;"))
+			("Next page "),
+			element img {
+			   attribute src {"/editor/images/point_right.png"},
+			   attribute alt {"Next"}
+			}
+		}
+	)
 	else
 	("") 
 
@@ -263,14 +267,18 @@ declare function app:navigation(
 
 	let $previous :=
 	if($from - $number + 1 > 0) then
-	(("&lt; "),
+	(
 		element a {
 			attribute rel {"prev"},
 			attribute title {"Go to previous page"},
 			attribute href {
        				fn:string-join(
 					($uri,"?","page=",$prevpage,$perpage,$collection,$querypart),"")},
-			("Previous page")
+			element img {
+			   attribute src {"/editor/images/point_left.png"},
+			   attribute alt {"Previous"}
+			},
+			(" Previous page")
 		}
 	)
 	else
@@ -300,59 +308,58 @@ declare function app:navigation(
 
 	let $links := ( 
 		element table {
+			attribute class {"nav_bar"},
 			element tr {
 				element td {
 					attribute style {"width:15%;text-align:left;"},
 					$previous,"&#160;"},
 				element td {
 					attribute style {"width:70%;text-align:center;"},
-					element p {
-						element strong {
-							$total," files"
-						},
-						(<form action="./list_files.xq" style="display:inline;">
-						<select name="itemsPerPage" onchange="this.form.submit();return true;"> 
-						{(
-								element option {attribute value {"10"},
-								      if($number=10) then 
-								      attribute selected {"selected"}
-								      else
-								      "",
-								      "10 per page"},
-								element option {attribute value {"20"},
-								      if($number=20) then 
-								      attribute selected {"selected"}
-								      else
-								      "",
-								      "20 per page"},
-								element option {attribute value {"50"},
-								      if($number=50) then 
-								      attribute selected {"selected"}
-								      else
-								      "",
-								      "50 per page"},
-								element option {attribute value {"100"},
-								      if($number=100) then 
-								      attribute selected {"selected"}
-								      else
-								      "",
-								      "100 per page"},
-								element option {attribute value {"5000"},
-								      if($number=5000) then 
-								      attribute selected {"selected"}
-								      else
-								      "",
-								      "all on one page"}
-								)}
-						</select>
-
-						<input type="hidden" name="published_only"  value="{$published_only}"/>
-						<input type="hidden" name="c"  value="{$coll}"/>
-						<input type="hidden" name="query" value="{$query}"/>
-						<input type="hidden" name="page" value="1" />
-
-						</form>)
+					element strong {
+						$total," files"
 					},
+					(<form action="./list_files.xq" style="display:inline;">
+					<select name="itemsPerPage" onchange="this.form.submit();return true;"> 
+					{(
+							element option {attribute value {"10"},
+							      if($number=10) then 
+							      attribute selected {"selected"}
+							      else
+							      "",
+							      "10 per page"},
+							element option {attribute value {"20"},
+							      if($number=20) then 
+							      attribute selected {"selected"}
+							      else
+							      "",
+							      "20 per page"},
+							element option {attribute value {"50"},
+							      if($number=50) then 
+							      attribute selected {"selected"}
+							      else
+							      "",
+							      "50 per page"},
+							element option {attribute value {"100"},
+							      if($number=100) then 
+							      attribute selected {"selected"}
+							      else
+							      "",
+							      "100 per page"},
+							element option {attribute value {"5000"},
+							      if($number=5000) then 
+							      attribute selected {"selected"}
+							      else
+							      "",
+							      "all on one page"}
+							)}
+					</select>
+
+					<input type="hidden" name="published_only"  value="{$published_only}"/>
+					<input type="hidden" name="c"  value="{$coll}"/>
+					<input type="hidden" name="query" value="{$query}"/>
+					<input type="hidden" name="page" value="1" />
+
+					</form>),
 					element p {$page_nav}},
 				element td {
 					attribute style {"width:15%;text-align:right;"},
@@ -477,34 +484,6 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 }
 </p> 
 
-<br style="clear:both;"/>
-
-<form method="post" action="./publish.xq" >
-<div id="publish">
-
-<input type="submit" 
-	       name="publish" 
-	       value="publish checked files" />
-
-{app:pass-as-hidden()}
-
-<input 
-	    onclick="check_all();return false;"
-	    type="button" 
-	    name="publish" 
-	    value="check all records" />
-
-<input 
-	    onclick="un_check_all();return false;"
-	    type="button" 
-	    name="publish" 
-	    value="&quot;uncheck&quot; all records" />
-
-	
-</div>
-</form>
-
-
 <div class="files_list" style="width:100%">
 <h2>
 {app:list-title()}
@@ -522,7 +501,38 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	{app:navigation($list)}
 
 	<table border='0' cellpadding='0' cellspacing='0' class='result_table'>
-	<tr><th>Composer</th><th>Title</th><th></th><th></th></tr>
+	<tr>
+	   <th>Composer</th>
+	   <th>Title</th>
+	   <th/>
+	   <th class="tools">XML</th>
+	   <th class="tools">Edit</th>
+	   <th class="tools">	   
+	       <form method="post" id="publish_form" action="./publish.xq" >
+             <div id="publish">
+
+                <a href="javascript: document.forms['publish_form'].submit();"
+                    title="Publish checked files"
+                    class="publish_link">Publish</a>
+
+                   {app:pass-as-hidden()}
+                
+                <br/>
+                <a href="javascript: check_all();" 
+                    title="Check all"
+                    class="check_link"><img src="/editor/images/check_all.png" alt="Check all" title="Check all"/></a>
+                
+                <a href="javascript: un_check_all();"
+                    title="Uncheck all"
+                    class="check_link"><img src="/editor/images/uncheck_all.png" alt="Uncheck all" title="Uncheck all"/></a>
+	
+            </div>
+        </form>
+	   
+	   
+	   </th>
+	   <th class="tools">Delete</th>
+	</tr>
 	{
 		
 		for $doc at $count in $list[position() = ($from to $to)]
@@ -533,15 +543,16 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	</div>
 
 
-
-
 }
 </div>
 </div>
 <div class="footer">
-           <a href="http://www.kb.dk/dcm" title="DCM"><img style="border: 0px; vertical-align:middle;" alt="DCM Logo" src="/editor/images/dcm_logo_small.png"/></a>
-            2013 Danish
-              Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
+           <a href="http://www.kb.dk/dcm" title="DCM" 
+           style="text-decoration:none;"><img 
+           style="border: 0px; vertical-align:middle;" 
+           alt="DCM Logo" 
+           src="/editor/images/dcm_logo_small.png"/></a>
+            2013 Danish Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
 </div>
 
 </body>

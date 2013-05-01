@@ -42,7 +42,7 @@ table {
 }
 
 th {
-    font-size: .8em;
+    font-size: 10pt;
     font-weight: bold;
     padding: .2em;
     padding-left: .3em;
@@ -51,7 +51,7 @@ th {
 }
 
 td {
-    font-size: .8em;
+    font-size: 10pt;
     padding: .2em;
     padding-left: .3em;
     margin: 0em;
@@ -82,7 +82,7 @@ td.buttons input, td.buttons img {
 }
 
 td.buttons input:hover, td.buttons img:hover {
-    border: 1px solid #999999;
+    border: 1px solid #999;
     padding: 2px;
 }
 
@@ -90,8 +90,26 @@ div.files_list table {
     width: 100%;
 }
 
+table.result_table {
+    margin-top: 5px;
+    border: 1px solid #999;
+}
+
+table.result_table th {
+    vertical-align: top;
+    background-color: #ccc;
+}
+
 table.result_table td {
     padding:3px;
+}
+
+table.result_table .tools {
+    text-align: center;
+}
+
+table.nav_bar {
+    background-color: none;
 }
 
 tbody tr.result:hover {
@@ -113,7 +131,18 @@ form.search fieldset {
     background-color: #ddd;
 }
 
+#publish .check_link {
+    text-decoration: none;
+}
 
+#publish .check_link img {
+    margin: 3px 1px 0 1px;
+}
+
+#publish_form {
+    margin: 0;
+    padding: 0;
+}
 /* styling "publish" checkboxes */
 
 label.publishedIsGreen,
