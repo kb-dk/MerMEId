@@ -72,6 +72,24 @@ declare function app:pass-as-hidden() as node()* {
 	return $inputs
 };
 
+
+declare function app:pass-as-hidden-except(
+	$field as xs:string,
+	$value as xs:string) as node()* {
+
+	let $inputs:=
+	for $input in app:pass-as-hidden()
+	return
+	if($input/@name eq $field) then
+	<input type="hidden" value="{$value}"  name="{$field}" />
+	else
+	$input
+	
+	return $inputs
+};
+
+
+
 declare function app:get-publication-reference($doc as node() )  as node()* 
         {
 	let $doc-name:=util:document-name($doc)
@@ -174,7 +192,7 @@ declare function app:delete-document-reference($doc as node()) as node() {
 	let $form-id := util:document-name($doc)
 	let $uri     := concat("/db/public/",util:document-name($doc))
 	let $form := if(doc-available($uri)) then
-	<form>&#160;</form>
+	<span>&#160;</span>
 	else
 	<form id="del{$form-id}" 
         action="http://{request:get-header('HOST')}/filter/delete/dcm/{util:document-name($doc)}"
@@ -443,7 +461,21 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 
 <p>
 {
-
+        if($published_only) then
+	<form method="get" id="status-selection" action="" >
+        <div style="display:inline;" >
+	<input type="submit" value="Show all" />
+        {app:pass-as-hidden-except("published_only","")}
+        </div>
+        </form>
+	else
+	<form method="get" id="status-selection" action="" >
+        <div style="display:inline;" >
+	<input type="submit" value="Show published" />
+        {app:pass-as-hidden-except("published_only","1")}
+        </div>
+        </form>
+}{
 	for $c in distinct-values(
 		collection("/db/dcm")//m:seriesStmt/m:identifier[@type="file_collection"]/string()[string-length(.) > 0])
 	let $querystring  := 
