@@ -415,6 +415,10 @@ type="text/css"/>
 //
 </script>
 
+<script type="text/javascript" src="/editor/js/publishing.js">
+//
+</script>
+
 </head>
 <body class="list_files">
 <div class="main">
@@ -471,7 +475,7 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	else
 	<form method="get" id="status-selection" action="" >
         <div style="display:inline;" >
-	<input type="submit" value="Show published" />
+	<input type="submit" value="Show published only" />
         {app:pass-as-hidden-except("published_only","1")}
         </div>
         </form>
@@ -543,9 +547,19 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	       <form method="post" id="publish_form" action="./publish.xq" >
              <div id="publish">
 
-                <a href="javascript: document.forms['publish_form'].submit();"
+                <a href="javascript: publishing_action('publish'); document.forms['publish_form'].submit();"
                     title="Publish checked files"
                     class="publish_link">Publish</a>
+
+                <a href="javascript: publishing_action('retract'); document.forms['publish_form'].submit();"
+                    title="Retract checked files"
+                    class="publish_link">Retract</a>
+
+
+	        <input name="publishing_action" 
+	               type="hidden"
+                       value="publish" 
+                       id="publishingaction" />
 
                    {app:pass-as-hidden()}
                 
