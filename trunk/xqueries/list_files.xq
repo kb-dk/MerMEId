@@ -172,7 +172,10 @@ declare function app:edit-form-reference($doc as node()) as node() {
 
 declare function app:delete-document-reference($doc as node()) as node() {
 	let $form-id := util:document-name($doc)
-	let $form := 
+	let $uri     := concat("/db/public/",util:document-name($doc))
+	let $form := if(doc-available($uri)) then
+	<form>&#160;</form>
+	else
 	<form id="del{$form-id}" 
         action="http://{request:get-header('HOST')}/filter/delete/dcm/{util:document-name($doc)}"
 	method="post" 
