@@ -6,11 +6,13 @@ function add_publish(formid,inputid,checkboxid)
     var input     = document.getElementById(inputid);
     var checkbox  = document.getElementById(checkboxid);
 
-    if(checkbox.checked == false) {
-        localform.insertBefore(input,getFirstChild(localform));
-    } else {
-	formdiv.appendChild(input);
-    }
+    setTimeout(function() {
+	if(checkbox.checked == false) {
+            localform.insertBefore(input,getFirstChild(localform));
+	} else {
+	    formdiv.appendChild(input);
+	}
+    },0);
 }
 
 function check_all()
@@ -58,8 +60,9 @@ function getFirstChild(parent)
 	if( parent.childNodes[i].nodeName == 'INPUT' ) 
 	{
 	    return  parent.childNodes[i];
-	}
+	} 
     }
+    return null;
 }
 
 function publishing_action(action)
