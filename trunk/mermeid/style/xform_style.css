@@ -552,7 +552,8 @@ a.help_plain img {
 
 a.help span.comment, a.help_plain span.comment, 
 a.warning span.comment, a.dcm_id span.comment,
-a.popup span.comment {
+a.popup span.comment,
+div.popup {
     display:inline;
     position: absolute;
     visibility:hidden;
@@ -581,7 +582,8 @@ a.popup span.comment {
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333'); 
 }
 
-a.popup span.comment {
+a.popup span.comment,
+div.popup {
     background-color: #ccc;
     cursor: default;
     font-size: 1em;

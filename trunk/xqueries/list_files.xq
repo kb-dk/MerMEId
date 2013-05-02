@@ -192,7 +192,9 @@ declare function app:delete-document-reference($doc as node()) as node() {
 	let $form-id := util:document-name($doc)
 	let $uri     := concat("/db/public/",util:document-name($doc))
 	let $form := if(doc-available($uri)) then
-	<span>&#160;</span>
+	<span>
+	   <img src="/editor/images/remove_disabled.gif" alt="Remove (disabled)" title="Only unpublished files may be deleted"/>
+	</span>
 	else
 	<form id="del{$form-id}" 
         action="http://{request:get-header('HOST')}/filter/delete/dcm/{util:document-name($doc)}"
@@ -546,32 +548,49 @@ Search terms may be combined using boolean operators. Wildcards allowed. Some ex
 	   <th class="tools">	   
 	       <form method="post" id="publish_form" action="./publish.xq" >
              <div id="publish">
-
-                <a href="javascript: publishing_action('publish'); document.forms['publish_form'].submit();"
-                    title="Publish checked files"
-                    class="publish_link">Publish</a>
-
-                <a href="javascript: publishing_action('retract'); document.forms['publish_form'].submit();"
-                    title="Retract checked files"
-                    class="publish_link">Retract</a>
-
-
-	        <input name="publishing_action" 
-	               type="hidden"
+                Publish 
+                <img src="/editor/images/menu.gif" 
+                    alt="Publishing menu" 
+                    onmouseover="document.getElementById('publish_menu').style.visibility='visible'"
+                    onmouseout="document.getElementById('publish_menu').style.visibility='hidden'"
+                    style="vertical-align: text-top;"/>
+                <div 
+                    class="popup" 
+                    id="publish_menu" 
+                    onmouseover="document.getElementById('publish_menu').style.visibility='visible'"
+                    onmouseout="document.getElementById('publish_menu').style.visibility='hidden'">
+    
+                    <button 
+                        type="submit" 
+                        onclick="document.getElementById('publishingaction').value='publish';">
+                        <img src="/editor/images/publish.png" alt="Publish"/>
+                        Publish selected files</button>
+                    <br/>
+                    <button 
+                        type="submit"
+                        onclick="document.getElementById('publishingaction').value='retract';">
+                        <img src="/editor/images/unpublish.png" alt="Unpublish"/>
+                        Unpublish selected files</button>
+                        
+    	            <input name="publishing_action" 
+    	               type="hidden"
                        value="publish" 
                        id="publishingaction" />
-
-                   {app:pass-as-hidden()}
-                
-                <br/>
-                <a href="javascript: check_all();" 
-                    title="Check all"
-                    class="check_link"><img src="/editor/images/check_all.png" alt="Check all" title="Check all"/></a>
-                
-                <a href="javascript: un_check_all();"
-                    title="Uncheck all"
-                    class="check_link"><img src="/editor/images/uncheck_all.png" alt="Uncheck all" title="Uncheck all"/></a>
-	
+    
+                    {app:pass-as-hidden()}
+                    
+                    <hr/>
+                    
+                    <button type="button"
+                        onclick="check_all();">
+                        <img src="/editor/images/check_all.png" alt="Check all" title="Check all"/>
+                        Select all files</button>
+                    <br/>
+                    <button type="button"
+                        onclick="un_check_all();">
+                        <img src="/editor/images/uncheck_all.png" alt="Uncheck all" title="Uncheck all"/>
+                        Unselect all files</button>
+                </div>
             </div>
         </form>
 	   

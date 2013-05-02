@@ -64,9 +64,3 @@ function getFirstChild(parent)
     }
     return null;
 }
-
-function publishing_action(action)
-{
-    var input   = document.getElementById('publishingaction');
-    input.value=action;
-}
