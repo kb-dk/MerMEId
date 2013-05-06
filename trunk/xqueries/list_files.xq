@@ -546,11 +546,6 @@ declare function app:navigation(
                <div class="nav_bar">
 <!--                   <h2>
                    {app:list-title()}
-                   {
-                   	<a title="Add new file" href="#" class="addLink" 
-                   	onclick="location.href='/filter/new/dcm/'; return false;"><img 
-                   	src="/editor/images/new.gif" alt="New file" border="0" /></a>
-                   }
                    </h2>-->
                    {app:navigation($list)}
                </div>
@@ -566,7 +561,7 @@ declare function app:navigation(
            	       <form method="post" id="publish_form" action="./publish.xq" >
                         <div id="publish">
                            Publish 
-                           <img src="/editor/images/menu.gif" 
+                           <img src="/editor/images/menu.png" 
                                alt="Publishing menu" 
                                onmouseover="document.getElementById('publish_menu').style.visibility='visible'"
                                onmouseout="document.getElementById('publish_menu').style.visibility='hidden'"
