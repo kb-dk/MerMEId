@@ -554,9 +554,7 @@ declare function app:navigation(
         	<div class="files_list">
            	
                <div class="nav_bar">
-<!--                   <h2>
-                   {app:list-title()}
-                   </h2>-->
+                    <!--<h2>{app:list-title()}</h2>-->
                    {app:navigation($list)}
                </div>
            
@@ -564,7 +562,7 @@ declare function app:navigation(
            	<tr>
            	   <th>Composer</th>
            	   <th>Title</th>
-           	   <th>&#160;</th>
+           	   <th>Collection</th>
            	   <th class="tools">XML</th>
            	   <th class="tools">Edit</th>
            	   <th class="tools">	   
