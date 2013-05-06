@@ -6,9 +6,40 @@ body {
     margin:0px;
 }
 
-h1 {
-    margin:0px;
+div.list_header,
+div.filter_bar,
+div.files_list,
+div.nav_bar {
+    background-color: #ddd;
+    border: 1px solid #888;
+    border-top: none;
+    padding: 4px 8px;
+    margin: 0;
 }
+
+div.list_header {
+    background-color : #666;
+    /*border: 1px solid #888;*/
+    border: none;
+}
+
+div.files_list {
+    padding: 0;
+}
+
+div.nav_bar {
+    border: none;
+}
+
+div.nav_bar div {
+    text-align: center;
+}
+
+div.footer, p.footer {
+    margin: 0 -20px 20px -20px;
+    padding: 10px 20px;
+}
+
 
 h2 {
     margin-bottom: 0;
@@ -37,25 +68,29 @@ a.addLink:hover img {
     border: 1px solid #999;
 }
 
+
+.footer, .footer a:link, .footer a:visited, .footer a:active {
+    color: #444;
+}
+
 table {
     width: 100%;
 }
 
-th {
+th, td {
     font-size: 10pt;
-    font-weight: bold;
     padding: .2em;
     padding-left: .3em;
     margin: 0em;
     text-align: left;
+    vertical-align: top;
 }
 
-td {
-    font-size: 10pt;
-    padding: .2em;
-    padding-left: .3em;
-    margin: 0em;
-    border-top: 1px solid #999;
+th {
+    font-weight: bold;
+    border-bottom: 1px solid #888;
+    border-top: 1px solid #888;
+    white-space: nowrap;
 }
 
 td p 
@@ -86,22 +121,18 @@ td.buttons input:hover, td.buttons img:hover {
     padding: 2px;
 }
 
-div.files_list table {
-    width: 100%;
-}
-
 table.result_table {
     margin-top: 5px;
-    border: 1px solid #999;
+}
+
+table.result_table td,
+table.result_table th {
+    padding:3px 8px;
 }
 
 table.result_table th {
-    vertical-align: top;
-    background-color: #ccc;
-}
-
-table.result_table td {
-    padding:3px;
+    background-color: #666;
+    color: #fff;
 }
 
 table.result_table .tools {
@@ -109,23 +140,25 @@ table.result_table .tools {
     white-space: nowrap;
 }
 
-table.nav_bar {
-    background-color: none;
-}
-
 tbody tr.result:hover {
-    background-color: #ffffcc;
+    background-color: #F4F3EB;
 }
 
-form.search {
-    width:auto;
-    float:right;
+table.filter_block {
+    width: auto;
 }
 
-form.search fieldset {
+table.filter_block div,
+table.filter_block form {
     display: inline;
-    border: none;
-    text-align: right;
+}
+
+table.filter_block td {
+    padding: 0 8px 0 0;
+}
+
+table.filter_block td.label {
+    white-space: nowrap;
 }
 
 .odd {

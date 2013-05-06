@@ -263,6 +263,7 @@ declare function app:navigation(
 	(element a {
 			attribute rel   {"next"},
 			attribute title {"Go to next page"},
+			attribute style {"text-decoration: none;"},
 			attribute href {
 				fn:string-join((
 						$uri,"?",
@@ -273,12 +274,13 @@ declare function app:navigation(
 						$status_part,
 						$querypart),"")
 			},
-			("Next page "),
 			element img {
-			   attribute src {"/editor/images/point_right.png"},
-			   attribute alt {"Next"}
+			   attribute src {"/editor/images/next.png"},
+			   attribute alt {"Next"},
+			   attribute border {"0"}
 			}
-		}
+	    }	    
+	    
 	)
 	else
 	("") 
@@ -291,14 +293,15 @@ declare function app:navigation(
 		element a {
 			attribute rel {"prev"},
 			attribute title {"Go to previous page"},
+			attribute style {"text-decoration: none;"},
 			attribute href {
        				fn:string-join(
 					($uri,"?","page=",$prevpage,$perpage,$collection,$querypart),"")},
 			element img {
-			   attribute src {"/editor/images/point_left.png"},
-			   attribute alt {"Previous"}
-			},
-			(" Previous page")
+			   attribute src {"/editor/images/previous.png"},
+			   attribute alt {"Previous"},
+			   attribute border {"0"}
+			}
 		}
 	)
 	else
@@ -321,23 +324,17 @@ declare function app:navigation(
 		}
           else 
 		element span {
-			attribute style {"color:red;"},
+			attribute style {"color:#999;"},
 			($p)
                 }
 	)
 
 	let $links := ( 
-		element table {
-			attribute class {"nav_bar"},
-			element tr {
-				element td {
-					attribute style {"width:15%;text-align:left;"},
-					$previous,"&#160;"},
-				element td {
-					attribute style {"width:70%;text-align:center;"},
+				element div {
 					element strong {
-						$total," files"
+						"Found ",$total," files"
 					},
+					(". Display "),
 					(<form action="./list_files.xq" style="display:inline;">
 					<select name="itemsPerPage" onchange="this.form.submit();return true;"> 
 					{(
@@ -370,7 +367,7 @@ declare function app:navigation(
 							      attribute selected {"selected"}
 							      else
 							      "",
-							      "all on one page"}
+							      "all"}
 							)}
 					</select>
 
@@ -380,245 +377,263 @@ declare function app:navigation(
 					<input type="hidden" name="page" value="1" />
 
 					</form>),
-					element p {$page_nav}},
-				element td {
-					attribute style {"width:15%;text-align:right;"},
-					$next,"&#160;"}
-			}
-		}
+					element p {
+					   $previous,"&#160;",
+					   $page_nav,
+					   "&#160;", $next}
+				}
 	)
 	return $links
 
 };
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>
-{app:list-title()}
-</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<link rel="styleSheet" 
-href="/editor/style/list_style.css" 
-type="text/css"/>
-<link rel="styleSheet" 
-href="/editor/style/xform_style.css" 
-type="text/css"/>
-<link rel="styleSheet" 
-href="/editor/style/front_page.css" 
-type="text/css"/>
-<link rel="styleSheet" 
-href="/editor/style/manual.css" 
-type="text/css"/>
-
-<script type="text/javascript" src="/editor/js/confirm.js">
-//
-</script>
-
-<script type="text/javascript" src="/editor/js/checkbox.js">
-//
-</script>
-
-<script type="text/javascript" src="/editor/js/publishing.js">
-//
-</script>
+    <title>
+    {app:list-title()}
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <link rel="styleSheet" 
+        href="/editor/style/list_style.css" 
+        type="text/css"/>
+    <link rel="styleSheet" 
+        href="/editor/style/xform_style.css" 
+        type="text/css"/>
+    
+    <script type="text/javascript" src="/editor/js/confirm.js">
+    //
+    </script>
+    
+    <script type="text/javascript" src="/editor/js/checkbox.js">
+    //
+    </script>
+    
+    <script type="text/javascript" src="/editor/js/publishing.js">
+    //
+    </script>
 
 </head>
 <body class="list_files">
-<div class="main">
-<div class="manual_header">
-<div style="float:right;">
-<a href="/editor/manual/" target="_blank"><img src="/editor/images/help.png" title="Help - opens the manual in a new window or tab" alt="Help" border="0"/></a>
-</div>
-<img src="/editor/images/mermeid_30px.png" title="MerMEId - Metadata Editor and Repository for MEI Data" alt="MerMEId Logo"/>
-</div>
-<form action="" method="get" class="search">
-<input name="query"  value='{request:get-parameter("query","")}'/>
-<input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
-<input name="published_only" value='{request:get-parameter("published_only","")}' type='hidden' />
-<input name="itemsPerPage"  value='{$number}' type='hidden' />
-<input type="submit" value="Search"               />
-<input type="submit" value="Clear" onclick="this.form.query.value='';this.form.submit();return true;"/>
-<a class="help">?<span class="comment">Search is case insensitive. 
-Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<br/>
-<span class="help_table">
-<span class="help_example">
-<span class="help_label">carl or nielsen</span>
-<span class="help_value">Boolean OR (default)</span>
-</span>                        
-<span class="help_example">
-<span class="help_label">carl and nielsen</span>
-<span class="help_value">Boolean AND</span>
-</span>
-<span class="help_example">
-<span class="help_label">"carl nielsen"</span>
-<span class="help_value">Exact phrase</span>
-</span>
-<span class="help_example">
-<span class="help_label">niels*</span>
-<span class="help_value">Match any number of characters. Finds Niels, Nielsen and Nielsson</span>
-</span>
-<span class="help_example">
-<span class="help_label">niels?n</span>
-<span class="help_value">Match 1 character. Finds Nielsen and Nielson, but not Nielsson</span>
-</span>
-</span>
-</span>
-</a>
-</form>
-
-<p>
-{
-        if($published_only) then
-	<form method="get" id="status-selection" action="" >
-        <div style="display:inline;" >
-	<input type="submit" value="Show all" />
-        {app:pass-as-hidden-except("published_only","")}
+    <div class="list_header">
+        <div style="float:right;">
+            <a title="Add new file" href="#" class="addLink" 
+               onclick="location.href='/filter/new/dcm/'; return false;"><img 
+               src="/editor/images/new.gif" alt="New file" border="0" /></a>
+               &#160;
+            <a href="/editor/manual/" 
+                class="addLink"
+                target="_blank"><img 
+                src="/editor/images/help.png" 
+                title="Help - opens the manual in a new window or tab" 
+                alt="Help" 
+                border="0"/></a>
         </div>
-        </form>
-	else
-	<form method="get" id="status-selection" action="" >
-        <div style="display:inline;" >
-	<input type="submit" value="Show published only" />
-        {app:pass-as-hidden-except("published_only","1")}
-        </div>
-        </form>
-}{
-	for $c in distinct-values(
-		collection("/db/dcm")//m:seriesStmt/m:identifier[@type="file_collection"]/string()[string-length(.) > 0])
-	let $querystring  := 
-	if($query) then
-	fn:string-join(
-		("c=",$c,
-		"&amp;published_only=",$published_only,
-		"&amp;itemsPerPage=",$number cast as xs:string,	
-		"&amp;query=",
-		fn:escape-uri($query,true())),
-		""
-	)
-	else
-	concat("c=",$c,
-		"&amp;published_only=",$published_only,
-		"&amp;itemsPerPage="  ,$number cast as xs:string)
+        <img src="/editor/images/mermeid_30px_inv.png" title="MerMEId - Metadata Editor and Repository for MEI Data" alt="MerMEId Logo"/>
+    </div>
+    <div class="filter_bar">
+        <table class="filter_block">
+            <tr>
+                <td class="label">Filter by: &#160;</td>
+                <td class="label">Publication status</td>
+                <td class="label">Collection</td>
+                <td class="label">Keywords</td>
+            </tr>
+            <tr>
+                <td>&#160;</td>
+                <td>
+                {
+                        if($published_only) then
+                	<form method="get" id="status-selection" action="" >
+                        <div style="display:inline;" >
+                	<input type="submit" value="All" />
+                        {app:pass-as-hidden-except("published_only","")}
+                        </div>
+                        </form>
+                	else
+                	<form method="get" id="status-selection" action="" >
+                        <div style="display:inline;" >
+                	<input type="submit" value="Published only" />
+                        {app:pass-as-hidden-except("published_only","1")}
+                        </div>
+                        </form>
+                }
+                </td>
+                <td>
+            {
+            	for $c in distinct-values(
+            		collection("/db/dcm")//m:seriesStmt/m:identifier[@type="file_collection"]/string()[string-length(.) > 0])
+            	let $querystring  := 
+            	if($query) then
+            	fn:string-join(
+            		("c=",$c,
+            		"&amp;published_only=",$published_only,
+            		"&amp;itemsPerPage=",$number cast as xs:string,	
+            		"&amp;query=",
+            		fn:escape-uri($query,true())),
+            		""
+            	)
+            	else
+            	concat("c=",$c,
+            		"&amp;published_only=",$published_only,
+            		"&amp;itemsPerPage="  ,$number cast as xs:string)
+            
+            	return
+            	if(not($coll=$c)) then 
+            	<button type="submit" title="{$c}" onclick="location.href='?{$querystring}'; return false;">{$c}</button>
+            	else
+            	<button type="submit" title="{$c}" disabled="true">{$c}</button>
+            }
+            {
+            
+            	let $get-uri := 
+            	if($query) then
+            	fn:string-join(("?published_only=",$published_only,"&amp;query=",fn:escape-uri($query,true())),"")
+            	else
+            	concat("?c=&amp;published_only=",$published_only)
+            
+            	let $link := 
+            	if($coll) then 
+            	<button type="submit" title="All collections" onclick="location.href='{$get-uri}'; return false;">All collections</button>
+            	else
+            	<button type="submit" title="All collections" disabled="true">All collections</button>
+            	return $link
+            }
+                </td>
+                <td>
+                    <form action="" method="get" class="search">
+                        <input name="query"  value='{request:get-parameter("query","")}'/>
+                        <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
+                        <input name="published_only" value='{request:get-parameter("published_only","")}' type='hidden' />
+                        <input name="itemsPerPage"  value='{$number}' type='hidden' />
+                        <input type="submit" value="Search"               />
+                        <input type="submit" value="Clear" onclick="this.form.query.value='';this.form.submit();return true;"/>
+                        <a class="help">?<span class="comment">Search is case insensitive. 
+                        Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<br/>
+                        <span class="help_table">
+                        <span class="help_example">
+                        <span class="help_label">carl or nielsen</span>
+                        <span class="help_value">Boolean OR (default)</span>
+                        </span>                        
+                        <span class="help_example">
+                        <span class="help_label">carl and nielsen</span>
+                        <span class="help_value">Boolean AND</span>
+                        </span>
+                        <span class="help_example">
+                        <span class="help_label">"carl nielsen"</span>
+                        <span class="help_value">Exact phrase</span>
+                        </span>
+                        <span class="help_example">
+                        <span class="help_label">niels*</span>
+                        <span class="help_value">Match any number of characters. Finds Niels, Nielsen and Nielsson</span>
+                        </span>
+                        <span class="help_example">
+                        <span class="help_label">niels?n</span>
+                        <span class="help_value">Match 1 character. Finds Nielsen and Nielson, but not Nielsson</span>
+                        </span>
+                        </span>
+                        </span>
+                        </a>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-	return
-	if(not($coll=$c)) then 
-	<button type="submit" title="{$c}" onclick="location.href='?{$querystring}'; return false;">{$c}</button>
-	else
-	<button type="submit" title="{$c}" disabled="true">{$c}</button>
-}
-{
-
-	let $get-uri := 
-	if($query) then
-	fn:string-join(("?published_only=",$published_only,"&amp;query=",fn:escape-uri($query,true())),"")
-	else
-	concat("?c=&amp;published_only=",$published_only)
-
-	let $link := 
-	if($coll) then 
-	<button type="submit" title="All collections" onclick="location.href='{$get-uri}'; return false;">All collections</button>
-	else
-	<button type="submit" title="All collections" disabled="true">All collections</button>
-	return $link
-}
-</p> 
-
-<div class="files_list" style="width:100%">
-<h2>
-{app:list-title()}
-{
-	<a title="Add new file" href="#" class="addLink" 
-	onclick="location.href='/filter/new/dcm/'; return false;"><img 
-	src="/editor/images/new.gif" alt="New file" border="0" /></a>
-}
-</h2>
-
-{
-	let $list := loop:getlist($published_only,$coll,$query)
-	return
-	<div>
-	{app:navigation($list)}
-
-	<table border='0' cellpadding='0' cellspacing='0' class='result_table'>
-	<tr>
-	   <th>Composer</th>
-	   <th>Title</th>
-	   <th/>
-	   <th class="tools">XML</th>
-	   <th class="tools">Edit</th>
-	   <th class="tools">	   
-	       <form method="post" id="publish_form" action="./publish.xq" >
-             <div id="publish">
-                Publish 
-                <img src="/editor/images/menu.gif" 
-                    alt="Publishing menu" 
-                    onmouseover="document.getElementById('publish_menu').style.visibility='visible'"
-                    onmouseout="document.getElementById('publish_menu').style.visibility='hidden'"
-                    style="vertical-align: text-top;"/>
-                <div 
-                    class="popup" 
-                    id="publish_menu" 
-                    onmouseover="document.getElementById('publish_menu').style.visibility='visible'"
-                    onmouseout="document.getElementById('publish_menu').style.visibility='hidden'">
-    
-                    <button 
-                        type="submit" 
-                        onclick="document.getElementById('publishingaction').value='publish';">
-                        <img src="/editor/images/publish.png" alt="Publish"/>
-                        Publish selected files</button>
-                    <br/>
-                    <button 
-                        type="submit"
-                        onclick="document.getElementById('publishingaction').value='retract';">
-                        <img src="/editor/images/unpublish.png" alt="Unpublish"/>
-                        Unpublish selected files</button>
-                        
-    	            <input name="publishing_action" 
-    	               type="hidden"
-                       value="publish" 
-                       id="publishingaction" />
-    
-                    {app:pass-as-hidden()}
-                    
-                    <hr/>
-                    
-                    <button type="button"
-                        onclick="check_all();">
-                        <img src="/editor/images/check_all.png" alt="Check all" title="Check all"/>
-                        Select all files</button>
-                    <br/>
-                    <button type="button"
-                        onclick="un_check_all();">
-                        <img src="/editor/images/uncheck_all.png" alt="Uncheck all" title="Uncheck all"/>
-                        Unselect all files</button>
-                </div>
-            </div>
-        </form>
-	   
-	   
-	   </th>
-	   <th class="tools">Delete</th>
-	</tr>
-	{
-		
-		for $doc at $count in $list[position() = ($from to $to)]
-		return app:format-reference($doc,$count)
-
-	}
-	</table>
-	</div>
-
-
-}
-</div>
-</div>
-<div class="footer">
+        {
+        	let $list := loop:getlist($published_only,$coll,$query)
+        	return
+        	<div class="files_list">
+           	
+               <div class="nav_bar">
+<!--                   <h2>
+                   {app:list-title()}
+                   {
+                   	<a title="Add new file" href="#" class="addLink" 
+                   	onclick="location.href='/filter/new/dcm/'; return false;"><img 
+                   	src="/editor/images/new.gif" alt="New file" border="0" /></a>
+                   }
+                   </h2>-->
+                   {app:navigation($list)}
+               </div>
+           
+           	<table border='0' cellpadding='0' cellspacing='0' class='result_table'>
+           	<tr>
+           	   <th>Composer</th>
+           	   <th>Title</th>
+           	   <th>&#160;</th>
+           	   <th class="tools">XML</th>
+           	   <th class="tools">Edit</th>
+           	   <th class="tools">	   
+           	       <form method="post" id="publish_form" action="./publish.xq" >
+                        <div id="publish">
+                           Publish 
+                           <img src="/editor/images/menu.gif" 
+                               alt="Publishing menu" 
+                               onmouseover="document.getElementById('publish_menu').style.visibility='visible'"
+                               onmouseout="document.getElementById('publish_menu').style.visibility='hidden'"
+                               style="vertical-align: text-top;"/>
+                           <div 
+                               class="popup" 
+                               id="publish_menu" 
+                               onmouseover="document.getElementById('publish_menu').style.visibility='visible'"
+                               onmouseout="document.getElementById('publish_menu').style.visibility='hidden'">
+               
+                               <button 
+                                   type="submit" 
+                                   onclick="document.getElementById('publishingaction').value='publish';">
+                                   <img src="/editor/images/publish.png" alt="Publish"/>
+                                   Publish selected files</button>
+                               <br/>
+                               <button 
+                                   type="submit"
+                                   onclick="document.getElementById('publishingaction').value='retract';">
+                                   <img src="/editor/images/unpublish.png" alt="Unpublish"/>
+                                   Unpublish selected files</button>
+                                   
+               	            <input name="publishing_action" 
+               	               type="hidden"
+                                  value="publish" 
+                                  id="publishingaction" />
+               
+                               {app:pass-as-hidden()}
+                               
+                               <hr/>
+                               
+                               <button type="button"
+                                   onclick="check_all();">
+                                   <img src="/editor/images/check_all.png" alt="Check all" title="Check all"/>
+                                   Select all files</button>
+                               <br/>
+                               <button type="button"
+                                   onclick="un_check_all();">
+                                   <img src="/editor/images/uncheck_all.png" alt="Uncheck all" title="Uncheck all"/>
+                                   Unselect all files</button>
+                           </div>
+                       </div>
+                   </form>
+           	   
+           	   
+           	   </th>
+           	   <th class="tools">Delete</th>
+           	</tr>
+           	{
+           		
+           		for $doc at $count in $list[position() = ($from to $to)]
+           		return app:format-reference($doc,$count)
+           
+           	}
+           	</table>
+        	</div>
+        
+        
+        }
+    <div class="footer">
            <a href="http://www.kb.dk/dcm" title="DCM" 
            style="text-decoration:none;"><img 
            style="border: 0px; vertical-align:middle;" 
            alt="DCM Logo" 
            src="/editor/images/dcm_logo_small.png"/></a>
             2013 Danish Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
-</div>
+    </div>
 
 </body>
 </html>
