@@ -440,24 +440,30 @@ declare function app:navigation(
             <tr>
                 <td>&#160;</td>
                 <td>
+                
                 {
-                        if($published_only) then
-                	<form method="get" id="status-selection" action="" >
-                        <div style="display:inline;" >
-                	<input type="submit" value="All" />
-                        {app:pass-as-hidden-except("published_only","")}
-                        </div>
+                    if($published_only) then
+                        <form method="get" id="status-selection" action="" >
+                            <select onchange="this.form.submit();">
+                                <option value="all">All</option>
+                                <option value="published" selected="selected">Published only</option>
+                            </select> 
+                            {app:pass-as-hidden-except("published_only","")}
                         </form>
                 	else
-                	<form method="get" id="status-selection" action="" >
-                        <div style="display:inline;" >
-                	<input type="submit" value="Published only" />
-                        {app:pass-as-hidden-except("published_only","1")}
-                        </div>
+                        <form method="get" id="status-selection" action="" >
+                            <select onchange="this.form.submit();">
+                                <option value="all" selected="selected">All</option>
+                                <option value="published">Published only</option>
+                            </select> 
+                            {app:pass-as-hidden-except("published_only","1")}
                         </form>
                 }
+                
                 </td>
                 <td>
+                
+                    <select onchange="location.href=this.value; return false;">
             {
             	for $c in distinct-values(
             		collection("/db/dcm")//m:seriesStmt/m:identifier[@type="file_collection"]/string()[string-length(.) > 0])
@@ -478,9 +484,9 @@ declare function app:navigation(
             
             	return
             	if(not($coll=$c)) then 
-            	<button type="submit" title="{$c}" onclick="location.href='?{$querystring}'; return false;">{$c}</button>
+            	<option value="?{$querystring}">{$c}</option>
             	else
-            	<button type="submit" title="{$c}" disabled="true">{$c}</button>
+            	<option value="?{$querystring}" selected="selected">{$c}</option>
             }
             {
             
@@ -492,11 +498,15 @@ declare function app:navigation(
             
             	let $link := 
             	if($coll) then 
-            	<button type="submit" title="All collections" onclick="location.href='{$get-uri}'; return false;">All collections</button>
+            	<option value="{$get-uri}">All collections</option>
             	else
-            	<button type="submit" title="All collections" disabled="true">All collections</button>
+            	<option value="{$get-uri}" selected="selected">All collections</option>
             	return $link
             }
+            
+            
+                    </select>
+                    
                 </td>
                 <td>
                     <form action="" method="get" class="search">
