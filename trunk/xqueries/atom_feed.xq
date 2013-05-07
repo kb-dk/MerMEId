@@ -30,7 +30,7 @@ declare variable $number   :=
 declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
 
-declare variable $host_port_context :=  "distest.kb.dk";
+declare variable $host_port_context :=  "disdev-01.kb.dk";
 
 declare function app:format-document(
   $doc  as node(),
@@ -224,7 +224,7 @@ declare function app:opensearch-header($total as xs:integer,
 	where util:document-name($doc)=$document
 	return $doc
       else
-	loop:getlist($coll,$query)
+	loop:getlist("",$coll,$query)
 
      let $intotal := fn:count($list/m:meihead)
   
