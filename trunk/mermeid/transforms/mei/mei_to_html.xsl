@@ -1751,7 +1751,7 @@
 					<xsl:if test="m:title[@level='s']/text()"> (= <xsl:apply-templates select="m:title[@level='s']"/>
 						<xsl:if test="m:biblScope[@unit='vol']/text()">, Vol. <xsl:apply-templates
 								select="m:biblScope[@unit='vol']"/>
-						</xsl:if> ) </xsl:if>
+						</xsl:if> )</xsl:if>
 					<xsl:apply-templates select="m:imprint">
 						<xsl:with-param name="append_to_text">true</xsl:with-param>
 					</xsl:apply-templates>
@@ -1760,8 +1760,8 @@
 							<xsl:apply-templates select="current()" mode="volumes_pages"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:if test="normalize-space(m:biblScope[@unit='pages'])">, p. <xsl:value-of
-									select="m:biblScope[@unit='pages']"/>
+							<xsl:if test="normalize-space(m:biblScope[@unit='page'])">, p. <xsl:value-of
+									select="m:biblScope[@unit='page']"/>
 							</xsl:if>
 						</xsl:otherwise>
 					</xsl:choose> <xsl:if test="normalize-space(m:title[@level='s'])=''"> </xsl:if>
@@ -2049,7 +2049,7 @@
 						</xsl:for-each>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:for-each select="m:biblScope[@unit='page' and text()]">
+						<xsl:for-each select="m:biblScope[contains(@unit,'page') and text()]">
 							<xsl:if test="position()=1">, p. </xsl:if>
 							<xsl:if test="position()&gt;1">; </xsl:if>
 							<xsl:value-of select="."/>

@@ -32,7 +32,6 @@ table {
 }
 
 table.unicode_table {
-    font-size: 2em;
     border: none;
     border-top: 1px solid #666;
     border-left: 1px solid #666;
@@ -40,6 +39,7 @@ table.unicode_table {
 
 table.unicode_table td {
     padding: .5em .5em 0 .5em;
+    font-size: 16pt;
     text-align: center;
     border: none;
     border-right: 1px solid #666;
@@ -49,10 +49,12 @@ table.unicode_table td {
 table.unicode_table p {
     font-size: .6em;
     color: #666;
+    font-family: arial, helvetica, sans-serif;
 }
 
-a:link, a:visited, a:active, a:hover {
-   /* text-decoration: none; */
+table.music_symbols td {
+    font-size: 2em;
+    line-height: .8em;
 }
 
 a img {
@@ -77,7 +79,8 @@ ul.important {
     padding-left: 30px;
     margin-left:0;    
     margin-bottom: 10px;
-    background-color: #ffeeaa;
+    /*background-color: #ffeeaa;*/
+    background-color: #f0e0cc;
 }
 
 ul.important li {
@@ -85,7 +88,7 @@ ul.important li {
 }
 
 ul.toc {
-    list-style-image: url('../images/point_right.png')
+    list-style-image: url('../images/next.png')
 }
 
 ul.toc li {
@@ -138,6 +141,10 @@ a.trigger img:hover {
     padding: 1px;
 }
 
+div.manual_header a img {
+    margin-top: 4px;
+}
+
 .tab
 {
     font-weight: bold;
@@ -183,10 +190,8 @@ a.trigger img:hover {
     font-family: Hnias, Junicode, sans-serif, serif;
 }
 
-.music_symbols, .music_symbols td {
+.music_symbols {
     font-family: Euterpe, "Arial Unicode MS", sans-serif, serif;
-    font-size: 1.2em;
-    line-height: .8em;
 }
 
 .music_symbols td p {
