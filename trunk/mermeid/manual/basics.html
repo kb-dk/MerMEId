@@ -51,25 +51,29 @@
         <li><strong>Edit file</strong>: Click the edit icon
           <img alt="Edit" src="../images/edit.gif" height="16" width="16"/> to open the file in the
           metadata editor</li>
-        <li><strong>Publish file(s)</strong>: The color of the checkboxes indicates whether the file is 
-          published and up to date (<img alt="Green" style="vertical-align:bottom;" title="published" 
-            src="../images/checkbox_green.png" height="16" width="16"/>),
-          has been modified since its publication (<img alt="Yellow" style="vertical-align:bottom;" title="modified" 
-            src="../images/checkbox_yellow.png" height="16" width="16"/>),
-          or unpublished (<img alt="Red" style="vertical-align:bottom;" title="unpublished" 
-            src="../images/checkbox_red.png" height="16" width="16"/>).<br/>
+        <li><strong>Publish file(s)</strong>: The color of the checkboxes indicates whether the file is <br/>
+          <img alt="Green" style="vertical-align:bottom;" title="published" 
+            src="../images/checkbox_green.png" height="16" width="16"/> published and up to date, has been <br/>
+          <img alt="Yellow" style="vertical-align:bottom;" title="modified" 
+            src="../images/checkbox_yellow.png" height="16" width="16"/> modified since last publication, or is <br/>
+          <img alt="Red" style="vertical-align:bottom;" title="unpublished" 
+            src="../images/checkbox_red.png" height="16" width="16"/> unpublished.<br/>
           To publish or unpublish files, check the appropriate checkboxes and select the desired action from the 
           publish menu activated by moving the cursor over the publish menu button
-          <img alt="Menu" src="../images/menu.png" height="16" width="16"/>.<br/>
-          "Publishing" in this context simply means that MerMEId copies your file to a separate folder in your eXist database named "public".
+          <img alt="Menu" src="../images/menu.gif" height="16" width="16" style="vertical-align:bottom;"/>.<br/>
+          "Publishing" in this context means that MerMEId copies the file to a separate 
+          <a href="/storage/public/" target="_blank" title="Click to see the contents of your 'public' eXist collection">folder named "public"</a> in your eXist database.
             How files placed in the public folder are further processed or made available to others is outside the scope
-            of MerMEId and entirely depends on what your system is set up to do with them.
+            of MerMEId and entirely depends on what your system is set up to do with them.<br/>
+          "Unpublishing" simply means that MerMEId deletes the copy of the file from the public folder.
         </li>
-        
         <li><strong>Delete file</strong>: Clicking the
-          delete icon <img alt="Delete" src="../images/delete.gif" height="16" width="16"/> will display a warning that
+          delete icon <img alt="Delete" src="../images/remove.gif" height="12" width="12"/> will display a warning that
           you are about to delete the selected file. Click "OK" to delete,
-          otherwise "Cancel". </li>
+          otherwise "Cancel". <br/>
+          Please note that only unpublished files can be deleted. To delete a previously published file
+          you will ned to unpublish it first to make sure it is deleted from the public folder as well.           
+        </li>
       </ul>
       <h3><a name="editor" id="editor">The editor &#8211;
         general functionality and navigation</a></h3>
