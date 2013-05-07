@@ -12,22 +12,25 @@ let $log-in := xdb:login("/db", "admin", "flormelis")
 let $parameters :=  request:get-parameter-names()
 return
 <docs>
-{
-	for $parameter in $parameters 
-	let $doc         := doc($parameter)
-	let $destination :=concat($pubroot,substring-after($parameter,$dcmroot))
-	let $put_to :=substring-after($parameter,$dcmroot)
-	where contains($parameter,$dcmroot)
-	return 
-	<doc action="{$action}">
-	{
-		if($action eq 'publish') then
-		xdb:store($pubroot,$put_to, $doc)
-		else
-		xdb:remove($pubroot,$put_to)
-	}
-	</doc>
-}
+  {
+    for $parameter in $parameters 
+    let $doc         := doc($parameter)
+    let $destination :=concat($pubroot,substring-after($parameter,$dcmroot))
+    let $put_to :=substring-after($parameter,$dcmroot)
+    where contains($parameter,$dcmroot)
+    return 
+    <doc action="{$action}">
+      {
+	if($action eq 'publish') then
+	  xdb:store($pubroot,$put_to, $doc)
+	else
+	  if(doc-available($destination)) then
+	    xdb:remove($pubroot,$put_to)
+	  else
+	    ()
+      }
+    </doc>
+  }
 </docs>
 
 
