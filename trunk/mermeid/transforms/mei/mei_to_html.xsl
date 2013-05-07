@@ -2244,11 +2244,13 @@
 
 
 	<xsl:template name="maybe_print_lang">
+		<xsl:variable name="lang" select="@xml:lang"/>
+		<xsl:variable name="element" select="name(.)"></xsl:variable>
 		<xsl:attribute name="xml:lang">
 			<xsl:value-of select="@xml:lang"/>
 		</xsl:attribute>
 		<xsl:choose>
-			<xsl:when test="position()&gt;1">
+			<xsl:when test="position()&gt;1 and @xml:lang!=parent::node()/*[name()=$element][1]/@xml:lang">
 				<xsl:attribute name="class">alternative_language</xsl:attribute> [<xsl:value-of
 					select="concat(@xml:lang,':')"/>] </xsl:when>
 			<xsl:otherwise>
