@@ -28,7 +28,10 @@ declare function loop:pubstatus(
 	  else
 	    false()
       else
-	false()
+	if($published_only eq 'unpublished') then
+	  true()
+	else
+	  false()
 
    return $status
 
