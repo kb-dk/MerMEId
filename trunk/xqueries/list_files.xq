@@ -68,7 +68,8 @@ declare function app:format-reference(
     (
     <option value="">All documents</option>,
     <option value="any">Any published</option>,
-    <option value="pending">Modified only</option>)
+    <option value="pending">Modified published</option>,
+    <option value="unpublished">Unpublished</option>)
 
     return $options
   };
