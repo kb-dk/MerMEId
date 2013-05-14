@@ -105,6 +105,10 @@ cp "local_config/mermeid_configuration.xml_$M_FILE" \
 cp "local_config/standard_bibliography.xml_$M_FILE" \
     "$D_PATH/MerMEId/xqueries/library/standard_bibliography.xml"
 
+cp "local_config/login.xqm_$M_FILE" \
+    "$D_PATH/MerMEId/xqueries/login.xqm"
+
+
 export CWDTAR=`pwd`/$TAR
 (cd $D_PATH ; tar jcvf $CWDTAR/mermeid.tar.bz2 MerMEId)
 
