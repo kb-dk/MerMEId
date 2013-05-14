@@ -1,0 +1,11 @@
+xquery version "1.0" encoding "UTF-8";
+module namespace login="http://kb.dk/this/login";
+
+
+declare function login:function() as node()
+{
+  let $lgin := xdb:login("/db", "admin", "flormelis")
+  return $lgin
+};
+
+

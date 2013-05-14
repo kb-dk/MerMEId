@@ -48,7 +48,7 @@ declare function app:format-reference(
 	  <td class="tools">
 	    <a target="_blank"
             title="View XML source" 
-            href="dcm/{util:document-name($doc)}">
+            href="/storage/dcm/{util:document-name($doc)}">
 	      <img src="/editor/images/xml.gif" 
 	      alt="view source" 
 	      border="0"
@@ -120,7 +120,7 @@ declare function app:format-reference(
 
 	      let $form:=
 	      <form id="formsourcediv{$doc-name}"
-	      action="./list_files.xq" 
+	      action="/storage/list_files.xq" 
 	      method="post" style="display:inline;">
 	      
 		<div id="sourcediv{$doc-name}"
@@ -245,7 +245,7 @@ declare function app:format-reference(
       {
 
 	let $total := fn:count($list/m:meiHead)
-	let $uri   := "" 
+	let $uri   := "/storage/list_files.xq" 
 
 	let $collection := 
 	  if(not($coll)) then
@@ -342,7 +342,7 @@ declare function app:format-reference(
 		      "Found ",$total," files"
 		    },
 		    (". Display "),
-		    (<form action="./list_files.xq" style="display:inline;">
+		    (<form action="/storage/list_files.xq" style="display:inline;">
 		    <select name="itemsPerPage" onchange="this.form.submit();return true;"> 
 		      {(
 			element option {attribute value {"10"},
@@ -448,7 +448,7 @@ declare function app:format-reference(
 	      <tr>
 		<td>&#160;</td>
 		<td>
-		  <form method="get" id="status-selection" action="" >
+		  <form method="get" id="status-selection" action="/storage/list_files.xq" >
 		    <select name="published_only" onchange="this.form.submit();">
 		      {
   			for $alt in app:options()
@@ -512,7 +512,7 @@ declare function app:format-reference(
                     
           </td>
           <td>
-            <form action="" method="get" class="search">
+            <form action="/storage/list_files.xq" method="get" class="search">
               <input name="query"  value='{request:get-parameter("query","")}'/>
               <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
               <input name="published_only" value='{request:get-parameter("published_only","")}' type='hidden' />
@@ -566,7 +566,7 @@ declare function app:format-reference(
             <th class="tools">XML</th>
             <th class="tools">Edit</th>
             <th class="tools">	   
-              <form method="post" id="publish_form" action="./publish.xq" >
+              <form method="post" id="publish_form" action="/storage/publish.xq" >
                 <div id="publish">
                 Publish 
                 <img src="/editor/images/menu.png" 
