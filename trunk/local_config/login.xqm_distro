@@ -5,7 +5,7 @@ declare namespace xdb="http://exist-db.org/xquery/xmldb";
 
 declare function login:function() as xs:boolean
 {
-  let $lgin := xdb:login("/db", "admin", "flormelis")
+  let $lgin := xdb:login("/db", "user", "secret password")
   return $lgin
 };
 
