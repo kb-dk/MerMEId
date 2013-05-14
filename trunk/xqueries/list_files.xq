@@ -428,7 +428,7 @@ declare function app:format-reference(
 	      <a href="/editor/manual/" 
 	      class="addLink"
 	      target="_blank"><img 
-	      src="/editor/images/help.png" 
+	      src="/editor/images/help_light.png" 
 	      title="Help - opens the manual in a new window or tab" 
 	      alt="Help" 
 	      border="0"/></a>
