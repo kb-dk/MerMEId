@@ -67,8 +67,8 @@ declare function app:format-reference(
   let $options:= 
     (
     <option value="">All documents</option>,
-    <option value="any">Any published</option>,
-    <option value="pending">Modified published</option>,
+    <option value="any">Published</option>,
+    <option value="pending">Modified</option>,
     <option value="unpublished">Unpublished</option>)
 
     return $options
@@ -536,7 +536,9 @@ declare function app:format-reference(
                 </span>
                 <span class="help_example">
                   <span class="help_label">niels*</span>
-                  <span class="help_value">Match any number of characters. Finds Niels, Nielsen and Nielsson</span>
+                  <span class="help_value">Match any number of characters. Finds Niels, Nielsen and Nielsson<br/>
+                    (use only at end of word)
+                  </span>
                 </span>
                 <span class="help_example">
                   <span class="help_label">niels?n</span>
