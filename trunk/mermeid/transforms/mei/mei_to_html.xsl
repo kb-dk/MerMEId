@@ -2473,32 +2473,32 @@
 			<xsl:apply-templates/>
 		</p>
 	</xsl:template>
-	<xsl:template match="m:rend[@fontweight = 'bold']">
+	<xsl:template match="m:rend[@fontweight = 'bold'][text()]">
 		<b>
 			<xsl:apply-templates/>
 		</b>
 	</xsl:template>
-	<xsl:template match="m:rend[@fontstyle = 'ital']">
+	<xsl:template match="m:rend[@fontstyle = 'ital'][text()]">
 		<i>
 			<xsl:apply-templates/>
 		</i>
 	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'underline']">
+	<xsl:template match="m:rend[@rend = 'underline'][text()]">
 		<u>
 			<xsl:apply-templates/>
 		</u>
 	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'sub']">
+	<xsl:template match="m:rend[@rend = 'sub'][text()]">
 		<sub>
 			<xsl:apply-templates/>
 		</sub>
 	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'sup']">
+	<xsl:template match="m:rend[@rend = 'sup'][text()]">
 		<sup>
 			<xsl:apply-templates/>
 		</sup>
 	</xsl:template>
-	<xsl:template match="m:rend[@fontfam or @fontsize or @color]">
+	<xsl:template match="m:rend[@fontfam or @fontsize or @color][text()]">
 		<xsl:variable name="atts">
 			<xsl:if test="@fontfam">
 				<xsl:value-of select="concat('font-family:',@fontfam,';')"/>
@@ -2517,7 +2517,7 @@
 			<xsl:apply-templates/>
 		</xsl:element>
 	</xsl:template>
-	<xsl:template match="m:ref[@target]">
+	<xsl:template match="m:ref[@target][text()]">
 		<xsl:element name="a">
 			<xsl:attribute name="src">
 				<xsl:value-of select="@target"/>
@@ -2531,7 +2531,7 @@
 			<xsl:apply-templates/>
 		</xsl:element>
 	</xsl:template>
-	<xsl:template match="m:rend[@halign]">
+	<xsl:template match="m:rend[@halign][text()]">
 		<xsl:element name="div">
 			<xsl:attribute name="style">text-align:<xsl:value-of select="@halign"/>;</xsl:attribute>
 			<xsl:apply-templates/>
@@ -2559,7 +2559,7 @@
 			</xsl:when>
 		</xsl:choose>
 	</xsl:template>
-	<xsl:template match="m:fig[m:graphic]">
+	<xsl:template match="m:fig[m:graphic[@target!='']]">
 		<xsl:element name="img">
 			<xsl:attribute name="src">
 				<xsl:value-of select="m:graphic/@target"/>
