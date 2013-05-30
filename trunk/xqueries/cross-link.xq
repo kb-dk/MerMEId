@@ -79,7 +79,7 @@ declare function app:opensearch-header($total as xs:integer,
 {
   let $list := 
 	if($works) then
-          loop:getlist("any",$coll,$query)
+          loop:getlist("",$coll,$query)
         else
 	  if($target) then
 	     source_list:get-reverse-links($target)
