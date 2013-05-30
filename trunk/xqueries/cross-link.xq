@@ -4,7 +4,7 @@ xquery version "1.0" encoding "UTF-8";
 
 import module namespace source_list="http://kb.dk/this/getlist-sources" at
 "./main_loop_sources.xqm";
-import module namespace work_list="http://kb.dk/this/getlist" at "./main_loop.xqm";
+import module namespace loop="http://kb.dk/this/getlist" at "./main_loop.xqm";
 
 declare default element namespace "http://www.kb.dk/dcm";
 declare namespace transform="http://exist-db.org/xquery/transform";
@@ -79,7 +79,7 @@ declare function app:opensearch-header($total as xs:integer,
 {
   let $list := 
 	if($works) then
-          work_list:getlist($coll,$query)
+          loop:getlist("any",$coll,$query)
         else
 	  if($target) then
 	     source_list:get-reverse-links($target)
