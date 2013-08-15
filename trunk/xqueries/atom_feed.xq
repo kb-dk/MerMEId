@@ -65,7 +65,7 @@ declare function app:format-reference(
   $from as xs:integer,
   $to   as xs:integer ) as node() {
 
-  let $terms := $doc//m:profiledesc//m:term[string()]  
+  let $terms := $doc//m:profileDesc//m:term[string()]  
   let $num   := fn:count($terms)
 
   let $keywords :=
