@@ -219,7 +219,7 @@ declare function app:format-reference(
 	value="{request:get-header('HOST')}/storage/dcm/{util:document-name($doc)}"
 	title="file name"/>
 	<input 
-	onclick="{fn:concat('show_confirm(&quot;del',$form-id,'&quot;,&quot;',$doc//m:workDesc/m:work/m:titleStmt/m:title[string()]/string()[1],'&quot;);return false;')}" 
+	onclick="{string-join(('show_confirm(&quot;del',$form-id,'&quot;,&quot;',$doc//m:workDesc/m:work/m:titleStmt/m:title[string()]/string()[1],'&quot;);return false;'),'')}" 
 	type="image" 
 	src="/editor/images/remove.gif"  
 	name="button"
@@ -254,19 +254,19 @@ declare function app:format-reference(
 	    if($coll="all") then
 	      ""
 	    else
-	      fn:concat("&amp;c=",$coll)
+	      concat("&amp;c=",$coll)
 
 
         let $querypart :=
 	  if(not($query)) then 
 	    ""
 	  else
-	    fn:concat("&amp;query=",$query)
+	    concat("&amp;query=",$query)
 
         let $status_part :=
-	  fn:concat("&amp;published_only=",$published_only)
+	  concat("&amp;published_only=",$published_only)
 
-        let $perpage  := fn:concat("&amp;itemsPerPage=",$number)
+        let $perpage  := concat("&amp;itemsPerPage=",$number)
 	let $nextpage := ($page+1) cast as xs:string
 
 	let $next     :=
