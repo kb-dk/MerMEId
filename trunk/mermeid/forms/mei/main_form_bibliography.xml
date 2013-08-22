@@ -76,8 +76,8 @@
             <xf:repeat nodeset="m:bibl" id="std-bibl-menu-repeat">
               <xf:trigger submission="replace-form-with" appearance="minimal">
                 <xf:label><h:img src="/../editor/images/add.gif" alt="Add"/> 
-                  <xf:output ref="m:creator[text()]" value="concat(.[1],': ')"/>
-                  <xf:output ref="m:editor[text() and not(../m:creator[text()])]" value="concat(.[1],': ')"/>
+                  <xf:output ref="m:author[text()]" value="concat(.[1],': ')"/>
+                  <xf:output ref="m:editor[text() and not(../m:author[text()])]" value="concat(.[1],': ')"/>
                   <xf:output ref="m:title[text() and string-length()&gt;40][1]" value="concat(substring(.,1,40),'...')"/>
                   <xf:output ref="m:title[text() and string-length()&lt;41][1]" value="."/>
                 </xf:label>
@@ -168,10 +168,10 @@
                       <xf:output value="concat(translate(substring(.,1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(.,2))"/></xf:repeat></h:span>
                   </h:td>
                   <h:td>  
-                    <xf:repeat nodeset="m:creator"><xf:output 
+                    <xf:repeat nodeset="m:author"><xf:output 
                       value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
                         value="."/></xf:repeat><xf:output 
-                          value="if (normalize-space(m:creator[1]) and not(normalize-space(m:recipient[1]))) then ': ' else ''"/>
+                          value="if (normalize-space(m:author[1]) and not(normalize-space(m:recipient[1]))) then ': ' else ''"/>
                     <xf:output value="if (normalize-space(m:recipient[1])) then concat(' to ',m:recipient[1]) else ''"/>
                     <h:i><xf:output value="m:title[@level='a']"/></h:i><xf:output 
                       value="if (normalize-space(m:title[@level='a'][1]) and normalize-space(m:title[@level='j'][1])) then concat('. ',m:title[@level='j'][1]) else m:title[@level='j']"/>
@@ -179,7 +179,7 @@
                     <xf:output value="if (normalize-space(m:title[not(@level)])) then m:title[not(@level)] else ''"/>
                     <xf:output value="if (normalize-space(m:creation[1]/m:date[1])) then concat('(',normalize-space(m:creation[1]/m:date[1]),')') else ''"/>
                     <xf:output value="if (normalize-space(m:imprint[1]/m:date[1])) then concat('(',normalize-space(m:imprint[1]/m:date[1]),')') else ''"/>
-                    <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient[1],m:title[@level='a'][1],m:title[@level='j'][1],m:title[@level='m'][1],m:creation[1]/m:date[1],m:imprint[1]/m:date[1]))='']"> [No description] </xf:group>
+                    <xf:group ref=".[normalize-space(concat(m:author[1],m:recipient[1],m:title[@level='a'][1],m:title[@level='j'][1],m:title[@level='m'][1],m:creation[1]/m:date[1],m:imprint[1]/m:date[1]))='']"> [No description] </xf:group>
                   </h:td>                  
                   <h:td nowrap="nowrap">
                     <xf:group ref=".[instance('temp')/file_exists='true']">

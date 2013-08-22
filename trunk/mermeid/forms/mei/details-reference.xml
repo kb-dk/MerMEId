@@ -82,10 +82,10 @@
                     
                     <xf:group id="editing_status" ref="instance('data-instance')//m:bibl[@xml:id=instance('temp')/id]">
                         <h:h3>
-                            <xf:repeat nodeset="m:creator"><xf:output 
+                            <xf:repeat nodeset="m:author"><xf:output 
                                 value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
                                     value="."/></xf:repeat><xf:output 
-                                        value="if (normalize-space(m:creator[1]) and not(normalize-space(m:recipient))) then ': ' else ''"/>
+                                        value="if (normalize-space(m:author[1]) and not(normalize-space(m:recipient))) then ': ' else ''"/>
                             <xf:output value="if (normalize-space(m:recipient)) then concat(' to ',m:recipient) else ''"/>
                             <h:i><xf:output value="m:title[@level='a']">
                             </xf:output></h:i><xf:output 
@@ -93,7 +93,7 @@
                             <xf:output value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='m'])) then concat('. ',m:title[@level='m']) else m:title[@level='m']"/>
                             <xf:output value="if (normalize-space(m:title[not(@level)])) then m:title[not(@level)] else ''"/>
                             <xf:output value="if (normalize-space(m:date)) then concat('(',normalize-space(m:date),')') else ''"/>
-                            <xf:group ref=".[normalize-space(concat(m:creator[1],m:recipient,m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:title[not(@level)],m:date))='']"> [No description] </xf:group>
+                            <xf:group ref=".[normalize-space(concat(m:author[1],m:recipient,m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:title[not(@level)],m:date))='']"> [No description] </xf:group>
                             <xf:output value="if(instance('temp')[changed='true']) then '*' else''" id="work_identifier"/>
                             <dcm:id ref="."/>
                             <dcm:attribute-editor ref="."/>

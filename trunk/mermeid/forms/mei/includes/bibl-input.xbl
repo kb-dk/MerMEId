@@ -45,18 +45,18 @@
                     <xf:group ref="$binding">
                         
                         
-                        <xf:group ref="m:creator[not(../m:genre='newspaper') and not(../m:genre='letter') and not(../m:genre='diary entry') and not(../m:genre[contains(.,'concert program')])]">
+                        <xf:group ref="m:author[not(../m:genre='newspaper') and not(../m:genre='letter') and not(../m:genre='diary entry') and not(../m:genre[contains(.,'concert program')])]">
                             <!-- authors are listed elsewhere if newspaper article -->
                             <h:fieldset>
                                 <h:legend>Authors</h:legend>
-                                <xf:repeat nodeset="../m:creator" id="repeat-bibl-author">
+                                <xf:repeat nodeset="../m:author" id="repeat-bibl-author">
                                     <h:div>
                                         <xf:input ref="." class="maxlong">
                                             <xf:label class="fixed_width_short">Name</xf:label>
                                         </xf:input>
-                                        <dcm:element-buttons triggers="add delete" nodeset="m:creator"
+                                        <dcm:element-buttons triggers="add delete" nodeset="m:author"
                                             index="repeat-bibl-author"
-                                            origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[m:creator][1]/m:creator[1]"/>
+                                            origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[m:author][1]/m:author[1]"/>
                                         <dcm:attribute-editor ref="."/>
                                     </h:div>
                                 </xf:repeat>
@@ -99,14 +99,14 @@
                                 <!-- newspaper article author here -->
                                 <h:fieldset>
                                     <h:legend>Authors</h:legend>
-                                    <xf:repeat nodeset="m:creator" id="repeat-bibl-newspaper-author">
+                                    <xf:repeat nodeset="m:author" id="repeat-bibl-newspaper-author">
                                         <h:div>
                                             <xf:input ref="." class="maxlong">
                                                 <xf:label class="fixed_width_short">Name</xf:label>
                                             </xf:input>
-                                            <dcm:element-buttons triggers="add delete" nodeset="m:creator"
+                                            <dcm:element-buttons triggers="add delete" nodeset="m:author"
                                                 index="repeat-bibl-author"
-                                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:creator]/m:creator"/>
+                                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:author]/m:author"/>
                                             <dcm:attribute-editor ref="."/>
                                         </h:div>
                                     </xf:repeat>
@@ -231,12 +231,12 @@
                         </xf:group>
                         
                         <xf:group ref=".[m:genre='letter' or m:genre='diary entry']">
-                            <xf:input ref="m:creator" class="maxlong">
+                            <xf:input ref="m:author" class="maxlong">
                                 <xf:label class="fixed_width">Author <h:a class="help">?<h:span class="comment">For
                                     diary entries, leave empty if author is the
                                     composer</h:span></h:a></xf:label>
                             </xf:input>
-                            <dcm:attribute-editor ref="m:creator"/>
+                            <dcm:attribute-editor ref="m:author"/>
                             <h:br clear="all"/>
                             <xf:group ref=".[m:genre='letter']">
                                 <xf:input ref="m:recipient" class="maxlong">

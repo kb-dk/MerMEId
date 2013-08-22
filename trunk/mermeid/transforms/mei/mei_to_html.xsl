@@ -1738,7 +1738,7 @@
 				<xsl:if test="m:title[@level='m']/text()">
 					<!-- show entry only if a title is stated -->
 					<xsl:choose>
-						<xsl:when test="m:creator/text()">
+						<xsl:when test="m:author/text()">
 							<xsl:call-template name="list_authors"/>
 						</xsl:when>
 						<xsl:otherwise>
@@ -1770,7 +1770,7 @@
 			<xsl:when test="m:genre='article' and m:genre='book'">
 				<!-- show entry only if a title is stated -->
 				<xsl:if test="m:title[@level='a']/text()">
-					<xsl:if test="m:creator/text()">
+					<xsl:if test="m:author/text()">
 						<xsl:call-template name="list_authors"/>
 					</xsl:if>
 					<em>
@@ -1821,7 +1821,7 @@
 				<!-- show entry only if a title or journal/newspaper name is stated -->
 				<xsl:if test="m:title[@level='a']/text()|m:title[@level='j']/text()">
 					<xsl:if test="normalize-space(m:title[@level='a'])!=''">
-						<xsl:if test="m:creator/text()">
+						<xsl:if test="m:author/text()">
 							<xsl:call-template name="list_authors"/>
 						</xsl:if> '<xsl:value-of select="m:title[@level='a']/text()"/>'<xsl:if
 							test="m:title[@level='j']/text()"><xsl:choose>
@@ -1845,7 +1845,7 @@
 			<xsl:when test="m:genre='web site'">
 				<!-- show entry only if a title is stated -->
 				<xsl:if test="normalize-space(m:title)">
-					<xsl:if test="normalize-space(m:creator)!=''"><xsl:apply-templates select="m:creator"/>: </xsl:if>
+					<xsl:if test="normalize-space(m:author)!=''"><xsl:apply-templates select="m:author"/>: </xsl:if>
 					<em><xsl:value-of select="m:title"/></em>
 					<xsl:if
 						test="normalize-space(concat(m:biblScope[normalize-space()], m:imprint/m:publisher, m:imprint/m:pubPlace))"
@@ -1862,20 +1862,20 @@
 							<xsl:apply-templates select="m:creation/m:geogName/text()"/>&#160;&#160; 
 					</td>
 					<td>
-						<xsl:if test="m:creator/text()">
+						<xsl:if test="m:author/text()">
 							<xsl:choose>
 								<xsl:when test="m:creation/m:date/text()"> from </xsl:when>
 								<xsl:otherwise>From </xsl:otherwise>
 							</xsl:choose>
-							<xsl:value-of select="m:creator"/>
+							<xsl:value-of select="m:author"/>
 						</xsl:if>
 						<xsl:if test="m:recipient/text()">
 							<xsl:choose>
-								<xsl:when test="m:creator/text()"> to </xsl:when>
+								<xsl:when test="m:author/text()"> to </xsl:when>
 								<xsl:otherwise>To</xsl:otherwise>
 							</xsl:choose>
 							<xsl:value-of select="m:recipient"/>
-						</xsl:if><xsl:if test="(m:creator/text() or m:recipient/text()) and m:physLoc//text()">, </xsl:if> 
+						</xsl:if><xsl:if test="(m:author/text() or m:recipient/text()) and m:physLoc//text()">, </xsl:if> 
 						<xsl:apply-templates select="m:physLoc[*//text()]"/>
 						
 						<xsl:for-each select="m:relatedItem[@rel='host' and *//text()]">
@@ -1902,9 +1902,9 @@
 					</td>
 					<td>
 						<!-- do not display name if it is the composer's own diary -->
-						<xsl:if test="m:creator/text() or (m:creator/text() and m:creator!=/*//m:work/m:titleStmt/m:respStmt/m:persName[@role='composer'])">
+						<xsl:if test="m:author/text() or (m:author/text() and m:author!=/*//m:work/m:titleStmt/m:respStmt/m:persName[@role='composer'])">
 							<xsl:text> </xsl:text>
-							<xsl:value-of select="m:creator"/>
+							<xsl:value-of select="m:author"/>
 							<xsl:if test="m:physLoc[m:repository//text() or m:identifier/text() or m:ptr/@target]">, </xsl:if>
 						</xsl:if>
 						<xsl:apply-templates select="m:physLoc[m:repository//text() or m:identifier/text() or m:ptr/@target]"/>
@@ -1938,7 +1938,7 @@
 			</xsl:when>
 
 			<xsl:otherwise>
-				<xsl:if test="m:creator//text()"><xsl:apply-templates select="m:creator"/>: </xsl:if>
+				<xsl:if test="m:author//text()"><xsl:apply-templates select="m:author"/>: </xsl:if>
 				<xsl:if test="m:title//text()">
 					<em><xsl:value-of select="m:title"/></em>
 				</xsl:if>
@@ -2001,7 +2001,7 @@
 
 	<!-- list authors -->
 	<xsl:template name="list_authors">
-		<xsl:for-each select="m:creator">
+		<xsl:for-each select="m:author">
 			<xsl:call-template name="list_seperator"/>
 			<xsl:apply-templates select="."/>
 			<xsl:if test="position() = last()">: </xsl:if>
@@ -2478,7 +2478,7 @@
 			<xsl:apply-templates/>
 		</b>
 	</xsl:template>
-	<xsl:template match="m:rend[@fontstyle = 'ital'][text()]">
+	<xsl:template match="m:rend[@fontstyle = 'italic'][text()]">
 		<i>
 			<xsl:apply-templates/>
 		</i>

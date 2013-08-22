@@ -34,7 +34,6 @@
     </xsl:variable>
     <xsl:apply-templates select="exsl:node-set($new_doc)" 
 			 mode="html2mei"/>
-
   </xsl:template>
 
 
@@ -208,7 +207,7 @@
     </xsl:if>
   </xsl:template>
   <xsl:template match="h:b|h:strong"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="fontweight">bold</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
-  <xsl:template match="h:i|h:em"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="fontstyle">ital</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
+  <xsl:template match="h:i|h:em"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="fontstyle">italic</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
   <xsl:template match="h:u"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="rend">underline</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
   <xsl:template match="h:sub"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="rend">sub</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>
   <xsl:template match="h:sup"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="rend">sup</xsl:attribute><xsl:apply-templates select="node()"/></xsl:element></xsl:template>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mei meiversion="2012" 
+<mei meiversion="2013" 
   xmlns="http://www.music-encoding.org/ns/mei" 
-  xmlns:xl="http://www.w3.org/1999/xlink" 
   xml:id="">
   <!-- 
     This file serves as a template defining all possible elements and attributes editable in MerMEId. 
@@ -10,7 +9,7 @@
     to reduce the amount of empty elements when starting a new document.
 
     Danish Centre for Music Publication
-    The Royal Library, Copenhagen 2012
+    The Royal Library, Copenhagen 2013
   -->
   <meiHead>
     <fileDesc>
@@ -160,7 +159,7 @@
                     <repository>
                       <corpName xml:id=""/>
                       <geogName xml:id=""/>
-                      <identifier auth="RISM" authURI="http://www.rism.info" xml:id=""/>
+                      <identifier authority="RISM" authURI="http://www.rism.info" xml:id=""/>
                       <ptr target="" mimetype="" label="" xml:id=""/>
                     </repository>
                     <identifier xml:id=""/>
@@ -261,7 +260,7 @@
                 <bibl xml:id="">
                   <genre>article</genre>
                   <genre>journal</genre>
-                  <creator/>
+                  <author/>
                   <date isodate="" notbefore="" notafter=""/>
                   <title level="a"/>
                   <title level="j"/>
@@ -297,7 +296,7 @@
         <biblList>
           <bibl xml:id="">
             <genre/>
-            <creator/>
+            <author/>
             <creation>
               <date isodate=""/>
               <geogName/>
@@ -398,7 +397,7 @@
                     <bibl xml:id="">
                       <genre>article</genre>
                       <genre>journal</genre>
-                      <creator/>
+                      <author/>
                       <date isodate="" notbefore="" notafter=""/>
                       <title level="a"/>
                       <title level="j"/>
@@ -464,8 +463,10 @@
                 <tempo/>
                 <meter count="" unit="" sym=""/>
                 <perfMedium analog="marc:048" authority="marcmusperf">
+                  <castList>
+                    <castItem/>
+                  </castList>
                   <instrumentation/>
-                  <castList/>
                 </perfMedium>
                 <extent unit=""/>
 

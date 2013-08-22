@@ -157,7 +157,7 @@
   <!-- MEI -> HTML -->
   <xsl:template match="m:lb" mode="mei2html">&lt;br/&gt;</xsl:template> 
   <xsl:template match="m:rend[@fontweight = 'bold']" mode="mei2html">&lt;b&gt;<xsl:apply-templates mode="mei2html"/>&lt;/b&gt;</xsl:template>
-  <xsl:template match="m:rend[@fontstyle = 'ital']" mode="mei2html">&lt;i&gt;<xsl:apply-templates mode="mei2html"/>&lt;/i&gt;</xsl:template>
+  <xsl:template match="m:rend[@fontstyle = 'italic']" mode="mei2html">&lt;i&gt;<xsl:apply-templates mode="mei2html"/>&lt;/i&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'underline']" mode="mei2html">&lt;u&gt;<xsl:apply-templates mode="mei2html"/>&lt;/u&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sub']" mode="mei2html">&lt;sub&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sub&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sup']" mode="mei2html">&lt;sup&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sup&gt;</xsl:template>
