@@ -1,27 +1,31 @@
 
 COMPLETED:
 
-3. MerMEId. Sammankoppling av svn med git (tidsÃ¥tgÃ¥ng 2 mandagar). 
-Den nuvarande processen slutade fungera nÃ¤r DIS migrarerade svn till ny server
+3. MerMEId. Sammankoppling av svn med git (tidsåtgång 2 mandagar). 
+Den nuvarande processen slutade fungera när DIS migrarerade svn till ny server
 (code-01.kb.dk)
 
 TODO:
 
-1. Visning (tidsÃ¥tgÃ¥ng 18-20 mandagar):
-Den enda komponent som Ã¥terstÃ¥r att utveckla Ã¤r en visningsapplikation. Vi har
-tidigare arbetat med detta, men det har varit baserat pÃ¥ en visning i COP och
-inte i CMS. FÃ¶reslÃ¥r att vi lÃ¤mnar detta och att vi i stÃ¤llet visar sÃ¶kning
+0. Load test på labs.kb.dk, kb-cop.kb.dk og evt. disdev-01.kb.dk (tidsforbrug 2 dage?)
+Deadline: 1. september 2013 (SLU)
+
+1. Visning (tidsåtgång 18-20 mandagar):
+Deadline: medio oktober 2013 (SLU)
+Den enda komponent som återstår att utveckla är en visningsapplikation. Vi har
+tidigare arbetat med detta, men det har varit baserat på en visning i COP och
+inte i CMS. Föreslår att vi lämnar detta och att vi i stället visar sökning
 och resultat via CMS.
 
-Visningen skall utvecklas via Ã¥teranvÃ¤ndning av kod frÃ¥n list_files.xq
+Visningen skall utvecklas via återanvändning av kod från list_files.xq
 (http://code-01.kb.dk/svn/xml-store-v2/trunk/xqueries/list_files.xq)
 
-All navigation av "collections" och "status" dÃ¶ljs fÃ¶r brukaren, som fÃ¥r en
-lÃ¥ng lista av "published documents". FÃ¶r fÃ¶rvining av visningen skall man
-kunna filtrera med den enkla sÃ¶krutan och dessutom via facetter baserade pÃ¥
-<term>...</term> i <termlist>...</termlist>, som visas som lÃ¤nkar. I skrivande
-stund Ã¤r det ett Ã¶verkomligt antal term i bruk. SammanstÃ¤llningen nedan gÃ¤ller
-bara CNW och visar antal fÃ¶rekomster och term.
+All navigation av "collections" och "status" döljs för brukaren, som får en
+lång lista av "published documents". För förvining av visningen skall man
+kunna filtrera med den enkla sökrutan och dessutom via facetter baserade på
+<term>...</term> i <termlist>...</termlist>, som visas som länkar. I skrivande
+stund är det ett överkomligt antal term i bruk. Sammanställningen nedan gäller
+bara CNW och visar antal förekomster och term.
 
     323 Vocal music
     266 Song
@@ -44,23 +48,27 @@ bara CNW och visar antal fÃ¶rekomster och term.
       1 String quintet
       1 Orchestral music
 
-A thought: NÃ¥gra termer kÃ¤nns mindre brukarvÃ¤nliga, som "Other orchestral
-music" vilken leder anvÃ¤ndaren till frÃ¥gan: Andra orkesterverk Ã¤n vadÃ¥?
-FÃ¶reslÃ¥r sammanslagning av den kategorin och "Orchestral music".
+A thought: Några termer känns mindre brukarvänliga, som "Other orchestral
+music" vilken leder användaren till frågan: Andra orkesterverk än vadå?
+Föreslår sammanslagning av den kategorin och "Orchestral music".
+[Brugen af "orchestral music" er nok en fejl - se liste over kategorier i MerMEId]
 
-2. Migrering till mei 2013 (tidsÃ¥tgÃ¥ng ??? mandagar)
+Hertil kommer design og indpasning i DCMs øvrige website (ATGE)
+
+2. Migrering till mei 2013 (tidsåtgång 5 mandagar)
+Deadline: medio september 2013 (ATGE/SLU)
+
+Punkterne 5-7 skal ses under ét og påbegyndes snarest muligt efter de andre opgaver på listen
+5. MerMEId. Migrering till Orbeons senaste version (tidsåtgång 3 mandagar) (SLU/ATGE)
+   Förra gången vi försökte med Orbeon fick vi problem med både autenticering
+   och CSS. Det sistnämnda löste du, Axel, men det förra lyckades jag aldrig
+   få på banan.
+6. MerMEId. Migrering till eXists senaste version (tidsåtgång 2 mandagar) (SLU)
+   Borde vara enkelt. (Er testet OK, men kræver skift til Tomcat7/Java7)
+7. Revidera installationsmanualen i för att ta höjd för ändringar till följd
+   av migrering till nyare version av Orbeon och eXist (SLU)
+
+WON'T FIX:
 
 4. MerMEId. Dataexport till DRs databas och andra relaterade uppgifter
-   (tidsÃ¥tgÃ¥ng ??? mandagar)
-
-5. MerMEId. Migrering till Orbeons senaste version (tidsÃ¥tgÃ¥ng 3 mandagar)
-   FÃ¶rra gÃ¥ngen vi fÃ¶rsÃ¶kte med Orbeon fick vi problem med bÃ¥de autenticering
-   och CSS. Det sistnÃ¤mnda lÃ¶ste du, Axel, men det fÃ¶rra lyckades jag aldrig
-   fÃ¥ pÃ¥ banan.
-
-6. MerMEId. Migrering till eXists senaste version (tidsÃ¥tgÃ¥ng 2 mandagar)
-   Borde vara enkelt.
-
-7. Revidera installationsmanualen i fÃ¶r att ta hÃ¶jd fÃ¶r Ã¤ndringar till fÃ¶ljd
-   av migrering till nyare version av Orbeon och eXist
-
+   (tidsåtgång ??? mandagar)
