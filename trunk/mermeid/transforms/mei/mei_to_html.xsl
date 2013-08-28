@@ -1605,7 +1605,7 @@
 	<xsl:template match="m:identifier[@authority='RISM']">
 		<xsl:variable name="RISM_file_name" 
 			select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'rism_sigla/',
-			substring-before(.,'-'),'.xml'))"/>
+			substring-before(normalize-space(.),'-'),'.xml'))"/>
 		<xsl:choose>
 			<xsl:when test="boolean(document($RISM_file_name))">
 				<xsl:variable name="RISM_file" select="document($RISM_file_name)"/>
