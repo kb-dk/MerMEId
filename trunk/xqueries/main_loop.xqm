@@ -38,31 +38,32 @@ declare function loop:pubstatus(
 };
 
 declare function loop:getlist (
-	$published_only  as xs:string,
-	$coll            as xs:string,
-	$query           as xs:string) as node()* 
+  $database        as xs:string,
+  $published_only  as xs:string,
+  $coll            as xs:string,
+  $query           as xs:string) as node()* 
 {
 
         let $list  := 
         if($coll) then 
         if($query) then
-        for $doc in collection("/db/dcm")/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
+        for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
         where loop:pubstatus($published_only,$doc)
 	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()
 	return $doc 
 	else
-	for $doc in collection("/db/dcm")/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
+	for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
         where loop:pubstatus($published_only,$doc)
 	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()[1],$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()[1]
 	return $doc 
         else
 	if($query) then
-        for $doc in collection("/db/dcm")/m:mei[ft:query(.,$query)]
+        for $doc in collection($database)/m:mei[ft:query(.,$query)]
         where loop:pubstatus($published_only,$doc)
 	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()[1],$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()[1]
 	return $doc
         else
-        for $doc in collection("/db/dcm")/m:mei
+        for $doc in collection($database)/m:mei
         where loop:pubstatus($published_only,$doc)
 	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()[1],$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()[1]
 	return $doc
