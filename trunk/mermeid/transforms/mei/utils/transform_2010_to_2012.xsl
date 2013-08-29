@@ -1358,6 +1358,20 @@
     <xsl:template match="m:revisiondesc">
         <revisionDesc>
             <xsl:apply-templates/>
+            <!-- Add a record of the conversion to revisionDesc -->
+            <change>
+                <xsl:attribute name="isodate"><xsl:value-of 
+                    select="format-date(current-date(),'[Y]-[M02]-[D02]')"/></xsl:attribute>
+                <xsl:attribute name="resp">MerMEId</xsl:attribute>
+                <xsl:variable name="generated_id" select="generate-id()"/>
+                <xsl:variable name="no_of_nodes" select="count(//*)"/>
+                <xsl:attribute name="xml:id">
+                    <xsl:value-of select="concat('change_',$no_of_nodes,$generated_id)"/>
+                </xsl:attribute>
+                <changeDesc>
+                    <p>Automated conversion from MEI 2010 to MEI 2012</p>
+                </changeDesc>
+            </change>
         </revisionDesc>
     </xsl:template>
 
