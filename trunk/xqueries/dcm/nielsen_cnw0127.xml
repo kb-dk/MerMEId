@@ -1,191 +1,201 @@
-<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="2012" xml:id="mei_d1e1">
-    <meiHead>
-        <fileDesc>
+<mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="2013" xml:id="mei_d1e1">
+   <meiHead>
+      <fileDesc>
+         <titleStmt>
+            <title xml:lang="da">[Part of a song cycle:] Erindringens Sø</title>
+         </titleStmt>
+         <pubStmt>
+            <respStmt xml:id="respStmt_52cf37a4">
+               <resp>Publisher</resp>
+               <corpName xml:id="corpName_2e3ac885">
+                  <abbr>DCM</abbr>
+                  <expan>Danish Centre for Music Publication</expan>
+                  <address>
+                     <addrLine>The Royal Library</addrLine>
+                     <addrLine>Søren Kierkegaards Plads 1</addrLine>
+                     <addrLine>P.O. Box 2149</addrLine>
+                     <addrLine>DK - 1016 Copenhagen K</addrLine>
+                     <addrLine>
+                        <ptr label="WWW" target="http://www.kb.dk/dcm"/>
+                     </addrLine>
+                     <addrLine>
+                        <ptr label="E-mail" target="mailto://foa-dcm@kb.dk"/>
+                     </addrLine>
+                  </address>
+               </corpName>
+               <persName role="editor" xml:id="persName_758f60c4">Niels Bo Foltmann</persName>
+               <persName role="editor" xml:id="persName_0e2452d4">Axel Teich Geertinger</persName>
+               <persName role="editor" xml:id="persName_cfe6b4d9">Peter Hauge</persName>
+               <persName role="editor" xml:id="persName_168c0b9b">Niels Krabbe</persName>
+               <persName role="editor" xml:id="persName_908851af">Elly Bruunshuus Petersen</persName>
+            </respStmt>
+            <date isodate="2013">2013</date>
+            <availability>
+               <acqSource/>
+               <accessRestrict/>
+               <useRestrict>For demonstration purposes only</useRestrict>
+            </availability>
+         </pubStmt>
+         <seriesStmt>
+            <title xml:id="title_dadc493a">MerMEId Demo Files</title>
+            <identifier type="file_collection" xml:id="identifier_f7f0e644">Demo</identifier>
+         </seriesStmt>
+      </fileDesc>
+      <encodingDesc>
+         <appInfo>
+            <application version="2013">
+               <name>MerMEId</name>
+            </application>
+         </appInfo>
+         <projectDesc xml:id="projectDesc_43e27b5e">
+            <p>Metadata created using MerMEId 2013</p>
+         </projectDesc>
+      </encodingDesc>
+      <workDesc>
+         <work analog="frbr:work" xml:id="work_d1e388">
+            <identifier type="CNW">127</identifier>
+            <identifier type="CNU">lll/4, 12</identifier>
+            <identifier type="CNS">118</identifier>
+            <identifier type="Demo">5</identifier>
             <titleStmt>
-                <title xml:lang="da">[Part of a song cycle:] Erindringens Sø</title>
+               <title xml:id="title_bd575adf" xml:lang="da">[Part of a song cycle:] Erindringens Sø</title>
+               <title xml:id="title_5e6daf2e" xml:lang="en">Lake of Memories</title>
+               <title type="alternative" xml:id="title_158dcf86" xml:lang="da">Træd stille, min Veninde</title>
+               <title type="alternative" xml:id="title_f5b1aee5" xml:lang="en">Tread softly, my companion</title>
+               <respStmt>
+                  <persName role="composer" xml:id="persName_9ce39f38">Carl Nielsen</persName>
+                  <persName role="author" xml:id="persName_08e2be5c">Ludvig Holstein</persName>
+               </respStmt>
             </titleStmt>
-            <pubStmt>
-                <respStmt xml:id="respStmt_52cf37a4">
-                    <resp>Publisher</resp>
-                    <corpName xml:id="corpName_2e3ac885">
-                        <abbr>DCM</abbr>
-                        <expan>Danish Centre for Music Publication</expan>
-                        <address>
-                            <addrLine>The Royal Library</addrLine>
-                            <addrLine>Søren Kierkegaards Plads 1</addrLine>
-                            <addrLine>P.O. Box 2149</addrLine>
-                            <addrLine>DK - 1016 Copenhagen K</addrLine>
-                            <addrLine>
-                                <ptr label="WWW" target="http://www.kb.dk/dcm"/>
-                            </addrLine>
-                            <addrLine>
-                                <ptr label="E-mail" target="mailto://foa-dcm@kb.dk"/>
-                            </addrLine>
-                        </address>
-                    </corpName>
-                    <persName role="editor" xml:id="persName_758f60c4">Niels Bo Foltmann</persName>
-                    <persName role="editor" xml:id="persName_0e2452d4">Axel Teich Geertinger</persName>
-                    <persName role="editor" xml:id="persName_cfe6b4d9">Peter Hauge</persName>
-                    <persName role="editor" xml:id="persName_168c0b9b">Niels Krabbe</persName>
-                    <persName role="editor" xml:id="persName_908851af">Elly Bruunshuus Petersen</persName>
-                </respStmt>
-                <date isodate="2013">2013</date>
-                <availability>
-                    <acqSource/>
-                    <accessRestrict/>
-                    <useRestrict>For demonstration purposes only</useRestrict>
-                </availability>
-            </pubStmt>
-            <seriesStmt>
-                <title xml:id="title_dadc493a">MerMEId Demo Files</title>
-                <identifier type="file_collection" xml:id="identifier_f7f0e644">Demo</identifier>
-            </seriesStmt>
-         </fileDesc>
-        <encodingDesc>
-            <appInfo>
-                <application version="2013">
-                    <name>MerMEId</name>
-                </application>
-            </appInfo>
-            <projectDesc xml:id="projectDesc_43e27b5e">
-                <p>Metadata created using MerMEId 2013</p>
-            </projectDesc>
-        </encodingDesc>
-        <workDesc>
-            <work analog="frbr:work" xml:id="work_d1e388">
-                <identifier type="CNW">127</identifier>
-                <identifier type="CNU">lll/4, 12</identifier>
-                <identifier type="CNS">118</identifier>
-                <identifier type="Demo">5</identifier>
-                <titleStmt>
-                    <title xml:id="title_bd575adf" xml:lang="da">[Part of a song cycle:] Erindringens Sø</title>
-                    <title xml:id="title_5e6daf2e" xml:lang="en">Lake of Memories</title>
-                    <title type="alternative" xml:id="title_158dcf86" xml:lang="da">Træd stille, min Veninde</title>
-                    <title type="alternative" xml:id="title_f5b1aee5" xml:lang="en">Tread softly, my companion</title>
-                    <respStmt>
-                        <persName role="composer" xml:id="persName_9ce39f38">Carl Nielsen</persName>
-                        <persName role="author" xml:id="persName_08e2be5c">Ludvig Holstein</persName>
-                    </respStmt>
-                </titleStmt>
-                <history xml:id="history_55aaa917">
-                    <creation xml:id="creation_5916d80b">
-                        <date notafter="1896-12-31" notbefore="1895-01-01">1895-1896</date>
-                    </creation>
-                </history>
-                <langUsage>
-                    <language xml:id="da">Danish</language>
-                    <language xml:id="en">English</language>
-                </langUsage>
-                <biblList xml:id="listBibl_fdf6019a-8c0c-4d46-b6e7-e74d132a0cd7244">
-                    <head>Primary texts</head>
-                    <bibl xml:id="bibl_d1e254249">
-                        <genre>letter</genre>
-                        <creator>Bror Beckman</creator>
-                        <recipient>Carl Nielsen</recipient>
-                        <creation>
-                            <date isodate="1897-03-16">1897-03-16</date>
-                            <geogName/>
-                        </creation>
-                        <physLoc>
-                            <repository>
-                                <identifier authority="RISM" authURI="http://www.rism.info/">S-Skma</identifier>
-                            </repository>
-                            <identifier>Bror Beckmans arkiv</identifier>
-                        </physLoc>
-                        <relatedItem rel="host">
-                            <bibl xml:id="bibl_d1e288282">
-                                <title>CNB</title>
-                                <biblScope>I/619</biblScope>
-                            </bibl>
-                        </relatedItem>
-                    </bibl>
-                </biblList>
-                <notesStmt>
-                    <annot type="links" xml:id="annot_eb044652"/>
-                    <annot type="general_description" xml:id="annot_f864966a">This file demonstrates how to use relations to other files (works), for 
+            <history xml:id="history_55aaa917">
+               <creation xml:id="creation_5916d80b">
+                  <date notafter="1896-12-31" notbefore="1895-01-01">1895-1896</date>
+               </creation>
+            </history>
+            <langUsage>
+               <language xml:id="da">Danish</language>
+               <language xml:id="en">English</language>
+            </langUsage>
+            <biblList xml:id="listBibl_fdf6019a-8c0c-4d46-b6e7-e74d132a0cd7244">
+               <head>Primary texts</head>
+               <bibl xml:id="bibl_d1e254249">
+                  <genre>letter</genre>
+                  <author>Bror Beckman</author>
+                  <recipient>Carl Nielsen</recipient>
+                  <creation>
+                     <date isodate="1897-03-16">1897-03-16</date>
+                     <geogName/>
+                  </creation>
+                  <physLoc>
+                     <repository>
+                        <identifier authority="RISM" authURI="http://www.rism.info/">S-Skma</identifier>
+                     </repository>
+                     <identifier>Bror Beckmans arkiv</identifier>
+                  </physLoc>
+                  <relatedItem rel="host">
+                     <bibl xml:id="bibl_d1e288282">
+                        <title>CNB</title>
+                        <biblScope>I/619</biblScope>
+                     </bibl>
+                  </relatedItem>
+               </bibl>
+            </biblList>
+            <notesStmt>
+               <annot type="links" xml:id="annot_eb044652"/>
+               <annot type="general_description" xml:id="annot_f864966a">This file demonstrates how to use relations to other files (works), for 
 instance to describe a song cycle, collection, or anthology. </annot>
-                </notesStmt>
-                <classification>
-                    <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmContentClass"/>
-                    <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmPresentationClass"/>
-                    <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmAuthorityClass"/>
-                    <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmScoringClass"/>
-                    <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmStateClass"/>
-                    <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmCompletenessClass"/>
-                    <termList>
-                        <term>Vocal music</term>
-                        <term>Song</term>
-                    </termList>
-                </classification>
-                <expressionList>
-                    <expression analog="frbr:expression" xml:id="expression_1">
-                        <titleStmt>
-                            <title xml:lang="da">Erindringens Sø</title>
-                            <title xml:lang="en">Lake of Memories</title>
-                            <respStmt>
-                                <persName role=""/>
-                            </respStmt>
-                        </titleStmt>
-                        <incip>
-                            <incipText>
-                                <p xml:lang="da">Træd stille, min Veninde</p>
-                                <p xml:lang="en">Tread softly, my companion</p>
-                            </incipText>
-                            <graphic targettype="lowres" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_127.png"/>
-                            <graphic targettype="hires" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_127.png"/>
-                            <graphic targettype="print" target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_127.png"/>
-                            <score/>
-                        </incip>
-                        <key/>
-                        <tempo>Adagio</tempo>
-                        <meter count="4" unit="2"/>
-                        <history>
-                            <creation>
-                                <date/>
-                                <geogName/>
-                            </creation>
-                            <p/>
-                            <eventList type="performances">
-                                <event xml:id="event_d1e399391">
-                                    <date isodate=" 1898-02-03"> 1898-02-03</date>
-                                    <geogName role="venue">The Concert PÅalæ (Koncertpalæet)</geogName>
-                                    <geogName role="place"/>
-                                    <corpName role="ensemble"/>
-                                    <persName role="soloist">Margrethe Boye-Jensen</persName>
-                                    <persName role="soloist">Adolfa Johnsson</persName>
-                                    <p>First performance.</p>
-                                </event>
-                            </eventList>
-                        </history>
-                        <perfMedium analog="marc:048">
-                            <instrumentation>
-                                <instrVoice solo="false" count="1" code="vn">voice</instrVoice>
-                                <instrVoice solo="false" count="1" code="ka">pno.</instrVoice>
-                            </instrumentation>
-                        </perfMedium>
-                        <classification>
-                            <termList>
-                                <term/>
-                            </termList>
-                        </classification>
-                        <componentGrp/>
-                        <relationList>
-                            <relation rel="hasReproduction" label="Edited score" targettype="edited_score"/>
-                        </relationList>
-                    </expression>
-                </expressionList>
-                <relationList>
-                    <relation label="Seks Sange til Tekster af Ludvig Holstein" rel="isPartOf" target="nielsen_holstein_sange.xml" xml:id="relation_34940d6e"/>
-                </relationList>
-            </work>
-        </workDesc>
-        <revisionDesc>
-            <change isodate="2013-01-23" resp="axel" xml:id="change_7dc80463">
-                <changeDesc>
-                    <p/>
-                </changeDesc>
-            </change>
-        </revisionDesc>
-    </meiHead>
-    <music/>
+            </notesStmt>
+            <classification>
+               <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmContentClass"/>
+               <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmPresentationClass"/>
+               <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmAuthorityClass"/>
+               <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmScoringClass"/>
+               <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmStateClass"/>
+               <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmCompletenessClass"/>
+               <termList>
+                  <term>Vocal music</term>
+                  <term>Song</term>
+               </termList>
+            </classification>
+            <expressionList>
+               <expression analog="frbr:expression" xml:id="expression_1">
+                  <titleStmt>
+                     <title xml:lang="da">Erindringens Sø</title>
+                     <title xml:lang="en">Lake of Memories</title>
+                     <respStmt>
+                        <persName role=""/>
+                     </respStmt>
+                  </titleStmt>
+                  <incip>
+                     <incipText>
+                        <p xml:lang="da">Træd stille, min Veninde</p>
+                        <p xml:lang="en">Tread softly, my companion</p>
+                     </incipText>
+                     <graphic targettype="lowres"
+                              target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/lowres/cnw_127.png"/>
+                     <graphic targettype="hires"
+                              target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/hires/cnw_127.png"/>
+                     <graphic targettype="print"
+                              target="http://www.kb.dk/da/kb/nb/mta/dcm/udgivelser/cnw/incipits/print/cnw_127.png"/>
+                     <score/>
+                  </incip>
+                  <key/>
+                  <tempo>Adagio</tempo>
+                  <meter count="4" unit="2"/>
+                  <history>
+                     <creation>
+                        <date/>
+                        <geogName/>
+                     </creation>
+                     <p/>
+                     <eventList type="performances">
+                        <event xml:id="event_d1e399391">
+                           <date isodate=" 1898-02-03"> 1898-02-03</date>
+                           <geogName role="venue">The Concert PÅalæ (Koncertpalæet)</geogName>
+                           <geogName role="place"/>
+                           <corpName role="ensemble"/>
+                           <persName role="soloist">Margrethe Boye-Jensen</persName>
+                           <persName role="soloist">Adolfa Johnsson</persName>
+                           <p>First performance.</p>
+                        </event>
+                     </eventList>
+                  </history>
+                  <perfMedium analog="marc:048">
+                     <instrumentation>
+                        <instrVoice solo="false" count="1" code="vn">voice</instrVoice>
+                        <instrVoice solo="false" count="1" code="ka">pno.</instrVoice>
+                     </instrumentation>
+                  </perfMedium>
+                  <classification>
+                     <termList>
+                        <term/>
+                     </termList>
+                  </classification>
+                  <componentGrp/>
+                  <relationList>
+                     <relation rel="hasReproduction" label="Edited score" targettype="edited_score"/>
+                  </relationList>
+               </expression>
+            </expressionList>
+            <relationList>
+               <relation label="Seks Sange til Tekster af Ludvig Holstein" rel="isPartOf"
+                         target="nielsen_holstein_sange.xml"
+                         xml:id="relation_34940d6e"/>
+            </relationList>
+         </work>
+      </workDesc>
+      <revisionDesc>
+         <change isodate="2013-01-23" resp="axel" xml:id="change_7dc80463">
+            <changeDesc>
+               <p/>
+            </changeDesc>
+         </change>
+         <change isodate="2013-08-29" resp="MerMEId" xml:id="change_651N20627">
+            <changeDesc>
+               <p>Automated conversion from MEI 2012 to MEI 2013</p>
+            </changeDesc>
+         </change>
+      </revisionDesc>
+   </meiHead>
+   <music/>
 </mei>

@@ -1,175 +1,190 @@
-<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="2012" xml:id="mei_127N10003">
-    <meiHead>
-        <fileDesc>
+<mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="2013"
+     xml:id="mei_127N10003">
+   <meiHead>
+      <fileDesc>
+         <titleStmt>
+            <title>[Song cycle:] Seks Sange til Tekster af Ludvig Holstein</title>
+         </titleStmt>
+         <pubStmt>
+            <respStmt xml:id="respStmt_id6533cc95">
+               <resp>Publisher</resp>
+               <corpName authURI="http://www.kb.dk/dcm" xml:id="corpName_id7290fc0b">
+                  <abbr>DCM</abbr>
+                  <expan>Danish Centre for Music Publication</expan>
+                  <address>
+                     <addrLine>
+                        <ptr xmlns:xl="http://www.w3.org/1999/xlink" label="WWW" target="http://www.kb.dk/dcm"
+                             xl:title="WWW"/>
+                     </addrLine>
+                     <addrLine>
+                        <ptr label="E-mail" target="mailto://foa-dcm@kb.dk"/>
+                     </addrLine>
+                     <addrLine>The Royal Library</addrLine>
+                     <addrLine>Søren Kierkegaards Plads 1</addrLine>
+                     <addrLine>P.O. Box 2149</addrLine>
+                     <addrLine>DK  -1016 Copenhagen K</addrLine>
+                  </address>
+               </corpName>
+               <persName role="editor" xml:id="persName_2c197bb5">Niels Bo Foltmann</persName>
+               <persName role="editor" xml:id="persName_26876b93">Axel Teich Geertinger</persName>
+               <persName role="editor" xml:id="persName_a117686d">Peter Hauge</persName>
+               <persName role="editor" xml:id="persName_e6867703">Niels Krabbe</persName>
+               <persName role="editor" xml:id="persName_593beb2d">Elly Bruunshuus Petersen</persName>
+            </respStmt>
+            <date isodate="2013">2013</date>
+            <availability>
+               <useRestrict>For demonstration purposes only</useRestrict>
+            </availability>
+         </pubStmt>
+         <seriesStmt>
+            <title xml:id="title_idb2286a6a">MerMEId Demo Files</title>
+            <identifier type="file_collection" xml:id="identifier_id45d9c5bc">Demo</identifier>
+         </seriesStmt>
+         <notesStmt>
+            <annot type="bibliography" xml:id="annot_idd6b08a62"/>
+         </notesStmt>
+         <sourceDesc>
+            <source analog="frbr:manifestation" label="" xml:id="source_idd32d35dc">
+               <titleStmt>
+                  <title xml:id="title_id3603d9f7">Print, first edition</title>
+               </titleStmt>
+               <pubStmt>
+                  <respStmt>
+                     <corpName role="publisher" xml:id="corpName_id06b1205f">Wilhelm Hansen</corpName>
+                  </respStmt>
+                  <pubPlace xml:id="pubPlace_id5ac68e77"/>
+                  <date notafter="1897-12-31" notbefore="1897-01-01">1897</date>
+               </pubStmt>
+               <physDesc>
+                  <titlePage label="Title page" xml:id="titlePage_e2cc1846">
+                     <p>SANGE LIEDER / CARL=NIELSEN / AF / LUDV-HOLSTEIN / DEUTSCH / E. v ENZBERG / WILHELM-HANSEN- / KIØBENHAVN LEIPZIG / EIGENTHUM DES VERLEGERS FÜR ALLE LÄNDER.</p>
+                  </titlePage>
+                  <extent unit="pages"/>
+                  <dimensions unit="cm">33.5x27</dimensions>
+                  <watermark xml:id="watermark_id2d86d23b">
+                     <ptr xmlns:xl="http://www.w3.org/1999/xlink" label="" mimetype="" xl:title=""
+                          xml:id="ptr_id29d3baf1"/>
+                  </watermark>
+                  <physMedium/>
+                  <plateNum>11971</plateNum>
+               </physDesc>
+               <classification>
+                  <termList>
+                     <term classcode="DcmContentClass">music</term>
+                     <term classcode="DcmPresentationClass">print</term>
+                     <term classcode="DcmAuthorityClass"/>
+                     <term classcode="DcmScoringClass">score</term>
+                     <term classcode="DcmStateClass">first edition</term>
+                     <term classcode="DcmCompletenessClass">complete</term>
+                  </termList>
+               </classification>
+               <itemList/>
+               <componentGrp/>
+               <relationList>
+                  <relation label="" rel="isEmbodimentOf" target="#expression_idcd0bbbdf"
+                            xml:id="relation_id67a9b43f"/>
+               </relationList>
+            </source>
+         </sourceDesc>
+      </fileDesc>
+      <encodingDesc>
+         <appInfo>
+            <application version="2013">
+               <name>MerMEId</name>
+            </application>
+         </appInfo>
+         <projectDesc xml:id="projectDesc_id7121056a">
+            <p>Created using MerMEId 2013<lb/>
+            </p>
+         </projectDesc>
+      </encodingDesc>
+      <workDesc>
+         <work analog="frbr:work" xml:id="work_idb8acdc23">
+            <identifier type="Opus">10</identifier>
+            <identifier type="CNW">126-131</identifier>
+            <identifier type="CNU">III/4 11-16</identifier>
+            <identifier type="Demo">4-9</identifier>
             <titleStmt>
-                <title>[Song cycle:] Seks Sange til Tekster af Ludvig Holstein</title>
+               <title xml:id="title_idd68da4b7" xml:lang="da">[Song cycle:] Seks Sange til Tekster af Ludvig Holstein</title>
+               <title xml:id="title_e5bfb1b5" xml:lang="en">Six Songs to Texts by Ludvig Holstein</title>
+               <title type="text_source" xml:id="title_1901cdac" xml:lang="da">Digte. København 1895</title>
+               <respStmt>
+                  <persName role="composer" xml:id="persName_idfd4e4845">Carl Nielsen</persName>
+                  <persName role="author" xml:id="persName_a3f3f660">Ludvig Holstein</persName>
+               </respStmt>
             </titleStmt>
-            <pubStmt>
-                <respStmt xml:id="respStmt_id6533cc95">
-                    <resp>Publisher</resp>
-                    <corpName authURI="http://www.kb.dk/dcm" xml:id="corpName_id7290fc0b">
-                        <abbr>DCM</abbr>
-                        <expan>Danish Centre for Music Publication</expan>
-                        <address>
-                            <addrLine>
-                                <ptr label="WWW" target="http://www.kb.dk/dcm" xl:title="WWW"/>
-                            </addrLine>
-                            <addrLine>
-                                <ptr label="E-mail" target="mailto://foa-dcm@kb.dk"/>
-                            </addrLine>
-                            <addrLine>The Royal Library</addrLine>
-                            <addrLine>Søren Kierkegaards Plads 1</addrLine>
-                            <addrLine>P.O. Box 2149</addrLine>
-                            <addrLine>DK  -1016 Copenhagen K</addrLine>
-                        </address>
-                    </corpName>
-                    <persName role="editor" xml:id="persName_2c197bb5">Niels Bo Foltmann</persName>
-                    <persName role="editor" xml:id="persName_26876b93">Axel Teich Geertinger</persName>
-                    <persName role="editor" xml:id="persName_a117686d">Peter Hauge</persName>
-                    <persName role="editor" xml:id="persName_e6867703">Niels Krabbe</persName>
-                    <persName role="editor" xml:id="persName_593beb2d">Elly Bruunshuus Petersen</persName>
-                </respStmt>
-                <date isodate="2013">2013</date>
-                <availability>
-                    <useRestrict>For demonstration purposes only</useRestrict>
-                </availability>
-            </pubStmt>
-            <seriesStmt>
-                <title xml:id="title_idb2286a6a">MerMEId Demo Files</title>
-                <identifier type="file_collection" xml:id="identifier_id45d9c5bc">Demo</identifier>
-            </seriesStmt>
+            <history xml:id="history_idf2256a21">
+               <creation xml:id="creation_idcbf81343">
+                  <date notafter="1896-04-01" notbefore="1895-10-01">1895-1896</date>
+               </creation>
+               <p>Holstein's poems <rend fontstyle="italic">Digte</rend> were published in late 1895, but two of the poems that Nielsen set to music (<rend fontstyle="italic">Sommersang</rend> and <rend fontstyle="italic">Æbleblomst</rend>) had previously been printed in <rend fontstyle="italic">Illustreret Tidende</rend> (November 1894 and June 1895, respectively). Most probably Nielsen only began his composition around New Year 1896. This dating is supported by the fact that in March 1896 he received 250 kroner for the songs from Wilhelm Hansen.<lb/>
+               </p>
+            </history>
+            <langUsage>
+               <language xml:id="en">English</language>
+               <language xml:id="da">Danish</language>
+            </langUsage>
             <notesStmt>
-                <annot type="bibliography" xml:id="annot_idd6b08a62"/>
+               <annot type="general_description" xml:id="annot_02b8d778">This file demonstrates the use of relations to other files (or works) to describe a song cycle, anthology, or collection. Such collections can be modelled in two ways, depending on whether they are reagrded as one work or a collection of individual works. This example shows the cycle as a collection of indivual works, linked together by relations to its constituent parts. A collection or cycle regarded as one single work could be modelled in a single file using the "components" section on the "Music" tab to describe the individual parts, just like movements in a sonata. The "Comala" and "Maskarade" sample files illustrate this approach.<lb/>Sources common to all pieces in the collection are described in this file. See the individual songs for details and descriptions of sources to each of the songs.</annot>
             </notesStmt>
-            <sourceDesc>
-                <source analog="frbr:manifestation" label="" xml:id="source_idd32d35dc">
-                    <titleStmt>
-                        <title xml:id="title_id3603d9f7">Print, first edition</title>
-                    </titleStmt>
-                    <pubStmt>
-                        <respStmt>
-                            <corpName role="publisher" xml:id="corpName_id06b1205f">Wilhelm Hansen</corpName>
-                        </respStmt>
-                        <pubPlace xml:id="pubPlace_id5ac68e77"/>
-                        <date notafter="1897-12-31" notbefore="1897-01-01">1897</date>
-                    </pubStmt>
-                    <physDesc>
-                        <titlePage label="Title page" xml:id="titlePage_e2cc1846">
-                            <p>SANGE LIEDER / CARL=NIELSEN / AF / LUDV-HOLSTEIN / DEUTSCH / E. v ENZBERG / WILHELM-HANSEN- / KIØBENHAVN LEIPZIG / EIGENTHUM DES VERLEGERS FÜR ALLE LÄNDER.</p>
-                        </titlePage>
-                        <extent unit="pages"/>
-                        <dimensions unit="cm">33.5x27</dimensions>
-                        <watermark xml:id="watermark_id2d86d23b">
-                            <ptr label="" mimetype="" xl:title="" xml:id="ptr_id29d3baf1"/>
-                        </watermark>
-                        <physMedium/>
-                        <plateNum>11971</plateNum>
-                    </physDesc>
-                    <classification>
-                        <termList>
-                            <term classcode="DcmContentClass">music</term>
-                            <term classcode="DcmPresentationClass">print</term>
-                            <term classcode="DcmAuthorityClass"/>
-                            <term classcode="DcmScoringClass">score</term>
-                            <term classcode="DcmStateClass">first edition</term>
-                            <term classcode="DcmCompletenessClass">complete</term>
-                        </termList>
-                    </classification>
-                    <itemList/>
-                    <componentGrp/>
-                    <relationList>
-                        <relation label="" rel="isEmbodimentOf" target="#expression_idcd0bbbdf" xml:id="relation_id67a9b43f"/>
-                    </relationList>
-                </source>
-            </sourceDesc>
-        </fileDesc>
-        <encodingDesc>
-            <appInfo>
-                <application version="2013">
-                    <name>MerMEId</name>
-                </application>
-            </appInfo>
-            <projectDesc xml:id="projectDesc_id7121056a">
-                <p>Created using MerMEId 2013<lb/>
-                </p>
-            </projectDesc>
-        </encodingDesc>
-        <workDesc>
-            <work analog="frbr:work" xml:id="work_idb8acdc23">
-                <identifier type="Opus">10</identifier>
-                <identifier type="CNW">126-131</identifier>
-                <identifier type="CNU">III/4 11-16</identifier>
-                <identifier type="Demo">4-9</identifier>
-                <titleStmt>
-                    <title xml:id="title_idd68da4b7" xml:lang="da">[Song cycle:] Seks Sange til Tekster af Ludvig Holstein</title>
-                    <title xml:id="title_e5bfb1b5" xml:lang="en">Six Songs to Texts by Ludvig Holstein</title>
-                    <title type="text_source" xml:id="title_1901cdac" xml:lang="da">Digte. København 1895</title>
-                    <respStmt>
-                        <persName role="composer" xml:id="persName_idfd4e4845">Carl Nielsen</persName>
-                        <persName role="author" xml:id="persName_a3f3f660">Ludvig Holstein</persName>
-                    </respStmt>
-                </titleStmt>
-                <history xml:id="history_idf2256a21">
-                    <creation xml:id="creation_idcbf81343">
-                        <date notafter="1896-04-01" notbefore="1895-10-01">1895-1896</date>
-                    </creation>
-                    <p>Holstein's poems <rend fontstyle="ital">Digte</rend> were published in late 1895, but two of the poems that Nielsen set to music (<rend fontstyle="ital">Sommersang</rend> and <rend fontstyle="ital">Æbleblomst</rend>) had previously been printed in <rend fontstyle="ital">Illustreret Tidende</rend> (November 1894 and June 1895, respectively). Most probably Nielsen only began his composition around New Year 1896. This dating is supported by the fact that in March 1896 he received 250 kroner for the songs from Wilhelm Hansen.<lb/>
-                    </p>
-                </history>
-                <langUsage>
-                    <language xml:id="en">English</language>
-                    <language xml:id="da">Danish</language>
-                </langUsage>
-                <notesStmt>
-                    <annot type="general_description" xml:id="annot_02b8d778">This file demonstrates the use of relations to other files (or works) to describe a song cycle, anthology, or collection. Such collections can be modelled in two ways, depending on whether they are reagrded as one work or a collection of individual works. This example shows the cycle as a collection of indivual works, linked together by relations to its constituent parts. A collection or cycle regarded as one single work could be modelled in a single file using the "components" section on the "Music" tab to describe the individual parts, just like movements in a sonata. The "Comala" and "Maskarade" sample files illustrate this approach.<lb/>Sources common to all pieces in the collection are described in this file. See the individual songs for details and descriptions of sources to each of the songs.</annot>
-                </notesStmt>
-                <classification>
-                    <classCode xml:id="DcmContentClass"/>
-                    <classCode xml:id="DcmPresentationClass"/>
-                    <classCode xml:id="DcmAuthorityClass"/>
-                    <classCode xml:id="DcmScoringClass"/>
-                    <classCode xml:id="DcmStateClass"/>
-                    <classCode xml:id="DcmCompletenessClass"/>
-                </classification>
-                <expressionList>
-                    <expression analog="frbr:expression" xml:id="expression_idcd0bbbdf">
-                        <titleStmt>
-                            <title xml:id="title_id96d969fe" xml:lang="en"/>
-                        </titleStmt>
-                        <history xml:id="history_iddc7a940a">
-                            <creation xml:id="creation_idea599c69">
-                                <date/>
-                                <geogName xml:id="geogName_id97498459"/>
-                            </creation>
-                            <p/>
-                        </history>
-                        <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_id34998f12"/>
-                        <classification>
-                            <termList>
-                                <term/>
-                            </termList>
-                        </classification>
-                        <componentGrp/>
-                        <relationList/>
-                    </expression>
-                </expressionList>
-                <relationList>
-                    <relation label="Æbleblomst (CNW 126)" rel="hasPart" target="nielsen_cnw0126.xml" xml:id="relation_f248510c"/>
-                    <relation label="Erindringens Sø (CNW 127)" rel="hasPart" target="nielsen_cnw0127.xml" xml:id="relation_f42ea8cd"/>
-                    <relation label="Sommersang (CNW 128)" rel="hasPart" target="nielsen_cnw0128.xml" xml:id="relation_02f7cff0"/>
-                    <relation label="Sang bag Ploven (CNW 129)" rel="hasPart" target="nielsen_cnw0129.xml" xml:id="relation_04bea6f2"/>
-                    <relation label="I Aften (CNW 130)" rel="hasPart" target="nielsen_cnw0130.xml" xml:id="relation_9a19d783"/>
-                    <relation label="Hilsen (CNW 131)" rel="hasPart" target="nielsen_cnw0131.xml" xml:id="relation_dbd4af91"/>
-                </relationList>
-            </work>
-        </workDesc>
-        <revisionDesc>
-            <change isodate="2013-01-23" resp="axel" xml:id="change_f5b3881e">
-                <changeDesc>
-                    <p/>
-                </changeDesc>
-            </change>
-        </revisionDesc>
-    </meiHead>
-    <music/>
+            <classification>
+               <classCode xml:id="DcmContentClass"/>
+               <classCode xml:id="DcmPresentationClass"/>
+               <classCode xml:id="DcmAuthorityClass"/>
+               <classCode xml:id="DcmScoringClass"/>
+               <classCode xml:id="DcmStateClass"/>
+               <classCode xml:id="DcmCompletenessClass"/>
+            </classification>
+            <expressionList>
+               <expression analog="frbr:expression" xml:id="expression_idcd0bbbdf">
+                  <titleStmt>
+                     <title xml:id="title_id96d969fe" xml:lang="en"/>
+                  </titleStmt>
+                  <history xml:id="history_iddc7a940a">
+                     <creation xml:id="creation_idea599c69">
+                        <date/>
+                        <geogName xml:id="geogName_id97498459"/>
+                     </creation>
+                     <p/>
+                  </history>
+                  <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_id34998f12"/>
+                  <classification>
+                     <termList>
+                        <term/>
+                     </termList>
+                  </classification>
+                  <componentGrp/>
+                  <relationList/>
+               </expression>
+            </expressionList>
+            <relationList>
+               <relation label="Æbleblomst (CNW 126)" rel="hasPart" target="nielsen_cnw0126.xml"
+                         xml:id="relation_f248510c"/>
+               <relation label="Erindringens Sø (CNW 127)" rel="hasPart" target="nielsen_cnw0127.xml"
+                         xml:id="relation_f42ea8cd"/>
+               <relation label="Sommersang (CNW 128)" rel="hasPart" target="nielsen_cnw0128.xml"
+                         xml:id="relation_02f7cff0"/>
+               <relation label="Sang bag Ploven (CNW 129)" rel="hasPart" target="nielsen_cnw0129.xml"
+                         xml:id="relation_04bea6f2"/>
+               <relation label="I Aften (CNW 130)" rel="hasPart" target="nielsen_cnw0130.xml"
+                         xml:id="relation_9a19d783"/>
+               <relation label="Hilsen (CNW 131)" rel="hasPart" target="nielsen_cnw0131.xml"
+                         xml:id="relation_dbd4af91"/>
+            </relationList>
+         </work>
+      </workDesc>
+      <revisionDesc>
+         <change isodate="2013-01-23" resp="axel" xml:id="change_f5b3881e">
+            <changeDesc>
+               <p/>
+            </changeDesc>
+         </change>
+      </revisionDesc>
+      <change isodate="2013-08-29" resp="MerMEId" xml:id="change_651N20627">
+         <changeDesc>
+            <p>Automated conversion from MEI 2012 to MEI 2013</p>
+         </changeDesc>
+      </change>
+   </meiHead>
+   <music/>
 </mei>

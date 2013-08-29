@@ -7,7 +7,7 @@
     xmlns:h="http://www.w3.org/1999/xhtml"
     xmlns:exsl="http://exslt.org/common"
     exclude-result-prefixes="xsl m t exsl xl h"
-    version="2.0">
+    version="1.0">
 
     <!-- 
     Transformation of MEI metadata from MEI 2012 to MEI 2013.
@@ -61,9 +61,29 @@
     <xsl:template match="m:identifier[@auth]">
         <identifier>
             <xsl:apply-templates select="@*[name(.)!='auth']"/>
-            <xsl:attribute name="authority"></xsl:attribute>
+            <xsl:attribute name="authority"><xsl:value-of select="@auth"/></xsl:attribute>
             <xsl:apply-templates select="node()"/>
         </identifier>
     </xsl:template>
-
+    
+    <xsl:template match="m:revisionDesc">
+        <!-- Add a record of the conversion to revisionDesc -->
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+            <change>
+                <xsl:attribute name="isodate"><xsl:value-of 
+                    select="format-date(current-date(),'[Y]-[M02]-[D02]')"/></xsl:attribute>
+                <xsl:attribute name="resp">MerMEId</xsl:attribute>
+                <xsl:variable name="generated_id" select="generate-id()"/>
+                <xsl:variable name="no_of_nodes" select="count(//*)"/>
+                <xsl:attribute name="xml:id">
+                    <xsl:value-of select="concat('change_',$no_of_nodes,$generated_id)"/>
+                </xsl:attribute>
+                <changeDesc>
+                    <p>Automated conversion from MEI 2012 to MEI 2013</p>
+                </changeDesc>
+            </change>
+        </xsl:copy>
+    </xsl:template>
+    
 </xsl:stylesheet>

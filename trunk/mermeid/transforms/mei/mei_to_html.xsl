@@ -1872,7 +1872,7 @@
 						<xsl:if test="m:recipient/text()">
 							<xsl:choose>
 								<xsl:when test="m:author/text()"> to </xsl:when>
-								<xsl:otherwise>To</xsl:otherwise>
+								<xsl:otherwise>To </xsl:otherwise>
 							</xsl:choose>
 							<xsl:value-of select="m:recipient"/>
 						</xsl:if><xsl:if test="(m:author/text() or m:recipient/text()) and m:physLoc//text()">, </xsl:if> 
@@ -2112,13 +2112,39 @@
 	
 	<xsl:template match="m:revisionDesc">
 		<xsl:apply-templates select="m:change[normalize-space(@isodate)!=''][last()]" mode="last"/>
+		<xsl:if test="count(m:change) &gt; 0">
+			<br/><xsl:text>
+			</xsl:text>
+			<script type="application/javascript"><xsl:text>
+				openness["revhist"]=false;
+				</xsl:text></script>
+			<xsl:text>
+			</xsl:text>
+			<div class="fold revision_history">
+				<p class="p_heading" id="prevhist" title="Click to open" onclick="toggle('revhist')">
+					<img style="display:inline" id="imgrevhist" border="0" src="/editor/images/plus.png" alt="+"/>
+					Revision history
+				</p>
+				<div class="folded_content" style="display:none" id="revhist">
+					<table>
+						<xsl:apply-templates select="m:change" mode="all"/>
+					</table>
+				</div>
+			</div>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template match="m:revisionDesc/m:change" mode="all">
+		<tr>
+			<td><xsl:value-of select="@isodate"/></td>
+			<td><xsl:value-of select="@resp"/></td>
+			<td><xsl:apply-templates select="*"/></td>
+		</tr>
 	</xsl:template>
 	
 	<xsl:template match="m:revisionDesc/m:change" mode="last">
-		<div class="latest_revision">
 			<br/>Last changed <xsl:value-of select="@isodate"/>
 			<xsl:if test="normalize-space(@resp)"> by <i><xsl:value-of select="@resp"/></i></xsl:if>
-		</div>
 	</xsl:template>
 
 	<xsl:template match="@type">
