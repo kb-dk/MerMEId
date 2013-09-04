@@ -147,8 +147,8 @@
     <h:p>Changes will be lost if you answer "Discard". <h:br/>
       To keep changes, choose "Save".
     </h:p>    
-    <xf:trigger appearance="save_proceed_button">
-      <xf:label><h:img src="/../editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
+    <xf:trigger appearance="save_proceed_button" id="save-and-proceed-button">
+      <xf:label><h:img id="save-and-proceed-image" src="/../editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:dispatch name="language-update" target="form-group"/>
         <xf:send submission="save-to-file"/>
@@ -180,7 +180,7 @@
     <!-- end test -->    
     
     <xf:trigger appearance="minimal" id="save-button">
-      <xf:label><h:img src="/../editor/images/save.gif" alt="Save" title="Save file"/></xf:label>
+      <xf:label><h:img id="save-button-image" src="/../editor/images/save.gif" alt="Save" title="Save file"/></xf:label>
       <xf:action ev:event="DOMActivate save">
         <xf:send submission="save-to-file"/>
         <xf:dispatch name="language-update" target="form-group"/>
@@ -194,7 +194,7 @@
       class="xforms-trigger" 
       target="xml_{instance('parameters')/dcm:xml_file}"><h:img 
         src="/../editor/images/xml.gif" alt="XML" title="View XML data" border="0"/></h:a><xf:trigger appearance="minimal">
-      <xf:label><h:img 
+          <xf:label><h:img  id="home-button-image" 
         src="/../editor/images/home.gif" alt="File list" 
         title="Close editor and return to file list" border="0"/></xf:label>
       <xf:action ev:event="DOMActivate">
@@ -208,14 +208,14 @@
         </xf:action>
       </xf:action>
     </xf:trigger><xf:trigger appearance="minimal">
-      <xf:label><h:img 
+      <xf:label><h:img  id="settings-button-image" 
         src="/../editor/images/settings.png" alt="Settings" 
         title="Change settings" border="0"/></xf:label>
       <xf:action ev:event="DOMActivate">
         <xxf:show dialog="settings-dialog"/>
       </xf:action>
     </xf:trigger><xf:trigger appearance="minimal">
-      <xf:label><h:img 
+      <xf:label><h:img  id="help-button-image" 
         src="/../editor/images/help.png" alt="Help" 
         title="Help" border="0"/></xf:label>
       <xf:action ev:event="DOMActivate">
