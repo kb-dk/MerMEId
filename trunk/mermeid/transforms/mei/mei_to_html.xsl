@@ -2134,12 +2134,13 @@
 			<xsl:text>
 			</xsl:text>
 			<div class="fold revision_history">
-				<p class="p_heading" id="prevhist" title="Click to open" onclick="toggle('revhist')">
+				<p class="colophon_heading" id="prevhist" title="Click to open" onclick="toggle('revhist')">
 					<img style="display:inline" id="imgrevhist" border="0" src="/editor/images/plus.png" alt="+"/>
 					Revision history
 				</p>
 				<div class="folded_content" style="display:none" id="revhist">
 					<table>
+						<th>Date</th><th>Responsible</th><th>Description</th>
 						<xsl:apply-templates select="m:change" mode="all"/>
 					</table>
 				</div>
