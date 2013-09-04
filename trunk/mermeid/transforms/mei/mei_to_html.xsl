@@ -10,14 +10,23 @@
 	
 -->
 
-<xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:m="http://www.music-encoding.org/ns/mei" xmlns:t="http://www.tei-c.org/ns/1.0"
-	xmlns:dcm="http://www.kb.dk/dcm" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:foo="http://www.kb.dk/foo"
-	xmlns:exsl="http://exslt.org/common" xmlns:java="http://xml.apache.org/xalan/java"
-	xmlns:zs="http://www.loc.gov/zing/srw/" xmlns:marc="http://www.loc.gov/MARC21/slim" 
-	extension-element-prefixes="exsl java" exclude-result-prefixes="m xsl exsl foo java">
+<xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:m="http://www.music-encoding.org/ns/mei" 
+	xmlns:dcm="http://www.kb.dk/dcm" 
+	xmlns:xl="http://www.w3.org/1999/xlink" 
+	xmlns:foo="http://www.kb.dk/foo"
+	xmlns:exsl="http://exslt.org/common" 
+	xmlns:java="http://xml.apache.org/xalan/java"
+	xmlns:zs="http://www.loc.gov/zing/srw/" 
+	xmlns:marc="http://www.loc.gov/MARC21/slim" 
+	extension-element-prefixes="exsl java" 
+	exclude-result-prefixes="m xsl exsl foo java">
 
-	<xsl:output method="xml" encoding="UTF-8" cdata-section-elements="" omit-xml-declaration="yes"/>
+	<xsl:output method="xml" encoding="UTF-8" 
+		cdata-section-elements="" 
+		omit-xml-declaration="yes"/>
+	
 	<xsl:strip-space elements="*"/>
 
 	<xsl:param name="hostname"/>
@@ -92,7 +101,7 @@
 			m:workDesc/
 			m:work/
 			m:titleStmt/m:respStmt">
-			<xsl:for-each select="m:persName[@role='composer']">
+			<xsl:for-each select="m:persName[@role='composer'][text()]">
 				<p>
 					<xsl:apply-templates select="."/>
 				</p>
@@ -177,7 +186,7 @@
 			m:workDesc/
 			m:work/
 			m:titleStmt/
-			m:respStmt[m:persName]">
+			m:respStmt[m:persName[text()][@role!='composer']]">
 			<p>
 				<xsl:for-each select="m:persName[text()][@role!='composer']">
 					<xsl:if test="@role and @role!=''">
@@ -432,21 +441,15 @@
 		<!-- colophon -->
 		<div class="colophon">
 			<br/>
-			<div class="hr"/>
+			<div class="hr">&#160;</div>
 			<xsl:if test="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()]">
-				<p>
-					<em>File title:</em>
-					<br/>
-				</p>
+				<p class="colophon_heading">File title:</p>
 				<p>
 					<xsl:value-of select="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()][1]"/>
 				</p>
 			</xsl:if>
 			<xsl:if test="m:meiHead/m:fileDesc/m:seriesStmt/m:title/text()">
-				<p>
-					<em>Series:</em>
-					<br/>
-				</p>
+				<p class="colophon_heading">Series:</p>
 				<xsl:for-each select="m:meiHead/m:fileDesc/m:seriesStmt/m:title//text()">
 					<p>
 						<xsl:value-of select="."/>
@@ -464,11 +467,9 @@
 				</xsl:for-each>
 			</xsl:if>
 			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/*[name()!='resp']//text()">
-				<p>
-					<em>File publication:</em>
-				</p>
-				<p>
-					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName[//text()]">
+				<p class="colophon_heading">File publication:</p>
+				<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName[//text()]">
+					<p>
 						<xsl:choose>
 							<xsl:when test="text() or m:expan/text()">
 								<xsl:apply-templates select="text()"/>
@@ -479,55 +480,65 @@
 								<xsl:if test="m:abbr/text()"><xsl:value-of select="m:abbr"/><br/></xsl:if>
 							</xsl:otherwise>
 						</xsl:choose>
-					</xsl:for-each>
-					<xsl:for-each
-						select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr/@target or text()]">
-						<xsl:choose>
-							<xsl:when test="m:ptr/@target">
-								<xsl:choose>
-									<xsl:when test="m:ptr/text()">
-										<xsl:value-of select="m:ptr/text()"/>
+						
+						<xsl:for-each select="m:address/m:addrLine[m:ptr/@target or text()]">
+							<xsl:choose>
+								<xsl:when test="m:ptr/@target">
+										<xsl:choose>
+											<xsl:when test="m:ptr/text()">
+												<xsl:value-of select="m:ptr/text()"/>
+											</xsl:when>
+											<xsl:otherwise>
+												<xsl:value-of select="m:ptr/@label"/>
+											</xsl:otherwise>
+										</xsl:choose>
+										<xsl:text>: </xsl:text>
+										<xsl:element name="a">
+											<xsl:attribute name="href">
+												<xsl:value-of select="m:ptr/@target"/>
+											</xsl:attribute>
+											<xsl:value-of select="m:ptr/@target"/>
+										</xsl:element>
 									</xsl:when>
 									<xsl:otherwise>
-										<xsl:value-of select="m:ptr/@label"/>
+										<xsl:value-of select="."/>
 									</xsl:otherwise>
-								</xsl:choose>
-								<xsl:text>: </xsl:text>
-								<xsl:element name="a">
-									<xsl:attribute name="href">
-										<xsl:value-of select="m:ptr/@target"/>
-									</xsl:attribute>
-									<xsl:value-of select="m:ptr/@target"/>
-								</xsl:element>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="."/>
-							</xsl:otherwise>
-						</xsl:choose>
-						<br/>
-					</xsl:for-each>
-					<xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:date"/>
-				</p>
-				<p>
-					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName[text()]">
-						<xsl:value-of select="."/>
-						<xsl:if test="normalize-space(@role)"> (<xsl:value-of select="@role"/>)</xsl:if>
-						<xsl:if test="position()!=last()">
+							</xsl:choose>
 							<br/>
-						</xsl:if>
-					</xsl:for-each>
-				</p>
-				<p>
-					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:acqSource[text()]">
-						<br/><xsl:value-of select="."/>
-					</xsl:for-each>
-					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:accessRestrict[text()]">
-						<br/><xsl:value-of select="."/>
-					</xsl:for-each>
-					<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:useRestrict[text()]">
-						<br/><xsl:value-of select="."/>
-					</xsl:for-each>
-				</p>
+						</xsl:for-each>
+					</p>
+				</xsl:for-each>
+				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:date/text()">
+					<p><xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:date"/></p>
+				</xsl:if>
+				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName[text()]">
+					<p>
+						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName[text()]">
+							<xsl:if test="normalize-space(@role)">
+								<xsl:call-template name="capitalize">
+									<xsl:with-param name="str" select="@role"/>
+								</xsl:call-template>:<xsl:text> </xsl:text>
+							</xsl:if>
+							<xsl:value-of select="."/>
+							<xsl:if test="position()!=last()">
+								<br/>
+							</xsl:if>
+						</xsl:for-each>
+					</p>
+				</xsl:if>
+				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:availability//text()">
+					<p>
+						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:acqSource[text()]">
+							<br/><xsl:value-of select="."/>
+						</xsl:for-each>
+						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:accessRestrict[text()]">
+							<br/><xsl:value-of select="."/>
+						</xsl:for-each>
+						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:useRestrict[text()]">
+							<br/><xsl:value-of select="."/>
+						</xsl:for-each>
+					</p>
+				</xsl:if>
 			</xsl:if>
 			<xsl:apply-templates select="m:meiHead/m:revisionDesc"/>
 		</div>
@@ -727,15 +738,15 @@
 						</xsl:element>
 					</div>
 				</div>
-
 			</xsl:when>
-			<xsl:otherwise>
+			<xsl:when test="count(m:expression)=1">
 				<ul class="single_movement">
 					<li>
 						<xsl:apply-templates select="m:expression"/>
 					</li>
 				</ul>
-			</xsl:otherwise>
+			</xsl:when>
+			<xsl:otherwise/>
 		</xsl:choose>
 	</xsl:template>
 
@@ -886,29 +897,31 @@
 	<!-- perfMedium templates -->
 	<xsl:template match="m:perfMedium">
 		<xsl:param name="full" select="true()"/>
-		<div class="perfmedium">
-			<xsl:for-each select="m:instrumentation[*]">
-				<p>
-					<xsl:if test="position()=1 and $full">
-						<span class="label">Instrumentation: </span>
-						<br/>
-					</xsl:if>
-					<xsl:apply-templates select="m:instrVoiceGrp"/>
-					<xsl:apply-templates select="m:instrVoice[not(@solo='true')][text()]"/>
-					<xsl:if test="count(m:instrVoice[@solo='true'])&gt;0">
-						<xsl:if test="count(m:instrVoice[not(@solo='true')])&gt;0">
+		<xsl:if test="m:instrumentation[*] or m:castList[*//text()]">
+			<div class="perfmedium">
+				<xsl:for-each select="m:instrumentation[*]">
+					<p>
+						<xsl:if test="position()=1 and $full">
+							<span class="label">Instrumentation: </span>
 							<br/>
 						</xsl:if>
-						<span class="p_heading:">Soloist<xsl:if test="count(m:instrVoice[@solo='true'])&gt;1"
-							>s</xsl:if>:</span>
-						<xsl:apply-templates select="m:instrVoice[@solo='true'][text()]"/>
-					</xsl:if>
-				</p>
-			</xsl:for-each>
-			<xsl:apply-templates select="m:castList[*//text()]">
-				<xsl:with-param name="full" select="$full"/>
-			</xsl:apply-templates>
-		</div>
+						<xsl:apply-templates select="m:instrVoiceGrp"/>
+						<xsl:apply-templates select="m:instrVoice[not(@solo='true')][text()]"/>
+						<xsl:if test="count(m:instrVoice[@solo='true'])&gt;0">
+							<xsl:if test="count(m:instrVoice[not(@solo='true')])&gt;0">
+								<br/>
+							</xsl:if>
+							<span class="p_heading:">Soloist<xsl:if test="count(m:instrVoice[@solo='true'])&gt;1"
+								>s</xsl:if>:</span>
+							<xsl:apply-templates select="m:instrVoice[@solo='true'][text()]"/>
+						</xsl:if>
+					</p>
+				</xsl:for-each>
+				<xsl:apply-templates select="m:castList[*//text()]">
+					<xsl:with-param name="full" select="$full"/>
+				</xsl:apply-templates>
+			</div>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template match="m:instrVoiceGrp">

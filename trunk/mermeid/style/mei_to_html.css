@@ -64,6 +64,7 @@ ul {
 .hr {
     border-top: 1px solid #999;
     width: 100%;
+    height: 1px;
 }
 
 .main {
@@ -193,16 +194,19 @@ ul.single_movement {
 
 .alternative_language, .classification, .colophon {
     font-size : .9em;
-    color: #888888;
+    color: #666;
 }
 
 .colophon a:link, .colophon a:visited, .colophon a:active {
-    color: #888888;
+    color: #666;
 }
 
+.colophon_heading {
+    font-weight: bold;
+}
 
 .revision_history td {
-    color: #888;
+    color: #666;
 }
 
 .revision_history .p_heading {
