@@ -60,6 +60,9 @@ request:get-parameter("published_only","") cast as xs:string;
 	if($input/@name ne $field) then
 	  $input
 	else
+	  if($input/@name eq "page") then
+	  (<input name="page" type="hidden" value="1" />)
+	  else
 	  ()
 	
 	return $inputs
