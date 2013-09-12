@@ -1,0 +1,310 @@
+body {   
+    font-size: .8em;
+    font-family: arial, helvetica, sans-serif;
+    background-color: #e5e1bf;
+    padding:20px;
+    margin:0px;
+}
+
+div.list_header,
+div.filter_bar,
+div.files_list,
+div.nav_bar {
+    background-color: #ddd;
+    border: 1px solid #888;
+    border-top: none;
+    padding: 4px 8px;
+    margin: 0;
+}
+
+div.list_header {
+    background-color : #555;
+    border: none;
+    padding: 5px 9px;
+}
+
+div.files_list {
+    padding: 0;
+}
+
+div.nav_bar {
+    border: none;
+}
+
+div.nav_bar div {
+    text-align: center;
+}
+
+div.footer, p.footer {
+    margin: 0 -20px 20px -20px;
+    padding: 10px 20px;
+}
+
+
+h2 {
+    margin-bottom: 0;
+}
+
+p {
+    margin: 5px 0 5px 0;
+}
+
+a {
+    color:black;
+}
+
+a.addLink {
+    text-decoration: none;
+}
+
+a.addLink img {
+    padding: 2px;
+    border: none;
+    vertical-align:top;
+}
+
+a.addLink:hover img {
+    padding: 1px;
+    border: 1px solid #999;
+}
+
+
+.footer, .footer a:link, .footer a:visited, .footer a:active {
+    color: #444;
+}
+
+table {
+    width: 100%;
+}
+
+th, td {
+    font-size: 10pt;
+    padding: .2em;
+    padding-left: .3em;
+    margin: 0em;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    font-weight: bold;
+    border-bottom: 1px solid #888;
+    border-top: 1px solid #888;
+    white-space: nowrap;
+}
+
+td p 
+{
+    margin: 0;
+}
+
+button {
+    padding: 0px;
+}
+
+td.buttons {
+    white-space: nowrap;
+}
+
+td.buttons form {
+    padding: 0em;
+    margin: 0em;
+}
+
+td.buttons input, td.buttons img {
+    padding:3px;
+    margin:0em;
+}
+
+td.buttons input:hover, td.buttons img:hover {
+    border: 1px solid #999;
+    padding: 2px;
+}
+
+table.result_table {
+    margin-top: 5px;
+}
+
+table.result_table td,
+table.result_table th {
+    padding:3px 8px;
+}
+
+table.result_table th {
+    background-color: #555;
+    color: #fff;
+}
+
+table.result_table .tools {
+    text-align: center;
+    white-space: nowrap;
+}
+
+tbody tr.result:hover {
+    background-color: #F4F3EB;
+}
+
+table.filter_block {
+    width: auto;
+}
+
+table.filter_block div,
+table.filter_block form {
+    display: inline;
+}
+
+table.filter_block td {
+    padding: 0 8px 0 0;
+}
+
+table.filter_block td.label {
+    white-space: nowrap;
+}
+
+.odd {
+    background-color: #ddd;
+}
+
+#publish .check_link {
+    text-decoration: none;
+}
+
+#publish .check_link img {
+    margin: 3px 1px 0 1px;
+}
+
+#publish a.popup .comment button {
+    width: 15em;
+    display: block;
+}
+
+#publish a.popup {
+    font-weight: bold;
+}
+
+#publish_form {
+    margin: 0;
+    padding: 0;
+}
+/* styling "publish" checkboxes */
+
+label.publishedIsGreen,
+label.pendingIsYellow,
+label.unpublishedIsRed { 
+    display: inline-block; 
+    cursor: pointer; 
+    margin: 0;
+    padding: 0 0 16px 0;
+}
+
+.publishedIsGreen input,
+.pendingIsYellow input,
+.unpublishedIsRed input { margin-right: 5px; }
+
+.has-js .publishedIsGreen input,
+.has-js .pendingIsYellow input,
+.has-js .unpublishedIsRed input { position:absolute; left: -1000px;}
+
+.has-js .publishedIsGreen,
+.has-js .pendingIsYellow,
+.has-js .unpublishedIsRed { padding-left: 20px; }
+
+.has-js .publishedIsGreen { background: url('/editor/images/checkbox_green.png') no-repeat; }
+.has-js .pendingIsYellow  { background: url('/editor/images/checkbox_yellow.png') no-repeat; }
+.has-js .unpublishedIsRed { background: url('/editor/images/checkbox_red.png') no-repeat; }
+
+.has-js label.publishedIsGreen.c_on  { background: url('/editor/images/checkbox_green_checked.png') no-repeat; }
+.has-js label.pendingIsYellow.c_on   { background: url('/editor/images/checkbox_yellow_checked.png') no-repeat; }
+.has-js label.unpublishedIsRed.c_on  { background: url('/editor/images/checkbox_red_checked.png') no-repeat; }
+
+
+
+/* css for help and other pop-ups */
+
+div.popup button {
+    text-align:left;
+    width: 100%;
+    min-height: 26px; 
+}
+
+a.help {
+    text-decoration: none;
+    text-align: left;
+    vertical-align:text-top;
+    color: #888888;
+    background-color: #ffffcc;
+    border: 1px solid #888888;
+    font-weight: bold;
+    padding-top: 0px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 1px;
+    font-size:.8em;   
+    cursor: help;
+    border-radius: 2px;
+    /* For non-CSS3 FireFox */
+    -moz-border-radius: 2px;    
+}
+
+a.help_plain {
+    cursor: help;
+}
+
+a.help span.comment, a.help_plain span.comment {
+    display:inline;
+    position: absolute;
+    visibility:hidden;
+    white-space: normal;
+    text-decoration:none;
+    color: black;
+    background-color:#dbd9ba;
+    padding: 1px;
+    z-index:250;
+    padding: 4px;
+    width: 200px;
+    margin-top: 20px;
+    margin-left: -5px;
+    border: 1px solid #ddd;
+    font-weight:normal;
+    box-shadow: 10px 10px 10px #333;
+    border-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 10px 10px 10px #333;
+    -moz-border-radius: 4px;
+    /* For MSIE 6-8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333')"; 
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333'); 
+}
+
+a.help span.comment {
+    font-size: 1.2em;
+}
+
+a:hover.help span.comment, a:hover.help_plain span.comment  {
+    visibility:visible;
+}
+
+form.search a.help span.comment {
+    width: 250px;
+    margin-left:-250px;
+}
+
+
+a.help .help_table {
+    display: table;
+}
+
+a.help .help_example {
+    display: table-row;
+}
+
+a.help .help_label, a.help .help_value {
+    padding-top: 6px;
+    display: table-cell;
+}
+
+form.search a.help .help_label {
+    padding-right: 8px;
+    white-space: nowrap;
+    font-family: courier, fixed, monospace;
+}
