@@ -1,18 +1,22 @@
 body {   
     font-size: .8em;
     font-family: arial, helvetica, sans-serif;
-    background-color: #e5e1bf;
+    background-color: white;
     padding:20px;
     margin:0px;
 }
 
 div.list_header,
 div.filter_bar,
-div.files_list,
 div.nav_bar {
     background-color: #ddd;
     border: 1px solid #888;
     border-top: none;
+    padding: 4px 8px;
+    margin: 0;
+}
+
+div.files_list {
     padding: 4px 8px;
     margin: 0;
 }
@@ -144,26 +148,22 @@ tbody tr.result:hover {
     background-color: #F4F3EB;
 }
 
-table.filter_block {
+div.filter_block {
+    float: left;
     width: auto;
 }
 
-table.filter_block div,
-table.filter_block form {
+div.filter_block div,
+div.filter_block form {
     display: inline;
-}
-
-table.filter_block td {
     padding: 0 8px 0 0;
-}
-
-table.filter_block td.label {
-    white-space: nowrap;
 }
 
 .odd {
     background-color: #ddd;
 }
+
+.even {background-color:white;}
 
 #publish .check_link {
     text-decoration: none;
