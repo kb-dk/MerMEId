@@ -1,39 +1,19 @@
 xquery version "1.0" encoding "UTF-8";
 
-module namespace  filter="http://kb.dk/this/app/filter" at "./filter_utils.xqm";
+module  namespace  filter="http://kb.dk/this/app/filter";
 
-declare namespace file="http://exist-db.org/xquery/file";
-declare namespace fn="http://www.w3.org/2005/xpath-functions";
-declare namespace ft="http://exist-db.org/xquery/lucene";
-declare namespace ht="http://exist-db.org/xquery/httpclient";
 declare namespace m="http://www.music-encoding.org/ns/mei";
-declare namespace request="http://exist-db.org/xquery/request";
-declare namespace response="http://exist-db.org/xquery/response";
-declare namespace util="http://exist-db.org/xquery/util";
-declare namespace xl="http://www.w3.org/1999/xlink";
 
-declare variable $filter:coll   := request:get-parameter("c",    "") cast as xs:string;
-declare variable $filter:query  := request:get-parameter("query","");
-declare variable $filter:page   := request:get-parameter("page", "1") cast as xs:integer;
-declare variable $filter:number :=
-request:get-parameter("itemsPerPage","20")   cast as xs:integer;
-
-declare variable $filter:from     := ($filter:page - 1) * $filter:number + 1;
-declare variable $filter:to       :=  $filter:from      + $filter:number - 1;
-
-declare variable $filter:published_only := 
-request:get-parameter("published_only","") cast as xs:string;
-
-
-declare function filter:print-filterse
+declare function filter:print-filters(
   $database        as xs:string,
   $published_only  as xs:string,
   $coll            as xs:string,
-  $query           as xs:string) as node()* 
+  $number          as xs:integer,
+  $query           as xs:string,
+  $list as node()*) as node()* 
 {
-  return
-  <div class="filter_bar">
-    <div class="filter_block">
+  let $filter:=
+    (<div class="filter_block">
     Filter by Collection
     <br/>
     <select onchange="location.href=this.value; return false;">
@@ -75,7 +55,7 @@ declare function filter:print-filterse
             	 return $link
                }
     </select>
-    </div>
+    </div>,
     <div class="filter_block">
       <form action="" method="get" class="search">
         <input name="query"  value='{request:get-parameter("query","")}'/>
@@ -113,6 +93,13 @@ declare function filter:print-filterse
       </span>
         </a>
       </form>
-    </div>
-  </div>
-}
+    </div>,
+    <br clear="all"/>,
+    <ul>{
+    for $genre in distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
+      let $entry := <li>{$genre}</li>
+      return $entry
+    }</ul>
+    )
+    return $filter
+};
