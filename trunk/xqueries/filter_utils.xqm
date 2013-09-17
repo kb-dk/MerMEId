@@ -19,7 +19,7 @@ declare function filter:print-filters(
     <select onchange="location.href=this.value; return false;">
       {
         for $c in distinct-values(
-          collection($database)//m:seriesStmt/m:identifier[@type="file_collection"]/string()[string-length(.) > 0])
+          collection($database)//m:seriesStmt/m:identifier[@type="file_collection"]/string()[string-length(.) > 0 ])
           let $querystring  := 
             if($query) then
               fn:string-join(
@@ -96,8 +96,11 @@ declare function filter:print-filters(
     </div>,
     <br clear="all"/>,
     <ul>{
-    for $genre in distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
-      let $entry := <li>{$genre}</li>
+    for $genre in 
+      distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
+       let $entry := <li>{$genre}</li>
+       where string-length($genre) > 0 and not ( contains($genre,"Vocal") or
+	 contains($genre,"Instrumental") or contains($genre,"Stage") )  
       return $entry
     }</ul>
     )
