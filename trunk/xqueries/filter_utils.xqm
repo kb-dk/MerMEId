@@ -120,11 +120,28 @@ declare function filter:print-filters(
 	      min($dates)
 
 	  return 
-            (<input name="notbefore"  value="{$notbefore}"/>,
-            <input name="notafter"   value="{$notafter}" />)
+            (<input name="notbefore" value="{$notbefore}"/>,
+            <input name="notafter" value="{$notafter}" />
+            )            
 	}
 	</p>
-      </form>
+	<!-- #slider -->
+    <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td>
+                <input type="text" name="notbefore" id="notbefore"/>
+            </td>
+            <td>
+                <div class="slider" id="year_slider"></div>
+            </td>
+            <td>
+                <input type="text" name="notafter" id="notafter"/>
+            </td>
+        </tr>
+     </table>
+     <!-- end #slider -->
+
+     </form>
     </div>,
     <br clear="all"/>,
     <ul>

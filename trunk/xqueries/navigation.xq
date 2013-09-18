@@ -65,8 +65,17 @@ declare function local:format-reference(
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
       <link rel="styleSheet" 
-      href="/editor/style/navigation_style.css" 
+      href="/editor/style/public_list_style.css" 
       type="text/css"/>
+
+      <!-- #slider -->
+      <link href="/editor/jquery/jquery-ui-1.10.3/css/base/jquery-ui.css" 
+         rel="stylesheet" 
+         type="text/css"/>
+      <link href="/editor/jquery/jquery-ui-1.10.3/css/style.css" 
+         rel="stylesheet"  
+         type="text/css"/>
+      <!-- end #slider -->
       
       <script type="text/javascript" src="/editor/js/confirm.js">
       //
@@ -79,7 +88,20 @@ declare function local:format-reference(
       <script type="text/javascript" src="/editor/js/publishing.js">
       //
       </script>
+      
+      <!-- #slider -->
+      <script type="text/javascript" src="/editor/jquery/jquery-ui-1.10.3/js/jquery-1.9.1.js">
+      //
+      </script>
+      <script type="text/javascript" src="/editor/jquery/jquery-ui-1.10.3/js/jquery-ui-1.10.3.custom.js">
+      //
+      </script>
+      <script type="text/javascript" src="/editor/jquery/jquery-ui-1.10.3/slider.js">
+      //
+      </script>
+      <!-- end #slider -->
 
+      
     </head>
     <body class="list_files">
       <div class="list_header">
