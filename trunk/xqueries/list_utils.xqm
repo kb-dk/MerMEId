@@ -12,11 +12,13 @@ declare namespace response="http://exist-db.org/xquery/response";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xl="http://www.w3.org/1999/xlink";
 
-declare variable $app:coll   := request:get-parameter("c",    "") cast as xs:string;
-declare variable $app:query  := request:get-parameter("query","");
-declare variable $app:page   := request:get-parameter("page", "1") cast as xs:integer;
-declare variable $app:number :=
-request:get-parameter("itemsPerPage","20")   cast as xs:integer;
+declare variable $app:notbefore := request:get-parameter("notbefore","") cast as xs:string;
+declare variable $app:notafter  := request:get-parameter("notafter","") cast as xs:string;
+declare variable $app:coll   := request:get-parameter("c",           "") cast as xs:string;
+declare variable $app:query  := request:get-parameter("query",       "");
+declare variable $app:page   := request:get-parameter("page",        "1") cast as xs:integer;
+declare variable $app:number := request:get-parameter("itemsPerPage","20")   cast as xs:integer;
+declare variable $app:genre  := request:get-parameter("genre",       "") cast as xs:string;
 
 declare variable $app:from     := ($app:page - 1) * $app:number + 1;
 declare variable $app:to       :=  $app:from      + $app:number - 1;
@@ -44,7 +46,10 @@ request:get-parameter("published_only","") cast as xs:string;
       <input name="c"              type="hidden" value="{$app:coll}"   />,
       <input name="query"          type="hidden" value="{$app:query}"  />,
       <input name="page"           type="hidden" value="{$app:page}"   />,
-      <input name="itemsPerPage"   type="hidden" value="{$app:number}" />)
+      <input name="itemsPerPage"   type="hidden" value="{$app:number}" />,
+      <input name="genre"          type="hidden" value="{$app:genre}" />)
+      <input name="notbefore"      type="hidden" value="{$app:notbefore}" />)
+      <input name="notafter"      type="hidden" value="{$app:notafter}" />)
       return $inputs
   };
 
@@ -342,7 +347,8 @@ request:get-parameter("published_only","") cast as xs:string;
 				  "all"}
 		       )}
 		    </select>
-				  
+
+		    <input type="hidden" name="genre"  value="{$app:genre}"/>	  
 		    <input type="hidden" name="published_only"  value="{$app:published_only}"/>
 		    <input type="hidden" name="c"  value="{$app:coll}"/>
 		    <input type="hidden" name="query" value="{$app:query}"/>

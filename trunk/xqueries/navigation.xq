@@ -18,6 +18,7 @@ declare namespace local="http://kb.dk/this/app";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 
+declare variable $genre  := request:get-parameter("genre","") cast as xs:string;
 declare variable $coll   := request:get-parameter("c",    "") cast as xs:string;
 declare variable $query  := request:get-parameter("query","");
 declare variable $page   := request:get-parameter("page", "1") cast as xs:integer;
@@ -86,7 +87,7 @@ declare function local:format-reference(
       </div>
 
     {
-      let $list := loop:getlist($database,$published_only,$coll,$query)
+      let $list := loop:getlist($database,$published_only,$coll,$genre,$query)
       return
       (<br clear="both" />,
       <div class="files_list">
@@ -94,7 +95,7 @@ declare function local:format-reference(
           {app:navigation($list)}
         </div>
 	<div style="width:30%;float:left;">
-	{filter:print-filters($database,$published_only,$coll,$number,$query,$list)}
+	{filter:print-filters($database,$published_only,$coll,$number,$genre,$query,$list)}
 	</div>
 	<div style="width:70%;float:left;">
           {

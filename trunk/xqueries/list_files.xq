@@ -17,6 +17,7 @@ declare namespace m="http://www.music-encoding.org/ns/mei";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 
+declare variable $genre  := request:get-parameter("genre","") cast as xs:string;
 declare variable $coll   := request:get-parameter("c",    "") cast as xs:string;
 declare variable $query  := request:get-parameter("query","");
 declare variable $page   := request:get-parameter("page", "1") cast as xs:integer;
@@ -225,7 +226,7 @@ declare function local:format-reference(
       </table>
     </div>
     {
-      let $list := loop:getlist($database,$published_only,$coll,$query)
+      let $list := loop:getlist($database,$published_only,$coll,$genre,$query)
       return
       <div class="files_list">
         <div class="nav_bar">

@@ -4,11 +4,16 @@ module  namespace  filter="http://kb.dk/this/app/filter";
 
 declare namespace m="http://www.music-encoding.org/ns/mei";
 
+declare variable $filter:page   := request:get-parameter("page", "1") cast as xs:integer;
+declare variable $filter:number := request:get-parameter("itemsPerPage","20") cast as xs:integer;
+declare variable $filter:uri    := "";
+
 declare function filter:print-filters(
   $database        as xs:string,
   $published_only  as xs:string,
   $coll            as xs:string,
   $number          as xs:integer,
+  $genre           as xs:string,
   $query           as xs:string,
   $list as node()*) as node()* 
 {
@@ -62,8 +67,9 @@ declare function filter:print-filters(
         <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
         <input name="published_only" value="{$published_only}" type='hidden' />
         <input name="itemsPerPage"  value='{$number}' type='hidden' />
+        <input name="genre"  value='{$genre}' type='hidden' />
         <input type="submit" value="Search"               />
-        <input type="submit" value="Clear" onclick="this.form.query.value='';this.form.submit();return true;"/>
+        <input type="submit" value="Clear" onclick="this.form.notbefore.value='';this.form.notafter.value='';this.form.genre.value='';this.form.query.value='';this.form.submit();return true;"/>
         <a class="help">?<span class="comment">Search is case insensitive. 
         Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<br/>
         <span class="help_table">
@@ -92,17 +98,110 @@ declare function filter:print-filters(
         </span>
       </span>
         </a>
+	<p>
+	{
+
+	  let $dates := 
+	    for $date in $list//m:workDesc/m:work/m:history/m:creation/m:date
+	      for $attr in $date/@notafter|$date/@isodate|$date/@notbefore
+		return filter:get-date($attr/string())
+
+
+	  let $notafter  := 
+	    if(request:get-parameter("notafter","")) then
+	      filter:get-date(request:get-parameter("notafter",""))
+	    else
+	      max($dates)
+
+	  let $notbefore  := 
+	    if(request:get-parameter("notbefore","")) then
+	      filter:get-dater(equest:get-parameter("notbefore",""))(
+	    else
+	      min($dates)
+
+	  return 
+            (<input name="notbefore"  value="{$notbefore}"/>,
+            <input name="notafter"   value="{$notafter}" />)
+	}
+	</p>
       </form>
     </div>,
     <br clear="all"/>,
-    <ul>{
-    for $genre in 
-      distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
-       let $entry := <li>{$genre}</li>
-       where string-length($genre) > 0 and not ( contains($genre,"Vocal") or
-	 contains($genre,"Instrumental") or contains($genre,"Stage") )  
-      return $entry
-    }</ul>
+    <ul>
+      {
+	for $genre in 
+	  distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
+	  where string-length($genre) > 0 and not ( contains($genre,"Vocal") or
+	    contains($genre,"Instrumental") or contains($genre,"Stage") )  
+	    return 
+	    <li>
+	      {
+		filter:print-filtered-link(
+		  $database,
+		  $published_only,
+		  $coll,
+		  $number,
+		  $query,
+		  $genre),
+		" (",
+		filter:count-hits($genre,$list),
+		")"
+	      }
+	    </li>
+       }
+    </ul>
     )
     return $filter
+};
+
+
+declare function filter:count-hits(
+  $term as xs:string,
+  $list as node()*) as xs:integer* 
+{
+  let $number :=
+  for $count in count($list//m:workDesc[contains(m:work/m:classification/m:termList/m:term/string(),$term) ])
+    return $count
+  return $number
+};
+
+
+declare function filter:print-filtered-link(
+  $database        as xs:string,
+  $published_only  as xs:string,
+  $coll            as xs:string,
+  $number          as xs:integer,
+  $query           as xs:string,
+  $term            as xs:string) as node()*
+{
+  let $link := (
+    element a 
+    {
+      attribute title {"Filter with ",$term},
+      attribute href {
+	fn:string-join((
+	  $filter:uri,"?",
+	  "page=",1,
+	  "&amp;itemsPerPage=",$number,
+	  "&amp;c=",$coll,
+	  "&amp;published_only=",$published_only,
+	  "&amp;query=",$query,
+	  "&amp;notbefore=",request:get-parameter("notbefore",""),
+	  "&amp;notafter=",request:get-parameter("notafter",""),
+	  "&amp;genre=",fn:escape-uri($term,true())),"")},
+	  $term
+    }
+    )
+    return $link
+};
+
+declare function filter:get-date($date as xs:string) as xs:date
+{
+  let $xsdate :=
+    if(string-length($date) = 4) then
+      xs:date(string-join(($date,"01","01"),"-"))
+    else
+      xs:date($date)
+
+  return $xsdate
 };
