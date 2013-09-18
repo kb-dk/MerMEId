@@ -120,8 +120,8 @@ declare function filter:print-filters(
 	      min($dates)
 
 	  return 
-            (<input name="notbefore" value="{$notbefore}"/>,
-            <input name="notafter" value="{$notafter}" />
+            (<input id="notbefore_hidden" type="hidden" value="{$notbefore}"/>,
+            <input id="notafter_hidden" type="hidden" value="{$notafter}" />
             )            
 	}
 	</p>
@@ -129,19 +129,19 @@ declare function filter:print-filters(
     <table cellpadding="0" cellspacing="0" border="0">
         <tr>
             <td>
-                <input type="text" name="notbefore" id="notbefore"/>
+                <input type="text" id="notbefore" name="notbefore"/>
             </td>
             <td>
                 <div class="slider" id="year_slider"></div>
             </td>
             <td>
-                <input type="text" name="notafter" id="notafter"/>
+                <input type="text" id="notafter" name="notafter"/>
             </td>
         </tr>
      </table>
      <!-- end #slider -->
 
-     </form>
+     </form>     
     </div>,
     <br clear="all"/>,
     <ul>
@@ -212,13 +212,23 @@ declare function filter:print-filtered-link(
     return $link
 };
 
+(: 
 declare function filter:get-date($date as xs:string) as xs:date
 {
   let $xsdate :=
     if(string-length($date) = 4) then
       xs:date(string-join(($date,"01","01"),"-"))
     else
-      xs:date($date)
+      xs:date($date) 
+
+  return $xsdate
+};
+:)
+
+declare function filter:get-date($date as xs:string) as xs:integer
+{
+  let $xsdate :=
+      substring($date,1,4)
 
   return $xsdate
 };

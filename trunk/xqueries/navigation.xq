@@ -103,7 +103,7 @@ declare function local:format-reference(
 
       
     </head>
-    <body class="list_files">
+    <body class="list_files" onload="setYearSlider();">
       <div class="list_header">
       <h1>Navigation</h1>
       </div>
