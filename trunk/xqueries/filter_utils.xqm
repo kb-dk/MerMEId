@@ -115,7 +115,7 @@ declare function filter:print-filters(
 
 	  let $notbefore  := 
 	    if(request:get-parameter("notbefore","")) then
-	      filter:get-dater(equest:get-parameter("notbefore",""))
+	      filter:get-date(request:get-parameter("notbefore",""))
 	    else
 	      min($dates)
 
