@@ -58,16 +58,16 @@ declare function app:generate-href($field as xs:string,
     let $inputs := app:pass-as-hidden()
     let $pars   :=
     for $inp in $inputs
+
     let $str:=
       if($field = $inp/@name/string() ) then
-	string-join(($field,$value),"=")
+	string-join(($field,fn:escape-uri($value,true())),"=")
       else
-	string-join(($inp/@name,$inp/@value),"=")
+	string-join(($inp/@name,fn:escape-uri($inp/@value,true())),"=")
 	return 
 	  $str
 
 	  let $link := string-join($pars,"&amp;")
-
 	  return $link
 
   };
