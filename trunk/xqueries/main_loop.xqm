@@ -6,6 +6,42 @@ declare namespace m="http://www.music-encoding.org/ns/mei";
 declare namespace ft="http://exist-db.org/xquery/lucene";
 declare namespace util="http://exist-db.org/xquery/util";
 
+declare function loop:date-filters(
+  $doc as node()) as xs:boolean
+{
+  let $notafter := request:get-parameter("notafter","")
+  let $notbefore:= request:get-parameter("notbefore","")
+
+  let $date := 
+    for $d in $doc//m:workDesc/m:work/m:history/m:creation/m:date
+      return $d
+    
+  let $earliest := 
+    if($date/@notbefore/string()) then
+      substring($date/@notbefore/string(),1,4)
+    else if ($date/@isodate/string()) then
+      substring($date/@isodate/string(),1,4)
+    else
+      ""
+
+  let $latest   := 
+    if($date/@notafter/string()) then
+      substring($date/@notafter/string(),1,4)
+    else if ($date/@isodate/string()) then 
+      substring($date/@isodate/string(),1,4)
+    else
+      ""
+
+  let $inside := 
+    if( $notafter and $notbefore ) then
+      ($notafter >= $latest and $notbefore <= $earliest)
+    else
+      true()
+      
+  return $inside
+
+};
+
 declare function loop:genre-filter(
   $genre as xs:string,
   $doc as node()) as xs:boolean
@@ -64,14 +100,14 @@ declare function loop:getlist (
         for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
 	  let $sort_key_person := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
 	  let $sort_key_title := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
-        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc)
+        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
 	order by $sort_key_person,$sort_key_title
 	return $doc 
 	else
 	for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
 	  let $sort_key_person := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
 	  let $sort_key_title := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
-          where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc)
+          where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
 	  order by $sort_key_person,$sort_key_title
 	return $doc 
         else
@@ -79,14 +115,14 @@ declare function loop:getlist (
         for $doc in collection($database)/m:mei[ft:query(.,$query)]
 	  let $sort_key_person := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
 	  let $sort_key_title := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
-        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc)
+        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
 	order by $sort_key_person,$sort_key_title
 	return $doc
         else
         for $doc in collection($database)/m:mei
 	  let $sort_key_person := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
 	  let $sort_key_title := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
-        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc)
+        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
 	order by $sort_key_person,$sort_key_title
 	return $doc
 	

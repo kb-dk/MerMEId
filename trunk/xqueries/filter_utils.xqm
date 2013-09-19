@@ -98,14 +98,12 @@ declare function filter:print-filters(
         </span>
       </span>
         </a>
-	<p>
 	{
 
 	  let $dates := 
 	    for $date in $list//m:workDesc/m:work/m:history/m:creation/m:date
 	      for $attr in $date/@notafter|$date/@isodate|$date/@notbefore
 		return filter:get-date($attr/string())
-
 
 	  let $notafter  := 
 	    if(request:get-parameter("notafter","")) then
@@ -121,25 +119,21 @@ declare function filter:print-filters(
 
 	  return 
             (<input id="notbefore_hidden" type="hidden" value="{$notbefore}"/>,
-            <input id="notafter_hidden" type="hidden" value="{$notafter}" />
-            )            
+            <input id="notafter_hidden" type="hidden" value="{$notafter}" />,
+	    <table cellpadding="0" cellspacing="0" border="0">
+              <tr>
+		<td>
+                  <input type="text" id="notbefore" name="notbefore"/>
+		</td>
+		<td>
+                  <div class="slider" id="year_slider"></div>
+		</td>
+		<td>
+                  <input type="text" id="notafter" name="notafter"/>
+		</td>
+              </tr>
+	    </table>)
 	}
-	</p>
-	<!-- #slider -->
-    <table cellpadding="0" cellspacing="0" border="0">
-        <tr>
-            <td>
-                <input type="text" id="notbefore" name="notbefore"/>
-            </td>
-            <td>
-                <div class="slider" id="year_slider"></div>
-            </td>
-            <td>
-                <input type="text" id="notafter" name="notafter"/>
-            </td>
-        </tr>
-     </table>
-     <!-- end #slider -->
 
      </form>     
     </div>,
@@ -211,19 +205,6 @@ declare function filter:print-filtered-link(
     )
     return $link
 };
-
-(: 
-declare function filter:get-date($date as xs:string) as xs:date
-{
-  let $xsdate :=
-    if(string-length($date) = 4) then
-      xs:date(string-join(($date,"01","01"),"-"))
-    else
-      xs:date($date) 
-
-  return $xsdate
-};
-:)
 
 declare function filter:get-date($date as xs:string) as xs:integer
 {
