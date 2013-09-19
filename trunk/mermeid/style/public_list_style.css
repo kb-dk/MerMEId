@@ -114,12 +114,32 @@ div.filter_block {
     width: auto;
 }
 
-.odd {
-    background-color: #ddd;
+/* CSS for the result list */
+
+.result_row {
+    font-weight: bold;
+    background-color: #ccc;
 }
 
-.even {background-color:white;}
+p.result_row {
+    margin: 8px 0;
+}
 
+p.result_row span {
+    display: inline-block;
+    padding: 3px;
+}
+
+p.result_row span.list_id {
+    width: 60px;
+    background-color: #333;
+    color: #fff;
+}
+
+p.result_row a {
+    text-decoration: none;
+    color: inherit;
+}
 
 
 /* css for help and other pop-ups */
@@ -215,20 +235,38 @@ form.search a.help .help_label {
 /* genre color codes */
 
 /* main categories */
-.stage_music                { background-color: #812970 ;}
-.instrumental_music         { background-color: #5b8896 ;}
-.vocal_music                { background-color: #c9a044 ;}
+.stage_music                { background-color: #812970;
+                              color: #fff; }
+.instrumental_music         { background-color: #5b8896;
+                              color: #fff; }
+.vocal_music                { background-color: #c9a044;
+                              color: #fff; }
 
 /* sub-categories */
-.opera                      { background-color: #f72c8d ;}
-.incidental_music           { background-color: #c72279 ;}
-.ballet                     { background-color: #9c1dac ;}
-.symphony                   { background-color: #4c89fe ;}
-.concerto                   { background-color: #01aef5 ;}
-.other_orchestral_music     { background-color: #00b7c0 ;}
-.chamber_music              { background-color: #01df87 ;}
-.music_for_one_instrument   { background-color: #55de01 ;}
-.music_for_vocal_soloists_and_instruments_with_or_without_choir { background-color: #f3fb53 ;}
-.choral_music_with_instruments { background-color: #ffb147 ;}
-.a_cappella_choral_music    { background-color: #ff7647 ;}
-.song                       { background-color: #fc495e ;}
+.opera                      { background-color: #f72c8d;
+                              color: #fff; }
+.incidental_music           { background-color: #c72279;
+                              color: #fff; }
+.ballet                     { background-color: #9c1dac;
+                              color: #fff; }
+.symphony                   { background-color: #4c89fe;
+                              color: #fff; }
+.concerto                   { background-color: #01aef5;
+                              color: #fff; }
+.other_orchestral_music     { background-color: #00b7c0;
+                              color: #fff; }
+.chamber_music              { background-color: #01df87;
+                              color: #fff; }
+.piano_music, .organ_music,
+.music_for_one_instrument   { background-color: #55de01;
+                              color: #fff; }
+.music_for_vocal_soloists_and_instruments_with_or_without_choir { 
+                              background-color: #f3fb53;
+                              color: #fff; }
+.choral_music_with_instruments { 
+                              background-color: #ffb147;
+                              color: #fff; }
+.a_cappella_choral_music    { background-color: #ff7647;
+                              color: #000; }
+.song                       { background-color: #fc495e;
+                              color: #fff; }

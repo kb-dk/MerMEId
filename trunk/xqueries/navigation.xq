@@ -36,20 +36,20 @@ declare function local:format-reference(
   $pos as xs:integer ) as node() 
 
 {
-  let $class :=
-    if($pos mod 2 = 1) then 
-      "odd"
-    else
-      "even"
-
+   let $class := 
+      for $genre in 
+	  distinct-values($doc//m:workDesc/m:work/m:classification/m:termList/m:term/string())
+	  where string-length($genre) > 0   
+	     return
+	       translate($genre,' ,','_')
+	       
       let $ref   := 
-      <p class="{$class}" xmlns="http://www.w3.org/1999/xhtml">
+      <p class="result_row {$class}" xmlns="http://www.w3.org/1999/xhtml">
+	<span class="list_id">{app:get-edition-and-number($doc)}</span>
 	<span class="composer">
 	  {$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']}
 	</span>
-	<span>{app:view-document-reference($doc)}</span>
-	<span>{app:get-edition-and-number($doc)}</span>
-	<span>{util:document-name($doc)}</span>
+	<span class="title">{app:view-document-reference($doc)}</span>
       </p>
       return $ref
 };
