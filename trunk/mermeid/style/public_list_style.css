@@ -22,9 +22,9 @@ div.files_list {
 }
 
 div.list_header {
-    background-color : #555;
+    background-color : #fff;
     border: none;
-    padding: 5px 9px;
+    padding: 0;
 }
 
 div.files_list {
@@ -57,22 +57,6 @@ a {
     color:black;
 }
 
-a.addLink {
-    text-decoration: none;
-}
-
-a.addLink img {
-    padding: 2px;
-    border: none;
-    vertical-align:top;
-}
-
-a.addLink:hover img {
-    padding: 1px;
-    border: 1px solid #999;
-}
-
-
 .footer, .footer a:link, .footer a:visited, .footer a:active {
     color: #444;
 }
@@ -100,29 +84,6 @@ th {
 td p 
 {
     margin: 0;
-}
-
-button {
-    padding: 0px;
-}
-
-td.buttons {
-    white-space: nowrap;
-}
-
-td.buttons form {
-    padding: 0em;
-    margin: 0em;
-}
-
-td.buttons input, td.buttons img {
-    padding:3px;
-    margin:0em;
-}
-
-td.buttons input:hover, td.buttons img:hover {
-    border: 1px solid #999;
-    padding: 2px;
 }
 
 table.result_table {
@@ -158,58 +119,6 @@ div.filter_block {
 }
 
 .even {background-color:white;}
-
-#publish .check_link {
-    text-decoration: none;
-}
-
-#publish .check_link img {
-    margin: 3px 1px 0 1px;
-}
-
-#publish a.popup .comment button {
-    width: 15em;
-    display: block;
-}
-
-#publish a.popup {
-    font-weight: bold;
-}
-
-#publish_form {
-    margin: 0;
-    padding: 0;
-}
-/* styling "publish" checkboxes */
-
-label.publishedIsGreen,
-label.pendingIsYellow,
-label.unpublishedIsRed { 
-    display: inline-block; 
-    cursor: pointer; 
-    margin: 0;
-    padding: 0 0 16px 0;
-}
-
-.publishedIsGreen input,
-.pendingIsYellow input,
-.unpublishedIsRed input { margin-right: 5px; }
-
-.has-js .publishedIsGreen input,
-.has-js .pendingIsYellow input,
-.has-js .unpublishedIsRed input { position:absolute; left: -1000px;}
-
-.has-js .publishedIsGreen,
-.has-js .pendingIsYellow,
-.has-js .unpublishedIsRed { padding-left: 20px; }
-
-.has-js .publishedIsGreen { background: url('/editor/images/checkbox_green.png') no-repeat; }
-.has-js .pendingIsYellow  { background: url('/editor/images/checkbox_yellow.png') no-repeat; }
-.has-js .unpublishedIsRed { background: url('/editor/images/checkbox_red.png') no-repeat; }
-
-.has-js label.publishedIsGreen.c_on  { background: url('/editor/images/checkbox_green_checked.png') no-repeat; }
-.has-js label.pendingIsYellow.c_on   { background: url('/editor/images/checkbox_yellow_checked.png') no-repeat; }
-.has-js label.unpublishedIsRed.c_on  { background: url('/editor/images/checkbox_red_checked.png') no-repeat; }
 
 
 
@@ -302,3 +211,24 @@ form.search a.help .help_label {
     white-space: nowrap;
     font-family: courier, fixed, monospace;
 }
+
+/* genre color codes */
+
+/* main categories */
+.stage_music                { background-color: #812970 ;}
+.instrumental_music         { background-color: #5b8896 ;}
+.vocal_music                { background-color: #c9a044 ;}
+
+/* sub-categories */
+.opera                      { background-color: #f72c8d ;}
+.incidental_music           { background-color: #c72279 ;}
+.ballet                     { background-color: #9c1dac ;}
+.symphony                   { background-color: #4c89fe ;}
+.concerto                   { background-color: #01aef5 ;}
+.other_orchestral_music     { background-color: #00b7c0 ;}
+.chamber_music              { background-color: #01df87 ;}
+.music_for_one_instrument   { background-color: #55de01 ;}
+.music_for_vocal_soloists_and_instruments_with_or_without_choir { background-color: #f3fb53 ;}
+.choral_music_with_instruments { background-color: #ffb147 ;}
+.a_cappella_choral_music    { background-color: #ff7647 ;}
+.song                       { background-color: #fc495e ;}
