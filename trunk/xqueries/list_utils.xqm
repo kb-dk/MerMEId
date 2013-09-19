@@ -26,37 +26,55 @@ declare variable $app:to       :=  $app:from      + $app:number - 1;
 declare variable $app:published_only := 
 request:get-parameter("published_only","") cast as xs:string;
 
-  declare function app:options() as node()*
-  { 
-  let $options:= 
+declare function app:options() as node()*
+{ 
+let $options:= 
+  (
+  <option value="">All documents</option>,
+  <option value="any">Published</option>,
+  <option value="pending">Modified</option>,
+  <option value="unpublished">Unpublished</option>)
+
+  return $options
+};
+
+
+declare function app:pass-as-hidden() as node()* {
+  let $inputs :=
     (
-    <option value="">All documents</option>,
-    <option value="any">Published</option>,
-    <option value="pending">Modified</option>,
-    <option value="unpublished">Unpublished</option>)
+    <input name="published_only" type="hidden" value="{$app:published_only}"   />,
+    <input name="c"              type="hidden" value="{$app:coll}"   />,
+    <input name="query"          type="hidden" value="{$app:query}"  />,
+    <input name="page"           type="hidden" value="{$app:page}"   />,
+    <input name="itemsPerPage"   type="hidden" value="{$app:number}" />,
+    <input name="genre"          type="hidden" value="{$app:genre}" />,
+    <input name="notbefore"      type="hidden" value="{$app:notbefore}" />,
+    <input name="notafter"      type="hidden" value="{$app:notafter}" />)
+    return $inputs
+};
 
-    return $options
-  };
+declare function app:generate-href($field as xs:string,
+  $value as xs:string) as xs:string {
+    let $inputs := app:pass-as-hidden()
+    let $pars   :=
+    for $inp in $inputs
+    let $str:=
+      if($field = $inp/@name/string() ) then
+	string-join(($field,$value),"=")
+      else
+	string-join(($inp/@name,$inp/@value),"=")
+	return 
+	  $str
 
+	  let $link := string-join($pars,"&amp;")
 
-  declare function app:pass-as-hidden() as node()* {
-    let $inputs :=
-      (
-      <input name="published_only" type="hidden" value="{$app:published_only}"   />,
-      <input name="c"              type="hidden" value="{$app:coll}"   />,
-      <input name="query"          type="hidden" value="{$app:query}"  />,
-      <input name="page"           type="hidden" value="{$app:page}"   />,
-      <input name="itemsPerPage"   type="hidden" value="{$app:number}" />,
-      <input name="genre"          type="hidden" value="{$app:genre}" />)
-      <input name="notbefore"      type="hidden" value="{$app:notbefore}" />)
-      <input name="notafter"      type="hidden" value="{$app:notafter}" />)
-      return $inputs
+	  return $link
+
   };
 
 
   declare function app:pass-as-hidden-except(
-    $field as xs:string,
-    $value as xs:string) as node()* 
+    $field as xs:string)  as node()* 
     {
 
       let $inputs:=
@@ -66,11 +84,11 @@ request:get-parameter("published_only","") cast as xs:string;
 	  $input
 	else
 	  if($input/@name eq "page") then
-	  (<input name="page" type="hidden" value="1" />)
+	    (<input name="page" type="hidden" value="1" />)
 	  else
-	  ()
-	
-	return $inputs
+	    ()
+	    
+	    return $inputs
     };
 
     declare function app:get-publication-reference($doc as node() )  as node()* 
@@ -215,28 +233,7 @@ request:get-parameter("published_only","") cast as xs:string;
       {
 
 	let $total := fn:count($list/m:meiHead)
-	let $uri   := "/storage/list_files.xq" 
-
-	let $app:collection := 
-	  if(not($app:coll)) then
-	    ""
-	  else
-	    if($app:coll="all") then
-	      ""
-	    else
-	      concat("&amp;c=",$app:coll)
-
-
-        let $app:querypart :=
-	  if(not($app:query)) then 
-	    ""
-	  else
-	    concat("&amp;query=",$app:query)
-
-        let $status_part :=
-	  concat("&amp;published_only=",$app:published_only)
-
-        let $perpage  := concat("&amp;itemsPerPage=",$app:number)
+	let $uri   := "" 
 	let $nextpage := ($app:page+1) cast as xs:string
 
 	let $next     :=
@@ -248,12 +245,7 @@ request:get-parameter("published_only","") cast as xs:string;
 	      attribute href {
 		fn:string-join((
 		  $uri,"?",
-		  "page=",
-		  $nextpage,
-		  $perpage,
-		  $app:collection,
-		  $status_part,
-		  $app:querypart),"")
+		  app:generate-href("page",$nextpage)),"")
 	      },
 	      element img {
 		attribute src {"/editor/images/next.png"},
@@ -275,7 +267,8 @@ request:get-parameter("published_only","") cast as xs:string;
 		    attribute style {"text-decoration: none;"},
 		    attribute href {
        		      fn:string-join(
-			($uri,"?","page=",$prevpage,$perpage,$app:collection,$app:querypart),"")},
+			($uri,"?",
+			app:generate-href("page",$prevpage)),"")},
 			element img {
 			  attribute src {"/editor/images/previous.png"},
 			  attribute alt {"Previous"},
@@ -285,81 +278,73 @@ request:get-parameter("published_only","") cast as xs:string;
 		else
 		  ("") 
 
-		let $app:page_nav := for $p in 1 to fn:ceiling( $total div $app:number ) cast as xs:integer
-		return 
-		  (if(not($app:page = $p)) then
-		  element a {
-		    attribute title {"Go to page ",xs:string($p)},
-		    attribute href {
-       		      fn:string-join(
-			($uri,"?",
-			"page=",xs:string($p),
-			$perpage,
-			$app:collection,
-			$status_part,
-			$app:querypart),"")},
-			($p)
-		  }
-		else 
-		  element span {
-		    attribute style {"color:#999;"},
-		    ($p)
-		  }
-		)
-		let $links := ( 
-		  element div {
-		    element strong {
-		      "Found ",$total," files"
-		    },
-		    (". Display "),
-		    (<form action="/storage/list_files.xq" style="display:inline;">
-		    <select name="itemsPerPage" onchange="this.form.submit();return true;"> 
-		      {(
-			element option {attribute value {"10"},
-			if($app:number=10) then 
-			  attribute selected {"selected"}
-			else
-			  "",
-			  "10 per page"},
-			  element option {attribute value {"20"},
-			  if($app:number=20) then 
+		  let $app:page_nav := for $p in 1 to fn:ceiling( $total div $app:number ) cast as xs:integer
+		  return 
+		    (if(not($app:page = $p)) then
+		    element a {
+		      attribute title {"Go to page ",xs:string($p)},
+		      attribute href {
+       			fn:string-join(
+			  ($uri,"?",
+			  app:generate-href("page",xs:string($p))),"")
+		      },
+		      ($p)
+		    }
+		  else 
+		    element span {
+		      attribute style {"color:#999;"},
+		      ($p)
+		    }
+		  )
+		  let $links := ( 
+		    element div {
+		      element strong {
+			"Found ",$total," files"
+		      },
+		      (". Display "),
+		      (<form action="" style="display:inline;">
+		      <select name="itemsPerPage" onchange="this.form.submit();return true;"> 
+			{(
+			  element option {attribute value {"10"},
+			  if($app:number=10) then 
 			    attribute selected {"selected"}
 			  else
 			    "",
-			    "20 per page"},
-			    element option {attribute value {"50"},
-			    if($app:number=50) then 
+			    "10 per page"},
+			    element option {attribute value {"20"},
+			    if($app:number=20) then 
 			      attribute selected {"selected"}
 			    else
 			      "",
-			      "50 per page"},
-			      element option {attribute value {"100"},
-			      if($app:number=100) then 
+			      "20 per page"},
+			      element option {attribute value {"50"},
+			      if($app:number=50) then 
 				attribute selected {"selected"}
 			      else
 				"",
-				"100 per page"},
-				element option {attribute value {$total cast as xs:string},
-				if($app:number=$total) then 
+				"50 per page"},
+				element option {attribute value {"100"},
+				if($app:number=100) then 
 				  attribute selected {"selected"}
 				else
 				  "",
-				  "all"}
-		       )}
-		    </select>
+				  "100 per page"},
+				  element option {attribute value {$total cast as xs:string},
+				  if($app:number=$total) then 
+				    attribute selected {"selected"}
+				  else
+				    "",
+				    "all"}
+			 )}
+		      </select>
 
-		    <input type="hidden" name="genre"  value="{$app:genre}"/>	  
-		    <input type="hidden" name="published_only"  value="{$app:published_only}"/>
-		    <input type="hidden" name="c"  value="{$app:coll}"/>
-		    <input type="hidden" name="query" value="{$app:query}"/>
-		    <input type="hidden" name="page" value="1" />
-				  
-		    </form>),
-		    element p {
-		      $previous,"&#160;",
-		      $app:page_nav,
-		      "&#160;", $next}
-		  })
-		  return $links
-
+		      {app:pass-as-hidden-except("itemsPerPage")}
+		      
+		      </form>),
+		      element p {
+			$previous,"&#160;",
+			$app:page_nav,
+			"&#160;", $next}
+		    })
+		    return $links
       };

@@ -19,7 +19,7 @@ declare option exist:serialize "method=xml media-type=text/html";
 
 declare variable $genre  := request:get-parameter("genre","") cast as xs:string;
 declare variable $coll   := request:get-parameter("c",    "") cast as xs:string;
-declare variable $query  := request:get-parameter("query","");
+declare variable $query  := request:get-parameter("query","") cast as xs:string;
 declare variable $page   := request:get-parameter("page", "1") cast as xs:integer;
 declare variable $number := request:get-parameter("itemsPerPage","20") cast as xs:integer;
 
@@ -136,7 +136,7 @@ declare function local:format-reference(
 			  return $option
 		      }
 		      </select> 
-		      {app:pass-as-hidden-except("published_only","")}
+		      {app:pass-as-hidden-except("published_only")}
 		    </form>
 		</td>
 		<td>
