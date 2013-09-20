@@ -116,10 +116,10 @@ declare function local:format-reference(
         <div class="nav_bar">
           {app:navigation($list)}
         </div>
-	<div style="width:30%;float:left;">
+	<div class="filter">
 	{filter:print-filters($database,$published_only,$coll,$number,$genre,$query,$list)}
 	</div>
-	<div style="width:70%;float:left;">
+	<div class="results">
           {
             for $doc at $count in $list[position() = ($from to $to)]
             return local:format-reference($doc,$count)

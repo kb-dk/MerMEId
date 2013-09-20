@@ -1,6 +1,6 @@
 body {   
     font-size: .8em;
-    font-family: arial, helvetica, sans-serif;
+    font-family: verdana, arial, helvetica, sans-serif;
     background-color: white;
     padding:20px;
     margin:0px;
@@ -109,12 +109,51 @@ tbody tr.result:hover {
     background-color: #F4F3EB;
 }
 
+/* CSS for the filter area */
+
+div.filter {
+    display: table-cell;
+    vertical-align: top;
+    width: 350px;
+}
+
 div.filter_block {
     float: left;
     width: auto;
+    margin: 5px 0;
 }
 
+div.genre_filter span.genre_indicator {
+    display: inline-block;
+    width: 15px;
+}
+
+div.genre_filter a {
+    text-decoration: none;
+}
+
+div.genre_filter a:hover {
+    text-decoration: underline;
+}
+
+div.genre_filter_row {
+    margin: 3px 0;
+    text-indent: -20px;
+    padding-left: 20px;
+}
+
+div.filter_block .label {
+    font-weight: bold;
+    font-size: .85em;
+} 
+
 /* CSS for the result list */
+
+div.results {
+    display: table-cell;
+    vertical-align: top;
+    width: 100%;
+}
 
 .result_row {
     font-weight: bold;
@@ -131,9 +170,10 @@ p.result_row span {
 }
 
 p.result_row span.list_id {
-    width: 60px;
+    width: 70px;
     background-color: #333;
     color: #fff;
+    white-space: nowrap;
 }
 
 p.result_row a {

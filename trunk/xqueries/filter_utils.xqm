@@ -19,8 +19,7 @@ declare function filter:print-filters(
 {
   let $filter:=
     (<div class="filter_block">
-    Filter by Collection
-    <br/>
+    <span class="label">Collection </span>
     <select onchange="location.href=this.value; return false;">
       {
         for $c in distinct-values(
@@ -62,6 +61,7 @@ declare function filter:print-filters(
     </select>
     </div>,
     <div class="filter_block">
+      <span class="label">Keywords</span>
       <form action="" method="get" class="search">
         <input name="query"  value='{request:get-parameter("query","")}'/>
         <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
@@ -119,9 +119,10 @@ declare function filter:print-filters(
 
 	  return 
             (
+        <div class="label" style="margin-top: 10px;">Year of composition</div>,    
 	    <table cellpadding="0" cellspacing="0" border="0">
             <tr>
-        		<td>
+        		<td style="padding-left: 0;">
                     <input type="text" id="notbefore" name="notbefore" value="{$notbefore}" onblur="setYearSlider()"/>
         		</td>
         		<td>
@@ -136,15 +137,17 @@ declare function filter:print-filters(
 
      </form>     
     </div>,
-    <br clear="all"/>,
-    <ul>
+    <div class="genre_filter filter_block">
       {
 	for $genre in 
 	  distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
 	  where string-length($genre) > 0 and not ( contains($genre,"Vocal") or
 	    contains($genre,"Instrumental") or contains($genre,"Stage") )  
 	    return 
-	    <li>
+	    <div class="genre_filter_row">
+	              
+            <span class="genre_indicator {translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')}">&#160;</span>
+        
 	      {
 		filter:print-filtered-link(
 		  $database,
@@ -157,9 +160,9 @@ declare function filter:print-filters(
 		filter:count-hits($genre,$list),
 		")"
 	      }
-	    </li>
+	    </div>
        }
-    </ul>
+    </div>
     )
     return $filter
 };
