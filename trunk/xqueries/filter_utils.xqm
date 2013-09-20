@@ -118,20 +118,19 @@ declare function filter:print-filters(
 	      min($dates)
 
 	  return 
-            (<input id="notbefore_hidden" type="hidden" value="{$notbefore}"/>,
-            <input id="notafter_hidden" type="hidden" value="{$notafter}" />,
+            (
 	    <table cellpadding="0" cellspacing="0" border="0">
-              <tr>
-		<td>
-                  <input type="text" id="notbefore" name="notbefore"/>
-		</td>
-		<td>
-                  <div class="slider" id="year_slider"></div>
-		</td>
-		<td>
-                  <input type="text" id="notafter" name="notafter"/>
-		</td>
-              </tr>
+            <tr>
+        		<td>
+                    <input type="text" id="notbefore" name="notbefore" value="{$notbefore}" onblur="setYearSlider()"/>
+        		</td>
+        		<td>
+                    <div class="slider" id="year_slider"><!-- --></div>
+        		</td>
+        		<td>
+                    <input type="text" id="notafter" name="notafter" value="{$notafter}" onblur="setYearSlider()"/>
+        		</td>
+            </tr>
 	    </table>)
 	}
 

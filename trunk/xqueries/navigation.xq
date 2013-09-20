@@ -41,7 +41,7 @@ declare function local:format-reference(
 	  distinct-values($doc//m:workDesc/m:work/m:classification/m:termList/m:term/string())
 	  where string-length($genre) > 0   
 	     return
-	       translate($genre,' ,','_')
+	       translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')
 	       
       let $ref   := 
       <p class="result_row {$class}" xmlns="http://www.w3.org/1999/xhtml">
@@ -103,7 +103,7 @@ declare function local:format-reference(
 
       
     </head>
-    <body class="list_files" onload="setYearSlider();">
+    <body class="list_files">
       <div class="list_header">
       <h1>Works</h1>
       </div>
