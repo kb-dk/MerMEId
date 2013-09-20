@@ -1,0 +1,235 @@
+body { 
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size: 8pt;
+    background-color: #333;
+    padding: 20px 50px;
+    margin: 0;
+}
+
+h1, h2, h3, h4 {
+    font-family:"Verdana",sans-serif;
+    line-height: 1.4em;
+    margin: 0;
+    font-weight: normal;
+    /*clear: both;*/
+}
+
+h1 {
+    font-size: 18pt;
+}
+
+h2 {
+    font-size: 14pt;
+    padding-bottom: 10px;
+}
+
+h3 {
+    font-size: 12pt;
+    padding-bottom: 10px;
+}
+
+p {
+    line-height: 1.4em;
+    margin: 0;
+    padding-bottom: 8px;
+}
+
+#all {
+    width: auto;
+    min-width: 600px;
+    max-width: 1120px;
+    padding: 0;
+    background-color: #637F57;
+    color: #fff;
+    margin: auto;
+    border-radius: 8px;
+}
+
+#header {
+    color: #fff;
+    padding: 20px 20px 5px 20px;
+    border-bottom: 1px solid #fff;
+    
+}
+
+#header h1, #header h2, #header h3, #header h4 {
+    clear: none;    
+    font-weight: bold;
+}
+
+#main {
+    padding: 5px 10px 5px 20px;
+    min-height: 300px; 
+    background-color: #fff;
+    color: #000;
+    clear: both;
+}
+
+#main a {
+    color: #336;
+}
+
+#footer {
+    color: #fff;
+    padding: 10px 20px 0 20px;
+    border-top: 1px solid #fff;
+    height: 48px;
+}
+
+.content_box {
+    padding: 10px 0px;
+    font-size: 1.2em;
+/*    line-height: 1.4em; */
+}
+
+.content_box ul, .content_box li {
+    padding-left: 15px;
+}
+
+.kb_logo {
+    float: right;
+    width:auto;
+}
+
+a, a:link, a:visited, a:active, a:hover {
+    color: #eec;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #fff;
+}
+
+ul {
+    margin-top: 0;
+}
+
+.dcm_logo a {
+    text-decoration: none;
+}
+
+input, select {
+  border: 1px solid #666;
+  color:#fff;
+  background: #333;
+  padding: 1px;
+}
+
+input[type=text] {
+    padding: 1px 8px;
+    background: #eee;
+}
+
+
+.button {
+  padding: 3px 5px;
+  border: 1px solid #666;
+  border-radius: 2px;
+  color:#fff;
+  font-size: 8.5pt;
+  background: #333 url(images/button.png) repeat-x scroll 5px center;
+  height: 24px;
+}
+
+.button:hover {
+  background: #799158 url(images/button_hover.png) repeat-x scroll 5px center;
+  border: 1px solid #5D6F43;
+}
+
+[disabled],
+.button:disabled, 
+.button[disabled],
+.button[disabled="disabled"],
+[disabled]:hover,
+.button:disabled:hover {
+  border: 1px solid #666;
+  background: #333 url(images/button_disabled.png) repeat-x scroll 5px center !important;
+  color:#ccc !important;
+}
+
+ol {
+    margin: 0;
+    padding: 0 0 0 20px;
+}
+
+/* Top menu */
+
+#menu {
+    height: 24px;
+    padding: 0 10px 0 10px;
+    border-bottom: 1px solid #fff;
+}
+
+#menu a {
+    display: block;
+    float:left;
+    width: auto;
+    height: 21px;
+    padding: 3px 10px 0 10px;
+    text-decoration: none;
+    color: #fff;
+}
+
+#menu a:hover, #menu .selected {
+    color: #fff;
+    background-color: #799158;
+}
+
+.change_language {
+    float: right;
+}
+
+/* Quotations */
+
+.quote {
+    font-style: italic;
+}
+
+/* Illustrations */
+
+img.illustration, p.illustration_text {
+    display: block;
+    width: 400px;
+    float: right;
+    clear: right;
+    margin: 0 0 0 15px;
+}
+
+p.illustration_text {
+    font-style:italic;
+    margin-bottom: 15px;
+}
+/* List of readings */
+
+.readings th, .readings td {
+    padding: 2px 15px 2px 0;
+    text-align: left;
+    vertical-align: top;
+}
+
+/* Footnotes */
+
+.footnote_reference, .footnote_number {
+    position: relative;
+    top: -.5em;
+    font-size: .83em;
+    font-style: normal;
+}
+
+.footnote_number {
+    display: block;
+    width: 2em;
+    margin-bottom: -1.7em;
+    margin-left: -1.3em;
+}
+
+.footnotes {
+    border-top: 1px solid #000;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.footnote {
+    margin-left: 1.3em;
+    margin-bottom: .3em;
+}

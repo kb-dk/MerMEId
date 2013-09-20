@@ -301,8 +301,7 @@ declare function app:generate-href($field as xs:string,
 		      element strong {
 			"Found ",$total," files"
 		      },
-		      (". Display "),
-		      (<form action="" style="display:inline;">
+		      (<form action="" id="itemsPerPageForm" style="display:inline;">
 		      <select name="itemsPerPage" onchange="this.form.submit();return true;"> 
 			{(
 			  element option {attribute value {"10"},

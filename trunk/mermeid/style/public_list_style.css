@@ -1,112 +1,14 @@
-body {   
-    font-size: .8em;
-    font-family: verdana, arial, helvetica, sans-serif;
-    background-color: white;
-    padding:20px;
-    margin:0px;
+input, select {
+    background-color: #fff;
+    color: #000;
 }
 
-div.list_header,
-div.filter_bar,
-div.nav_bar {
-    background-color: #ddd;
-    border: 1px solid #888;
-    border-top: none;
-    padding: 4px 8px;
-    margin: 0;
+div.spacer {
+    display: table-cell;
 }
 
-div.files_list {
-    padding: 4px 8px;
-    margin: 0;
-}
-
-div.list_header {
-    background-color : #fff;
-    border: none;
-    padding: 0;
-}
-
-div.files_list {
-    padding: 0;
-}
-
-div.nav_bar {
-    border: none;
-}
-
-div.nav_bar div {
-    text-align: center;
-}
-
-div.footer, p.footer {
-    margin: 0 -20px 20px -20px;
-    padding: 10px 20px;
-}
-
-
-h2 {
-    margin-bottom: 0;
-}
-
-p {
-    margin: 5px 0 5px 0;
-}
-
-a {
-    color:black;
-}
-
-.footer, .footer a:link, .footer a:visited, .footer a:active {
-    color: #444;
-}
-
-table {
-    width: 100%;
-}
-
-th, td {
-    font-size: 10pt;
-    padding: .2em;
-    padding-left: .3em;
-    margin: 0em;
-    text-align: left;
-    vertical-align: top;
-}
-
-th {
-    font-weight: bold;
-    border-bottom: 1px solid #888;
-    border-top: 1px solid #888;
-    white-space: nowrap;
-}
-
-td p 
-{
-    margin: 0;
-}
-
-table.result_table {
-    margin-top: 5px;
-}
-
-table.result_table td,
-table.result_table th {
-    padding:3px 8px;
-}
-
-table.result_table th {
-    background-color: #555;
-    color: #fff;
-}
-
-table.result_table .tools {
-    text-align: center;
-    white-space: nowrap;
-}
-
-tbody tr.result:hover {
-    background-color: #F4F3EB;
+div.spacer div {
+    width: 15px;
 }
 
 /* CSS for the filter area */
@@ -115,6 +17,9 @@ div.filter {
     display: table-cell;
     vertical-align: top;
     width: 350px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin: 15px 15px 0 0;
 }
 
 div.filter_block {
@@ -145,9 +50,19 @@ div.genre_filter_row {
 div.filter_block .label {
     font-weight: bold;
     font-size: .85em;
+    line-height: 2em;
 } 
 
+#notbefore,
+#notafter {
+    width : 48px;
+}
+
 /* CSS for the result list */
+
+#itemsPerPageForm {
+    float: right;
+}
 
 div.results {
     display: table-cell;
@@ -156,31 +71,63 @@ div.results {
 }
 
 .result_row {
-    font-weight: bold;
-    background-color: #ccc;
+    margin: 15px 0;
 }
 
-p.result_row {
-    margin: 8px 0;
-}
 
-p.result_row span {
-    display: inline-block;
-    padding: 3px;
-}
-
-p.result_row span.list_id {
-    width: 70px;
-    background-color: #333;
-    color: #fff;
-    white-space: nowrap;
-}
-
-p.result_row a {
+.result_row a {
     text-decoration: none;
     color: inherit;
 }
 
+.result_row .composer {
+    font-size: .85em;
+    border-top: 1px solid #aaa;
+}
+
+.result_row .title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.result_row .composer,
+.result_row .title {
+    padding: 2px 5px;
+    border-left:  1px solid #aaa;
+    border-right: 1px solid #aaa;
+}
+
+.info_bar {
+    font-weight: bold;
+}
+
+.info_bar span {
+    display: table-cell;
+    padding: 0;
+}
+
+.info_bar span.genre span {
+    padding: 3px 8px;
+    display: inline;
+    display: inline-block;
+}
+
+.info_bar span.genre span.pos1 .overlay {
+    position: absolute;
+    height: inherit;
+    width: inherit;
+    background-color: #fff;
+    opacity:0.3;
+    filter:alpha(opacity=30); /* For IE8 and earlier */
+}
+
+.info_bar span.list_id {
+    width: auto;
+    background-color: #444;
+    color: #fff;
+    white-space: nowrap;
+    padding: 3px 8px;
+}
 
 /* css for help and other pop-ups */
 
@@ -302,11 +249,11 @@ form.search a.help .help_label {
                               color: #fff; }
 .music_for_vocal_soloists_and_instruments_with_or_without_choir { 
                               background-color: #f3fb53;
-                              color: #fff; }
+                              color: #000; }
 .choral_music_with_instruments { 
                               background-color: #ffb147;
                               color: #fff; }
 .a_cappella_choral_music    { background-color: #ff7647;
-                              color: #000; }
+                              color: #fff; }
 .song                       { background-color: #fc495e;
                               color: #fff; }

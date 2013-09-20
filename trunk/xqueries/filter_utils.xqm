@@ -123,13 +123,13 @@ declare function filter:print-filters(
 	    <table cellpadding="0" cellspacing="0" border="0">
             <tr>
         		<td style="padding-left: 0;">
-                    <input type="text" id="notbefore" name="notbefore" value="{$notbefore}" onblur="setYearSlider()"/>
+                    <input id="notbefore" name="notbefore" value="{$notbefore}" onblur="setYearSlider()"/>
         		</td>
         		<td>
                     <div class="slider" id="year_slider"><!-- --></div>
         		</td>
         		<td>
-                    <input type="text" id="notafter" name="notafter" value="{$notafter}" onblur="setYearSlider()"/>
+                    <input id="notafter" name="notafter" value="{$notafter}" onblur="setYearSlider()"/>
         		</td>
             </tr>
 	    </table>)

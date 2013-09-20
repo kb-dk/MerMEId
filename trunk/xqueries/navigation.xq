@@ -36,22 +36,36 @@ declare function local:format-reference(
   $pos as xs:integer ) as node() 
 
 {
-   let $class := 
+   let $genres := 
       for $genre in 
 	  distinct-values($doc//m:workDesc/m:work/m:classification/m:termList/m:term/string())
 	  where string-length($genre) > 0   
 	     return
-	       translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')
-	       
-      let $ref   := 
-      <p class="result_row {$class}" xmlns="http://www.w3.org/1999/xhtml">
-	<span class="list_id">{app:get-edition-and-number($doc)}</span>
-	<span class="composer">
-	  {$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']}
-	</span>
-	<span class="title">{app:view-document-reference($doc)}</span>
-      </p>
-      return $ref
+	       $genre
+
+   let $class := 
+      for $genre in $genres
+         return 
+	         translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')
+
+   let $genre_boxes := 
+      for $genre at $pos in $genres
+         return 
+            <span class="pos{$pos}">{$genre}</span>
+
+   let $ref   := 
+      <div class="result_row">
+	    <div class="composer">
+	        {$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}
+	        &#160;
+	    </div>
+        <div class="title">{app:view-document-reference($doc)}<!-- --></div>
+        <div class="info_bar {$class}">
+	      <span class="list_id">{app:get-edition-and-number($doc)}<!-- --></span>
+	      <span class="genre">{$genre_boxes}<!-- --></span>
+	     </div>
+      </div>
+   return $ref
 };
 
 
@@ -63,6 +77,10 @@ declare function local:format-reference(
 	{app:list-title()}
       </title>
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+      
+      <link type="text/css" href="/editor/style/dcm.css" rel="stylesheet" />
+      <link type="text/css" href="/editor/style/cnw.css" rel="stylesheet" />
+
 
       <link rel="styleSheet" 
       href="/editor/style/public_list_style.css" 
@@ -104,36 +122,49 @@ declare function local:format-reference(
       
     </head>
     <body class="list_files">
-      <div class="list_header">
-      <h1>Works</h1>
-      </div>
-
+    
+      <div id="all">
+    
+      <div id="header">
+         <div class="kb_logo">
+            <a href="http://www.kb.dk" title="Det Kongelige Bibliotek"><img 
+             style="margin-top: -10px; border: 0px; vertical-align:middle;" title="Det Kongelige Bibliotek" 
+             alt="KB Logo" src="/editor/images/kb_white.png"></img></a></div>
+         <h1>Works</h1>
+      </div> <!-- end header -->
+      <div id="main">
+         <div class="content_box">
     {
       let $list := loop:getlist($database,$published_only,$coll,$genre,$query)
       return
-      (<br clear="both" />,
+      (
       <div class="files_list">
-        <div class="nav_bar">
-          {app:navigation($list)}
-        </div>
-	<div class="filter">
-	{filter:print-filters($database,$published_only,$coll,$number,$genre,$query,$list)}
-	</div>
-	<div class="results">
-          {
-            for $doc at $count in $list[position() = ($from to $to)]
-            return local:format-reference($doc,$count)
-          }
-	</div>
+    	<div class="filter">
+    	{filter:print-filters($database,$published_only,$coll,$number,$genre,$query,$list)}
+    	</div>
+    	<div class="spacer"><div>&#160;</div></div>
+    	<div class="results">
+    	   <div class="nav_bar">
+              {app:navigation($list)}
+           </div>
+           {
+                for $doc at $count in $list[position() = ($from to $to)]
+                return local:format-reference($doc,$count)
+           }
+    	</div>
       </div>)
     }
-    <div class="footer">
+    </div> <!-- end content box -->
+    </div> <!-- end main -->
+
+    <div id="footer">
       <a href="http://www.kb.dk/dcm" title="DCM" 
       style="text-decoration:none;"><img 
            style="border: 0px; vertical-align:middle;" 
            alt="DCM Logo" 
-           src="/editor/images/dcm_logo_small.png"/></a>
+           src="/editor/images/dcm_logo_small_white.png"/></a>
            2013 Danish Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
-    </div>
+    </div> <!-- end footer -->
+    </div> <!-- end all -->
   </body>
 </html>
