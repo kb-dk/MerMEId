@@ -1,3 +1,7 @@
+a:link, a:active, a:visited, a:hover {
+    color: #000;
+}
+
 input, select {
     background-color: #fff;
     color: #000;
@@ -18,6 +22,7 @@ div.filter {
     vertical-align: top;
     width: 350px;
     background-color: #f0f0f0;
+    font-size: .9em;
     padding: 10px;
     margin: 15px 15px 0 0;
 }
@@ -49,7 +54,6 @@ div.genre_filter_row {
 
 div.filter_block .label {
     font-weight: bold;
-    font-size: .85em;
     line-height: 2em;
 } 
 
@@ -80,25 +84,33 @@ div.results {
     color: inherit;
 }
 
+.result_row .composer,
+.result_row .title {
+    border-left:  1px solid #aaa;
+    border-right: 1px solid #aaa;
+}
+
 .result_row .composer {
     font-size: .85em;
     border-top: 1px solid #aaa;
+    padding: 2px 5px;
 }
 
 .result_row .title {
     font-size: 1.2em;
     font-weight: bold;
+    padding: 0 5px 8px 5px;
 }
 
-.result_row .composer,
-.result_row .title {
+.result_row .date {
+    font-size: .85em;
+    float: right;
     padding: 2px 5px;
-    border-left:  1px solid #aaa;
-    border-right: 1px solid #aaa;
 }
 
 .info_bar {
     font-weight: bold;
+    font-size: .85em;
 }
 
 .info_bar span {
@@ -232,28 +244,57 @@ form.search a.help .help_label {
 /* sub-categories */
 .opera                      { background-color: #f72c8d;
                               color: #fff; }
+.opera .pos1                { background-color: #C72371;}
+
 .incidental_music           { background-color: #c72279;
                               color: #fff; }
+.incidental_music .pos1     { background-color: #A01B61;}
+
 .ballet                     { background-color: #9c1dac;
                               color: #fff; }
+.ballet .pos1               { background-color: #7E178A;}
+
 .symphony                   { background-color: #4c89fe;
                               color: #fff; }
+.symphony .pos1             { background-color: #3D6ECD;}
+
 .concerto                   { background-color: #01aef5;
                               color: #fff; }
+.concerto .pos1             { background-color: #008CC5; }
+
 .other_orchestral_music     { background-color: #00b7c0;
                               color: #fff; }
+.other_orchestral_music .pos1 
+                            { background-color: #00939B;}
+
 .chamber_music              { background-color: #01df87;
                               color: #fff; }
+.chamber_music .pos1        { background-color: #00B46D;}
+
 .piano_music, .organ_music,
 .music_for_one_instrument   { background-color: #55de01;
                               color: #fff; }
-.music_for_vocal_soloists_and_instruments_with_or_without_choir { 
-                              background-color: #f3fb53;
+.piano_music .pos1, .organ_music .pos1,
+.music_for_one_instrument .pos1  
+                            { background-color: #44B300;}
+
+.music_for_vocal_soloists_and_instruments_with_or_without_choir  
+                            { background-color: #f3fb53;
                               color: #000; }
-.choral_music_with_instruments { 
-                              background-color: #ffb147;
+.music_for_vocal_soloists_and_instruments_with_or_without_choir .pos1 
+                            { background-color: #C4CA43;}
+
+.choral_music_with_instruments 
+                            { background-color: #ffb147;
                               color: #fff; }
+.choral_music_with_instruments .pos1 
+                            { background-color: #CE8E39;}
+
 .a_cappella_choral_music    { background-color: #ff7647;
                               color: #fff; }
+.a_cappella_choral_music .pos1 
+                            { background-color: #CE5F39;}
+
 .song                       { background-color: #fc495e;
                               color: #fff; }
+.song .pos1                 { background-color: #CB3A4B;}

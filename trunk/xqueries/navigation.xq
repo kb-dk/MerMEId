@@ -52,6 +52,12 @@ declare function local:format-reference(
       for $genre at $pos in $genres
          return 
             <span class="pos{$pos}">{$genre}</span>
+            
+      let $date_output :=
+        if($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore or $doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter) then
+          substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore,1,4) + '-' + substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter,1,4)
+        else
+          substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@isodate,1,4)
 
    let $ref   := 
       <div class="result_row">
@@ -59,6 +65,7 @@ declare function local:format-reference(
 	        {$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}
 	        &#160;
 	    </div>
+	    <div class="date">&#160;{$date_output}</div>
         <div class="title">{app:view-document-reference($doc)}<!-- --></div>
         <div class="info_bar {$class}">
 	      <span class="list_id">{app:get-edition-and-number($doc)}<!-- --></span>
