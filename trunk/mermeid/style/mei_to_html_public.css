@@ -1,6 +1,5 @@
 p {
-    margin-top : .5em;
-    margin-bottom : 0px;
+    margin: 0;
     line-height: 1.4em;
 }
 
@@ -21,11 +20,8 @@ h1, h2, h3, h4, h5 {
 h3, h4, h5 {
     padding: 10px 0 0 0;
     margin: 0;
+    font-weight: bold;
 }
-
-/*h1 {
-    font-size: 1.5em;
-}*/
 
 h2 {
     font-size: 1.3em;
@@ -211,6 +207,7 @@ ul.single_movement {
     font-family: arial, helvetica, sans-serif;
     font-size: .8em;
     float:right;
+    clear: right;
     width: auto;
     margin-top: 5px;    
 }

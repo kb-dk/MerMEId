@@ -93,8 +93,7 @@ div.results {
 }
 
 .result_row .title {
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 14pt;
     padding: 0 5px 8px 5px;
 }
 
@@ -107,6 +106,7 @@ div.results {
 .info_bar {
     font-weight: bold;
     font-size: .85em;
+    background-color: #eee;
 }
 
 .info_bar span {
@@ -118,15 +118,6 @@ div.results {
     padding: 3px 8px;
     display: inline;
     display: inline-block;
-}
-
-.info_bar span.genre span.pos1 .overlay {
-    position: absolute;
-    height: inherit;
-    width: inherit;
-    background-color: #fff;
-    opacity:0.3;
-    filter:alpha(opacity=30); /* For IE8 and earlier */
 }
 
 .info_bar span.list_id {

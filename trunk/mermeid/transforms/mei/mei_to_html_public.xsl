@@ -2317,8 +2317,8 @@
 		</xsl:attribute>
 		<xsl:choose>
 			<xsl:when test="position()&gt;1 and @xml:lang!=parent::node()/*[name()=$element][1]/@xml:lang">
-				<xsl:attribute name="class">alternative_language</xsl:attribute> [<xsl:value-of
-					select="concat(@xml:lang,':')"/>] </xsl:when>
+				<xsl:attribute name="class">alternative_language</xsl:attribute><!-- [<xsl:value-of
+					select="concat(@xml:lang,':')"/>] --></xsl:when>
 			<xsl:otherwise>
 				<xsl:attribute name="class">preferred_language</xsl:attribute>
 			</xsl:otherwise>
