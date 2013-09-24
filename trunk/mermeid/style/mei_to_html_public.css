@@ -1,0 +1,384 @@
+p {
+    margin-top : .5em;
+    margin-bottom : 0px;
+    line-height: 1.4em;
+}
+
+table {
+    font-size: 1em;
+}
+
+table td {
+    vertical-align: top;
+    line-height: 1.4em;
+    padding-right: 1em;
+}
+
+h1, h2, h3, h4, h5 {
+    line-height: 1.4em;
+}
+
+h3, h4, h5 {
+    padding: 10px 0 0 0;
+    margin: 0;
+}
+
+/*h1 {
+    font-size: 1.5em;
+}*/
+
+h2 {
+    font-size: 1.3em;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+h4 {
+    font-size: 1em;
+}
+
+h5 {
+    font-size: 1em;
+}
+
+sup {
+    line-height: .5em;
+}
+
+ul {
+    margin-top: 0px;
+    padding-left: 1em;
+}
+
+#backlink {
+    float: right;
+}
+
+.hr {
+    border-top: 1px solid #999;
+    width: 100%;
+    height: 1px;
+}
+
+.p_heading, .p_subheading, .movement_heading {
+    font-weight : bold;
+    margin-top : .5em;
+}
+
+.p_subheading {
+    margin-bottom: 0em;
+}
+
+.movement_heading {
+    margin-top: 1em;  
+    margin-bottom: -.75em;
+}
+
+.bibl_record_short {
+    margin-top:0em;
+}
+
+/*.titlepage {
+    font-style: italic;
+}
+
+.titlepage i {
+    font-style: normal;
+}*/
+
+.fold {
+    cursor : pointer;
+    margin-top:.5em;
+}
+
+.folded_content {
+    padding-left : 14px;
+    cursor: default;
+}
+
+.incipit_lowres {
+    margin-top : 5px;
+    margin-bottom : 10px;
+}
+
+.invisible {
+    color: transparent;
+}
+
+.label {
+    font-weight: bold;
+}
+
+a.abbr {
+    border-bottom: 1px dashed #666;
+    cursor: help;   
+    text-decoration: none;
+    color: #000;
+}
+
+a:hover.abbr .expan {
+    visibility:visible;
+}
+
+.expan {
+    display:inline;
+    position: absolute;
+    visibility:hidden;
+    white-space: normal;
+    text-decoration:none;
+    color: black;
+    background-color:#ddd;
+    padding: 1px;
+    padding-bottom: 5px;
+    z-index:250;
+    padding: 8px 4px 4px 4px;
+    width: 300px;
+    margin-top: 20px;
+    margin-left: -5px;
+    border: 1px solid #ddd;
+    font-weight:normal;
+    font-style: normal;
+    text-align: left;
+    box-shadow: 7px 7px 10px 5px #333;
+    border-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 7px 7px 10px 5px #333;
+    -moz-border-radius: 4px;
+    /* For MSIE 6-8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333')"; 
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333'); 
+}
+
+div.perfmedium { 
+    margin-top: 0.5em;
+}
+
+div.perfmedium p { 
+    margin-top: 0;
+}
+
+.movement_list {
+    list-style-type: none;
+    padding-left: 0;
+    border-left: 1px dashed black;
+    margin-left: 3px;
+}
+
+ul.single_movement {
+    list-style-type: none;
+    border-left: none;
+    padding-left: 44px;
+}
+
+.movement_list li {
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+
+.movement_list p {
+    margin: 0;
+}
+
+.alternative_language, .classification, .colophon {
+    font-size : .9em;
+    color: #666;
+}
+
+.colophon a:link, .colophon a:visited, .colophon a:active {
+    color: #666;
+}
+
+.colophon_heading {
+    font-weight: bold;
+}
+
+.revision_history td, .revision_history th {
+    color: #666;
+    text-align: left;
+}
+
+.revision_history .p_heading {
+    font-weight: normal;
+}
+
+.revision_history p {
+    margin-top: 0;
+}
+
+.settings {
+    font-family: arial, helvetica, sans-serif;
+    font-size: .8em;
+    float:right;
+    width: auto;
+    margin-top: 5px;    
+}
+
+table.performances tr td, table.letters tr td {
+    padding: 0 0 .4em 0;
+    margin: 0;
+    line-height: 1.2em;
+}
+
+table.letters tr td.date_col {
+    padding: 0 0 .4em 0;
+    white-space:nowrap;
+}
+
+div.source {
+    padding-bottom : 10px;
+}
+
+div.source p {
+    margin-top : 0px;
+}
+
+table.source_component_list td {
+    padding-top: 10px;
+    vertical-align: top;
+}
+
+table.source_component_list td h3, 
+table.source_component_list td h4,
+table.source_component_list td h5 {
+/* H3, H4, H5 padding set to 0 for vertical alignment with label cell */    
+    padding-top: 0px;
+}
+
+table.source_component_list td.label_cell {
+    white-space: nowrap;
+}
+
+/* SPECIAL SYMBOLS */
+
+/* Embedded fonts */
+/* Unicode music symbols font */
+@font-face {
+	font-family: 'Euterpe';
+	src: url('fonts/Euterpe.eot');
+	src: local('Euterpe Regular'), local('Euterpe'),
+	       url('fonts/Euterpe.eot?#iefix') format('embedded-opentype'),
+	       url('fonts/Euterpe.ttf') format('truetype'), 
+	       url('fonts/Euterpe.woff') format('woff'), 
+	       url('fonts/Euterpe.svg#Euterpe') format('svg');
+} 
+
+/* Runic font */
+@font-face {
+	font-family: 'Hnias';
+	src: url('fonts/Hnias.eot');
+	src: local('Hnias Regular'), local('Hnias'), 
+	       url('fonts/Hnias.eot?#iefix') format('embedded-opentype'),
+	       url('fonts/Hnias.ttf') format('truetype'), 
+	       url('fonts/Hnias.woff') format('woff'), 
+	       url('fonts/Hnias.svg#Hnias') format('svg');
+} 
+/* End embedded fonts */
+
+.accidental {
+    position: relative;
+    top: 0em;
+    font-family: "Arial Unicode MS", sans-serif; 
+    font-size:1em;
+    padding-left:.0em;
+    padding-right:.1em;
+    padding-top: 0em;
+    padding-bottom: .3em;
+}
+
+.meter {
+    font-family: 'times new roman', times, serif; 
+    font-size: 1.3em;
+    line-height: 1em;
+    font-weight: bold;
+}
+
+.runes {
+    font-family: Hnias, Junicode, sans-serif, serif;
+}
+
+.music_symbols {
+    font-family: Euterpe, "Arial Unicode MS", sans-serif, serif;
+    font-size: 2em;
+    line-height: .5em;
+}
+
+.time_signature {
+    position:relative;
+    top: .2em;
+}
+
+/* css for help pop-ups */
+a.help {
+    text-decoration : none;
+    text-align : left;
+    vertical-align : text-top;
+    color : #339933;
+    background-color : #ffffff;
+    border : 1px solid #226622;
+    font-weight : bold;
+    padding-top : 0px;
+    padding-left : 2px;
+    padding-right : 2px;
+    padding-bottom : 1px;
+    font-size : .8em;
+    -moz-border-radius : .3em .3em .3em .3em;
+    border-radius-topright : .3em;
+    border-radius-topleft : .3em;
+    border-radius-bottomright : .3em;
+    border-radius-bottomleft : .3em;
+}
+a.help span.comment {
+    display : inline;
+    position : absolute;
+    visibility : hidden;
+    white-space : normal;
+    text-decoration : none;
+    color : black;
+    background-color : #eeffee;
+    padding : 1px;
+    z-index : 10;
+    padding : 4px;
+    width : 200px;
+    margin-top : -10px;
+    margin-left : 5px;
+    border : 1px solid #226622;
+    font-weight : normal;
+    font-size : 1.2em;
+    -moz-border-radius : .3em .3em .3em .3em;
+    border-radius-topright : .3em;
+    border-radius-topleft : .3em;
+    border-radius-bottomright : .3em;
+    border-radius-bottomleft : .3em;
+}
+a:hover.help span.comment {
+    visibility : visible;
+}
+
+
+@media print {
+
+    .noprint {
+        display : none;
+    }
+    
+    body {
+        background-color: #fff;
+    }
+    
+    p {
+        margin-top : 0.2em;
+        margin-bottom : 0em;
+    }
+    .p_heading {
+        margin-top : 0.2em;
+    }
+    div.source {
+        padding-bottom : 0.2em;
+    }
+    div.source p {
+        margin-top : 0.2em;
+    }
+
+}
