@@ -1,3 +1,7 @@
+h2 {
+    font-size: 1.3em;
+}
+
 input, select {
     background-color: #fff;
     color: #000;
@@ -46,6 +50,19 @@ div.genre_filter_row {
     margin: 3px 0;
     text-indent: -20px;
     padding-left: 20px;
+    padding-bottom: 3px;
+}
+
+div.level1 {
+    font-weight: bold;
+    font-size: 1.25em;
+    text-transform: uppercase;
+    padding-top: 10px;
+}
+
+div.genre_filter_row .num {
+    color: #666;
+    font-weight: normal;
 }
 
 div.filter_block .label {

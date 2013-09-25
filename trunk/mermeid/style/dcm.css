@@ -34,8 +34,13 @@ p {
     padding-bottom: 8px;
 }
 
-a:link, a:active, a:visited, a:hover {
-    color: #000;
+a, a:link, a:visited, a:active, a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #eec;
 }
 
 #all {
@@ -58,7 +63,7 @@ a:link, a:active, a:visited, a:hover {
 
 #header h1, #header h2, #header h3, #header h4 {
     clear: none;    
-    font-weight: bold;
+    padding: 0;
 }
 
 #header a:link, #header a:active, #header a:visited, #header a:hover {
@@ -74,7 +79,7 @@ a:link, a:active, a:visited, a:hover {
 }
 
 #main a {
-    color: #336;
+    color: #000;
 }
 
 #footer {
@@ -101,15 +106,6 @@ a:link, a:active, a:visited, a:hover {
 .kb_logo {
     float: right;
     width:auto;
-}
-
-a, a:link, a:visited, a:active, a:hover {
-    color: #eec;
-    text-decoration: underline;
-}
-
-a:hover {
-    color: #fff;
 }
 
 ul {

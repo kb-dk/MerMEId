@@ -18,7 +18,9 @@ declare function filter:print-filters(
   $list as node()*) as node()* 
 {
   let $filter:=
-    (<div class="filter_block">
+    ( 
+    (: Collection filter disabled :)
+    (:<div class="filter_block">
     <span class="label">Collection </span>
     <select onchange="location.href=this.value; return false;">
       {
@@ -59,7 +61,7 @@ declare function filter:print-filters(
             	 return $link
                }
     </select>
-    </div>,
+    </div>, :)
     <div class="filter_block">
       <span class="label">Keywords</span>
       <form action="" method="get" class="search">
@@ -143,12 +145,12 @@ declare function filter:print-filters(
         let $vocabulary := doc("http://disdev-01.kb.dk/editor/forms/mei/model/keywords.xml")
         (:distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string()):)
         
-	for $genre in $vocabulary/m:classification/m:termList[@label="level2"]/m:term/string()
+(:	for $genre in $vocabulary/m:classification/m:termList[@label="level2"]/m:term/string()  :)
 	  (:for $genre in 
 	  distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
 	  where string-length($genre) > 0 and not ( contains($genre,"Vocal") or
 	    contains($genre,"Instrumental") or contains($genre,"Stage") )  :)
-	    let $num := filter:count-hits($genre,$list)
+(:	    let $num := filter:count-hits($genre,$list)
 	    return 
               if($num > 0) then (
 	    <div class="genre_filter_row">
@@ -165,8 +167,41 @@ declare function filter:print-filters(
 		  $genre),
 		" (",$num,")"
 	      }
-	    </div> ) else ()
+	    </div> ) else ()   :)
+
+	for $genre in $vocabulary/m:classification/m:termList[@label="level1" or @label="level2"]/m:term/string()
+	  (:for $genre in 
+	  distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
+	  where string-length($genre) > 0 and not ( contains($genre,"Vocal") or
+	    contains($genre,"Instrumental") or contains($genre,"Stage") )  :)
+	    let $num := filter:count-hits($genre,$list)
+	    let $link := filter:print-filtered-link(
+		  $database,
+		  $published_only,
+		  $coll,
+		  $number,
+		  $query,
+		  $genre)		  
+ 
+	    return 
+          if($num > 0) then (
+	           if ($vocabulary/m:classification/m:termList[m:term/string()=$genre]/@label="level2")
+	           then (
+	              <div class="genre_filter_row level2">
+                     <span class="genre_indicator {translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')}">&#160;</span>
+                     &#160; {$link} 
+                     <span class="num"> ({$num})</span>
+                  </div>
+               )
+               else (
+                  <div class="genre_filter_row level1">{$link} 
+                     <span class="num"> ({$num})</span>
+                  </div>
+               )
+               
+	      ) else ()
        }
+       <span>&#160;</span>
     </div>
     )
     return $filter

@@ -44,14 +44,15 @@
 			<head>
 				<xsl:call-template name="make_html_head"/>
 			</head>
-			<body>
+			<body class="document_view">
 				<div id="all">
 					<div id="header">
 						<div class="kb_logo">
 							<a href="http://www.kb.dk" title="Det Kongelige Bibliotek"><img 
 								style="margin-top: -10px; border: 0px; vertical-align:middle;" title="Det Kongelige Bibliotek" 
 								alt="KB Logo" src="/editor/images/kb_white.png"></img></a></div>
-						<h1>Works</h1>
+						<h1>CNW</h1>
+						<h2>A Thematic Catalogue of Carl Nielsen&apos;s Works</h2>
 						<!--<p>En tematisk-bibliografisk fortegnelse over Carl Nielsens værker</p>
 						<div class="line"> </div>-->
 					</div>
@@ -73,11 +74,12 @@
 						</div>
 					</div>
 					<div id="footer">
-						<div class="dcm_logo">
-							<a href="http://www.kb.dk/dcm" title="Dansk Center for Musikudgivelse"><img 
-								style="border: 0px; vertical-align:middle;" alt="DCM Logo" src="/editor/images/dcm_logo_small_white.png"></img>
-								Dansk Center for Musikudgivelse / Det Kongelige Bibliotek 2013 </a>
-						</div>
+						<a href="http://www.kb.dk/dcm" title="DCM" 
+							style="text-decoration:none;"><img 
+								style="border: 0px; vertical-align:middle;" 
+								alt="DCM Logo" 
+								src="/editor/images/dcm_logo_small_white.png"/></a>
+						2013 Danish Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
 					</div>
 				</div>
 			</body>
