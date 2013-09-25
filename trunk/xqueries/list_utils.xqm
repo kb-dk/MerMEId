@@ -154,6 +154,16 @@ declare function app:generate-href($field as xs:string,
       return $ref
     };
 
+    declare function app:public-view-document-reference($doc as node()) as node() {
+      (: it is assumed that we live in /storage :)
+      let $ref := 
+      <a  title="View" 
+      href="/storage/document.xq?doc={util:document-name($doc)}">
+	{$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[string()][1]/string()}
+      </a>
+      return $ref
+    };
+    
     declare function app:edit-form-reference($doc as node()) as node() 
     {
       (: 
