@@ -139,11 +139,18 @@ declare function filter:print-filters(
     </div>,
     <div class="genre_filter filter_block">
       {
-	for $genre in 
+
+        let $vocabulary := doc("http://disdev-01.kb.dk/editor/forms/mei/model/keywords.xml")
+        (:distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string()):)
+        
+	for $genre in $vocabulary/m:classification/m:termList[@label="level2"]/m:term/string()
+	  (:for $genre in 
 	  distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
 	  where string-length($genre) > 0 and not ( contains($genre,"Vocal") or
-	    contains($genre,"Instrumental") or contains($genre,"Stage") )  
+	    contains($genre,"Instrumental") or contains($genre,"Stage") )  :)
+	    let $num := filter:count-hits($genre,$list)
 	    return 
+              if($num > 0) then (
 	    <div class="genre_filter_row">
 	              
             <span class="genre_indicator {translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')}">&#160;</span>
@@ -156,11 +163,9 @@ declare function filter:print-filters(
 		  $number,
 		  $query,
 		  $genre),
-		" (",
-		filter:count-hits($genre,$list),
-		")"
+		" (",$num,")"
 	      }
-	    </div>
+	    </div> ) else ()
        }
     </div>
     )
