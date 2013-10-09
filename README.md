@@ -6,7 +6,7 @@ metadata, based on the the [Music Encoding
 Initiative](http://www.music-encoding.org/) (MEI)  XML schema. From the 9
 October 2013 MerMEId now supports MEI 2013.
 
-A transform for upgrading MEI 2012 to 2013 is available in the directory
+A transform for upgrading MerMEId generated  from MEI2012 to meiHeaders in MEI2013 is available in the directory
 https://github.com/Det-Kongelige-Bibliotek/MerMEId/tree/master/trunk/mermeid/transforms/mei/utils
 
 MerMEId is developed at the [Danish Centre for Music Publication](http://www.kb.dk/en/kb/nb/mta/dcm/index.html) (DCM) both for
