@@ -1062,17 +1062,11 @@
 						<xsl:apply-templates/>
 					</p>
 				</xsl:for-each>
-				<xsl:for-each select="m:eventList[@type='history' and m:event[m:date/text() | m:title/text()]]">
+				<!-- history time line -->
+				<xsl:for-each select="m:eventList[@type='history' and m:event[//text()]]">
 					<table>
-						<xsl:for-each select="m:event[m:date/text() | m:title/text()]">
-							<tr>
-								<td nowrap="nowrap">
-									<xsl:apply-templates select="m:date"/>
-								</td>
-								<td>
-									<xsl:apply-templates select="m:title"/>
-								</td>
-							</tr>
+						<xsl:for-each select="m:event[//text()]">
+							<xsl:apply-templates select="." mode="performance_details"/>
 						</xsl:for-each>
 					</table>
 				</xsl:for-each>
