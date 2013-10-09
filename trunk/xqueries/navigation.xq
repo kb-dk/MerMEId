@@ -62,8 +62,8 @@ declare function local:format-reference(
    let $ref   := 
       <div class="result_row">
 	    <div class="composer">
-	        {$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}
-	        &#160;
+	        <!--{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}
+	        &#160;-->
 	    </div>
 	    <div class="date">&#160;{$date_output}</div>
         <div class="title">{app:public-view-document-reference($doc)}<!-- --></div>
@@ -156,6 +156,9 @@ declare function local:format-reference(
     	<div class="results">
     	   <div class="nav_bar">
               {app:navigation($list)}
+           </div>
+           <div class="filter_elements">
+              {app:filter-elements()}
            </div>
            {
                 for $doc at $count in $list[position() = ($from to $to)]

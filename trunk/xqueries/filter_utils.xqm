@@ -63,15 +63,13 @@ declare function filter:print-filters(
     </select>
     </div>, :)
     <div class="filter_block">
-      <span class="label">Keywords</span>
-      <form action="" method="get" class="search">
-        <input name="query"  value='{request:get-parameter("query","")}'/>
+      <form action="" method="get" class="search" id="filter_form" name="filter_form">
+        <div class="label">Keywords</div>
+        <input name="query"  value='{request:get-parameter("query","")}' id="query_input"/>
         <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
         <input name="published_only" value="{$published_only}" type='hidden' />
         <input name="itemsPerPage"  value='{$number}' type='hidden' />
         <input name="genre"  value='{$genre}' type='hidden' />
-        <input type="submit" value="Search"               />
-        <input type="submit" value="Clear" onclick="this.form.notbefore.value='';this.form.notafter.value='';this.form.genre.value='';this.form.query.value='';this.form.submit();return true;"/>
         <a class="help">?<span class="comment">Search is case insensitive. 
         Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<br/>
         <span class="help_table">
@@ -121,7 +119,7 @@ declare function filter:print-filters(
 
 	  return 
             (
-        <div class="label" style="margin-top: 10px;">Year of composition</div>,    
+        <div class="label">Year of composition</div>,    
 	    <table cellpadding="0" cellspacing="0" border="0">
             <tr>
         		<td style="padding-left: 0;">
@@ -136,7 +134,9 @@ declare function filter:print-filters(
             </tr>
 	    </table>)
 	}
-
+	   <div class="search_submit">
+          <input type="submit" value="Search" id="search_submit"/>
+       </div>
      </form>     
     </div>,
     <div class="genre_filter filter_block">

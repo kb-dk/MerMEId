@@ -30,7 +30,19 @@ div.filter {
 div.filter_block {
     float: left;
     width: auto;
-    margin: 5px 0;
+}
+
+#query_input {
+    width: 280px;
+}
+
+div.search_submit {
+    margin: 15px 0 0 0;
+}
+
+#search_submit:hover {
+    cursor: pointer;
+    background-color: #e6e6e6;
 }
 
 div.genre_filter span.genre_indicator {
@@ -68,6 +80,7 @@ div.genre_filter_row .num {
 div.filter_block .label {
     font-weight: bold;
     line-height: 2em;
+    margin: 5px 0 0 0;
 } 
 
 #notbefore,
@@ -81,6 +94,32 @@ div.filter_block .label {
 
 #notafter {
     margin-left : 5px;
+}
+
+/* CSS for the "clear filter" elements */
+
+.filter_elements {
+    padding: 5px 0 20px 0:
+}
+
+#main a.filter_element {
+  font-size: 12px;
+  line-height: 1em;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  margin: 0 5px 5px 0;
+  padding: 3px 21px 4px 7px;
+  background: url('/editor/images/filter_remove.png') no-repeat right 0 #515251;
+  float: left;
+}
+
+#main a.filter_element:hover {
+  background-color: #be331a;
+}
+
+#main .filter_elements a.reset {
+  background-color: #be331a;
 }
 
 /* CSS for the result list */
@@ -97,12 +136,17 @@ div.results {
 
 .result_row {
     margin: 15px 0;
+    background-color: #e8e8e8;
 }
-
 
 .result_row a {
     text-decoration: none;
     color: inherit;
+}
+
+
+.result_row a:hover {
+    text-decoration: underline;
 }
 
 .result_row .composer,
