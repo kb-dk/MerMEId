@@ -2,8 +2,8 @@ $(function () {
 /* instantiates the year range selection slider  */ 
     $("#year_slider").slider({
         range: true,
-        min: 1800,
-        max: 1950,
+        min: 1880,
+        max: 1931,
         values: [ document.getElementById("notbefore").value, document.getElementById("notafter").value ],
         slide: function (event, ui) {
             $("#notbefore").val(ui.values[0]);
