@@ -161,7 +161,7 @@ declare function local:format-reference(
               {app:navigation($list)}
            </div>
            <div class="filter_elements">
-              {app:filter-elements()}
+              {filter:filter-elements()}
            </div>
            {
                 for $doc at $count in $list[position() = ($from to $to)]

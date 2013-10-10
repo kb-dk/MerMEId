@@ -243,46 +243,6 @@ declare function app:generate-href($field as xs:string,
     };
 
 
-    declare function app:filter-elements() 
-    {
-      let $year_block :=
-      	if($app:notbefore or $app:notafter) then
-           <a class="filter_element"
-               href="javascript:document.forms['filter_form'].notbefore.value='';document.forms['filter_form'].notafter.value='';document.forms['filter_form'].submit();">
-               Year of composition: {$app:notbefore}–{$app:notafter} 
-           </a>
-	    else
-	       ""
-      let $query_block :=
-      	if($app:query) then
-           <a class="filter_element"
-               href="javascript:document.forms['filter_form'].query.value='';document.forms['filter_form'].submit();">
-               Keyword(s): {$app:query} 
-           </a>
-	    else
-	       ""
-      let $genre_block :=
-      	if($app:genre) then
-           <a class="filter_element" 
-               href="javascript:document.forms['filter_form'].genre.value='';document.forms['filter_form'].submit();">
-               Genre: {$app:genre} 
-           </a>
-	    else
-	       ""
-      let $reset_block :=
-      	if($genre_block or $year_block or $query_block) then
-           <a class="filter_element reset" 
-               href="javascript:document.forms['filter_form'].notbefore.value='';document.forms['filter_form'].notafter.value='';document.forms['filter_form'].genre.value='';document.forms['filter_form'].query.value='';document.forms['filter_form'].submit();">
-               Reset all
-           </a> 
-	    else
-	       ""
-	  let $clear :=
-    	  <br style="clear:both"/>
-	  return ($year_block, $query_block, $genre_block, $reset_block, $clear)
-    };
-
-
     declare function app:navigation( 
       $list as node()* ) as node()*
       {
@@ -362,7 +322,7 @@ declare function app:generate-href($field as xs:string,
 		  let $links := ( 
 		    element div {
 		      element strong {
-			"Found ",$total," works written in",$notbefore,"-",$notafter 
+			"Found ",$total," works written in",$notbefore,"–",$notafter 
 		      },
 		      (<form action="" id="itemsPerPageForm" style="display:inline;">
 		      <select name="itemsPerPage" onchange="this.form.submit();return true;"> 
