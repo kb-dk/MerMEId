@@ -4,7 +4,8 @@ module  namespace  filter="http://kb.dk/this/app/filter";
 
 declare namespace m="http://www.music-encoding.org/ns/mei";
 
-declare variable $filter:page   := request:get-parameter("page", "1") cast as xs:integer;
+declare variable $filter:sortby := request:get-parameter("sortby", "") cast as xs:string;
+declare variable $filter:page   := request:get-parameter("page",   "1") cast as xs:integer;
 declare variable $filter:number := request:get-parameter("itemsPerPage","20") cast as xs:integer;
 declare variable $filter:uri    := "";
 
@@ -32,6 +33,7 @@ declare function filter:print-filters(
             	("c=",$c,
             	"&amp;published_only=",$published_only,
             	"&amp;itemsPerPage=",$number cast as xs:string,	
+            	"&amp;sortby=",$filter:sortby,
             	"&amp;query=",
             	fn:escape-uri($query,true())),
             	""
@@ -39,6 +41,7 @@ declare function filter:print-filters(
                else
             	 concat("c=",$c,
             	 "&amp;published_only=",$published_only,
+            	"&amp;sortby=",$filter:sortby,
             	 "&amp;itemsPerPage="  ,$number cast as xs:string)
             	 return
             	   if(not($coll=$c)) then 
@@ -69,6 +72,7 @@ declare function filter:print-filters(
         <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
         <input name="published_only" value="{$published_only}" type='hidden' />
         <input name="itemsPerPage"  value='{$number}' type='hidden' />
+        <input name="sortby"  value='{$filter:sortby}' type='hidden' />
         <input name="genre"  value='{$genre}' type='hidden' />
         <a class="help">?<span class="comment">Search is case insensitive. 
         Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<br/>
@@ -100,26 +104,12 @@ declare function filter:print-filters(
         </a>
 	{
 
-	  let $dates := 
-	    for $date in $list//m:workDesc/m:work/m:history/m:creation/m:date
-	      for $attr in $date/@notafter|$date/@isodate|$date/@notbefore
-		return filter:get-date($attr/string())
-
-	  let $notafter  := 
-	    if(request:get-parameter("notafter","")) then
-	      filter:get-date(request:get-parameter("notafter",""))
-	    else
-	      max($dates)
-
-	  let $notbefore  := 
-	    if(request:get-parameter("notbefore","")) then
-	      filter:get-date(request:get-parameter("notbefore",""))
-	    else
-	      min($dates)
+	  let $notafter  := request:get-parameter("notafter","1931")
+	  let $notbefore := request:get-parameter("notbefore","1880")
 
 	  return 
             (
-        <div class="label">Year of composition</div>,    
+            <div class="label">Year of composition</div>,    
 	    <table cellpadding="0" cellspacing="0" border="0">
             <tr>
         		<td style="padding-left: 0;">
@@ -236,6 +226,7 @@ declare function filter:print-filtered-link(
 	  $filter:uri,"?",
 	  "page=",1,
 	  "&amp;itemsPerPage=",$number,
+	  "&amp;sortby=",request:get-parameter("sortby",""),
 	  "&amp;c=",$coll,
 	  "&amp;published_only=",$published_only,
 	  "&amp;query=",$query,

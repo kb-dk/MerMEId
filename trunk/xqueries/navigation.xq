@@ -85,6 +85,9 @@ declare function local:format-reference(
       <!-- generated title disabled -->
       <!--<title>{app:list-title()}</title>-->
       
+
+      <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
       
       <link type="text/css" href="/editor/style/dcm.css" rel="stylesheet" />

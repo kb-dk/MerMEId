@@ -5,6 +5,8 @@ declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
 
+declare option exist:serialize "method=xml media-type=text/html"; 
+
 declare variable $dcmroot := 'dcm/';
 declare variable $pubroot := 'public/';
 declare variable $action  := 
@@ -18,11 +20,11 @@ let $return_to := concat(
   "&amp;page=",        fn:escape-uri(request:get-parameter("page",""),true()),
   "&amp;itemsPerPage=",fn:escape-uri(request:get-parameter("itemsPerPage",""),true()))
 
-let $res := response:redirect-to($return_to cast as xs:anyURI)
+(:let $res := response:redirect-to($return_to cast as xs:anyURI):)
 let $log-in := login:function()
 let $parameters :=  request:get-parameter-names()
 return
-<docs>
+<table>
   {
     for $parameter in $parameters 
     let $doc         := doc($parameter)
@@ -30,8 +32,9 @@ return
     let $put_to :=substring-after($parameter,$dcmroot)
     where contains($parameter,$dcmroot)
     return 
-    <doc action="{$action}">
-      {
+    <tr>
+    <td>action="{$action}"</td>
+    <td>{
 	if($action eq 'publish') then
 	  xdb:store($pubroot,$put_to, $doc)
 	else
@@ -39,9 +42,9 @@ return
 	    xdb:remove($pubroot,$put_to)
 	  else
 	    ()
-      }
-    </doc>
+      }</td>
+    </tr>
   }
-</docs>
+</table>
 
 

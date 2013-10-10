@@ -2,6 +2,8 @@ xquery version "1.0" encoding "UTF-8";
 
 module namespace  app="http://kb.dk/this/listapp";
 
+import module namespace  filter="http://kb.dk/this/app/filter" at "./filter_utils.xqm";
+
 declare namespace file="http://exist-db.org/xquery/file";
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
 declare namespace ft="http://exist-db.org/xquery/lucene";
@@ -12,16 +14,16 @@ declare namespace response="http://exist-db.org/xquery/response";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xl="http://www.w3.org/1999/xlink";
 
-declare variable $app:notbefore := request:get-parameter("notbefore","") cast as xs:string;
-declare variable $app:notafter  := request:get-parameter("notafter","") cast as xs:string;
-declare variable $app:coll   := request:get-parameter("c",           "") cast as xs:string;
-declare variable $app:query  := request:get-parameter("query",       "");
-declare variable $app:page   := request:get-parameter("page",        "1") cast as xs:integer;
-declare variable $app:number := request:get-parameter("itemsPerPage","20")   cast as xs:integer;
-declare variable $app:genre  := request:get-parameter("genre",       "") cast as xs:string;
-
-declare variable $app:from     := ($app:page - 1) * $app:number + 1;
-declare variable $app:to       :=  $app:from      + $app:number - 1;
+declare variable $app:notbefore := request:get-parameter("notbefore",   "") cast as xs:string;
+declare variable $app:notafter  := request:get-parameter("notafter",    "") cast as xs:string;
+declare variable $app:coll      := request:get-parameter("c",           "") cast as xs:string;
+declare variable $app:query     := request:get-parameter("query",       "");
+declare variable $app:page      := request:get-parameter("page",        "1") cast as xs:integer;
+declare variable $app:number    := request:get-parameter("itemsPerPage","20") cast as xs:integer;
+declare variable $app:genre     := request:get-parameter("genre",       "")   cast as xs:string;
+declare variable $app:sortby    := request:get-parameter("sortby",      "")   cast as xs:string;
+declare variable $app:from      := ($app:page - 1) * $app:number + 1;
+declare variable $app:to        :=  $app:from      + $app:number - 1;
 
 declare variable $app:published_only := 
 request:get-parameter("published_only","") cast as xs:string;
@@ -49,7 +51,9 @@ declare function app:pass-as-hidden() as node()* {
     <input name="itemsPerPage"   type="hidden" value="{$app:number}" />,
     <input name="genre"          type="hidden" value="{$app:genre}" />,
     <input name="notbefore"      type="hidden" value="{$app:notbefore}" />,
-    <input name="notafter"      type="hidden" value="{$app:notafter}" />)
+    <input name="notafter"       type="hidden" value="{$app:notafter}" />,
+    <input name="sortby"         type="hidden" value="{$app:sortby}" />
+    )
     return $inputs
 };
 
@@ -347,10 +351,18 @@ declare function app:generate-href($field as xs:string,
 		      ($p)
 		    }
 		  )
+
+		  let $dates := for $date in $list//m:workDesc/m:work/m:history/m:creation/m:date
+		    for $attr in $date/@notafter|$date/@isodate|$date/@notbeforep
+  		       return filter:get-date($attr/string())
+
+		  let $notafter  := max($dates)
+		  let $notbefore  := min($dates)
+
 		  let $links := ( 
 		    element div {
 		      element strong {
-			"Found ",$total," works"
+			"Found ",$total," works written in",$notbefore,"-",$notafter 
 		      },
 		      (<form action="" id="itemsPerPageForm" style="display:inline;">
 		      <select name="itemsPerPage" onchange="this.form.submit();return true;"> 

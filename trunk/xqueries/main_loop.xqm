@@ -86,6 +86,25 @@ declare function loop:pubstatus(
 
 };
 
+declare function loop:sort-key (
+  $doc as node(),
+  $key as xs:string) as xs:string
+{
+  let $sort_key:=
+    if($key eq "person") then
+      replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
+    else if($key eq "title") then
+      replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
+    else if($key eq "date") then
+     
+      substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/(@notafter|@isodate|@notbefore)[1],1,4)
+    else 
+      ""
+
+  return $sort_key
+
+};
+
 declare function loop:getlist (
   $database        as xs:string,
   $published_only  as xs:string,
@@ -93,40 +112,32 @@ declare function loop:getlist (
   $genre           as xs:string,
   $query           as xs:string) as node()* 
 {
-
-        let $list  := 
-        if($coll) then 
-        if($query) then
+  let $sortby := request:get-parameter("sortby","title")
+  let $list   := 
+    if($coll) then 
+      if($query) then
         for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
-	  let $sort_key_person := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
-	  let $sort_key_title := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
         where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
-	order by $sort_key_person,$sort_key_title
+	order by loop:sort-key ($doc,"person"),loop:sort-key($doc,$sortby)
 	return $doc 
-	else
+      else
 	for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
-	  let $sort_key_person := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
-	  let $sort_key_title := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
-          where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
-	  order by $sort_key_person,$sort_key_title
+        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
+	order by loop:sort-key ($doc,"person"),loop:sort-key($doc,$sortby)
 	return $doc 
         else
-	if($query) then
-        for $doc in collection($database)/m:mei[ft:query(.,$query)]
-	  let $sort_key_person := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
-	  let $sort_key_title := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
-        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
-	order by $sort_key_person,$sort_key_title
-	return $doc
-        else
-        for $doc in collection($database)/m:mei
-	  let $sort_key_person := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
-	  let $sort_key_title := replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
-        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
-	order by $sort_key_person,$sort_key_title
-	return $doc
+	  if($query) then
+            for $doc in collection($database)/m:mei[ft:query(.,$query)]
+            where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
+	    order by loop:sort-key ($doc,"person"),loop:sort-key($doc,$sortby)
+	    return $doc
+          else
+            for $doc in collection($database)/m:mei
+            where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
+	    order by loop:sort-key ($doc,"person"),loop:sort-key($doc,$sortby)
+	    return $doc
 	
-	return $list
+        return $list
 
 };
 
