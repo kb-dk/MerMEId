@@ -318,11 +318,23 @@ declare function app:generate-href($field as xs:string,
 
 		  let $notafter  := max($dates)
 		  let $notbefore  := min($dates)
+		  let $date_span := 
+		    if($notafter and $notafter!=$notbefore) then
+		      fn:concat(" composed between ",$notbefore," and ",$notafter)
+		    else if ($notafter and $notafter=$notbefore) then
+		      fn:concat(" composed in ",$notbefore)
+		    else
+		      ""
+		  let $work := 
+		    if($total=1) then
+		      " work"
+		    else
+		      " works"
 
 		  let $links := ( 
 		    element div {
 		      element strong {
-			"Found ",$total," works written in",$notbefore,"–",$notafter 
+			"Found ",$total, $work, $date_span 
 		      },
 		      (<form action="" id="itemsPerPageForm" style="display:inline;">
 		      <select name="itemsPerPage" onchange="this.form.submit();return true;"> 

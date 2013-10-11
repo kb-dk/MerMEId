@@ -3,7 +3,6 @@ xquery version "1.0" encoding "UTF-8";
 module  namespace  filter="http://kb.dk/this/app/filter";
 
 declare namespace m="http://www.music-encoding.org/ns/mei";
-declare namespace app="http://kb.dk/this/listapp";
 
 declare variable $filter:sortby := request:get-parameter("sortby", "") cast as xs:string;
 declare variable $filter:page   := request:get-parameter("page",   "1") cast as xs:integer;
@@ -211,27 +210,33 @@ declare function filter:count-hits(
 
 declare function filter:filter-elements() 
 {
+  let $notafter  := request:get-parameter("notafter","")
+  let $notbefore := request:get-parameter("notbefore","")
+  let $query := request:get-parameter("query","")
+  let $genre := request:get-parameter("genre","")
+  let $this_uri := fn:concat($filter:uri,"?",request:get-query-string())
+ 
   let $year_block :=
-      if($app:notbefore or $app:notafter) then
+      if($notbefore or $notafter) then
        <a class="filter_element"
-           href="javascript:document.forms['filter_form'].notbefore.value='';document.forms['filter_form'].notafter.value='';document.forms['filter_form'].submit();">
-           Year of composition: {$app:notbefore}–{$app:notafter} 
+           href="{fn:replace(fn:replace($this_uri,'notbefore=\d*','notbefore='),'notafter=\d*','notafter=')}">
+           Year of composition: {$notbefore}–{$notafter} 
        </a>
     else
        ""
   let $query_block :=
-      if($app:query) then
+      if($query) then
        <a class="filter_element"
-           href="javascript:document.forms['filter_form'].query.value='';document.forms['filter_form'].submit();">
-           Keyword(s): {$app:query} 
+           href="{fn:replace($this_uri,'query=[^&amp;]+','query=')}">
+           Keyword(s): {$query} 
        </a>
     else
        ""
   let $genre_block :=
-      if($app:genre) then
+      if($genre) then
        <a class="filter_element" 
-           href="javascript:document.forms['filter_form'].genre.value='';document.forms['filter_form'].submit();">
-           Genre: {$app:genre} 
+           href="{fn:replace($this_uri,'genre=[^&amp;]+','genre=')}">
+           Genre: {$genre} 
        </a>
     else
        ""
