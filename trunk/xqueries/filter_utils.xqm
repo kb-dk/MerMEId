@@ -18,6 +18,9 @@ declare function filter:print-filters(
   $query           as xs:string,
   $list as node()*) as node()* 
 {
+  let $notafter  := request:get-parameter("notafter","1931")
+  let $notbefore := request:get-parameter("notbefore","1880")
+
   let $filter:=
     ( 
     (: Collection filter disabled :)
@@ -66,7 +69,7 @@ declare function filter:print-filters(
     </select>
     </div>, :)
     <div class="filter_block">
-      <form action="" method="get" class="search" id="filter_form" name="filter_form">
+      <form action="" method="get" class="search" id="query_form" name="query_form">
         <div class="label">Keywords</div>
         <input name="query"  value='{request:get-parameter("query","")}' id="query_input"/>
         <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
@@ -74,6 +77,8 @@ declare function filter:print-filters(
         <input name="itemsPerPage"  value='{$number}' type='hidden' />
         <input name="sortby"  value='{$filter:sortby}' type='hidden' />
         <input name="genre"  value='{$genre}' type='hidden' />
+        <input name="notbefore" value='{request:get-parameter("notbefore","")}' type='hidden' />
+        <input name="notafter" value='{request:get-parameter("notafter","")}' type='hidden' />
         <a class="help">?<span class="comment">Search is case insensitive. 
         Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<br/>
         <span class="help_table">
@@ -101,15 +106,13 @@ declare function filter:print-filters(
           </span>
         </span>
       </span>
-        </a>
-	{
-
-	  let $notafter  := request:get-parameter("notafter","1931")
-	  let $notbefore := request:get-parameter("notbefore","1880")
-
-	  return 
-            (
-            <div class="label">Year of composition</div>,    
+      </a>
+	  <div class="search_submit">
+         <input type="submit" value="Search" id="search_submit"/>
+      </div>
+    </form>
+    <form action="" method="get" class="search" id="year_form" name="year_form">
+        <div class="label">Year of composition</div>    
 	    <table cellpadding="0" cellspacing="0" border="0">
             <tr>
         		<td style="padding-left: 0;">
@@ -122,11 +125,16 @@ declare function filter:print-filters(
                     <input id="notafter" name="notafter" value="{$notafter}" onblur="setYearSlider()"/>
         		</td>
             </tr>
-	    </table>)
-	}
-	   <div class="search_submit">
-          <input type="submit" value="Search" id="search_submit"/>
-       </div>
+	    </table>
+	    <div class="search_submit">
+          <input type="submit" value="Search" id="year_submit"/>
+        </div>
+        <input name="query"  value='{request:get-parameter("query","")}' type="hidden"/>
+        <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
+        <input name="published_only" value="{$published_only}" type='hidden' />
+        <input name="itemsPerPage"  value='{$number}' type='hidden' />
+        <input name="sortby"  value='{$filter:sortby}' type='hidden' />
+        <input name="genre"  value='{$genre}' type='hidden' />
      </form>     
     </div>,
     <div class="genre_filter filter_block">
@@ -243,7 +251,7 @@ declare function filter:filter-elements()
   let $reset_block :=
       if($genre_block or $year_block or $query_block) then
        <a class="filter_element reset" 
-           href="javascript:document.forms['filter_form'].notbefore.value='';document.forms['filter_form'].notafter.value='';document.forms['filter_form'].genre.value='';document.forms['filter_form'].query.value='';document.forms['filter_form'].submit();">
+           href="{fn:concat($filter:uri,'?itemsPerPage=',request:get-parameter("itemsPerPage",""),'&amp;sortby=',request:get-parameter("sortby",""))}">
            Reset all
        </a> 
     else

@@ -320,9 +320,9 @@ declare function app:generate-href($field as xs:string,
 		  let $notbefore  := min($dates)
 		  let $date_span := 
 		    if($notafter and $notafter!=$notbefore) then
-		      fn:concat(" composed between ",$notbefore," and ",$notafter)
+		      fn:concat(" (composed between ",$notbefore," and ",$notafter,")")
 		    else if ($notafter and $notafter=$notbefore) then
-		      fn:concat(" composed in ",$notbefore)
+		      fn:concat(" (composed in ",$notbefore,")")
 		    else
 		      ""
 		  let $work := 
