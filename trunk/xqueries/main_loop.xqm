@@ -90,14 +90,22 @@ declare function loop:sort-key (
   $doc as node(),
   $key as xs:string) as xs:string
 {
+
+  let $collection:=$doc//m:seriesStmt/m:identifier[@type="file_collection"]/string()[1] 
+
   let $sort_key:=
     if($key eq "person") then
       replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
     else if($key eq "title") then
       replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
     else if($key eq "date") then
-     
       substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/(@notafter|@isodate|@notbefore)[1],1,4)
+    else if($key eq "work_number") then
+      (: make the number a 5 character long string padded with zeros :)
+      let $num:=$doc//m:workDesc/m:work/m:identifier[@type=$collection]/string()
+      let $padded_number:=concat("000000",normalize-space($num))
+      let $len:=string-length($padded_number)-4
+	return substring($padded_number,$len,5)
     else 
       ""
 
