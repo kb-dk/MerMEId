@@ -28,6 +28,15 @@ declare variable $database := "/db/dcm";
 declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
 
+declare variable $sort-options :=
+(<option value="person,work_number">Composer,Work number</option>,
+<option value="person,title">Composer,Title</option>,
+<option value="person,date">Composer, Date</option>,
+<option value="date,person">Date, Composer</option>,
+<option value="date,title">Date, Title</option>
+);
+
+
 declare variable $published_only := 
 request:get-parameter("published_only","") cast as xs:string;
 
@@ -41,12 +50,19 @@ declare function local:format-reference(
       else
 	"even"
 
+      let $date_output :=
+        if($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore!='' or $doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter!='') then
+          concat(substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore,1,4),'-',substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter,1,4))
+        else
+          substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@isodate,1,4)
+
+
 	let $ref   := 
 	<tr class="result {$class}">
 	  <td nowrap="nowrap">
 	    {$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']}
 	  </td>
-	  <td>{app:view-document-reference($doc)}</td>
+	  <td>{app:view-document-reference($doc)} {"  ",$date_output}</td>
 	  <td nowrap="nowrap">{app:get-edition-and-number($doc)} </td>
 	  <td class="tools">
 	    <a target="_blank"
@@ -230,7 +246,7 @@ declare function local:format-reference(
       return
       <div class="files_list">
         <div class="nav_bar">
-          {app:navigation($list)}
+          {app:navigation($sort-options,$list)}
         </div>
            
         <table border='0' cellpadding='0' cellspacing='0' class='result_table'>

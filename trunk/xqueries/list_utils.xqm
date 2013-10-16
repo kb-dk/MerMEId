@@ -21,7 +21,7 @@ declare variable $app:query     := request:get-parameter("query",       "");
 declare variable $app:page      := request:get-parameter("page",        "1") cast as xs:integer;
 declare variable $app:number    := request:get-parameter("itemsPerPage","20") cast as xs:integer;
 declare variable $app:genre     := request:get-parameter("genre",       "")   cast as xs:string;
-declare variable $app:sortby    := request:get-parameter("sortby",      "")   cast as xs:string;
+declare variable $app:sortby    := request:get-parameter("sortby",      "work_number")   cast as xs:string;
 declare variable $app:from      := ($app:page - 1) * $app:number + 1;
 declare variable $app:to        :=  $app:from      + $app:number - 1;
 
@@ -244,6 +244,7 @@ declare function app:generate-href($field as xs:string,
 
 
     declare function app:navigation( 
+      $sort-options as node()*,
       $list as node()* ) as node()*
       {
 
@@ -336,7 +337,28 @@ declare function app:generate-href($field as xs:string,
 		      element strong {
 			"Found ",$total, $work, $date_span 
 		      },
-		      (<form action="" id="itemsPerPageForm" style="display:inline;">
+		      if($sort-options) then
+			(<form action="" id="sortForm" style="display:inline;float:right;">
+			<select name="sortby" onchange="this.form.submit();return true;"> 
+			{
+			  for $opt in $sort-options
+			    let $option:=
+			      if($opt/@value/string()=$app:sortby) then
+			        element option {
+				  attribute value {$opt/@value/string()},
+				  attribute selected {"selected"},
+				  concat("Sort by: ",$opt/string())}
+			      else
+			        element option {
+				  attribute value {$opt/@value/string()},$opt/string()}
+   			    return $option
+			}
+			</select>
+			{app:pass-as-hidden-except("sortby")}
+			</form>)
+		      else
+			(),
+		      (<form action="" id="itemsPerPageForm" style="display:inline;float:right;">
 		      <select name="itemsPerPage" onchange="this.form.submit();return true;"> 
 			{(
 			  element option {attribute value {"10"},

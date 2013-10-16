@@ -119,33 +119,35 @@ declare function loop:getlist (
   $coll            as xs:string,
   $genre           as xs:string,
   $query           as xs:string) as node()* 
-{
-  let $sortby := request:get-parameter("sortby","title")
-  let $list   := 
-    if($coll) then 
-      if($query) then
-        for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
-        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
-	order by loop:sort-key ($doc,"person"),loop:sort-key($doc,$sortby)
-	return $doc 
-      else
-	for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
-        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
-	order by loop:sort-key ($doc,"person"),loop:sort-key($doc,$sortby)
-	return $doc 
+  {
+    let $sortby := request:get-parameter("sortby","person,title")
+    let $sort0  := substring-before($sortby,",")
+    let $sort1  := substring-after($sortby,",")
+    let $list   := 
+      if($coll) then 
+	if($query) then
+          for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
+          where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
+	  order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
+	  return $doc 
+	else
+	  for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
+          where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
+	  order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
+	  return $doc 
         else
 	  if($query) then
             for $doc in collection($database)/m:mei[ft:query(.,$query)]
             where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
-	    order by loop:sort-key ($doc,"person"),loop:sort-key($doc,$sortby)
+	    order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	    return $doc
-          else
-            for $doc in collection($database)/m:mei
-            where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
-	    order by loop:sort-key ($doc,"person"),loop:sort-key($doc,$sortby)
-	    return $doc
-	
-        return $list
+      else
+        for $doc in collection($database)/m:mei
+        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc)
+	order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
+	return $doc
+	      
+    return $list
 
-};
+  };
 

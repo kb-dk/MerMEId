@@ -31,6 +31,15 @@ declare variable $to       :=  $from      + $number - 1;
 
 declare variable $published_only := "";
 
+declare variable $sort-options :=
+(<option value="null,work_number">Work number</option>,
+<option value="null,title">Title</option>,
+<option value="null,date">Date</option>,
+<option value="date,title">Date, Title</option>
+);
+
+
+
 declare function local:format-reference(
   $doc as node(),
   $pos as xs:integer ) as node() 
@@ -158,7 +167,7 @@ declare function local:format-reference(
     	<div class="spacer"><div>&#160;</div></div>
     	<div class="results">
     	   <div class="nav_bar">
-              {app:navigation($list)}
+              {app:navigation($sort-options,$list)}
            </div>
            <div class="filter_elements">
               {filter:filter-elements()}
