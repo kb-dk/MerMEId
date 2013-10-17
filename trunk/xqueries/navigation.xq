@@ -70,22 +70,22 @@ declare function local:format-reference(
 
    let $ref   := 
       <div class="result_row">
-	    <div class="composer">
-	        <!--{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}
-	        &#160;-->
-	    </div>
+	    <div class="composer">{comment{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}}&#160;</div>
 	    <div class="date">&#160;{$date_output}</div>
-        <div class="title">{app:public-view-document-reference($doc)}<!-- --></div>
+        <div class="title">
+	  {app:public-view-document-reference($doc)}{" "}
+	</div>
         <div class="info_bar {$class}">
-	      <span class="list_id">{app:get-edition-and-number($doc)}<!-- --></span>
-	      <span class="genre">{$genre_boxes}<!-- --></span>
-	     </div>
+	  <span class="list_id">
+	    {app:get-edition-and-number($doc)}{" "}
+	  </span>
+	  <span class="genre">
+	    {$genre_boxes}{" "}
+	  </span>
+	</div>
       </div>
    return $ref
 };
-
-
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>

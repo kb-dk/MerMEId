@@ -21,7 +21,7 @@ declare variable $app:query     := request:get-parameter("query",       "");
 declare variable $app:page      := request:get-parameter("page",        "1") cast as xs:integer;
 declare variable $app:number    := request:get-parameter("itemsPerPage","20") cast as xs:integer;
 declare variable $app:genre     := request:get-parameter("genre",       "")   cast as xs:string;
-declare variable $app:sortby    := request:get-parameter("sortby",      "work_number")   cast as xs:string;
+declare variable $app:sortby    := request:get-parameter("sortby",      "null,work_number") cast as xs:string;
 declare variable $app:from      := ($app:page - 1) * $app:number + 1;
 declare variable $app:to        :=  $app:from      + $app:number - 1;
 
