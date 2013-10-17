@@ -158,13 +158,36 @@ declare function app:generate-href($field as xs:string,
       return $ref
     };
 
-    declare function app:public-view-document-reference($doc as node()) as node() {
+    declare function app:public-view-document-reference($doc as node()) as node()* {
       (: it is assumed that we live in /storage :)
       let $ref := 
-      <a  title="View" 
-      href="/storage/document.xq?doc={util:document-name($doc)}">
-	{$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[string()][1]/string()}
-      </a>
+	(element span {
+	  attribute style {"display:inline;"},
+	  attribute lang {"da"},
+	  element a {
+	    attribute title {"View"},
+	    attribute href  {concat("/storage/document.xq?doc=",util:document-name($doc))},
+	  $doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][@xml:lang='da' and not(@type/string())]/string()
+	  },
+	  element span {
+	    attribute style {"font-size: 80%;"},
+	    $doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][@xml:lang='da' and @type/string()='subordinate']/string()
+	  }
+	},
+	element span {
+	  attribute style {"display:none;"},
+	  attribute lang {"en"},
+	  element a {
+	    attribute title {"View"},
+	    attribute href  {concat("/storage/document.xq?doc=",util:document-name($doc))},
+	    $doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][@xml:lang='en' and not(@type/string())]/string()
+	  },
+	  element span {
+	    attribute style {"font-size: 80%;"},
+	    $doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][@xml:lang='en' and @type/string()='subordinate']/string()
+	  }
+	}
+	)
       return $ref
     };
     

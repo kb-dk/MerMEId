@@ -70,8 +70,8 @@ declare function local:format-reference(
 
    let $ref   := 
       <div class="result_row">
-	    <div class="composer">{comment{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}}&#160;</div>
-	    <div class="date">&#160;{$date_output}</div>
+	<div class="composer">{comment{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}}&#160;</div>
+	<div class="date">&#160;{$date_output}</div>
         <div class="title">
 	  {app:public-view-document-reference($doc)}{" "}
 	</div>
