@@ -120,7 +120,7 @@ declare function loop:getlist (
   $genre           as xs:string,
   $query           as xs:string) as node()* 
   {
-    let $sortby := request:get-parameter("sortby","person,work_number")
+    let $sortby := request:get-parameter("sortby","null,work_number")
     let $sort0  := substring-before($sortby,",")
     let $sort1  := substring-after($sortby,",")
     let $list   := 

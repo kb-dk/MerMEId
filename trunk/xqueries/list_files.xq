@@ -29,11 +29,12 @@ declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
 
 declare variable $sort-options :=
-(<option value="person,work_number">Composer,Work number</option>,
+(<option value="null,work_number">Work number</option>,
+<option value="person,work_number">Composer,Work number</option>,
 <option value="person,title">Composer,Title</option>,
-<option value="person,date">Composer, Date</option>,
-<option value="date,person">Date, Composer</option>,
-<option value="date,title">Date, Title</option>
+<option value="person,date">Composer, Year</option>,
+<option value="date,person">Year, Composer</option>,
+<option value="date,title">Year, Title</option>
 );
 
 

@@ -34,8 +34,8 @@ declare variable $published_only := "";
 declare variable $sort-options :=
 (<option value="null,work_number">Work number</option>,
 <option value="null,title">Title</option>,
-<option value="null,date">Date</option>,
-<option value="date,title">Date, Title</option>
+<option value="null,date">Year</option>,
+<option value="date,title">Year, Title</option>
 );
 
 

@@ -160,8 +160,14 @@ declare function app:generate-href($field as xs:string,
 
     declare function app:public-view-document-reference($doc as node()) as node()* {
       (: it is assumed that we live in /storage :)
+      let $langs :=
+	comment{
+	    for $lang in distinct-values($doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()]/@xml:lang/string())
+	    return $lang
+	  }
       let $ref := 
-	(element span {
+	($langs,
+	element span {
 	  attribute style {"display:inline;"},
 	  attribute lang {"da"},
 	  element a {

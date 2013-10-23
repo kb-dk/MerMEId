@@ -2,6 +2,7 @@
 <properties>
   <comment>HTTP Filter parameters</comment>
 
+
   <entry key="filter">/</entry>
 
 <!--
@@ -10,24 +11,20 @@ The filter is meant to operate on top of an eXist XML database
 
 -->
 
-  <entry key="exist.host">localhost</entry>
+  <entry key="exist.host">disdev-01.kb.dk</entry>
   <entry key="exist.port">8080</entry>
   <entry key="exist.realm">exist</entry>
   <entry key="exist.context">/exist/rest/db</entry>
-  <!-- entry key="exist.user">admin</entry>
-  <entry key="exist.password">flormelis</entry-->
-  <entry key="exist.user">dcm</entry>
-  <entry key="exist.password">florsocker</entry>
+  <entry key="exist.user">admin</entry>
+  <entry key="exist.password">flormelis</entry>
 
 <!--
 
 get is the retrieval filter
 
-entry key="exist.context"
-/exist/rest/db/dcm
 -->
 
-  <entry key="get.dcm">http://labs.kb.dk/editor/transforms/mei/filter_get.xsl</entry>
+  <entry key="get.dcm">http://disdev-01.kb.dk/editor/transforms/mei/filter_get.xsl</entry>
   <entry key="get.dcm.mime">application/xml</entry>
   <entry key="get.dcm.charset">UTF-8</entry>
 
@@ -37,7 +34,7 @@ put is for updating
 
 -->
 
-  <entry key="put.dcm">http://labs.kb.dk/editor/transforms/mei/filter_put.xsl</entry>
+  <entry key="put.dcm">http://disdev-01.kb.dk/editor/transforms/mei/filter_put.xsl</entry>
   <entry key="put.dcm.mime">application/xml</entry>
   <entry key="put.dcm.charset">UTF-8</entry>
 
@@ -47,21 +44,21 @@ del is for removing stuff
 
 -->
 
-  <entry key="del.dcm.redirect">http://labs.kb.dk/storage/list_files.xq</entry>
+  <entry key="del.dcm.redirect">http://disdev-01.kb.dk/storage/list_files.xq</entry>
 
 <!-- 
 
 Create is for what it seems to be. A URI that is good to use for creating new
 documents. We're doing that using uri templates (RFC6570). The URI should look like
 
-http://mei.example.org/orbeon/xforms-jsp/mei-form/?doc=cnw0361.xml
+http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://disdev-01.kb.dk/form/dcm/&doc=cnw0361.xml
 
 when ready
 
 -->
 
-   <entry key="create.dcm">http://labs.kb.dk/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}</entry>
-   <entry key="create.dcm.uri">http://labs.kb.dk/editor/forms/mei/edit-work-case.xml</entry>
-   <entry key="create.dcm.dir">http://labs.kb.dk/filter/</entry>
+   <entry key="create.dcm">http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}</entry>
+   <entry key="create.dcm.uri">http://disdev-01.kb.dk/editor/forms/mei/edit-work-case.xml</entry>
+   <entry key="create.dcm.dir">http://disdev-01.kb.dk/filter/dcm/</entry>
 
 </properties>
