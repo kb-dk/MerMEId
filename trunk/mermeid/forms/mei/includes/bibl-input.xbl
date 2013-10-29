@@ -45,7 +45,7 @@
                     <xf:group ref="$binding">
                         
                         
-                        <xf:group ref="m:author[not(../m:genre='newspaper') and not(../m:genre='letter') and not(../m:genre='diary entry') and not(../m:genre='interview') and not(../m:genre[contains(.,'concert program')])]">
+                        <xf:group ref="m:author[not(../m:genre='newspaper') and not(../m:genre='manuscript') and not(../m:genre='letter') and not(../m:genre='diary entry') and not(../m:genre='interview') and not(../m:genre[contains(.,'concert program')])]">
                             <!-- authors are listed elsewhere if newspaper article -->
                             <h:fieldset>
                                 <h:legend>Authors</h:legend>
@@ -65,7 +65,7 @@
                             </h:fieldset>
                         </xf:group>
                         
-                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry')]">
+                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript')]">
                             <h:fieldset>
                                 <h:legend>Title</h:legend>
                                 <xf:repeat nodeset="m:title" id="repeat-bibl-title">
@@ -116,7 +116,7 @@
                             </h:fieldset>
                         </xf:group>
                         
-                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(../m:genre[contains(.,'concert program')])]">
+                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript') and not(../m:genre[contains(.,'concert program')])]">
                             
                             <h:fieldset>
                                 <h:legend>Volume etc. <h:a class="help">?<h:span class="comment">Volume and issue no. to
@@ -181,7 +181,7 @@
                             </h:fieldset>
                         </xf:group>
                         
-                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry')]">
+                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript')]">
                             <xf:group ref="m:imprint[not(../m:genre='newspaper')]">
                                 <!-- publication date etc. listed elsewhere if newspaper article -->
                                 <h:fieldset>
@@ -207,7 +207,7 @@
                             </xf:group>
                         </xf:group>
                         
-                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(../m:genre[contains(.,'concert program')])]">
+                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript') and not(../m:genre[contains(.,'concert program')])]">
                             <h:fieldset>
                                 <h:legend>Link to fulltext</h:legend>
                                 <dcm:create nodeset="m:ptr" label="Add link to fulltext"
@@ -232,7 +232,12 @@
                             
                         </xf:group>
                         
-                        <xf:group ref=".[m:genre='letter' or m:genre='diary entry']">
+                        <xf:group ref=".[m:genre='letter' or m:genre='diary entry' or m:genre='manuscript']">
+                            <xf:input ref="m:title" class="maxlong">
+                                <xf:label class="fixed_width">Title</xf:label>
+                            </xf:input>
+                            <dcm:attribute-editor ref="m:title"/>
+                            <h:br clear="all"/>
                             <xf:input ref="m:author" class="maxlong">
                                 <xf:label class="fixed_width">Author <h:a class="help">?<h:span class="comment">For
                                     diary entries, leave empty if author is the
@@ -257,7 +262,7 @@
                             </h:div>
                         </xf:group>
                         
-                        <xf:group ref=".[m:genre='letter' or m:genre='diary entry' or m:genre[contains(.,'concert program')]]">
+                        <xf:group ref=".[m:genre='letter' or m:genre='diary entry' or m:genre='manuscript' or m:genre[contains(.,'concert program')]]">
                             <h:fieldset>
                                 <h:legend>Item location <h:a class="help">?<h:span
                                     class="comment">The library, archive or other repository holding this

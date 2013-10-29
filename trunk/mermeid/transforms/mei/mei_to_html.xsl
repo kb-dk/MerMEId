@@ -1725,12 +1725,18 @@
 				</xsl:for-each>
 			</table>
 		</xsl:if>
+		<xsl:if test="count(m:bibl[m:genre='manuscript' and *[local-name()!='genre']//text()]) &gt; 0">
+			<p class="p_subheading">Manuscripts:</p>
+				<xsl:for-each select="m:bibl[m:genre='manuscript' and *[local-name()!='genre']//text()]">
+					<p><xsl:apply-templates select="."/></p>
+				</xsl:for-each>
+		</xsl:if>
 		<xsl:if
 			test="count(m:bibl[(m:genre='letter' or m:genre='diary entry') and *[local-name()!='genre']//text()])&gt;0 and 
 			count(m:bibl[m:genre!='letter' and m:genre!='diary entry' and *[local-name()!='genre']//text()])&gt;0">
 			<p class="p_heading">Other:</p>
 		</xsl:if>
-		<xsl:for-each select="m:bibl[m:genre!='letter' and m:genre!='diary entry' and *[local-name()!='genre']//text()]">
+		<xsl:for-each select="m:bibl[m:genre!='letter' and m:genre!='diary entry' and m:genre!='manuscript' and *[local-name()!='genre']//text()]">
 			<p class="bibl_record">
 				<xsl:apply-templates select="."/>
 			</p>
@@ -1893,16 +1899,7 @@
 							<xsl:value-of select="m:recipient"/>
 						</xsl:if><xsl:if test="(m:author/text() or m:recipient/text()) and m:physLoc//text()">, </xsl:if> 
 						<xsl:apply-templates select="m:physLoc[*//text()]"/>
-						
-						<xsl:for-each select="m:relatedItem[@rel='host' and *//text()]">
-							<xsl:if test="position()=1"> (</xsl:if>
-							<xsl:if test="position() &gt; 1">,<xsl:text> </xsl:text></xsl:if>
-							<xsl:value-of select="m:bibl/m:title"/>
-							<xsl:apply-templates select="m:bibl" mode="volumes_pages"/>
-							<xsl:if test="position()=last()">)</xsl:if>
-						</xsl:for-each>
-												
-						<!--<xsl:apply-templates select="m:relatedItem[@rel='host' and *//text()]"/>-->
+						<xsl:call-template name="hosts"/>
 						<xsl:apply-templates select="m:annot"/>
 						<xsl:apply-templates select="m:ptr"/> 
 					</td>
@@ -1924,15 +1921,7 @@
 							<xsl:if test="m:physLoc[m:repository//text() or m:identifier/text() or m:ptr/@target]">, </xsl:if>
 						</xsl:if>
 						<xsl:apply-templates select="m:physLoc[m:repository//text() or m:identifier/text() or m:ptr/@target]"/>
-						<xsl:for-each select="m:relatedItem[@rel='host' and *//text()]">
-							<xsl:if test="position()=1"> (</xsl:if>
-							<xsl:if test="position() &gt; 1">;<xsl:text> </xsl:text></xsl:if>
-							<xsl:value-of select="m:bibl/m:title"/>
-							<xsl:apply-templates select="m:bibl" mode="volumes_pages"/>
-							<xsl:if test="position()=last()">)</xsl:if>
-						</xsl:for-each>
-						
-						<!--<xsl:apply-templates select="m:relatedItem[@rel='host' and *//text()]"/>-->
+						<xsl:call-template name="hosts"/>
 						<xsl:apply-templates select="m:annot"/>
 						<xsl:apply-templates select="m:ptr"/> 
 					</td>
@@ -1953,6 +1942,21 @@
 					select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>.
 			</xsl:when>
 
+			<xsl:when test="m:genre='manuscript'">
+				<xsl:if test="m:author//text()"><xsl:apply-templates select="m:author"/>: </xsl:if>
+				<xsl:if test="m:title//text()">
+					<em><xsl:value-of select="m:title"/>. </em>
+				</xsl:if>
+				<xsl:if test="m:creation/m:geogName//text()">
+					<xsl:apply-templates select="m:creation/m:geogName"/>
+					<xsl:if test="m:creation/m:date//text()"><xsl:text> </xsl:text></xsl:if>
+				</xsl:if>
+				<xsl:if test="m:creation/m:date//text()">
+					<xsl:apply-templates select="m:creation/m:date"/>					
+				</xsl:if>
+				<xsl:call-template name="hosts"/>  
+			</xsl:when>
+			
 			<xsl:otherwise>
 				<xsl:if test="m:author//text()"><xsl:apply-templates select="m:author"/>: </xsl:if>
 				<xsl:if test="m:title//text()">
@@ -1964,7 +1968,8 @@
 				<xsl:if test="m:creation/m:date//text()">
 					<xsl:apply-templates select="m:creation/m:date"/></xsl:if>
 				<xsl:if test="m:biblScope[@unit='page']//text()">, p. <xsl:value-of
-						select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>. * 
+						select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>. 
+				<xsl:call-template name="hosts"/> * 
 			</xsl:otherwise>
 		</xsl:choose>
 		<!-- links to full text (exception: letters and diary entries handled elsewhere) -->
@@ -1974,6 +1979,16 @@
 			</xsl:apply-templates>
 			<xsl:apply-templates select="m:ptr"/>
 		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template name="hosts">
+		<xsl:for-each select="m:relatedItem[@rel='host' and *//text()]">
+			<xsl:if test="position()=1"> (</xsl:if>
+			<xsl:if test="position() &gt; 1">;<xsl:text> </xsl:text></xsl:if>
+			<xsl:value-of select="m:bibl/m:title"/>
+			<xsl:apply-templates select="m:bibl" mode="volumes_pages"/>
+			<xsl:if test="position()=last()">)</xsl:if>
+		</xsl:for-each>
 	</xsl:template>
 	
 	<xsl:template match="m:bibl/m:annot">
