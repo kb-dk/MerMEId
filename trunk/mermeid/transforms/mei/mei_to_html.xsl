@@ -1854,14 +1854,6 @@
 					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">, p. <xsl:value-of
 						select="m:biblScope[@unit='page']"/></xsl:if>.<xsl:text> </xsl:text> 
 				</xsl:if>
-				<xsl:for-each select="m:relatedItem[@rel='host' and *//text()]">
-					<xsl:if test="position()=1"> (</xsl:if>
-					<xsl:if test="position() &gt; 1">,<xsl:text> </xsl:text></xsl:if>
-					<xsl:value-of select="m:bibl/m:title"/>
-					<xsl:apply-templates select="m:bibl" mode="volumes_pages"/>
-					<xsl:if test="position()=last()">)</xsl:if>
-				</xsl:for-each>
-				
 			</xsl:when>
 
 			<xsl:when test="m:genre='web site'">
@@ -1928,20 +1920,6 @@
 				</tr>
 			</xsl:when>
 
-			<xsl:when test="contains(m:genre,'concert') and contains(m:genre,'program')">
-				<xsl:if test="m:editor//text()"><xsl:apply-templates select="m:editor"/> (ed.): </xsl:if>
-				<xsl:if test="m:title//text()">
-					<em><xsl:value-of select="m:title"/></em>
-				</xsl:if>
-				<xsl:if test="m:biblScope[@unit='vol']//text()">, Vol.<xsl:value-of
-					select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>. 
-				<xsl:apply-templates select="m:imprint"/>
-				<xsl:if test="m:creation/m:date//text()">
-					<xsl:apply-templates select="m:creation/m:date"/></xsl:if>
-				<xsl:if test="m:biblScope[@unit='page']//text()">, p. <xsl:value-of
-					select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>.
-			</xsl:when>
-
 			<xsl:when test="m:genre='manuscript'">
 				<xsl:if test="m:author//text()"><xsl:apply-templates select="m:author"/>: </xsl:if>
 				<xsl:if test="m:title//text()">
@@ -1954,7 +1932,14 @@
 				<xsl:if test="m:creation/m:date//text()">
 					<xsl:apply-templates select="m:creation/m:date"/>					
 				</xsl:if>
-				<xsl:call-template name="hosts"/>  
+			</xsl:when>
+
+			<xsl:when test="contains(m:genre,'concert') and contains(m:genre,'program')">
+				<xsl:if test="m:title//text()">
+					<em><xsl:value-of select="m:title"/></em> (concert programme)</xsl:if>
+				<xsl:apply-templates select="m:imprint">
+					<xsl:with-param name="append_to_text">true</xsl:with-param>
+				</xsl:apply-templates>
 			</xsl:when>
 			
 			<xsl:otherwise>
@@ -1968,12 +1953,13 @@
 				<xsl:if test="m:creation/m:date//text()">
 					<xsl:apply-templates select="m:creation/m:date"/></xsl:if>
 				<xsl:if test="m:biblScope[@unit='page']//text()">, p. <xsl:value-of
-						select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>. 
-				<xsl:call-template name="hosts"/> * 
+						select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>.* 
 			</xsl:otherwise>
 		</xsl:choose>
+		
 		<!-- links to full text (exception: letters and diary entries handled elsewhere) -->
 		<xsl:if test="not(m:genre='diary entry' or m:genre='letter')">
+			<xsl:call-template name="hosts"/>  
 			<xsl:apply-templates select="m:annot">
 				<xsl:with-param name="compact" select="'true'"/>
 			</xsl:apply-templates>
@@ -2042,8 +2028,7 @@
 	<xsl:template match="m:author">
 		<xsl:value-of select="."/>
 		<xsl:if test="@type and @type!=''">
-			<xsl:text> </xsl:text>(<xsl:value-of select="@type"/>)
-		</xsl:if>
+			<xsl:text> </xsl:text>(<xsl:value-of select="@type"/>)</xsl:if>
 	</xsl:template>
 
 	<!-- list editors -->

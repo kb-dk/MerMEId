@@ -45,7 +45,7 @@
                     <xf:group ref="$binding">
                         
                         
-                        <xf:group ref="m:author[not(../m:genre='newspaper') and not(../m:genre='manuscript') and not(../m:genre='letter') and not(../m:genre='diary entry') and not(../m:genre='interview') and not(../m:genre[contains(.,'concert program')])]">
+                        <xf:group ref="m:author[not(../m:genre='newspaper') and not(../m:genre='manuscript') and not(../m:genre='letter') and not(../m:genre='diary entry') and not(../m:genre='interview') and not(../m:genre[contains(.,'program')])]">
                             <!-- authors are listed elsewhere if newspaper article -->
                             <h:fieldset>
                                 <h:legend>Authors</h:legend>
@@ -77,7 +77,7 @@
                                                     value="if (@level='j') then concat(translate(substring(../m:genre[.!='article' and .!='interview'][1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(../m:genre[.!='article' and .!='interview'][1],2)) else ''"/>
                                                 <xf:output value="if (@level='m') then 'Monograph' else ''"/>
                                                 <xf:output value="if (@level='s') then 'Series' else ''"/>
-                                                <xf:output value="if ((@level!='s' and @level!='a' and @level!='m' and @level!='j') or not(@level)) then 'Title' else ''"/>
+                                                <xf:output value="if ((@level!='s' and @level!='a' and @level!='m' and @level!='j') or not(@level)) then '' else ''"/>
                                             </xf:label>
                                         </xf:input>
                                         <dcm:attribute-editor ref="."/>
@@ -116,7 +116,7 @@
                             </h:fieldset>
                         </xf:group>
                         
-                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript') and not(../m:genre[contains(.,'concert program')])]">
+                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript') and count(m:genre[contains(.,'program')])=0]">
                             
                             <h:fieldset>
                                 <h:legend>Volume etc. <h:a class="help">?<h:span class="comment">Volume and issue no. to
@@ -187,49 +187,30 @@
                                 <h:fieldset>
                                     <h:legend>Publication</h:legend>
                                     <h:div>
+                                        <dcm:create nodeset="m:publisher" label="Add publisher"
+                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:publisher][1]/m:imprint/m:publisher"/>
                                         <xf:input ref="m:publisher" class="maxlong">
                                             <xf:label class="fixed_width">Publisher</xf:label>
                                         </xf:input>
                                         <dcm:attribute-editor ref="m:publisher"/>
                                     </h:div>
                                     <h:div>
+                                        <dcm:create nodeset="m:pubPlace" label="Add place"
+                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:pubPlace][1]/m:imprint/m:pubPlace"/>
                                         <xf:input ref="m:pubPlace" class="maxlong">
                                             <xf:label class="fixed_width">Place</xf:label>
                                         </xf:input>
                                         <dcm:attribute-editor ref="m:pubPlace"/>
                                     </h:div>
                                     <h:div>
+                                        <dcm:create nodeset="m:date" label="Add place"
+                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:date][1]/m:imprint/m:date"/>
                                         <dcm:date-editor ref="m:date">
                                             <xf:label class="fixed_width">Date </xf:label>
                                         </dcm:date-editor>
                                     </h:div>
                                 </h:fieldset>
                             </xf:group>
-                        </xf:group>
-                        
-                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript') and not(../m:genre[contains(.,'concert program')])]">
-                            <h:fieldset>
-                                <h:legend>Link to fulltext</h:legend>
-                                <dcm:create nodeset="m:ptr" label="Add link to fulltext"
-                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr"/>
-                                <xf:repeat nodeset="m:ptr" id="bibl-input-ptr">
-                                    <h:div>
-                                        <xf:input ref="@target" class="maxlong">
-                                            <xf:label>URI</xf:label>
-                                        </xf:input>
-                                        <xf:input ref="@label" class="long">
-                                            <xf:label>Link label <h:a class="help">?<h:span class="comment">A label to
-                                                be displayed as the link text</h:span></h:a></xf:label>
-                                        </xf:input>
-                                        <dcm:element-buttons triggers="add remove"
-                                            index="bibl-input-ptr" 
-                                            nodeset="m:ptr" 
-                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr"/>
-                                        <dcm:attribute-editor ref="."/>
-                                    </h:div>
-                                </xf:repeat>
-                            </h:fieldset>
-                            
                         </xf:group>
                         
                         <xf:group ref=".[m:genre='letter' or m:genre='diary entry' or m:genre='manuscript']">
@@ -325,7 +306,7 @@
                             </h:fieldset>
                         </xf:group>
                         
-                        <xf:group ref=".[m:genre!='concert programme' and not(m:genre[contains(.,'web')])]">
+                        <xf:group ref=".[not(m:genre[contains(.,'web')])]">
                             <h:fieldset>
                                 <h:legend>Transcriptions and reproductions <h:a class="help">?<h:span class="comment">If a 
                                     transcription, facsimile or other reproduction of this item is available,
@@ -376,7 +357,7 @@
                                 <xf:repeat nodeset="m:ptr">
                                     <h:div>
                                         <xf:input ref="@target" class="long">
-                                            <xf:label class="fixed_width">URI <h:a class="help">?<h:span
+                                            <xf:label class="fixed_width_short">URI <h:a class="help">?<h:span
                                                 class="comment">Link to fulltext or facsimile, e.g.
                                                 http://example.org/document.html</h:span></h:a></xf:label>
                                         </xf:input>
@@ -392,67 +373,7 @@
                                 </xf:repeat>
                             </h:fieldset>
                         </xf:group>
-                        
-                        
-                        <xf:group ref=".[m:genre='concert programme']">
-                            <h:div>
-                                <xf:input ref="m:title" class="maxlong">
-                                    <xf:label class="fixed_width">Title </xf:label>
-                                </xf:input>
-                                <dcm:attribute-editor ref="m:title"/>
-                            </h:div>
-                            <h:fieldset>
-                                <h:legend>Publication</h:legend>
-                                <h:div>
-                                    <xf:input ref="m:publisher" class="maxlong">
-                                        <xf:label class="fixed_width">Publisher</xf:label>
-                                    </xf:input>
-                                    <dcm:attribute-editor ref="m:publisher"/>
-                                </h:div>
-                                <h:div>
-                                    <xf:input ref="m:pubPlace" class="maxlong">
-                                        <xf:label class="fixed_width">Place</xf:label>
-                                    </xf:input>
-                                    <dcm:attribute-editor ref="m:pubPlace"/>
-                                </h:div>
-                                <h:div>
-                                    <dcm:date-editor ref="m:date">
-                                        <xf:label class="fixed_width">Date </xf:label>
-                                    </dcm:date-editor>
-                                </h:div>
-                            </h:fieldset>
-                            
-                            <h:fieldset>
-                                <h:legend>Location</h:legend>
-                                <xf:input ref="m:physLoc/m:repository">
-                                    <xf:label class="fixed_width_long">Repository name <h:a class="help">?<h:span
-                                        class="comment">The library, archive or other repository holding this
-                                        item, e.g. "DK-Kk"</h:span></h:a></xf:label>
-                                </xf:input>
-                                <dcm:attribute-editor ref="m:physLoc/m:repository"/>
-                                <xf:input ref="m:physLoc/m:identifier">
-                                    <xf:label>Shelfmark <h:a class="help">?<h:span class="comment">The shelfmark or
-                                        other signature identfying the item in the
-                                        repository</h:span></h:a></xf:label>
-                                </xf:input>
-                                <dcm:attribute-editor ref="m:physLoc/m:identifier"/>
-                                <xf:repeat nodeset="m:ptr">
-                                    <h:div>
-                                        <xf:input ref="@target" class="long">
-                                            <xf:label class="fixed_width_mediumlong">URI <h:a class="help">?<h:span
-                                                class="comment">Link to fulltext or facsimile, e.g.
-                                                http://example.org/document.html</h:span></h:a></xf:label>
-                                        </xf:input>
-                                        <xf:input ref="@label" class="long">
-                                            <xf:label>Link label <h:a class="help">?<h:span class="comment">A label to
-                                                be displayed as the link text</h:span></h:a></xf:label>
-                                        </xf:input>
-                                        <dcm:attribute-editor ref="."/>
-                                    </h:div>
-                                </xf:repeat>
-                            </h:fieldset>
-                        </xf:group>
-                        
+                                                                        
                         <h:fieldset>
                             <h:legend>Notes <h:a class="help">?<h:span class="comment">Any notes to be added to this
                                 item, e.g. a description of contents or - in case of performance documentation -
