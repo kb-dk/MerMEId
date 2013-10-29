@@ -1824,7 +1824,7 @@
 					</xsl:if>. </xsl:if>
 			</xsl:when>
 
-			<xsl:when test="(m:genre='journal' or m:genre='newspaper') and m:genre='article'">
+			<xsl:when test="(m:genre='journal' or m:genre='newspaper') and (m:genre='article' or m:genre='interview')">
 				<!-- show entry only if a title or journal/newspaper name is stated -->
 				<xsl:if test="m:title[@level='a']/text()|m:title[@level='j']/text()">
 					<xsl:if test="normalize-space(m:title[@level='a'])!=''">
@@ -2013,6 +2013,13 @@
 			<xsl:apply-templates select="."/>
 			<xsl:if test="position() = last()">: </xsl:if>
 		</xsl:for-each>
+	</xsl:template>
+	
+	<xsl:template match="m:author">
+		<xsl:value-of select="."/>
+		<xsl:if test="@type and @type!=''">
+			<xsl:text> </xsl:text>(<xsl:value-of select="@type"/>)
+		</xsl:if>
 	</xsl:template>
 
 	<!-- list editors -->
