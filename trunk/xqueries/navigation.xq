@@ -45,7 +45,41 @@ declare function local:format-reference(
   $pos as xs:integer ) as node() 
 
 {
-   let $genres := 
+
+   let $vocabulary := doc("http://disdev-01.kb.dk/editor/forms/mei/model/keywords.xml")
+   (: the first level 1 and 2 genre keywords are assumed to be the principal ones - all others are hidden :)
+   let $genre1 := $doc//m:workDesc/m:work/m:classification/m:termList/m:term[.=$vocabulary//m:termList[@label='level1']/m:term and .!=''][1]/string()
+   let $genre2 := $doc//m:workDesc/m:work/m:classification/m:termList/m:term[.=$vocabulary//m:termList[@label='level2']/m:term and .!=''][1]/string()
+   let $class1 := translate(translate($genre1,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')
+   let $class2 := translate(translate($genre2,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')
+            
+   let $date_output :=
+     if($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore!='' or $doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter!='') then
+       concat(substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore,1,4),'-',substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter,1,4))
+     else
+       substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@isodate,1,4)
+
+   let $ref   := 
+      <div class="result_row">
+	<div class="composer">{comment{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}}&#160;</div>
+	<div class="date">&#160;{$date_output}</div>
+        <div class="title">
+	  {app:public-view-document-reference($doc)}{" "}
+	</div>
+        <div class="info_bar {$class2}">
+	  <span class="list_id">
+	    {app:get-edition-and-number($doc)}{" "}
+	  </span>
+	  <span class="genre">
+	    <span class="pos1">{$genre1}</span>{" "}
+	    <span class="pos2">{$genre2}</span>
+	  </span>
+	</div>
+      </div>
+   return $ref
+
+(: the following lists ALL genre keywords instead :)
+(:   let $genres := 
       for $genre in 
 	  distinct-values($doc//m:workDesc/m:work/m:classification/m:termList/m:term/string())
 	  where string-length($genre) > 0   
@@ -60,7 +94,7 @@ declare function local:format-reference(
    let $genre_boxes := 
       for $genre at $pos in $genres
          return 
-            <span class="pos{$pos}">{$genre}</span>
+            <span class="pos{$pos}">{$genre}</span> 
             
       let $date_output :=
         if($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore!='' or $doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter!='') then
@@ -84,7 +118,7 @@ declare function local:format-reference(
 	  </span>
 	</div>
       </div>
-   return $ref
+   return $ref  :)
 };
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -94,14 +128,11 @@ declare function local:format-reference(
       <!-- generated title disabled -->
       <!--<title>{app:list-title()}</title>-->
       
-
       <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
       
       <link type="text/css" href="/editor/style/dcm.css" rel="stylesheet" />
       <link type="text/css" href="/editor/style/cnw.css" rel="stylesheet" />
-
 
       <link rel="styleSheet" 
       href="/editor/style/public_list_style.css" 
@@ -139,7 +170,6 @@ declare function local:format-reference(
       //
       </script>
       <!-- end #slider -->
-
       
     </head>
     <body class="list_files">
