@@ -318,7 +318,9 @@
                                     </xf:repeat>
                                 </h:div>
                             </h:fieldset>
-                            
+                        </xf:group>
+                        
+                        <xf:group ref=".[m:genre!='concert programme' and not(m:genre[contains(.,'web')])]">
                             <h:fieldset>
                                 <h:legend>Transcriptions and reproductions <h:a class="help">?<h:span class="comment">If a 
                                     transcription, facsimile or other reproduction of this item is available,
@@ -386,7 +388,8 @@
                             </h:fieldset>
                         </xf:group>
                         
-                        <xf:group ref=".[genre='concert programme']">
+                        
+                        <xf:group ref=".[m:genre='concert programme']">
                             <h:div>
                                 <xf:input ref="m:title" class="maxlong">
                                     <xf:label class="fixed_width">Title </xf:label>

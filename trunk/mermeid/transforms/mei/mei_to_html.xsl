@@ -1846,7 +1846,16 @@
 					<xsl:if test="normalize-space(m:imprint/m:date)!=''"> (<xsl:apply-templates
 							select="m:imprint/m:date"/>)</xsl:if>
 					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">, p. <xsl:value-of
-							select="m:biblScope[@unit='page']"/></xsl:if>. </xsl:if>
+						select="m:biblScope[@unit='page']"/></xsl:if>.<xsl:text> </xsl:text> 
+				</xsl:if>
+				<xsl:for-each select="m:relatedItem[@rel='host' and *//text()]">
+					<xsl:if test="position()=1"> (</xsl:if>
+					<xsl:if test="position() &gt; 1">,<xsl:text> </xsl:text></xsl:if>
+					<xsl:value-of select="m:bibl/m:title"/>
+					<xsl:apply-templates select="m:bibl" mode="volumes_pages"/>
+					<xsl:if test="position()=last()">)</xsl:if>
+				</xsl:for-each>
+				
 			</xsl:when>
 
 			<xsl:when test="m:genre='web site'">
