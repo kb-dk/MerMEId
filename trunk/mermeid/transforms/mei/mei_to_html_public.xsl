@@ -48,8 +48,9 @@
 				<div id="all">
 					<div id="header">
 						<div class="kb_logo">
-							<a href="http://www.kb.dk" title="Det Kongelige Bibliotek"><img 
-								style="margin-top: -10px; border: 0px; vertical-align:middle;" title="Det Kongelige Bibliotek" 
+							<a href="http://www.kb.dk" title="Det Kongelige Bibliotek"><img
+								id="KBLogo"
+								title="Det Kongelige Bibliotek" 
 								alt="KB Logo" src="/editor/images/kb_white.png"></img></a></div>
 						<h1>CNW</h1>
 						<h2>A Thematic Catalogue of Carl Nielsen&apos;s Works</h2>
