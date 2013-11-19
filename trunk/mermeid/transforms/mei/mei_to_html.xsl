@@ -1583,11 +1583,10 @@
 						<xsl:if test="m:identifier[text()]">
 							(<em><xsl:apply-templates select="m:identifier[text()]"/></em>)
 						</xsl:if>
-						<xsl:text> </xsl:text>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:for-each select="m:identifier[text()]">
-							<em><xsl:apply-templates select="."/></em><xsl:text> </xsl:text>
+							<em><xsl:apply-templates select="."/></em>
 						</xsl:for-each>
 					</xsl:otherwise>
 				</xsl:choose>

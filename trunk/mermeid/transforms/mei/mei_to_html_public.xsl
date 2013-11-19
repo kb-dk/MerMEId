@@ -1612,11 +1612,10 @@
 						<xsl:if test="m:identifier[text()]">
 							(<em><xsl:apply-templates select="m:identifier[text()]"/></em>)
 						</xsl:if>
-						<xsl:text> </xsl:text>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:for-each select="m:identifier[text()]">
-							<em><xsl:apply-templates select="."/></em><xsl:text> </xsl:text>
+							<em><xsl:apply-templates select="."/></em>
 						</xsl:for-each>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -1649,8 +1648,9 @@
 				<xsl:choose>
 					<xsl:when test="$RISM_file//marc:datafield[marc:subfield[@code='g']=$siglum]">
 						<xsl:variable name="record" select="$RISM_file//marc:datafield[marc:subfield[@code='g']=$siglum]"/>
-						<a href="javascript:void(0);" class="abbr"><xsl:value-of select="."/><span class="expan">
-								<xsl:value-of select="$record/marc:subfield[@code='a']"/>,
+						<a href="javascript:void(0);" class="abbr"><xsl:value-of select="."/><span 
+							class="expan">
+								<xsl:value-of select="$record/marc:subfield[@code='a']"/>, 
 								<xsl:value-of select="$record/marc:subfield[@code='c']"/>
 							</span></a>
 					</xsl:when>
