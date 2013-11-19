@@ -168,16 +168,15 @@ declare function app:generate-href($field as xs:string,
       let $ref := 
 	($langs,
 	element span {
-	  attribute style {"display:inline;"},
-	  attribute lang {"da"},
+	  attribute lang {$doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][not(@type/string())][1]/@xml:lang},
 	  element a {
 	    attribute title {"View"},
 	    attribute href  {concat("/storage/document.xq?doc=",util:document-name($doc))},
-	  $doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][@xml:lang='da' and not(@type/string())]/string()
+	  $doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][not(@type/string())][1]/string()
 	  },
 	  element span {
-	    attribute style {"font-size: 80%;"},
-	    $doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][@xml:lang='da' and @type/string()='subordinate']/string()
+	    attribute style {"font-size: 75%;"},
+	    concat($doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][@type/string()='subordinate'][1]/string(),"&#160;")
 	  }
 	},
 	element span {
@@ -186,11 +185,11 @@ declare function app:generate-href($field as xs:string,
 	  element a {
 	    attribute title {"View"},
 	    attribute href  {concat("/storage/document.xq?doc=",util:document-name($doc))},
-	    $doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][@xml:lang='en' and not(@type/string())]/string()
+	    concat($doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][@xml:lang='en' and not(@type/string())]/string(),"&#160;")
 	  },
 	  element span {
-	    attribute style {"font-size: 80%;"},
-	    $doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][@xml:lang='en' and @type/string()='subordinate']/string()
+	    attribute style {"font-size: 75%;"},
+	    concat($doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][@xml:lang='en' and @type/string()='subordinate']/string(),"&#160;")
 	  }
 	}
 	)

@@ -60,21 +60,21 @@ declare function local:format-reference(
        substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@isodate,1,4)
 
    let $ref   := 
-      <div class="result_row">
-	<div class="composer">{comment{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}}&#160;</div>
-	<div class="date">&#160;{$date_output}</div>
+     <div class="result_row">
+	    <div class="composer">{comment{$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}}&#160;</div>
+	    <div class="date">&#160;{$date_output}</div>
         <div class="title">
-	  {app:public-view-document-reference($doc)}{" "}
-	</div>
+	      {app:public-view-document-reference($doc)}{" "}
+	    </div>
         <div class="info_bar {$class2}">
-	  <span class="list_id">
-	    {app:get-edition-and-number($doc)}{" "}
-	  </span>
-	  <span class="genre">
-	    <span class="pos1">{$genre1}</span>{" "}
-	    <span class="pos2">{$genre2}</span>
-	  </span>
-	</div>
+	      <span class="list_id">
+	        {app:get-edition-and-number($doc)}{" "}
+	      </span>
+	      <span class="genre">
+	        <span class="pos1">{$genre1}</span>{" "}
+	        <span class="pos2">{$genre2}</span>
+	      </span>
+	    </div>
       </div>
    return $ref
 
