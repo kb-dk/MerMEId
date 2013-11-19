@@ -316,36 +316,38 @@
                                 <dcm:create nodeset="m:relatedItem"
                                     label="Add printed reproduction"
                                     origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:relatedItem[@rel='host']][1]/m:relatedItem[@rel='host']"/>
-                                <xf:repeat nodeset="m:relatedItem[@rel='host']/m:bibl" id="repeat-letter-editions">
+                                <xf:repeat nodeset="m:relatedItem[@rel='host']" id="repeat-letter-editions">
                                     <h:div>
-                                        <xf:input ref="m:title" class="maxlong">
-                                            <xf:label>Title <h:a class="help">?<h:span class="comment">The title or a
-                                                short-hand reference to the publication quoting or transcribing
-                                                this item, e.g. "CNB" or "Mozart:
-                                                Briefe"</h:span></h:a></xf:label>
-                                        </xf:input>
-                                        <xf:select1 ref="m:biblScope/@unit" class="short">
-                                            <xf:label>Page or No. <h:a class="help">?<h:span class="comment">The
-                                                number of this item in the edition or the relevant pages</h:span></h:a></xf:label>
-                                            <xf:item>
+                                        <xf:group ref="m:bibl">
+                                            <xf:input ref="m:title" class="maxlong">
+                                                <xf:label>Title <h:a class="help">?<h:span class="comment">The title or a
+                                                    short-hand reference to the publication quoting or transcribing
+                                                    this item, e.g. "CNB" or "Mozart:
+                                                    Briefe"</h:span></h:a></xf:label>
+                                            </xf:input>
+                                            <xf:select1 ref="m:biblScope/@unit" class="short">
+                                                <xf:label>Page or No. <h:a class="help">?<h:span class="comment">The
+                                                    number of this item in the edition or the relevant pages</h:span></h:a></xf:label>
+                                                <xf:item>
+                                                    <xf:label/>
+                                                    <xf:value/>
+                                                </xf:item>
+                                                <xf:item>
+                                                    <xf:label>p.</xf:label>
+                                                    <xf:value>page</xf:value>
+                                                </xf:item>
+                                                <xf:item>
+                                                    <xf:label>no.</xf:label>
+                                                    <xf:value>no</xf:value>
+                                                </xf:item>
+                                            </xf:select1>
+                                            <xf:input ref="m:biblScope">
                                                 <xf:label/>
-                                                <xf:value/>
-                                            </xf:item>
-                                            <xf:item>
-                                                <xf:label>p.</xf:label>
-                                                <xf:value>page</xf:value>
-                                            </xf:item>
-                                            <xf:item>
-                                                <xf:label>no.</xf:label>
-                                                <xf:value>no</xf:value>
-                                            </xf:item>
-                                        </xf:select1>
-                                        <xf:input ref="m:biblScope">
-                                            <xf:label/>
-                                        </xf:input>
-                                        <dcm:element-buttons triggers="add del-parent-with-last" nodeset="m:bibl"
+                                            </xf:input>
+                                        </xf:group>
+                                        <dcm:element-buttons triggers="add delete" nodeset="m:relatedItem"
                                             index="repeat-letter-editions"
-                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:relatedItem[@rel='host']][1]/m:relatedItem[@rel='host']/m:bibl[1]"/>
+                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:relatedItem[@rel='host']][1]/m:relatedItem[@rel='host']"/>
                                         <dcm:attribute-editor/>
                                     </h:div>
                                 </xf:repeat>
@@ -354,7 +356,7 @@
                                 <dcm:create nodeset="m:ptr"
                                     label="Add digital reproduction"
                                     origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
-                                <xf:repeat nodeset="m:ptr">
+                                <xf:repeat nodeset="m:ptr" id="repeat-letter-digitizations">
                                     <h:div>
                                         <xf:input ref="@target" class="long">
                                             <xf:label class="fixed_width_short">URI <h:a class="help">?<h:span
@@ -365,8 +367,8 @@
                                             <xf:label>Link label <h:a class="help">?<h:span class="comment">A label to
                                                 be displayed as the link text, e.g. "Facsimile"</h:span></h:a></xf:label>
                                         </xf:input>
-                                        <dcm:element-buttons triggers="add remove" nodeset="m:bibl"
-                                            index="repeat-letter-editions"
+                                        <dcm:element-buttons triggers="add remove" nodeset="m:ptr"
+                                            index="repeat-letter-digitizations"
                                             origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
                                         <dcm:attribute-editor/>
                                     </h:div>
