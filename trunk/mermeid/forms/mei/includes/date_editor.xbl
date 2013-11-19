@@ -277,6 +277,48 @@
                                     it is to be displayed, e.g. "1845-1846", "in late 1976", "1918-12-24" or "probably before 1888".</h:span></h:a>
                                 </xf:label>
                             </xf:input> 
+
+                            <xforms:trigger ref="instance('editor-instance')[mode='single']">
+                                <xforms:label>Paste date</xforms:label>
+                                <xforms:action ev:event="DOMActivate">
+                                    <xforms:setvalue ref="displayed_date" value="instance('editor-instance')/isodate"/>
+                                </xforms:action>
+                            </xforms:trigger>
+                            <xforms:trigger ref="instance('editor-instance')[mode='interval']">
+                                <xforms:label>Paste dates</xforms:label>
+                                <xforms:action ev:event="DOMActivate">
+                                    <xforms:action if="(notbefore!='' or startdate!='')">
+                                        <xforms:action if="(notafter!='' or enddate!='')">
+                                            <xforms:setvalue ref="displayed_date" 
+                                                value="concat('Between ', instance('editor-instance')/notbefore, 
+                                                instance('editor-instance')/startdate,' and ', 
+                                                instance('editor-instance')/notafter, 
+                                                instance('editor-instance')/enddate)"/>
+                                        </xforms:action>
+                                        <xforms:action if="(notafter='' and enddate='')">
+                                            <xforms:action if="(notbefore!='')">
+                                                <xforms:setvalue ref="displayed_date" 
+                                                    value="concat('Not before ', instance('editor-instance')/notbefore)"/>
+                                            </xforms:action>
+                                            <xforms:action if="(startdate!='')">
+                                                <xforms:setvalue ref="displayed_date" 
+                                                    value="concat('Start date ', instance('editor-instance')/startdate)"/>
+                                            </xforms:action>
+                                        </xforms:action>
+                                    </xforms:action>
+                                    <xforms:action if="(notbefore='' and startdate='')">
+                                        <xforms:action if="(notafter!='')">
+                                            <xforms:setvalue ref="displayed_date" 
+                                                value="concat('Not after ', instance('editor-instance')/notafter)"/>
+                                        </xforms:action>
+                                        <xforms:action if="(enddate!='')">
+                                            <xforms:setvalue ref="displayed_date" 
+                                                value="concat('End date ', instance('editor-instance')/enddate)"/>
+                                        </xforms:action>
+                                    </xforms:action>
+                                </xforms:action>
+                            </xforms:trigger>
+
                         </h:div>
                         
                         <h:div class="dcm-date-editor-error">
