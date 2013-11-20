@@ -293,7 +293,7 @@ declare function filter:print-filtered-link(
     return $link
 };
 
-declare function filter:get-date($date as xs:string) as xs:integer
+declare function filter:get-date($date as xs:string) as xs:string
 {
   let $xsdate :=
       substring($date,1,4)
