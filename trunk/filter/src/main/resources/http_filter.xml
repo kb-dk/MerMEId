@@ -2,7 +2,6 @@
 <properties>
   <comment>HTTP Filter parameters</comment>
 
-
   <entry key="filter">/</entry>
 
 <!--
@@ -11,12 +10,12 @@ The filter is meant to operate on top of an eXist XML database
 
 -->
 
-  <entry key="exist.host">disdev-01.kb.dk</entry>
+  <entry key="exist.host">distest.kb.dk</entry>
   <entry key="exist.port">8080</entry>
   <entry key="exist.realm">exist</entry>
   <entry key="exist.context">/exist/rest/db</entry>
-  <entry key="exist.user">admin</entry>
-  <entry key="exist.password">flormelis</entry>
+  <entry key="exist.user">dcmuser</entry>
+  <entry key="exist.password">florsocker</entry>
 
 <!--
 
@@ -24,9 +23,17 @@ get is the retrieval filter
 
 -->
 
-  <entry key="get.dcm">http://disdev-01.kb.dk/editor/transforms/mei/filter_get.xsl</entry>
-  <entry key="get.dcm.mime">application/xml</entry>
+  <entry key="get.dcm">http://distest.kb.dk/editor/transforms/mei/filter_get.xsl</entry>
+  <entry key="get.dcm.mime">text/xml</entry>
   <entry key="get.dcm.charset">UTF-8</entry>
+
+
+  <entry key="get.collection2">http://distest.kb.dk/editor/transforms/mei/filter_get.xsl</entry>
+
+  <entry key="get.collection2.mime">text/xml</entry>
+  <entry key="get.collection2.charset">UTF-8</entry>
+
+
 
 <!--
 
@@ -34,9 +41,15 @@ put is for updating
 
 -->
 
-  <entry key="put.dcm">http://disdev-01.kb.dk/editor/transforms/mei/filter_put.xsl</entry>
-  <entry key="put.dcm.mime">application/xml</entry>
+  <entry key="put.dcm">http://distest.kb.dk/editor/transforms/mei/filter_put.xsl</entry>
+  <entry key="put.dcm.mime">text/xml</entry>
   <entry key="put.dcm.charset">UTF-8</entry>
+
+
+  <entry key="put.collection2">http://distest.kb.dk/editor/transforms/mei/filter_put.xsl</entry>
+  <entry key="put.collection2.mime">text/xml</entry>
+  <entry key="put.collection2.charset">UTF-8</entry>
+
 
 <!--
 
@@ -44,7 +57,9 @@ del is for removing stuff
 
 -->
 
-  <entry key="del.dcm.redirect">http://disdev-01.kb.dk/storage/list_files.xq</entry>
+  <entry key="del.dcm.redirect">http://distest.kb.dk/storage/list_files.xq</entry>
+
+  <entry key="del.collection2.redirect">http://distest.kb.dk/storage/collection2/</entry>
 
 <!-- 
 
@@ -57,8 +72,8 @@ when ready
 
 -->
 
-   <entry key="create.dcm">http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}</entry>
-   <entry key="create.dcm.uri">http://disdev-01.kb.dk/editor/forms/mei/edit-work-case.xml</entry>
-   <entry key="create.dcm.dir">http://disdev-01.kb.dk/filter/dcm/</entry>
+   <entry key="create.dcm">http://distest.kb.dk/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}</entry>
+   <entry key="create.dcm.uri">http://distest.kb.dk/editor/forms/mei/edit-work-case.xml</entry>
+   <entry key="create.dcm.dir">http://distest.kb.dk/filter/</entry>
 
 </properties>

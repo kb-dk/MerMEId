@@ -13,7 +13,7 @@ declare function filter:print-filters(
   $database        as xs:string,
   $published_only  as xs:string,
   $coll            as xs:string,
-  $number          as xs:integer,
+  $number          as xs:string,
   $genre           as xs:string,
   $query           as xs:string,
   $list as node()*) as node()* 
@@ -172,17 +172,17 @@ declare function filter:print-filters(
 	  distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
 	  where string-length($genre) > 0 and not ( contains($genre,"Vocal") or
 	    contains($genre,"Instrumental") or contains($genre,"Stage") )  :)
-	    let $num := filter:count-hits($genre,$list)
+	    let $num := string(filter:count-hits($genre,$list))
 	    let $link := filter:print-filtered-link(
 		  $database,
 		  $published_only,
 		  $coll,
-		  $number,
+		  string($number),
 		  $query,
 		  $genre)		  
  
 	    return 
-          if($num > 0) then (
+          if(xs:integer($num) > 0) then (
 	           if ($vocabulary/m:classification/m:termList[m:term/string()=$genre]/@label="level2")
 	           then (
 	              <div class="genre_filter_row level2">
@@ -267,7 +267,7 @@ declare function filter:print-filtered-link(
   $database        as xs:string,
   $published_only  as xs:string,
   $coll            as xs:string,
-  $number          as xs:integer,
+  $number          as xs:string,
   $query           as xs:string,
   $term            as xs:string) as node()*
 {
@@ -276,8 +276,7 @@ declare function filter:print-filtered-link(
     {
       attribute title {"Filter with ",$term},
       attribute href {
-	fn:string-join((
-	  $filter:uri,"?",
+	concat($filter:uri,"?",
 	  "page=",1,
 	  "&amp;itemsPerPage=",$number,
 	  "&amp;sortby=",request:get-parameter("sortby",""),
@@ -286,7 +285,7 @@ declare function filter:print-filtered-link(
 	  "&amp;query=",$query,
 	  "&amp;notbefore=",request:get-parameter("notbefore",""),
 	  "&amp;notafter=",request:get-parameter("notafter",""),
-	  "&amp;genre=",fn:escape-uri($term,true())),"")},
+	  "&amp;genre=",fn:escape-uri($term,true()))},
 	  $term
     }
     )
