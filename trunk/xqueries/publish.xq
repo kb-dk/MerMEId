@@ -20,7 +20,7 @@ let $return_to := concat(
   "&amp;page=",        fn:escape-uri(request:get-parameter("page",""),true()),
   "&amp;itemsPerPage=",fn:escape-uri(request:get-parameter("itemsPerPage",""),true()))
 
-(:let $res := response:redirect-to($return_to cast as xs:anyURI):)
+let $res := response:redirect-to($return_to cast as xs:anyURI)
 let $log-in := login:function()
 let $parameters :=  request:get-parameter-names()
 return
