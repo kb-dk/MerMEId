@@ -87,8 +87,23 @@
 				</a>
 			</div>
 		</xsl:if>
+		
+		<xsl:call-template name="body_main_content"/>
 
-		<div class="settings colophon">
+		<xsl:for-each select="m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes' and text()]">
+			<div class="private">
+				<div class="private_heading">[Private notes]</div>
+				<div class="private_content">
+					<xsl:apply-templates select="."/>
+				</div>
+			</div>
+		</xsl:for-each>
+
+	</xsl:template>
+
+
+	<xsl:template name="body_main_content">
+				<div class="settings colophon">
 			<a
 				href="javascript:loadcssfile('/editor/style/html_hide_languages.css'); hide('load_alt_lang_css'); show('remove_alt_lang_css')"
 				id="load_alt_lang_css" class="noprint">Hide alternative languages</a>
@@ -241,25 +256,13 @@
 		<!-- related files -->
 		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:relationList" mode="external"/>
 
-		<!-- show work history and global sources first if more than one version -->
+		<!-- show work history first if more than one version -->
 		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
-
-			<!-- work history -->
 			<xsl:apply-templates
 				select="m:meiHead/
 				m:workDesc/
 				m:work/
 				m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event/*[name()!='genre' and name()!='head']//text()]]"/>
-
-			<!-- global sources -->
-			<xsl:if
-				test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
-				or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0">
-				<xsl:apply-templates
-					select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']">
-					<xsl:with-param name="global">true</xsl:with-param>
-				</xsl:apply-templates>
-			</xsl:if>
 		</xsl:if>
 
 
@@ -432,6 +435,21 @@
 
 		</xsl:if>
 
+		<!-- global sources for works with versions -->
+		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
+			<div>&#160;</div>
+			<div class="hr">&#160;</div>			
+			<xsl:if
+				test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
+				or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0">
+				<xsl:apply-templates
+					select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']">
+					<xsl:with-param name="global">true</xsl:with-param>
+				</xsl:apply-templates>
+			</xsl:if>
+		</xsl:if>
+		
+
 		<!-- bibliography -->
 		<xsl:apply-templates select="m:meiHead/
 			m:workDesc/
@@ -543,15 +561,6 @@
 			<xsl:apply-templates select="m:meiHead/m:revisionDesc"/>
 		</div>
 
-		<xsl:for-each select="m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes' and text()]">
-			<div class="private">
-				<div class="private_heading">[Private notes]</div>
-				<div class="private_content">
-					<xsl:apply-templates select="."/>
-				</div>
-			</div>
-		</xsl:for-each>
-
 	</xsl:template>
 
 
@@ -610,15 +619,7 @@
 						</xsl:choose>
 					</div>
 					<xsl:for-each select="../m:relation[@rel=$rel]">
-						<xsl:element name="a">
-							<xsl:attribute name="href">
-								<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
-							</xsl:attribute>
-							<xsl:apply-templates select="@label"/>
-							<xsl:if test="not(@label) or @label=''">
-								<xsl:value-of select="@target"/>
-							</xsl:if>
-						</xsl:element>
+						<xsl:apply-templates select="." mode="relation_link"/>
 						<xsl:if test="position()!=last()">
 							<br/>
 						</xsl:if>
@@ -626,6 +627,18 @@
 				</p>
 			</xsl:if>
 		</xsl:for-each>
+	</xsl:template>
+	
+	<xsl:template match="m:relation" mode="relation_link">
+		<xsl:element name="a">
+			<xsl:attribute name="href">
+				<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
+			</xsl:attribute>
+			<xsl:apply-templates select="@label"/>
+			<xsl:if test="not(@label) or @label=''">
+				<xsl:value-of select="@target"/>
+			</xsl:if>
+		</xsl:element>
 	</xsl:template>
 
 
@@ -2300,8 +2313,8 @@
 		</xsl:attribute>
 		<xsl:choose>
 			<xsl:when test="position()&gt;1 and @xml:lang!=parent::node()/*[name()=$element][1]/@xml:lang">
-				<xsl:attribute name="class">alternative_language</xsl:attribute> [<xsl:value-of
-					select="concat(@xml:lang,':')"/>] </xsl:when>
+				<xsl:attribute name="class">alternative_language</xsl:attribute><!-- [<xsl:value-of
+					select="concat(@xml:lang,':')"/>] --></xsl:when>
 			<xsl:otherwise>
 				<xsl:attribute name="class">preferred_language</xsl:attribute>
 			</xsl:otherwise>
