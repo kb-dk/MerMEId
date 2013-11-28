@@ -74,6 +74,7 @@ declare function local:format-reference(
 	      border="0"
               title="View source" />
 	    </a>
+	    {app:copy-document-reference($doc)}
 	  </td>
 	  <td class="tools">{app:edit-form-reference($doc)}</td>
 	  <td class="tools">{app:get-publication-reference($doc)}</td>
@@ -255,7 +256,7 @@ declare function local:format-reference(
             <th>Composer</th>
             <th>Title</th>
             <th>Collection</th>
-            <th class="tools">XML</th>
+            <th class="tools" >XML</th>
             <th class="tools">Edit</th>
             <th class="tools">	   
               <form method="post" id="publish_form" action="/storage/publish.xq" >

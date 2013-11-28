@@ -229,6 +229,28 @@ declare function app:generate-href($field as xs:string,
 
     };
 
+
+    declare function app:copy-document-reference($doc as node()) as node() 
+    {
+      let $form-id := util:document-name($doc)
+      let $uri     := concat("/db/public/",util:document-name($doc))
+      let $form := 
+      <form id="copy{$form-id}" action="./copy-file.xq" method="get" style="display:inline;">
+	{app:pass-as-hidden()}
+	<input type="hidden" 
+	value="copy"
+	name="{util:document-name($doc)}" />
+	<input type="submit" 
+	src="/editor/images/copy.gif"  
+	name="button"
+	value="copy"
+	title="Copy"/>
+      </form>
+      return  $form
+    };
+
+
+
     declare function app:delete-document-reference($doc as node()) as node() 
     {
       let $form-id := util:document-name($doc)
