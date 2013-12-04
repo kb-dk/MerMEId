@@ -9,48 +9,38 @@ declare namespace uuid="java:java.util.UUID";
 
 declare option    exist:serialize "method=xml media-type=text/html"; 
 
-declare variable $dcmroot := 'dcm/';
+declare variable $dcmroot := "/db/dcm/";
 
 let $return_to := concat(
   "http://",request:get-header('HOST'),"/storage/list_files.xq?",
-  "published_only=",   fn:escape-uri(request:get-parameter("published_only",""),true()),
-  "&amp;c=",           fn:escape-uri(request:get-parameter("c",""),true()),
-  "&amp;query=",       fn:escape-uri(request:get-parameter("query",""),true()),
-  "&amp;page=",        fn:escape-uri(request:get-parameter("page",""),true()),
-  "&amp;itemsPerPage=",fn:escape-uri(request:get-parameter("itemsPerPage",""),true()))
+  "sortby=",             fn:escape-uri(request:get-parameter("sortby",""),true()),
+  "&amp;published_only=",fn:escape-uri(request:get-parameter("published_only",""),true()),
+  "&amp;c=",             fn:escape-uri(request:get-parameter("c",""),true()),
+  "&amp;query=",         fn:escape-uri(request:get-parameter("query",""),true()),
+  "&amp;page=",          fn:escape-uri(request:get-parameter("page",""),true()),
+  "&amp;itemsPerPage=",  fn:escape-uri(request:get-parameter("itemsPerPage",""),true()))
 
-let $res := response:redirect-to($return_to cast as xs:anyURI)
+
 let $log-in := login:function()
+let $res := response:redirect-to($return_to cast as xs:anyURI)
 let $parameters :=  request:get-parameter-names()
 
 return
 <table>
   {
     for $parameter in $parameters 
-    let $put-to  := concat($dcmroot,uuid:to-string(uuid:random-UUID()),".xml")
-    let $action  := request:get-parameter($parameter,"")
-    let $doc     := doc($parameter)
-    where contains($parameter,".xml") and ($action="copy")
+    let $new_file := concat($dcmroot,uuid:to-string(uuid:random-UUID()),".xml")
+    let $old_file := concat($dcmroot,$parameter)
+    where request:get-parameter($parameter,"")="copy" and contains($parameter,"xml")
     return
-      <tr>
-      <td>
-	{xdb:store($dcmroot,$put-to, $doc)}
-      </td>
-      <td>
-	{
-      	  let $new_doc := doc($put-to)
-	  return util:document-name($new_doc)
-	}
-	{
-	  let $new_doc := doc($put-to)
-	  for $title in $new_doc//m:workDesc/m:work[1]/m:titleStmt/m:title[string()][1]
-	  let $new_title := concat($title//string()," (copy) ")
-	  return
-	    update value $title with $new_title
-	}    
-      </td>
-      </tr>
-}
+    let $odoc    := doc($old_file)
+    let $stored  := xdb:store($dcmroot,$new_file, $odoc )
+    let $new_doc := doc($new_file)
+    for $title in $new_doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1][string()]
+    let $new_title := concat($title//string()," (copy) ")
+    let $upd := update replace $title[string()][1] with <m:title>{$new_title}</m:title>
+    return <tr><td>{$title[string()][1]//string()}</td><td>{$new_title}</td></tr>
+  }
 </table>
 
 

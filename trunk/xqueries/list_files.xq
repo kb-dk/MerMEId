@@ -29,12 +29,12 @@ declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
 
 declare variable $sort-options :=
-(<option value="null,work_number">Work number</option>,
-<option value="person,work_number">Composer,Work number</option>,
-<option value="person,title">Composer,Title</option>,
+(<option value="person,title">Composer,Title</option>,
 <option value="person,date">Composer, Year</option>,
+<option value="person,work_number">Composer,Work number</option>,
 <option value="date,person">Year, Composer</option>,
-<option value="date,title">Year, Title</option>
+<option value="date,title">Year, Title</option>,
+<option value="null,work_number">Work number</option>
 );
 
 
@@ -74,9 +74,9 @@ declare function local:format-reference(
 	      border="0"
               title="View source" />
 	    </a>
-	    {app:copy-document-reference($doc)}
 	  </td>
 	  <td class="tools">{app:edit-form-reference($doc)}</td>
+	  <td class="tools">{app:copy-document-reference($doc)}</td>
 	  <td class="tools">{app:get-publication-reference($doc)}</td>
 	  <td class="tools">{app:delete-document-reference($doc)}</td>
 	</tr>
@@ -258,6 +258,7 @@ declare function local:format-reference(
             <th>Collection</th>
             <th class="tools" >XML</th>
             <th class="tools">Edit</th>
+            <th class="tools">Copy</th>
             <th class="tools">	   
               <form method="post" id="publish_form" action="/storage/publish.xq" >
                 <div id="publish">

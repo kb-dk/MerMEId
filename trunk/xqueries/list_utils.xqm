@@ -21,7 +21,7 @@ declare variable $app:query     := request:get-parameter("query",       "");
 declare variable $app:page      := request:get-parameter("page",        "1") cast as xs:integer;
 declare variable $app:number    := request:get-parameter("itemsPerPage","20") cast as xs:integer;
 declare variable $app:genre     := request:get-parameter("genre",       "")   cast as xs:string;
-declare variable $app:sortby    := request:get-parameter("sortby",      "null,work_number") cast as xs:string;
+declare variable $app:sortby    := request:get-parameter("sortby",      "person,title") cast as xs:string;
 declare variable $app:from      := ($app:page - 1) * $app:number + 1;
 declare variable $app:to        :=  $app:from      + $app:number - 1;
 
@@ -153,7 +153,7 @@ declare function app:generate-href($field as xs:string,
       <a  target="_blank"
       title="View" 
       href="/storage/present.xq?doc={util:document-name($doc)}">
-	{$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[string()][1]/string()}
+	{$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()}
       </a>
       return $ref
     };
@@ -240,7 +240,7 @@ declare function app:generate-href($field as xs:string,
 	<input type="hidden" 
 	value="copy"
 	name="{util:document-name($doc)}" />
-	<input type="submit" 
+	<input type="image" 
 	src="/editor/images/copy.gif"  
 	name="button"
 	value="copy"
