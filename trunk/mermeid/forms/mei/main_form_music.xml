@@ -479,6 +479,7 @@
 								</xf:trigger>
 								<xf:repeat nodeset="m:instrVoiceGrp" id="repeat-ensemble">
 									<h:fieldset>
+										<xi:include href="includes/instrvoicegrp-input.xml" parse="xml"/>
 										<h:legend>
 											<xf:output value="if (m:head!='') then m:head else '[Ensemble]'"/> &#160;
 											<dcm:element-buttons 
@@ -535,7 +536,7 @@
 													<xxf:variable name="ensemble" select="."></xxf:variable>
 													<xf:action if="../m:head=''">
 														<!-- set ensemble name if empty -->
-														<xf:setvalue ref="../m:head" value="instance('ensembles')/m:instrVoiceGrp[@code=$ensemble]"/>
+														<!--<xf:setvalue ref="../m:head" value="instance('ensembles')/m:instrVoiceGrp[@code=$ensemble]"/>-->
 													</xf:action>
 												</xf:action>
 											</xf:select1>

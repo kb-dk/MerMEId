@@ -3,6 +3,7 @@
     xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
     xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:dcm="http://www.kb.dk/dcm"
     xmlns:xi="http://www.w3.org/2001/XInclude">
     <h:span class="fixed_width_mediumlong">
         <xf:input ref="@count" class="minimal_length">
@@ -35,4 +36,5 @@
             </xf:action>
         </xf:action>
     </xf:select1>
+    <dcm:attribute-editor/>
 </h:span>

@@ -144,8 +144,8 @@
                         </h:h3> 
                     </xf:group>
                 </h:div>
-            
-               
+                
+                
                 <h:div class="blocklabel strong">Component <h:a class="help">?<h:span class="comment">A music "component" (in FRBR terms: component expression) 
                     describes a specific section of the music, e.g. a movement, act, or scene</h:span></h:a>
                     <dcm:attribute-editor ref="."/>
@@ -412,58 +412,91 @@
                                     <xf:group ref=".[count(preceding-sibling::m:instrVoiceGrp)=0]">
                                         <h:span class="blocklabel">Ensembles</h:span>
                                     </xf:group>
-                                    <xxf:variable name="topLevelEnsemble" select="."/>
-                                    <xxf:variable name="id" select="@xml:id"/>
-                                    <h:div>
-                                        <!-- the reference to the top level instrumentation is provided by the n attribute -->
+                                    <h:fieldset>
+                                        <xxf:variable name="topLevelEnsemble" select="."/>
+                                        <xxf:variable name="id" select="@xml:id"/>
+                                        <!-- the reference to the corresponding top level instrumentation is provided by the n attribute -->
+                                        
                                         <xf:group ref=".[@xml:id=$thisInstrumentation/m:instrVoiceGrp/@n]">
-                                            <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/>
-                                                    <h:span>
-                                                        <xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>
-                                                        <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
-                                                    </h:span>
-                                                </xf:label>
-                                                <xf:action ev:event="DOMActivate">
-                                                    <xf:delete context="$thisInstrumentation" nodeset="m:instrVoiceGrp[@n=$id]"/>
-                                                </xf:action>
-                                            </xf:trigger>
+                                            <!-- there is a copy of the corresponding instrVoiceGrp at this sub-level -->
+                                            <xf:group ref="$thisInstrumentation/m:instrVoiceGrp[@n=$id]">
+                                                <h:legend>
+                                                    <xf:trigger appearance="minimal">
+                                                        <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/>
+                                                            <h:span>
+                                                                <!--<xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>-->
+                                                                <!--<xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>-->
+                                                                
+                                                            </h:span>
+                                                        </xf:label>
+                                                        <xf:action ev:event="DOMActivate">
+                                                            <xf:delete context="$thisInstrumentation" nodeset="m:instrVoiceGrp[@n=$id]"/>
+                                                        </xf:action>
+                                                    </xf:trigger>
+                                                    <xf:input ref="m:head" class="long"/>                                                                
+                                                    <dcm:attribute-editor ref="m:head"/>
+                                                    <xf:select1 ref="@code" class="long">
+                                                        <xf:label>Standard code <h:a class="help">?<h:span 
+                                                            class="comment">Choosing a standard MARC code optimizes data  
+                                                            compatibility and interchangeability with other systems. <h:br/>
+                                                            A code should be supplied also when you do not want the ensemble 
+                                                            to have a heading (name).
+                                                        </h:span></h:a></xf:label>
+                                                        <xf:itemset nodeset="instance('ensembles')/m:instrVoiceGrp">
+                                                            <xf:label><xf:output value="if (@code!='') then concat(@code, ' (',m:head,')') else '- Please select -'"/></xf:label>
+                                                            <xf:value ref="@code"/>
+                                                        </xf:itemset>
+                                                        <xf:action ev:event="xforms-value-changed">
+                                                            <xxf:variable name="ensemble" select="."></xxf:variable>
+                                                            <xf:action if="../m:head=''">
+                                                                <!-- set ensemble name if empty -->
+                                                                <xf:setvalue ref="../m:head" value="instance('ensembles')/m:instrVoiceGrp[@code=$ensemble]"/>
+                                                            </xf:action>
+                                                        </xf:action>
+                                                    </xf:select1>
+                                                    <dcm:attribute-editor ref="."/>
+                                                </h:legend>
+                                                <h:div class="vertical_spacer"/> 
+                                            </xf:group>
                                         </xf:group>
+                                        
                                         <xf:group ref=".[not(@xml:id=$thisInstrumentation/m:instrVoiceGrp/@n)]">
-                                            <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this ensemble"/>
-                                                    <h:span class="disabled">
-                                                        <xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>
-                                                        <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
-                                                    </h:span>
-                                                </xf:label>
-                                                <xf:action ev:event="DOMActivate">
-                                                    <!-- put a copy in the temp instance and turn it into a reference before putting it in place -->
-                                                    <xf:delete context="instance('temp')/element" nodeset="*"/>
-                                                    <xf:insert context="instance('temp')/element" nodeset="m:instrVoiceGrp" origin="$topLevelEnsemble"/>
-                                                    <!-- remove child elements -->
-                                                    <xf:delete context="instance('temp')/element/m:instrVoiceGrp" nodeset="m:instrVoice"/>
-                                                    <!-- move the main element's @xml:id to @n for identification (to do: add attribute @sameas for this?) -->
-                                                    <xf:setvalue ref="instance('temp')/element/*[1]/@n" value="instance('temp')/element/*[1]/@xml:id"/>
-                                                    <xf:delete context="instance('temp')/element/*[1]" nodeset="*|@*[name()!='n' and name()!='xml:id']"/>
-                                                    <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-                                                    <xf:insert context="$thisInstrumentation" nodeset="m:instrVoiceGrp" 
-                                                        origin="instance('temp')/element/m:instrVoiceGrp" at="1" position="before"/>
-                                                    
-                                                    <!-- move the new element into place according to the top level instrumentation -->
-                                                    <!-- keep moving down until the order fits the model or reaching the end -->
-                                                    <xf:action while="$topLevelEnsemble/preceding-sibling::m:instrVoiceGrp/@xml:id[.!=$id][.=$thisInstrumentation/m:instrVoiceGrp[@n[.=$id]]/following-sibling::m:instrVoiceGrp/@n]
-                                                        and count($thisInstrumentation/m:instrVoiceGrp[@n=$id]/preceding-sibling::*)+1 &lt; count($thisInstrumentation/*)">
-                                                        <xxf:variable name="pos" select="count($thisInstrumentation/m:instrVoiceGrp[@n=$id]/preceding-sibling::*)+1"/>
-                                                        <!-- move new element down one position -->
-                                                        <xf:insert context="$thisInstrumentation" origin="$thisInstrumentation/*[$pos]"
-                                                            nodeset="*" at="$pos+1"/>
-                                                        <xf:delete context="$thisInstrumentation" nodeset="*" at="$pos"/>
-                                                    </xf:action>                                                    
-                                                    <!-- end moving -->
-                                                    
-                                                </xf:action>
-                                            </xf:trigger>
+                                            <!-- a copy of this instrVoiceGrp does not exist at this sub-level yet -->
+                                            <h:legend>
+                                                <xf:trigger appearance="minimal">
+                                                    <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this ensemble"/>
+                                                        <h:span class="disabled">
+                                                            <xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>
+                                                            <!--<xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>-->
+                                                        </h:span>
+                                                    </xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <!-- put a copy in the temp instance and turn it into a reference before putting it in place -->
+                                                        <xf:delete context="instance('temp')/element" nodeset="*"/>
+                                                        <xf:insert context="instance('temp')/element" nodeset="m:instrVoiceGrp" origin="$topLevelEnsemble"/>
+                                                        <!-- move the main element's @xml:id to @n for identification (to do: add attribute @sameas for this?) -->
+                                                        <xf:setvalue ref="instance('temp')/element/*[1]/@n" value="instance('temp')/element/*[1]/@xml:id"/>
+                                                        <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                                                        <!-- delete instrVoice child elements -->
+                                                        <xf:delete context="instance('temp')/element/m:instrVoiceGrp" nodeset="m:instrVoice"/>
+                                                        <xf:insert context="$thisInstrumentation" nodeset="m:instrVoiceGrp" 
+                                                            origin="instance('temp')/element/m:instrVoiceGrp" at="1" position="before"/>
+                                                        
+                                                        <!-- move the new element into place according to the top level instrumentation -->
+                                                        <!-- keep moving down until the order fits the model or reaching the end -->
+                                                        <xf:action while="$topLevelEnsemble/preceding-sibling::m:instrVoiceGrp/@xml:id[.!=$id][.=$thisInstrumentation/m:instrVoiceGrp[@n[.=$id]]/following-sibling::m:instrVoiceGrp/@n]
+                                                            and count($thisInstrumentation/m:instrVoiceGrp[@n=$id]/preceding-sibling::*)+1 &lt; count($thisInstrumentation/*)">
+                                                            <xxf:variable name="pos" select="count($thisInstrumentation/m:instrVoiceGrp[@n=$id]/preceding-sibling::*)+1"/>
+                                                            <!-- move new element down one position -->
+                                                            <xf:insert context="$thisInstrumentation" origin="$thisInstrumentation/*[$pos]"
+                                                                nodeset="*" at="$pos+1"/>
+                                                            <xf:delete context="$thisInstrumentation" nodeset="*" at="$pos"/>
+                                                        </xf:action>                                                    
+                                                        <!-- end moving -->
+                                                        
+                                                    </xf:action>
+                                                </xf:trigger>
+                                            </h:legend>
                                         </xf:group>
                                         
                                         <!-- performers within this ensemble -->
@@ -477,16 +510,19 @@
                                                     <xf:group ref=".[@xml:id=$thisEnsemble/m:instrVoice/@n]">
                                                         <xf:trigger appearance="minimal">
                                                             <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
-                                                                <h:span>
+                                                                <!--<h:span>
                                                                     <xf:output value="@count"/>
                                                                     <xf:output value="."/>
                                                                     <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
-                                                                </h:span>
+                                                                    </h:span>-->
                                                             </xf:label>
                                                             <xf:action ev:event="DOMActivate">
                                                                 <xf:delete context="$thisEnsemble" nodeset="m:instrVoice[@n=$thisTopLevelPerformer/@xml:id]"/>
                                                             </xf:action>
                                                         </xf:trigger>
+                                                        <xf:group ref="$thisEnsemble/m:instrVoice[@n=$perfId]">
+                                                            <xi:include href="includes/instrvoice-input.xml" parse="xml"/>
+                                                        </xf:group>
                                                     </xf:group>
                                                     <xf:group ref=".[not(@xml:id=$thisEnsemble/m:instrVoice/@n)]">
                                                         <xf:trigger appearance="minimal">
@@ -502,7 +538,7 @@
                                                                 <xf:delete context="instance('temp')/element" nodeset="*"/>
                                                                 <xf:insert context="instance('temp')/element" nodeset="m:instrVoice" origin="$thisTopLevelPerformer"/>
                                                                 <xf:setvalue ref="instance('temp')/element/*[1]/@n" value="instance('temp')/element/*[1]/@xml:id"/>
-                                                                <xf:delete context="instance('temp')/element/*[1]" nodeset="*|text()|@*[name()!='n' and name()!='xml:id']"/>
+                                                                <!--<xf:delete context="instance('temp')/element/*[1]" nodeset="*|text()|@*[name()!='n' and name()!='xml:id']"/>-->
                                                                 <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
                                                                 <xxf:variable name="insertPoint" select="count(instance('temp')/element/m:instrVoice/m:head)"/>
                                                                 <xf:insert context="$thisEnsemble" nodeset="*" 
@@ -517,7 +553,6 @@
                                                                     <xf:delete context="$thisEnsemble" nodeset="*" at="$pos"/>
                                                                 </xf:action>                                                    
                                                                 <!-- end moving -->
-                                                                
                                                             </xf:action>
                                                         </xf:trigger>
                                                     </xf:group>
@@ -525,12 +560,52 @@
                                             </xf:repeat>
                                         </xf:group>
                                         <!-- end performers in ensemble -->
+                                    </h:fieldset>
+                                </xf:repeat>
+                                
+                                <!-- list ensembles not linked to top-level ensembles  -->
+                                <xf:repeat nodeset="m:instrVoiceGrp[count(.[@n=$topLevelInstrumentation/m:instrVoiceGrp/@xml:id])=0]">
+                                    <xxf:variable name="thisId" select="@xml:id"/>
+                                    <h:fieldset>
+                                        <h:legend>
+                                            <xf:trigger appearance="minimal">
+                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/></xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:delete nodeset="."/>
+                                                </xf:action>
+                                            </xf:trigger>
+                                            <xf:input ref="m:head" class="long"/>                                                                
+                                            <dcm:attribute-editor ref="m:head"/>
+                                            <xf:select1 ref="@code" class="long">
+                                                <xf:label>Standard code <h:a class="help">?<h:span 
+                                                    class="comment">Choosing a standard MARC code optimizes data  
+                                                    compatibility and interchangeability with other systems. <h:br/>
+                                                    A code should be supplied also when you do not want the ensemble 
+                                                    to have a heading (name).
+                                                </h:span></h:a></xf:label>
+                                                <xf:itemset nodeset="instance('ensembles')/m:instrVoiceGrp">
+                                                    <xf:label><xf:output value="if (@code!='') then concat(@code, ' (',m:head,')') else '- Please select -'"/></xf:label>
+                                                    <xf:value ref="@code"/>
+                                                </xf:itemset>
+                                                <xf:action ev:event="xforms-value-changed">
+                                                    <xxf:variable name="ensemble" select="."></xxf:variable>
+                                                    <xf:action if="../m:head=''">
+                                                        <!-- set ensemble name if empty -->
+                                                        <xf:setvalue ref="../m:head" value="instance('ensembles')/m:instrVoiceGrp[@code=$ensemble]"/>
+                                                    </xf:action>
+                                                </xf:action>
+                                            </xf:select1>
+                                            <dcm:attribute-editor ref="."/>
+                                        </h:legend>
+                                        <h:div class="vertical_spacer"/> 
                                         
-                                    </h:div>
+                                        
+                                    </h:fieldset>
                                 </xf:repeat>
                                 <!-- end ensembles -->
                                 
                                 <!-- select performers -->
+                                <!-- list performers defines at top level -->
                                 <xf:repeat nodeset="$topLevelInstrumentation/m:instrVoice">
                                     <xf:group ref=".[count(preceding-sibling::m:instrVoice)=0]">
                                         <h:span class="blocklabel">Performers</h:span>
@@ -540,17 +615,14 @@
                                     <h:div>
                                         <xf:group ref=".[@xml:id=$thisInstrumentation/m:instrVoice/@n]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
-                                                    <h:span>
-                                                        <xf:output value="@count"/>
-                                                        <xf:output value="."/>
-                                                        <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
-                                                    </h:span>
-                                                </xf:label>
+                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:delete context="$thisInstrumentation" nodeset="m:instrVoice[@n=$thisTopLevelPerformer/@xml:id]"/>
                                                 </xf:action>
                                             </xf:trigger>
+                                            <xf:group ref="$thisInstrumentation/m:instrVoice[@n=$perfId]">
+                                                <xi:include href="includes/instrvoice-input.xml" parse="xml"/>
+                                            </xf:group>
                                         </xf:group>
                                         <xf:group ref=".[not(@xml:id=$thisInstrumentation/m:instrVoice/@n)]">
                                             <xf:trigger appearance="minimal">
@@ -566,7 +638,7 @@
                                                     <xf:delete context="instance('temp')/element" nodeset="*"/>
                                                     <xf:insert context="instance('temp')/element" nodeset="m:instrVoice" origin="$thisTopLevelPerformer"/>
                                                     <xf:setvalue ref="instance('temp')/element/*[1]/@n" value="instance('temp')/element/*[1]/@xml:id"/>
-                                                    <xf:delete context="instance('temp')/element/*[1]" nodeset="*|text()|@*[name()!='n' and name()!='xml:id']"/>
+                                                    <!--<xf:delete context="instance('temp')/element/*[1]" nodeset="*|text()|@*[name()!='n' and name()!='xml:id']"/>-->
                                                     <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
                                                     <xxf:variable name="insertPoint" select="count(instance('temp')/element/m:instrVoice/m:head)"/>
                                                     <xf:insert context="$thisInstrumentation" nodeset="*" 
@@ -587,6 +659,20 @@
                                     </h:div>
                                 </xf:repeat>
                             </xf:group>
+                            <!-- list performers not linked to top-level performers  -->
+                            <xf:repeat nodeset="$thisInstrumentation/m:instrVoice[count(.[@n=$topLevelInstrumentation/m:instrVoice/@xml:id])=0]">
+                                <xxf:variable name="thisId" select="@xml:id"/>
+                                <h:div>
+                                    <xf:trigger appearance="minimal">
+                                        <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:delete nodeset="."/>
+                                        </xf:action>
+                                    </xf:trigger>
+                                    <xi:include href="includes/instrvoice-input.xml" parse="xml"/>
+                                </h:div>
+                            </xf:repeat>
+                            
                             <!-- end select performers -->
                             
                         </h:fieldset>
@@ -618,6 +704,7 @@
                                         <xf:group ref=".[@xml:id=$thisCastList/m:castItem/@n]">
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this role"/>
+                                                    <!-- Roles cannot be edited at this level - only added or omitted -->
                                                     <h:span>
                                                         <xf:output value="m:role//text()[1]"/>
                                                     </h:span>
@@ -639,8 +726,10 @@
                                                     <xf:delete context="instance('temp')/element" nodeset="*"/>
                                                     <xf:insert context="instance('temp')/element" nodeset="m:castItem" origin="$thisTopLevelCast"/>
                                                     <xf:setvalue ref="instance('temp')/element/*[1]/@n" value="instance('temp')/element/*[1]/@xml:id"/>
-                                                    <xf:delete context="instance('temp')/element/*[1]" nodeset="*|@*[name()!='n' and name()!='xml:id']"/>
-                                                    <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                                                    <!--<xf:delete context="instance('temp')/element/*[1]" nodeset="*|@*[name()!='n' and name()!='xml:id']"/>-->
+                                                    <xf:action xxf:iterate="instance('temp')/element//*[@xml:id]">
+                                                        <xf:setvalue ref="@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                                                    </xf:action>
                                                     <xf:insert context="$thisCastList" nodeset="*" 
                                                         origin="instance('temp')/element/m:castItem" at="1" position="before"/>
                                                     <!-- move the new element into place according to the top level instrumentation -->
@@ -656,6 +745,21 @@
                                                 </xf:action>
                                             </xf:trigger>
                                         </xf:group>
+                                    </h:div>
+                                </xf:repeat>
+                                <!-- list castItems not linked to top-level castList -->
+                                <xf:repeat nodeset="$thisCastList/m:castItem[count(.[@n=$topLevelCastList/m:castItem/@xml:id])=0]">
+                                    <h:div>
+                                        <xf:trigger appearance="minimal">
+                                            <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
+                                                <h:span>
+                                                    <xf:output value="m:role//text()[1]"/>
+                                                </h:span>
+                                            </xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:delete nodeset="."/>
+                                            </xf:action>
+                                        </xf:trigger>
                                     </h:div>
                                 </xf:repeat>
                             </xf:group>
