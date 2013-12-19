@@ -479,7 +479,7 @@
 								</xf:trigger>
 								<xf:repeat nodeset="m:instrVoiceGrp" id="repeat-ensemble">
 									<h:fieldset>
-										<xi:include href="includes/instrvoicegrp-input.xml" parse="xml"/>
+										<!--<xi:include href="includes/instrvoicegrp-input.xml" parse="xml"/>-->
 										<h:legend>
 											<xf:output value="if (m:head!='') then m:head else '[Ensemble]'"/> &#160;
 											<dcm:element-buttons 
