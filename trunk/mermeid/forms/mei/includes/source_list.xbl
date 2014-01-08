@@ -59,6 +59,7 @@
                 
                 <xf:instance id="local-temp">
                     <temp-values>
+                        <mode/>
                         <target_uri/>
                         <itemList xmlns="http://www.music-encoding.org/ns/mei">
                             <!-- empty item template -->
@@ -486,10 +487,23 @@
                                     <xf:action ev:event="DOMActivate">
                                         <xxf:hide dialog="add_source_dialog"></xxf:hide>
                                         <xf:setvalue ref="instance('local-temp')/target_uri" value="concat($parameters/dcm:server_name,'storage/cross-link.xq')"/>
+                                        <xf:setvalue ref="instance('local-temp')/mode" value="reference"/>
                                         <xf:send submission="load-fileList"/>
                                         <xxf:show dialog="source_reference_dialog"/>
                                     </xf:action>
-                                </xf:trigger> 
+                                </xf:trigger> <!--
+                                <h:br/>
+                                <xf:trigger class="long">
+                                    <xf:label><h:img src="/../editor/images/copy.gif" 
+                                        title="Add source as link to an external description"/> Copy to external source</xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xxf:hide dialog="add_source_dialog"></xxf:hide>
+                                        <xf:setvalue ref="instance('local-temp')/target_uri" value="concat($parameters/dcm:server_name,'storage/cross-link.xq')"/>
+                                        <xf:setvalue ref="instance('local-temp')/mode" value="copy"/>
+                                        <xf:send submission="load-fileList"/>
+                                        <xxf:show dialog="source_reference_dialog"/>
+                                    </xf:action>
+                                </xf:trigger> -->
                             </h:div>
                         </xxf:dialog>
                         
