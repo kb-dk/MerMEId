@@ -13,22 +13,22 @@ declare function list:getlist (
 	let $list  := 
 	if($coll) then 
 	if($query) then
-	for $doc in collection("/db/dcm")/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll and fn:string-length(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title[1]/string())>0 and ft:query(.,$query)] 
+	for $doc in collection("/db/dcm")/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll and string-length(string-join(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title[1],""))>0 and ft:query(.,$query)] 
 
 	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:title[1]/string()
 	return $doc 
 	else
-	for $doc in collection("/db/dcm")/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll and fn:string-length(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title[1]/string())>0 ] 
+	for $doc in collection("/db/dcm")/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll and string-length(string-join(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title[1],""))>0 ] 
 	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:title[1]/string()
 
 	return $doc 
         else
 	if($query) then
-        for $doc in collection("/db/dcm")/m:mei[ft:query(.,$query) and fn:string-length(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title[1]/string())>0 ]
+        for $doc in collection("/db/dcm")/m:mei[ft:query(.,$query) and string-length(string-join(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title[1],""))>0 ]
 	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:title[1]/string()
 	return $doc
         else
-        for $doc in collection("/db/dcm")/m:mei[fn:string-length(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title[1]/string())>0]
+        for $doc in collection("/db/dcm")/m:mei[string-length(string-join(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title[1],""))>0]
 	order by $doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt/m:title[1]/string()
 	return $doc
 	
