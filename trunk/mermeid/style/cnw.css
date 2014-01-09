@@ -2,11 +2,6 @@
     background-color: #6699b9;
 }
 
-#menu a:hover, #menu .selected {
-    color: #fff;
-    background-color: #7ab7dd;
-}
-
 #header p {
     padding: 0px;
 }
@@ -15,3 +10,29 @@
     height: 2px; /* composer not shown in the CNW result list */
 }
 
+/* Top menu */
+
+#menu {
+    height: 24px;
+    padding: 0 10px 0 10px;
+    border-bottom: 1px solid #fff;
+}
+
+#menu a {
+    display: block;
+    float:left;
+    width: auto;
+    height: 21px;
+    padding: 3px 10px 0 10px;
+    text-decoration: none;
+    color: #fff;
+}
+
+#menu a:hover, #menu .selected {
+    color: #fff;
+    background-color: #7ab7dd;
+}
+
+.change_language {
+    float: right;
+}

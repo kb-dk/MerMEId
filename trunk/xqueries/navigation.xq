@@ -184,6 +184,12 @@ declare function local:format-reference(
 			<h1>CNW</h1>
 			<h2>A Thematic Catalogue of Carl Nielsen&apos;s Works</h2>
       </div> <!-- end header -->
+      <div id="menu">
+             <a href="index.html">Home</a> 
+             <a href="introduction.html">Introduction</a>
+             <a href="navigation.xq" class="selected">Catalogue</a> 
+      </div> <!-- end menu -->
+
       <div id="main">
          <div class="content_box">
     {
