@@ -140,7 +140,7 @@ declare function filter:print-filters(
     <div class="genre_filter filter_block">
       {
 
-        let $vocabulary := doc("http://disdev-01.kb.dk/editor/forms/mei/model/keywords.xml")
+        let $vocabulary := doc(concat("http://",request:get-header('HOST'),"/editor/forms/mei/model/keywords.xml"))
         (:distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string()):)
         
 (:	for $genre in $vocabulary/m:classification/m:termList[@label="level2"]/m:term/string()  :)

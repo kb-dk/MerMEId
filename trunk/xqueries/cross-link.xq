@@ -36,8 +36,6 @@ declare variable $target   :=
 declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
 
-declare variable $host_port_context :=  "disdev-01.kb.dk";
-
 declare function app:format-doc($doc  as node()) as node() {
 
     let $ref   := 

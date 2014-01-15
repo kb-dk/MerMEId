@@ -46,7 +46,8 @@ declare function local:format-reference(
 
 {
 
-   let $vocabulary := doc("http://disdev-01.kb.dk/editor/forms/mei/model/keywords.xml")
+  
+   let $vocabulary := doc(concat("http://",request:get-header('HOST'),"/editor/forms/mei/model/keywords.xml"))
    (: the first level 1 and 2 genre keywords are assumed to be the principal ones - all others are hidden :)
    let $genre1 := $doc//m:workDesc/m:work/m:classification/m:termList/m:term[.=$vocabulary//m:termList[@label='level1']/m:term and .!=''][1]/string()
    let $genre2 := $doc//m:workDesc/m:work/m:classification/m:termList/m:term[.=$vocabulary//m:termList[@label='level2']/m:term and .!=''][1]/string()
