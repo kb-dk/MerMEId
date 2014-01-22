@@ -1604,6 +1604,7 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:if>
+			<xsl:if test="../m:identifier[text()]"><xsl:text> </xsl:text></xsl:if>
 		</xsl:for-each>
 		<xsl:apply-templates select="m:identifier"/><xsl:if 
 			test="m:identifier[text()] or m:repository[*//text()]">. </xsl:if>
