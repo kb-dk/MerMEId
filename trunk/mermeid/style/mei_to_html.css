@@ -342,8 +342,18 @@ table.source_component_list td.label_cell {
     font-size: 1.3em;
     line-height: 1em;
     font-weight: bold;
+    display: inline-table;
+    vertical-align: middle;
 }
 
+.meter_count {
+    display: table-cell;
+    border-bottom: 1px solid #000;
+}
+
+.meter_unit {
+    display: table-row;
+}
 .runes {
     font-family: Hnias, Junicode, sans-serif, serif;
 }

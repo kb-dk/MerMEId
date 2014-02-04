@@ -307,7 +307,11 @@
 
 			<!-- meter, key, incipit – only relevant at this level in single movement works -->
 			<xsl:apply-templates select="m:tempo[text()]"/>
-			<xsl:apply-templates select="m:meter[normalize-space(concat(@count,@unit,@sym))]"/>
+			<xsl:if test="m:meter[normalize-space(concat(@count,@unit,@sym))]">
+				<p>
+					<xsl:apply-templates select="m:meter"/>
+				</p>
+			</xsl:if>
 			<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
 			<xsl:apply-templates select="m:extent"/>
 			<xsl:apply-templates select="m:incip"/>
@@ -676,7 +680,11 @@ select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[n
 			select="m:perfMedium[m:instrumentation[m:instrVoice or m:instrVoiceGrp] or m:castList/m:castItem]"
 			mode="subLevel"/>
 		<xsl:apply-templates select="m:tempo[text()]"/>
-		<xsl:apply-templates select="m:meter[normalize-space(concat(@count,@unit,@sym))]"/>
+		<xsl:if test="m:meter[normalize-space(concat(@count,@unit,@sym))]">
+			<p>
+				<xsl:apply-templates select="m:meter"/>
+			</p>
+		</xsl:if>
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
 		<xsl:apply-templates select="m:extent"/>
 		<xsl:apply-templates select="m:incip"/>
@@ -839,29 +847,33 @@ select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[n
 	<xsl:template match="m:incip/m:score"/>
 
 	<xsl:template match="m:meter">
-		<p>
-			<xsl:if test="position() = 1">
-				<span class="label">Metre: </span>
-			</xsl:if>
-			<xsl:choose>
-				<xsl:when test="@count!='' and @unit!=''">
-					<span class="meter">
-						<xsl:value-of select="concat(@count,'/',@unit)"/>
+		<xsl:if test="position() = 1">
+			<span class="label">Metre: </span>
+		</xsl:if>
+		<xsl:choose>
+			<xsl:when test="@count!='' and @unit!=''">
+				<span class="meter">
+					<span class="meter_count">
+						<xsl:value-of select="@count"/>
 					</span>
-				</xsl:when>
-				<xsl:otherwise>
-					<span class="music_symbols time_signature">
-						<xsl:choose>
-							<xsl:when test="@sym='common'">&#x1d134;</xsl:when>
-							<xsl:when test="@sym='cut'">&#x1d135;</xsl:when>
-						</xsl:choose>
+					<span class="meter_unit">
+						<xsl:value-of select="@unit"/>
 					</span>
-				</xsl:otherwise>
-			</xsl:choose>
-			<xsl:if test="position()=last()">
-				<br/>
-			</xsl:if>
-		</p>
+					
+				</span>
+			</xsl:when>
+			<xsl:otherwise>
+				<span class="music_symbols time_signature">
+					<xsl:choose>
+						<xsl:when test="@sym='common'">&#x1d134;</xsl:when>
+						<xsl:when test="@sym='cut'">&#x1d135;</xsl:when>
+					</xsl:choose>
+				</span>
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:if test="position()=last()">
+			<br/>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template match="m:key[@pname or @accid or @mode]">
