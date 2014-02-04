@@ -359,8 +359,12 @@
 
 			<!-- version history -->
 			<xsl:if test="count(/m:mei/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
+<!--				<xsl:apply-templates
+select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[name()!='biblList']//text()]]]"/>-->
+				<!-- version history test Jan. 2014 -->
 				<xsl:apply-templates
-					select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[name()!='biblList']//text()]]]"/>
+					select="m:history[//text()]"/>
+				<!-- end version history test -->
 			</xsl:if>
 
 			<!-- version-specific sources -->
