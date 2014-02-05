@@ -339,21 +339,24 @@ table.source_component_list td.label_cell {
 
 .meter {
     font-family: 'times new roman', times, serif; 
-    font-size: 1.3em;
     line-height: 1em;
     font-weight: bold;
-    display: inline-table;
     vertical-align: middle;
+    display: inline-block;
+    text-align: center;
+    width: auto;
+}
+
+.meter_count, .meter_unit {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
 }
 
 .meter_count {
-    display: table-cell;
-    border-bottom: 1px solid #000;
+    text-decoration: underline;
 }
 
-.meter_unit {
-    display: table-row;
-}
 .runes {
     font-family: Hnias, Junicode, sans-serif, serif;
 }

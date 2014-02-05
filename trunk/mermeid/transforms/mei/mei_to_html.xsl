@@ -856,10 +856,10 @@ select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[n
 					<span class="meter_count">
 						<xsl:value-of select="@count"/>
 					</span>
+					<br/>
 					<span class="meter_unit">
 						<xsl:value-of select="@unit"/>
 					</span>
-					
 				</span>
 			</xsl:when>
 			<xsl:otherwise>

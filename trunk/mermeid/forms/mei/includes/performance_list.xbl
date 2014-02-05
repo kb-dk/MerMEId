@@ -106,12 +106,10 @@
                     
                     <h:fieldset>
                         <h:legend>Performances
-                            <xf:group ref=".[$parent='expression' and normalize-space($title)!='']">
-                                <xf:output value="concat(' - ',$title)"/>
-                            </xf:group>
                             <!--<dcm:attribute-editor ref=".[$settings/dcm:attr='true']"/>-->
                         </h:legend>
                         <h:div class="level">
+                            <!--
                             <xf:group ref=".[$parent='work']">
                                 Level: Work 
                             </xf:group>
@@ -123,6 +121,7 @@
                                     Level: Component
                                 </xf:group>
                             </xf:group>
+                            -->
                             <h:a class="help">?<h:span class="comment">Performances may be listed at work level and at version level. 
                                 Listing performances of individual versions requires that versions  
                                 have been defined (on the Music tab) and that they have been given a title 
