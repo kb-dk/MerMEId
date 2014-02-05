@@ -140,11 +140,11 @@ public class FilterUtilityMethods  {
 
 	String targetUri  = this.uriConstructor(request,response);	
 
-	String mime       = this.props.getProperty("get." 
+	String mime       = this.props.getProperty("put." 
 						   + this.getBase() 
 						   + ".mime");
 
-	String charset    = this.props.getProperty("get." 
+	String charset    = this.props.getProperty("put." 
 						   + this.getBase()
 						   + ".charset");
 
@@ -179,7 +179,7 @@ public class FilterUtilityMethods  {
 	    new org.apache.commons.httpclient.
 	    methods.StringRequestEntity(result,
 					contentType,
-					null);
+					charset);
 	
 	logger.debug(".. result\n" + result);
 
