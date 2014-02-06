@@ -1083,7 +1083,7 @@ select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[n
 				<xsl:for-each select="m:creation/m:date[text()]">
 					<xsl:if test="position()=1">
 						<p><span class="p_heading"> Date of composition: </span>
-							<xsl:apply-templates/>. </p>
+							<xsl:apply-templates select="."/>. </p>
 					</xsl:if>
 				</xsl:for-each>
 				<xsl:for-each select="m:p[text()]">
@@ -1100,20 +1100,12 @@ select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[n
 					</table>
 				</xsl:for-each>
 				<!-- performances -->
-				<xsl:choose>
-					<!-- Only 1 expression, or work level performances -->
-					<xsl:when test="name(parent::node())='work' and count(../m:expressionList/m:expression)=1">
-						<!-- Performances entered at work level -->
-						<xsl:apply-templates select="../m:expressionList/m:expression/m:history/m:eventList[@type='performances' and m:event//*[name()!='genre' and name()!='head']/text()]"/>
-						<!-- Performances entered at expression level -->
-						<xsl:apply-templates select="m:eventList[@type='performances' and m:event//*[name()!='genre' and name()!='head']/text()]"/>
-					</xsl:when>
-					<!-- Multiple expressions (versions) -->
-					<xsl:when
-						test="name(parent::node())!='work' and count(/m:mei/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression) &gt; 1">
-						<xsl:apply-templates select="m:eventList[@type='performances' and m:event//text()]"/>
-					</xsl:when>
-				</xsl:choose>
+				<xsl:if test="name(parent::node())='work' and count(../m:expressionList/m:expression)=1">
+					<!-- Performances entered at expression level displayed at work level if only one expression -->
+					<xsl:apply-templates select="../m:expressionList/m:expression/m:history/m:eventList[@type='performances' and m:event//*[name()!='genre' and name()!='head']/text()]"/>
+				</xsl:if>
+				<xsl:apply-templates select="m:eventList[@type='performances' and m:event//text()]"/>
+				
 			</div>
 		</div>
 	</xsl:template>
@@ -2179,8 +2171,8 @@ select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[n
 				</p>
 				<div class="folded_content" style="display:none" id="revhist">
 					<table>
-						<th>Date</th><th>Responsible</th><th>Description</th>
-						<xsl:apply-templates select="m:change" mode="all"/>
+						<th>Date </th><th>Responsible </th><th>Description</th>
+						<xsl:apply-templates select="m:change[*//text() or @isodate!='' or @resp!='']" mode="all"/>
 					</table>
 				</div>
 			</div>
@@ -2189,9 +2181,19 @@ select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[n
 
 	<xsl:template match="m:revisionDesc/m:change" mode="all">
 		<tr>
-			<td><xsl:value-of select="@isodate"/></td>
-			<td><xsl:value-of select="@resp"/></td>
-			<td><xsl:apply-templates select="*"/></td>
+			<td><xsl:value-of select="@isodate"/><xsl:text>&#160;</xsl:text></td>
+			<td><xsl:value-of select="@resp"/><xsl:text>&#160;</xsl:text></td>
+			<td>
+				<!-- make sure cell are not empty -->
+				<xsl:choose>
+				<xsl:when test="*//text()">
+					<xsl:apply-templates select="descendant::node()[text()]"/>	
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:text>&#160;</xsl:text>
+				</xsl:otherwise>
+			</xsl:choose>
+			</td>
 		</tr>
 	</xsl:template>
 	
@@ -2547,7 +2549,7 @@ select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[n
 	<xsl:template match="m:lb">
 		<br/>
 	</xsl:template>
-	<xsl:template match="m:p">
+	<xsl:template match="m:p[child::text()]">
 		<p>
 			<xsl:apply-templates/>
 		</p>
