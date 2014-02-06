@@ -195,27 +195,7 @@
                         </xf:input>
                         <dcm:attribute-editor ref="m:tempo"/>
                         <h:br clear="all"/>  
-                        <dcm:create nodeset="m:meter"
-                            label="Add meter"
-                            origin="instance('empty-instance')/m:meiHead/m:workDesc//m:meter[1]"/>
-                        <xf:input ref="m:meter/@count" class="minimal_length">
-                            <xf:label class="fixed_width">Metre</xf:label>
-                        </xf:input>/<xf:input ref="m:meter/@unit" class="minimal_length"/> or symbol: 
-                        <xf:select1	ref="m:meter/@sym" class="auto_length">
-                            <xf:item>
-                                <xf:label>-</xf:label>
-                                <xf:value/>
-                            </xf:item>
-                            <xf:item>
-                                <xf:label>common time</xf:label>
-                                <xf:value>common</xf:value>
-                            </xf:item>
-                            <xf:item>
-                                <xf:label>cut time</xf:label>
-                                <xf:value>cut</xf:value>
-                            </xf:item>
-                        </xf:select1>
-                        <dcm:attribute-editor ref="m:meter"/>
+                        <xi:include href="includes/meter-input.xml" parse="xml"/>
                     </h:div>            
                     <dcm:create nodeset="m:key"
                         label="Add key"

@@ -165,46 +165,7 @@
 							</xf:trigger>
 							<dcm:attribute-editor ref="m:tempo"/>
 							<h:br clear="all"/>  
-
-							<dcm:create 
-								nodeset="m:meter"
-								label="Add metre"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:meter"/>
-							<xf:repeat nodeset="m:meter" id="repeat-meter">
-								<xxf:variable name="pos" select="position()"/> 
-								<xf:group ref=".[$pos!=1]">
-									<h:br/>
-								</xf:group>
-									<xf:input ref="@count" class="minimal_length">
-									<xf:label class="fixed_width">
-										<xf:output value="if ($pos=1) then 'Metre' else ''"/>
-										<h:a class="help">?<h:span class="comment">Either a fractional metre or a metre symbol (cut or common time) may be entered.
-											To create a mixed metre, add another metre.
-										</h:span></h:a>
-										
-									</xf:label>
-								</xf:input>/<xf:input ref="@unit" class="minimal_length"/> or symbol: 
-								<xf:select1	ref="@sym" class="auto_length">
-									<xf:item>
-										<xf:label> </xf:label>
-										<xf:value/>
-									</xf:item>
-									<xf:item>
-										<xf:label>c (common time)</xf:label>
-										<xf:value>common</xf:value>
-									</xf:item>
-									<xf:item>
-										<xf:label>¢ (cut time)</xf:label>
-										<xf:value>cut</xf:value>
-									</xf:item>
-								</xf:select1>
-								<dcm:element-buttons
-									triggers="add remove" 
-									nodeset="m:meter" 
-									index="repeat-meter"
-									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:meter"/>
-								<dcm:attribute-editor/>
-							</xf:repeat>
+							<xi:include href="includes/meter-input.xml" parse="xml"/>
 							
 							<h:br clear="all"/>
 							<dcm:create 
