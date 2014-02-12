@@ -682,6 +682,9 @@
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
 		<xsl:apply-templates select="m:extent"/>
 		<xsl:apply-templates select="m:incip"/>
+		<xsl:for-each select="m:notesStmt/m:annot[not(@type='links') and text()]">
+			<p><xsl:apply-templates/></p>
+		</xsl:for-each>
 		<xsl:apply-templates select="m:componentGrp"/>
 	</xsl:template>
 

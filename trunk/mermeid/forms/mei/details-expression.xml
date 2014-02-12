@@ -746,7 +746,37 @@
                         </h:fieldset>
                     </xf:group>
                     <!-- end cast selection -->
-                    
+                   
+                   
+                    <h:fieldset>
+                        <h:legend>Notes <h:a class="help">?<h:span class="comment">Any descriptional or other notes about this component</h:span></h:a></h:legend>
+                        <h:div class="vertical_spacer"/>
+                        <dcm:create 
+                            nodeset="m:notesStmt"
+                            label="Add annotation"
+                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:notesStmt"/>
+                        <xf:group ref="m:notesStmt">
+                            <dcm:create 
+                                nodeset="m:annot"
+                                label="Add annotation"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:notesStmt/m:annot"/>
+                            <xf:repeat nodeset="m:annot" id="repeat_expression_note">
+                                <h:div style="white-space:nowrap">
+                                    <xf:textarea ref="." class="notes"  mediatype="text/html">
+                                        <xf:label/> 
+                                    </xf:textarea>
+                                    <!-- tinyMCE -->
+                                    <!--<fr:tinymce ref="."/>-->
+                                    <dcm:element-buttons triggers="remove" 
+                                        index="repeat_expression_note" 
+                                        nodeset="m:annot" 
+                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:notesStmt/m:annot"/>
+                                    <dcm:attribute-editor ref="."/>
+                                </h:div>
+                            </xf:repeat>
+                        </xf:group>                        
+                    </h:fieldset>
+
                     <h:fieldset>
                         <h:legend>Edited score</h:legend>
                         <dcm:create nodeset="m:relationList"
@@ -774,10 +804,7 @@
                                 <dcm:attribute-editor ref="."/>
                             </h:div>
                         </xf:repeat>
-                        
                     </h:fieldset>
-                    
-                    
                     
                 </xf:group>
                 
