@@ -140,7 +140,6 @@
 					</xsl:for-each>
 				</h1>
 			</xsl:if>
-
 			<xsl:if
 				test="m:title[@type='alternative'][text()] |
 				m:title[@type='uniform'][text()]     |
@@ -363,12 +362,7 @@
 
 			<!-- version history -->
 			<xsl:if test="count(/m:mei/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
-<!--				<xsl:apply-templates
-select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[name()!='biblList']//text()]]]"/>-->
-				<!-- version history test Jan. 2014 -->
-				<xsl:apply-templates
-					select="m:history[//text()]"/>
-				<!-- end version history test -->
+				<xsl:apply-templates select="m:history[//text()]"/>
 			</xsl:if>
 
 			<!-- version-specific sources -->
@@ -2171,7 +2165,9 @@ select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[n
 				</p>
 				<div class="folded_content" style="display:none" id="revhist">
 					<table>
-						<th>Date </th><th>Responsible </th><th>Description</th>
+						<tr>
+							<th>Date </th><th>Responsible </th><th>Description</th>
+						</tr>
 						<xsl:apply-templates select="m:change[*//text() or @isodate!='' or @resp!='']" mode="all"/>
 					</table>
 				</div>
@@ -2186,13 +2182,13 @@ select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[n
 			<td>
 				<!-- make sure cell are not empty -->
 				<xsl:choose>
-				<xsl:when test="*//text()">
-					<xsl:apply-templates select="descendant::node()[text()]"/>	
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:text>&#160;</xsl:text>
-				</xsl:otherwise>
-			</xsl:choose>
+					<xsl:when test="*//text()">
+						<xsl:apply-templates select="*//text()"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:text>&#160;</xsl:text>
+					</xsl:otherwise>
+				</xsl:choose>
 			</td>
 		</tr>
 	</xsl:template>
@@ -2553,6 +2549,9 @@ select="m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event[*[n
 		<p>
 			<xsl:apply-templates/>
 		</p>
+	</xsl:template>
+	<xsl:template match="m:p[not(child::text())]">
+		<!-- ignore -->
 	</xsl:template>
 	<xsl:template match="m:rend[@fontweight = 'bold'][text()]">
 		<b>

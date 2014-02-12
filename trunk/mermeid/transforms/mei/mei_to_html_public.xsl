@@ -8,6 +8,7 @@
 	Danish Centre for Music Publication
 	The Royal Library, Copenhagen
 	
+	
 -->
 
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" 
@@ -50,17 +51,18 @@
 						<!--<p>En tematisk-bibliografisk fortegnelse over Carl Nielsens værker</p>
 						<div class="line"> </div>-->
 					</div>
-					<!--
+					
 					<div id="menu">
 						<div class="change_language">
 							<a href="source_description_en.html">[English]</a>
 						</div>
-						<a href="dcm.htm">Forside</a>
-						<a href="dummy.htm">Alfabetisk oversigt</a>
+						<a href="cnw.html">Home</a>
+						<!--<a href="dummy.htm">Alfabetisk oversigt</a>
 						<a href="dummy.htm">Genreoversigt</a>
-						<a href="dummy.htm" class="selected">Avanceret søgning</a>
-						<a href="dummy.htm">Om CNW</a>
-					</div>-->
+						<a href="dummy.htm" class="selected">Avanceret søgning</a>-->
+						<a href="introduction.html">Introduction</a>
+						<a href="navigation.xq" class="selected">Catalogue</a>
+					</div>
 					<div id="main" class="main">
 						<div class="content_box">
 							<div id="backlink"><a href="javascript:history.back();">Back</a></div>
@@ -137,5 +139,10 @@
 			</xsl:if>
 		</xsl:element>
 	</xsl:template>	
+	
+	<!-- Revision history not shown in public -->
+	<xsl:template match="m:revisionDesc">
+		<xsl:apply-templates select="m:change[normalize-space(@isodate)!=''][last()]" mode="last"/>
+	</xsl:template>
 
 </xsl:stylesheet>
