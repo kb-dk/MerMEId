@@ -255,16 +255,16 @@
 		<!-- related files -->
 		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:relationList" mode="external"/>
 
-		<!-- show work history first if more than one version -->
-		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
-			<xsl:apply-templates
-				select="m:meiHead/
-				m:workDesc/
-				m:work/
-				m:history[m:creation[*/text()] or m:p[text()] or m:eventList[m:event/*[name()!='genre' and name()!='head']//text()]]"/>
-		</xsl:if>
-
-
+		<!-- work history -->
+		<xsl:apply-templates
+			select="m:meiHead/m:workDesc/m:work/m:history[m:creation[*/text()] or m:p[text()]]"
+			mode="history"/>
+		
+		<xsl:apply-templates 
+			select="m:meiHead/m:workDesc/m:work/m:history"
+			mode="performances"/>
+		
+				
 		<!-- top-level expression (versions and one-movement work details) -->
 		<xsl:for-each select="m:meiHead/
 			m:workDesc/
@@ -334,7 +334,10 @@
 					</xsl:for-each>
 				</p>
 			</xsl:for-each>
-
+			
+			<!-- version history -->
+			<xsl:apply-templates select="m:history[//text()]" mode="history"/>
+			
 			<!-- components (movements) -->
 			<xsl:for-each
 				select="m:componentGrp[normalize-space(*//text()[1]) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">
@@ -360,9 +363,9 @@
 				</div>
 			</xsl:for-each>
 
-			<!-- version history -->
+			<!-- version performances -->
 			<xsl:if test="count(/m:mei/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
-				<xsl:apply-templates select="m:history[//text()]"/>
+				<xsl:apply-templates select="m:history[//text()]" mode="performances"/>
 			</xsl:if>
 
 			<!-- version-specific sources -->
@@ -414,16 +417,15 @@
 		</xsl:for-each>
 		<!-- end top-level expressions (versions) -->
 
-		<!-- show work history and global sources _after_ movements if only one version -->
+		<!-- show work performances and global sources _after_ movements if only one version -->
 		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2">
 
-			<!-- work history -->
-			<xsl:apply-templates
-				select="m:meiHead/
-				m:workDesc/
-				m:work/
-				m:history[m:creation[//text()] or m:p[text()] or m:eventList[m:event/*[name()!='genre' and name()!='head']//text()]]"/>
-
+			<!-- work performances -->
+			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:history" mode="performances"/>
+			<!-- Performances entered at expression level displayed at work level if only one expression -->
+			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history[m:eventList[@type='performances' and m:event//text()]]"
+					mode="performances"/>
+			
 			<!-- global sources -->
 			<xsl:if
 				test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
@@ -1060,66 +1062,57 @@
 	<!-- end perfMedium -->
 
 	<!-- history -->
-	<xsl:template match="m:history[*//text()]">
-		<xsl:variable name="historydiv_id" select="concat('history',generate-id(.),position())"/>
-		<xsl:text>
-		</xsl:text>
-		<script type="application/javascript"><xsl:text>
-			openness["</xsl:text><xsl:value-of select="$historydiv_id"/><xsl:text>"]=false;
-			</xsl:text></script>
-		<xsl:text>
-		</xsl:text>
-
-		<div class="fold">
-			<p class="p_heading" id="p{$historydiv_id}" title="Click to open" onclick="toggle('{$historydiv_id}')">
-				<img id="img{$historydiv_id}" class="noprint" style="display:inline" border="0"
-					src="/editor/images/plus.png" alt="+"/> History </p>
-			<div class="folded_content" id="{$historydiv_id}" style="display:none;">
-
-				<!-- composition history -->
-				<xsl:for-each select="m:creation/m:date[text()]">
-					<xsl:if test="position()=1">
-						<p><span class="p_heading"> Date of composition: </span>
-							<xsl:apply-templates select="."/>. </p>
-					</xsl:if>
+	<xsl:template match="m:history[*//text()]" mode="history">
+		<!-- composition history -->
+		<xsl:for-each select="m:creation/m:date[text()]">
+			<xsl:if test="position()=1">
+				<p><span class="p_heading"> Date of composition: </span>
+					<xsl:apply-templates select="."/>. </p>
+			</xsl:if>
+		</xsl:for-each>
+		<xsl:for-each select="m:p[text()]">
+			<p>
+				<xsl:apply-templates/>
+			</p>
+		</xsl:for-each>
+		<!-- history time line -->
+		<xsl:for-each select="m:eventList[@type='history' and m:event[//text()]]">
+			<table>
+				<xsl:for-each select="m:event[//text()]">
+					<xsl:apply-templates select="." mode="performance_details"/>
 				</xsl:for-each>
-				<xsl:for-each select="m:p[text()]">
-					<p>
-						<xsl:apply-templates/>
-					</p>
-				</xsl:for-each>
-				<!-- history time line -->
-				<xsl:for-each select="m:eventList[@type='history' and m:event[//text()]]">
-					<table>
-						<xsl:for-each select="m:event[//text()]">
-							<xsl:apply-templates select="." mode="performance_details"/>
-						</xsl:for-each>
-					</table>
-				</xsl:for-each>
-				<!-- performances -->
-				<xsl:if test="name(parent::node())='work' and count(../m:expressionList/m:expression)=1">
-					<!-- Performances entered at expression level displayed at work level if only one expression -->
-					<xsl:apply-templates select="../m:expressionList/m:expression/m:history/m:eventList[@type='performances' and m:event//*[name()!='genre' and name()!='head']/text()]"/>
-				</xsl:if>
-				<xsl:apply-templates select="m:eventList[@type='performances' and m:event//text()]"/>
-				
-			</div>
-		</div>
+			</table>
+		</xsl:for-each>
 	</xsl:template>
 
-	<xsl:template match="m:eventList[@type='performances']">
-		<xsl:if test="m:event//text()">
-			<div class="fold" style="display:block;">
-				<p class="p_heading">Performances</p>
-				<table>
-					<xsl:for-each select="m:event[//text()]">
-						<xsl:apply-templates select="." mode="performance_details"/>
-					</xsl:for-each>
-				</table>
+	<!-- performances -->
+	<xsl:template match="m:history" mode="performances">
+		<xsl:if test="m:eventList[@type='performances']//text()">
+			<xsl:variable name="historydiv_id" select="concat('history',generate-id(.),position())"/>
+			<xsl:text>
+			</xsl:text>
+			<script type="application/javascript"><xsl:text>
+				openness["</xsl:text><xsl:value-of select="$historydiv_id"/><xsl:text>"]=false;
+				</xsl:text></script>
+			<xsl:text>
+			</xsl:text>
+			<div class="fold">
+				<p class="p_heading" id="p{$historydiv_id}" title="Click to open" onclick="toggle('{$historydiv_id}')">
+					<img id="img{$historydiv_id}" class="noprint" style="display:inline" border="0"
+						src="/editor/images/plus.png" alt="+"/> Performances </p>
+				<div class="folded_content" id="{$historydiv_id}" style="display:none;">
+					<div class="fold" style="display:block;">
+						<table>
+							<xsl:for-each select="m:eventList[@type='performances']/m:event[//text()]">
+								<xsl:apply-templates select="." mode="performance_details"/>
+							</xsl:for-each>
+						</table>
+					</div>
+				</div>
 			</div>
 		</xsl:if>
 	</xsl:template>
-
+	
 	<!-- sources -->
 	<xsl:template match="m:sourceDesc">
 		<xsl:param name="global"/>
