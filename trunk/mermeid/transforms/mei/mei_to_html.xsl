@@ -666,6 +666,29 @@
 				<xsl:value-of select="@target"/>
 			</xsl:if>
 		</xsl:element>
+		<!-- get collection name and number from linked files -->
+		<xsl:variable name="fileName" select="concat('http://',$hostname,'/storage/dcm/',@target)"/>
+		<xsl:variable name="linkedDoc" select="document($fileName)" />		
+		<xsl:variable name="file_context" select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
+		<xsl:variable name="catalogue_no" select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
+		<xsl:variable name="output">
+			<xsl:value-of select="$file_context"/>
+			<xsl:text> </xsl:text>
+			<xsl:choose>
+				<xsl:when test="string-length($catalogue_no)&gt;11">
+					<xsl:variable name="part1" select="substring($catalogue_no, 1, 11)"/>
+					<xsl:variable name="part2" select="substring($catalogue_no, 12)"/>
+					<xsl:variable name="delimiter" select="substring(concat(translate($part2,'0123456789',''),' '),1,1)"/>
+					<xsl:value-of select="concat($part1,substring-before($part2,$delimiter),'...')"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="$catalogue_no"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:if test="normalize-space($output)!=''">
+			<xsl:value-of select="concat(' (',$output,')')"/>			
+		</xsl:if>
 	</xsl:template>
 
 

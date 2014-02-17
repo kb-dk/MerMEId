@@ -8,7 +8,6 @@
 	Danish Centre for Music Publication
 	The Royal Library, Copenhagen
 	
-	
 -->
 
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" 
@@ -85,7 +84,7 @@
 
 	<!-- MAIN TEMPLATES -->
 	<xsl:template name="make_public_html_head">
-		<title>HTML Preview</title>
+		<title><xsl:call-template name="page_title"/></title>
 
 		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
 
@@ -116,7 +115,17 @@
 				<span class="list_id">
 					<xsl:value-of select="$file_context"/>
 					<xsl:text> </xsl:text>
-					<xsl:value-of select="$catalogue_no"/>
+					<xsl:choose>
+						<xsl:when test="string-length($catalogue_no)&gt;11">
+							<xsl:variable name="part1" select="substring($catalogue_no, 1, 11)"/>
+							<xsl:variable name="part2" select="substring($catalogue_no, 12)"/>
+							<xsl:variable name="delimiter" select="substring(concat(translate($part2,'0123456789',''),' '),1,1)"/>
+							<xsl:value-of select="concat($part1,substring-before($part2,$delimiter),'...')"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$catalogue_no"/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</span>
 			</div>
 		</xsl:if>
