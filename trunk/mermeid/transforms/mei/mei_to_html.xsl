@@ -7,6 +7,7 @@
 	Axel Teich Geertinger & Sigfrid Lundberg
 	Danish Centre for Music Publication
 	The Royal Library, Copenhagen
+	2010-2014
 	
 -->
 
@@ -55,7 +56,7 @@
 
 	<!-- MAIN TEMPLATES -->
 	<xsl:template name="make_html_head">
-		<title>HTML Preview</title>
+		<title><xsl:call-template name="page_title"/></title>
 
 		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
 
@@ -83,7 +84,17 @@
 				<a>
 					<xsl:value-of select="$file_context"/>
 					<xsl:text> </xsl:text>
-					<xsl:value-of select="$catalogue_no"/>
+					<xsl:choose>
+						<xsl:when test="string-length($catalogue_no)&gt;11">
+							<xsl:variable name="part1" select="substring($catalogue_no, 1, 11)"/>
+							<xsl:variable name="part2" select="substring($catalogue_no, 12)"/>
+							<xsl:variable name="delimiter" select="substring(concat(translate($part2,'0123456789',''),' '),1,1)"/>
+							<xsl:value-of select="concat($part1,substring-before($part2,$delimiter),'...')"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$catalogue_no"/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</a>
 			</div>
 		</xsl:if>
@@ -259,11 +270,6 @@
 		<xsl:apply-templates
 			select="m:meiHead/m:workDesc/m:work/m:history[m:creation[*/text()] or m:p[text()]]"
 			mode="history"/>
-		
-		<xsl:apply-templates 
-			select="m:meiHead/m:workDesc/m:work/m:history"
-			mode="performances"/>
-		
 				
 		<!-- top-level expression (versions and one-movement work details) -->
 		<xsl:for-each select="m:meiHead/
@@ -364,8 +370,8 @@
 			</xsl:for-each>
 
 			<!-- version performances -->
-			<xsl:if test="count(/m:mei/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
-				<xsl:apply-templates select="m:history[//text()]" mode="performances"/>
+			<xsl:if test="count(../m:expression)&gt;1">
+				<xsl:apply-templates select="m:history[m:eventList[@type='performances']//text()]" mode="performances"/>
 			</xsl:if>
 
 			<!-- version-specific sources -->
@@ -416,44 +422,38 @@
 
 		</xsl:for-each>
 		<!-- end top-level expressions (versions) -->
+		
+		<!-- show performances and global sources _after_ movements if only one version -->
 
-		<!-- show work performances and global sources _after_ movements if only one version -->
-		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2">
-
-			<!-- work performances -->
-			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:history" mode="performances"/>
-			<!-- Performances entered at expression level displayed at work level if only one expression -->
-			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history[m:eventList[@type='performances' and m:event//text()]]"
-					mode="performances"/>
-			
-			<!-- global sources -->
-			<xsl:if
-				test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
-				or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0">
-				<xsl:apply-templates
-					select="m:meiHead[count(m:workDesc/m:work/m:expressionList/m:expression)&lt;2]/
-					m:fileDesc/
-					m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"
-				/>
-			</xsl:if>
-
-		</xsl:if>
-
-		<!-- global sources for works with versions -->
 		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
-			<div>&#160;</div>
-			<div class="hr">&#160;</div>			
-			<xsl:if
-				test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
-				or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0">
-				<xsl:apply-templates
-					select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']">
-					<xsl:with-param name="global">true</xsl:with-param>
-				</xsl:apply-templates>
+			<!-- draw a separator if any global performances or sources are going to be listed after versions -->
+			<xsl:if test="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']//text()] or
+				count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0">
+				<div>&#160;</div>
+				<div class="hr">&#160;</div>			
 			</xsl:if>
 		</xsl:if>
 		
-
+		<!-- global sources -->
+		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
+			or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0">
+			<xsl:apply-templates select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"/>
+		</xsl:if>
+				
+		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2">
+			<!-- work-level performances -->
+			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']//text()]" mode="performances"/>
+			<!-- Performances entered at expression level displayed at work level if only one expression -->
+			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history[m:eventList[@type='performances']//text()]"
+				mode="performances"/>
+		</xsl:if>
+		
+		<!-- work-level performances for works with versions -->
+		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
+			<!-- work-level performances -->
+			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']//text()]" mode="performances"/>
+		</xsl:if>
+		
 		<!-- bibliography -->
 		<xsl:apply-templates select="m:meiHead/
 			m:workDesc/
@@ -569,6 +569,29 @@
 
 
 	<!-- SUB-TEMPLATES -->
+	
+	<!-- generate a page title -->
+	<xsl:template name="page_title">
+		<xsl:for-each select="m:meiHead/
+			m:workDesc/
+			m:work/
+			m:titleStmt">
+			<xsl:choose>
+				<xsl:when test="m:title[@type='main']//text()">
+					<xsl:value-of select="m:title[@type='main']"/>
+				</xsl:when>
+				<xsl:when test="m:title[@type='uniform']//text()">
+					<xsl:value-of select="m:title[@type='uniform']"/>
+				</xsl:when>
+				<xsl:when test="m:title[not(@type)]//text()">
+					<xsl:value-of select="m:title[not(@type)]"/>
+				</xsl:when>
+			</xsl:choose>
+			<xsl:if test="m:respStmt/m:persName[@role='composer'][text()]"> - </xsl:if>
+			<xsl:value-of select="m:respStmt/m:persName[@role='composer'][text()]"/>
+		</xsl:for-each>
+	</xsl:template>
+	
 	
 	<xsl:template match="m:titleStmt/m:respStmt[m:persName[text()]]">
 		<p>

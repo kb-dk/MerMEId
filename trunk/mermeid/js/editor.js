@@ -9,7 +9,7 @@ function next(elem) {
 function setPageTitle() {
     if(document.title) {
         if(document.getElementById('work_identifier').innerHTML != '') {
-            document.title = document.getElementById('work_identifier').innerHTML+' - MerMEId';
+            document.title = 'MerMEId - '+document.getElementById('work_identifier').innerHTML;
         }
     }
 }

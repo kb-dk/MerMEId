@@ -140,11 +140,19 @@ declare function app:generate-href($field as xs:string,
     };
 
     declare function app:get-edition-and-number($doc as node() ) as xs:string* {
-
       let $c := 
-	$doc//m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"][1]/string()
-	return ($c,$doc//m:meiHead/m:workDesc/m:work[1]/m:identifier[@type=$c]/string())
-
+	  $doc//m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"][1]/string()
+      let $no := $doc//m:meiHead/m:workDesc/m:work[1]/m:identifier[@type=$c]/string()
+      (: shorten very long identifiers (i.e. lists of numbers) :)
+	  let $part1 := substring($no, 1, 11)
+	  let $part2 := substring($no, 12)
+      let $delimiter := substring(concat(translate($part2,'0123456789',''),' '),1,1)
+      let $n := 
+          if (string-length($no)>11) then 
+            concat($part1,substring-before($part2,$delimiter),'...')
+          else
+            $no
+      return ($c, $n)	
     };
 
     declare function app:view-document-reference($doc as node()) as node() {
