@@ -7,6 +7,7 @@ declare namespace m="http://www.music-encoding.org/ns/mei";
 declare variable $filter:sortby := request:get-parameter("sortby", "") cast as xs:string;
 declare variable $filter:page   := request:get-parameter("page",   "1") cast as xs:integer;
 declare variable $filter:number := request:get-parameter("itemsPerPage","20") cast as xs:integer;
+declare variable $filter:genre := request:get-parameter("genre", "") cast as xs:string;
 declare variable $filter:uri    := "";
 declare variable $filter:vocabulary := 
         doc(concat("http://",request:get-header('HOST'),"/editor/forms/mei/model/keywords.xml"));
@@ -101,7 +102,10 @@ declare function filter:print-filters(
       <div class="genre_filter filter_block">
 	{
 	  for $genre in $filter:vocabulary/m:classification/m:termList[@label="level1" or @label="level2"]/m:term/string()
-	let $link := filter:print-filtered-link(
+	    let $selected :=
+          if ($genre=$filter:genre) then "selected" else ""
+
+    let $link := filter:print-filtered-link(
 	  $database,
 	  $published_only,
 	  $coll,
@@ -112,9 +116,10 @@ declare function filter:print-filters(
 	  if ($filter:vocabulary/m:classification/m:termList[m:term/string()=$genre]/@label="level2")
 	    then 
 	    (
-	    <div class="genre_filter_row level2">
-              <span class="genre_indicator {translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')}">&#160;</span>
-                  &#160; {$link} 
+	    <div class="genre_filter_row level2 {$selected}">
+              <span class="genre_indicator {translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')}">
+              &#160;
+              </span> &#160; {$link} 
 	    </div>
 	    )
           else

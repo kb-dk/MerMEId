@@ -533,21 +533,15 @@
 				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:date/text()">
 					<p><xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:date"/></p>
 				</xsl:if>
-				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName[text()]">
+				
+				<!-- list editors and others -->
+				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt[m:persName[text()]]">
 					<p>
-						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:persName[text()]">
-							<xsl:if test="normalize-space(@role)">
-								<xsl:call-template name="capitalize">
-									<xsl:with-param name="str" select="@role"/>
-								</xsl:call-template>:<xsl:text> </xsl:text>
-							</xsl:if>
-							<xsl:value-of select="."/>
-							<xsl:if test="position()!=last()">
-								<br/>
-							</xsl:if>
-						</xsl:for-each>
+						<xsl:apply-templates select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt[m:persName[text()]]" 
+							mode="list_persons_by_role"/>
 					</p>
 				</xsl:if>
+				
 				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:availability//text()">
 					<p>
 						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:acqSource[text()]">
@@ -1340,6 +1334,50 @@
 			</p>
 		</xsl:if>
 	</xsl:template>
+	
+	<xsl:template match="*" mode="list_persons_by_role">
+		<xsl:if test="count(m:persName[text()] | m:corpName[text()])>0">
+			<xsl:for-each select="m:corpName[text()]|m:persName[text()]">
+				<xsl:variable name="role">
+					<xsl:call-template name="capitalize">
+						<xsl:with-param name="str" select="@role"/>
+					</xsl:call-template>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="@role!=preceding-sibling::*[1]/@role or position()=1">
+						<xsl:choose>
+							<xsl:when test="@role=following-sibling::*[1]/@role">
+								<xsl:if test="name()='persName' and normalize-space(@role)">
+									<xsl:value-of select="concat($role,'s')"/><xsl:text>: </xsl:text>
+								</xsl:if>
+								<xsl:apply-templates select="."/>, </xsl:when>
+							<xsl:otherwise>
+								<xsl:if test="name()='persName' and normalize-space(@role)">
+									<xsl:value-of select="@role"/><xsl:text>: </xsl:text>
+								</xsl:if>
+								<xsl:apply-templates select="."/>
+								<xsl:if test="following-sibling::m:persName/text()">; </xsl:if>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:choose>
+							<xsl:when test="@role=following-sibling::*[1]/@role">
+								<xsl:apply-templates select="."/>, </xsl:when>
+							<xsl:when test="not(following-sibling::*[1]/@role)">
+								<xsl:apply-templates select="."/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:apply-templates select="."/>. </xsl:otherwise>
+						</xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
+				<xsl:if test="position() = last()">
+					<xsl:text>. </xsl:text>
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:if>
+	</xsl:template>
 
 	<!-- source-related templates -->
 
@@ -2073,7 +2111,7 @@
 		</xsl:if>
 	</xsl:template>
 
-	<!-- list authors -->
+	<!-- list authors in bibliographic references -->
 	<xsl:template name="list_authors">
 		<xsl:for-each select="m:author">
 			<xsl:call-template name="list_seperator"/>
@@ -2088,7 +2126,7 @@
 			<xsl:text> </xsl:text>(<xsl:value-of select="@type"/>)</xsl:if>
 	</xsl:template>
 
-	<!-- list editors -->
+	<!-- list editors in bibliographic references -->
 	<xsl:template name="list_editors">
 		<xsl:for-each select="m:editor[text()]">
 			<xsl:call-template name="list_seperator"/>

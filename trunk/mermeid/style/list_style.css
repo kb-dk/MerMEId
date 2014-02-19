@@ -31,10 +31,6 @@ div.nav_bar {
     border: none;
 }
 
-div.nav_bar div {
-    text-align: center;
-}
-
 div.footer, p.footer {
     margin: 0 -20px 20px -20px;
     padding: 10px 20px;
@@ -186,6 +182,7 @@ table.filter_block td.label {
     margin: 0;
     padding: 0;
 }
+
 /* styling "publish" checkboxes */
 
 label.publishedIsGreen,
@@ -217,7 +214,45 @@ label.unpublishedIsRed {
 .has-js label.pendingIsYellow.c_on   { background: url('/editor/images/checkbox_yellow_checked.png') no-repeat; }
 .has-js label.unpublishedIsRed.c_on  { background: url('/editor/images/checkbox_red_checked.png') no-repeat; }
 
+/* CSS for the paging */
 
+.paging_div {
+    clear: right;
+    float:left;
+}
+
+a.paging:link, a.paging:active, a.paging:visited, a.paging:hover {
+    text-decoration: none; 
+    color: #000;
+}  
+
+a.paging:hover {
+    background-color: #f8f8f8;
+}
+
+.paging {
+    background-color: #e8e8e8;
+    color: #999;
+    display: block;
+    float: left;
+    position: relative;
+    text-align: center;
+    height: 16px;
+    width: 26px;
+    text-decoration: none;
+    border: 1px solid #777;
+    border-radius: 2px;
+    margin: 2px 2px 0 0;
+    padding-top: 2px;
+}
+
+.paging img {
+    margin-top: 3px;
+}
+
+#sortForm, #itemsPerPageForm {
+    margin: 0;
+}
 
 /* css for help and other pop-ups */
 

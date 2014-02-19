@@ -48,6 +48,15 @@ div.search_submit {
 div.genre_filter span.genre_indicator {
     display: inline-block;
     width: 15px;
+    margin-left: 5px;
+}
+
+div.genre_filter div.selected {
+    background: #fff;
+}
+
+div.genre_filter div.selected .genre_indicator {
+    background-image: url("/editor/images/checked.png");
 }
 
 div.genre_filter a {
@@ -59,10 +68,11 @@ div.genre_filter a:hover {
 }
 
 div.genre_filter_row {
-    margin: 3px 0;
-    text-indent: -20px;
-    padding-left: 20px;
-    padding-bottom: 3px;
+    padding: 5px;
+    padding-left: 32px;
+    text-indent: -32px;
+    float: left;
+    clear: both;
 }
 
 div.level1 {
@@ -99,7 +109,7 @@ div.filter_block .label {
 /* CSS for the "clear filter" elements */
 
 .filter_elements {
-    padding: 5px 0 20px 0:
+    padding: 5px 0 0 0;
 }
 
 #main a.filter_element {
@@ -120,6 +130,46 @@ div.filter_block .label {
 
 #main .filter_elements a.reset {
   background-color: #be331a;
+}
+
+
+/* CSS for the paging */
+
+.paging_div {
+    clear: right;
+    float:left;
+}
+
+a.paging:link, a.paging:active, a.paging:visited, a.paging:hover {
+    text-decoration: none; 
+}  
+
+a.paging:hover {
+    background-color: #f8f8f8;
+}
+
+.paging {
+    background-color: #e8e8e8;
+    color: #999;
+    display: block;
+    float: left;
+    position: relative;
+    text-align: center;
+    height: 21px;
+    width: 26px;
+    text-decoration: none;
+    border: 1px solid #777;
+    border-radius: 2px;
+    margin: 2px 2px 0 0;
+    padding-top: 2px;
+}
+
+.paging img {
+    margin-top: 6px;
+}
+
+#sortForm, #itemsPerPageForm {
+    margin: 0;
 }
 
 /* CSS for the result list */

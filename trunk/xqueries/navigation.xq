@@ -72,8 +72,16 @@ declare function local:format-reference(
 	        {app:get-edition-and-number($doc)}{" "}
 	      </span>
 	      <span class="genre">
-	        <span class="pos1">{$genre1}</span>{" "}
-	        <span class="pos2">{$genre2}</span>
+	      {
+	        if (string-length($genre1)>0) then 
+	           <span class="pos1">{$genre1}</span>
+	        else ""
+	      }
+	      {
+	        if (string-length($genre2)>0) then 
+	           <span class="pos2">{$genre2}</span>
+	        else ""
+	      }
 	      </span>
 	    </div>
       </div>

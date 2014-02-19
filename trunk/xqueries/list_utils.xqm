@@ -318,7 +318,7 @@ declare function app:generate-href($field as xs:string,
 	    (element a {
 	      attribute rel   {"next"},
 	      attribute title {"Go to next page"},
-	      attribute style {"text-decoration: none;"},
+	      attribute class {"paging"},
 	      attribute href {
 		fn:string-join((
 		  $uri,"?",
@@ -341,7 +341,7 @@ declare function app:generate-href($field as xs:string,
 		  element a {
 		    attribute rel {"prev"},
 		    attribute title {"Go to previous page"},
-		    attribute style {"text-decoration: none;"},
+		    attribute class {"paging"},
 		    attribute href {
        		      fn:string-join(
 			($uri,"?",
@@ -360,6 +360,7 @@ declare function app:generate-href($field as xs:string,
 		    (if(not($app:page = $p)) then
 		    element a {
 		      attribute title {"Go to page ",xs:string($p)},
+		      attribute class {"paging"},
 		      attribute href {
        			fn:string-join(
 			  ($uri,"?",
@@ -369,7 +370,7 @@ declare function app:generate-href($field as xs:string,
 		    }
 		  else 
 		    element span {
-		      attribute style {"color:#999;"},
+		      attribute class {"paging selected"},
 		      ($p)
 		    }
 		  )
@@ -458,10 +459,16 @@ declare function app:generate-href($field as xs:string,
 		      {app:pass-as-hidden-except("itemsPerPage")}
 		      
 		      </form>),
-		      element p {
-			$previous,"&#160;",
-			$app:page_nav,
-			"&#160;", $next}
+		      if ($total > $app:number) then
+		         element div {
+       		        attribute class {"paging_div"},
+       			    $previous,"&#160;",
+       			    $app:page_nav,
+       			    "&#160;", $next}
+       		  else "",
+			  element br {
+			     attribute clear {"both"}
+			  }
 		    })
 		    return $links
       };
