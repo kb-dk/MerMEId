@@ -240,3 +240,40 @@ p.illustration_text {
     margin-left: 1.3em;
     margin-bottom: .3em;
 }
+
+/* Print-related style rules */
+
+#dcm_logo_print,
+#KBLogo_print {
+    display: none;
+}
+
+
+@media print {
+
+    body, #header, #footer, #all {
+        margin: 0;
+        padding: 0;
+        color: #000;
+        background-color: #fff;
+    }
+
+    #all {
+        max-width: none;
+        min-width: inherit;
+    }
+    
+    #main {
+        padding: 0;
+    }
+    
+    #dcm_logo,
+    #KBLogo {
+        display: none;
+    }
+    #dcm_logo_print,
+    #KBLogo_print {
+        display: inline;
+    }
+    
+}

@@ -184,11 +184,16 @@ generated title disabled
     
       <div id="header">
          <div class="kb_logo">
-            <a href="http://www.kb.dk" title="Det Kongelige Bibliotek"><img 
-             style="margin-top: -10px; border: 0px; vertical-align:middle;" title="Det Kongelige Bibliotek" 
-             alt="KB Logo" src="/editor/images/kb_white.png"></img></a></div>
-			<h1>CNW</h1>
-			<h2>A Thematic Catalogue of Carl Nielsen&apos;s Works</h2>
+            <a href="http://www.kb.dk" title="Det Kongelige Bibliotek"><img
+				id="KBLogo"
+				title="Det Kongelige Bibliotek" 
+				alt="KB Logo" src="/editor/images/kb_white.png"/><img
+				id="KBLogo_print"
+				title="Det Kongelige Bibliotek" 
+				alt="KB Logo" src="/editor/images/kb.png"/></a>
+		</div>
+		<h1>CNW</h1>
+		<h2>A Thematic Catalogue of Carl Nielsen&apos;s Works</h2>
       </div> <!-- end header -->
       <div id="menu">
              <a href="index.html">Home</a> 
@@ -226,11 +231,17 @@ generated title disabled
 
     <div id="footer">
       <a href="http://www.kb.dk/dcm" title="DCM" 
-      style="text-decoration:none;"><img 
-           style="border: 0px; vertical-align:middle;" 
-           alt="DCM Logo" 
-           src="/editor/images/dcm_logo_small_white.png"/></a>
-           2013 Danish Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
+        style="text-decoration:none;"><img 
+          style="border: 0px; vertical-align:middle;" 
+		  alt="DCM Logo" 
+		  src="/editor/images/dcm_logo_small_white.png"
+		  id="dcm_logo"/><img 
+		  style="border: 0px; vertical-align:middle;" 
+		  alt="DCM Logo" 
+		  src="/editor/images/dcm_logo_small.png"
+		  id="dcm_logo_print"
+		/></a>
+        2013 Danish Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
     </div> <!-- end footer -->
     </div> <!-- end all -->
   </body>

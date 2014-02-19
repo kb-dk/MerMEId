@@ -352,3 +352,33 @@ form.search a.help .help_label {
 .song                       { background-color: #fc495e;
                               color: #fff; }
 .song .pos1                 { background-color: #CB3A4B;}
+
+/* Print style rules */
+@media print {
+
+    .filter, 
+    .spacer, 
+    .nav_bar form, 
+    .nav_bar p,
+    .filter_elements,
+    #menu { 
+        display: none !important;
+    }
+
+    #content_box div.results {
+        display: block;
+    }
+    
+    .result_row .composer,
+    .result_row .date,
+    .result_row .title {
+        border: 0;
+    }
+
+    .result_row .title,  
+    .result_row .composer,
+    .info_bar span.list_id {
+        padding: 0;
+    }
+    
+}

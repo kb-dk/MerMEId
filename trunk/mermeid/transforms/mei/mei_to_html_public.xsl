@@ -44,7 +44,10 @@
 							<a href="http://www.kb.dk" title="Det Kongelige Bibliotek"><img
 								id="KBLogo"
 								title="Det Kongelige Bibliotek" 
-								alt="KB Logo" src="/editor/images/kb_white.png"></img></a></div>
+								alt="KB Logo" src="/editor/images/kb_white.png"/><img
+									id="KBLogo_print"
+									title="Det Kongelige Bibliotek" 
+									alt="KB Logo" src="/editor/images/kb.png"/></a></div>
 						<h1>CNW</h1>
 						<h2>A Thematic Catalogue of Carl Nielsen&apos;s Works</h2>
 						<!--<p>En tematisk-bibliografisk fortegnelse over Carl Nielsens værker</p>
@@ -73,7 +76,14 @@
 							style="text-decoration:none;"><img 
 								style="border: 0px; vertical-align:middle;" 
 								alt="DCM Logo" 
-								src="/editor/images/dcm_logo_small_white.png"/></a>
+								src="/editor/images/dcm_logo_small_white.png"
+								id="dcm_logo"/><img 
+									style="border: 0px; vertical-align:middle;" 
+									alt="DCM Logo" 
+									src="/editor/images/dcm_logo_small.png"
+									id="dcm_logo_print"
+								/>
+						</a>
 						2013 Danish Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
 					</div>
 				</div>
