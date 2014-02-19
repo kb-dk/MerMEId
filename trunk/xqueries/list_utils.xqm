@@ -100,43 +100,46 @@ declare function app:generate-href($field as xs:string,
       let $doc-name:=util:document-name($doc)
       let $color_style := 
 	if(doc-available(concat("public/",$doc-name))) then
-	  (let $public_hash:=util:hash(doc(concat("public/",$doc-name)),'md5')
-	  let $dcm_hash:=util:hash($doc,'md5')
-	  return
-	    if($dcm_hash=$public_hash) then
-	      "publishedIsGreen"
-	    else
-	      "pendingIsYellow")
-            else
-	      "unpublishedIsRed"
+	  (
+	    let $public_hash:=util:hash(doc(concat("public/",$doc-name)),'md5')
+	    let $dcm_hash:=util:hash($doc,'md5')
+	    return
+	      if($dcm_hash=$public_hash) then
+		"publishedIsGreen"
+	      else
+		"pendingIsYellow"
+           )
+         else
+	   "unpublishedIsRed"
 
-	      let $form:=
-	      <form id="formsourcediv{$doc-name}"
-	      action="/storage/list_files.xq" 
-	      method="post" style="display:inline;">
-	      
-		<div id="sourcediv{$doc-name}"
- 		style="display:inline;">
+      let $form:=
+      <form id="formsourcediv{$doc-name}"
+      action="/storage/list_files.xq" 
+      method="post" style="display:inline;">
+      
+	<div id="sourcediv{$doc-name}"
+             style="display:inline;">
 		
-		  <input id="source{$doc-name}" 
-		  type="hidden" 
-		  value="publish" 
-		  name="dcm/{$doc-name}" 
-		  title="file name"/>
+	  <input id="source{$doc-name}" 
+	         type="hidden" 
+		 value="publish" 
+		 name="dcm/{$doc-name}" 
+		 title="file name"/>
 
-		  <label class="{$color_style}" for='checkbox{$doc-name}'>
-		    <input id='checkbox{$doc-name}'
-		    onclick="add_publish('sourcediv{$doc-name}',
-		    'source{$doc-name}',
-		    'checkbox{$doc-name}');" 
-		    type="checkbox" 
-		    name="button" 
-		    value="" 
-		    title="publish"/></label>
+	  <label class="{$color_style}" for='checkbox{$doc-name}'>
+	    <input id='checkbox{$doc-name}'
+	    onclick="add_publish('sourcediv{$doc-name}',
+	    'source{$doc-name}',
+	    'checkbox{$doc-name}');" 
+	    type="checkbox" 
+	    name="button" 
+	    value="" 
+	    title="publish"/>
+	  </label>
 
-		</div>
-	      </form>
-	      return $form
+	</div>
+      </form>
+      return $form
     };
 
     declare function app:get-edition-and-number($doc as node() ) as xs:string* {

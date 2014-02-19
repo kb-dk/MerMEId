@@ -8,6 +8,8 @@ declare variable $filter:sortby := request:get-parameter("sortby", "") cast as x
 declare variable $filter:page   := request:get-parameter("page",   "1") cast as xs:integer;
 declare variable $filter:number := request:get-parameter("itemsPerPage","20") cast as xs:integer;
 declare variable $filter:uri    := "";
+declare variable $filter:vocabulary := 
+        doc(concat("http://",request:get-header('HOST'),"/editor/forms/mei/model/keywords.xml"));
 
 declare function filter:print-filters(
   $database        as xs:string,
@@ -22,52 +24,6 @@ declare function filter:print-filters(
   let $notbefore := request:get-parameter("notbefore","1880")
 
   let $filter:=
-    ( 
-    (: Collection filter disabled :)
-    (:<div class="filter_block">
-    <span class="label">Collection </span>
-    <select onchange="location.href=this.value; return false;">
-      {
-        for $c in distinct-values(
-          collection($database)//m:seriesStmt/m:identifier[@type="file_collection"]/string()[string-length(.) > 0 ])
-          let $querystring  := 
-            if($query) then
-              fn:string-join(
-            	("c=",$c,
-            	"&amp;published_only=",$published_only,
-            	"&amp;itemsPerPage=",$number cast as xs:string,	
-            	"&amp;sortby=",$filter:sortby,
-            	"&amp;query=",
-            	fn:escape-uri($query,true())),
-            	""
-            	 )
-               else
-            	 concat("c=",$c,
-            	 "&amp;published_only=",$published_only,
-            	"&amp;sortby=",$filter:sortby,
-            	 "&amp;itemsPerPage="  ,$number cast as xs:string)
-            	 return
-            	   if(not($coll=$c)) then 
-            	   <option value="?{$querystring}">{$c}</option>
-            	 else
-            	 <option value="?{$querystring}" selected="selected">{$c}</option>
-               }
-	       {
-            	 let $get-uri := 
-            	   if($query) then
-            	     fn:string-join(("?published_only=",$published_only,"&amp;query=",fn:escape-uri($query,true())),"")
-            	   else
-            	     concat("?c=&amp;published_only=",$published_only)
-            
-  	         let $link := 
-            	   if($coll) then 
-            	   <option value="{$get-uri}">All collections</option>
-            	 else
-            	 <option value="{$get-uri}" selected="selected">All collections</option>
-            	 return $link
-               }
-    </select>
-    </div>, :)
     <div class="filter_block">
       <form action="" method="get" class="search" id="query_form" name="query_form">
         <div class="label">Keywords</div>
@@ -107,103 +63,71 @@ declare function filter:print-filters(
         </span>
       </span>
       </a>
-	  <div class="search_submit">
-         <input type="submit" value="Search" id="search_submit"/>
+      <div class="search_submit">
+        <input type="submit" value="Search" id="search_submit"/>
       </div>
-    </form>
-    <form action="" method="get" class="search" id="year_form" name="year_form">
-        <div class="label">Year of composition</div>    
-	    <table cellpadding="0" cellspacing="0" border="0">
-            <tr>
-        		<td style="padding-left: 0;">
-                    <input id="notbefore" name="notbefore" value="{$notbefore}" onblur="setYearSlider()"/>
-        		</td>
-        		<td>
-                    <div class="slider" id="year_slider"><!-- --></div>
-        		</td>
-        		<td>
-                    <input id="notafter" name="notafter" value="{$notafter}" onblur="setYearSlider()"/>
-        		</td>
-            </tr>
-	    </table>
-	    <div class="search_submit">
+      </form>
+      <form action="" method="get" class="search" id="year_form" name="year_form">
+	<div class="label">Year of composition</div>    
+	<table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td style="padding-left: 0;">
+            <input id="notbefore" name="notbefore" value="{$notbefore}" onblur="setYearSlider()"/>
+            </td>
+            <td>
+	      <div class="slider" id="year_slider">
+		{" "}
+	      </div>
+            </td>
+            <td>
+	      <input id="notafter" 
+	      name="notafter" 
+	      value="{$notafter}" 
+	      onblur="setYearSlider()"/>
+            </td>
+          </tr>
+	</table>
+	<div class="search_submit">
           <input type="submit" value="Search" id="year_submit"/>
-        </div>
-        <input name="query"  value='{request:get-parameter("query","")}' type="hidden"/>
-        <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
-        <input name="published_only" value="{$published_only}" type='hidden' />
-        <input name="itemsPerPage"  value='{$number}' type='hidden' />
-        <input name="sortby"  value='{$filter:sortby}' type='hidden' />
-        <input name="genre"  value='{$genre}' type='hidden' />
-     </form>     
-    </div>,
-    <div class="genre_filter filter_block">
-      {
+	</div>
+	<input name="query"  value='{request:get-parameter("query","")}' type="hidden"/>
+	<input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
+	<input name="published_only" value="{$published_only}" type='hidden' />
+	<input name="itemsPerPage"  value='{$number}' type='hidden' />
+	<input name="sortby"  value='{$filter:sortby}' type='hidden' />
+	<input name="genre"  value='{$genre}' type='hidden' />
+      </form>     
 
-        let $vocabulary := doc(concat("http://",request:get-header('HOST'),"/editor/forms/mei/model/keywords.xml"))
-        (:distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string()):)
-        
-(:	for $genre in $vocabulary/m:classification/m:termList[@label="level2"]/m:term/string()  :)
-	  (:for $genre in 
-	  distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
-	  where string-length($genre) > 0 and not ( contains($genre,"Vocal") or
-	    contains($genre,"Instrumental") or contains($genre,"Stage") )  :)
-(:	    let $num := filter:count-hits($genre,$list)
-	    return 
-              if($num > 0) then (
-	    <div class="genre_filter_row">
-	              
-            <span class="genre_indicator {translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')}">&#160;</span>
-        
-	      {
-		filter:print-filtered-link(
-		  $database,
-		  $published_only,
-		  $coll,
-		  $number,
-		  $query,
-		  $genre),
-		" (",$num,")"
-	      }
-	    </div> ) else ()   :)
-
-	for $genre in $vocabulary/m:classification/m:termList[@label="level1" or @label="level2"]/m:term/string()
-	  (:for $genre in 
-	  distinct-values($list//m:workDesc/m:work/m:classification/m:termList/m:term/string())
-	  where string-length($genre) > 0 and not ( contains($genre,"Vocal") or
-	    contains($genre,"Instrumental") or contains($genre,"Stage") )  :)
-	    let $num := string(filter:count-hits($genre,$list))
-	    let $link := filter:print-filtered-link(
-		  $database,
-		  $published_only,
-		  $coll,
-		  string($number),
-		  $query,
-		  $genre)		  
- 
-	    return 
-          if(xs:integer($num) > 0) then (
-	           if ($vocabulary/m:classification/m:termList[m:term/string()=$genre]/@label="level2")
-	           then (
-	              <div class="genre_filter_row level2">
-                     <span class="genre_indicator {translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')}">&#160;</span>
-                     &#160; {$link} 
-                     <span class="num"> ({$num})</span>
-                  </div>
-               )
-               else (
-                  <div class="genre_filter_row level1">{$link} 
-                     <span class="num"> ({$num})</span>
-                  </div>
-               )
-               
-	      ) else ()
-       }
-       <span>&#160;</span>
-    </div>
-    )
+      <div class="genre_filter filter_block">
+	{
+	  for $genre in $filter:vocabulary/m:classification/m:termList[@label="level1" or @label="level2"]/m:term/string()
+	let $link := filter:print-filtered-link(
+	  $database,
+	  $published_only,
+	  $coll,
+	  string($number),
+	  $query,
+	  $genre)		  
+ 	return 
+	  if ($filter:vocabulary/m:classification/m:termList[m:term/string()=$genre]/@label="level2")
+	    then 
+	    (
+	    <div class="genre_filter_row level2">
+              <span class="genre_indicator {translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')}">&#160;</span>
+                  &#160; {$link} 
+	    </div>
+	    )
+          else
+          <div class="genre_filter_row level1">
+	    {$link} 
+          </div>
+        }
+      </div>
+      </div>
     return $filter
 };
+
+
 
 
 declare function filter:count-hits(
@@ -299,3 +223,54 @@ declare function filter:get-date($date as xs:string) as xs:string
 
   return $xsdate
 };
+
+
+(:
+declare function filter:collections() {
+  <div class="filter_block">
+    <span class="label">Collection </span>
+    <select onchange="location.href=this.value; return false;">
+      {
+        for $c in distinct-values(
+          collection($database)//m:seriesStmt/m:identifier[@type="file_collection"]/string()[string-length(.) > 0 ])
+          let $querystring  := 
+            if($query) then
+              fn:string-join(
+            	("c=",$c,
+            	"&amp;published_only=",$published_only,
+            	"&amp;itemsPerPage=",$number cast as xs:string,	
+            	"&amp;sortby=",$filter:sortby,
+            	"&amp;query=",
+            	fn:escape-uri($query,true())),
+            	""
+            	 )
+               else
+            	 concat("c=",$c,
+            	 "&amp;published_only=",$published_only,
+            	"&amp;sortby=",$filter:sortby,
+            	 "&amp;itemsPerPage="  ,$number cast as xs:string)
+            	 return
+            	   if(not($coll=$c)) then 
+            	   <option value="?{$querystring}">{$c}</option>
+            	 else
+            	 <option value="?{$querystring}" selected="selected">{$c}</option>
+               }
+	       {
+            	 let $get-uri := 
+            	   if($query) then
+            	     fn:string-join(("?published_only=",$published_only,"&amp;query=",fn:escape-uri($query,true())),"")
+            	   else
+            	     concat("?c=&amp;published_only=",$published_only)
+            
+  	         let $link := 
+            	   if($coll) then 
+            	   <option value="{$get-uri}">All collections</option>
+            	 else
+            	 <option value="{$get-uri}" selected="selected">All collections</option>
+            	 return $link
+               }
+    </select>
+    </div>
+};
+
+:)
