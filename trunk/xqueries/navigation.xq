@@ -24,6 +24,8 @@ declare variable $query  := request:get-parameter("query","");
 declare variable $page   := request:get-parameter("page", "1") cast as xs:integer;
 declare variable $number := request:get-parameter("itemsPerPage","20") cast as xs:integer;
 
+declare variable $vocabulary := doc(concat("http://",request:get-header('HOST'),"/editor/forms/mei/model/keywords.xml"));
+
 declare variable $database := "/db/public";
 
 declare variable $from     := ($page - 1) * $number + 1;
@@ -46,8 +48,6 @@ declare function local:format-reference(
 
 {
 
-  
-   let $vocabulary := doc(concat("http://",request:get-header('HOST'),"/editor/forms/mei/model/keywords.xml"))
    (: the first level 1 and 2 genre keywords are assumed to be the principal ones - all others are hidden :)
    let $genre1 := $doc//m:workDesc/m:work/m:classification/m:termList/m:term[.=$vocabulary//m:termList[@label='level1']/m:term and .!=''][1]/string()
    let $genre2 := $doc//m:workDesc/m:work/m:classification/m:termList/m:term[.=$vocabulary//m:termList[@label='level2']/m:term and .!=''][1]/string()
@@ -126,8 +126,13 @@ declare function local:format-reference(
     <head>
       <title>Carl Nielsen Works (CNW)</title>
       
-      <!-- generated title disabled -->
-      <!--<title>{app:list-title()}</title>-->
+<!-- 
+generated title disabled 
+-->
+
+<!-- 
+<title>{app:list-title()}</title>
+ -->
       
       <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>

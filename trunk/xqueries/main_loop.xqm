@@ -6,6 +6,9 @@ declare namespace m="http://www.music-encoding.org/ns/mei";
 declare namespace ft="http://exist-db.org/xquery/lucene";
 declare namespace util="http://exist-db.org/xquery/util";
 
+declare variable $loop:vocabulary := 
+  doc(concat("http://",request:get-header('HOST'),"/editor/forms/mei/model/keywords.xml"));
+
 declare function loop:date-filters(
   $doc as node()) as xs:boolean
 {
@@ -46,11 +49,23 @@ declare function loop:genre-filter(
   $genre as xs:string,
   $doc as node()) as xs:boolean
 {
+  (: we are searchin in level 2 genre keywords :)
+
+  let $docgenre := $doc//m:workDesc/m:work/m:classification/m:termList/m:term[.=$loop:vocabulary//m:termList[@label='level2']/m:term and .!=''][1]/string()
+
   let $occurrence :=
     if( string-length($genre)=0) then
       true()
     else 
-      count($doc//m:workDesc[contains(m:work/m:classification/m:termList/m:term/string(),$genre) ])>0
+      if($genre eq $docgenre) then
+	true()
+      else
+	false()
+
+(:
+count($doc//m:workDesc[contains(m:work/m:classification/m:termList/m:term/string(),$genre)])>0
+:)
+
       return $occurrence
 };
 

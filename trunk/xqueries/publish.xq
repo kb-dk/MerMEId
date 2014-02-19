@@ -7,8 +7,8 @@ declare namespace fn="http://www.w3.org/2005/xpath-functions";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 
-declare variable $dcmroot := 'dcm/';
-declare variable $pubroot := 'public/';
+declare variable $dcmroot := "xmldb:exist:///db/dcm/";
+declare variable $pubroot := "xmldb:exist:///db/public/";
 declare variable $action  := 
 request:get-parameter("publishing_action","publish") cast as xs:string;
 
