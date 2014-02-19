@@ -51,38 +51,30 @@ div.genre_filter span.genre_indicator {
     margin-left: 5px;
 }
 
-div.genre_filter div.selected {
+div.genre_filter .selected {
     background: #fff;
 }
 
-div.genre_filter div.selected .genre_indicator {
-    background-image: url("/editor/images/checked.png");
-}
-
-div.genre_filter a {
-    text-decoration: none;
-}
-
-div.genre_filter a:hover {
-    text-decoration: underline;
-}
-
-div.genre_filter_row {
+a.genre_filter_row {
     padding: 5px;
     padding-left: 32px;
     text-indent: -32px;
-    float: left;
-    clear: both;
+    display: block;
+    text-decoration: none;
 }
 
-div.level1 {
+.genre_filter_row:hover {
+    background: #f8f8f8;
+}
+
+.level1 {
     font-weight: bold;
     font-size: 1.25em;
     text-transform: uppercase;
     padding-top: 10px;
 }
 
-div.genre_filter_row .num {
+.genre_filter_row .num {
     color: #666;
     font-weight: normal;
 }

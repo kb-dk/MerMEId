@@ -105,9 +105,7 @@ declare function filter:print-filters(
 	    let $selected :=
           if ($genre=$filter:genre) then "selected" else ""
 
-    let $link := filter:print-filtered-link(
-	  $database,
-	  $published_only,
+    let $link := filter:get-filtered-link(
 	  $coll,
 	  string($number),
 	  $query,
@@ -116,23 +114,23 @@ declare function filter:print-filters(
 	  if ($filter:vocabulary/m:classification/m:termList[m:term/string()=$genre]/@label="level2")
 	    then 
 	    (
-	    <div class="genre_filter_row level2 {$selected}">
+	    <a class="genre_filter_row level2 {$selected}"
+	        href="{$link}" title="Select genre: {$genre}">
               <span class="genre_indicator {translate(translate($genre,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')}">
               &#160;
-              </span> &#160; {$link} 
-	    </div>
+              </span> &#160; {$genre} 
+	    </a>
 	    )
           else
-          <div class="genre_filter_row level1">
-	    {$link} 
-          </div>
+          <a class="genre_filter_row level1 {$selected}"
+              href="{$link}" title="Select genre: {$genre}">
+	    {$genre} 
+          </a>
         }
       </div>
       </div>
     return $filter
 };
-
-
 
 
 declare function filter:count-hits(
@@ -218,6 +216,26 @@ declare function filter:print-filtered-link(
 	  $term
     }
     )
+    return $link
+};
+
+
+declare function filter:get-filtered-link(
+  $coll            as xs:string,
+  $number          as xs:string,
+  $query           as xs:string,
+  $term            as xs:string) as xs:string
+{
+  let $link := 
+	concat($filter:uri,"?",
+	  "page=",1,
+	  "&amp;itemsPerPage=",$number,
+	  "&amp;sortby=",request:get-parameter("sortby",""),
+	  "&amp;c=",$coll,
+	  "&amp;query=",$query,
+	  "&amp;notbefore=",request:get-parameter("notbefore",""),
+	  "&amp;notafter=",request:get-parameter("notafter",""),
+	  "&amp;genre=",fn:escape-uri($term,true()))
     return $link
 };
 
