@@ -49,8 +49,8 @@ declare function local:format-reference(
 {
 
    (: the first level 1 and 2 genre keywords are assumed to be the principal ones - all others are hidden :)
-   let $genre1 := $doc//m:workDesc/m:work/m:classification/m:termList/m:term[.=$vocabulary//m:termList[@label='level1']/m:term and .!=''][1]/string()
-   let $genre2 := $doc//m:workDesc/m:work/m:classification/m:termList/m:term[.=$vocabulary//m:termList[@label='level2']/m:term and .!=''][1]/string()
+   let $genre1 := $doc//m:workDesc/m:work/m:classification/m:termList/m:term[contains(string-join($vocabulary//m:termList[@label='level1']/m:term," "),.) and .!=''][1]/string()
+   let $genre2 := $doc//m:workDesc/m:work/m:classification/m:termList/m:term[contains(string-join($vocabulary//m:termList[@label='level2']/m:term," "),.) and .!=''][1]/string()
    let $class1 := translate(translate($genre1,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')
    let $class2 := translate(translate($genre2,' ,','_'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')
             
