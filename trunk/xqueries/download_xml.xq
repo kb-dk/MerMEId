@@ -10,21 +10,20 @@ declare namespace app="http://kb.dk/this/app";
 declare namespace m="http://www.music-encoding.org/ns/mei";
 declare namespace ft="http://exist-db.org/xquery/lucene";
 
-declare option exist:serialize "method=xml media-type=text/html"; 
+declare option exist:serialize "method=xml media-type=text/xml"; 
 declare variable $document := request:get-parameter("doc", "");
 
 
 let $list := 
-for $doc in collection("/db/dcm")
+for $doc in collection("/db/public") 
 where util:document-name($doc)=$document
 return $doc
 
 let $params := 
 <parameters>
    <param name="hostname" value="{request:get-header('HOST')}"/>
-   <param name="doc" value="{$document}"/>
 </parameters>
 
 for $doc in $list
-return transform:transform($doc,xs:anyURI(concat("","http://",request:get-header('HOST'),"/editor/transforms/mei/mei_to_html.xsl")),$params)
+return transform:transform($doc,xs:anyURI(concat("","http://",request:get-header('HOST'),"/editor/transforms/mei/download_xml.xsl")),$params)
  

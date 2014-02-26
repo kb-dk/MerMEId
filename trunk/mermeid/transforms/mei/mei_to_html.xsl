@@ -31,6 +31,8 @@
 	<xsl:strip-space elements="*"/>
 
 	<xsl:param name="hostname"/>
+	<xsl:param name="doc" select="'default.xml'"/>
+	
 
 	<!-- GLOBAL VARIABLES -->
 	<!-- preferred language in titles and other multilingual fields -->
@@ -114,7 +116,7 @@
 
 
 	<xsl:template name="body_main_content">
-				<div class="settings colophon">
+				<div class="settings colophon noprint">
 			<a
 				href="javascript:loadcssfile('/editor/style/html_hide_languages.css'); hide('load_alt_lang_css'); show('remove_alt_lang_css')"
 				id="load_alt_lang_css" class="noprint">Hide alternative languages</a>
@@ -460,104 +462,7 @@
 			m:work/
 			m:biblList[m:bibl/*[text()]]"/>
 
-		<!-- colophon -->
-		<div class="colophon">
-			<br/>
-			<div class="hr">&#160;</div>
-			<xsl:if test="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()]">
-				<p class="colophon_heading">File title:</p>
-				<p>
-					<xsl:value-of select="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()][1]"/>
-				</p>
-			</xsl:if>
-			<xsl:if test="m:meiHead/m:fileDesc/m:seriesStmt/m:title/text()">
-				<p class="colophon_heading">Series:</p>
-				<xsl:for-each select="m:meiHead/m:fileDesc/m:seriesStmt/m:title//text()">
-					<p>
-						<xsl:value-of select="."/>
-						<xsl:for-each
-							select="../identifier[normalize-space(@type) and @type!='file_collection' and text()]">
-							<br/>
-							<xsl:value-of select="@type"/>
-							<xsl:text> </xsl:text>
-							<xsl:value-of select="."/>
-						</xsl:for-each>
-						<xsl:if test="position()!=last()">
-							<br/>
-						</xsl:if>
-					</p>
-				</xsl:for-each>
-			</xsl:if>
-			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/*[name()!='resp']//text()">
-				<p class="colophon_heading">File publication:</p>
-				<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName[//text()]">
-					<p>
-						<xsl:choose>
-							<xsl:when test="text() or m:expan/text()">
-								<xsl:apply-templates select="text()"/>
-								<xsl:apply-templates select="m:expan"/>
-								<xsl:if test="m:abbr/text()"> (<xsl:value-of select="m:abbr"/>)</xsl:if><br/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:if test="m:abbr/text()"><xsl:value-of select="m:abbr"/><br/></xsl:if>
-							</xsl:otherwise>
-						</xsl:choose>
-						
-						<xsl:for-each select="m:address/m:addrLine[m:ptr/@target or text()]">
-							<xsl:choose>
-								<xsl:when test="m:ptr/@target">
-										<xsl:choose>
-											<xsl:when test="m:ptr/text()">
-												<xsl:value-of select="m:ptr/text()"/>
-											</xsl:when>
-											<xsl:otherwise>
-												<xsl:value-of select="m:ptr/@label"/>
-											</xsl:otherwise>
-										</xsl:choose>
-										<xsl:text>: </xsl:text>
-										<xsl:element name="a">
-											<xsl:attribute name="href">
-												<xsl:value-of select="m:ptr/@target"/>
-											</xsl:attribute>
-											<xsl:value-of select="m:ptr/@target"/>
-										</xsl:element>
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:value-of select="."/>
-									</xsl:otherwise>
-							</xsl:choose>
-							<br/>
-						</xsl:for-each>
-					</p>
-				</xsl:for-each>
-				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:date/text()">
-					<p><xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:date"/></p>
-				</xsl:if>
-				
-				<!-- list editors and others -->
-				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt[m:persName[text()]]">
-					<p>
-						<xsl:apply-templates select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt[m:persName[text()]]" 
-							mode="list_persons_by_role"/>
-					</p>
-				</xsl:if>
-				
-				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:availability//text()">
-					<p>
-						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:acqSource[text()]">
-							<br/><xsl:value-of select="."/>
-						</xsl:for-each>
-						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:accessRestrict[text()]">
-							<br/><xsl:value-of select="."/>
-						</xsl:for-each>
-						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:useRestrict[text()]">
-							<br/><xsl:value-of select="."/>
-						</xsl:for-each>
-					</p>
-				</xsl:if>
-			</xsl:if>
-			<xsl:apply-templates select="m:meiHead/m:revisionDesc"/>
-		</div>
+		<xsl:apply-templates select="." mode="colophon"/>
 
 	</xsl:template>
 
@@ -959,6 +864,109 @@
 	<xsl:template match="m:expression/m:extent[text()]">
 		<p>Duration: <xsl:apply-templates/>&#160;<xsl:apply-templates select="@unit"/></p>
 	</xsl:template>
+	
+	
+	<!-- colophon -->
+	<xsl:template match="*" mode="colophon">
+		<div class="colophon">
+			<br/>
+			<div class="hr">&#160;</div>
+			<xsl:if test="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()]">
+				<p class="colophon_heading">File title:</p>
+				<p>
+					<xsl:value-of select="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()][1]"/>
+				</p>
+			</xsl:if>
+			<xsl:if test="m:meiHead/m:fileDesc/m:seriesStmt/m:title/text()">
+				<p class="colophon_heading">Series:</p>
+				<xsl:for-each select="m:meiHead/m:fileDesc/m:seriesStmt/m:title//text()">
+					<p>
+						<xsl:value-of select="."/>
+						<xsl:for-each
+							select="../identifier[normalize-space(@type) and @type!='file_collection' and text()]">
+							<br/>
+							<xsl:value-of select="@type"/>
+							<xsl:text> </xsl:text>
+							<xsl:value-of select="."/>
+						</xsl:for-each>
+						<xsl:if test="position()!=last()">
+							<br/>
+						</xsl:if>
+					</p>
+				</xsl:for-each>
+			</xsl:if>
+			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/*[name()!='resp']//text()">
+				<p class="colophon_heading">File publication:</p>
+				<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName[//text()]">
+					<p>
+						<xsl:choose>
+							<xsl:when test="text() or m:expan/text()">
+								<xsl:apply-templates select="text()"/>
+								<xsl:apply-templates select="m:expan"/>
+								<xsl:if test="m:abbr/text()"> (<xsl:value-of select="m:abbr"/>)</xsl:if><br/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:if test="m:abbr/text()"><xsl:value-of select="m:abbr"/><br/></xsl:if>
+							</xsl:otherwise>
+						</xsl:choose>
+						
+						<xsl:for-each select="m:address/m:addrLine[m:ptr/@target or text()]">
+							<xsl:choose>
+								<xsl:when test="m:ptr/@target">
+									<xsl:choose>
+										<xsl:when test="m:ptr/text()">
+											<xsl:value-of select="m:ptr/text()"/>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:value-of select="m:ptr/@label"/>
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:text>: </xsl:text>
+									<xsl:element name="a">
+										<xsl:attribute name="href">
+											<xsl:value-of select="m:ptr/@target"/>
+										</xsl:attribute>
+										<xsl:value-of select="m:ptr/@target"/>
+									</xsl:element>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="."/>
+								</xsl:otherwise>
+							</xsl:choose>
+							<br/>
+						</xsl:for-each>
+					</p>
+				</xsl:for-each>
+				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:date/text()">
+					<p><xsl:value-of select="m:meiHead/m:fileDesc/m:pubStmt/m:date"/></p>
+				</xsl:if>
+				
+				<!-- list editors and others -->
+				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt[m:persName[text()]]">
+					<p>
+						<xsl:apply-templates select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt[m:persName[text()]]" 
+							mode="list_persons_by_role"/>
+					</p>
+				</xsl:if>
+				
+				<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:availability//text()">
+					<p>
+						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:acqSource[text()]">
+							<br/><xsl:value-of select="."/>
+						</xsl:for-each>
+						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:accessRestrict[text()]">
+							<br/><xsl:value-of select="."/>
+						</xsl:for-each>
+						<xsl:for-each select="m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:useRestrict[text()]">
+							<br/><xsl:value-of select="."/>
+						</xsl:for-each>
+					</p>
+				</xsl:if>
+			</xsl:if>
+			<xsl:apply-templates select="m:meiHead/m:revisionDesc"/>
+		</div>
+	</xsl:template>
+	
 	
 	<!-- work-related templates -->
 	

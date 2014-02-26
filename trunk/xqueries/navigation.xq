@@ -23,6 +23,7 @@ declare variable $coll   := request:get-parameter("c",    "") cast as xs:string;
 declare variable $query  := request:get-parameter("query","");
 declare variable $page   := request:get-parameter("page", "1") cast as xs:integer;
 declare variable $number := request:get-parameter("itemsPerPage","20") cast as xs:integer;
+declare variable $mode   := request:get-parameter("mode","") cast as xs:string;
 
 declare variable $vocabulary := doc(concat("http://",request:get-header('HOST'),"/editor/forms/mei/model/keywords.xml"));
 
@@ -36,8 +37,7 @@ declare variable $published_only := "";
 declare variable $sort-options :=
 (<option value="null,work_number">Work number</option>,
 <option value="null,title">Title</option>,
-<option value="null,date">Year</option>,
-<option value="date,title">Year, Title</option>
+<option value="date,title">Year</option>
 );
 
 
@@ -204,9 +204,23 @@ generated title disabled
 		<h2>A Thematic Catalogue of Carl Nielsen&apos;s Works</h2>
       </div> <!-- end header -->
       <div id="menu">
-             <a href="index.html">Home</a> 
-             <a href="introduction.html">Introduction</a>
-             <a href="navigation.xq" class="selected">Catalogue</a> 
+             { 
+               let $browse:= if ($mode="") then "selected" else ""
+               return (<a href="navigation.xq" class="{$browse}">Browse catalogue</a>)
+             }
+             <!-- This is under construction... -->
+             { 
+               let $alpha:= if ($mode="alpha") then "selected" else ""
+               return (<a href="navigation.xq?itemsPerPage=9999&amp;c=CNW&amp;sortby=null%2Ctitle&amp;mode=alpha" 
+               class="{$alpha}">Alphabetic list</a>)
+             }
+             { 
+               let $sys:= if ($mode="sys") then "selected" else ""
+               return (<a href="navigation.xq?itemsPerPage=9999&amp;c=CNW&amp;sortby=work_number%2Ctitle&amp;mode=sys" 
+               class="{$sys}">Systematic list</a>)
+             }
+             <!-- end construction -->             
+             <a href="about.html">About CNW</a> 
       </div> <!-- end menu -->
 
       <div id="main">

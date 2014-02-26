@@ -7,7 +7,7 @@
 	Axel Teich Geertinger & Sigfrid Lundberg
 	Danish Centre for Music Publication
 	The Royal Library, Copenhagen
-	
+
 -->
 
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" 
@@ -50,24 +50,17 @@
 									alt="KB Logo" src="/editor/images/kb.png"/></a></div>
 						<h1>CNW</h1>
 						<h2>A Thematic Catalogue of Carl Nielsen&apos;s Works</h2>
-						<!--<p>En tematisk-bibliografisk fortegnelse over Carl Nielsens værker</p>
-						<div class="line"> </div>-->
 					</div>
 					
 					<div id="menu">
-						<div class="change_language">
-							<a href="source_description_en.html">[English]</a>
-						</div>
-						<a href="cnw.html">Home</a>
-						<!--<a href="dummy.htm">Alfabetisk oversigt</a>
-						<a href="dummy.htm">Genreoversigt</a>
-						<a href="dummy.htm" class="selected">Avanceret søgning</a>-->
-						<a href="introduction.html">Introduction</a>
 						<a href="navigation.xq" class="selected">Catalogue</a>
+						<a href="navigation.xq?itemsPerPage=9999&amp;c=CNW&amp;sortby=null%2Ctitle&amp;mode=alpha">Alphabetic list</a>
+						<a href="navigation.xq?itemsPerPage=9999&amp;c=CNW&amp;sortby=work_number%2Ctitle&amp;mode=sys">Systematic list</a>
+						<a href="about.html">About CNW</a>
 					</div>
 					<div id="main" class="main">
 						<div class="content_box">
-							<div id="backlink"><a href="javascript:history.back();">Back</a></div>
+							<div id="backlink" class="noprint"><a href="javascript:history.back();">Back</a></div>
 							<xsl:call-template name="make_public_html_body"/>
 						</div>
 					</div>
@@ -137,6 +130,11 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</span>
+				<!-- parameter $doc doesn't seem to work yet 
+				<span class="tools">
+					<a href="http://{$hostname}/storage/download_xml.xq?doc={$doc}" title="Get this record as XML (MEI)" 
+						target="_blank"><img src="/editor/images/xml.gif" alt="XML" border="0"/></a>
+				</span>-->
 			</div>
 		</xsl:if>
 		
@@ -159,9 +157,12 @@
 		</xsl:element>
 	</xsl:template>	
 	
-	<!-- Revision history not shown in public -->
-	<xsl:template match="m:revisionDesc">
-		<xsl:apply-templates select="m:change[normalize-space(@isodate)!=''][last()]" mode="last"/>
-	</xsl:template>
+	
+	<!-- Only show last revision instead of full colophon -->
+	<xsl:template match="*" mode="colophon">
+		<div class="colophon">
+			<xsl:apply-templates select="//m:revisionDesc//m:change[normalize-space(@isodate)!=''][last()]" mode="last"/>
+		</div>
+	</xsl:template>	
 
 </xsl:stylesheet>

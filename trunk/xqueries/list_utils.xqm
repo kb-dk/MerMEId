@@ -448,7 +448,7 @@ declare function app:generate-href($field as xs:string,
 				  "",
 				  "100 per page"},
 				  element option {attribute value {$total cast as xs:string},
-				  if($app:number=$total) then 
+				  if($app:number=$total or $app:number>$total) then 
 				    attribute selected {"selected"}
 				  else
 				    "",
