@@ -130,7 +130,7 @@
 			m:work/
 			m:titleStmt/m:respStmt">
 			<xsl:for-each select="m:persName[@role='composer'][text()]">
-				<p>
+				<p class="composer_top">
 					<xsl:apply-templates select="."/>
 				</p>
 			</xsl:for-each>
@@ -360,7 +360,7 @@
 				
 				<div class="fold">
 
-					<p class="p_heading" id="p{$mdiv_id}" onclick="toggle('{$mdiv_id}')" title="Click to open">
+					<p class="p_heading section_heading" id="p{$mdiv_id}" onclick="toggle('{$mdiv_id}')" title="Click to open">
 						<img class="noprint" style="display:inline;" id="img{$mdiv_id}" border="0"
 							src="/editor/images/plus.png" alt="-"/> Music </p>
 
@@ -391,7 +391,7 @@
 					<xsl:text>
 					</xsl:text>
 					<div class="fold">
-						<p class="p_heading" id="p{$source_id}" title="Click to open" onclick="toggle('{$source_id}')">
+						<p class="p_heading section_heading" id="p{$source_id}" title="Click to open" onclick="toggle('{$source_id}')">
 							<img class="noprint" style="display:inline;" border="0" id="img{$source_id}" alt="+"
 								src="/editor/images/plus.png"/> Sources </p>
 
@@ -684,7 +684,7 @@
 				<xsl:variable name="mdiv_id" select="concat('subsection',../../@xml:id,generate-id(),position())"/>
 
 				<div class="fold">
-					<p class="p_heading" id="p{$mdiv_id}" onclick="toggle('{$mdiv_id}')" title="Click to open">
+					<p class="p_heading section_heading" id="p{$mdiv_id}" onclick="toggle('{$mdiv_id}')" title="Click to open">
 						<xsl:text>
 						</xsl:text><script type="application/javascript"><xsl:text>
 							openness["</xsl:text><xsl:value-of select="$mdiv_id"/><xsl:text>"]=false;
@@ -1145,7 +1145,7 @@
 			<xsl:text>
 			</xsl:text>
 			<div class="fold">
-				<p class="p_heading" id="p{$historydiv_id}" title="Click to open" onclick="toggle('{$historydiv_id}')">
+				<p class="p_heading section_heading" id="p{$historydiv_id}" title="Click to open" onclick="toggle('{$historydiv_id}')">
 					<img id="img{$historydiv_id}" class="noprint" style="display:inline" border="0"
 						src="/editor/images/plus.png" alt="+"/> Performances </p>
 				<div class="folded_content" id="{$historydiv_id}" style="display:none;">
@@ -1171,7 +1171,7 @@
 		<div class="fold">
 			<xsl:text>
 			</xsl:text>
-			<p class="p_heading" id="p{$source_id}" title="Click to open" onclick="toggle('{$source_id}')">
+			<p class="p_heading section_heading" id="p{$source_id}" title="Click to open" onclick="toggle('{$source_id}')">
 				<img class="noprint" style="display:inline;" border="0" id="img{$source_id}" alt="+"
 					src="/editor/images/plus.png"/> Sources </p>
 
@@ -1794,8 +1794,8 @@
 			<xsl:text>
 			</xsl:text>
 			<div class="fold">
-				<p class="p_heading" id="p{$bib_id}" title="Click to open" onclick="toggle('{$bib_id}')">
-					<img style="display:inline" id="img{$bib_id}" border="0" src="/editor/images/plus.png" alt="+"/>
+				<p class="p_heading section_heading" id="p{$bib_id}" title="Click to open" onclick="toggle('{$bib_id}')">
+					<img class="noprint" style="display:inline" id="img{$bib_id}" border="0" src="/editor/images/plus.png" alt="+"/>
 					<xsl:call-template name="print_bibliography_type"/>
 				</p>
 				<div class="folded_content" style="display:none">
@@ -2248,7 +2248,7 @@
 			</xsl:text>
 			<div class="fold revision_history">
 				<p class="colophon_heading" id="prevhist" title="Click to open" onclick="toggle('revhist')">
-					<img style="display:inline" id="imgrevhist" border="0" src="/editor/images/plus.png" alt="+"/>
+					<img class="noprint" style="display:inline" id="imgrevhist" border="0" src="/editor/images/plus.png" alt="+"/>
 					Revision history
 				</p>
 				<div class="folded_content" style="display:none" id="revhist">

@@ -56,6 +56,7 @@ return
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Merged documents</title>
+<link rel="stylesheet" type="text/css" href="/editor/style/mei_to_html_print.css"/>
 </head>
 <body>
 {
