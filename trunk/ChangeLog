@@ -1,3 +1,1263 @@
+2014-02-20 14:25  slu
+
+	* xqueries/main_loop.xqm, xqueries/navigation.xq: fixed some stuff
+
+2014-02-19 22:13  atge
+
+	* mermeid/style/public_list_style.css, xqueries/filter_utils.xqm:
+	  imrpoved genre selection styling
+
+2014-02-19 19:52  atge
+
+	* mermeid/images/checkbox_trsp.png,
+	  mermeid/images/checkbox_trsp_checked.png,
+	  mermeid/images/checked.png, mermeid/style/list_style.css,
+	  mermeid/style/public_list_style.css,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  xqueries/filter_utils.xqm, xqueries/list_utils.xqm,
+	  xqueries/navigation.xq: styled paging links and genre selection
+
+2014-02-19 16:31  atge
+
+	* mermeid/images/Thumbs.db, mermeid/style/cnw.css,
+	  mermeid/style/dcm.css, mermeid/style/public_list_style.css,
+	  mermeid/transforms/mei/mei_to_html_public.xsl,
+	  xqueries/navigation.xq: introduced @print css
+
+2014-02-19 12:06  slu
+
+	* xqueries/filter_utils.xqm, xqueries/list_utils.xqm: removed hits
+	  counting in the filter sets in the left margin
+
+2014-02-19 09:46  slu
+
+	* apache-httpd/conf-devel.conf, apache-httpd/conf-prod.conf,
+	  filter/src/main/resources/http_filter.xml,
+	  local_config/login.xqm_dcmudv,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html, xqueries/main_loop.xqm,
+	  xqueries/navigation.xq, xqueries/publish.xq: Made the filtering
+	  with respect to genre more restrictive. Made some
+	  optimizations.
+
+2014-02-17 14:16  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_public.xsl: abbreviation of
+	  long lists of catalogue numbers now also in public view;
+	  collection name and numbers are now added automatically to
+	  <relation> links
+
+2014-02-17 13:21  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml, mermeid/js/editor.js,
+	  mermeid/transforms/mei/mei_to_html.xsl, xqueries/list_utils.xqm:
+	  fixed bug in HTML view (performances sections); long lists of
+	  catalogue numbers (e.g. in collections of works) are abbreviated
+	  in the HTML view's top ribbon; HTML page titles now include work
+	  title
+
+2014-02-13 09:46  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: history notes and date of
+	  composition always shown now - only performances can be hidden
+
+2014-02-12 16:36  atge
+
+	* mermeid/forms/mei/details-expression.xml,
+	  mermeid/forms/mei/model/empty_doc.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl: added notesStmt to
+	  component expressions to allow explanatory text, links etc.
+
+2014-02-12 15:43  atge
+
+	* local_config/mermeid_configuration.xml_dcmudv,
+	  mermeid/forms/mei/edit-form-head.xml,
+	  mermeid/forms/mei/includes/performance_list.xbl,
+	  mermeid/forms/mei/main_form_history.xml, mermeid/style/dcm.css,
+	  mermeid/style/mei_to_html.css,
+	  mermeid/style/mei_to_html_public.css,
+	  mermeid/style/public_list_style.css,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_public.xsl: put performance
+	  lists into a separate XBL component; fixed some styling issues
+
+2014-02-06 20:19  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: composition dates now
+	  treated like other dates; avoid empty td and p elements in
+	  revision history
+
+2014-02-06 18:29  atge
+
+	* mermeid/forms/mei/details-expression.xml,
+	  mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/meter-input.xml,
+	  mermeid/forms/mei/main_form_music.xml: meter input now in a
+	  shared module; multiple meters possible at component level too
+
+2014-02-05 16:08  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/performance_list.xbl,
+	  mermeid/forms/mei/main_form_history.xml,
+	  mermeid/style/mei_to_html.css,
+	  mermeid/transforms/mei/mei_to_html.xsl: fixed html display of
+	  time signatures; removed obslete labels "work" and "version" from
+	  performance lists; some cleaning up
+
+2014-02-05 10:22  slu
+
+	* apache-httpd/conf-devel.conf, apache-httpd/conf-prod.conf,
+	  filter/src/main/java/dk/kb/mermeid/filter/FilterUtilityMethods.java,
+	  local_config/http_filter.xml_test,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html: checking in the filter fix
+
+2014-02-04 22:18  atge
+
+	* mermeid/forms/mei/main_form_music.xml,
+	  mermeid/style/mei_to_html.css,
+	  mermeid/transforms/mei/mei_to_html.xsl: Support for mixed metres;
+	  fractional metres are displayed as inline tables
+
+2014-02-04 15:54  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/edit-form-head.xml,
+	  mermeid/forms/mei/includes/history-input.xbl,
+	  mermeid/forms/mei/main_form_history.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl: History information now
+	  editable at version level too
+
+2014-01-23 11:19  slu
+
+	* local_config/mermeid_configuration.xml_dcmudv,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html: Ooops.
+	  mermeid_configuration.xml_dcmudv contains host names...
+
+2014-01-23 09:23  slu
+
+	* apache-httpd/conf-top-level.conf: a virtual server that does
+	  nothing but run mermeid
+
+2014-01-23 08:45  slu
+
+	* apache-httpd, apache-httpd/conf-devel.conf,
+	  apache-httpd/conf-prod.conf,
+	  filter/src/main/resources/http_filter.xml, mermeid/INSTALL.html,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html,
+	  mermeid/transforms/mei/utils/sequential_transformer: no comments
+
+2014-01-22 14:09  slu
+
+	* local_config/http_filter.xml_dcmudv,
+	  local_config/login.xqm_dcmudv,
+	  local_config/mermeid_configuration.xml_dcmudv,
+	  local_config/standard_bibliography.xml_dcmudv: adding a new local
+	  configuration
+
+2014-01-22 09:34  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/images/manual/external_source_add.png,
+	  mermeid/manual/index.html,
+	  mermeid/manual/tutorial_external_sources.html,
+	  mermeid/transforms/mei/mei_to_html.xsl: Added missing space
+	  between repository name and shelf mark in HTML mode; Updated
+	  manual to include information on copying sources from other
+	  files.
+
+2014-01-15 09:18  slu
+
+	* xqueries/cross-link.xq, xqueries/filter_utils.xqm,
+	  xqueries/navigation.xq: left a hard coded host name. happens too
+	  often :(
+
+2014-01-09 16:06  atge
+
+	* mermeid/forms/mei/includes/source_list.xbl: implemented copying
+	  of sources from other files
+
+2014-01-09 11:31  atge
+
+	* mermeid/style/cnw.css, xqueries/navigation.xq: added menu to
+	  public interface
+
+2014-01-09 09:30  slu
+
+	* xqueries/main_loop_sources.xqm: the increased stringency of eXist
+	  complicates stuff :(
+
+2014-01-08 15:50  atge
+
+	* mermeid/forms/mei/includes/source_list.xbl,
+	  mermeid/images/Thumbs.db: prepared copying of external sources
+	  (temporarily stopped because file browser does not work on the
+	  development server...)
+
+2013-12-19 11:55  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/main_form_music.xml: removed duplicate ensemble
+	  heading input
+
+2013-12-10 13:56  atge
+
+	* mermeid/forms/mei/details-expression.xml,
+	  mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/instrvoice-input.xml,
+	  mermeid/forms/mei/includes/instrvoicegrp-input.xml,
+	  mermeid/forms/mei/main_form_music.xml,
+	  mermeid/style/xform_style.css,
+	  mermeid/transforms/mei/utils/update_perfMedium_in_sub-expressions.xsl:
+	  perfMedium in componentGrp/expression elements are now created as
+	  complete copies that may be changed freely (not just references
+	  to top-level instrumentation and cast list); an XSL transform is
+	  added to update existing files
+
+2013-12-04 14:18  slu
+
+	* xqueries/copy-file.xq, xqueries/list_files.xq,
+	  xqueries/list_utils.xqm, xqueries/main_loop.xqm: Implemented a
+	  copy function. Changed sorting behaviour, such that sortby
+	  defaults to person,title rather than null,work_number
+
+2013-11-28 15:34  slu
+
+	* xqueries/copy-file.xq, xqueries/list_files.xq,
+	  xqueries/list_utils.xqm: ok -- no comments
+
+2013-11-28 14:11  slu
+
+	* xqueries/copy-file.xq: Ready to connect to the list_files.xq
+
+2013-11-27 16:47  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_public.xsl:
+	  mei_to_html_public.xsl now re-uses templates from
+	  mei_to_html.xsl; Works having versions now place global sources
+	  after the descriptions of versions instead of before
+
+2013-11-21 12:27  slu
+
+	* filter/src/main/resources/http_filter.xml,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html: rebuild stuff
+
+2013-11-21 11:56  slu
+
+	* xqueries/publish.xq: restored the redirect back to list_files.xq
+
+2013-11-20 12:07  slu
+
+	* filter/src/main/resources/http_filter.xml,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html, xqueries/filter_utils.xqm,
+	  xqueries/navigation.xq: should work now
+
+2013-11-20 10:22  slu
+
+	* xqueries/filter_utils.xqm: filter:get-date now returns string not
+	  integer
+
+2013-11-19 19:28  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_public.xsl: removed spaces in
+	  physLoc display
+
+2013-11-19 17:27  atge
+
+	* mermeid/forms/mei/includes/date_editor.xbl: date editor now
+	  offers pasting pre-formatted dates into "displayed date" field
+
+2013-11-19 16:49  atge
+
+	* xqueries/list_utils.xqm, xqueries/navigation.xq: preventing works
+	  without subtitle from generating emtpy <div>s (causing a display
+	  error in MSIE)
+
+2013-11-19 15:31  atge
+
+	* mermeid/forms/mei/includes/bibl-input.xbl: fixed error related to
+	  repeated relatedItems (now producing multiple relatedItems
+	  instead of multiple bibls)
+
+2013-11-19 09:31  atge
+
+	* mermeid/images/Thumbs.db, mermeid/images/kb_white.png,
+	  mermeid/style/mei_to_html_public.css,
+	  mermeid/transforms/mei/mei_to_html_public.xsl: minor display
+	  corrections
+
+2013-10-29 19:27  atge
+
+	* mermeid/style/cnw.css, mermeid/style/public_list_style.css,
+	  xqueries/navigation.xq: only the first level 1 and 2 genre
+	  keywords are shown in the list
+
+2013-10-29 17:41  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/bibl-input.xbl,
+	  mermeid/forms/mei/model/bibl_reference_types.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_public.xsl: Corrections and
+	  additions to bibl reference types
+
+2013-10-29 14:50  atge
+
+	* mermeid/forms/mei/includes/bibl-input.xbl,
+	  mermeid/forms/mei/model/bibl_reference_types.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl: Added manuscripts to bibl
+	  reference types (cont'd.)
+
+2013-10-29 13:14  atge
+
+	* mermeid/forms/mei/includes/bibl-input.xbl,
+	  mermeid/transforms/mei/mei_to_html.xsl: Added interview to bibl
+	  reference types (cont'd.)
+
+2013-10-29 13:03  atge
+
+	* mermeid/forms/mei/includes/bibl-input.xbl,
+	  mermeid/forms/mei/model/bibl_reference_types.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl: Added interview to bibl
+	  reference types
+
+2013-10-23 08:28  slu
+
+	* filter/src/main/resources/http_filter.xml,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html, xqueries/list_files.xq,
+	  xqueries/list_utils.xqm, xqueries/main_loop.xqm,
+	  xqueries/navigation.xq: made sorting fool proof
+
+2013-10-17 13:11  slu
+
+	* xqueries/list_utils.xqm, xqueries/navigation.xq: now presenting
+	  subtitles when they are there. prepared for a javascript
+	  toggling between english and danish as presentation language for
+	  metadata
+
+2013-10-17 08:36  slu
+
+	* xqueries/list_utils.xqm, xqueries/main_loop.xqm,
+	  xqueries/navigation.xq: Fixed a bug related to when to show the
+	  string "Sort by:" in the pull
+	  down.
+
+2013-10-16 13:26  slu
+
+	* xqueries/list_files.xq, xqueries/list_utils.xqm,
+	  xqueries/main_loop.xqm, xqueries/navigation.xq: sorting works
+	  nicely
+
+2013-10-15 14:17  slu
+
+	* xqueries/main_loop.xqm: the sorting with respect to cnw numbers
+	  works. sort of
+
+2013-10-11 19:34  atge
+
+	* mermeid/style/public_list_style.css, xqueries/filter_utils.xqm,
+	  xqueries/list_utils.xqm: separated year slider from keyword
+	  search form
+
+2013-10-11 14:36  atge
+
+	* xqueries/filter_utils.xqm, xqueries/list_utils.xqm: fixed a
+	  number of filter removal bugs and improved result count display
+
+2013-10-10 15:17  atge
+
+	* mermeid/jquery/jquery-ui-1.10.3/slider.js,
+	  xqueries/filter_utils.xqm, xqueries/list_utils.xqm,
+	  xqueries/navigation.xq: improved fixed year selection slider;
+	  moved filter removal blocks til filter_utils
+
+2013-10-10 13:31  slu
+
+	* mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html, xqueries/filter_utils.xqm,
+	  xqueries/list_utils.xqm, xqueries/main_loop.xqm,
+	  xqueries/navigation.xq, xqueries/publish.xq: implemented sorting
+
+2013-10-09 17:06  atge
+
+	* mermeid/images/filter_remove.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/style.css,
+	  mermeid/style/public_list_style.css, xqueries/filter_utils.xqm,
+	  xqueries/list_utils.xqm, xqueries/navigation.xq: Added blocks
+	  displaying applied filters; removable one by one
+
+2013-10-09 08:32  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml: pseudo-changed the footer
+	  just to display a new revision number ...
+
+2013-10-09 08:25  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_public.xsl: fixed bug
+	  preventing history time line from displaying event descriptions
+
+2013-10-09 08:24  atge
+
+	* mermeid/jquery/jquery-ui-1.10.3/slider.js,
+	  mermeid/style/public_list_style.css: slight modifications to the
+	  year range slider
+
+2013-09-25 16:24  atge
+
+	* mermeid/forms/mei/model/keywords.xml, mermeid/style/dcm.css,
+	  mermeid/style/mei_to_html_public.css,
+	  mermeid/style/public_list_style.css,
+	  mermeid/transforms/mei/mei_to_html_public.xsl,
+	  xqueries/filter_utils.xqm, xqueries/navigation.xq: changed
+	  appearance of genre filter and order of genres; added level 1
+	  genre keywords; changed page title to CNW
+
+2013-09-25 13:18  slu
+
+	* xqueries/collection.xconf, xqueries/filter_utils.xqm: this setup
+	  gives a fast enough search for CNW
+
+2013-09-25 07:10  atge
+
+	* xqueries/list_utils.xqm: added (temporary?) function in
+	  list_utils.xqm for linking to document.xq instead of the editor's
+	  HTML preview
+
+2013-09-24 15:51  atge
+
+	* mermeid/style/mei_to_html_public.css,
+	  mermeid/style/public_list_style.css,
+	  mermeid/transforms/mei/mei_to_html_public.xsl,
+	  xqueries/navigation.xq: fixed date span display in result list
+	  and minor styling issues; added (temporary?) function in
+	  list_utils.xqm for linking to document.xq instead of the editor's
+	  HTML preview
+
+2013-09-24 11:08  atge
+
+	* mermeid/images/minus.png, mermeid/images/minus_gray.png,
+	  mermeid/images/minus_green.png, mermeid/images/plus.png,
+	  mermeid/images/plus_gray.png, mermeid/images/plus_green.png,
+	  mermeid/style/dcm.css, mermeid/style/mei_to_html_public.css,
+	  mermeid/style/public_list_style.css,
+	  mermeid/transforms/mei/mei_to_html_public.xsl,
+	  xqueries/document.xq: added xq, xsl, and css for public document
+	  viewing
+
+2013-09-23 19:59  atge
+
+	* mermeid/style/public_list_style.css, xqueries/navigation.xq:
+	  prepared 2-level genre color coding; added dates of composition
+	  to result list
+
+2013-09-20 15:18  atge
+
+	* mermeid/images/Thumbs.db,
+	  mermeid/images/dcm_logo_small_white.png,
+	  mermeid/images/kb_white.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/style.css,
+	  mermeid/style/cnw.css, mermeid/style/dcm.css,
+	  mermeid/style/public_list_style.css, xqueries/filter_utils.xqm,
+	  xqueries/list_utils.xqm, xqueries/navigation.xq: introduced
+	  preliminary DCM/CNW layout
+
+2013-09-20 11:18  atge
+
+	* mermeid/style/public_list_style.css, xqueries/filter_utils.xqm,
+	  xqueries/navigation.xq: changed appearance of filter
+
+2013-09-20 10:19  atge
+
+	* mermeid/jquery/jquery-ui-1.10.3/slider.js,
+	  xqueries/filter_utils.xqm, xqueries/navigation.xq: simplified
+	  year range slider initialization and changing; year range can now
+	  be changed by entering values; changed genre classnames to
+	  lowercase
+
+2013-09-19 15:16  atge
+
+	* mermeid/style/public_list_style.css, xqueries/navigation.xq:
+	  color coded result list
+
+2013-09-19 14:03  slu
+
+	* xqueries/list_utils.xqm: escaping the URIs
+
+2013-09-19 12:51  slu
+
+	* xqueries/list_files.xq, xqueries/list_utils.xqm: cleaned up the
+	  result set navigation a lot
+
+2013-09-19 11:59  atge
+
+	* mermeid/jquery/jquery-ui-1.10.3/css/style.css,
+	  mermeid/style/public_list_style.css: prepared genre color codes
+
+2013-09-19 10:28  slu
+
+	* filter/src/main/resources/http_filter.xml,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html,
+	  mermeid/transforms/mei/utils/sequential_transformer,
+	  xqueries/filter_utils.xqm, xqueries/main_loop.xqm: search engine
+	  almost there
+
+2013-09-19 06:48  atge
+
+	* xqueries/navigation.xq: changed title from "Navigation" to
+	  "Works" (but in the end, a publication-specific title like "Carl
+	  Nielsen Works" will be needed)
+
+2013-09-18 22:20  atge
+
+	* mermeid/jquery/jquery-ui-1.10.3/slider.js,
+	  xqueries/filter_utils.xqm, xqueries/navigation.xq: Year range
+	  slider almost working now; need to decide whether dates are
+	  treated as YYYY-MM-DD dates or 4-digit integers/strings
+
+2013-09-18 18:49  atge
+
+	* mermeid/jquery, mermeid/jquery/jquery-1.8.3.js,
+	  mermeid/jquery/jquery-ui-1.10.3,
+	  mermeid/jquery/jquery-ui-1.10.3/css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/animated-overlay.gif,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-bg_flat_0_aaaaaa_40x100.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-bg_flat_75_ffffff_40x100.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-bg_glass_55_fbf9ee_1x400.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-bg_glass_65_ffffff_1x400.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-bg_glass_75_dadada_1x400.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-bg_glass_75_e6e6e6_1x400.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-bg_glass_95_fef1ec_1x400.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-icons_222222_256x240.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-icons_2e83ff_256x240.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-icons_454545_256x240.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-icons_888888_256x240.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/images/ui-icons_cd0a0a_256x240.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/jquery-ui.css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/jquery.ui.all.css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/jquery.ui.base.css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/jquery.ui.core.css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/jquery.ui.slider.css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/jquery.ui.theme.css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/animated-overlay.gif,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-bg_flat_0_aaaaaa_40x100.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-bg_flat_75_ffffff_40x100.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-bg_glass_55_fbf9ee_1x400.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-bg_glass_65_ffffff_1x400.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-bg_glass_75_dadada_1x400.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-bg_glass_75_e6e6e6_1x400.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-bg_glass_95_fef1ec_1x400.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-bg_highlight-soft_75_cccccc_1x100.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-icons_222222_256x240.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-icons_2e83ff_256x240.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-icons_454545_256x240.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-icons_888888_256x240.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/images/ui-icons_cd0a0a_256x240.png,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/jquery-ui.min.css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/jquery.ui.core.min.css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/jquery.ui.slider.min.css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/base/minified/jquery.ui.theme.min.css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/style.css,
+	  mermeid/jquery/jquery-ui-1.10.3/js,
+	  mermeid/jquery/jquery-ui-1.10.3/js/jquery-1.9.1.js,
+	  mermeid/jquery/jquery-ui-1.10.3/js/jquery-ui-1.10.3.custom.js,
+	  mermeid/jquery/jquery-ui-1.10.3/js/jquery-ui-1.10.3.custom.min.js,
+	  mermeid/jquery/jquery-ui-1.10.3/slider.js,
+	  mermeid/style/navigation_style.css,
+	  mermeid/style/public_list_style.css, xqueries/filter_utils.xqm,
+	  xqueries/navigation.xq: Added jquery range slider. Renamed
+	  navigation_style.css to public_list_style.css to shortcircuit
+	  ownership problem
+
+2013-09-18 16:49  atge
+
+	* xqueries/dcm/nielsen_cnw0131.xml,
+	  xqueries/dcm/nielsen_hjemvee.xml: corrected demo file numbers
+
+2013-09-18 13:52  slu
+
+	* xqueries/filter_utils.xqm: fixed the query string dates as well
+
+2013-09-18 13:35  slu
+
+	* xqueries/filter_utils.xqm: the filter calculates real xs:date
+
+2013-09-18 13:34  slu
+
+	* xqueries/cross-link.xq, xqueries/filter_utils.xqm,
+	  xqueries/list_files.xq, xqueries/list_utils.xqm,
+	  xqueries/main_loop.xqm, xqueries/navigation.xq: a lot of changes
+	  since yesterday morning
+
+2013-09-17 08:51  slu
+
+	* xqueries/filter_utils.xqm: removed some unwanted terms from the
+	  filters
+
+2013-09-12 14:24  slu
+
+	* mermeid/style/navigation_style.css: the classes needed for
+	  navigation
+
+2013-09-12 14:18  slu
+
+	* xqueries/filter_utils.xqm, xqueries/navigation.xq: basic
+	  functions in place
+
+2013-09-12 08:53  slu
+
+	* xqueries/filter_utils.xqm: collecting all filter stuff in a
+	  seperate module
+
+2013-09-12 07:42  slu
+
+	* mermeid/style/navigation_style.css: A style for the end user
+	  interface
+
+2013-09-11 12:07  slu
+
+	* xqueries/list_utils.xqm: now we go to page 1 in a result set
+	  after changing a filter
+
+2013-09-11 11:56  slu
+
+	* xqueries/main_loop.xqm: case independent sorting independent of
+	  white space
+
+2013-09-11 09:03  atge
+
+	* local_config/standard_bibliography.xml_demo,
+	  local_config/standard_bibliography.xml_dev,
+	  local_config/standard_bibliography.xml_distro,
+	  local_config/standard_bibliography.xml_prod,
+	  local_config/standard_bibliography.xml_test,
+	  mermeid/forms/mei/edit-form-footer.xml: updated
+	  standard_bibliography.xml to MEI 2013
+
+2013-09-05 07:33  slu
+
+	* xqueries/cross-link.xq: forgot the new function signature for
+	  loop:getlist()
+
+2013-09-04 17:20  atge
+
+	* mermeid/style/mei_to_html.css,
+	  mermeid/transforms/mei/mei_to_html.xsl: Fixed some small issues
+	  in HTML view (2)
+
+2013-09-04 17:14  atge
+
+	* mermeid/style/mei_to_html.css,
+	  mermeid/transforms/mei/mei_to_html.xsl: Fixed some small issues
+	  in HTML view
+
+2013-09-04 17:13  atge
+
+	* mermeid/forms/mei/edit-form-topbar.xml,
+	  mermeid/forms/mei/model/standard_instrumentation.xml: IDs added
+	  to toolbar icons; a bug fixed in standard instrumentation
+
+2013-09-03 06:50  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/manual/index.html, mermeid/resources: Removed MEI2012
+	  customization
+
+2013-08-29 12:57  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/style/mei_to_html.css,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/utils/transform_2012_to_2013.xsl,
+	  xqueries/dcm/gade_comala.xml, xqueries/dcm/nielsen_cnw0126.xml,
+	  xqueries/dcm/nielsen_cnw0127.xml,
+	  xqueries/dcm/nielsen_cnw0128.xml,
+	  xqueries/dcm/nielsen_cnw0129.xml,
+	  xqueries/dcm/nielsen_cnw0130.xml,
+	  xqueries/dcm/nielsen_cnw0131.xml,
+	  xqueries/dcm/nielsen_hjemvee.xml,
+	  xqueries/dcm/nielsen_holstein_sange.xml,
+	  xqueries/dcm/nielsen_maskarade.xml: Additions to MEI 2012 to 2013
+	  transform; demo data transformed to MEI 2013; HTML transform now
+	  includes revision history
+
+2013-08-29 12:56  atge
+
+	* mermeid/transforms/mei/utils/transform_2010_to_2012.xsl: MEI 2010
+	  to 2012 transform now adds a revision comment
+
+2013-08-28 16:01  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: Made the transform a
+	  little more fail-safe by ignoring spaces before rism sigla. The
+	  setup still has a problem if the country code is wrong, though.
+
+2013-08-28 11:34  slu
+
+	* xqueries/list_files.xq, xqueries/main_loop.xqm,
+	  xqueries/navigation.xq: no comments
+
+2013-08-22 17:33  atge
+
+	* mermeid/transforms/mei/utils/transform_2012_to_2013.xsl: xsl to
+	  migrate data from MEI 2012 (2.0.0) to MEI 2013 (2.1.0)
+
+2013-08-22 17:24  atge
+
+	* mermeid/forms/mei/details-performance.xml,
+	  mermeid/forms/mei/details-reference.xml,
+	  mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/bibl-input.xbl,
+	  mermeid/forms/mei/main_form_bibliography.xml,
+	  mermeid/forms/mei/model-references.xml,
+	  mermeid/forms/mei/model/bibl_reference_types.xml,
+	  mermeid/forms/mei/model/empty_doc.xml,
+	  mermeid/forms/mei/model/new_file.xml, mermeid/index.html,
+	  mermeid/transforms/mei/filter_get.xsl,
+	  mermeid/transforms/mei/filter_put.xsl,
+	  mermeid/transforms/mei/mei_to_html.xsl: migrated from MEI 2012
+	  (2.0.0) to MEI 2013 (2.1.0)
+
+2013-08-22 13:35  slu
+
+	* xqueries/list_utils.xqm: A modul with functions shared between
+	  user and editor function
+
+2013-08-22 12:05  slu
+
+	* xqueries/navigation.xq: this will be the user interface
+
+2013-08-22 12:04  slu
+
+	* xqueries/feed_navigation.xq, xqueries/navigation.xq: won't use
+	  the atom and opml stuff, but I'll keep it for the time being
+
+2013-08-20 11:03  slu
+
+	* xqueries/list_files.xq: string-join works better then concat for
+	  these data
+
+2013-08-15 08:20  slu
+
+	* filter/src/main/resources/http_filter.xml,
+	  local_config/login.xqm_prod,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html, xqueries/atom_feed.xq: some
+	  minor modifications
+
+2013-07-30 12:00  atge
+
+	* xqueries/dcm/gade_comala.xml: updated Comala demo file
+
+2013-05-30 13:25  slu
+
+	* mermeid/forms/mei/edit-form-footer.xml: Added more space in the
+	  system
+
+2013-05-30 12:47  slu
+
+	* xqueries/cross-link.xq: not really, but now it should be fixed
+
+2013-05-30 11:56  slu
+
+	* xqueries/cross-link.xq: should have fixed the problem with the
+	  creation of relations
+
+2013-05-16 14:53  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/style/mei_to_html.css,
+	  mermeid/transforms/mei/mei_to_html.xsl: Fixed problem with empty
+	  HTML elements (<i/> causing everything to be italicized).
+	  Style change: Title page transcription no longer in italics by
+	  default.
+
+2013-05-14 14:56  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml, xqueries/list_files.xq:
+	  shorter option labels
+
+2013-05-14 14:04  slu
+
+	* build-distro.sh, filter/src/main/resources/http_filter.xml,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html,
+	  mermeid/forms/mei/edit-form-footer.xml, xqueries/publish.xq:
+	  fixed statefulness in publication
+
+2013-05-14 09:35  atge
+
+	* mermeid/images/manual/list_files.png, xqueries/list_files.xq:
+	  minor help icon adjustment
+
+2013-05-14 08:59  slu
+
+	* local_config/login.xqm_distro: login is now OK
+
+2013-05-14 08:52  slu
+
+	* local_config/login.xqm_demo, local_config/login.xqm_dev,
+	  local_config/login.xqm_distro, local_config/login.xqm_prod,
+	  local_config/login.xqm_test: The login variable is boolean. Not
+	  obvious but logical!
+
+2013-05-14 07:41  slu
+
+	* local_config/login.xqm_demo, local_config/login.xqm_dev,
+	  local_config/login.xqm_distro, local_config/login.xqm_prod,
+	  local_config/login.xqm_test, xqueries/list_files.xq,
+	  xqueries/publish.xq: login functions will be kept secret...
+
+2013-05-08 08:03  slu
+
+	* mermeid/forms/mei/edit-form-footer.xml, xqueries/main_loop.xqm:
+	  Implemented selection of unpublished documents in the
+	  list_files.xq
+
+2013-05-08 07:58  slu
+
+	* xqueries/list_files.xq: Implemented selection of Unpublished
+	  documents
+
+2013-05-07 17:49  atge
+
+	* mermeid/INSTALL.html, mermeid/forms/mei/details-source.xml,
+	  mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl: fixed a few bugs: source
+	  component buttons and HTML preview (multiple alternative titles
+	  in the same language)
+
+2013-05-07 17:04  atge
+
+	* mermeid/forms/mei/main_form_music.xml,
+	  mermeid/images/checkbox_checked.png,
+	  mermeid/images/checkbox_green_checked.png,
+	  mermeid/images/checkbox_red_checked.png,
+	  mermeid/images/checkbox_yellow_checked.png,
+	  mermeid/images/close.gif, mermeid/images/close_dark.gif,
+	  mermeid/images/manual/html_view.png, mermeid/manual/basics.html,
+	  mermeid/manual/tutorial_reprint.html,
+	  mermeid/style/front_page.css, mermeid/style/manual.css,
+	  mermeid/style/model_editor_style.css,
+	  mermeid/transforms/mei/mei_to_html.xsl: minor styling; also fixed
+	  a HTML preview problem (<biblScope> page numbers not displayed if
+	  series titel was present)
+
+2013-05-07 14:26  slu
+
+	* xqueries/atom_feed.xq, xqueries/list_files.xq,
+	  xqueries/main_loop.xqm: now with selection of modified already
+	  published documents
+
+2013-05-07 08:27  slu
+
+	* xqueries/publish.xq: trying to remove a file that didn't exist
+	  caused an exception
+
+2013-05-07 08:12  atge
+
+	* mermeid/images/help.png, mermeid/images/help_light.png,
+	  mermeid/manual/basics.html: updated the manual (continued)
+
+2013-05-07 07:20  atge
+
+	* mermeid/images/manual/list_files.png, mermeid/manual/basics.html:
+	  updated the manual (publishing added)
+
+2013-05-07 06:29  atge
+
+	* mermeid/images/Thumbs.db, mermeid/images/help2.png:
+
+2013-05-06 16:33  atge
+
+	* mermeid/images/Thumbs.db, xqueries/dcm/nielsen_cnw0131.xml,
+	  xqueries/list_files.xq: tiny corrections
+
+2013-05-06 15:44  atge
+
+	* xqueries/list_files.xq: changed filter buttons to select boxes to
+	  get things a little more compact
+
+2013-05-06 15:02  atge
+
+	* mermeid/style/tab_style.css: set the editor background color to
+	  match the file list's header color
+
+2013-05-06 14:59  atge
+
+	* mermeid/images/menu.png, mermeid/manual/attribute_editor.html,
+	  mermeid/manual/basics.html, mermeid/manual/code_inspector.html,
+	  mermeid/manual/dates.html, mermeid/manual/index.html,
+	  mermeid/manual/special_characters.html,
+	  mermeid/manual/tutorial_anthology.html,
+	  mermeid/manual/tutorial_bibliography.html,
+	  mermeid/manual/tutorial_external_sources.html,
+	  mermeid/manual/tutorial_reprint.html,
+	  mermeid/manual/tutorial_versions.html,
+	  mermeid/style/list_style.css, mermeid/style/manual.css,
+	  xqueries/list_files.xq: A little more styling
+
+2013-05-06 14:29  atge
+
+	* mermeid/images/mermeid_30px_inv.png, mermeid/images/next.png,
+	  mermeid/images/previous.png, mermeid/style/list_style.css,
+	  xqueries/list_files.xq: Re-styled the files list
+
+2013-05-02 14:45  atge
+
+	* mermeid/js/publishing.js, mermeid/style/list_style.css,
+	  mermeid/style/xform_style.css, xqueries/list_files.xq: publishing
+	  controls now in a popup menu
+
+2013-05-02 10:49  slu
+
+	* mermeid/js/publishing.js: added a return null sist i
+	  getFirstChild
+
+2013-05-01 18:23  atge
+
+	* mermeid/images/Thumbs.db, mermeid/images/globe.png,
+	  mermeid/images/publish.png, mermeid/images/unpublish.png,
+	  mermeid/style/list_style.css: some more publish-icons and styling
+
+2013-05-01 12:32  slu
+
+	* mermeid/js/publishing.js, xqueries/list_files.xq,
+	  xqueries/publish.xq: both publish and retract actions work now
+	  with the same publish.xq
+
+2013-05-01 11:47  slu
+
+	* mermeid/js/confirm.js: The confirm functions shouldn't really be
+	  diluted with other
+
+2013-05-01 11:46  slu
+
+	* mermeid/js/publishing.js: collected some of the checkbox
+	  functions and handling of publishing functions here.
+
+2013-05-01 09:26  slu
+
+	* xqueries/list_files.xq: Show only published works
+
+2013-05-01 07:26  atge
+
+	* mermeid/images/Thumbs.db, mermeid/images/check_all.png,
+	  mermeid/images/uncheck_all.png, mermeid/style/list_style.css,
+	  xqueries/list_files.xq: moved "publish"-related elements to the
+	  search result table + done some styling
+
+2013-05-01 07:12  slu
+
+	* xqueries/list_files.xq: trying to get the delete form right
+
+2013-04-30 15:03  atge
+
+	* mermeid/forms/mei/main_form_work.xml: fixed general work
+	  description textarea
+
+2013-04-30 12:27  slu
+
+	* xqueries/list_files.xq: got a stateful handling av published_only
+
+2013-04-30 10:35  slu
+
+	* mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html, xqueries/list_files.xq,
+	  xqueries/main_loop.xqm: can now search for published documents
+
+2013-04-18 14:39  atge
+
+	* mermeid/style/list_style.css, xqueries/list_files.xq: added a
+	  meta tag to force IE out of quirks mode
+
+2013-04-18 13:04  atge
+
+	* mermeid/images/Thumbs.db, mermeid/images/checkbox.png,
+	  mermeid/images/checkbox_checked.png,
+	  mermeid/images/checkbox_green.png,
+	  mermeid/images/checkbox_green_checked.png,
+	  mermeid/images/checkbox_red.png,
+	  mermeid/images/checkbox_red_checked.png,
+	  mermeid/images/checkbox_yellow.png,
+	  mermeid/images/checkbox_yellow_checked.png,
+	  mermeid/js/checkbox.js, mermeid/style/list_style.css: added
+	  support for coloured checkboxes for the "publish" mechanism on
+	  list_files.xq
+
+2013-04-18 12:21  slu
+
+	* xqueries/list_files.xq: Publish, delete and edit buttons created
+	  using forms with get method. Checkbox
+	  embedded in a label tag.
+
+2013-04-18 08:26  slu
+
+	* xqueries/list_files.xq: made classes rather than style attributes
+
+2013-04-18 07:08  slu
+
+	* mermeid/images/checkbox.png, mermeid/images/checkbox_green.png,
+	  mermeid/images/checkbox_red.png,
+	  mermeid/images/checkbox_yellow.png: images for checkboxes in the
+	  publication system
+
+2013-04-17 10:28  slu
+
+	* xqueries/list_files.xq: OK, we can now publish. But there is more
+	  to problem than that
+
+2013-04-17 10:27  slu
+
+	* xqueries/publish.xq: It copies a file from the dcm collection to
+	  one that is named public. The only
+	  drawback is that the admin password has to be hard-coded into the
+	  script. Cannot publish this until that is fixed, somehow.
+
+2013-04-11 09:06  slu
+
+	* mermeid/js/confirm.js: added functions for publishing
+
+2013-04-10 12:58  slu
+
+	* xqueries/list_files.xq: backup copy. doesn't work. sorry
+
+2013-04-04 13:46  slu
+
+	* form-in-form.html: Java script and usage for publication service
+
+2013-03-20 09:34  slu
+
+	* mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html:
+
+2013-03-20 09:34  slu
+
+	* ChangeLog: OK, we're checking in the ChangeLog, which obviously
+	  will create a log
+	  entry which would need ChangeLog. We'll keep this at a minimum,
+	  though
+	  ;)
+
+2013-03-20 09:12  slu
+
+	* build-distro.sh, filter/src/main/resources/http_filter.xml,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html,
+	  mermeid/forms/mei/edit-form-footer.xml: just making sure the
+	  edit-form-footer.xml is updated
+
 2013-03-13 10:38  atge
 
 	* mermeid/images/Thumbs.db, mermeid/manual/attribute_editor.html:
