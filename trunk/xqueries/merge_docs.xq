@@ -28,6 +28,23 @@ declare variable $database := "/db/dcm";
 declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
 
+declare function local:copy($element as element()) {
+  element {node-name($element)}
+  {
+    for $attr in $element/@*
+    where not(contains(node-name($attr),'style'))
+     return $attr,
+     for $child in $element/node()
+     where not(contains(node-name($child),'script'))
+     return 
+       if ($child instance of element()) then 
+	 local:copy($child)
+       else 
+	 $child
+  }
+};
+
+
 let $params := 
 <parameters>
    <param name="hostname" value="{request:get-header('HOST')}"/>
@@ -43,10 +60,10 @@ return
 <body>
 {
   for $doc in $list
-  let $html := transform:transform($doc,xs:anyURI(concat("","http://",request:get-header('HOST'),"/editor/transforms/mei/mei_to_html_print.xsl")),$params)//div[@class='main']/*
+  let $html := transform:transform($doc,xs:anyURI(concat("","http://",request:get-header('HOST'),"/editor/transforms/mei/mei_to_html_print.xsl")),$params)//div[@class='main']
   return 
   <div>
-    {$html}
+    {local:copy($html)}
   </div>
 }
 </body>
