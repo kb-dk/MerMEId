@@ -8,39 +8,35 @@ declare variable $mode   := request:get-parameter("mode","") cast as xs:string;
   {layout:head("About Carl Nielsen Works (CNW)")}
   <body class="list_files">
     <div id="all">
-      {layout:head("Carl Nielsen Works (CNW)")}
-      <div id="all">
-	{layout:page-head("A major theme","The impossibility of fully escaping structures in order to study them")}
-	  {layout:page-menu($mode)}
-	  <div id="main">
-
-	    <p>
-	      A major theme of poststructuralism is instability in the human
-	      sciences, due to the complexity of humans themselves.
-	    </p>
-	    <p>
-	      And the impossibility of fully escaping structures in order to study
-	      them.  
-	    </p>
-	    <p>
-	      And the impossibility of fully escaping structures in order
-	      to study them.
-	    </p>
-	    <p>
-	      And the impossibility of fully escaping structures in
-	      order to study them.
-	    </p>
-	    <p>
-	      And the impossibility of fully escaping structures in order
- 	      to study them.
-	    </p>
-	    <p>
-	      And the impossibility of fully escaping structures in
-	      order to study them.
-	    </p>
-	  </div>
-	  {layout:page-footer($mode)}
+      {layout:page-head("A major theme","The impossibility of fully escaping structures in order to study them")}
+      {layout:page-menu($mode)}
+      <div id="main">
+	<p>
+	A major theme of poststructuralism is instability in the human
+	sciences, due to the complexity of humans themselves.
+	</p>
+	<p>
+	And the impossibility of fully escaping structures in order to study
+	them.  
+	</p>
+	<p>
+	And the impossibility of fully escaping structures in order
+	to study them.
+	</p>
+	<p>
+	And the impossibility of fully escaping structures in
+	order to study them.
+	</p>
+	<p>
+	And the impossibility of fully escaping structures in order
+ 	to study them.
+	</p>
+	<p>
+	And the impossibility of fully escaping structures in
+	order to study them.
+	</p>
       </div>
+      {layout:page-footer($mode)}
     </div>
   </body>
 </html>
