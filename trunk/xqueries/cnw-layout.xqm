@@ -98,7 +98,7 @@ declare function layout:page-menu($mode as xs:string) as node()
       class="{$sys}">Systematic list</a>)
     }
 
-    <a href="about.html">About CNW</a> 
+    <a href="example-page.xq">About CNW</a> 
   </div> 
 
   return $menu
