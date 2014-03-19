@@ -273,194 +273,33 @@
 			select="m:meiHead/m:workDesc/m:work/m:history[m:creation[*/text()] or m:p[text()]]"
 			mode="history"/>
 				
-		<!-- top-level expression (versions and one-movement work details) -->
-		<xsl:for-each select="m:meiHead/
-			m:workDesc/
-			m:work/
-			m:expressionList/
-			m:expression">
-			<!-- show title/tempo/number as heading only if more than one version -->
-			<xsl:if test="count(../m:expression)&gt;1">
-				<p>&#160;</p>
-				<xsl:variable name="title">
-					<xsl:apply-templates select="m:titleStmt">
-						<xsl:with-param name="tempo">
-							<xsl:apply-templates select="m:tempo"/>
-						</xsl:with-param>
-					</xsl:apply-templates>
-				</xsl:variable>
-				<xsl:if test="normalize-space($title)">
-					<h2><xsl:value-of select="$title"/></h2>
-				</xsl:if>
-			</xsl:if>
-			
-			<xsl:if test="m:identifier/text()">
-				<p>
-					<xsl:for-each select="m:identifier[text()]">
-						<xsl:variable name="type"><xsl:apply-templates select="@type"/></xsl:variable>
-						<xsl:value-of select="concat($type,' ',.)"/>
-						<xsl:if test="position()&lt;last()">
-							<br/>
-						</xsl:if>
-					</xsl:for-each>
-				</p>
-			</xsl:if>
-
-			<!-- persons -->
-			<xsl:apply-templates select="m:titleStmt/m:respStmt[m:persName]"/>
-
-			<!-- performers -->
-			<xsl:apply-templates select="m:perfMedium[*//text()]"/>
-
-			<!-- meter, key, incipit – only relevant at this level in single movement works -->
-			<xsl:apply-templates select="m:tempo[text()]"/>
-			<xsl:if test="m:meter[normalize-space(concat(@count,@unit,@sym))]">
-				<p>
-					<xsl:apply-templates select="m:meter"/>
-				</p>
-			</xsl:if>
-			<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
-			<xsl:apply-templates select="m:extent"/>
-			<xsl:apply-templates select="m:incip"/>
-
-			<!-- external links -->
-			<xsl:for-each select="m:relationList[m:relation[@target!='']]">
-				<p>
-					<xsl:text>Related resources: </xsl:text>
-					<xsl:for-each select="m:relation[@target!='']">
-						<img src="/editor/images/html_link.png" title="Link to external resource"/>
-						<xsl:element name="a">
-							<xsl:attribute name="href">
-								<xsl:apply-templates select="@target"/>
-							</xsl:attribute>
-							<xsl:apply-templates select="@label"/>
-							<xsl:if test="not(@label) or @label=''">
-								<xsl:value-of select="@target"/>
-							</xsl:if>
-						</xsl:element>
-						<xsl:if test="position()&lt;last()">, </xsl:if>
-					</xsl:for-each>
-				</p>
-			</xsl:for-each>
-			
-			<!-- version history -->
-			<xsl:apply-templates select="m:history[//text()]" mode="history"/>
-			
-			<!-- components (movements) -->
-			<xsl:for-each
-				select="m:componentGrp[normalize-space(*//text()[1]) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">
-
-				<xsl:variable name="mdiv_id" select="concat('movements',generate-id(),position())"/>
-
-				<xsl:text>
-				</xsl:text>
-				<script type="application/javascript"><xsl:text>openness["</xsl:text><xsl:value-of select="$mdiv_id"/><xsl:text>"]=false;</xsl:text></script>
-				<xsl:text>
-				</xsl:text>
-				
-				<div class="fold">
-
-					<p class="p_heading section_heading" id="p{$mdiv_id}" onclick="toggle('{$mdiv_id}')" title="Click to open">
-						<img class="noprint" style="display:inline;" id="img{$mdiv_id}" border="0"
-							src="/editor/images/plus.png" alt="-"/> Music </p>
-
-					<div class="folded_content" style="display:none" id="{$mdiv_id}">
-						<xsl:apply-templates select="m:expression"/>
-					</div>
-
-				</div>
-			</xsl:for-each>
-
-			<!-- version performances -->
-			<xsl:if test="count(../m:expression)&gt;1">
-				<xsl:apply-templates select="m:history[m:eventList[@type='performances']//text()]" mode="performances"/>
-			</xsl:if>
-
-			<!-- version-specific sources -->
-			<xsl:if test="count(../m:expression)&gt;1">
-				<xsl:variable name="expression_id" select="@xml:id"/>
-				<xsl:for-each
-					select="/m:mei/m:meiHead/m:fileDesc/
-					m:sourceDesc[(normalize-space(*//text()) or m:source/@target!='') 
-					and m:source/m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
-					<xsl:variable name="source_id" select="concat('version_source',generate-id(.),$expression_id)"/>
-
-					<xsl:text>
-					</xsl:text>
-					<script type="application/javascript"><xsl:text>openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;</xsl:text></script>
-					<xsl:text>
-					</xsl:text>
-					<div class="fold">
-						<p class="p_heading section_heading" id="p{$source_id}" title="Click to open" onclick="toggle('{$source_id}')">
-							<img class="noprint" style="display:inline;" border="0" id="img{$source_id}" alt="+"
-								src="/editor/images/plus.png"/> Sources </p>
-
-						<div id="{$source_id}" style="display:none;" class="folded_content">
-							<!-- skip reproductions (=reprints) -->
-							<xsl:for-each
-								select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' 
-								and substring-after(@target,'#')=$expression_id] and 
-								not(m:relationList/m:relation[@rel='isReproductionOf'])]">
-								<xsl:choose>
-									<xsl:when test="@target!=''">
-										<!-- get external source description -->
-										<xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
-										<xsl:variable name="doc_name"
-											select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
-										<xsl:variable name="doc" select="document($doc_name)"/>
-										<xsl:apply-templates
-											select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"
-										/>
-									</xsl:when>
-									<xsl:when test="m:titleStmt/m:title/text()">
-										<xsl:apply-templates select="."/>
-									</xsl:when>
-								</xsl:choose>
-							</xsl:for-each>
-						</div>
-					</div>
-				</xsl:for-each>
-			</xsl:if>
-
-		</xsl:for-each>
-		<!-- end top-level expressions (versions) -->
-		
-		<!-- show performances and global sources _after_ movements if only one version -->
-
+		<!-- works with versions: show global sources, performances and bibliography before version details -->		
 		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
-			<!-- draw a separator if any global performances or sources are going to be listed after versions -->
-			<xsl:if test="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']//text()] or
-				count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0">
-				<div>&#160;</div>
-				<div class="hr">&#160;</div>			
-			</xsl:if>
-		</xsl:if>
-		
-		<!-- global sources -->
-		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2
-			or count(m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0">
-			<xsl:apply-templates select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"/>
+			<!-- global sources -->
+			<xsl:apply-templates select="m:meiHead/m:fileDesc/m:sourceDesc[m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)&gt;0]]">
+				<xsl:with-param name="global">true</xsl:with-param>
+			</xsl:apply-templates>
+			<!-- work-level performances  -->
+			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']//text()]" mode="performances"/>
+			<!-- bibliography -->
+			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:biblList[m:bibl/*[text()]]"/>
 		</xsl:if>
 				
+		<!-- top-level expression (versions and one-movement work details) -->
+		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:expressionList/m:expression" mode="top_level"/>
+		
+		<!-- works with only one version: show performances and global sources after movements -->
 		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2">
+			<!-- sources -->
+			<xsl:apply-templates select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"/>
 			<!-- work-level performances -->
 			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']//text()]" mode="performances"/>
 			<!-- Performances entered at expression level displayed at work level if only one expression -->
 			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history[m:eventList[@type='performances']//text()]"
 				mode="performances"/>
+			<!-- bibliography -->
+			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:biblList[m:bibl/*[text()]]"/>
 		</xsl:if>
-		
-		<!-- work-level performances for works with versions -->
-		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
-			<!-- work-level performances -->
-			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']//text()]" mode="performances"/>
-		</xsl:if>
-		
-		<!-- bibliography -->
-		<xsl:apply-templates select="m:meiHead/
-			m:workDesc/
-			m:work/
-			m:biblList[m:bibl/*[text()]]"/>
 
 		<xsl:apply-templates select="." mode="colophon"/>
 
@@ -590,6 +429,138 @@
 		</xsl:if>
 	</xsl:template>
 
+
+	<xsl:template match="m:expression" mode="top_level">
+		<!-- top-level expression (versions and one-movement work details) -->
+		<!-- show title/tempo/number as heading only if more than one version -->
+		<xsl:if test="count(../m:expression)&gt;1">
+			<p>&#160;</p>
+			<xsl:variable name="title">
+				<xsl:apply-templates select="m:titleStmt">
+					<xsl:with-param name="tempo">
+						<xsl:apply-templates select="m:tempo"/>
+					</xsl:with-param>
+				</xsl:apply-templates>
+			</xsl:variable>
+			<xsl:if test="normalize-space($title)">
+				<h2><xsl:value-of select="$title"/></h2>
+			</xsl:if>
+		</xsl:if>		
+		<xsl:if test="m:identifier/text()">
+			<p>
+				<xsl:for-each select="m:identifier[text()]">
+					<xsl:variable name="type"><xsl:apply-templates select="@type"/></xsl:variable>
+					<xsl:value-of select="concat($type,' ',.)"/>
+					<xsl:if test="position()&lt;last()">
+						<br/>
+					</xsl:if>
+				</xsl:for-each>
+			</p>
+		</xsl:if>		
+		<!-- persons -->
+		<xsl:apply-templates select="m:titleStmt/m:respStmt[m:persName]"/>		
+		<!-- performers -->
+		<xsl:apply-templates select="m:perfMedium[*//text()]"/>		
+		<!-- meter, key, incipit – only relevant at this level in single movement works -->
+		<xsl:apply-templates select="m:tempo[text()]"/>
+		<xsl:if test="m:meter[normalize-space(concat(@count,@unit,@sym))]">
+			<p>
+				<xsl:apply-templates select="m:meter"/>
+			</p>
+		</xsl:if>
+		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
+		<xsl:apply-templates select="m:extent"/>
+		<xsl:apply-templates select="m:incip"/>		
+		<!-- external links -->
+		<xsl:for-each select="m:relationList[m:relation[@target!='']]">
+			<p>
+				<xsl:text>Related resources: </xsl:text>
+				<xsl:for-each select="m:relation[@target!='']">
+					<img src="/editor/images/html_link.png" title="Link to external resource"/>
+					<xsl:element name="a">
+						<xsl:attribute name="href">
+							<xsl:apply-templates select="@target"/>
+						</xsl:attribute>
+						<xsl:apply-templates select="@label"/>
+						<xsl:if test="not(@label) or @label=''">
+							<xsl:value-of select="@target"/>
+						</xsl:if>
+					</xsl:element>
+					<xsl:if test="position()&lt;last()">, </xsl:if>
+				</xsl:for-each>
+			</p>
+		</xsl:for-each>		
+		<!-- version history -->
+		<xsl:apply-templates select="m:history[//text()]" mode="history"/>		
+		<!-- components (movements) -->
+		<xsl:for-each select="m:componentGrp[normalize-space(*//text()[1]) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">			
+			<xsl:variable name="mdiv_id" select="concat('movements',generate-id(),position())"/>
+			<xsl:text>
+				</xsl:text>
+			<script type="application/javascript"><xsl:text>openness["</xsl:text><xsl:value-of select="$mdiv_id"/><xsl:text>"]=false;</xsl:text></script>
+			<xsl:text>
+				</xsl:text>
+			<div class="fold">
+				<p class="p_heading section_heading" id="p{$mdiv_id}" onclick="toggle('{$mdiv_id}')" title="Click to open">
+					<img class="noprint" style="display:inline;" id="img{$mdiv_id}" border="0"
+						src="/editor/images/plus.png" alt="-"/> Music </p>
+				<div class="folded_content" style="display:none" id="{$mdiv_id}">
+					<xsl:apply-templates select="m:expression"/>
+				</div>
+			</div>
+		</xsl:for-each>
+		<!-- version performances -->
+		<xsl:if test="count(../m:expression)&gt;1">
+			<xsl:apply-templates select="m:history[m:eventList[@type='performances']//text()]" mode="performances"/>
+		</xsl:if>
+		<!-- version-specific sources -->
+		<xsl:if test="count(../m:expression)&gt;1">
+			<xsl:variable name="expression_id" select="@xml:id"/>
+			<xsl:for-each
+				select="/m:mei/m:meiHead/m:fileDesc/
+				m:sourceDesc[(normalize-space(*//text()) or m:source/@target!='') 
+				and m:source/m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
+				<xsl:variable name="source_id" select="concat('version_source',generate-id(.),$expression_id)"/>
+				
+				<xsl:text>
+					</xsl:text>
+				<script type="application/javascript"><xsl:text>openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;</xsl:text></script>
+				<xsl:text>
+					</xsl:text>
+				<div class="fold">
+					<p class="p_heading section_heading" id="p{$source_id}" title="Click to open" onclick="toggle('{$source_id}')">
+						<img class="noprint" style="display:inline;" border="0" id="img{$source_id}" alt="+"
+							src="/editor/images/plus.png"/> Sources </p>
+					
+					<div id="{$source_id}" style="display:none;" class="folded_content">
+						<!-- skip reproductions (=reprints) -->
+						<xsl:for-each
+							select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' 
+							and substring-after(@target,'#')=$expression_id] and 
+							not(m:relationList/m:relation[@rel='isReproductionOf'])]">
+							<xsl:choose>
+								<xsl:when test="@target!=''">
+									<!-- get external source description -->
+									<xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
+									<xsl:variable name="doc_name"
+										select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
+									<xsl:variable name="doc" select="document($doc_name)"/>
+									<xsl:apply-templates
+										select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"
+									/>
+								</xsl:when>
+								<xsl:when test="m:titleStmt/m:title/text()">
+									<xsl:apply-templates select="."/>
+								</xsl:when>
+							</xsl:choose>
+						</xsl:for-each>
+					</div>
+				</div>
+			</xsl:for-each>
+		</xsl:if>
+	</xsl:template>
+	<!-- end top-level expressions (versions) -->
+	
 
 	<xsl:template match="m:expression">
 		<!-- display title etc. only with components or versions -->
