@@ -494,20 +494,13 @@
 		<xsl:apply-templates select="m:history[//text()]" mode="history"/>		
 		<!-- components (movements) -->
 		<xsl:for-each select="m:componentGrp[normalize-space(*//text()[1]) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">			
-			<xsl:variable name="mdiv_id" select="concat('movements',generate-id(),position())"/>
-			<xsl:text>
-				</xsl:text>
-			<script type="application/javascript"><xsl:text>openness["</xsl:text><xsl:value-of select="$mdiv_id"/><xsl:text>"]=false;</xsl:text></script>
-			<xsl:text>
-				</xsl:text>
-			<div class="fold">
-				<p class="p_heading section_heading" id="p{$mdiv_id}" onclick="toggle('{$mdiv_id}')" title="Click to open">
-					<img class="noprint" style="display:inline;" id="img{$mdiv_id}" border="0"
-						src="/editor/images/plus.png" alt="-"/> Music </p>
-				<div class="folded_content" style="display:none" id="{$mdiv_id}">
+			<xsl:apply-templates select="." mode="fold_section">
+				<xsl:with-param name="id" select="concat('movements',generate-id(),position())"/>
+				<xsl:with-param name="heading">Music</xsl:with-param>
+				<xsl:with-param name="content">
 					<xsl:apply-templates select="m:expression"/>
-				</div>
-			</div>
+				</xsl:with-param>
+			</xsl:apply-templates>
 		</xsl:for-each>
 		<!-- version performances -->
 		<xsl:if test="count(../m:expression)&gt;1">
@@ -520,19 +513,11 @@
 				select="/m:mei/m:meiHead/m:fileDesc/
 				m:sourceDesc[(normalize-space(*//text()) or m:source/@target!='') 
 				and m:source/m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
-				<xsl:variable name="source_id" select="concat('version_source',generate-id(.),$expression_id)"/>
 				
-				<xsl:text>
-					</xsl:text>
-				<script type="application/javascript"><xsl:text>openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;</xsl:text></script>
-				<xsl:text>
-					</xsl:text>
-				<div class="fold">
-					<p class="p_heading section_heading" id="p{$source_id}" title="Click to open" onclick="toggle('{$source_id}')">
-						<img class="noprint" style="display:inline;" border="0" id="img{$source_id}" alt="+"
-							src="/editor/images/plus.png"/> Sources </p>
-					
-					<div id="{$source_id}" style="display:none;" class="folded_content">
+				<xsl:apply-templates select="." mode="fold_section">
+					<xsl:with-param name="id" select="concat('version_source',generate-id(.),$expression_id)"/>
+					<xsl:with-param name="heading">Sources</xsl:with-param>
+					<xsl:with-param name="content">
 						<!-- skip reproductions (=reprints) -->
 						<xsl:for-each
 							select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' 
@@ -554,8 +539,8 @@
 								</xsl:when>
 							</xsl:choose>
 						</xsl:for-each>
-					</div>
-				</div>
+					</xsl:with-param>
+				</xsl:apply-templates>
 			</xsl:for-each>
 		</xsl:if>
 	</xsl:template>
@@ -577,10 +562,9 @@
 				</xsl:variable>
 				<xsl:variable name="element" select="concat('h',$level)"/>
 				<xsl:element name="{$element}">
+					<xsl:attribute name="class">movement_heading</xsl:attribute>
 					<xsl:if test="@n!=''">
-						<strong>
 							<xsl:value-of select="@n"/><xsl:text>. </xsl:text>
-						</strong>
 					</xsl:if>
 					<xsl:apply-templates select="m:titleStmt[//text()]"/>
 				</xsl:element>
@@ -623,9 +607,7 @@
 						</span>
 					</xsl:when>
 					<xsl:otherwise>
-						<strong>
 							<xsl:apply-templates/>
-						</strong>
 						<xsl:if test="position()&lt;last()">
 							<br/>
 						</xsl:if>
@@ -652,19 +634,10 @@
 					</xsl:element>
 				-->
 
-				<xsl:variable name="mdiv_id" select="concat('subsection',../../@xml:id,generate-id(),position())"/>
-
-				<div class="fold">
-					<p class="p_heading section_heading" id="p{$mdiv_id}" onclick="toggle('{$mdiv_id}')" title="Click to open">
-						<xsl:text>
-						</xsl:text><script type="application/javascript"><xsl:text>
-							openness["</xsl:text><xsl:value-of select="$mdiv_id"/><xsl:text>"]=false;
-							</xsl:text></script>
-						<xsl:text>
-						</xsl:text>
-						<img class="noprint" style="display:inline;" id="img{$mdiv_id}" border="0"
-							src="/editor/images/plus.png" alt="-"/> Sections </p>
-					<div class="folded_content" style="display:none" id="{$mdiv_id}">
+				<xsl:apply-templates select="." mode="fold_section">
+					<xsl:with-param name="id" select="concat('subsection',../../@xml:id,generate-id(),position())"/>
+					<xsl:with-param name="heading">Sections</xsl:with-param>
+					<xsl:with-param name="content">
 						<xsl:element name="ul">
 							<xsl:attribute name="class">movement_list</xsl:attribute>
 							<xsl:if test="count(m:item|m:expression)=1">
@@ -676,8 +649,8 @@
 								</li>
 							</xsl:for-each>
 						</xsl:element>
-					</div>
-				</div>
+					</xsl:with-param>
+				</xsl:apply-templates>
 			</xsl:when>
 			<xsl:when test="count(m:expression)=1">
 				<ul class="single_movement">
@@ -1107,46 +1080,29 @@
 	<!-- performances -->
 	<xsl:template match="m:history" mode="performances">
 		<xsl:if test="m:eventList[@type='performances']//text()">
-			<xsl:variable name="historydiv_id" select="concat('history',generate-id(.),position())"/>
-			<xsl:text>
-			</xsl:text>
-			<script type="application/javascript"><xsl:text>
-				openness["</xsl:text><xsl:value-of select="$historydiv_id"/><xsl:text>"]=false;
-				</xsl:text></script>
-			<xsl:text>
-			</xsl:text>
-			<div class="fold">
-				<p class="p_heading section_heading" id="p{$historydiv_id}" title="Click to open" onclick="toggle('{$historydiv_id}')">
-					<img id="img{$historydiv_id}" class="noprint" style="display:inline" border="0"
-						src="/editor/images/plus.png" alt="+"/> Performances </p>
-				<div class="folded_content" id="{$historydiv_id}" style="display:none;">
-					<div class="fold" style="display:block;">
+			<xsl:apply-templates select="." mode="fold_section">
+				<xsl:with-param name="id" select="concat('history',generate-id(.),position())"/>
+				<xsl:with-param name="heading">Performances</xsl:with-param>
+				<xsl:with-param name="content">
+					<div>
 						<table>
 							<xsl:for-each select="m:eventList[@type='performances']/m:event[//text()]">
 								<xsl:apply-templates select="." mode="performance_details"/>
 							</xsl:for-each>
 						</table>
 					</div>
-				</div>
-			</div>
+				</xsl:with-param>
+			</xsl:apply-templates>
 		</xsl:if>
 	</xsl:template>
 	
 	<!-- sources -->
 	<xsl:template match="m:sourceDesc">
 		<xsl:param name="global"/>
-		<xsl:variable name="source_id" select="concat('source',generate-id(.),position())"/>
-		<script type="application/javascript"><xsl:text>
-				openness["</xsl:text><xsl:value-of select="$source_id"/><xsl:text>"]=false;
-				</xsl:text></script>
-		<div class="fold">
-			<xsl:text>
-			</xsl:text>
-			<p class="p_heading section_heading" id="p{$source_id}" title="Click to open" onclick="toggle('{$source_id}')">
-				<img class="noprint" style="display:inline;" border="0" id="img{$source_id}" alt="+"
-					src="/editor/images/plus.png"/> Sources </p>
-
-			<div id="{$source_id}" style="display:none;" class="folded_content">
+		<xsl:apply-templates select="." mode="fold_section">
+			<xsl:with-param name="id" select="concat('source',generate-id(.),position())"/>
+			<xsl:with-param name="heading">Sources</xsl:with-param>
+			<xsl:with-param name="content">
 				<!-- Skip reproductions (=reprints) here. -->
 				<!-- If listing global sources, list only those not referring to a specific version (if more than one) -->
 				<xsl:for-each select="m:source[not(m:relationList/m:relation[@rel='isReproductionOf'])]
@@ -1167,8 +1123,8 @@
 						</xsl:when>
 					</xsl:choose>
 				</xsl:for-each>
-			</div>
-		</div>
+			</xsl:with-param>
+		</xsl:apply-templates>
 	</xsl:template>
 
 	<!-- performance-related templates -->
@@ -1753,29 +1709,15 @@
 		</span>
 	</xsl:template>
 
-
 	<xsl:template match="m:biblList">
 		<xsl:if test="m:bibl/*[local-name()!='genre']//text()">
-			<xsl:variable name="bib_id" select="concat('bib',generate-id(.),position())"/>
-			<xsl:text>
-			</xsl:text>
-			<script type="application/javascript"><xsl:text>
-				openness["</xsl:text><xsl:value-of select="$bib_id"/><xsl:text>"]=false;
-				</xsl:text></script>
-			<xsl:text>
-			</xsl:text>
-			<div class="fold">
-				<p class="p_heading section_heading" id="p{$bib_id}" title="Click to open" onclick="toggle('{$bib_id}')">
-					<img class="noprint" style="display:inline" id="img{$bib_id}" border="0" src="/editor/images/plus.png" alt="+"/>
-					<xsl:call-template name="print_bibliography_type"/>
-				</p>
-				<div class="folded_content" style="display:none">
-					<xsl:attribute name="id">
-						<xsl:value-of select="$bib_id"/>
-					</xsl:attribute>
+			<xsl:apply-templates select="." mode="fold_section">
+				<xsl:with-param name="id" select="concat('bib',generate-id(),position())"/>
+				<xsl:with-param name="heading"><xsl:call-template name="print_bibliography_type"/></xsl:with-param>
+				<xsl:with-param name="content">
 					<xsl:apply-templates select="." mode="bibl_paragraph"/>
-				</div>
-			</div>
+				</xsl:with-param>
+			</xsl:apply-templates>
 		</xsl:if>
 	</xsl:template>
 
@@ -2210,26 +2152,19 @@
 	<xsl:template match="m:revisionDesc">
 		<xsl:apply-templates select="m:change[normalize-space(@isodate)!=''][last()]" mode="last"/>
 		<xsl:if test="count(m:change) &gt; 0">
-			<br/><xsl:text>
-			</xsl:text>
-			<script type="application/javascript"><xsl:text>
-				openness["revhist"]=false;
-				</xsl:text></script>
-			<xsl:text>
-			</xsl:text>
-			<div class="fold revision_history">
-				<p class="colophon_heading" id="prevhist" title="Click to open" onclick="toggle('revhist')">
-					<img class="noprint" style="display:inline" id="imgrevhist" border="0" src="/editor/images/plus.png" alt="+"/>
-					Revision history
-				</p>
-				<div class="folded_content" style="display:none" id="revhist">
-					<table>
-						<tr>
-							<th>Date </th><th>Responsible </th><th>Description</th>
-						</tr>
-						<xsl:apply-templates select="m:change[*//text() or @isodate!='' or @resp!='']" mode="all"/>
-					</table>
-				</div>
+			<div class="revision_history">
+				<xsl:apply-templates select="." mode="fold_section">
+					<xsl:with-param name="id" select="'revisionhistory'"/>
+					<xsl:with-param name="heading">Revision history</xsl:with-param>
+					<xsl:with-param name="content">
+						<table>
+							<tr>
+								<th>Date </th><th>Responsible </th><th>Description</th>
+							</tr>
+							<xsl:apply-templates select="m:change[*//text() or @isodate!='' or @resp!='']" mode="all"/>
+						</table>
+					</xsl:with-param>
+				</xsl:apply-templates>
 			</div>
 		</xsl:if>
 	</xsl:template>
@@ -2399,6 +2334,26 @@
 		<xsl:if test="position()&lt;last()">
 			<xsl:element name="br"/>
 		</xsl:if>
+	</xsl:template>
+
+	<xsl:template match="*" mode="fold_section">
+		<xsl:param name="heading"/>
+		<xsl:param name="id"/>
+		<xsl:param name="content"/>
+		<script type="application/javascript"><xsl:text>openness["</xsl:text><xsl:value-of select="$id"/><xsl:text>"]=false;</xsl:text></script>
+		<xsl:text>
+				</xsl:text>
+		<div class="fold">
+			<h3 class="section_heading" id="p{$id}">
+				<span onclick="toggle('{$id}')" title="Click to show or hide">
+					<img class="noprint" id="img{$id}" border="0"
+						src="/editor/images/plus.png" alt="-"/><xsl:value-of select="concat(' ',$heading)"/>
+				</span>
+			</h3>
+			<div class="folded_content" style="display:none" id="{$id}">
+				<xsl:copy-of select="$content"/>
+			</div>
+		</div>		
 	</xsl:template>
 
 

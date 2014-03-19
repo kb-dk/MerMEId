@@ -8,6 +8,7 @@
 	Danish Centre for Music Publication
 	The Royal Library, Copenhagen
 
+
 -->
 
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" 

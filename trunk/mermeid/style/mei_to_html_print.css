@@ -7,12 +7,6 @@ body {
     background-color: #fff;
 }
 
-p {
-    margin-top : 0.2em;
-    margin-bottom : 0em;
-    line-height: 12pt;
-}
-
 table {
     font-size: 1em;
 }
@@ -26,6 +20,7 @@ table td {
 
 h1, h2, h3, h4, h5 {
     line-height: 1.4em;
+    font-weight: normal;
 }
 
 h3, h4, h5 {
@@ -34,19 +29,19 @@ h3, h4, h5 {
 }
 
 h1 {
-    font-size: 1.5em;
+    font-size: 2em;
 }
 
 h2 {
-    font-size: 1.3em;
+    font-size: 1.5em;
 }
 
 h3 {
-    font-size: 1em;
+    font-size: 1.3em;
 }
 
 h4 {
-    font-size: 1em;
+    font-size: 1.15em;
 }
 
 h5 {
@@ -83,7 +78,7 @@ a, a:link, a:visited, a:active, a:hover {
     display: none;
 }
 
-.p_heading, .p_subheading, .movement_heading {
+.p_heading, .p_subheading {
     font-weight : bold;
 }
 
@@ -94,11 +89,6 @@ a, a:link, a:visited, a:active, a:hover {
 .section_heading {
     font-size: 1.25em;
     margin: 1.2em 0 .4em 0;
-}
-
-.movement_heading {
-    margin-top: 1em;  
-    margin-bottom: -.75em;
 }
 
 .alternative_language {
@@ -229,25 +219,6 @@ table.source_component_list td h5 {
 
 table.source_component_list td.label_cell {
     white-space: nowrap;
-}
-
-/* Styling the header with the catalogue's name 
-   and the works's number in it. 
-   For series-specific styling, use the series identifier as a class name. */
-.series_header {
-    /* shared by all series */
-    background-color : #84a48a;
-    padding: 4px 8px;
-    margin: -10px -10px 0 -10px;
-    color : white;
-    font-weight : bold;
-    font-size : 1.5em;
-}
-
-    /* series-specific header color */
-.CNW {
-    background-color : #046344;
-    background-color : #76923C;
 }
 
 /* SPECIAL SYMBOLS */

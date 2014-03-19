@@ -20,15 +20,15 @@ h1, h2, h3, h4, h5 {
 h3, h4, h5 {
     padding: 10px 0 0 0;
     margin: 0;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 h2 {
-    font-size: 1.3em;
+    font-size: 1.5em;
 }
 
 h3 {
-    font-size: 1.2em;
+    font-size: 1.25em;
 }
 
 h4 {
@@ -82,6 +82,10 @@ ul {
     margin-bottom: -.75em;
 }
 
+.section_heading {
+    padding: 0;
+}
+
 .bibl_record_short {
     margin-top:0em;
 }
@@ -98,17 +102,12 @@ ul {
     vertical-align: text-top;
 }
 
-/*.titlepage {
-    font-style: italic;
+.fold {
+    margin-top:.5em;
 }
 
-.titlepage i {
-    font-style: normal;
-}*/
-
-.fold {
+.fold .section_heading span {
     cursor : pointer;
-    margin-top:.5em;
 }
 
 .folded_content {
@@ -274,7 +273,8 @@ div.source {
 }
 
 div.source p {
-    margin-top : 0px;
+    margin-top : 0;
+    padding: 0;
 }
 
 table.source_component_list td {
@@ -422,6 +422,14 @@ a:hover.help span.comment {
     }
     div.source p {
         margin-top : 0.2em;
+    }
+    
+    .colophon, #footer {
+        font-size: .8em;
+    }
+    
+    a.abbr {
+        border-bottom: none;
     }
 
 }
