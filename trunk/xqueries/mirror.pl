@@ -27,10 +27,9 @@ my $res = $ua->request($req);
 
 ## Check the outcome of the response
 
-my @filelist = ();
 if ($res->is_success) {
 #    print STDERR "Success getting file list " . $res->status_line . "\n";
-    @filelist = split("\n",$res->content());
+    my @filelist = split("\n",$res->content());
 
     foreach my $file (@filelist) {
 	my $req = new HTTP::Request();
@@ -40,6 +39,8 @@ if ($res->is_success) {
 	my $res = $ua->request($req);
 	if ($res->is_success) {
 	    print STDERR "$file :" . $res->status_line . "\n";
+	    # print STDERR $res->headers()->as_string();
+	    # print STDERR $res->header( "Last-Modified" );
 	} else {
 	    print STDERR "$file :" . $res->status_line . " bah :( \n";
 	}
