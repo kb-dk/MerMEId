@@ -273,7 +273,7 @@
 			select="m:meiHead/m:workDesc/m:work/m:history[m:creation[*/text()] or m:p[text()]]"
 			mode="history"/>
 				
-		<!-- works with versions: show global sources, performances and bibliography before version details -->		
+		<!-- works with versions: show global sources and performances before version details -->		
 		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
 			<!-- global sources -->
 			<xsl:apply-templates select="m:meiHead/m:fileDesc/m:sourceDesc[m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)&gt;0]]">
@@ -281,13 +281,11 @@
 			</xsl:apply-templates>
 			<!-- work-level performances  -->
 			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']//text()]" mode="performances"/>
-			<!-- bibliography -->
-			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:biblList[m:bibl/*[text()]]"/>
 		</xsl:if>
 				
 		<!-- top-level expression (versions and one-movement work details) -->
 		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:expressionList/m:expression" mode="top_level"/>
-		
+
 		<!-- works with only one version: show performances and global sources after movements -->
 		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2">
 			<!-- sources -->
@@ -297,9 +295,17 @@
 			<!-- Performances entered at expression level displayed at work level if only one expression -->
 			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history[m:eventList[@type='performances']//text()]"
 				mode="performances"/>
-			<!-- bibliography -->
-			<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:biblList[m:bibl/*[text()]]"/>
 		</xsl:if>
+
+		<!-- works with versions: draw separator before general bibliography -->		
+		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
+			<xsl:if test="m:meiHead/m:workDesc/m:work/m:biblList[m:bibl/*[text()]]">
+				<hr/>
+			</xsl:if>
+		</xsl:if>
+
+		<!-- bibliography -->
+		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:biblList[m:bibl/*[text()]]"/>
 
 		<xsl:apply-templates select="." mode="colophon"/>
 
