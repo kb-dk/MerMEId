@@ -14,24 +14,27 @@ declare variable $linebreak := "
 
 declare variable $database := request:get-parameter("db","/db/dcm") cast as xs:string;
 declare variable $coll     := lower-case(request:get-parameter("c","cnw") cast as xs:string);
-
-declare variable $base-uri := request:get-parameter("base-uri","http://dcm-udv-01.kb.dk:8080/exist/rest");
-
-declare variable $logger   := logger:getLogger("document-names -- ");
+declare variable $suri     := "http://dcm-udv-01.kb.dk:8080/exist/rest";
+declare variable $base-uri := request:get-parameter("base-uri",$suri);
+declare variable $docname  := request:get-parameter("docname","");
 
 declare option exist:serialize "method=text media-type=text/plain"; 
 
-let $since  := request:get-parameter("since", "2014-01-01T00:00:00+01:00") cast as xs:dateTime
-let $before := request:get-parameter("before","2099-01-01T00:00:00+01:00") cast as xs:dateTime
+let $since    := request:get-parameter("since", "2001-01-01T00:00:00+01:00") cast as xs:dateTime
+let $before   := request:get-parameter("before","2099-01-01T00:00:00+01:00") cast as xs:dateTime
 
 return
 for $doc in collection($database)
-let $source := concat($base-uri,$database,util:document-name($doc)) 
-let $modified    := xdb:last-modified( $database,util:document-name($doc))
-let $thiscoll   := lower-case($doc//m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string())
-where ( $modified > $since and $modified < $before and $thiscoll = $coll )
+let $name     := util:document-name($doc)
+let $source   := concat($base-uri,$database,$name) 
+let $modified := xdb:last-modified( $database,$name)
+let $thiscoll := lower-case($doc//m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string())
+
+where ( ( not($docname) and ($modified > $since and $modified < $before and $thiscoll = $coll ))
+        or 
+        ($docname eq $name) )
 return
   (util:document-name($doc),
   " ",
-  xdb:last-modified($database,util:document-name($doc)),
+  xdb:last-modified($database,$name),
   $linebreak)

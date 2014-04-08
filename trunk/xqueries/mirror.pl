@@ -5,15 +5,19 @@ use LWP::UserAgent;
 use Getopt::Long;
 use DateTime;
 
-my $scheme = "http://";
-my $suri   = "dcm-udv-01.kb.dk:8080/exist/rest";
-my $turi   = "dcm-udv-01.kb.dk:8080/exist/rest";
-my $source = "/db/public";
-my $target = "/db/cnw/data";
-my $edition= "hartw";
-my $since  = "2000-01-01T00:00:01";
-my $before = "2099-12-31T24:00:00";
-my $files  = "http://dcm-udv-01.kb.dk/storage/document-names.xq?" .
+my $scheme    = "http://";
+my $source_host_port = "dcm-udv-01.kb.dk:8080";
+my $target_host_port = "dcm-udv-01.kb.dk:8080";
+my $user      = "admin";
+my $password  = "flormelis";
+my $suri      = $scheme . $source_host_port . "/exist/rest/db";
+my $turi      = $scheme . $target_host_port . "/exist/rest/db";
+my $source    = "/public";
+my $target    = "/cnw/data";
+my $edition   = "hartw";
+my $since     = "2000-01-01T00:00:01";
+my $before    = "2099-12-31T24:00:00";
+my $source_files     = $suri . "/document-info.xq?" .
     join ("&",
 	  (
 	   "c=$edition",
@@ -25,10 +29,10 @@ my $files  = "http://dcm-udv-01.kb.dk/storage/document-names.xq?" .
 
 my $ua = LWP::UserAgent->new;
 $ua->agent("crud-client/0.1 ");
-#$ua->credentials($host_port, "exist" , $user, $password );
+$ua->credentials($target_host_port, "exist" , $user, $password );
 
 my $req = new HTTP::Request();
-$req->uri($files);
+$req->uri($source_files);
 $req->method("GET");
 
 # $req->header( "Content-Type" => $suffixes{$suffix} );
@@ -40,7 +44,7 @@ my $res = $ua->request($req);
 ## Check the outcome of the response
 
 if ($res->is_success) {
-    print STDERR "Success getting $files list " . $res->status_line . "\n";
+    print STDERR "Success getting $source_files list " . $res->status_line . "\n";
     my @filelist = split("\n",$res->content());
 
     my $latest_modification = &parse_date_time("2000-01-01T00:00:01");
@@ -51,21 +55,23 @@ if ($res->is_success) {
 	    $latest_modification = $docdate ;
 	}
 	my $req = new HTTP::Request();
-	my $url = $scheme . $suri . $source .'/' .  $file;
+	my $target_url = $turi . $target .'/' .  $file;
+	my $source_url = $suri . $source .'/' .  $file;
 	$req->method("HEAD");
-	$req->uri($url);
+	$req->uri($target_url);
 	my $res = $ua->request($req);
-	if ($res->is_success) {
-	    print STDERR "$url :" . $res->status_line . "\n";
-	    # print STDERR $res->headers()->as_string();
-	    # print STDERR $res->header( "Last-Modified" );
+	if ( $res->is_success() ) 
+	    &copy_file($source_url,$target_url);
 	} else {
-	    print STDERR "$file :" . $res->status_line . " bah :( \n";
+	    if($res->code() == 404) {
+		&copy_file($source_url,$target_url);
+	    }
 	}
     }
+
     print STDERR "$latest_modification\n";
 } else {
-	die "mirror.pl has problems with $files URI";
+	die "mirror.pl has problems with $source_files URI";
 }
 
 
@@ -73,7 +79,7 @@ if ($res->is_success) {
 sub parse_date_time {
     my $dtf = shift;
 
-    $dtf =~ m/^(\d\d\d\d)(\d\d)(\d\d)T(\d\d)(\d\d)(\d\d).*$/;
+    $dtf =~ m/^(\d\d\d\d)-?(\d\d)-?(\d\d)T(\d\d):?(\d\d):?(\d\d).*$/;
 
     return DateTime->new(
 	year       => $1,
@@ -83,4 +89,35 @@ sub parse_date_time {
 	minute     => $5,
 	second     => $6,
 	time_zone  => 'CET');
+}
+
+sub copy_file {
+    my $source_url = shift;
+    my $target_url = shift;
+
+    my $ua = LWP::UserAgent->new;
+    my $getreq = new HTTP::Request();
+    $getreq->method("GET");
+    $getreq->uri($source_url);
+    my $getres = $ua->request($getreq);
+    if($getres->is_success) {
+	$ua->credentials($target_host_port, "exist" , $user, $password );
+	print STDERR "got content from $source_url " . $getres->code . "\n";
+	my $content = $getres->content();
+	my $putreq = new HTTP::Request();
+	$putreq->method("PUT");
+	$putreq->content($content);
+	$putreq->uri($target_url);
+	my $putres = $ua->request($putreq);
+	if($putres->is_success) {
+	    print STDERR "managed to put content to $target_url " . 
+		$putres->code . "\n";	
+	} else {
+	    print STDERR "failed to put content to $target_url " . 
+		$putres->code . "\n";	
+	}
+    } else {
+	print STDERR "failed to get content from $source_url " 
+	    . $getres->code . "\n";
+    }
 }
