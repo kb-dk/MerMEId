@@ -3,18 +3,20 @@
 use strict;
 use LWP::UserAgent;
 use Getopt::Long;
+use DateTime;
 
 my $scheme = "http://";
 my $suri   = "dcm-udv-01.kb.dk:8080/exist/rest";
 my $turi   = "dcm-udv-01.kb.dk:8080/exist/rest";
 my $source = "/db/public";
 my $target = "/db/cnw/data";
-my $since  = "2014-01-16T15:19:55";
+my $edition= "hartw";
+my $since  = "2000-01-01T00:00:01";
 my $before = "2099-12-31T24:00:00";
 my $files  = "http://dcm-udv-01.kb.dk/storage/document-names.xq?" .
     join ("&",
 	  (
-	   "c=CNW",
+	   "c=$edition",
 	   "db=$source",
 	   "since=$since",
 	   "before=$before"
@@ -41,8 +43,13 @@ if ($res->is_success) {
     print STDERR "Success getting $files list " . $res->status_line . "\n";
     my @filelist = split("\n",$res->content());
 
+    my $latest_modification = &parse_date_time("2000-01-01T00:00:01");
     foreach my $line (@filelist) {
 	my ($file,$date) = split /\s+/,$line;
+	my $docdate = &parse_date_time($date);
+	if(DateTime->compare( $latest_modification, $docdate ) < 0 ) {
+	    $latest_modification = $docdate ;
+	}
 	my $req = new HTTP::Request();
 	my $url = $scheme . $suri . $source .'/' .  $file;
 	$req->method("HEAD");
@@ -56,7 +63,24 @@ if ($res->is_success) {
 	    print STDERR "$file :" . $res->status_line . " bah :( \n";
 	}
     }
+    print STDERR "$latest_modification\n";
 } else {
 	die "mirror.pl has problems with $files URI";
 }
 
+
+
+sub parse_date_time {
+    my $dtf = shift;
+
+    $dtf =~ m/^(\d\d\d\d)(\d\d)(\d\d)T(\d\d)(\d\d)(\d\d).*$/;
+
+    return DateTime->new(
+	year       => $1,
+	month      => $2,
+	day        => $3,
+	hour       => $4,
+	minute     => $5,
+	second     => $6,
+	time_zone  => 'CET');
+}
