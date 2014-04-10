@@ -73,7 +73,9 @@ foreach my $file (@filelist) {
     if($sources{$file}) {
 #	print STDERR "The file $file is in the source database\n";
     } else {
+	my $target_url = $turi . $target .'/' .  $file;
 	print STDERR "The file $file is in the target database only should be removed\n";
+	&delete_file($target_url);
     }
     
 }
@@ -124,6 +126,21 @@ sub parse_date_time {
 	minute     => $5,
 	second     => $6,
 	time_zone  => 'CET');
+}
+
+sub delete_file {
+    my $url = shift;
+
+    print STDERR "delete_file called\n";
+    my $ua = LWP::UserAgent->new;
+    $ua->credentials($target_host_port, "exist" , $user, $password );
+    my $delreq = new HTTP::Request();
+    $delreq->method("DELETE");
+    $delreq->uri($url);
+    my $delres = $ua->request($delreq);
+    if($delres->is_success) {
+	print STDERR "Successfully removed file $url\n";
+    }
 }
 
 sub copy_file {
