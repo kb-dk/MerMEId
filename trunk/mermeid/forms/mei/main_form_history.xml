@@ -33,7 +33,8 @@
 			<dcm:history-input/>
 
 			<!-- List work level performances -->
-			<dcm:performance-list ref=".[not(count(../m:expressionList/m:expression)=1 and ../m:expressionList/m:expression/m:history/m:eventList[@type='performances']//text())]">
+			<dcm:performance-list ref=".[m:eventList[@type='performances']//text() or
+				(count(../m:expressionList/m:expression)=1 and not(../m:expressionList/m:expression/m:history/m:eventList[@type='performances']//text()))]">
 				<!-- this list is supressed if work level performances are entered at expression level instead -->
 				<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
 				<xf:action ev:event="save-data">
@@ -44,13 +45,16 @@
 		</xf:group> 
 
 		<!-- Show "work level" performances entered at expression level, if any (this is an exception)	-->
-		<dcm:performance-list ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList[count(m:expression)=1]/m:expression/m:history[m:eventList//text()]">
-			<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
-			<xf:action ev:event="save-data">
-				<xf:dispatch name="save" targetid="save-button"/>
-				<xf:load resource="{event('goto-uri')}" show="replace"/>
-			</xf:action>
-		</dcm:performance-list>
+		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList[count(m:expression)=1]/m:expression/m:history[m:eventList//text()]">
+			<h:p>[Performance entered at expression (version) level]</h:p>
+			<dcm:performance-list>
+				<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
+				<xf:action ev:event="save-data">
+					<xf:dispatch name="save" targetid="save-button"/>
+					<xf:load resource="{event('goto-uri')}" show="replace"/>
+				</xf:action>
+			</dcm:performance-list>
+		</xf:group>
 		
 		<!-- Expression-level history and performances. Used only if more than one expression -->
 

@@ -26,6 +26,19 @@
                     src="/../editor/forms/mei/model/empty_doc.xml" 
                     xxf:readonly="true"/>
                 
+                <xf:instance id="local-temp" xmlns="http://www.music-encoding.org/ns/mei">
+                    <expression>
+                        <history xml:id="">
+                            <creation xml:id="">
+                                <date/>
+                                <geogName xml:id=""/>            
+                            </creation>
+                            <p/>
+                            <eventList type="performances" xml:id=""/>
+                        </history>
+                    </expression>
+                </xf:instance>
+                
             </xf:model>
         </xbl:implementation>
         <xbl:template>
@@ -44,6 +57,9 @@
                     </xxf:variable>
                     <xxf:variable name="temp" as="node()?">
                         <xxf:sequence select="instance('temp')" xxbl:scope="outer"/>
+                    </xxf:variable>
+                    <xxf:variable name="data-instance" as="node()?">
+                        <xxf:sequence select="instance('data-instance')" xxbl:scope="outer"/>
                     </xxf:variable>
                     
                     
@@ -66,6 +82,9 @@
                             <xf:group ref="m:eventList[@type='performances']">
                                 <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
                                     <xf:repeat nodeset="m:event" id="repeat-work-performance">
+                                        <xxf:variable name="event_id" select="@xml:id"/>
+                                        <xxf:variable name="event" select="."/>
+                                        <xxf:variable name="ancestor" select="../../../@xml:id"/>
                                         <h:tr class="hoverclass">
                                             <h:td class="number_cell">
                                                 <xf:output value="position()"/>&#160;
@@ -101,6 +120,59 @@
                                             <h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add del-parent-with-last" nodeset="m:event" index="repeat-work-performance" 
                                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
                                                 <dcm:attribute-editor ref="."/>
+                                            </h:td>    
+                                            <h:td>    
+                                                <!-- move performance to work level or version -->
+                                                <xf:group ref=".[count($data-instance//m:workDesc/m:work/m:expressionList/m:expression)&gt;1 or name(../../..)='expression']">
+                                                    <h:a class="popup"><h:img src="/../editor/images/expand.png" 
+                                                        title="Move this source to another version"/>Move to...<h:span 
+                                                            class="comment">
+                                                            <h:div>
+                                                                <h:p class="blocklabel strong" style="font-size:.9em;">Move this performance to</h:p>
+                                                                <h:div>
+                                                                    <xf:trigger ref=".[name(../../..)='expression']">
+                                                                        <xf:label>Work (no specific version)</xf:label>
+                                                                        <xf:action ev:event="DOMActivate">
+                                                                            <xf:insert context="$data-instance//m:work/m:history/m:eventList[@type='performances']" 
+                                                                                at="last()" position="after"
+                                                                                origin="$event"/>
+                                                                            <xf:delete ref="$data-instance//m:expression[@xml:id=$ancestor]/m:history/m:eventList[@type='performances']/m:event[@xml:id=$event_id]"/>
+                                                                        </xf:action>
+                                                                    </xf:trigger>
+                                                                </h:div>
+                                                                <xf:repeat nodeset="$data-instance//m:workDesc/m:work/m:expressionList/m:expression[@xml:id!=$ancestor]">
+                                                                    <xxf:variable name="exp" select="@xml:id"/>
+                                                                    <xxf:variable name="title" select="if (m:titleStmt/m:title/text()) then m:titleStmt/m:title else concat('[',$exp,']')"/>
+                                                                    <h:div>
+                                                                        <xf:trigger>
+                                                                            <xf:label><xf:output value="$title"/></xf:label>
+                                                                            <xf:action ev:event="DOMActivate">
+                                                                                <xf:action if="not(m:history)">
+                                                                                    <xf:insert context="."
+                                                                                        origin="instance('local-temp')/m:history"/>
+                                                                                </xf:action>
+                                                                                <!--<xf:action if="not(m:history/m:eventList[@type='performances'])">
+                                                                                    <xf:insert context="m:history"
+                                                                                        at="last()" position="after"
+                                                                                        origin="instance('local-temp')//m:eventList"/>
+                                                                                </xf:action>-->
+                                                                                <xf:action ref="m:history[not(m:eventList[@type='performances'])]">
+                                                                                    <xxf:variable name="nodeset">m:eventList[@type='performances']</xxf:variable>
+                                                                                    <xxf:variable name="origin" select="instance('local-temp')/m:history/m:eventList"/>
+                                                                                    <xi:include href="create_and_place_element.xml"/>
+                                                                                </xf:action>
+                                                                                <xf:insert context="$data-instance//*[@xml:id=$exp]/m:history/m:eventList[@type='performances']" 
+                                                                                        at="last()" position="after"
+                                                                                        origin="$event"/>
+                                                                                <xf:delete ref="$data-instance//*[@xml:id=$ancestor]/m:history/m:eventList[@type='performances']/m:event[@xml:id=$event_id]"/>
+                                                                            </xf:action>
+                                                                        </xf:trigger>
+                                                                    </h:div>
+                                                                </xf:repeat>
+                                                            </h:div>
+                                                        </h:span></h:a>
+                                                </xf:group>
+                                                <!-- end move performance -->
                                             </h:td>
                                         </h:tr>
                                     </xf:repeat>
