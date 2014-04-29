@@ -24,6 +24,9 @@
 	extension-element-prefixes="exsl java" 
 	exclude-result-prefixes="m xsl exsl foo java">
 
+	<xsl:param name="hostname"    select="'dcm-udv-01.kb.dk'"/>
+	<xsl:param name="script_path" select="'/storage/document.xq'"/>
+
 	<xsl:output method="xml" encoding="UTF-8" 
 		cdata-section-elements="" 
 		omit-xml-declaration="yes"/>
@@ -31,7 +34,7 @@
 	<xsl:strip-space elements="*"/>
 
 	<xsl:include href="mei_to_html.xsl"/>
-	
+
 	<!-- CREATE HTML DOCUMENT -->
 	<xsl:template match="m:mei" xml:space="default">
 		<html xml:lang="en" lang="en">
@@ -147,15 +150,17 @@
 	<!-- SUB-TEMPLATES -->
 	
 	<xsl:template match="m:relation" mode="relation_link">
-		<xsl:element name="a">
-			<xsl:attribute name="href">
-				<xsl:value-of select="concat('http://',$hostname,'/storage/document.xq?doc=',@target)"/>
-			</xsl:attribute>
-			<xsl:apply-templates select="@label"/>
-			<xsl:if test="not(@label) or @label=''">
-				<xsl:value-of select="@target"/>
-			</xsl:if>
-		</xsl:element>
+	  <xsl:element name="a">
+	    <xsl:attribute name="href">
+	      <xsl:value-of select="concat('http://',
+				    $hostname,
+				    $script_path,'?doc=',@target)"/>
+	    </xsl:attribute>
+	    <xsl:apply-templates select="@label"/>
+	    <xsl:if test="not(@label) or @label=''">
+	      <xsl:value-of select="@target"/>
+	    </xsl:if>
+	  </xsl:element>
 	</xsl:template>	
 	
 	
