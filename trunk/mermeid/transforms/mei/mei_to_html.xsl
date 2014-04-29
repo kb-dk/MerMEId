@@ -1374,7 +1374,7 @@
 				<xsl:for-each select="m:classification/m:termList[m:term[text()]]">
 					<div class="classification">
 						<xsl:for-each select="m:term[text()]">
-							<xsl:if test="position()=1"> [Source classification: </xsl:if>
+							<xsl:if test="position()=1"> [Classification: </xsl:if>
 							<xsl:value-of select="."/>
 							<xsl:choose>
 								<xsl:when test="position()=last()">]</xsl:when>
@@ -1502,7 +1502,12 @@
 
 	<xsl:template match="m:itemList">
 		<xsl:choose>
-			<xsl:when test="count(m:item)&gt;1 or (m:item/@label and m:item/@label!='')">
+			<!-- Show items as bulleted list if 
+				1) there are more than one item or
+				2) an item has a label, and source is not a manuscript -->
+			<xsl:when test="count(m:item)&gt;1 or 
+				(m:item/@label and m:item/@label!='' and
+				../m:classification/m:termList/m:term[@classcode='DcmPresentationClass']!='manuscript')">
 				<ul class="item_list">
 					<xsl:for-each select="m:item[*//text()]">
 						<li>
@@ -1510,6 +1515,14 @@
 						</li>
 					</xsl:for-each>
 				</ul>
+			</xsl:when>
+			<!-- Add a DIV wrapper if item is a labeled manuscript item (for styling) -->
+			<xsl:when test="(count(m:item)&lt;=1 and
+				m:item/@label and m:item/@label!='' and
+				../m:classification/m:termList/m:term[@classcode='DcmPresentationClass']='manuscript')">
+				<div class="ms_item">
+					<xsl:apply-templates select="m:item[*//text()]"/>
+				</div>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:apply-templates select="m:item[*//text()]"/>
