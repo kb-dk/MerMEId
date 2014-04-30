@@ -1109,11 +1109,21 @@
 			<xsl:with-param name="id" select="concat('source',generate-id(.),position())"/>
 			<xsl:with-param name="heading">Sources</xsl:with-param>
 			<xsl:with-param name="content">
+				<!-- sort order lists must begin and end with a semicolon -->
+				<xsl:variable name="state_order" select="';sketch;draft;fair copy;printers copy;first edition;later edition;'"/>
+				<xsl:variable name="scoring_order" select="';score;score and parts;vocal score;piano score;choral score;short score;parts;'"/>
+				<xsl:variable name="authority_order" select="';autograph;partly autograph;doubtful autograph;copy;'"/>
 				<!-- Skip reproductions (=reprints) here. -->
 				<!-- If listing global sources, list only those not referring to a specific version (if more than one) -->
 				<xsl:for-each select="m:source[not(m:relationList/m:relation[@rel='isReproductionOf'])]
 					[$global!='true' or ($global='true' and (count(//m:work/m:expressionList/m:expression)&lt;2
 					or not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)))]">
+					<xsl:sort select="m:classification/m:termList/m:term[@classcode='DcmContentClass']"/>
+					<xsl:sort select="m:classification/m:termList/m:term[@classcode='DcmPresentationClass']"/>
+					<xsl:sort select="string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmAuthorityClass'],';')))"/>
+					<xsl:sort select='string-length(substring-before($state_order,concat(";",translate(m:classification/m:termList/m:term[@classcode="DcmStateClass"],"&apos;",""),";")))'/>
+					<xsl:sort select="string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';')))"/>
+					<xsl:sort select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
 					<xsl:choose>
 						<xsl:when test="@target!=''">
 							<!-- get external source description -->
@@ -1373,7 +1383,9 @@
 
 				<xsl:for-each select="m:classification/m:termList[m:term[text()]]">
 					<div class="classification">
+						<xsl:variable name="sort_order" select="'DcmContentClass,DcmPresentationClass,DcmAuthorityClass,DcmStateClass,DcmScoringClass,DcmCompletenessClass'"/>
 						<xsl:for-each select="m:term[text()]">
+							<xsl:sort select="string-length(substring-before($sort_order,@classcode))"/>
 							<xsl:if test="position()=1"> [Classification: </xsl:if>
 							<xsl:value-of select="."/>
 							<xsl:choose>
