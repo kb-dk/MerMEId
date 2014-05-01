@@ -180,6 +180,68 @@
                             </xf:group>
                         </h:fieldset>
                     </xf:group>
+                   
+                    <xxf:dialog id="leave-warning-dialog" appearance="full">
+                        <!-- The requested URI must be stored in $temp/target_uri prior to opening the dialog -->
+                        <xf:label>Warning – Editing external source</xf:label>
+                        <h:p>The description of this source is contained in another file.<br/> 
+                            Editing an external source means that the present file will be closed and the file containing the <br/>
+                            actual source description will be opened for editing instead. <h:br/>
+                            Before you continue, make sure you are entitled to make changes in the file you are about to open.<h:br/>
+                            If you need to update the title of this source reference after editing, return to this file <br/>
+                            and click the "Update" button next to the reference to get the updated title.
+                        </h:p>
+                        <h:p>Do you want to proceed?</h:p>    
+                        <xf:trigger>
+                            <xf:label>Yes</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xxf:hide dialog="leave-warning-dialog"/>
+                                <xf:action if="$temp/changed='true'">
+                                    <xxf:show dialog="exit-warning-dialog"/>
+                                </xf:action>	
+                                <xf:action if="$temp/changed='false'">
+                                    <xf:load resource="{$temp/target_uri}" show="replace"/>
+                                </xf:action>
+                            </xf:action>
+                        </xf:trigger>
+                        <xf:trigger>
+                            <xf:label>No</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xxf:hide dialog="leave-warning-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </xxf:dialog>
+                    
+                    <xxf:dialog id="exit-warning-dialog" appearance="full">
+                        <!-- The requested URI must be stored in $temp/target_uri prior to opening the dialog -->
+                        <xf:label>Warning</xf:label>
+                        <h:p>You have unsaved changes. 
+                            Do you want to save before proceeding?
+                        </h:p>
+                        <h:p>Changes will be lost if you answer "Discard". <h:br/>
+                            To keep changes, choose "Save".
+                        </h:p>    
+                        <xf:trigger appearance="save_proceed_button">
+                            <xf:label><h:img src="/../editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <!--<xf:send submission="save-to-file"/>
+                                    <xf:load resource="{$temp/target_uri}" show="replace"/>-->
+                                <xf:dispatch name="save-data" targetid="dcm-performance-list-binding" target="dcm-performance-list-binding">
+                                    <xxf:context name="goto-uri" select="$temp/target_uri"/>
+                                </xf:dispatch>
+                                <xxf:hide dialog="exit-warning-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                        <xf:trigger>
+                            <xf:label><h:img src="/../editor/images/discard.png" alt="Discard" title="Discard changes and proceed"/> Discard</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:load resource="{$temp/target_uri}" show="replace"/>
+                                <xxf:hide dialog="exit-warning-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </xxf:dialog>
+                    
+                
                 </xf:group>
             </xf:group>            
         </xbl:template>
