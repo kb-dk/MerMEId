@@ -5,6 +5,7 @@
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
     xmlns:xbl="http://www.w3.org/ns/xbl" 
     xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+    xmlns:xi="http://www.w3.org/2001/XInclude" 
     xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
     xmlns:dcm="http://www.kb.dk/dcm">
     
@@ -411,6 +412,9 @@
                                                             <xf:group ref="m:itemList[m:item]">
                                                                 <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
                                                                     <xf:repeat nodeset="m:item" id="repeat-items">
+                                                                        <xxf:variable name="item_id" select="@xml:id"/>
+                                                                        <xxf:variable name="item" select="."/>
+                                                                        <xxf:variable name="ancestor_id" select="../../@xml:id"/>
                                                                         <h:tr class="hoverclass">
                                                                             <h:td class="no_border">
                                                                                 <h:ul style="margin:0; padding-left:15px;">
@@ -452,6 +456,35 @@
                                                                             </h:td>
                                                                             <h:td class="no_border">
                                                                                 <dcm:attribute-editor/>
+                                                                            </h:td>
+                                                                            <h:td>
+                                                                                <!-- move item to other sources -->
+                                                                                <xf:group ref=".[count($data-instance//m:sourceDesc/m:source)&gt;1]">
+                                                                                    <h:a class="popup"><h:img src="/../editor/images/expand.png" 
+                                                                                        title="Move this item to another source"/>Move to...<h:span 
+                                                                                            class="comment">
+                                                                                            <h:div>
+                                                                                                <h:p class="blocklabel strong" style="font-size:.9em;">Move this item to</h:p>
+                                                                                                <xf:repeat nodeset="$data-instance//m:sourceDesc/m:source[@xml:id!=$ancestor_id and (@target='' or not(@target))]">
+                                                                                                    <xxf:variable name="this_source" select="@xml:id"/>
+                                                                                                    <xxf:variable name="title" select="if (m:titleStmt/m:title/text()) then m:titleStmt/m:title else concat('[',$this_source,']')"/>
+                                                                                                    <h:div>
+                                                                                                        <xf:trigger>
+                                                                                                            <xf:label><xf:output value="$title"/></xf:label>
+                                                                                                            <xf:action ev:event="DOMActivate">
+                                                                                                                <xf:insert context="$data-instance//m:sourceDesc/m:source[@xml:id=$this_source]/m:itemList" 
+                                                                                                                    at="last()" position="after"
+                                                                                                                    origin="$item"/>
+                                                                                                                <xf:delete ref="$data-instance//m:sourceDesc/m:source[@xml:id=$ancestor_id]/m:itemList/m:item[@xml:id=$item_id]"/>
+                                                                                                            </xf:action>
+                                                                                                        </xf:trigger>
+                                                                                                    </h:div>
+                                                                                                </xf:repeat>
+                                                                                            </h:div>
+                                                                                        </h:span></h:a>
+                                                                                </xf:group>
+                                                                                <!-- end move item -->
+                                                                                
                                                                             </h:td>
                                                                         </h:tr>
                                                                     </xf:repeat>
