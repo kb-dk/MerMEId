@@ -133,6 +133,15 @@
                                                                     <xf:trigger ref=".[name(../../..)='expression']">
                                                                         <xf:label>Work (no specific version)</xf:label>
                                                                         <xf:action ev:event="DOMActivate">
+                                                                            <xf:action ref="$data-instance//m:work[not(m:history)]">
+                                                                                <xf:insert context="."
+                                                                                    origin="instance('local-temp')/m:history"/>
+                                                                            </xf:action>
+                                                                            <xf:action ref="$data-instance//m:work/m:history[not(m:eventList[@type='performances'])]">
+                                                                                <xxf:variable name="nodeset">m:eventList[@type='performances']</xxf:variable>
+                                                                                <xxf:variable name="origin" select="instance('local-temp')/m:history/m:eventList"/>
+                                                                                <xi:include href="create_and_place_element.xml"/>
+                                                                            </xf:action>
                                                                             <xf:insert context="$data-instance//m:work/m:history/m:eventList[@type='performances']" 
                                                                                 at="last()" position="after"
                                                                                 origin="$event"/>
@@ -151,7 +160,8 @@
                                                                                     <xf:insert context="."
                                                                                         origin="instance('local-temp')/m:history"/>
                                                                                 </xf:action>
-                                                                                <!--<xf:action if="not(m:history/m:eventList[@type='performances'])">
+                                                                                <!--
+                                                                                <xf:action if="not(m:history/m:eventList[@type='performances'])">
                                                                                     <xf:insert context="m:history"
                                                                                         at="last()" position="after"
                                                                                         origin="instance('local-temp')//m:eventList"/>
