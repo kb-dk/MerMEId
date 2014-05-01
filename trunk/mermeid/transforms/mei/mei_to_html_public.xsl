@@ -8,7 +8,6 @@
 	Danish Centre for Music Publication
 	The Royal Library, Copenhagen
 
-
 -->
 
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" 
@@ -24,9 +23,8 @@
 	extension-element-prefixes="exsl java" 
 	exclude-result-prefixes="m xsl exsl foo java">
 
-	<xsl:param name="hostname"    select="'dcm-udv-01.kb.dk'"/>
 	<xsl:param name="script_path" select="'/storage/document.xq'"/>
-
+	
 	<xsl:output method="xml" encoding="UTF-8" 
 		cdata-section-elements="" 
 		omit-xml-declaration="yes"/>
@@ -134,11 +132,11 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</span>
-				<!-- parameter $doc doesn't seem to work yet 
+				<!-- parameter $doc doesn't seem to work yet --> 
 				<span class="tools">
-					<a href="http://{$hostname}/storage/download_xml.xq?doc={$doc}" title="Get this record as XML (MEI)" 
+					<a href="/storage/{translate($file_context,'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ','abcdefghijklmnopqrstuvwxyzæøå')}/download_xml.xq?doc={$doc}" title="Get this record as XML (MEI)" 
 						target="_blank"><img src="/editor/images/xml.gif" alt="XML" border="0"/></a>
-				</span>-->
+				</span>
 			</div>
 		</xsl:if>
 		

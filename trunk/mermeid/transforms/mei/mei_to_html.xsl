@@ -31,7 +31,7 @@
 	<xsl:strip-space elements="*"/>
 
 	<xsl:param name="hostname"/>
-	<xsl:param name="doc" select="'default.xml'"/>
+	<xsl:param name="doc"/>
 	
 
 	<!-- GLOBAL VARIABLES -->
