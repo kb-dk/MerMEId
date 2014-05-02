@@ -39,6 +39,10 @@
 	<xsl:variable name="preferred_language">none</xsl:variable>
 	<xsl:variable name="settings"
 		select="document(concat('http://',$hostname,'/editor/forms/mei/mermeid_configuration.xml'))"/>
+
+	<xsl:variable name="file_context">
+		<xsl:value-of select="/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
+	</xsl:variable>
 	
 
 	<!-- CREATE HTML DOCUMENT -->
@@ -73,9 +77,9 @@
 	<xsl:template name="make_html_body" xml:space="default">
 		<!-- main identification -->
 
-		<xsl:variable name="file_context">
+<!--		<xsl:variable name="file_context">
 			<xsl:value-of select="m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
-		</xsl:variable>
+		</xsl:variable>-->
 
 		<xsl:variable name="catalogue_no">
 			<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
@@ -1670,6 +1674,8 @@
 		</xsl:for-each>
 	</xsl:template>	
 	
+	<!-- Look up abbreviations -->
+	
 	<xsl:template match="m:identifier[@authority='RISM']">
 		<xsl:variable name="RISM_file_name" 
 			select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'rism_sigla/',
@@ -1696,6 +1702,27 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+	
+	<xsl:template match="m:bibl//m:title">
+		<xsl:variable name="bibl_file_name" 
+			select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'library/standard_bibliography.xml'))"/>
+		
+		<xsl:variable name="bibl_file" select="document($bibl_file_name)"/>
+		<xsl:variable name="title" select="."/>
+		<xsl:variable name="reference" select="$bibl_file//m:biblList[m:head=$file_context]/m:bibl[@label=$title]"/>
+		<xsl:choose>			
+			<xsl:when test="$reference/m:title">
+				<a href="javascript:void(0);" class="abbr"><xsl:value-of select="$title"/><span class="expan">
+					<xsl:apply-templates select="$reference"/>
+				</span></a>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="."/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<!-- End look up abbreviations -->
 
 
 	<!-- format scribe's name and medium -->
@@ -1793,6 +1820,7 @@
 	<!-- bibliographic record formatting template -->
 	<xsl:template match="m:bibl">
 		<xsl:param name="compact" select="'false'"/>
+		
 		<xsl:choose>
 			<xsl:when test="m:genre='book' and not(m:genre='article')">
 				<xsl:if test="m:title[@level='m']/text()">
@@ -1834,7 +1862,7 @@
 						<xsl:call-template name="list_authors"/>
 					</xsl:if>
 					<em>
-						<xsl:value-of select="m:title[@level='a']"/>
+						<xsl:apply-templates select="m:title[@level='a']"/>
 					</em>
 					<xsl:choose>
 						<xsl:when test="m:title[@level='m']/text()">, in: <xsl:if test="m:editor/text()">
@@ -1855,7 +1883,7 @@
 						</xsl:when>
 						<xsl:otherwise>
 							<xsl:choose>
-								<xsl:when test="normalize-space(m:title[@level='s'])!=''">, in: <xsl:value-of
+								<xsl:when test="normalize-space(m:title[@level='s'])!=''">, in: <xsl:apply-templates
 										select="normalize-space(m:title[@level='s'])"/>
 									<xsl:if test="normalize-space(m:biblScope[@unit='vol'])!=''">, Vol.<xsl:value-of
 											select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>
@@ -1883,7 +1911,7 @@
 					<xsl:if test="normalize-space(m:title[@level='a'])!=''">
 						<xsl:if test="m:author/text()">
 							<xsl:call-template name="list_authors"/>
-						</xsl:if> '<xsl:value-of select="m:title[@level='a']/text()"/>'<xsl:if
+						</xsl:if> '<xsl:apply-templates select="m:title[@level='a']/text()"/>'<xsl:if
 							test="m:title[@level='j']/text()"><xsl:choose>
 								<xsl:when test="m:genre='journal'">, in: </xsl:when>
 								<xsl:otherwise>. </xsl:otherwise>
@@ -1970,7 +1998,7 @@
 			<xsl:when test="m:genre='manuscript'">
 				<xsl:if test="m:author//text()"><xsl:apply-templates select="m:author"/>: </xsl:if>
 				<xsl:if test="m:title//text()">
-					<em><xsl:value-of select="m:title"/>. </em>
+					<em><xsl:apply-templates select="m:title"/>. </em>
 				</xsl:if>
 				<xsl:if test="m:creation/m:geogName//text()">
 					<xsl:apply-templates select="m:creation/m:geogName"/>
@@ -1983,7 +2011,7 @@
 
 			<xsl:when test="contains(m:genre,'concert') and contains(m:genre,'program')">
 				<xsl:if test="m:title//text()">
-					<em><xsl:value-of select="m:title"/></em> (concert programme)</xsl:if>
+					<em><xsl:apply-templates select="m:title"/></em> (concert programme)</xsl:if>
 				<xsl:apply-templates select="m:imprint">
 					<xsl:with-param name="append_to_text">true</xsl:with-param>
 				</xsl:apply-templates>
@@ -1992,7 +2020,7 @@
 			<xsl:otherwise>
 				<xsl:if test="m:author//text()"><xsl:apply-templates select="m:author"/>: </xsl:if>
 				<xsl:if test="m:title//text()">
-					<em><xsl:value-of select="m:title"/></em>
+					<em><xsl:apply-templates select="m:title"/></em>
 				</xsl:if>
 				<xsl:if test="m:biblScope[@unit='vol']//text()">, Vol.<xsl:value-of
 						select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>. 
@@ -2006,29 +2034,19 @@
 		
 		<!-- links to full text (exception: letters and diary entries handled elsewhere) -->
 		<xsl:if test="not(m:genre='diary entry' or m:genre='letter')">
-			<xsl:call-template name="hosts"/>  
 			<xsl:apply-templates select="m:annot">
 				<xsl:with-param name="compact" select="'true'"/>
 			</xsl:apply-templates>
+			<xsl:call-template name="hosts"/>  
 			<xsl:apply-templates select="m:ptr"/>
 		</xsl:if>
-	</xsl:template>
-	
-	<xsl:template name="hosts">
-		<xsl:for-each select="m:relatedItem[@rel='host' and *//text()]">
-			<xsl:if test="position()=1"> (</xsl:if>
-			<xsl:if test="position() &gt; 1">;<xsl:text> </xsl:text></xsl:if>
-			<xsl:value-of select="m:bibl/m:title"/>
-			<xsl:apply-templates select="m:bibl" mode="volumes_pages"/>
-			<xsl:if test="position()=last()">)</xsl:if>
-		</xsl:for-each>
 	</xsl:template>
 	
 	<xsl:template match="m:bibl/m:annot">
 		<xsl:param name="compact" select="'false'"/>
 		<xsl:choose>
 			<xsl:when test="$compact='true'">
-				<xsl:apply-templates/>
+				<xsl:text> </xsl:text><xsl:apply-templates/>
 			</xsl:when>
 			<xsl:otherwise>
 				<div>
@@ -2038,16 +2056,26 @@
 		</xsl:choose>
 	</xsl:template>
 	
+	<xsl:template name="hosts">
+		<xsl:for-each select="m:relatedItem[@rel='host' and *//text()]">
+			<xsl:if test="position()=1"> (</xsl:if>
+			<xsl:if test="position() &gt; 1">;<xsl:text> </xsl:text></xsl:if>
+			<xsl:apply-templates select="m:bibl/m:title"/>
+			<xsl:apply-templates select="m:bibl" mode="volumes_pages"/>
+			<xsl:if test="position()=last()">)</xsl:if>
+		</xsl:for-each>
+	</xsl:template>
+		
 	<!-- imprint -->
 	<xsl:template match="m:imprint[*//text()]">
 		<xsl:param name="append_to_text"/>
-		<xsl:if test="$append_to_text='true'">. </xsl:if>
+		<xsl:if test="$append_to_text='true' and ../m:title/text()">. </xsl:if>
 		<xsl:if test="m:publisher/text()">
 			<xsl:apply-templates select="m:publisher"/>, </xsl:if>
 		<xsl:value-of select="m:pubPlace"/>
 		<xsl:if test="m:date/text()">
 			<xsl:text> </xsl:text>
-			<xsl:apply-templates select="m:date[text()]"/></xsl:if>
+			<xsl:apply-templates select="m:date[text()]"/>.</xsl:if>
 	</xsl:template>
 
 	<xsl:template name="list_seperator">

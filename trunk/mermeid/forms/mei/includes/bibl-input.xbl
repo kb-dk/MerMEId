@@ -83,6 +83,22 @@
                                         <dcm:attribute-editor ref="."/>
                                     </h:div>
                                 </xf:repeat>
+                                
+                                <!-- Input for label (abbreviation) only when editing the standard bibliography -->
+                                <xf:group ref=".[local-name(/*/*[1])='biblList']">
+                                    <h:div>
+                                        <h:hr/>
+                                        <xf:input ref="@label" class="maxlong">
+                                            <xf:label class="fixed_width">Abbreviation
+                                                <h:a class="help">?<h:span class="comment">An abbreviated title or other 
+                                                    identifier may be added here (intended to be used as a short-hand
+                                                    reference to the full bibliographic citation).
+                                                </h:span></h:a>
+                                            </xf:label>
+                                        </xf:input>
+                                    </h:div>
+                                </xf:group>
+
                             </h:fieldset>
                         </xf:group>
                         

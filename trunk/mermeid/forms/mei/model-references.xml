@@ -28,6 +28,10 @@
                 <xf:action ev:event="xforms-ready" ev:observer="main_model">
                     <!-- search for file collections without a bibliography -->
                     <xf:send submission="load-fileList"/>
+                    <!-- insert a label attribute to all bibls if missing (to support reference by abbreviation 
+                        - this is necessary doing only once; future references will get this attribute from the empty model) -->
+                    <xf:insert context="instance('bibliography-instance')/m:biblList/m:bibl[not(@label)]"
+                               origin="xxf:attribute('label','')"/>
                 </xf:action>
                 
                 <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
@@ -263,7 +267,7 @@
             <h:br clear="all"/>
             
         </h:div>
-        
+
         <xi:include href="edit-form-footer.xml" parse="xml"/>
     </h:body>
 </h:html>
