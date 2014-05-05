@@ -2042,6 +2042,8 @@
 		</xsl:if>
 	</xsl:template>
 	
+	<!-- bibl-related templates -->
+	
 	<xsl:template match="m:bibl/m:annot">
 		<xsl:param name="compact" select="'false'"/>
 		<xsl:choose>
@@ -2056,6 +2058,7 @@
 		</xsl:choose>
 	</xsl:template>
 	
+	<!-- editions containing (the text of) the item -->
 	<xsl:template name="hosts">
 		<xsl:for-each select="m:relatedItem[@rel='host' and *//text()]">
 			<xsl:if test="position()=1"> (</xsl:if>
@@ -2075,7 +2078,8 @@
 		<xsl:value-of select="m:pubPlace"/>
 		<xsl:if test="m:date/text()">
 			<xsl:text> </xsl:text>
-			<xsl:apply-templates select="m:date[text()]"/>.</xsl:if>
+			<xsl:apply-templates select="m:date[text()]"/><xsl:if
+				test="not($append_to_text='true')">.</xsl:if></xsl:if>
 	</xsl:template>
 
 	<xsl:template name="list_seperator">
