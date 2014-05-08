@@ -42,6 +42,14 @@ a:hover {
     color: #eec;
 }
 
+ul {
+    margin-top: 0;
+}
+
+a img {
+    border: none;
+}
+
 #all {
     width: auto;
     min-width: 600px;
@@ -55,7 +63,7 @@ a:hover {
 
 #header {
     color: #fff;
-    padding: 20px 20px 5px 20px;
+    padding: 15px 20px 10px 20px;
     border-bottom: 1px solid #fff;
     
 }
@@ -63,6 +71,7 @@ a:hover {
 #header h1, #header h2, #header h3, #header h4 {
     clear: none;    
     padding: 0;
+    line-height: 1.1em;
 }
 
 #header a:link, #header a:active, #header a:visited, #header a:hover {
@@ -103,16 +112,22 @@ a:hover {
 }
 
 .kb_logo {
-    float: right;
+    float: left;
     width:auto;
+    margin: 3px 10px 0 0;
 }
 
-ul {
-    margin-top: 0;
+.kb-logo img {
+    border: none;
 }
+
 
 .dcm_logo a {
     text-decoration: none;
+}
+
+#toggle-anthologies {
+    margin: 15px 0 0 0;
 }
 
 input, select {
@@ -127,6 +142,11 @@ input[type=text] {
     background: #eee;
 }
 
+input[type="checkbox"] {
+    border: 1px solid #666;
+    height: 15px;
+    width: 15px;
+} 
 
 .button {
   padding: 3px 5px;
