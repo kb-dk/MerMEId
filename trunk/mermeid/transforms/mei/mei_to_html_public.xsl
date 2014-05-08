@@ -36,55 +36,57 @@
 
 	<!-- CREATE HTML DOCUMENT -->
 	<xsl:template match="m:mei" xml:space="default">
-		<html xml:lang="en" lang="en">
-			<head>
-				<xsl:call-template name="make_public_html_head"/>
-			</head>
-			<body class="document_view">
-				<div id="all">
-					<div id="header">
-						<div class="kb_logo">
-							<a href="http://www.kb.dk" title="Det Kongelige Bibliotek"><img
-								id="KBLogo"
-								title="Det Kongelige Bibliotek" 
-								alt="KB Logo" src="/editor/images/kb_white.png"/><img
-									id="KBLogo_print"
-									title="Det Kongelige Bibliotek" 
-									alt="KB Logo" src="/editor/images/kb.png"/></a></div>
-						<h1>CNW</h1>
-						<h2>A Thematic Catalogue of Carl Nielsen&apos;s Works</h2>
-					</div>
+	  <!-- html xml:lang="en" lang="en">
+	    <head>
+	      <xsl:call-template name="make_public_html_head"/>
+	    </head>
+	    <body class="document_view">
+	      <div id="all">
+		<div id="header">
+		  <div class="kb_logo">
+		    <a href="http://www.kb.dk" title="Det Kongelige Bibliotek"><img
+		    id="KBLogo"
+		    title="Det Kongelige Bibliotek" 
+		    alt="KB Logo" src="/editor/images/kb_white.png"/><img
+		    id="KBLogo_print"
+		    title="Det Kongelige Bibliotek" 
+		    alt="KB Logo" src="/editor/images/kb.png"/></a></div>
+		    <h1>CNW</h1>
+		    <h2>A Thematic Catalogue of Carl Nielsen&apos;s Works</h2>
+		</div>
 					
-					<div id="menu">
-						<a href="navigation.xq" class="selected">Catalogue</a>
-						<a href="navigation.xq?itemsPerPage=9999&amp;c=CNW&amp;sortby=null%2Ctitle&amp;mode=alpha">Alphabetic list</a>
-						<a href="navigation.xq?itemsPerPage=9999&amp;c=CNW&amp;sortby=work_number%2Ctitle&amp;mode=sys">Systematic list</a>
-						<a href="about.html">About CNW</a>
-					</div>
-					<div id="main" class="main">
-						<div class="content_box">
-							<div id="backlink" class="noprint"><a href="javascript:history.back();">Back</a></div>
-							<xsl:call-template name="make_public_html_body"/>
-						</div>
-					</div>
-					<div id="footer">
-						<a href="http://www.kb.dk/dcm" title="DCM" 
-							style="text-decoration:none;"><img 
-								style="border: 0px; vertical-align:middle;" 
-								alt="DCM Logo" 
-								src="/editor/images/dcm_logo_small_white.png"
-								id="dcm_logo"/><img 
-									style="border: 0px; vertical-align:middle;" 
-									alt="DCM Logo" 
-									src="/editor/images/dcm_logo_small.png"
-									id="dcm_logo_print"
-								/>
-						</a>
-						2013 Danish Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
-					</div>
-				</div>
-			</body>
-		</html>
+		<div id="menu">
+		  <a href="navigation.xq" class="selected">Catalogue</a>
+		  <a href="navigation.xq?itemsPerPage=9999&amp;c=CNW&amp;sortby=null%2Ctitle&amp;mode=alpha">Alphabetic list</a>
+		  <a href="navigation.xq?itemsPerPage=9999&amp;c=CNW&amp;sortby=work_number%2Ctitle&amp;mode=sys">Systematic list</a>
+		  <a href="about.html">About CNW</a>
+		</div -->
+		<div id="main" class="main">
+		  <div class="content_box">
+		    <div id="backlink" class="noprint">
+		      <a href="javascript:history.back();">Back</a>
+		    </div>
+		    <xsl:call-template name="make_public_html_body"/>
+		  </div>
+		</div>
+		<!-- div id="footer">
+		  <a href="http://www.kb.dk/dcm" title="DCM" 
+		     style="text-decoration:none;"><img 
+		     style="border: 0px; vertical-align:middle;" 
+		     alt="DCM Logo" 
+		     src="/editor/images/dcm_logo_small_white.png"
+		     id="dcm_logo"/><img 
+		     style="border: 0px; vertical-align:middle;" 
+		     alt="DCM Logo" 
+		     src="/editor/images/dcm_logo_small.png"
+		     id="dcm_logo_print"
+		     />
+		  </a>
+		  2013 Danish Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
+		</div>
+	      </div>
+	    </body>
+	  </html -->
 	</xsl:template>
 
 
