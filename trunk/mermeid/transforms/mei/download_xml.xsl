@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- 
+<xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns="http://www.music-encoding.org/ns/mei" 
+  xmlns:m="http://www.music-encoding.org/ns/mei" 
+  xmlns:dcm="http://www.kb.dk/dcm" 
+  xmlns:h="http://www.w3.org/1999/xhtml"
+  xmlns:xl="http://www.w3.org/1999/xlink"
+  exclude-result-prefixes="m dcm h xl"
+  version="1.0">
+  
+  <!-- 
   This XSLT creates a clean MEI encoding for public download 
   
   Axel Teich Geertinger & Sigfrid Lundberg
   Danish Centre for Music Publication
   The Royal Library, Copenhagen 2014
-  
 -->
-
-<xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns="http://www.music-encoding.org/ns/mei" 
-  xmlns:m="http://www.music-encoding.org/ns/mei" 
-  xmlns:dcm="http://www.kb.dk/dcm" 
-  exclude-result-prefixes="m"
-  version="1.0">
   
   <xsl:output method="xml"
     encoding="UTF-8"

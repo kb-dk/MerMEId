@@ -14,8 +14,9 @@
   xmlns:xl="http://www.w3.org/1999/xlink"
   xmlns:t="http://www.tei-c.org/ns/1.0"
   xmlns:h="http://www.w3.org/1999/xhtml"
+  xmlns:dcm="http://www.kb.dk/dcm"
   xmlns:exsl="http://exslt.org/common"
-  exclude-result-prefixes="xsl m t exsl"
+  exclude-result-prefixes="xsl m t h dcm xl exsl"
   version="1.0">
 
   <xsl:param name="user"   select="''"/>
