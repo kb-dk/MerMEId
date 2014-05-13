@@ -1,0 +1,40 @@
+#!/usr/bin/perl -w
+
+#################
+# This script select files in directory based on suffix (currently *xml) and
+# can then use xpath expression to obtain a subset.  It then xslt transforms
+# the seleted files and I then unlinked those that where not satisfying the
+# xpath (I've commented out that one).
+
+use strict;
+
+use XML::LibXML;
+use XML::LibXSLT;
+
+my $parser    = XML::LibXML->new(recover=>2);
+my $xslt      = new XML::LibXSLT;
+
+my $transform = '/home/sigge/dcm-files/minorcontentcorrectionsandadditionsmay2014.xsl';
+my $style_doc = $parser->parse_file($transform);
+my $transformer = $xslt->parse_stylesheet($style_doc);
+
+my $mei="http://www.music-encoding.org/ns/mei";
+
+while(my $file = <*.xml>) {
+    my $doc = $parser->parse_file($file);
+    my $xc = XML::LibXML::XPathContext->new($doc);
+    $xc->registerNs('m', $mei);
+    my @nodes = $xc->findnodes('//m:seriesStmt/m:identifier[@type="file_collection"]');
+    my $coll = shift(@nodes)->textContent();
+    if($coll eq 'CNW') {
+	my $res = $transformer->transform($doc);
+	if( open(my $fh, ">", $file) ) {
+	    $res->toFH($fh, 1);
+	} else {
+	    print STDERR "Failed to open and write to $file \n";
+	}
+    } else {
+#	unlink $file;
+    }
+
+}
