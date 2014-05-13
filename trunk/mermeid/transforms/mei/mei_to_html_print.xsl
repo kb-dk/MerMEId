@@ -31,11 +31,33 @@
 	
 	<xsl:include href="mei_to_html_public.xsl"/>
 	
+	
+	<!-- CREATE HTML DOCUMENT -->
+	<xsl:template match="/" xml:space="default">
+		<html xml:lang="en" lang="en">
+			<head>
+				<title><xsl:call-template name="page_title"/></title>
+				<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
+				<link rel="stylesheet" type="text/css" href="/editor/style/mei_to_html.css"/>
+			</head>
+			<body>
+				<div class="main">
+					<xsl:apply-templates/>
+				</div>
+			</body>
+		</html>
+	</xsl:template>
+	
+	<!-- Exceptions/alterations -->
+	
 	<!-- omit colophon -->
 	<xsl:template match="*" mode="colophon"/>
 	
 	<!-- omit metre (as it is shown in the incipits) -->
 	<xsl:template match="m:meter"/>
+	
+	<!-- omit links -->
+	<xsl:template match="m:ptr"/>
 	
 	<!-- show all folding sections -->
 	<xsl:template match="*" mode="fold_section">

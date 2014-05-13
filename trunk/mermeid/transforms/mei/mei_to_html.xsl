@@ -77,10 +77,6 @@
 	<xsl:template name="make_html_body" xml:space="default">
 		<!-- main identification -->
 
-<!--		<xsl:variable name="file_context">
-			<xsl:value-of select="m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
-		</xsl:variable>-->
-
 		<xsl:variable name="catalogue_no">
 			<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
 		</xsl:variable>
@@ -120,7 +116,7 @@
 
 
 	<xsl:template name="body_main_content">
-				<div class="settings colophon noprint">
+		<div class="settings colophon noprint">
 			<a
 				href="javascript:loadcssfile('/editor/style/html_hide_languages.css'); hide('load_alt_lang_css'); show('remove_alt_lang_css')"
 				id="load_alt_lang_css" class="noprint">Hide alternative languages</a>

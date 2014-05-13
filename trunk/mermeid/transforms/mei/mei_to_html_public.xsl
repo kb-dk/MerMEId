@@ -48,8 +48,8 @@
 		  		<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
 		  	</xsl:variable>
 		  	
-		  	<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]/text()">
-		  		<div class="info_bar {$file_context}">
+		  	<div class="info_bar {$file_context}">
+		  		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]/text()">
 		  			<span class="list_id">
 		  				<xsl:value-of select="$file_context"/>
 		  				<xsl:text> </xsl:text>
@@ -65,12 +65,12 @@
 		  					</xsl:otherwise>
 		  				</xsl:choose>
 		  			</span>
-		  			<span class="tools">
-		  				<a href="/storage/{translate($file_context,'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ','abcdefghijklmnopqrstuvwxyzæøå')}/download_xml.xq?doc={$doc}" title="Get this record as XML (MEI)" 
-		  					target="_blank"><img src="/editor/images/xml.gif" alt="XML" border="0"/></a>
-		  			</span>
-		  		</div>
-		  	</xsl:if>
+		  		</xsl:if>
+		  		<span class="tools noprint">
+		  			<a href="/storage/{translate($file_context,'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ','abcdefghijklmnopqrstuvwxyzæøå')}/download_xml.xq?doc={$doc}" title="Get this record as XML (MEI)" 
+		  				target="_blank"><img src="/editor/images/xml.gif" alt="XML" border="0"/></a>
+		  		</span>
+		  	</div>
 		  	
 		  	<xsl:call-template name="body_main_content"/>
 		  	
