@@ -37,3 +37,31 @@
 .result_row .composer {
     height: 2px; /* composer not shown in the CNW result list */
 }
+
+/* CSS for text pages */
+
+body.text .work_number_reference {
+    background-color: #ccc;
+    border: 1px solid #666;
+}
+
+a.work_number_reference:link, a.work_number_reference:active, a.work_number_reference:visited, a.work_number_reference:hover {
+    text-decoration:none;
+    color: #444;
+}
+
+a.work_number_reference:hover {
+    color: #000;
+}
+
+body.text #main h2 {
+    margin-top: .5em;
+}
+
+body.text #main h3 {
+    margin-top: .5em;
+}
+
+body.text #main li {
+    margin-top: .5em;
+}
