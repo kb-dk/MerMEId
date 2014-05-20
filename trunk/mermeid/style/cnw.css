@@ -65,3 +65,16 @@ body.text #main h3 {
 body.text #main li {
     margin-top: .5em;
 }
+
+body.text #colophon {
+    display: table;
+}
+
+body.text #colophon p {
+    display: table-row;
+}
+
+body.text #colophon p span{
+    display: table-cell;
+    padding: 5px 10px 0 0;
+}
