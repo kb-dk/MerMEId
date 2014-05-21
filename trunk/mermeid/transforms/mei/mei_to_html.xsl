@@ -1062,12 +1062,21 @@
 	<!-- history -->
 	<xsl:template match="m:history[*//text()]" mode="history">
 		<!-- composition history -->
-		<xsl:for-each select="m:creation/m:date[text()]">
+		<xsl:if test="m:creation/m:date[text()] or m:creation/m:geogName[text()]">
 			<xsl:if test="position()=1">
-				<p><span class="p_heading"> Date of composition: </span>
+				<p><span class="p_heading">Composition: </span>
+					<xsl:apply-templates select="m:creation/m:geogName"/>
+					<xsl:if	test="m:creation/m:date[text()] and m:creation/m:geogName[text()]"><xsl:text> </xsl:text></xsl:if>
+					<xsl:apply-templates select="m:creation/m:date"/>.</p>
+			</xsl:if>
+		</xsl:if>
+		
+<!--		<xsl:for-each select="m:creation/m:date[text()]">
+			<xsl:if test="position()=1">
+				<p><span class="p_heading"> Composition: </span>
 					<xsl:apply-templates select="."/>. </p>
 			</xsl:if>
-		</xsl:for-each>
+		</xsl:for-each>-->
 		<xsl:for-each select="m:p[text()]">
 			<p>
 				<xsl:apply-templates/>
