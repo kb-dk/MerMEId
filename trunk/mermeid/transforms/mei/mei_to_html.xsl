@@ -169,11 +169,14 @@
 				<xsl:element name="h2">
 
 					<xsl:for-each select="m:title[@type='uniform'][text()]">
+						<!-- uniform titles hidden -->
+						<!--
 						<xsl:element name="span">
 							<xsl:call-template name="maybe_print_lang"/>
 							<xsl:apply-templates select="."/>
 						</xsl:element>
 						<xsl:call-template name="maybe_print_br"/>
+						-->
 					</xsl:for-each>
 
 					<xsl:for-each select="m:title[@type='original'][text()]">
@@ -1316,15 +1319,24 @@
 						<xsl:choose>
 							<xsl:when test="@role=following-sibling::*[1]/@role">
 								<xsl:if test="name()='persName' and normalize-space(@role)">
-									<xsl:value-of select="concat($role,'s')"/><xsl:text>: </xsl:text>
+									<!-- make it plural... -->
+									<xsl:variable name="label">
+										<xsl:choose>
+											<xsl:when test="substring(@role,string-length(@role),1)='y'">
+												<xsl:value-of select="concat(substring($role,1,string-length($role)-1),'ies')"/>
+											</xsl:when>
+											<xsl:otherwise><xsl:value-of select="concat($role,'s')"/></xsl:otherwise>
+										</xsl:choose>
+									</xsl:variable>
+									<xsl:value-of select="$label"/><xsl:text>: </xsl:text>
 								</xsl:if>
 								<xsl:apply-templates select="."/>, </xsl:when>
 							<xsl:otherwise>
 								<xsl:if test="name()='persName' and normalize-space(@role)">
-									<xsl:value-of select="@role"/><xsl:text>: </xsl:text>
+									<xsl:value-of select="$role"/><xsl:text>: </xsl:text>
 								</xsl:if>
 								<xsl:apply-templates select="."/>
-								<xsl:if test="following-sibling::m:persName/text()">; </xsl:if>
+								<xsl:if test="following-sibling::m:persName/text()"><br/></xsl:if>
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:when>
@@ -1336,13 +1348,10 @@
 								<xsl:apply-templates select="."/>
 							</xsl:when>
 							<xsl:otherwise>
-								<xsl:apply-templates select="."/>. </xsl:otherwise>
+								<xsl:apply-templates select="."/><br/></xsl:otherwise>
 						</xsl:choose>
 					</xsl:otherwise>
 				</xsl:choose>
-				<xsl:if test="position() = last()">
-					<xsl:text>. </xsl:text>
-				</xsl:if>
 			</xsl:for-each>
 		</xsl:if>
 	</xsl:template>
@@ -2633,7 +2642,12 @@
 				<xsl:apply-templates select="exsl:node-set(substring-before($string,$abbr))"/>
 				<a href="javascript:void(0);" 
 					class="abbr"><xsl:value-of select="$abbr"/><span 
-						class="expan"><xsl:apply-templates select="$expan"/></span></a><xsl:apply-templates 
+						class="expan"><xsl:choose>
+							<!-- if the expansion is a nodeset, a <bibl> element for example, process it -->
+							<xsl:when test="$expan/*"><xsl:apply-templates select="$expan"/></xsl:when>
+							<!-- otherwise just plain text; no further processing -->
+							<xsl:otherwise><xsl:value-of select="$expan"/></xsl:otherwise>
+						</xsl:choose></span></a><xsl:apply-templates 
 							select="exsl:node-set(substring-after($string,$abbr))"/>
 			</xsl:when>
 			<xsl:otherwise>
@@ -2644,12 +2658,6 @@
 	<!-- End look up abbreviations -->
 	
 	
-
-	<!--<xsl:template match="text()">
-		<xsl:copy-of select="."/>
-	</xsl:template>-->
-
-
 	<!-- formatted text -->
 	<xsl:template match="m:lb">
 		<br/>
