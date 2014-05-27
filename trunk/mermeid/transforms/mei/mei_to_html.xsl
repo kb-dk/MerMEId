@@ -207,8 +207,9 @@
 		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier/text()">
 			<p>
 				<xsl:for-each select="m:meiHead/m:workDesc/m:work/m:identifier[text()]">
-					<xsl:variable name="type"><xsl:apply-templates select="@type"/></xsl:variable>
-					<xsl:value-of select="concat($type,' ',.)"/>
+					<!--<xsl:variable name="type"><xsl:apply-templates select="@type"/></xsl:variable>
+					<xsl:value-of select="concat($type,' ',.)"/>-->
+					<xsl:apply-templates select="@type"/><xsl:text> </xsl:text><xsl:value-of select="."/>
 					<xsl:if test="position()&lt;last()">
 						<br/>
 					</xsl:if>
@@ -2623,7 +2624,7 @@
 	<!-- General abbreviations, find in text blocks. -->
 	<!-- This should be improved to match only whole words (XSLT 2.0/RegEx?).
 		In that case, it could be generalized to match all text() nodes. -->
-	<xsl:template match="m:instrVoice/text() | m:identifier/text() | @type/text()">
+	<xsl:template match="m:instrVoice/text() | m:identifier/text() | m:identifier/@type">
 		<xsl:variable name="string" select="."/>
 		<xsl:variable name="abbr" select="$abbreviations_file/m:p/m:choice/m:abbr[contains($string,.)]"/>
 		<xsl:choose>
@@ -2632,11 +2633,11 @@
 				<xsl:apply-templates select="exsl:node-set(substring-before($string,$abbr))"/>
 				<a href="javascript:void(0);" 
 					class="abbr"><xsl:value-of select="$abbr"/><span 
-						class="expan"><xsl:value-of	select="$expan"/></span></a><xsl:apply-templates 
+						class="expan"><xsl:apply-templates select="$expan"/></span></a><xsl:apply-templates 
 							select="exsl:node-set(substring-after($string,$abbr))"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:copy-of select="."/>
+				<xsl:value-of select="."/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
