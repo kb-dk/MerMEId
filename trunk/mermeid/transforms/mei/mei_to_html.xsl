@@ -26,23 +26,30 @@
 
 	<xsl:output method="xml" encoding="UTF-8" 
 		cdata-section-elements="" 
-		omit-xml-declaration="yes"/>
+		omit-xml-declaration="yes" indent="no" xml:space="default"/>
 	
-	<xsl:strip-space elements="*"/>
-
 	<xsl:param name="hostname"/>
 	<xsl:param name="doc"/>
 	
 
 	<!-- GLOBAL VARIABLES -->
+	
 	<!-- preferred language in titles and other multilingual fields -->
 	<xsl:variable name="preferred_language">none</xsl:variable>
+	<!-- general MerMEId settings -->
 	<xsl:variable name="settings"
 		select="document(concat('http://',$hostname,'/editor/forms/mei/mermeid_configuration.xml'))"/>
-
+	<!-- file context - i.e. collection identifier like 'CNW' -->
 	<xsl:variable name="file_context">
 		<xsl:value-of select="/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
 	</xsl:variable>
+	<!-- files containing look-up information -->
+	<xsl:variable name="bibl_file_name" 
+		select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'library/standard_bibliography.xml'))"/>
+	<xsl:variable name="bibl_file" select="document($bibl_file_name)"/>
+	<xsl:variable name="abbreviations_file_name" 
+		select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'library/abbreviations.xml'))"/>
+	<xsl:variable name="abbreviations_file" select="document($abbreviations_file_name)"/>
 	
 
 	<!-- CREATE HTML DOCUMENT -->
@@ -480,7 +487,7 @@
 		<!-- external links -->
 		<xsl:for-each select="m:relationList[m:relation[@target!='']]">
 			<p>
-				<xsl:text>Related resources: </xsl:text>
+				<!--<xsl:text>Related resources: </xsl:text>-->
 				<xsl:for-each select="m:relation[@target!='']">
 					<img src="/editor/images/html_link.png" title="Link to external resource"/>
 					<xsl:element name="a">
@@ -1679,57 +1686,6 @@
 		</xsl:for-each>
 	</xsl:template>	
 	
-	<!-- Look up abbreviations -->
-	
-	<xsl:template match="m:identifier[@authority='RISM']">
-		<xsl:variable name="RISM_file_name" 
-			select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'rism_sigla/',
-			substring-before(normalize-space(.),'-'),'.xml'))"/>
-		<xsl:choose>
-			<xsl:when test="boolean(document($RISM_file_name))">
-				<xsl:variable name="RISM_file" select="document($RISM_file_name)"/>
-				<xsl:variable name="siglum" select="normalize-space(.)"/>
-				<xsl:choose>
-					<xsl:when test="$RISM_file//marc:datafield[marc:subfield[@code='g']=$siglum]">
-						<xsl:variable name="record" select="$RISM_file//marc:datafield[marc:subfield[@code='g']=$siglum]"/>
-						<a href="javascript:void(0);" class="abbr"><xsl:value-of select="."/><span class="expan">
-								<xsl:value-of select="$record/marc:subfield[@code='a']"/>,
-								<xsl:value-of select="$record/marc:subfield[@code='c']"/>
-							</span></a>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="."/>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:value-of select="."/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-	
-	<xsl:template match="m:bibl//m:title">
-		<xsl:variable name="bibl_file_name" 
-			select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'library/standard_bibliography.xml'))"/>
-		
-		<xsl:variable name="bibl_file" select="document($bibl_file_name)"/>
-		<xsl:variable name="title" select="."/>
-		<xsl:variable name="reference" select="$bibl_file//m:biblList[m:head=$file_context]/m:bibl[@label=$title]"/>
-		<xsl:choose>			
-			<xsl:when test="$reference/m:title">
-				<a href="javascript:void(0);" class="abbr"><xsl:value-of select="$title"/><span class="expan">
-					<xsl:apply-templates select="$reference"/>
-				</span></a>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:value-of select="."/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-	
-	<!-- End look up abbreviations -->
-
-
 	<!-- format scribe's name and medium -->
 	<xsl:template match="m:hand" mode="scribe">
 		<xsl:call-template name="lowercase">
@@ -2619,9 +2575,79 @@
 		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[cut]'))"/>
 	</xsl:template>
 
-	<xsl:template match="text()">
-		<xsl:copy-of select="."/>
+
+	<!-- Look up abbreviations -->
+	
+	<xsl:template match="m:identifier[@authority='RISM']">
+		<xsl:variable name="RISM_file_name" 
+			select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'rism_sigla/',
+			substring-before(normalize-space(.),'-'),'.xml'))"/>
+		<xsl:choose>
+			<xsl:when test="boolean(document($RISM_file_name))">
+				<xsl:variable name="RISM_file" select="document($RISM_file_name)"/>
+				<xsl:variable name="siglum" select="normalize-space(.)"/>
+				<xsl:choose>
+					<xsl:when test="$RISM_file//marc:datafield[marc:subfield[@code='g']=$siglum]">
+						<xsl:variable name="record" select="$RISM_file//marc:datafield[marc:subfield[@code='g']=$siglum]"/>
+						<a href="javascript:void(0);" class="abbr"><xsl:value-of select="."/><span class="expan">
+							<xsl:value-of select="$record/marc:subfield[@code='a']"/>,
+							<xsl:value-of select="$record/marc:subfield[@code='c']"/>
+						</span></a>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="."/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="."/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
+	
+	<xsl:template match="m:bibl//m:title">
+		<xsl:variable name="title" select="."/>
+		<xsl:variable name="reference" select="$bibl_file//m:biblList[m:head=$file_context or m:head='' or not(m:head)]/m:bibl[@label=$title]"/>
+		<xsl:choose>			
+			<xsl:when test="$reference/m:title">
+				<a href="javascript:void(0);" class="abbr"><xsl:value-of select="$title"/><span class="expan">
+					<xsl:apply-templates select="$reference"/>
+				</span></a>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="."/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<!-- General abbreviations, find in text blocks. -->
+	<!-- This should be improved to match only whole words (XSLT 2.0/RegEx?).
+		In that case, it could be generalized to match all text() nodes. -->
+	<xsl:template match="m:instrVoice/text() | m:identifier/text() | @type/text()">
+		<xsl:variable name="string" select="."/>
+		<xsl:variable name="abbr" select="$abbreviations_file/m:p/m:choice/m:abbr[contains($string,.)]"/>
+		<xsl:choose>
+			<xsl:when test="$abbr">
+				<xsl:variable name="expan" select="$abbreviations_file/m:p/m:choice/m:expan[../m:abbr=$abbr]"/>		
+				<xsl:apply-templates select="exsl:node-set(substring-before($string,$abbr))"/>
+				<a href="javascript:void(0);" 
+					class="abbr"><xsl:value-of select="$abbr"/><span 
+						class="expan"><xsl:value-of	select="$expan"/></span></a><xsl:apply-templates 
+							select="exsl:node-set(substring-after($string,$abbr))"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:copy-of select="."/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	<!-- End look up abbreviations -->
+	
+	
+
+	<!--<xsl:template match="text()">
+		<xsl:copy-of select="."/>
+	</xsl:template>-->
+
 
 	<!-- formatted text -->
 	<xsl:template match="m:lb">

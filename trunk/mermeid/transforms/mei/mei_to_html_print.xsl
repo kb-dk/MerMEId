@@ -58,6 +58,9 @@
 	
 	<!-- omit links -->
 	<xsl:template match="m:ptr"/>
+
+	<!-- omit pop-up expansions of abbreviations -->
+	<xsl:template match="m:expan"/>
 	
 	<!-- show all folding sections -->
 	<xsl:template match="*" mode="fold_section">
