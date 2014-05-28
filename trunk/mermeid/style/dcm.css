@@ -287,6 +287,10 @@ p.illustration_text {
         padding: 0;
     }
     
+    #header {
+        margin-bottom: 2em;
+    }
+    
     #dcm_logo,
     #KBLogo {
         display: none;
@@ -294,6 +298,18 @@ p.illustration_text {
     #dcm_logo_print,
     #KBLogo_print {
         display: inline;
+    }
+    
+    #header h1 {
+        font-size: 3em;    
+    }
+
+    #header h2 {
+        font-size: 1.5em;    
+    }
+
+    .noprint {
+        display: none;
     }
     
 }
