@@ -38,11 +38,40 @@
     height: 2px; /* composer not shown in the CNW result list */
 }
 
+.toplink {
+    float: right;
+    margin-top: 15px;
+}
+
+.new {
+    background-color: #ffff99;
+}
+
 /* CSS for text pages */
 
 body.text .work_number_reference {
-    background-color: #ccc;
+    background-color: #ddd;
     border: 1px solid #666;
+    padding: 0px 3px;
+}
+
+
+body.text #main p, 
+body.text #main div, 
+body.text #main h2,
+body.text #main h3,
+body.text #main h4,
+body.text #main ul
+{
+    max-width: 45em;
+    line-height: 1.5em;
+}
+
+body.text #main h2 a,
+body.text #main h3 a
+{
+    text-decoration:none;
+    cursor: default;
 }
 
 a.work_number_reference:link, a.work_number_reference:active, a.work_number_reference:visited, a.work_number_reference:hover {
@@ -64,6 +93,10 @@ body.text #main h3 {
 
 body.text #main li {
     margin-top: .5em;
+}
+
+body.text #toc li {
+    margin-top: 0;
 }
 
 body.text #colophon {

@@ -216,21 +216,33 @@ div.results {
 .info_bar {
     font-weight: bold;
     background-color: #eee;
+    display: table;
+    width: 100%;
 }
 
-.info_bar span {
+.info_bar div.genre_list {
+    display: table-row;
+}
+
+.info_bar div.genre_list span {
     display: table-cell;
-    padding: 0;
+    padding: 3px 8px;
+    white-space: nowrap;
 }
 
-.info_bar span.genre span {
+.info_bar div.genre_list .pos1,
+.info_bar div.genre_list .list_id {
+    /*width: auto;*/
+    width: 5%;
+}
+/*.info_bar span.genre span {
     padding: 3px 8px;
     display: inline;
     display: inline-block;
-}
+}*/
 
 .info_bar span.list_id {
-    width: auto;
+    /*width: auto;*/
     background-color: #444;
     color: #fff;
     white-space: nowrap;
@@ -336,64 +348,67 @@ form.search a.help .help_label {
                               color: #fff; }
 .vocal_music                { background-color: #c9a044;
                               color: #fff; }
+                              
+.pos1                       { color: #fff; }
+                              
 
 /* sub-categories */
 .opera                      { background-color: #f72c8d;
                               color: #fff; }
-.opera .pos1                { background-color: #C72371;}
+.opera_pos1                { background-color: #C72371;}
 
 .incidental_music           { background-color: #c72279;
                               color: #fff; }
-.incidental_music .pos1     { background-color: #A01B61;}
+.incidental_music_pos1     { background-color: #A01B61;}
 
 .ballet                     { background-color: #9c1dac;
                               color: #fff; }
-.ballet .pos1               { background-color: #7E178A;}
+.ballet_pos1               { background-color: #7E178A;}
 
 .symphony                   { background-color: #4c89fe;
                               color: #fff; }
-.symphony .pos1             { background-color: #3D6ECD;}
+.symphony_pos1             { background-color: #3D6ECD;}
 
 .concerto                   { background-color: #01aef5;
                               color: #fff; }
-.concerto .pos1             { background-color: #008CC5; }
+.concerto_pos1             { background-color: #008CC5; }
 
 .other_orchestral_music     { background-color: #00b7c0;
                               color: #fff; }
-.other_orchestral_music .pos1 
+.other_orchestral_music_pos1 
                             { background-color: #00939B;}
 
 .chamber_music              { background-color: #01df87;
                               color: #fff; }
-.chamber_music .pos1        { background-color: #00B46D;}
+.chamber_music_pos1        { background-color: #00B46D;}
 
 .piano_music, .organ_music,
 .music_for_one_instrument   { background-color: #55de01;
                               color: #fff; }
-.piano_music .pos1, .organ_music .pos1,
-.music_for_one_instrument .pos1  
+.piano_music_pos1, .organ_music_pos1,
+.music_for_one_instrument_pos1  
                             { background-color: #44B300;}
 
 .music_for_vocal_soloists_and_instruments_with_or_without_choir  
                             { background-color: #f3fb53;
                               color: #000; }
-.music_for_vocal_soloists_and_instruments_with_or_without_choir .pos1 
+.music_for_vocal_soloists_and_instruments_with_or_without_choir_pos1 
                             { background-color: #C4CA43;}
 
 .choral_music_with_instruments 
                             { background-color: #ffb147;
                               color: #fff; }
-.choral_music_with_instruments .pos1 
+.choral_music_with_instruments_pos1 
                             { background-color: #CE8E39;}
 
 .a_cappella_choral_music    { background-color: #ff7647;
                               color: #fff; }
-.a_cappella_choral_music .pos1 
+.a_cappella_choral_music_pos1 
                             { background-color: #CE5F39;}
 
 .song                       { background-color: #fc495e;
                               color: #fff; }
-.song .pos1                 { background-color: #CB3A4B;}
+.song_pos1                 { background-color: #CB3A4B;}
 
 /* Print style rules */
 @media print {

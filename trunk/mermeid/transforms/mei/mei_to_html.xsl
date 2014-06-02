@@ -462,12 +462,12 @@
 			<xsl:if test="normalize-space($title)">
 				<h2><xsl:value-of select="$title"/></h2>
 			</xsl:if>
-		</xsl:if>		
+		</xsl:if>	
 		<xsl:if test="m:identifier/text()">
 			<p>
 				<xsl:for-each select="m:identifier[text()]">
-					<xsl:variable name="type"><xsl:apply-templates select="@type"/></xsl:variable>
-					<xsl:value-of select="concat($type,' ',.)"/>
+<!-- Tjek her (se f.eks. CNW 351) -->					
+					<xsl:apply-templates select="@type"/><xsl:text> </xsl:text><xsl:value-of select="."/>
 					<xsl:if test="position()&lt;last()">
 						<br/>
 					</xsl:if>
