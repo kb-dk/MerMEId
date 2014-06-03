@@ -176,29 +176,17 @@ div.results {
     width: 100%;
 }
 
-.result_row {
-    margin: 15px 0;
-}
-
 .result_row a {
     text-decoration: none;
     color: inherit;
 }
 
-
 .result_row a:hover {
     text-decoration: underline;
 }
 
-.result_row .composer,
-.result_row .title {
-    border-left:  1px solid #aaa;
-    border-right: 1px solid #aaa;
-}
-
 .result_row .composer {
     font-size: .85em;
-    border-top: 1px solid #aaa;
     padding: 2px 5px;
 }
 
@@ -214,39 +202,44 @@ div.results {
 }
 
 .info_bar {
-    font-weight: bold;
-    background-color: #eee;
+}
+
+.result_table {
     display: table;
     width: 100%;
+    margin: 15px 0;
+    border: 1px solid #666;
+    background-color: #eee;
+}
+
+.result_row {
+    display: table-row;
+}
+
+.result_cell {
+    display: table-cell;
 }
 
 .info_bar div.genre_list {
     display: table-row;
+    float: right;
 }
 
-.info_bar div.genre_list span {
+.info_bar div.genre_list .genre_indicator {
     display: table-cell;
-    padding: 3px 8px;
-    white-space: nowrap;
+    width: 18px;
 }
 
-.info_bar div.genre_list .pos1,
-.info_bar div.genre_list .list_id {
-    /*width: auto;*/
+.result_table .list_id {
     width: 5%;
-}
-/*.info_bar span.genre span {
-    padding: 3px 8px;
-    display: inline;
-    display: inline-block;
-}*/
-
-.info_bar span.list_id {
-    /*width: auto;*/
-    background-color: #444;
-    color: #fff;
+    background-color: #666;
     white-space: nowrap;
     padding: 3px 8px;
+}
+
+#main .result_table .list_id a {
+    color: #fff;
+    font-weight: bold;
 }
 
 /* css for help and other pop-ups */
@@ -339,6 +332,55 @@ form.search a.help .help_label {
     font-family: courier, fixed, monospace;
 }
 
+a.abbr {
+    border-bottom: 1px dashed #666;
+    cursor: help;   
+    text-decoration: none;
+    color: #000;
+}
+
+.genre_list a.abbr {
+    border: none;
+}
+
+.genre_list a:link, .genre_list a:active, .genre_list a:visited, .genre_list a:hover {
+    text-decoration: none;
+}
+
+a:hover.abbr .expan {
+    visibility:visible;
+}
+
+.expan {
+    display:inline;
+    position: absolute;
+    visibility:hidden;
+    white-space: normal;
+    text-decoration:none;
+    color: black;
+    background-color:#ddd;
+    padding: 1px;
+    padding-bottom: 5px;
+    z-index:250;
+    padding: 8px 4px 4px 4px;
+    width: auto;
+    max-width: 300px;
+    margin-top: 20px;
+    margin-left: -5px;
+    border: 1px solid #ddd;
+    font-weight:normal;
+    font-style: normal;
+    text-align: left;
+    box-shadow: 7px 7px 10px 5px #333;
+    border-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 7px 7px 10px 5px #333;
+    -moz-border-radius: 4px;
+    /* For MSIE 6-8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333')"; 
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333'); 
+}
+
 /* genre color codes */
 
 /* main categories */
@@ -426,16 +468,16 @@ form.search a.help .help_label {
         display: block;
     }
     
-    .result_row .composer,
-    .result_row .date,
-    .result_row .title {
+    .result_table  {
         border: 0;
     }
 
     .result_row .title,  
     .result_row .composer,
-    .info_bar span.list_id {
+    .info_bar .list_id {
         padding: 0;
+        color: #000;
+        background-color: #fff;
     }
     
 }
