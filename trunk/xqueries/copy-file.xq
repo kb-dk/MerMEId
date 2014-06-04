@@ -1,5 +1,6 @@
 import module namespace login="http://kb.dk/this/login" at "./login.xqm";
 
+declare namespace functx = "http://www.functx.com";
 declare namespace m="http://www.music-encoding.org/ns/mei";
 declare namespace xdb="http://exist-db.org/xquery/xmldb";
 declare namespace request="http://exist-db.org/xquery/request";
@@ -10,6 +11,19 @@ declare namespace uuid="java:java.util.UUID";
 declare option    exist:serialize "method=xml media-type=text/html"; 
 
 declare variable $dcmroot := "/db/dcm/";
+
+declare function functx:copy-attributes
+  ( $copyTo as element() ,
+    $copyFrom as element() )  as element() {
+
+   element { node-name($copyTo)}
+           { $copyTo/@*[not(node-name(.) = $copyFrom/@*/node-name(.))],
+             $copyFrom/@*,
+             $copyTo/node() }
+
+ } ;
+
+
 
 let $return_to := concat(
   "http://",request:get-header('HOST'),"/storage/list_files.xq?",
@@ -36,10 +50,13 @@ return
     let $odoc    := doc($old_file)
     let $stored  := xdb:store($dcmroot,$new_file, $odoc )
     let $new_doc := doc($new_file)
-    for $title in $new_doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1][string()]
-    let $new_title := concat($title//string()," (copy) ")
-    let $upd := update replace $title[string()][1] with <m:title>{$new_title}</m:title>
-    return <tr><td>{$title[string()][1]//string()}</td><td>{$new_title}</td></tr>
+    for $title in $new_doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[string()]
+    let $new_title_text := concat($title//string()," (copy) ")
+    let $new_title := 
+    <title xmlns="http://www.music-encoding.org/ns/mei">{$new_title_text}</title>
+    let $upd := update replace $title[string()] with
+      functx:copy-attributes($new_title,$title)
+    return <tr><td>{$title[string()][1]//string()}</td><td>{$new_title_text}</td></tr>
   }
 </table>
 
