@@ -188,9 +188,9 @@
     <xsl:variable name="attrName" select="substring-before($thisAttrPart1,'=')"/>
     <xsl:variable name="remainder" select="substring-after(substring-after($attrString,$thisAttrPart2),'&#34;')"/>
     <xsl:if test="$attrName">
-      <xsl:attribute name="{$attrName}"><!-- xsl:value-of 
-        select="concat(substring-after($thisAttrPart1,'&#34;'),$thisAttrPart2)"/--><xsl:value-of
-										       select="$thisAttrPart2"/></xsl:attribute>
+      <xsl:attribute name="{$attrName}">
+	<xsl:value-of select="$thisAttrPart2"/>
+      </xsl:attribute>
       <xsl:if test="normalize-space($remainder)!='' and normalize-space($remainder)!='/'">
         <xsl:call-template name="addAttributes">
           <xsl:with-param name="attrString" select="$remainder"/>
@@ -251,13 +251,31 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template match="h:a">
-    <xsl:element name="ref" namespace="http://www.music-encoding.org/ns/mei">
-      <xsl:attribute name="target"><xsl:value-of select="@href"/></xsl:attribute>
-      <xsl:attribute name="xl:show"><xsl:value-of select="@target"/></xsl:attribute>
-      <xsl:attribute name="xl:title"><xsl:value-of select="@title"/></xsl:attribute>
-      <xsl:apply-templates select="node()"/>
-    </xsl:element>
+    <xsl:choose>
+      <xsl:when test="@href">
+	<xsl:element name="ref" namespace="http://www.music-encoding.org/ns/mei">
+	  <xsl:attribute name="target">
+	    <xsl:value-of select="@href"/>
+	  </xsl:attribute>
+	  <xsl:if test="@xl:show">
+	    <xsl:attribute name="xl:show">
+	      <xsl:value-of select="@target"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	  <xsl:if test="@xl:title">
+	    <xsl:attribute name="xl:title">
+	      <xsl:value-of select="@title"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	  <xsl:apply-templates select="node()"/>
+	</xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates select="node()"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
   <xsl:template match="h:div[contains(@style,'text-align')]"><xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei"><xsl:attribute name="halign"><xsl:value-of select="substring-before(substring-after(@style,'text-align:'),';')"/></xsl:attribute><xsl:apply-templates select="node() | @*"/></xsl:element></xsl:template>
   <xsl:template match="h:ul">
     <xsl:element name="list" namespace="http://www.music-encoding.org/ns/mei">
