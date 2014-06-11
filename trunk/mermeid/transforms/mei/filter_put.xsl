@@ -188,8 +188,9 @@
     <xsl:variable name="attrName" select="substring-before($thisAttrPart1,'=')"/>
     <xsl:variable name="remainder" select="substring-after(substring-after($attrString,$thisAttrPart2),'&#34;')"/>
     <xsl:if test="$attrName">
-      <xsl:attribute name="{$attrName}"><xsl:value-of 
-        select="concat(substring-after($thisAttrPart1,'&#34;'),$thisAttrPart2)"/></xsl:attribute>
+      <xsl:attribute name="{$attrName}"><!-- xsl:value-of 
+        select="concat(substring-after($thisAttrPart1,'&#34;'),$thisAttrPart2)"/--><xsl:value-of
+										       select="$thisAttrPart2"/></xsl:attribute>
       <xsl:if test="normalize-space($remainder)!='' and normalize-space($remainder)!='/'">
         <xsl:call-template name="addAttributes">
           <xsl:with-param name="attrString" select="$remainder"/>
