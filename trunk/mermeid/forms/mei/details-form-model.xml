@@ -64,6 +64,14 @@
             <change_marker>*</change_marker>
             <etc>...</etc>
             <target_uri/>
+            <file_exists>true</file_exists>
+            <counter/>
+            <max/>
+            <query/>
+            <series/>
+            <page/>
+            <value/>
+            <nodeset/>
             <path/>
             <element/>
         </temp>
@@ -89,6 +97,16 @@
         resource="{instance('temp')/target_uri}"
         replace="instance" instance="empty-instance"/>
 
+    <xf:submission id="load-fileList"
+        xxf:username=""
+        xxf:password=""
+        method="get" 
+        serialization="none" 
+        validate="false"
+        resource="{instance('temp')/target_uri}"
+        replace="instance" 
+        instance="XMLfiles"/>
+    
     <xf:submission id="load-bibliography"
         xxf:username=""
         xxf:password=""

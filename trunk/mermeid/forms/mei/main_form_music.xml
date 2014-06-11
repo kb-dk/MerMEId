@@ -4,7 +4,9 @@
 	xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
 	xmlns:xi="http://www.w3.org/2001/XInclude" 
 	xmlns:dcm="http://www.kb.dk/dcm"
+	xmlns:m="http://www.music-encoding.org/ns/mei" 
 	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
 	id="music-div">
 	
 	<h:div class="inputdiv">
@@ -354,42 +356,82 @@
 						</xf:group>
 					</h:fieldset>
 					
-					<h:fieldset>
-					<h:legend>Edited score</h:legend>
-					<dcm:create  
-						nodeset="m:relationList"
-						label="Add link to edited score"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList"/>
-					<dcm:create ref="m:relationList" 
-						nodeset="m:relation[@rel='hasReproduction' and @targettype='edited_score']"
-						label="Add link to edited score"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']"/>
-					<xf:group ref="m:relationList[m:relation[@rel='hasReproduction' and @targettype='edited_score']]">
-						<xf:group ref=".[m:relation[@rel='hasReproduction' and @targettype='edited_score']]">
-							<h:span class="blocklabel">URI <h:a class="help">?<h:span class="comment">Location of an external, edited score.
-								Not for digital representations of items listed as "sources"</h:span></h:a>
-							</h:span>
-						</xf:group>
-						<xf:repeat nodeset="m:relation[@rel='hasReproduction' and @targettype='edited_score']" id="edited_score-repeat">
-							<h:div>
-								<xf:input ref="@target" class="long">
-									<xf:label/>
-								</xf:input>
-								<xf:input ref="@label">
-									<xf:label>Description <h:a class="help">?<h:span class="comment">Explanatory text for the link to the resource, 
-										e.g. "Carl Nielsen Edition, full score"</h:span></h:a></xf:label>
-								</xf:input>
-								<dcm:element-buttons
-									triggers="add remove" 
-									nodeset="m:relation" 
-									index="edited_score-repeat"
-									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']"/>
-								<dcm:attribute-editor ref="."/>
-							</h:div>
-						</xf:repeat>
-						<h:br/> 
-					</xf:group>
-					</h:fieldset>
+					
+					<!-- Relations -->
+						<h:fieldset>
+							<h:legend>Relations <h:a class="help">?<h:span class="comment">Relations between this version and 
+								other versions or files may be specified here to create links between them.<h:br/>
+								For instance, if this version is a revision of an earlier version it may be specified here
+								by selecting the "is revision of". <h:br/>
+								On the target of the relation, you may want to add a link pointing to this one and defining 
+								the relation as "has revision" to make the linking bidirectional.
+							</h:span></h:a></h:legend>
+							<dcm:create 
+								nodeset="m:relationList"
+								label="Add relation"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList"/>
+							<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
+								<xf:repeat nodeset="m:relationList/m:relation" id="version_relations">
+									<xxf:variable name="context_node" select="."/>
+									<h:tr>
+										<h:td>
+											<h:span>This version </h:span>
+											<xi:include href="includes/relation_select.xml" parse="xml"/>
+											<xf:group ref="@target">
+												<xf:input ref="." class="maxlong">
+													<xf:label>URI <h:a class="help">?<h:span class="comment">The location of the linked ressource (target). 
+														The target may be either an external file (such as "http://www.example.org/some_file.xml"), an internal 
+														reference to an element in the file you are editing (by XML ID, such as "#expression_1"), or a combination
+														of both (like "http://www.example.org/some_file.xml#expression_1"). <h:br/>
+														The target URI may be entered manually or selected using the "Select file" button.</h:span></h:a>
+													</xf:label>
+												</xf:input>
+												<xf:trigger>
+													<xf:label>Select file...</xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xf:setvalue ref="instance('temp')/nodeset" 
+															value='"instance(&apos;data-instance&apos;)/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[index(&apos;repeat-expression&apos;)]/m:relationList/m:relation[index(&apos;version_relations&apos;)]"'/>
+														<xxf:show dialog="relation_dialog"/>
+														<xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?get=works')"/>
+														<xf:send submission="load-fileList"/>
+													</xf:action>
+												</xf:trigger>
+												<xf:trigger appearance="minimal">
+													<xf:label><h:span style="vertical-align:bottom;"><h:img src="/../editor/images/go_to_link.png" 
+														title="Go to linked resource"/></h:span></xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xxf:variable name="uri" 
+															select="concat(
+															instance('parameters')/dcm:orbeon_dir,
+															'?uri=',
+															instance('parameters')/dcm:form_home,
+															'edit-work-case.xml&amp;doc=',.)"/>
+														<xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+														<xxf:show dialog="leave-warning-dialog"></xxf:show>
+													</xf:action>
+												</xf:trigger>
+											</xf:group>
+										</h:td>
+										<h:td>
+											<xf:input ref="@label" class="long">
+												<xf:label> Label <h:a class="help">?<h:span class="comment">The text to be 
+													displayed as the link text (usually the title of the linked item)</h:span></h:a></xf:label>
+											</xf:input>
+										</h:td>
+										<h:td style="vertical-align:top; white-space:nowrap;">
+											<h:span class="editmenu">
+												<dcm:element-buttons 
+													triggers="up down add del-parent-with-last" 
+													nodeset="m:relation" 
+													index="version_relations"
+													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList/m:relation"/>
+												<dcm:attribute-editor ref="."/>
+											</h:span>
+										</h:td>
+									</h:tr>
+								</xf:repeat>
+							</h:table>
+						</h:fieldset>
 					
 					
 					<h:fieldset>                                                     
@@ -1095,7 +1137,7 @@
 		</xf:group>
 		
 	</h:div>
-	
+	<xi:include href="includes/relation-dialog.xml" parse="xml"/>
 	<xi:include href="includes/code-inspector.xml" parse="xml"/>
 	<h:br clear="all"/>
 	

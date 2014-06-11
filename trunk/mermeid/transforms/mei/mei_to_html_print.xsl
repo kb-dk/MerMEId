@@ -9,7 +9,6 @@
 	The Royal Library, Copenhagen
 	2010-2014	
 	
-	
 -->
 
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" 
@@ -27,28 +26,21 @@
 	
 	<xsl:output method="xml" encoding="UTF-8" 
 		cdata-section-elements="" 
-		omit-xml-declaration="yes"/>
+		omit-xml-declaration="yes" indent="no"/>
 	
-	<xsl:include href="mei_to_html_public.xsl"/>
+	<xsl:strip-space elements="*"/>
 	
 	
-	<!-- CREATE HTML DOCUMENT -->
-	<xsl:template match="/" xml:space="default">
-		<html xml:lang="en" lang="en">
-			<head>
-				<title><xsl:call-template name="page_title"/></title>
-				<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
-				<link rel="stylesheet" type="text/css" href="/editor/style/mei_to_html.css"/>
-			</head>
-			<body>
-				<div class="main">
-					<xsl:apply-templates/>
-				</div>
-			</body>
-		</html>
-	</xsl:template>
+	<xsl:include href="mei_to_html.xsl"/>
+	
 	
 	<!-- Exceptions/alterations -->
+	
+	<!-- show crosslinks as plain text -->
+	<xsl:template match="m:relation[@label!='']" mode="relation_link">
+		<p><xsl:value-of select="@label"/></p>
+	</xsl:template>	
+	
 	
 	<!-- omit colophon -->
 	<xsl:template match="*" mode="colophon"/>
@@ -58,9 +50,10 @@
 	
 	<!-- omit links -->
 	<xsl:template match="m:ptr"/>
-
-	<!-- omit pop-up expansions of abbreviations -->
-	<xsl:template match="m:expan"/>
+	
+	<!-- omit things not to print -->
+	<xsl:template match="*[contains(@class,'noprint')]"/>
+	
 	
 	<!-- show all folding sections -->
 	<xsl:template match="*" mode="fold_section">

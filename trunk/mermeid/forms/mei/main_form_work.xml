@@ -332,18 +332,25 @@
 								<h:td>
 									<h:span>This work </h:span>
 									<xi:include href="includes/relation_select.xml" parse="xml"/>
-									<xf:group ref="@target[normalize-space()='']">
+									<xf:group ref="@target">
+										<xf:input ref="." class="maxlong">
+											<xf:label>URI <h:a class="help">?<h:span class="comment">The location of the linked ressource (target). 
+												The target may be either an external file (such as "http://www.example.org/some_file.xml"), an internal 
+												reference to an element in the file you are editing (by XML ID, such as "#source_1"), or a combination
+												of both (like "http://www.example.org/some_file.xml#source_1"). <h:br/>
+												The target URI may be entered manually or selected using the "Select file" button.</h:span></h:a>
+											</xf:label>
+										</xf:input>
 										<xf:trigger>
 											<xf:label>Select file...</xf:label>
 											<xf:action ev:event="DOMActivate">
+												<xf:setvalue ref="instance('temp')/nodeset" 
+													value='"instance(&apos;data-instance&apos;)/m:meiHead/m:workDesc/m:work/m:relationList/m:relation[index(&apos;work_relations&apos;)]"'/>												
 												<xxf:show dialog="relation_dialog"/>
 												<xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?get=works')"/>
 												<xf:send submission="load-fileList"/>
 											</xf:action>
 										</xf:trigger>
-									</xf:group>
-									<xf:group ref="@target[normalize-space()]">
-										<xf:output value="."/>
 										<xf:trigger appearance="minimal">
 											<xf:label><h:span style="vertical-align:bottom;"><h:img src="/../editor/images/go_to_link.png" 
 												title="Go to linked resource"/></h:span></xf:label>
@@ -542,118 +549,7 @@
 			</h:table>
 		</h:div>
 	</xxf:dialog>	
-	
-	<xxf:dialog id="relation_dialog" appearance="full">
-		<xf:label>Select file to link to</xf:label>
-		<xf:select1 ref="instance('temp')/series" class="mediumshort">
-			<xf:label>Series:</xf:label>
-			<xf:action ev:event="DOMActivate xforms-value-changed">
-				<xf:setvalue ref="instance('temp')/page" value="1"/>
-				<xf:dispatch name="send-query" target="source_search"></xf:dispatch>
-			</xf:action>
-			<xf:item>
-				<xf:label>[ All ]</xf:label>
-				<xf:value/>
-			</xf:item>
-			<xf:itemset nodeset="instance('XMLfiles')/dcm:collections/dcm:collection">
-				<xf:label><xf:output value="."/></xf:label>
-				<xf:value><xf:output value="."/></xf:value>
-			</xf:itemset>
-		</xf:select1> &#160;&#160;&#160;&#160;
-		<xf:input ref="instance('temp')/query">
-			<xf:label>Keywords <h:a class="help">?<span class="comment search" 
-				style="width: 350px">
-				Narrow your search by adding keywords, e.g. part of the title.<h:br/>
-				Search is case insensitive. 
-				Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<br/>
-				<span class="help_table">
-					<span class="help_example">
-						<span class="help_label">carl or nielsen</span>
-						<span class="help_value">Boolean OR (default)</span>
-					</span>                        
-					<span class="help_example">
-						<span class="help_label">carl and nielsen</span>
-						<span class="help_value">Boolean AND</span>
-					</span>
-					<span class="help_example">
-						<span class="help_label">"carl nielsen"</span>
-						<span class="help_value">Exact phrase</span>
-					</span>
-					<span class="help_example">
-						<span class="help_label">niels*</span>
-						<span class="help_value">Match any number of characters. Finds Niels, Nielsen and Nielsson</span>
-					</span>
-					<span class="help_example">
-						<span class="help_label">niels?n</span>
-						<span class="help_value">Match 1 character. Finds Nielsen and Nielson, but not Nielsson</span>
-					</span>
-				</span>
-			</span></h:a>:
-			</xf:label>
-		</xf:input>
-		<xf:trigger id="source_search">
-			<xf:label>Search</xf:label>
-			<xf:action ev:event="DOMActivate">
-				<xf:setvalue ref="instance('temp')/page" value="1"/>
-			</xf:action>
-			<xf:action ev:event="DOMActivate send-query">
-				<xf:setvalue ref="instance('temp')/target_uri" 
-					value="concat(
-					instance('parameters')/dcm:server_name,
-					'storage/cross-link.xq?get=works&amp;query=',instance('temp')/query,
-					'&amp;subject=',instance('temp')/series,
-					'&amp;page=',instance('temp')/page)"/>
-				<xf:send submission="load-fileList"/>
-			</xf:action>
-		</xf:trigger>
-		<xxf:variable name="page" select="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
-		<xxf:variable name="max_page" select="floor(instance('XMLfiles')/opensearch:totalResults div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
-		<h:p>Found <xf:output value="instance('XMLfiles')/opensearch:totalResults"/> record(s).
-			<xf:group ref=".[$max_page &gt; 1]">
-				Displaying page <xf:output value="$page"/> of <xf:output value="$max_page"/>.
-			</xf:group>
-			<xf:trigger ref=".[$page &gt; 1]">
-				<xf:label>&lt;&lt;</xf:label>
-				<xf:action ev:event="DOMActivate">
-					<xf:setvalue ref="instance('temp')/page" 
-						value="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)"/>
-					<xf:dispatch name="send-query" target="source_search"></xf:dispatch>
-				</xf:action>
-			</xf:trigger>
-			<xf:trigger ref=".[$page &lt; $max_page]">
-				<xf:label>&gt;&gt;</xf:label>
-				<xf:action ev:event="DOMActivate">
-					<xf:setvalue ref="instance('temp')/page" 
-						value="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)+2"/>
-					<xf:dispatch name="send-query" target="source_search"></xf:dispatch>
-				</xf:action>
-			</xf:trigger>
-		</h:p>
-		<h:div class="file_ref_list">
-			<xf:repeat nodeset="instance('XMLfiles')/dcm:file" id="repeat-files">
-				<h:div>
-					<xf:trigger appearance="minimal" hint="Click to select this file and close">
-						<xf:label>
-							<xf:output value="concat(dcm:composer,': ',dcm:title)"/>
-						</xf:label>
-						<xf:action ev:event="DOMActivate">
-							<xf:setvalue ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:relationList/m:relation[index('work_relations')]/@target"
-								value="instance('XMLfiles')/dcm:file[index('repeat-files')]/dcm:link/@href"/>
-							<xf:action if="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:relationList/m:relation[index('work_relations')]/@label=''">
-								<xf:setvalue ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:relationList/m:relation[index('work_relations')]/@label"
-									value="instance('XMLfiles')/dcm:file[index('repeat-files')]/dcm:title"/>
-							</xf:action>
-							<xxf:hide dialog="relation_dialog"/>
-						</xf:action>
-					</xf:trigger>
-					<h:a class="help_plain"><h:img src="/../editor/images/id.png" style="margin-bottom: -2px;"/><h:span 
-						class="comment" style="margin-top:0px; margin-left:-10px">File: <xf:output value="dcm:link/@href"/><xf:output value="@ref"/></h:span></h:a>
-				</h:div>
-			</xf:repeat>
-		</h:div>
-	</xxf:dialog>
-	
-	
+		
 	<xxf:dialog id="leave-warning-dialog" appearance="full">
 		<!-- The requested URI must be stored in instance('temp')/target_uri prior to opening the dialog -->
 		<xf:label>Warning – Editing external file</xf:label>
@@ -680,6 +576,8 @@
 			</xf:action>
 		</xf:trigger>
 	</xxf:dialog>
+	
+	<xi:include href="includes/relation-dialog.xml" parse="xml"/>
 	
 </h:div>
 
