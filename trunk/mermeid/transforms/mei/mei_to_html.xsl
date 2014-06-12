@@ -262,13 +262,13 @@
 			m:workDesc/
 			m:work/
 			m:notesStmt">
-			<xsl:if test="m:annot[@type='general_description']">
+			<xsl:if test="m:annot[@type='general_description'][text()]">
 				<p>
 					<xsl:apply-templates select="m:annot[@type='general_description']"/>
 				</p>
 			</xsl:if>
 			<xsl:for-each select="m:annot[@type='links'][m:ptr[normalize-space(@target)]]">
-				<p>
+				<p class="noprint">
 					<xsl:for-each select="m:ptr[normalize-space(@target)]">
 						<xsl:apply-templates select="."/>
 					</xsl:for-each>

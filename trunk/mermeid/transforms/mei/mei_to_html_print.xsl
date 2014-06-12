@@ -51,6 +51,12 @@
 	<!-- omit links -->
 	<xsl:template match="m:ptr"/>
 	
+	<!-- omit pop-up information -->
+	<xsl:template match="m:bibl//m:title | m:identifier[@authority='RISM'] | m:instrVoice/text() | 
+		m:identifier/text() | m:identifier/@type">
+		<xsl:value-of select="."/>
+	</xsl:template>
+	
 	<!-- omit things not to print -->
 	<xsl:template match="*[contains(@class,'noprint')]"/>
 	
