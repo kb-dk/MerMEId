@@ -277,7 +277,7 @@
 		</xsl:for-each>
 
 		<!-- related files -->
-		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:relationList" mode="external"/>
+		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:relationList"/>
 
 		<!-- work history -->
 		<xsl:apply-templates
@@ -371,78 +371,149 @@
 	</xsl:template>
 	
 	
-	<xsl:template match="m:relationList" mode="external">
+	<!-- Relations -->
+	<xsl:template match="m:relationList" mode="link_without_label">
+		<xsl:if test="m:relation[@target!='']">
+			<p>
+				<xsl:for-each select="m:relation[@target!='']">
+					<img src="/editor/images/html_link.png" title="Link to external resource"/>
+					<xsl:element name="a">
+						<xsl:attribute name="href">
+							<xsl:apply-templates select="@target"/>
+						</xsl:attribute>
+						<xsl:apply-templates select="@label"/>
+						<xsl:if test="not(@label) or @label=''">
+							<xsl:value-of select="@target"/>
+						</xsl:if>
+					</xsl:element>
+					<xsl:if test="position()&lt;last()">, </xsl:if>
+				</xsl:for-each>
+			</p>
+		</xsl:if>
+	</xsl:template>		
+	
+	<xsl:template match="m:relationList">
 		<xsl:for-each select="m:relation[@target!='']">
 			<xsl:variable name="rel" select="@rel"/>
 			<xsl:if test="count(preceding-sibling::*[@rel=$rel])=0">
 				<!-- one <p> per relation type -->
-				<p>
-					<div class="p_heading">
+				<p class="relation_list">
+					<xsl:variable name="label">
 						<xsl:choose>
-							<xsl:when test="@rel='hasPart'">Contains:</xsl:when>
-							<xsl:when test="@rel='isPartOf'">Contained in:</xsl:when>
+							<xsl:when test="@rel='hasAbridgement'">Abridged version:</xsl:when>
+							<xsl:when test="@rel='isAbridgementOf'">Abridged version of:</xsl:when>
+							<xsl:when test="@rel='hasAdaptation'">Adaptation:</xsl:when>
+							<xsl:when test="@rel='isAdaptationOf'">Adaptation of:</xsl:when>
 							<xsl:when test="@rel='hasAlternate'">Alternate version:</xsl:when>
 							<xsl:when test="@rel='isAlternateOf'">Alternate version of:</xsl:when>
 							<xsl:when test="@rel='hasArrangement'">Arrangement:</xsl:when>
 							<xsl:when test="@rel='isArrangementOf'">Arrangement of:</xsl:when>
-							<xsl:when test="@rel='hasRevision'">Revised version:</xsl:when>
-							<xsl:when test="@rel='isRevisionOf'">Revised version of:</xsl:when>
+							<xsl:when test="@rel='hasComplement'">Complement:</xsl:when>
+							<xsl:when test="@rel='isComplementOf'">Complement to:</xsl:when>
+							<xsl:when test="@rel='hasEmbodiment'">Embodiment:</xsl:when>
+							<xsl:when test="@rel='isEmbodimentOf'">Embodiment of:</xsl:when>
+							<xsl:when test="@rel='hasExemplar'">Exemplar:</xsl:when>
+							<xsl:when test="@rel='isExemplarOf'">Exemplar of:</xsl:when>
 							<xsl:when test="@rel='hasImitation'">Imitation:</xsl:when>
 							<xsl:when test="@rel='isImitationOf'">Imitation of:</xsl:when>
+							<xsl:when test="@rel='hasPart'">Contains:</xsl:when>
+							<xsl:when test="@rel='isPartOf'">Contained in:</xsl:when>
+							<xsl:when test="@rel='hasRealization'">Realization:</xsl:when>
+							<xsl:when test="@rel='isRealizationOf'">Realization of:</xsl:when>
+							<xsl:when test="@rel='hasReconfiguration'">Reconfiguration:</xsl:when>
+							<xsl:when test="@rel='isReconfigurationOf'">Reconfiguration
+								of:</xsl:when>
+							<xsl:when test="@rel='hasReproduction'">Reproduction (edition or
+								facsimile):</xsl:when>
+							<xsl:when test="@rel='isReproductionOf'">Reproduction of:</xsl:when>
+							<xsl:when test="@rel='hasRevision'">Revised version:</xsl:when>
+							<xsl:when test="@rel='isRevisionOf'">Revised version of:</xsl:when>
+							<xsl:when test="@rel='hasSuccessor'">Succeeded by:</xsl:when>
+							<xsl:when test="@rel='isSuccessorOf'">Succeeds:</xsl:when>
+							<xsl:when test="@rel='hasSupplement'">Supplement:</xsl:when>
+							<xsl:when test="@rel='isSummarizationOf'">Summarizes:</xsl:when>
+							<xsl:when test="@rel='hasSummarization'">Summarization:</xsl:when>
+							<xsl:when test="@rel='isSupplementOf'">Supplement to:</xsl:when>
+							<xsl:when test="@rel='hasTransformation'">Transformation:</xsl:when>
+							<xsl:when test="@rel='isTransformationOf'">Transformation of:</xsl:when>
 							<xsl:when test="@rel='hasTranslation'">Translated version:</xsl:when>
 							<xsl:when test="@rel='isTranslationOf'">Translation of:</xsl:when>
-							<xsl:when test="@rel='hasAdaptation'">Adaptation:</xsl:when>
-							<xsl:when test="@rel='isAdaptationOf'">Adaptation of:</xsl:when>
-							<xsl:when test="@rel='hasAbridgement'">Abridged version:</xsl:when>
-							<xsl:when test="@rel='isAbridgementOf'">Abridged version of:</xsl:when>
 							<xsl:otherwise>
 								<xsl:value-of select="@rel"/>
 							</xsl:otherwise>
 						</xsl:choose>
-					</div>
-					<xsl:for-each select="../m:relation[@rel=$rel]">
-						<xsl:apply-templates select="." mode="relation_link"/>
-						<xsl:if test="position()!=last()">
-							<br/>
-						</xsl:if>
-					</xsl:for-each>
+					</xsl:variable>
+					<xsl:if test="$label!=''">
+						<div class="p_heading relation_list_label">
+							<xsl:value-of select="$label"/>
+						</div>
+					</xsl:if>
+					<xsl:if test="../m:relation[@rel=$rel]">
+						<div class="relations">
+							<xsl:for-each select="../m:relation[@rel=$rel]">
+								<xsl:apply-templates select="." mode="relation_link"/>
+								<xsl:if test="position()!=last()">
+									<br/>
+								</xsl:if>
+							</xsl:for-each>
+						</div>
+					</xsl:if>
 				</p>
 			</xsl:if>
 		</xsl:for-each>
 	</xsl:template>
 	
 	<xsl:template match="m:relation" mode="relation_link">
+		<!-- cross references between works in the catalogue are treated in a special way -->
+		<xsl:variable name="mermeid_crossref">
+			<xsl:choose>
+				<xsl:when test="contains(@target,'://') or contains(@target,'#')">false</xsl:when>
+				<xsl:otherwise>true</xsl:otherwise>
+			</xsl:choose>			
+		</xsl:variable>
 		<xsl:element name="a">
 			<xsl:attribute name="href">
-				<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
+				<xsl:choose>
+					<xsl:when test="$mermeid_crossref='true'">
+						<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
+					</xsl:when>
+					<xsl:otherwise><xsl:value-of select="@target"/></xsl:otherwise>
+				</xsl:choose>
 			</xsl:attribute>
 			<xsl:apply-templates select="@label"/>
 			<xsl:if test="not(@label) or @label=''">
 				<xsl:value-of select="@target"/>
 			</xsl:if>
 		</xsl:element>
-		<!-- get collection name and number from linked files -->
-		<xsl:variable name="fileName" select="concat('http://',$hostname,'/storage/dcm/',@target)"/>
-		<xsl:variable name="linkedDoc" select="document($fileName)" />		
-		<xsl:variable name="file_context" select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
-		<xsl:variable name="catalogue_no" select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
-		<xsl:variable name="output">
-			<xsl:value-of select="$file_context"/>
-			<xsl:text> </xsl:text>
-			<xsl:choose>
-				<xsl:when test="string-length($catalogue_no)&gt;11">
-					<xsl:variable name="part1" select="substring($catalogue_no, 1, 11)"/>
-					<xsl:variable name="part2" select="substring($catalogue_no, 12)"/>
-					<xsl:variable name="delimiter" select="substring(concat(translate($part2,'0123456789',''),' '),1,1)"/>
-					<xsl:value-of select="concat($part1,substring-before($part2,$delimiter),'...')"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="$catalogue_no"/>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:variable>
-		<xsl:if test="normalize-space($output)!=''">
-			<xsl:value-of select="concat(' (',$output,')')"/>			
+		<xsl:if test="$mermeid_crossref='true'">
+			<!-- get collection name and number from linked files -->
+			<xsl:variable name="fileName"
+				select="concat('http://',$hostname,'/storage/dcm/',@target)"/>
+			<xsl:variable name="linkedDoc" select="document($fileName)"/>
+			<xsl:variable name="file_context"
+				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
+			<xsl:variable name="catalogue_no"
+				select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
+			<xsl:variable name="output">
+				<xsl:value-of select="$file_context"/>
+				<xsl:text> </xsl:text>
+				<xsl:choose>
+					<xsl:when test="string-length($catalogue_no)&gt;11">
+						<xsl:variable name="part1" select="substring($catalogue_no, 1, 11)"/>
+						<xsl:variable name="part2" select="substring($catalogue_no, 12)"/>
+						<xsl:variable name="delimiter"
+							select="substring(concat(translate($part2,'0123456789',''),' '),1,1)"/>
+						<xsl:value-of
+							select="concat($part1,substring-before($part2,$delimiter),'...')"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="$catalogue_no"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:if test="normalize-space($catalogue_no)!=''">
+				<xsl:value-of select="concat(' (',$output,')')"/>
+			</xsl:if>
 		</xsl:if>
 	</xsl:template>
 
@@ -488,25 +559,8 @@
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
 		<xsl:apply-templates select="m:extent"/>
 		<xsl:apply-templates select="m:incip"/>		
-		<!-- external links -->
-		<xsl:for-each select="m:relationList[m:relation[@target!='']]">
-			<p>
-				<!--<xsl:text>Related resources: </xsl:text>-->
-				<xsl:for-each select="m:relation[@target!='']">
-					<img src="/editor/images/html_link.png" title="Link to external resource"/>
-					<xsl:element name="a">
-						<xsl:attribute name="href">
-							<xsl:apply-templates select="@target"/>
-						</xsl:attribute>
-						<xsl:apply-templates select="@label"/>
-						<xsl:if test="not(@label) or @label=''">
-							<xsl:value-of select="@target"/>
-						</xsl:if>
-					</xsl:element>
-					<xsl:if test="position()&lt;last()">, </xsl:if>
-				</xsl:for-each>
-			</p>
-		</xsl:for-each>		
+		<!-- external relation links -->
+		<xsl:apply-templates select="m:relationList[m:relation[@target!='']]"/>
 		<!-- version history -->
 		<xsl:apply-templates select="m:history[//text()]" mode="history"/>		
 		<!-- components (movements) -->
@@ -601,6 +655,7 @@
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
 		<xsl:apply-templates select="m:extent"/>
 		<xsl:apply-templates select="m:incip"/>
+		<xsl:apply-templates select="m:relationList[m:relation[@target!='']]"/>
 		<xsl:for-each select="m:notesStmt/m:annot[not(@type='links') and text()]">
 			<p><xsl:apply-templates/></p>
 		</xsl:for-each>
@@ -1082,12 +1137,6 @@
 			</xsl:if>
 		</xsl:if>
 		
-<!--		<xsl:for-each select="m:creation/m:date[text()]">
-			<xsl:if test="position()=1">
-				<p><span class="p_heading"> Composition: </span>
-					<xsl:apply-templates select="."/>. </p>
-			</xsl:if>
-		</xsl:for-each>-->
 		<xsl:for-each select="m:p[text()]">
 			<p>
 				<xsl:apply-templates/>

@@ -364,12 +364,20 @@
 								For instance, if this version is a revision of an earlier version it may be specified here
 								by selecting the "is revision of". <h:br/>
 								On the target of the relation, you may want to add a link pointing to this one and defining 
-								the relation as "has revision" to make the linking bidirectional.
+								the relation as "has revision" to make the linking bidirectional.<h:br/>
+								The relation can also point to an external ressource such as an edition or digitization. 
+								In that case select the "has reproduction" relation.
 							</h:span></h:a></h:legend>
 							<dcm:create 
 								nodeset="m:relationList"
 								label="Add relation"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList"/>
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:relationList"/>
+							<dcm:create ref="m:relationList" 
+								nodeset="m:relation"
+								label="Add relation"
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:relationList/m:relation"/>
+							
+							
 							<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
 								<xf:repeat nodeset="m:relationList/m:relation" id="version_relations">
 									<xxf:variable name="context_node" select="."/>
@@ -383,7 +391,11 @@
 														The target may be either an external file (such as "http://www.example.org/some_file.xml"), an internal 
 														reference to an element in the file you are editing (by XML ID, such as "#expression_1"), or a combination
 														of both (like "http://www.example.org/some_file.xml#expression_1"). <h:br/>
-														The target URI may be entered manually or selected using the "Select file" button.</h:span></h:a>
+														The target URI may be entered manually or selected using the "Select file" button.<h:br/>
+														Please note: in MerMEId's HTML preview, relative URIs are interpreted as being links to other 
+														MEI files to be displayed as MerMEId previews as well. To avoid this, make the URI absolute 
+														(i.e., starting with a protocol like "http://"). 
+													</h:span></h:a>
 													</xf:label>
 												</xf:input>
 												<xf:trigger>

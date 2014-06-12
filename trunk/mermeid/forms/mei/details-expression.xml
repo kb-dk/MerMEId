@@ -190,19 +190,31 @@
                     <h:div>                 
                         <dcm:create nodeset="m:tempo"
                             label="Add tempo"
-                            origin="instance('empty-instance')/m:meiHead/m:workDesc//m:tempo[1]"/>
+                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:tempo"/>
                         <xf:input ref="m:tempo" class="maxlong">
                             <xf:label class="fixed_width">Tempo</xf:label>
                         </xf:input>
+                        <xf:trigger appearance="minimal" ref="m:tempo">
+                            <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:delete nodeset="."/>
+                            </xf:action>
+                        </xf:trigger>
                         <dcm:attribute-editor ref="m:tempo"/>
                         <h:br clear="all"/>  
                         <xi:include href="includes/meter-input.xml" parse="xml"/>
                     </h:div>            
                     <dcm:create nodeset="m:key"
                         label="Add key"
-                        origin="instance('empty-instance')/m:meiHead/m:workDesc//m:key[1]"/>
+                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:key"/>
                     <xf:group ref="m:key">
                         <xi:include href="includes/key_select.xml" parse="xml"/>
+                        <xf:trigger appearance="minimal">
+                            <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:delete nodeset="."/>
+                            </xf:action>
+                        </xf:trigger>
                         <dcm:attribute-editor/>
                     </xf:group>
                     <h:br clear="all"/>
@@ -806,6 +818,8 @@
                             </h:div>
                         </xf:repeat>
                         </h:fieldset>-->
+                    
+                    
                     <!-- Relations -->
                     <h:fieldset>
                         <h:legend>Relations <h:a class="help">?<h:span class="comment">Relations between this component and 
@@ -813,12 +827,18 @@
                             For instance, if this component is an arrangement of another piece it may be specified here
                             by selecting the "is arrangement of". <h:br/>
                             On the target of the relation, you may want to add a link pointing to this one and defining 
-                            the relation as "has arrangement" to make the linking bidirectional.
+                            the relation as "has arrangement" to make the linking bidirectional.<h:br/>
+                            The relation can also point to an external ressource such as an edition or digitization. 
+                            In that case select the "has reproduction" relation.
                         </h:span></h:a></h:legend>
                         <dcm:create 
                             nodeset="m:relationList"
                             label="Add relation"
-                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList"/>
+                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:relationList"/>
+                        <dcm:create ref="m:relationList" 
+                            nodeset="m:relation"
+                            label="Add relation"
+                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:relationList/m:relation"/>                        
                         <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
                             <xf:repeat nodeset="m:relationList/m:relation" id="component_relations">
                                 <xxf:variable name="context_node" select="."/>
@@ -831,11 +851,14 @@
                                                 <xf:label>URI <h:a class="help">?<h:span class="comment">The location of the linked ressource (target). 
                                                     The target may be either an external file (such as "http://www.example.org/some_file.xml"), an internal 
                                                     reference to an element in the file you are editing (by XML ID, such as "#expression_1"), or a combination
-                                                    of both (like "http://www.example.org/some_file.xml#expression_1"). <!--<h:br/>
+                                                    of both (like "http://www.example.org/some_file.xml#expression_1").<h:br/>
+                                                    Please note: in MerMEId's HTML preview, relative URIs are interpreted as being links to other 
+                                                    MEI files to be displayed as MerMEId previews as well. To avoid this, make the URI absolute 
+                                                    (i.e., starting with a protocol like "http://"). <!--<h:br/>
                                                     The target URI may be entered manually or selected using the "Select file" button.--></h:span></h:a>
                                                 </xf:label>
                                             </xf:input>
-                                            <!-- the file browser does not work (yet) at this level -->
+                                            <!-- the file browser does not (yet) work at this level -->
                                             <!--                                            <xf:trigger>
                                                 <xf:label>Select file...</xf:label>
                                                 <xf:action ev:event="DOMActivate">

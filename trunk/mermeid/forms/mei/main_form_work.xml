@@ -320,7 +320,10 @@
 						defined in a different file, a link pointing to the external file may be defined here with the 
 						relation "is part of". <h:br/>
 						In the other file, conversely, a link pointing to this one and defining the relation as "has part"
-						may be defined.
+						may be defined.<h:br/>
+						Please note: in MerMEId's HTML preview, relative URIs are interpreted as being links to other 
+						MEI files to be displayed using the MerMEId preview as well. To avoid this, make the URI absolute 
+						(i.e., starting with a protocol like "http://").
 					</h:span></h:a></h:legend>
 					<dcm:create 
 						nodeset="m:relationList"
@@ -338,7 +341,10 @@
 												The target may be either an external file (such as "http://www.example.org/some_file.xml"), an internal 
 												reference to an element in the file you are editing (by XML ID, such as "#source_1"), or a combination
 												of both (like "http://www.example.org/some_file.xml#source_1"). <h:br/>
-												The target URI may be entered manually or selected using the "Select file" button.</h:span></h:a>
+												The target URI may be entered manually or selected using the "Select file" button.<h:br/>
+												Please note: in MerMEId's HTML preview, relative URIs are interpreted as being links to other 
+												MEI files to be displayed as MerMEId previews as well. To avoid this, make the URI absolute 
+												(i.e., starting with a protocol like "http://"). </h:span></h:a>
 											</xf:label>
 										</xf:input>
 										<xf:trigger>
