@@ -1189,9 +1189,10 @@
 					or not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)))]">
 					<xsl:sort select="m:classification/m:termList/m:term[@classcode='DcmContentClass']"/>
 					<xsl:sort select="m:classification/m:termList/m:term[@classcode='DcmPresentationClass']"/>
-					<xsl:sort select="string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmAuthorityClass'],';')))"/>
-					<xsl:sort select='string-length(substring-before($state_order,concat(";",translate(m:classification/m:termList/m:term[@classcode="DcmStateClass"],"&apos;",""),";")))'/>
-					<xsl:sort select="string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';')))"/>
+					<!-- adding 100 makes sure combinations of 1- and 2-digit numbers are sorted correctly -->
+					<xsl:sort select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmAuthorityClass'],';'))))"/>
+					<xsl:sort select='number(100 + string-length(substring-before($state_order,concat(";",translate(m:classification/m:termList/m:term[@classcode="DcmStateClass"],"&apos;",""),";"))))'/>
+					<xsl:sort select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';'))))"/>
 					<xsl:sort select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
 					<xsl:choose>
 						<xsl:when test="@target!=''">
