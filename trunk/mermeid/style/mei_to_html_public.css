@@ -127,13 +127,17 @@ ul {
     font-weight: bold;
 }
 
+.list_block {
+    display: table;
+}
+
 .relation_list {
     display: table-row;
 }
 
 .relation_list_label, .relations {
     display: table-cell;
-    padding-right: .5em;
+    padding: .5em .5em 0 0;
 }
 
 a.abbr {
