@@ -12,11 +12,16 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:m="http://www.music-encoding.org/ns/mei"
-	xmlns:dcm="http://www.kb.dk/dcm" xmlns:xl="http://www.w3.org/1999/xlink"
-	xmlns:foo="http://www.kb.dk/foo" xmlns:exsl="http://exslt.org/common"
-	xmlns:java="http://xml.apache.org/xalan/java" xmlns:zs="http://www.loc.gov/zing/srw/"
-	xmlns:marc="http://www.loc.gov/MARC21/slim" extension-element-prefixes="exsl java"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:m="http://www.music-encoding.org/ns/mei"
+	xmlns:dcm="http://www.kb.dk/dcm" 
+	xmlns:xl="http://www.w3.org/1999/xlink"
+	xmlns:foo="http://www.kb.dk/foo" 
+	xmlns:exsl="http://exslt.org/common"
+	xmlns:java="http://xml.apache.org/xalan/java" 
+	xmlns:zs="http://www.loc.gov/zing/srw/"
+	xmlns:marc="http://www.loc.gov/MARC21/slim" 
+	extension-element-prefixes="exsl java"
 	exclude-result-prefixes="m xsl exsl foo java">
 
 	<xsl:output method="xml" encoding="UTF-8" cdata-section-elements="" omit-xml-declaration="yes"
@@ -407,7 +412,7 @@
 	<xsl:template match="m:relationList">
 		<xsl:if test="m:relation[@target!='']">
 			<div class="list_block">
-				<xsl:for-each select="m:relation[@target!='']">
+				<xsl:for-each select="m:relation[@rel!='']">
 					<xsl:variable name="rel" select="@rel"/>
 					<xsl:if test="count(preceding-sibling::*[@rel=$rel])=0">
 						<!-- one <div> per relation type -->
@@ -490,6 +495,13 @@
 					</xsl:if>
 				</xsl:for-each>
 			</div>
+			<xsl:if test="m:relation[@rel='']">
+				<div>
+					<xsl:for-each select="m:relation[@rel='']">
+						<xsl:apply-templates select="." mode="relation_link"/>
+					</xsl:for-each>
+				</div>
+			</xsl:if>
 		</xsl:if>
 	</xsl:template>
 
@@ -624,17 +636,26 @@
 				select="/m:mei/m:meiHead/m:fileDesc/
 				m:sourceDesc[(normalize-space(*//text()) or m:source/@target!='') 
 				and m:source/m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
-
 				<xsl:apply-templates select="." mode="fold_section">
 					<xsl:with-param name="id"
 						select="concat('version_source',generate-id(.),$expression_id)"/>
 					<xsl:with-param name="heading">Sources</xsl:with-param>
 					<xsl:with-param name="content">
-						<!-- skip reproductions (=reprints) -->
-						<xsl:for-each
-							select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' 
-							and substring-after(@target,'#')=$expression_id] and 
-							not(m:relationList/m:relation[@rel='isReproductionOf'])]">
+						<!-- sort order lists must begin and end with a semicolon -->
+						<xsl:variable name="state_order"
+							select="';sketch;draft;fair copy;printers copy;first edition;later edition;'"/>
+						<xsl:variable name="scoring_order"
+							select="';score;score and parts;vocal score;piano score;choral score;short score;parts;'"/>
+						<xsl:variable name="authority_order"
+							select="';autograph;partly autograph;doubtful autograph;copy;'"/>
+						
+						<!-- collect all external source data first to create a complete list of sources -->
+						<xsl:variable name="sources">
+							<!-- skip reproductions (=reprints) - they are treated elsewhere -->
+							<xsl:for-each
+								select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' 
+								and substring-after(@target,'#')=$expression_id] and 
+								not(m:relationList/m:relation[@rel='isReproductionOf'])]">
 							<xsl:choose>
 								<xsl:when test="@target!=''">
 									<!-- get external source description -->
@@ -643,14 +664,33 @@
 									<xsl:variable name="doc_name"
 										select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
 									<xsl:variable name="doc" select="document($doc_name)"/>
-									<xsl:apply-templates
-										select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"
-									/>
+									<xsl:copy-of
+										select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
 								</xsl:when>
-								<xsl:when test="m:titleStmt/m:title/text()">
-									<xsl:apply-templates select="."/>
+								<xsl:when test="*//text()">
+									<xsl:copy-of select="."/>
 								</xsl:when>
 							</xsl:choose>
+							</xsl:for-each>
+						</xsl:variable>
+						<!-- make the source list a nodeset -->
+						<xsl:variable name="source_nodeset" select="exsl:node-set($sources)"/>
+						<xsl:for-each select="$source_nodeset/m:source">
+							<!-- process all sources, sorted according to classification -->
+							<xsl:sort
+								select="m:classification/m:termList/m:term[@classcode='DcmContentClass']"/>
+							<xsl:sort
+								select="m:classification/m:termList/m:term[@classcode='DcmPresentationClass']"/>
+							<!-- adding 100 ensures that combinations of 1- and 2-digit numbers are sorted correctly -->
+							<xsl:sort
+								select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmAuthorityClass'],';'))))"/>
+							<xsl:sort
+								select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
+							<xsl:sort
+								select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';'))))"/>
+							<xsl:sort
+								select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
+							<xsl:apply-templates select="."/>
 						</xsl:for-each>
 					</xsl:with-param>
 				</xsl:apply-templates>
@@ -1120,22 +1160,22 @@
 				<span class="p_heading relation_list_label">Roles: </span>
 			</xsl:if>
 			<span class="relations">
-			<xsl:for-each
-				select="m:castItem/m:role/m:name[count(@xml:lang[.=ancestor-or-self::m:castItem/preceding-sibling::*//@xml:lang])=0 or not(@xml:lang)]">
-				<!-- iterate over languages -->
-				<xsl:variable name="lang" select="@xml:lang"/>
-				<xsl:element name="span">
-					<xsl:call-template name="maybe_print_lang"/>
-					<xsl:apply-templates select="../../../../m:castList" mode="castlist">
-						<xsl:with-param name="lang" select="$lang"/>
-						<xsl:with-param name="full" select="$full"/>
-					</xsl:apply-templates>
-				</xsl:element>
-				<xsl:if test="position()&lt;last()">
-					<br/>
-				</xsl:if>
-			</xsl:for-each>
-				</span>
+				<xsl:for-each
+					select="m:castItem/m:role/m:name[count(@xml:lang[.=ancestor-or-self::m:castItem/preceding-sibling::*//@xml:lang])=0 or not(@xml:lang)]">
+					<!-- iterate over languages -->
+					<xsl:variable name="lang" select="@xml:lang"/>
+					<xsl:element name="span">
+						<xsl:call-template name="maybe_print_lang"/>
+						<xsl:apply-templates select="../../../../m:castList" mode="castlist">
+							<xsl:with-param name="lang" select="$lang"/>
+							<xsl:with-param name="full" select="$full"/>
+						</xsl:apply-templates>
+					</xsl:element>
+					<xsl:if test="position()&lt;last()">
+						<br/>
+					</xsl:if>
+				</xsl:for-each>
+			</span>
 		</div>
 	</xsl:template>
 
@@ -1259,17 +1299,40 @@
 					select="';score;score and parts;vocal score;piano score;choral score;short score;parts;'"/>
 				<xsl:variable name="authority_order"
 					select="';autograph;partly autograph;doubtful autograph;copy;'"/>
-				<!-- Skip reproductions (=reprints) here. -->
-				<!-- If listing global sources, list only those not referring to a specific version (if more than one) -->
-				<xsl:for-each
-					select="m:source[not(m:relationList/m:relation[@rel='isReproductionOf'])]
-					[$global!='true' or ($global='true' and (count(//m:work/m:expressionList/m:expression)&lt;2
-					or not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)))]">
+				<!-- collect all external source data first to create a complete list of sources -->
+				<xsl:variable name="sources">
+					<!-- skip reproductions (=reprints) - they are treated elsewhere. -->
+					<!-- If listing global sources, list only those not referring to a specific version (if more than one) -->
+					<xsl:for-each
+						select="m:source[not(m:relationList/m:relation[@rel='isReproductionOf'])]
+						[$global!='true' or ($global='true' and (count(//m:work/m:expressionList/m:expression)&lt;2
+						or not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)))]">
+						<xsl:choose>
+							<xsl:when test="@target!=''">
+								<!-- get external source description -->
+								<xsl:variable name="ext_id"
+									select="substring-after(@target,'#')"/>
+								<xsl:variable name="doc_name"
+									select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
+								<xsl:variable name="doc" select="document($doc_name)"/>
+								<xsl:copy-of
+									select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
+							</xsl:when>
+							<xsl:when test="*//text()">
+								<xsl:copy-of select="."/>
+							</xsl:when>
+						</xsl:choose>
+					</xsl:for-each>
+				</xsl:variable>
+				<!-- make the source list a nodeset -->
+				<xsl:variable name="source_nodeset" select="exsl:node-set($sources)"/>
+				<xsl:for-each select="$source_nodeset/m:source">
+					<!-- process all sources, sorted according to classification -->
 					<xsl:sort
 						select="m:classification/m:termList/m:term[@classcode='DcmContentClass']"/>
 					<xsl:sort
 						select="m:classification/m:termList/m:term[@classcode='DcmPresentationClass']"/>
-					<!-- adding 100 makes sure combinations of 1- and 2-digit numbers are sorted correctly -->
+					<!-- adding 100 ensures that combinations of 1- and 2-digit numbers are sorted correctly -->
 					<xsl:sort
 						select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmAuthorityClass'],';'))))"/>
 					<xsl:sort
@@ -1278,21 +1341,7 @@
 						select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';'))))"/>
 					<xsl:sort
 						select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
-					<xsl:choose>
-						<xsl:when test="@target!=''">
-							<!-- get external source description -->
-							<xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
-							<xsl:variable name="doc_name"
-								select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
-							<xsl:variable name="doc" select="document($doc_name)"/>
-							<xsl:apply-templates
-								select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"
-							/>
-						</xsl:when>
-						<xsl:when test="*//text()">
-							<xsl:apply-templates select="."/>
-						</xsl:when>
-					</xsl:choose>
+					<xsl:apply-templates select="."/>
 				</xsl:for-each>
 			</xsl:with-param>
 		</xsl:apply-templates>
