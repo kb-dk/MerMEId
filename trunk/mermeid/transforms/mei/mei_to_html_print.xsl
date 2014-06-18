@@ -37,9 +37,9 @@
 	<!-- Exceptions/alterations -->
 	
 	<!-- show crosslinks as plain text -->
-	<xsl:template match="m:relation[@label!='']" mode="relation_link">
+	<!--<xsl:template match="m:relation[@label!='']" mode="relation_link">
 		<p><xsl:value-of select="@label"/></p>
-	</xsl:template>	
+	</xsl:template>-->	
 	
 	
 	<!-- omit colophon -->

@@ -328,7 +328,7 @@
 		<!-- works with versions: draw separator before general bibliography -->
 		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
 			<xsl:if test="m:meiHead/m:workDesc/m:work/m:biblList[m:bibl/*[text()]]">
-				<hr/>
+				<hr class="noprint"/>
 			</xsl:if>
 		</xsl:if>
 
