@@ -494,14 +494,14 @@
 						</div>
 					</xsl:if>
 				</xsl:for-each>
+				<xsl:if test="m:relation[not(@rel) or @rel='']">
+					<div>
+						<xsl:for-each select="m:relation[not(@rel) or @rel='']">
+							<xsl:apply-templates select="." mode="relation_link"/>
+						</xsl:for-each>
+					</div>
+				</xsl:if>
 			</div>
-			<xsl:if test="m:relation[@rel='']">
-				<div>
-					<xsl:for-each select="m:relation[@rel='']">
-						<xsl:apply-templates select="." mode="relation_link"/>
-					</xsl:for-each>
-				</div>
-			</xsl:if>
 		</xsl:if>
 	</xsl:template>
 
@@ -517,9 +517,7 @@
 			<xsl:attribute name="href">
 				<xsl:choose>
 					<xsl:when test="$mermeid_crossref='true'">
-						<xsl:value-of
-							select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"
-						/>
+						<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:value-of select="@target"/>
@@ -1117,10 +1115,10 @@
 						</xsl:if>
 					</div>
 				</xsl:for-each>
-				<xsl:apply-templates select="m:castList[*//text()]">
-					<xsl:with-param name="full" select="$full"/>
-				</xsl:apply-templates>
 			</div>
+			<xsl:apply-templates select="m:castList[*//text()]">
+				<xsl:with-param name="full" select="$full"/>
+			</xsl:apply-templates>
 		</xsl:if>
 	</xsl:template>
 
@@ -1155,6 +1153,8 @@
 
 	<xsl:template match="m:castList">
 		<xsl:param name="full" select="true()"/>
+		<div class="perfmedium list_block">
+			
 		<div class="relation_list">
 			<xsl:if test="$full">
 				<span class="p_heading relation_list_label">Roles: </span>
@@ -1177,6 +1177,7 @@
 				</xsl:for-each>
 			</span>
 		</div>
+			</div>
 	</xsl:template>
 
 	<xsl:template match="m:castList" mode="castlist">
@@ -2487,7 +2488,7 @@
 	<xsl:template match="@type">
 		<xsl:value-of select="translate(.,'_',' ')"/>
 	</xsl:template>
-
+	
 	<!-- GENERAL TOOL TEMPLATES -->
 
 	<!-- output elements comma-separated -->

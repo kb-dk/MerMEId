@@ -23,8 +23,6 @@
 	extension-element-prefixes="exsl java" 
 	exclude-result-prefixes="m xsl exsl foo java">
 
-	<xsl:param name="script_path" select="'/storage/document.xq'"/>
-	
 	<xsl:output method="xml" encoding="UTF-8" 
 		cdata-section-elements="" 
 		omit-xml-declaration="yes"/>
@@ -79,21 +77,72 @@
 	</xsl:template>
 
 	<!-- SUB-TEMPLATES -->
-	
+
+	<!-- need to override this template in order to call the right xquery (document.xq instead of present.xq) -->
 	<xsl:template match="m:relation" mode="relation_link">
-	  <xsl:element name="a">
-	    <xsl:attribute name="href">
-	      <xsl:value-of select="concat('http://',
-				    $hostname,
-				    $script_path,'?doc=',@target)"/>
-	    </xsl:attribute>
-	    <xsl:apply-templates select="@label"/>
-	    <xsl:if test="not(@label) or @label=''">
-	      <xsl:value-of select="@target"/>
-	    </xsl:if>
-	  </xsl:element>
-	</xsl:template>	
+		<!-- In public viewing, we need to know the collection directory name -->
+		<xsl:variable name="coll_dir">
+			<xsl:call-template name="lowercase">
+				<xsl:with-param name="str" select="$file_context"/>
+			</xsl:call-template>
+		</xsl:variable>
+		<!-- cross references between works in the catalogue are treated in a special way -->
+		<xsl:variable name="mermeid_crossref">
+			<xsl:choose>
+				<xsl:when test="contains(@target,'://') or contains(@target,'#')">false</xsl:when>
+				<xsl:otherwise>true</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:element name="a">
+			<xsl:attribute name="href">
+				<xsl:choose>
+					<xsl:when test="$mermeid_crossref='true'">
+						<!-- This line is different -->
+						<xsl:value-of select="concat('http://',$hostname,'/storage/',$coll_dir,'/document.xq?doc=',@target)"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="@target"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:attribute>
+			<xsl:apply-templates select="@label"/>
+			<xsl:if test="not(@label) or @label=''">
+				<xsl:value-of select="@target"/>
+			</xsl:if>
+		</xsl:element>
+		<xsl:if test="$mermeid_crossref='true'">
+			<!-- get collection name and number from linked files -->
+			<xsl:variable name="fileName"
+				select="concat('http://',$hostname,'/storage/',$coll_dir,'/data/',@target)"/>
+			<xsl:variable name="linkedDoc" select="document($fileName)"/>
+			<xsl:variable name="file_context"
+				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
+			<xsl:variable name="catalogue_no"
+				select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
+			<xsl:variable name="output">
+				<xsl:value-of select="$file_context"/>
+				<xsl:text> </xsl:text>
+				<xsl:choose>
+					<xsl:when test="string-length($catalogue_no)&gt;11">
+						<xsl:variable name="part1" select="substring($catalogue_no, 1, 11)"/>
+						<xsl:variable name="part2" select="substring($catalogue_no, 12)"/>
+						<xsl:variable name="delimiter"
+							select="substring(concat(translate($part2,'0123456789',''),' '),1,1)"/>
+						<xsl:value-of
+							select="concat($part1,substring-before($part2,$delimiter),'...')"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="$catalogue_no"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:if test="normalize-space($catalogue_no)!=''">
+				<xsl:value-of select="concat(' (',$output,')')"/>
+			</xsl:if>
+		</xsl:if>
+	</xsl:template>
 	
+
 	
 	<!-- Only show last revision instead of full colophon -->
 	<xsl:template match="*" mode="colophon">
