@@ -33,7 +33,6 @@
 	
 	<xsl:include href="mei_to_html.xsl"/>
 	
-	
 	<!-- Exceptions/alterations -->
 	
 	<!-- show crosslinks as plain text -->
@@ -45,11 +44,17 @@
 	<!-- omit colophon -->
 	<xsl:template match="*" mode="colophon"/>
 	
-	<!-- omit metre (as it is shown in the incipits) -->
+	<!-- omit music details shown in the incipits -->
 	<xsl:template match="m:meter"/>
+	<xsl:template match="m:tempo"/>
+	<xsl:template match="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
+	<xsl:template match="m:incipText"/>
 	
 	<!-- omit links -->
 	<xsl:template match="m:ptr"/>
+
+	<!-- omit bibliography -->
+	<xsl:template match="m:work/m:biblList"/>
 	
 	<!-- omit pop-up information -->
 	<xsl:template match="m:bibl//m:title | m:identifier[@authority='RISM'] | m:instrVoice/text() | 
@@ -57,11 +62,11 @@
 		<xsl:value-of select="."/>
 	</xsl:template>
 	
-	<!-- omit things not to print -->
+	<!-- omit all things not intended for print -->
 	<xsl:template match="*[contains(@class,'noprint')]"/>
 	
 	
-	<!-- show all folding sections -->
+	<!-- expand all folding sections -->
 	<xsl:template match="*" mode="fold_section">
 		<xsl:param name="heading"/>
 		<xsl:param name="id"/>
@@ -73,6 +78,20 @@
 		<div class="folded_content">
 			<xsl:copy-of select="$content"/>
 		</div>
+	</xsl:template>
+	
+	<!-- Filter away all links to reproductions such as CNU -->
+	<xsl:template match="m:work/m:relationList | m:expression/m:relationList">
+		<xsl:variable name="relationList">
+			<relationList xmlns="http://www.music-encoding.org/ns/mei">
+				<xsl:for-each select="m:relation[@rel!='hasReproduction']">
+					<xsl:copy-of select="."/>
+				</xsl:for-each>
+			</relationList>
+		</xsl:variable>
+		<!-- make the list a nodeset -->
+		<xsl:variable name="relationList_nodeset" select="exsl:node-set($relationList)"/>
+		<xsl:apply-templates select="$relationList_nodeset/m:relationList" mode="relation_list"/>
 	</xsl:template>
 	
 </xsl:stylesheet>

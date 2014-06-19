@@ -408,8 +408,14 @@
 			</p>
 		</xsl:if>
 	</xsl:template>
-
+	
 	<xsl:template match="m:relationList">
+		<xsl:apply-templates select="." mode="relation_list"/>
+		<!-- this detour is necessary to make it possible to override default behaviour in 
+			style sheets including this one (e.g., the print style sheet) -->
+	</xsl:template>
+
+	<xsl:template match="m:relationList" mode="relation_list">
 		<xsl:if test="m:relation[@target!='']">
 			<div class="list_block">
 				<xsl:for-each select="m:relation[@rel!='']">
@@ -566,7 +572,7 @@
 		<!-- top-level expression (versions and one-movement work details) -->
 		<!-- show title/tempo/number as heading only if more than one version -->
 		<xsl:if test="count(../m:expression)&gt;1">
-			<p>&#160;</p>
+			<!--<p>&#160;</p>-->
 			<xsl:variable name="title">
 				<xsl:apply-templates select="m:titleStmt">
 					<xsl:with-param name="tempo">
@@ -834,6 +840,7 @@
 				<xsl:apply-templates select="."/>
 			</p>
 		</xsl:for-each>
+		<xsl:apply-templates select="m:incipText[//text()]"/>
 		<xsl:if test="normalize-space(m:graphic[@targettype='lowres']/@target)!=''">
 			<p>
 				<xsl:choose>
@@ -872,15 +879,17 @@
 			</p>
 		</xsl:if>
 		<xsl:apply-templates select="m:score"/>
-		<xsl:variable name="text_incipit">
-			<xsl:value-of select="m:incipText"/>
-		</xsl:variable>
-		<xsl:if test="normalize-space($text_incipit)">
+	</xsl:template>
+
+	<xsl:template match="m:incip/m:score"/>
+	
+	<xsl:template match="m:incipText">
+		<xsl:if test="m:p/text()">
 			<div class="list_block">
 				<div class="relation_list">
 					<span class="p_heading relation_list_label">Text incipit: </span>
 					<span class="relations">
-						<xsl:for-each select="m:incipText/m:p[text()]">
+						<xsl:for-each select="m:p[text()]">
 							<xsl:element name="span">
 								<xsl:call-template name="maybe_print_lang"/>
 								<xsl:apply-templates/>
@@ -894,8 +903,6 @@
 			</div>
 		</xsl:if>
 	</xsl:template>
-
-	<xsl:template match="m:incip/m:score"/>
 
 	<xsl:template match="m:meter">
 		<xsl:if test="position() = 1">
