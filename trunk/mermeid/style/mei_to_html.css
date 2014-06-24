@@ -345,13 +345,13 @@ table.source_component_list td.label_cell {
 /* Embedded fonts */
 /* Unicode music symbols font */
 @font-face {
-	font-family: 'Euterpe';
-	src: url('fonts/Euterpe.eot');
-	src: local('Euterpe Regular'), local('Euterpe'),
-	       url('fonts/Euterpe.eot?#iefix') format('embedded-opentype'),
-	       url('fonts/Euterpe.ttf') format('truetype'), 
-	       url('fonts/Euterpe.woff') format('woff'), 
-	       url('fonts/Euterpe.svg#Euterpe') format('svg');
+	font-family: 'Bravura Text';
+	src: url('fonts/BravuraText.eot');
+	src: local('Bravura Text'), 
+	       url('fonts/BravuraText.eot?#iefix') format('embedded-opentype'),
+	       url('fonts/BravuraText.ttf') format('truetype'), 
+	       url('fonts/BravuraText.woff') format('woff'), 
+	       url('fonts/BravuraText.svg#BravuraText') format('svg');
 } 
 
 /* Runic font */
@@ -382,14 +382,15 @@ table.source_component_list td.label_cell {
 }
 
 .music_symbols {
-    font-family: Euterpe, "Arial Unicode MS", sans-serif, serif;
-    font-size: 2em;
-    line-height: .5em;
+    font-family: "Bravura Text", "Arial Unicode MS", sans-serif, serif;
+    /*line-height: .5em;*/
+    font-size: 1.2em;
 }
 
 .time_signature {
     position:relative;
-    top: .2em;
+    top: -.18em;
+    font-size: 2em;
 }
 
 /* css for help pop-ups */

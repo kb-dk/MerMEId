@@ -52,6 +52,10 @@ table.unicode_table p {
     font-family: arial, helvetica, sans-serif;
 }
 
+table.unicode_table p.code {
+    margin-top: 1em;
+}
+
 table.music_symbols td {
     font-size: 2em;
     line-height: .8em;
@@ -165,13 +169,13 @@ div.manual_header a img {
 /* Embedded fonts */
 /* Unicode music symbols font */
 @font-face {
-	font-family: 'Euterpe';
-	src: url('fonts/Euterpe.eot');
-	src: local('Euterpe Regular'), local('Euterpe'),
-	       url('fonts/Euterpe.eot?#iefix') format('embedded-opentype'),
-	       url('fonts/Euterpe.ttf') format('truetype'), 
-	       url('fonts/Euterpe.woff') format('woff'), 
-	       url('fonts/Euterpe.svg#Euterpe') format('svg');
+	font-family: 'Bravura Text';
+	src: url('fonts/BravuraText.eot');
+	src: local('Bravura Text'), 
+	       url('fonts/BravuraText.eot?#iefix') format('embedded-opentype'),
+	       url('fonts/BravuraText.ttf') format('truetype'), 
+	       url('fonts/BravuraText.woff') format('woff'), 
+	       url('fonts/BravuraText.svg#BravuraText') format('svg');
 } 
 
 /* Runic font */
@@ -191,7 +195,7 @@ div.manual_header a img {
 }
 
 .music_symbols {
-    font-family: Euterpe, "Arial Unicode MS", sans-serif, serif;
+    font-family: "Bravura Text", "Arial Unicode MS", sans-serif, serif;
 }
 
 .music_symbols td p {
