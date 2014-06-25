@@ -454,9 +454,13 @@
 									<xsl:when test="@rel='hasReconfiguration'"
 										>Reconfiguration:</xsl:when>
 									<xsl:when test="@rel='isReconfigurationOf'">Reconfiguration
-										of:</xsl:when>
-									<xsl:when test="@rel='hasReproduction'">Reproduction (edition or
-										facsimile):</xsl:when>
+									of:</xsl:when>
+									<xsl:when test="@rel='hasReproduction'">
+										<xsl:choose>
+											<xsl:when test="contains(@label,'Edition')">Edition:</xsl:when>
+											<xsl:otherwise>Reproduction (edition or facsimile):</xsl:otherwise>
+										</xsl:choose>
+									</xsl:when>
 									<xsl:when test="@rel='isReproductionOf'">Reproduction
 										of:</xsl:when>
 									<xsl:when test="@rel='hasRevision'">Revised version:</xsl:when>
