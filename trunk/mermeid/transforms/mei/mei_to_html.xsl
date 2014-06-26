@@ -60,7 +60,7 @@
 				<xsl:call-template name="make_html_head"/>
 			</head>
 			<body>
-				<div class="main">
+				<div class="main" id="main_content">
 					<xsl:call-template name="make_html_body"/>
 				</div>
 			</body>

@@ -33,47 +33,58 @@
 
 	<!-- MAIN TEMPLATE -->
 	<xsl:template match="m:mei" xml:space="default">
-		  <div class="content_box">
-		    <div id="backlink" class="noprint">
-		      <a href="javascript:history.back();">Back</a>
-		    </div>
-		  	
-		  	<!-- main identification -->
-		  	<xsl:variable name="file_context">
-		  		<xsl:value-of select="m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
-		  	</xsl:variable>
-		  	
-		  	<xsl:variable name="catalogue_no">
-		  		<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
-		  	</xsl:variable>
-		  	
-		  	<div class="info_bar {$file_context}">
-		  		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]/text()">
-		  			<span class="list_id">
-		  				<xsl:value-of select="$file_context"/>
-		  				<xsl:text> </xsl:text>
-		  				<xsl:choose>
-		  					<xsl:when test="string-length($catalogue_no)&gt;11">
-		  						<xsl:variable name="part1" select="substring($catalogue_no, 1, 11)"/>
-		  						<xsl:variable name="part2" select="substring($catalogue_no, 12)"/>
-		  						<xsl:variable name="delimiter" select="substring(concat(translate($part2,'0123456789',''),' '),1,1)"/>
-		  						<xsl:value-of select="concat($part1,substring-before($part2,$delimiter),'...')"/>
-		  					</xsl:when>
-		  					<xsl:otherwise>
-		  						<xsl:value-of select="$catalogue_no"/>
-		  					</xsl:otherwise>
-		  				</xsl:choose>
-		  			</span>
-		  		</xsl:if>
-		  		<span class="tools noprint">
-		  			<a href="/storage/{translate($file_context,'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ','abcdefghijklmnopqrstuvwxyzæøå')}/download_xml.xq?doc={$doc}" title="Get this record as XML (MEI)" 
-		  				target="_blank"><img src="/editor/images/xml.gif" alt="XML" border="0"/></a>
-		  		</span>
-		  	</div>
-		  	
-		  	<xsl:call-template name="body_main_content"/>
-		  	
-		  </div>
+		<div class="content_box">
+			<div id="main_content">
+				<div id="backlink" class="noprint">
+					<a href="javascript:history.back();">Back</a>
+				</div>
+
+				<!-- main identification -->
+				<xsl:variable name="file_context">
+					<xsl:value-of
+						select="m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"
+					/>
+				</xsl:variable>
+
+				<xsl:variable name="catalogue_no">
+					<xsl:value-of
+						select="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
+				</xsl:variable>
+
+				<div class="info_bar {$file_context}">
+					<xsl:if
+						test="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]/text()">
+						<span class="list_id">
+							<xsl:value-of select="$file_context"/>
+							<xsl:text> </xsl:text>
+							<xsl:choose>
+								<xsl:when test="string-length($catalogue_no)&gt;11">
+									<xsl:variable name="part1"
+										select="substring($catalogue_no, 1, 11)"/>
+									<xsl:variable name="part2" select="substring($catalogue_no, 12)"/>
+									<xsl:variable name="delimiter"
+										select="substring(concat(translate($part2,'0123456789',''),' '),1,1)"/>
+									<xsl:value-of
+										select="concat($part1,substring-before($part2,$delimiter),'...')"
+									/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$catalogue_no"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</span>
+					</xsl:if>
+					<span class="tools noprint">
+						<a href="./download_xml.xq?doc={$doc}" title="Get this record as XML (MEI)"
+							target="_blank">
+							<img src="/editor/images/xml.gif" alt="XML" border="0"/>
+						</a>
+					</span>
+				</div>
+
+				<xsl:call-template name="body_main_content"/>
+			</div>
+		</div>
 	</xsl:template>
 
 	<!-- SUB-TEMPLATES -->
@@ -142,7 +153,12 @@
 		</xsl:if>
 	</xsl:template>
 	
-
+	<!-- omit music details shown in the incipits -->
+	<xsl:template match="m:meter"/>
+	<xsl:template match="m:tempo"/>
+	<xsl:template match="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
+	<xsl:template match="m:incipText"/>
+	
 	
 	<!-- Only show last revision instead of full colophon -->
 	<xsl:template match="*" mode="colophon">
