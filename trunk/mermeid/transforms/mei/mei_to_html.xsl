@@ -417,11 +417,11 @@
 
 	<xsl:template match="m:relationList" mode="relation_list">
 		<xsl:if test="m:relation[@target!='']">
-			<div class="list_block">
-				<xsl:for-each select="m:relation[@rel!='']">
-					<xsl:variable name="rel" select="@rel"/>
-					<xsl:if test="count(preceding-sibling::*[@rel=$rel])=0">
-						<!-- one <div> per relation type -->
+			<xsl:for-each select="m:relation[@rel!='']">
+				<xsl:variable name="rel" select="@rel"/>
+				<xsl:if test="count(preceding-sibling::*[@rel=$rel])=0">
+					<!-- one <div> per relation type -->
+					<div class="list_block">
 						<div class="relation_list">
 							<xsl:variable name="label">
 								<xsl:choose>
@@ -454,11 +454,13 @@
 									<xsl:when test="@rel='hasReconfiguration'"
 										>Reconfiguration:</xsl:when>
 									<xsl:when test="@rel='isReconfigurationOf'">Reconfiguration
-									of:</xsl:when>
+										of:</xsl:when>
 									<xsl:when test="@rel='hasReproduction'">
 										<xsl:choose>
-											<xsl:when test="contains(@label,'Edition')">Edition:</xsl:when>
-											<xsl:otherwise>Reproduction (edition or facsimile):</xsl:otherwise>
+											<xsl:when test="contains(@label,'Edition')"
+												>Edition:</xsl:when>
+											<xsl:otherwise>Reproduction (edition or
+												facsimile):</xsl:otherwise>
 										</xsl:choose>
 									</xsl:when>
 									<xsl:when test="@rel='isReproductionOf'">Reproduction
@@ -502,16 +504,16 @@
 								</div>
 							</xsl:if>
 						</div>
-					</xsl:if>
-				</xsl:for-each>
-				<xsl:if test="m:relation[not(@rel) or @rel='']">
-					<div>
-						<xsl:for-each select="m:relation[not(@rel) or @rel='']">
-							<xsl:apply-templates select="." mode="relation_link"/>
-						</xsl:for-each>
 					</div>
 				</xsl:if>
-			</div>
+			</xsl:for-each>
+			<xsl:if test="m:relation[not(@rel) or @rel='']">
+				<div>
+					<xsl:for-each select="m:relation[not(@rel) or @rel='']">
+						<xsl:apply-templates select="." mode="relation_link"/>
+					</xsl:for-each>
+				</div>
+			</xsl:if>
 		</xsl:if>
 	</xsl:template>
 
@@ -2578,9 +2580,49 @@
 
 
 
-	<!-- change date format from YYYY-MM-DD to D.M.YYYY -->
+	<!-- change date format from YYYY-MM-DD to D Month YYYY -->
 	<!-- "??"-wildcards (e.g. "20??-09-??") are treated like numbers -->
 	<xsl:template match="m:date">
+		<xsl:variable name="date" select="normalize-space(.)"/>
+		<xsl:choose>
+			<xsl:when test="string-length($date)=10">
+				<xsl:variable name="year" select="substring($date,1,4)"/>
+				<xsl:variable name="month" select="substring($date,6,2)"/>
+				<xsl:variable name="day" select="substring($date,9,2)"/>
+				<xsl:choose>
+					<!-- check if date format is YYYY-MM-DD; if so, display as D.M.YYYY -->
+					<xsl:when
+						test="(string(number($year))!='NaN' or string($year)='????' or (string(number(substring($year,1,2)))!='NaN' and substring($year,3,2)='??')) 
+						and (string(number($month))!='NaN' or string($month)='??') and (string(number($day))!='NaN' or string($day)='??') and substring($date,5,1)='-' and substring($date,8,1)='-'">
+						<xsl:choose>
+							<xsl:when test="substring($day,1,1)='0'">
+								<xsl:value-of select="substring($day,2,1)"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$day"/>
+							</xsl:otherwise>
+						</xsl:choose>
+						<xsl:text> </xsl:text>
+						<xsl:call-template name="month">
+							<xsl:with-param name="monthstring" select="($month)"/>
+						</xsl:call-template>
+						<xsl:text> </xsl:text>
+						<xsl:value-of select="$year"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:apply-templates/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$date"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<!-- change date format from YYYY-MM-DD to D.M.YYYY -->
+	<!-- "??"-wildcards (e.g. "20??-09-??") are treated like numbers -->
+	<xsl:template match="m:date" mode="DMYYYY">
 		<xsl:variable name="date" select="normalize-space(.)"/>
 		<xsl:choose>
 			<xsl:when test="string-length($date)=10">
@@ -2618,7 +2660,26 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-
+	
+	<xsl:template name="month">
+		<xsl:param name="monthstring"/>
+		<xsl:variable name="number" select="number($monthstring)"/>
+		<xsl:choose>
+			<xsl:when test="$number=1">Jan.</xsl:when>
+			<xsl:when test="$number=2">Feb.</xsl:when>
+			<xsl:when test="$number=3">Mar.</xsl:when>
+			<xsl:when test="$number=4">Apr.</xsl:when>
+			<xsl:when test="$number=5">May</xsl:when>
+			<xsl:when test="$number=6">June</xsl:when>
+			<xsl:when test="$number=7">July</xsl:when>
+			<xsl:when test="$number=8">Aug.</xsl:when>
+			<xsl:when test="$number=9">Sept.</xsl:when>
+			<xsl:when test="$number=10">Oct.</xsl:when>
+			<xsl:when test="$number=11">Nov.</xsl:when>
+			<xsl:when test="$number=12">Dec.</xsl:when>
+			<xsl:otherwise><xsl:value-of select="$monthstring"/></xsl:otherwise>
+		</xsl:choose>		
+	</xsl:template>
 
 	<xsl:template name="maybe_print_lang">
 		<xsl:variable name="lang" select="@xml:lang"/>
