@@ -186,15 +186,20 @@
     &lt;/span&gt;
     </xsl:template>
   -->
-  <xsl:template match="m:ref[@target]" mode="mei2html">&lt;a 
-    href="<xsl:value-of select="@target"/>" 
-    target="<xsl:value-of select="@xl:show"/>" 
-    title="<xsl:value-of select="@xl:title"/>"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/a&gt;</xsl:template>
+  <xsl:template match="m:ref[@target]" mode="mei2html">
+    <xsl:text>&lt;a href="</xsl:text><xsl:value-of select="@target"/><xsl:text>" </xsl:text>
+    <xsl:text>target="</xsl:text><xsl:value-of select="@xl:show"/><xsl:text>" </xsl:text>
+    <xsl:text>title="</xsl:text><xsl:value-of
+    select="@xl:title"/><xsl:text>"&gt;</xsl:text>
+    <xsl:apply-templates mode="mei2html"/>&lt;/a&gt;
+  </xsl:template>
+
   <xsl:template match="m:rend[@halign]" mode="mei2html">&lt;div style="text-align:<xsl:value-of select="@halign"/>;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/div&gt;</xsl:template>
   <xsl:template match="m:list" mode="mei2html"><xsl:choose>
     <xsl:when test="@form = 'simple'">&lt;ul&gt;<xsl:for-each select="m:li">&lt;li&gt;<xsl:apply-templates mode="mei2html"/>&lt;/li&gt;</xsl:for-each>&lt;/ul&gt;</xsl:when>
     <xsl:when test="@form = 'ordered'">&lt;ol&gt;<xsl:for-each select="m:li">&lt;li&gt;<xsl:apply-templates mode="mei2html"/>&lt;/li&gt;</xsl:for-each>&lt;/ol&gt;</xsl:when>
   </xsl:choose></xsl:template>
+
   <xsl:template match="m:fig[m:graphic]" mode="mei2html">&lt;img 
     src="<xsl:value-of select="m:graphic/@target"/>" 
     alt="<xsl:value-of select="m:graphic/@xl:title"/>"
