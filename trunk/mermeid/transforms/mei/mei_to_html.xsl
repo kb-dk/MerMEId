@@ -1315,10 +1315,9 @@
 					select="';autograph;partly autograph;doubtful autograph;copy;'"/>
 				<!-- collect all external source data first to create a complete list of sources -->
 				<xsl:variable name="sources">
-					<!-- skip reproductions (=reprints) - they are treated elsewhere. -->
 					<!-- If listing global sources, list only those not referring to a specific version (if more than one) -->
 					<xsl:for-each
-						select="m:source[not(m:relationList/m:relation[@rel='isReproductionOf'])]
+						select="m:source
 						[$global!='true' or ($global='true' and (count(//m:work/m:expressionList/m:expression)&lt;2
 						or not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)))]">
 						<xsl:choose>
@@ -1350,9 +1349,9 @@
 					<xsl:sort
 						select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmAuthorityClass'],';'))))"/>
 					<xsl:sort
-						select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
-					<xsl:sort
 						select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';'))))"/>
+					<xsl:sort
+						select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
 					<xsl:sort
 						select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
 					<xsl:apply-templates select="."/>
@@ -1624,7 +1623,7 @@
 			<xsl:for-each select="m:classification/m:termList[m:term[text()]]">
 				<div class="classification">
 					<xsl:variable name="sort_order"
-						select="'DcmContentClass,DcmPresentationClass,DcmAuthorityClass,DcmStateClass,DcmScoringClass,DcmCompletenessClass'"/>
+						select="'DcmContentClass,DcmPresentationClass,DcmAuthorityClass,DcmScoringClass,DcmStateClass,DcmCompletenessClass'"/>
 					<xsl:for-each select="m:term[text()]">
 						<xsl:sort select="string-length(substring-before($sort_order,@classcode))"/>
 						<xsl:if test="position()=1"> [Classification: </xsl:if>
@@ -1734,10 +1733,9 @@
 					<xsl:apply-templates select="m:componentGrp"/>
 				</xsl:otherwise>
 			</xsl:choose>
-
 			<!-- list reproductions (reprints) -->
 			<xsl:for-each
-				select="/*//m:source[m:relationList/m:relation[@rel='isReproductionOf'
+				select="../*[m:relationList/m:relation[@rel='isReproductionOf'
 					and substring-after(@target,'#')=$source_id]]">
 				<xsl:if test="position()=1">
 					<xsl:if test="not(m:titleStmt/m:title/text())">
@@ -2226,17 +2224,29 @@
 						<xsl:text> </xsl:text>
 					</xsl:if>
 				</xsl:if>
+				<xsl:apply-templates select="m:physLoc[*//text()]"/>
 				<xsl:if test="m:creation/m:date//text()">
-					<xsl:apply-templates select="m:creation/m:date"/>
+					<xsl:apply-templates select="m:creation/m:date"/>.
 				</xsl:if>
 			</xsl:when>
 
 			<xsl:when test="contains(m:genre,'concert') and contains(m:genre,'program')">
 				<xsl:if test="m:title//text()">
-					<em><xsl:apply-templates select="m:title"/></em> (concert programme)</xsl:if>
-				<xsl:apply-templates select="m:imprint">
-					<xsl:with-param name="append_to_text">true</xsl:with-param>
-				</xsl:apply-templates>
+					<em><xsl:apply-templates select="m:title"/></em><xsl:if test="not(contains('.!?',substring(m:title,string-length(m:title),1)))">.</xsl:if></xsl:if>
+				<xsl:apply-templates select="m:annot">
+					<xsl:with-param name="compact" select="'true'"/>
+				</xsl:apply-templates><xsl:if test="m:imprint//text()">. </xsl:if>
+				<xsl:for-each select="m:imprint[*//text()]">
+					<xsl:if test="m:publisher/text()">
+						<xsl:apply-templates select="m:publisher"/><xsl:if test="m:pubPlace//text() or m:date//text()">, </xsl:if></xsl:if>
+					<xsl:value-of select="m:pubPlace"/>
+					<xsl:if test="m:date/text()">
+						<xsl:text> </xsl:text>
+						<xsl:apply-templates select="m:date[text()]"/>
+					</xsl:if>.
+				</xsl:for-each>
+				<xsl:call-template name="hosts"/>
+				<xsl:apply-templates select="m:ptr"/>
 			</xsl:when>
 
 			<xsl:otherwise>
@@ -2255,7 +2265,7 @@
 		</xsl:choose>
 
 		<!-- links to full text (exception: letters and diary entries handled elsewhere) -->
-		<xsl:if test="not(m:genre='diary entry' or m:genre='letter')">
+		<xsl:if test="not(m:genre='diary entry' or m:genre='letter' or (contains(m:genre,'concert') and contains(m:genre,'program')))">
 			<xsl:apply-templates select="m:annot">
 				<xsl:with-param name="compact" select="'true'"/>
 			</xsl:apply-templates>
@@ -2590,19 +2600,21 @@
 				<xsl:variable name="month" select="substring($date,6,2)"/>
 				<xsl:variable name="day" select="substring($date,9,2)"/>
 				<xsl:choose>
-					<!-- check if date format is YYYY-MM-DD; if so, display as D.M.YYYY -->
+					<!-- check if date format is YYYY-MM-DD; if so, display as D Month YYY -->
 					<xsl:when
 						test="(string(number($year))!='NaN' or string($year)='????' or (string(number(substring($year,1,2)))!='NaN' and substring($year,3,2)='??')) 
 						and (string(number($month))!='NaN' or string($month)='??') and (string(number($day))!='NaN' or string($day)='??') and substring($date,5,1)='-' and substring($date,8,1)='-'">
 						<xsl:choose>
+							<xsl:when test="$day='??'"><!-- just skip "??" days --></xsl:when>
 							<xsl:when test="substring($day,1,1)='0'">
 								<xsl:value-of select="substring($day,2,1)"/>
+								<xsl:text> </xsl:text>
 							</xsl:when>
 							<xsl:otherwise>
 								<xsl:value-of select="$day"/>
+								<xsl:text> </xsl:text>
 							</xsl:otherwise>
 						</xsl:choose>
-						<xsl:text> </xsl:text>
 						<xsl:call-template name="month">
 							<xsl:with-param name="monthstring" select="($month)"/>
 						</xsl:call-template>
