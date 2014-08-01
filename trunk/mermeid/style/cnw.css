@@ -70,15 +70,6 @@ body.text #main h3 a
     cursor: default;
 }
 
-a.work_number_reference:link, a.work_number_reference:active, a.work_number_reference:visited, a.work_number_reference:hover {
-    text-decoration:none;
-    color: #444;
-}
-
-a.work_number_reference:hover {
-    color: #000;
-}
-
 body.text #main h2 {
     margin-top: .5em;
 }
@@ -87,13 +78,29 @@ body.text #main h3 {
     margin-top: .5em;
 }
 
+body.text #main ul
+{
+    list-style-type: none;
+    padding-left: 0;
+}
+
+body.text #main ul ul
+{
+    padding: 0 0 0 2em;
+}
+
 body.text #main li {
     margin-top: .5em;
 }
 
 body.text #toc li {
-    margin-top: 0;
+    margin: 1em 0 0 0;
 }
+
+body.text #toc ul li {
+    margin: 0;
+}
+
 
 body.text #colophon {
     display: table;
@@ -106,6 +113,16 @@ body.text #colophon p {
 body.text #colophon p span{
     display: table-cell;
     padding: 5px 10px 0 0;
+}
+
+a.work_number_reference:link, a.work_number_reference:active, a.work_number_reference:visited, a.work_number_reference:hover {
+    text-decoration:none;
+    color: #444;
+    white-space: nowrap;
+}
+
+a.work_number_reference:hover {
+    color: #000;
 }
 
 .alternative_language,
