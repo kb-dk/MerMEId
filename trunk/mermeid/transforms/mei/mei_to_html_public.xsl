@@ -159,7 +159,6 @@
 	<xsl:template match="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
 	<xsl:template match="m:incipText"/>
 	
-	
 	<!-- Only show last revision instead of full colophon -->
 	<xsl:template match="*" mode="colophon">
 		<div class="colophon">

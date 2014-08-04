@@ -612,9 +612,7 @@
 		<!-- meter, key, incipit – only relevant at this level in single movement works -->
 		<xsl:apply-templates select="m:tempo[text()]"/>
 		<xsl:if test="m:meter[normalize-space(concat(@count,@unit,@sym))]">
-			<p>
 				<xsl:apply-templates select="m:meter"/>
-			</p>
 		</xsl:if>
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
 		<xsl:apply-templates select="m:extent"/>
@@ -743,9 +741,7 @@
 			mode="subLevel"/>
 		<xsl:apply-templates select="m:tempo[text()]"/>
 		<xsl:if test="m:meter[normalize-space(concat(@count,@unit,@sym))]">
-			<p>
 				<xsl:apply-templates select="m:meter"/>
-			</p>
 		</xsl:if>
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
 		<xsl:apply-templates select="m:extent"/>
@@ -2999,9 +2995,7 @@
 				<xsl:variable name="expan"
 					select="$abbreviations_file/m:p/m:choice/m:expan[../m:abbr=$abbr]"/>
 				<xsl:apply-templates select="exsl:node-set(substring-before($string,$abbr))"/>
-				<a href="javascript:void(0);" class="abbr">
-					<xsl:value-of select="$abbr"/>
-					<span class="expan">
+				<a href="javascript:void(0);" class="abbr"><xsl:value-of select="$abbr"/><span class="expan">
 						<xsl:choose>
 							<!-- if the expansion is a nodeset, a <bibl> element for example, process it -->
 							<xsl:when test="$expan/*">
@@ -3012,8 +3006,7 @@
 								<xsl:value-of select="$expan"/>
 							</xsl:otherwise>
 						</xsl:choose>
-					</span>
-				</a>
+					</span></a>
 				<xsl:apply-templates select="exsl:node-set(substring-after($string,$abbr))"/>
 			</xsl:when>
 			<xsl:otherwise>
