@@ -2046,8 +2046,8 @@
 							<xsl:apply-templates select="current()" mode="volumes_pages"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:if test="normalize-space(m:biblScope[@unit='page'])">, p.
-									<xsl:value-of select="m:biblScope[@unit='page']"/>
+							<xsl:if test="normalize-space(m:biblScope[@unit='page'])">, 
+								<xsl:apply-templates select="m:biblScope[@unit='page']" mode="pp"/>
 							</xsl:if>
 						</xsl:otherwise>
 					</xsl:choose>
@@ -2106,8 +2106,8 @@
 								><xsl:text> </xsl:text><xsl:value-of
 								select="normalize-space(m:imprint/m:date)"/></xsl:if>
 					</xsl:if>
-					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">, p. <xsl:value-of
-							select="normalize-space(m:biblScope[@unit='page'])"/>
+					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">, 
+						<xsl:apply-templates select="m:biblScope[@unit='page']" mode="pp"/>
 					</xsl:if>. </xsl:if>
 			</xsl:when>
 
@@ -2119,10 +2119,7 @@
 						<xsl:if test="m:author/text()">
 							<xsl:call-template name="list_authors"/>
 						</xsl:if> '<xsl:apply-templates select="m:title[@level='a']/text()"
-							/>'<xsl:if test="m:title[@level='j']/text()"><xsl:choose>
-								<xsl:when test="m:genre='journal'">, in: </xsl:when>
-								<xsl:otherwise>. </xsl:otherwise>
-							</xsl:choose></xsl:if>
+							/>'<xsl:if test="m:title[@level='j']/text()">. </xsl:if>
 					</xsl:if>
 					<xsl:if test="m:title[@level='j']/text()">
 						<em><xsl:apply-templates select="m:title[@level='j']"/></em>
@@ -2133,8 +2130,8 @@
 							select="normalize-space(m:biblScope[@unit='issue'])"/></xsl:if>
 					<xsl:if test="normalize-space(m:imprint/m:date)!=''"> (<xsl:apply-templates
 							select="m:imprint/m:date"/>)</xsl:if>
-					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">, p. <xsl:value-of
-							select="m:biblScope[@unit='page']"/></xsl:if>.<xsl:text> </xsl:text>
+					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">, 
+						<xsl:apply-templates select="m:biblScope[@unit='page']" mode="pp"/></xsl:if>.<xsl:text> </xsl:text>
 				</xsl:if>
 			</xsl:when>
 
@@ -2255,8 +2252,9 @@
 					<xsl:apply-templates select="m:imprint"/>
 				<xsl:if test="m:creation/m:date//text()">
 					<xsl:apply-templates select="m:creation/m:date"/></xsl:if>
-				<xsl:if test="m:biblScope[@unit='page']//text()">, p. <xsl:value-of
-						select="normalize-space(m:biblScope[@unit='page'])"/></xsl:if>.*
+				<!-- unrecognized reference types are marked with an asterisk -->
+				<xsl:if test="m:biblScope[@unit='page']//text()">, 
+					<xsl:apply-templates select="m:biblScope[@unit='page']" mode="pp"/></xsl:if>.*
 			</xsl:otherwise>
 		</xsl:choose>
 
@@ -2368,9 +2366,9 @@
 					<xsl:if test="position()&gt;1">; </xsl:if> Vol. <xsl:value-of select="."/>
 					<xsl:if test="../m:biblScope[@unit='issue'][position()]/text()">/<xsl:value-of
 							select="../m:biblScope[@unit='issue'][position()]"/></xsl:if>
-					<xsl:if test="../m:biblScope[@unit='page'][position()]/text()">, p.
-							<xsl:value-of select="../m:biblScope[@unit='page'][position()]"
-						/></xsl:if>
+					<xsl:if test="../m:biblScope[@unit='page'][position()]/text()">, 
+						<xsl:apply-templates select="../m:biblScope[@unit='page'][position()]" mode="pp"/>
+					</xsl:if>
 				</xsl:for-each>
 			</xsl:when>
 			<xsl:otherwise>
@@ -2381,9 +2379,9 @@
 						<xsl:for-each select="m:biblScope[@unit='issue' and text()]">
 							<xsl:if test="position()&gt;1">; </xsl:if>
 							<xsl:value-of select="."/>
-							<xsl:if test="../m:biblScope[@unit='page'][position()]/text()">, p.
-									<xsl:value-of select="../m:biblScope[@unit='page'][position()]"
-								/></xsl:if>
+							<xsl:if test="../m:biblScope[@unit='page'][position()]/text()">, 
+								<xsl:apply-templates select="../m:biblScope[@unit='page'][position()]" mode="pp"/>
+							</xsl:if>
 						</xsl:for-each>
 					</xsl:when>
 					<xsl:otherwise>
@@ -2412,6 +2410,15 @@
 			<xsl:text> </xsl:text>
 			<xsl:value-of select="."/>
 		</xsl:for-each>
+	</xsl:template>
+	
+	<xsl:template match="m:biblScope[@unit='page' and text()]" mode="pp">
+		<xsl:choose>
+			<xsl:when test="contains(.,',') or contains(.,'-') or contains(.,'–')">pp.</xsl:when>
+			<xsl:otherwise>p.</xsl:otherwise>
+		</xsl:choose>
+		<xsl:text> </xsl:text>
+		<xsl:value-of select="."/>
 	</xsl:template>
 
 	<!-- display external link -->
