@@ -2033,7 +2033,7 @@
 					<i><xsl:apply-templates select="m:title[@level='m']"/></i>
 					<xsl:if test="m:title[@level='s']/text()"> (= <xsl:apply-templates
 							select="m:title[@level='s']"/>
-						<xsl:if test="m:biblScope[@unit='vol']/text()">, Vol. <xsl:apply-templates
+						<xsl:if test="m:biblScope[@unit='vol']/text()">, vol. <xsl:apply-templates
 								select="m:biblScope[@unit='vol']"/>
 						</xsl:if> )</xsl:if>
 					<xsl:apply-templates select="m:imprint">
@@ -2068,12 +2068,11 @@
 							<xsl:choose>
 								<xsl:when test="m:title[@level='s']/text()">(= <xsl:apply-templates
 										select="m:title[@level='s']/text()"/>
-									<xsl:if test="m:biblScope[@unit='vol']/text()">, Vol.
-											<xsl:value-of select="m:biblScope[@unit='vol']/text()"/>
+									<xsl:if test="m:biblScope[@unit='vol']/text()">, vol. <xsl:value-of select="m:biblScope[@unit='vol']/text()"/>
 									</xsl:if>) </xsl:when>
 								<xsl:otherwise>
 									<xsl:if test="m:biblScope[@unit='vol']/text()">,
-											Vol.<xsl:value-of
+											vol. <xsl:value-of
 											select="normalize-space(m:biblScope[@unit='vol'])"
 										/></xsl:if>
 								</xsl:otherwise>
@@ -2085,7 +2084,7 @@
 										<xsl:apply-templates
 										select="normalize-space(m:title[@level='s'])"/>
 									<xsl:if test="normalize-space(m:biblScope[@unit='vol'])!=''">,
-											Vol.<xsl:value-of
+											vol. <xsl:value-of
 											select="normalize-space(m:biblScope[@unit='vol'])"
 										/></xsl:if>
 								</xsl:when>
@@ -2241,7 +2240,7 @@
 				<xsl:if test="m:title//text()">
 					<em><xsl:apply-templates select="m:title"/></em>
 				</xsl:if>
-				<xsl:if test="m:biblScope[@unit='vol']//text()">, Vol.<xsl:value-of
+				<xsl:if test="m:biblScope[@unit='vol']//text()">, vol. <xsl:value-of
 						select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>.
 					<xsl:apply-templates select="m:imprint"/>
 				<xsl:if test="m:creation/m:date//text()">
@@ -2357,7 +2356,7 @@
 		<xsl:choose>
 			<xsl:when test="$number_of_volumes &gt; 0">: <xsl:for-each
 					select="m:biblScope[@unit='vol' and text()]">
-					<xsl:if test="position()&gt;1">; </xsl:if> Vol. <xsl:value-of select="."/>
+					<xsl:if test="position()&gt;1">; </xsl:if> vol. <xsl:value-of select="."/>
 					<xsl:if test="../m:biblScope[@unit='issue'][position()]/text()">/<xsl:value-of
 							select="../m:biblScope[@unit='issue'][position()]"/></xsl:if>
 					<xsl:if test="../m:biblScope[@unit='page'][position()]/text()">, 
