@@ -2030,9 +2030,7 @@
 							<xsl:call-template name="list_editors"/>
 						</xsl:otherwise>
 					</xsl:choose>
-					<em>
-						<xsl:apply-templates select="m:title[@level='m']"/>
-					</em>
+					<i><xsl:apply-templates select="m:title[@level='m']"/></i>
 					<xsl:if test="m:title[@level='s']/text()"> (= <xsl:apply-templates
 							select="m:title[@level='s']"/>
 						<xsl:if test="m:biblScope[@unit='vol']/text()">, Vol. <xsl:apply-templates
@@ -2060,15 +2058,13 @@
 					<xsl:if test="m:author/text()">
 						<xsl:call-template name="list_authors"/>
 					</xsl:if>
-					<em>
-						<xsl:apply-templates select="m:title[@level='a']"/>
-					</em>
+					'<xsl:apply-templates select="m:title[@level='a']"/>'
 					<xsl:choose>
 						<xsl:when test="m:title[@level='m']/text()">, in: <xsl:if
 								test="m:editor/text()">
 								<xsl:call-template name="list_editors"/>
 							</xsl:if>
-							<xsl:value-of select="m:title[@level='m']/text()"/>
+							<i><xsl:value-of select="m:title[@level='m']/text()"/></i>
 							<xsl:choose>
 								<xsl:when test="m:title[@level='s']/text()">(= <xsl:apply-templates
 										select="m:title[@level='s']/text()"/>
@@ -2122,7 +2118,7 @@
 							/>'<xsl:if test="m:title[@level='j']/text()">. </xsl:if>
 					</xsl:if>
 					<xsl:if test="m:title[@level='j']/text()">
-						<em><xsl:apply-templates select="m:title[@level='j']"/></em>
+						<i><xsl:apply-templates select="m:title[@level='j']"/></i>
 					</xsl:if>
 					<xsl:if test="normalize-space(m:biblScope[@unit='vol'])!=''">, <xsl:value-of
 							select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if><xsl:if
@@ -2140,9 +2136,7 @@
 				<xsl:if test="normalize-space(m:title)">
 					<xsl:if test="normalize-space(m:author)!=''"><xsl:apply-templates
 							select="m:author"/>: </xsl:if>
-					<em>
-						<xsl:value-of select="m:title"/>
-					</em>
+					<i><xsl:value-of select="m:title"/></i>
 					<xsl:if
 						test="normalize-space(concat(m:biblScope[normalize-space()], m:imprint/m:publisher, m:imprint/m:pubPlace))"
 						>. </xsl:if>
@@ -2209,7 +2203,7 @@
 			<xsl:when test="m:genre='manuscript'">
 				<xsl:if test="m:author//text()"><xsl:apply-templates select="m:author"/>: </xsl:if>
 				<xsl:if test="m:title//text()">
-					<em><xsl:apply-templates select="m:title"/>. </em>
+					<i><xsl:apply-templates select="m:title"/>. </i>
 				</xsl:if>
 				<xsl:if test="m:creation/m:geogName//text()">
 					<xsl:apply-templates select="m:creation/m:geogName"/>
@@ -2386,9 +2380,9 @@
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:for-each select="m:biblScope[contains(@unit,'page') and text()]">
-							<xsl:if test="position()=1">, p. </xsl:if>
+							<xsl:if test="position()=1">, </xsl:if>
 							<xsl:if test="position()&gt;1">; </xsl:if>
-							<xsl:value-of select="."/>
+							<xsl:apply-templates select="." mode="pp"/>
 						</xsl:for-each>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -2414,7 +2408,7 @@
 	
 	<xsl:template match="m:biblScope[@unit='page' and text()]" mode="pp">
 		<xsl:choose>
-			<xsl:when test="contains(.,',') or contains(.,'-') or contains(.,'–')">pp.</xsl:when>
+			<xsl:when test="translate(.,' 0123456789','')!=''">pp.</xsl:when>
 			<xsl:otherwise>p.</xsl:otherwise>
 		</xsl:choose>
 		<xsl:text> </xsl:text>
