@@ -1105,7 +1105,7 @@
 	<!-- perfMedium templates -->
 	<xsl:template match="m:perfMedium">
 		<xsl:param name="full" select="true()"/>
-		<xsl:if test="m:instrumentation[*] or m:castList[*//text()]">
+		<xsl:if test="m:instrumentation[*]">
 			<div class="perfmedium list_block">
 				<xsl:for-each select="m:instrumentation[*]">
 					<div class="relation_list">
@@ -1335,7 +1335,9 @@
 				</xsl:variable>
 				<!-- make the source list a nodeset -->
 				<xsl:variable name="source_nodeset" select="exsl:node-set($sources)"/>
-				<xsl:for-each select="$source_nodeset/m:source">
+				<!-- loop through the selected sources; sort them; and skip reproductions at this point -->
+				<xsl:for-each select="$source_nodeset/m:source
+					[not(m:relationList/m:relation[@rel='isReproductionOf']/@target)]">
 					<!-- process all sources, sorted according to classification -->
 					<xsl:sort
 						select="m:classification/m:termList/m:term[@classcode='DcmContentClass']"/>
@@ -1704,7 +1706,7 @@
 					<xsl:text> </xsl:text>
 					<xsl:choose>
 						<!-- some CNW-specific styling here -->
-						<xsl:when test="@type='CNU_Source' or @type='CNU Source'">
+						<xsl:when test="contains(@type,'CNU_Source') or contains(@type,'CNU Source')">
 							<b><xsl:apply-templates select="."/></b>. </xsl:when>
 						<xsl:otherwise>
 							<xsl:apply-templates select="."/>. </xsl:otherwise>
@@ -1731,7 +1733,7 @@
 			</xsl:choose>
 			<!-- list reproductions (reprints) -->
 			<xsl:for-each
-				select="../*[m:relationList/m:relation[@rel='isReproductionOf'
+				select="../m:source[m:relationList/m:relation[@rel='isReproductionOf'
 					and substring-after(@target,'#')=$source_id]]">
 				<xsl:if test="position()=1">
 					<xsl:if test="not(m:titleStmt/m:title/text())">
@@ -2298,7 +2300,7 @@
 		<xsl:value-of select="m:pubPlace"/>
 		<xsl:if test="m:date/text()">
 			<xsl:text> </xsl:text>
-			<xsl:apply-templates select="m:date[text()]"/>
+			<xsl:apply-templates select="m:date"/>
 			<xsl:if test="not($append_to_text='true')">.</xsl:if>
 		</xsl:if>
 	</xsl:template>
