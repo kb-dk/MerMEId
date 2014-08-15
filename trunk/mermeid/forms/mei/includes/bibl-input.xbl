@@ -103,9 +103,9 @@
                         </xf:group>
                         
                         
+                        <!-- newspaper article date and author here ?
                         <xf:group ref=".[m:genre='newspaper' or m:genre='interview']">
                             <xf:group ref="m:imprint/m:date">
-                                <!-- newspaper article date here -->
                                 <h:fieldset>
                                     <h:legend>Date</h:legend>
                                     <dcm:date-editor ref=".">
@@ -113,7 +113,6 @@
                                     </dcm:date-editor>
                                 </h:fieldset>
                             </xf:group>
-                            <!-- newspaper article / interview author here -->
                             <h:fieldset>
                                 <h:legend>Authors</h:legend>
                                 <xf:repeat nodeset="m:author" id="repeat-bibl-newspaper-author">
@@ -130,7 +129,7 @@
                                     </h:div>
                                 </xf:repeat>
                             </h:fieldset>
-                        </xf:group>
+                        </xf:group>-->
                         
                         <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript') and count(m:genre[contains(.,'program')])=0]">
                             
@@ -198,10 +197,11 @@
                         </xf:group>
                         
                         <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript')]">
-                            <xf:group ref="m:imprint[not(../m:genre='newspaper')]">
-                                <!-- publication date etc. listed elsewhere if newspaper article -->
                                 <h:fieldset>
                                     <h:legend>Publication</h:legend>
+                                    <dcm:create nodeset="m:imprint" label="Add publication data"
+                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:publisher][1]/m:imprint"/>
+                                    <xf:group ref="m:imprint">
                                     <h:div>
                                         <dcm:create nodeset="m:publisher" label="Add publisher"
                                             origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:publisher][1]/m:imprint/m:publisher"/>
@@ -219,14 +219,14 @@
                                         <dcm:attribute-editor ref="m:pubPlace"/>
                                     </h:div>
                                     <h:div>
-                                        <dcm:create nodeset="m:date" label="Add place"
+                                        <dcm:create nodeset="m:date" label="Add date"
                                             origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:date][1]/m:imprint/m:date"/>
                                         <dcm:date-editor ref="m:date">
                                             <xf:label class="fixed_width">Date </xf:label>
                                         </dcm:date-editor>
                                     </h:div>
+                                    </xf:group>
                                 </h:fieldset>
-                            </xf:group>
                         </xf:group>
                         
                         <xf:group ref=".[m:genre='letter' or m:genre='diary entry' or m:genre='manuscript']">

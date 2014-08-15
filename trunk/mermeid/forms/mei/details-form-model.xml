@@ -158,7 +158,33 @@
         <!-- to do: combine movement numbers, titles, or tempos to identify components -->
         <xf:setvalue ref="instance('temp')/path" 
             value="string-join(instance('data-instance')//m:expression[descendant-or-self::m:expression/@xml:id=instance('temp')/id]//m:title,'/')"/>
+
+        <!-- automatically add change entry in revisionDesc -->
+        <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc/m:change)=0">
+            <xf:insert context="instance('data-instance')/m:meiHead/m:revisionDesc" 
+                nodeset="m:change" 
+                origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
+        </xf:action>
+        <xxf:variable name="last_revision" 
+            select="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]"/>
+        <xxf:variable name="today" select="substring-before(now(), 'T')"/>
+        <xf:action if="$last_revision/@isodate!=$today or ($last_revision/@isodate=$today and ($last_revision/m:changeDesc/m:p/text() or $last_revision/@resp!=''))">
+            <xf:action if="$last_revision/@isodate!=''">
+                <xf:insert nodeset="instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
+                    position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
+                <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
+                    value="$today"/>
+            </xf:action>
+            <xf:action if="$last_revision/@isodate=''">
+                <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
+                    value="$today"/>
+            </xf:action>
+        </xf:action>
+        <!-- end revisionDesc entry -->
+        
     </xf:action>
+    
+       
     
     <xf:action ev:event="xforms-submit-done">
         <!-- set instance state to unchanged on saving -->
