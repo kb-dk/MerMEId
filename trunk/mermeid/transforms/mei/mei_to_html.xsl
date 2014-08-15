@@ -2095,23 +2095,25 @@
 					</xsl:choose>
 					<xsl:if
 						test="normalize-space(concat(m:imprint/m:publisher,m:imprint/m:pubPlace,m:imprint/m:date))!=''"
-						>. <xsl:if test="normalize-space(m:imprint/m:publisher)!=''">
-							<xsl:value-of select="normalize-space(m:imprint/m:publisher)"/>, </xsl:if>
+						> (<xsl:if test="normalize-space(m:imprint/m:publisher)!=''">
+							<xsl:value-of select="normalize-space(m:imprint/m:publisher)"/>: </xsl:if>
 						<xsl:if test="normalize-space(m:imprint/m:pubPlace)!=''">
 							<xsl:value-of select="normalize-space(m:imprint/m:pubPlace)"/></xsl:if>
 						<xsl:if test="normalize-space(m:imprint/m:date)!=''"
 								><xsl:text> </xsl:text><xsl:value-of
 								select="normalize-space(m:imprint/m:date)"/></xsl:if>
+						<xsl:text>)</xsl:text>
 					</xsl:if>
-					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">, 
+					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">
+						<xsl:text>, </xsl:text> 
 						<xsl:apply-templates select="m:biblScope[@unit='page']" mode="pp"/>
 					</xsl:if>. </xsl:if>
 			</xsl:when>
 
 			<xsl:when
 				test="(m:genre='journal' or m:genre='newspaper') and (m:genre='article' or m:genre='interview')">
-				<!-- show entry only if a title or journal/newspaper name is stated -->
-				<xsl:if test="m:title[@level='a']/text()|m:title[@level='j']/text()">
+				<!-- show entry only if some type of title is stated -->
+				<xsl:if test="m:title/text()">
 					<xsl:if test="normalize-space(m:title[@level='a'])!=''">
 						<xsl:if test="m:author/text()">
 							<xsl:call-template name="list_authors"/>
@@ -2128,7 +2130,17 @@
 					<xsl:if test="normalize-space(m:imprint/m:date)!=''"> (<xsl:apply-templates
 							select="m:imprint/m:date"/>)</xsl:if>
 					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">, 
-						<xsl:apply-templates select="m:biblScope[@unit='page']" mode="pp"/></xsl:if>.<xsl:text> </xsl:text>
+						<xsl:apply-templates select="m:biblScope[@unit='page']" mode="pp"/></xsl:if>
+					<!-- if the author is given, but no article title, put the author last -->
+					<xsl:if test="not(normalize-space(m:title[@level='a'])!='') and m:author/text()">
+						<xsl:text> [</xsl:text>
+						<xsl:for-each select="m:author">
+							<xsl:if test="position()&gt;1"><xsl:text>, </xsl:text></xsl:if>
+							<xsl:apply-templates select="."/>
+						</xsl:for-each>
+						<xsl:text>]</xsl:text>
+					</xsl:if>
+					<xsl:text>. </xsl:text>
 				</xsl:if>
 			</xsl:when>
 
@@ -2296,7 +2308,7 @@
 		<xsl:param name="append_to_text"/>
 		<xsl:if test="$append_to_text='true' and ../m:title/text()">. </xsl:if>
 		<xsl:if test="m:publisher/text()">
-			<xsl:apply-templates select="m:publisher"/>, </xsl:if>
+			<xsl:apply-templates select="m:publisher"/>: </xsl:if>
 		<xsl:value-of select="m:pubPlace"/>
 		<xsl:if test="m:date/text()">
 			<xsl:text> </xsl:text>
