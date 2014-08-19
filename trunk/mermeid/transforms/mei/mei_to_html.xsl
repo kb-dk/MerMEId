@@ -2033,7 +2033,10 @@
 							<xsl:call-template name="list_editors"/>
 						</xsl:otherwise>
 					</xsl:choose>
-					<i><xsl:apply-templates select="m:title[@level='m']"/></i>
+					<xsl:apply-templates select="m:title[@level='m']" mode="bibl_title">
+						<xsl:with-param name="quotes" select="'false'"/>
+						<xsl:with-param name="italic" select="'true'"/>
+					</xsl:apply-templates>
 					<xsl:if test="m:title[@level='s']/text()"> (= <xsl:apply-templates
 							select="m:title[@level='s']"/>
 						<xsl:if test="m:biblScope[@unit='vol']/text()">, vol. <xsl:apply-templates
@@ -2061,21 +2064,28 @@
 					<xsl:if test="m:author/text()">
 						<xsl:call-template name="list_authors"/>
 					</xsl:if>
-					'<xsl:apply-templates select="m:title[@level='a']"/>'
+					<xsl:apply-templates select="m:title[@level='a']" mode="bibl_title">
+						<xsl:with-param name="quotes" select="'true'"/>
+						<xsl:with-param name="italic" select="'false'"/>
+					</xsl:apply-templates>					
 					<xsl:choose>
 						<xsl:when test="m:title[@level='m']/text()">, in: <xsl:if
 								test="m:editor/text()">
 								<xsl:call-template name="list_editors"/>
 							</xsl:if>
-							<i><xsl:value-of select="m:title[@level='m']/text()"/></i>
+							<xsl:apply-templates select="m:title[@level='m']" mode="bibl_title">
+								<xsl:with-param name="quotes" select="'false'"/>
+								<xsl:with-param name="italic" select="'true'"/>
+							</xsl:apply-templates>
 							<xsl:choose>
 								<xsl:when test="m:title[@level='s']/text()">(= <xsl:apply-templates
 										select="m:title[@level='s']/text()"/>
-									<xsl:if test="m:biblScope[@unit='vol']/text()">, vol. <xsl:value-of select="m:biblScope[@unit='vol']/text()"/>
+									<xsl:if test="m:biblScope[@unit='vol']/text()">, vol.
+											<xsl:value-of select="m:biblScope[@unit='vol']/text()"/>
 									</xsl:if>) </xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="m:biblScope[@unit='vol']/text()">,
-											vol. <xsl:value-of
+									<xsl:if test="m:biblScope[@unit='vol']/text()">, vol.
+											<xsl:value-of
 											select="normalize-space(m:biblScope[@unit='vol'])"
 										/></xsl:if>
 								</xsl:otherwise>
@@ -2087,7 +2097,7 @@
 										<xsl:apply-templates
 										select="normalize-space(m:title[@level='s'])"/>
 									<xsl:if test="normalize-space(m:biblScope[@unit='vol'])!=''">,
-											vol. <xsl:value-of
+										vol. <xsl:value-of
 											select="normalize-space(m:biblScope[@unit='vol'])"
 										/></xsl:if>
 								</xsl:when>
@@ -2118,11 +2128,16 @@
 					<xsl:if test="normalize-space(m:title[@level='a'])!=''">
 						<xsl:if test="m:author/text()">
 							<xsl:call-template name="list_authors"/>
-						</xsl:if> '<xsl:apply-templates select="m:title[@level='a']/text()"
-							/>'<xsl:if test="m:title[@level='j']/text()">. </xsl:if>
+						</xsl:if><xsl:apply-templates select="m:title[@level='a']" mode="bibl_title">
+							<xsl:with-param name="quotes" select="'true'"/>
+							<xsl:with-param name="italic" select="'false'"/>
+						</xsl:apply-templates><xsl:if test="m:title[@level='j']/text()">. </xsl:if>
 					</xsl:if>
 					<xsl:if test="m:title[@level='j']/text()">
-						<i><xsl:apply-templates select="m:title[@level='j']"/></i>
+						<xsl:apply-templates select="m:title[@level='j']" mode="bibl_title">
+							<xsl:with-param name="quotes" select="'false'"/>
+							<xsl:with-param name="italic" select="'true'"/>
+						</xsl:apply-templates>					
 					</xsl:if>
 					<xsl:if test="normalize-space(m:biblScope[@unit='vol'])!=''">, <xsl:value-of
 							select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if><xsl:if
@@ -2150,7 +2165,10 @@
 				<xsl:if test="normalize-space(m:title)">
 					<xsl:if test="normalize-space(m:author)!=''"><xsl:apply-templates
 							select="m:author"/>: </xsl:if>
-					<i><xsl:value-of select="m:title"/></i>
+					<xsl:apply-templates select="m:title" mode="bibl_title">
+						<xsl:with-param name="quotes" select="'false'"/>
+						<xsl:with-param name="italic" select="'true'"/>
+					</xsl:apply-templates>					
 					<xsl:if
 						test="normalize-space(concat(m:biblScope[normalize-space()], m:imprint/m:publisher, m:imprint/m:pubPlace))"
 						>. </xsl:if>
@@ -2217,7 +2235,11 @@
 			<xsl:when test="m:genre='manuscript'">
 				<xsl:if test="m:author//text()"><xsl:apply-templates select="m:author"/>: </xsl:if>
 				<xsl:if test="m:title//text()">
-					<i><xsl:apply-templates select="m:title"/>. </i>
+					<xsl:apply-templates select="m:title" mode="bibl_title">
+						<xsl:with-param name="quotes" select="'false'"/>
+						<xsl:with-param name="italic" select="'true'"/>
+					</xsl:apply-templates>
+					<xsl:text>. </xsl:text>
 				</xsl:if>
 				<xsl:if test="m:creation/m:geogName//text()">
 					<xsl:apply-templates select="m:creation/m:geogName"/>
@@ -2227,8 +2249,7 @@
 				</xsl:if>
 				<xsl:apply-templates select="m:physLoc[*//text()]"/>
 				<xsl:if test="m:creation/m:date//text()">
-					<xsl:apply-templates select="m:creation/m:date"/>.
-				</xsl:if>
+					<xsl:apply-templates select="m:creation/m:date"/>. </xsl:if>
 			</xsl:when>
 
 			<xsl:when test="contains(m:genre,'concert') and contains(m:genre,'program')">
@@ -2277,6 +2298,35 @@
 	</xsl:template>
 
 	<!-- bibl-related templates -->
+
+	<xsl:template match="m:bibl/m:title" mode="bibl_title">
+		<xsl:param name="quotes" select="'false'"/>
+		<xsl:param name="italic" select="'false'"/>
+		<xsl:variable name="title">
+			<xsl:choose>
+				<xsl:when test="substring(.,1,1)='[' and substring(.,string-length(.),1)=']'">
+					<xsl:value-of select="substring(.,2,string-length(.)-2)"/>
+				</xsl:when>
+				<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="brackets">
+			<xsl:choose>
+				<xsl:when test="substring(.,1,1)='[' and substring(.,string-length(.),1)=']'">true</xsl:when>
+				<xsl:otherwise>false</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:if test="$brackets='true'"><xsl:text>[</xsl:text></xsl:if>
+		<xsl:if test="$quotes='true'"><xsl:text>'</xsl:text></xsl:if>
+		<xsl:choose>
+			<xsl:when test="$italic='true'">
+				<i><xsl:value-of select="$title"/></i>
+			</xsl:when>
+			<xsl:otherwise><xsl:value-of select="$title"/></xsl:otherwise>
+		</xsl:choose>		
+		<xsl:if test="$quotes='true'"><xsl:text>'</xsl:text></xsl:if>
+		<xsl:if test="$brackets='true'"><xsl:text>]</xsl:text></xsl:if>
+	</xsl:template>
 
 	<xsl:template match="m:bibl/m:annot">
 		<xsl:param name="compact" select="'false'"/>
