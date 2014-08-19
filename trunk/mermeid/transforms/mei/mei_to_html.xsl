@@ -525,22 +525,23 @@
 				<xsl:otherwise>true</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-		<xsl:element name="a">
-			<xsl:attribute name="href">
-				<xsl:choose>
-					<xsl:when test="$mermeid_crossref='true'">
-						<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="@target"/>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:attribute>
+		<xsl:variable name="href">
+			<xsl:choose>
+				<xsl:when test="$mermeid_crossref='true'">
+					<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="@target"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="label">
 			<xsl:apply-templates select="@label"/>
 			<xsl:if test="not(@label) or @label=''">
 				<xsl:value-of select="@target"/>
 			</xsl:if>
-		</xsl:element>
+		</xsl:variable>
+		<a href="{$href}" title="{$label}"><xsl:value-of select="$label"/></a>&#160;
 		<xsl:if test="$mermeid_crossref='true'">
 			<!-- get collection name and number from linked files -->
 			<xsl:variable name="fileName"
@@ -568,7 +569,7 @@
 				</xsl:choose>
 			</xsl:variable>
 			<xsl:if test="normalize-space($catalogue_no)!=''">
-				<xsl:value-of select="concat(' (',$output,')')"/>
+				<a class="work_number_reference" href="{$href}" title="{$label}"><xsl:value-of select="$output"/></a>
 			</xsl:if>
 		</xsl:if>
 	</xsl:template>
