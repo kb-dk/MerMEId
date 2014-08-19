@@ -138,7 +138,7 @@ ul {
     line-height: 1.6em;
 }
 
-#main a.work_number_reference {
+a.work_number_reference {
     border: 1px solid #666;
     padding: 0px 3px;
     padding: 0px 2px;
@@ -147,15 +147,16 @@ ul {
     border-radius: 4px;
 }
 
-#main a.work_number_reference:link, 
-#main a.work_number_reference:active, 
-#main a.work_number_reference:visited, 
-#main a.work_number_reference:hover {
+a.work_number_reference:link, 
+a.work_number_reference:active, 
+a.work_number_reference:visited, 
+a.work_number_reference:hover {
     text-decoration: none;
     white-space: nowrap;
+    color: #000;
 }
 
-#main a.work_number_reference:hover {
+a.work_number_reference:hover {
     background-color: #ddd;
 }
 
