@@ -1571,10 +1571,6 @@
 	<xsl:template match="m:source[*[name()!='classification']//text()]|m:item[*//text()]">
 		<xsl:param name="mode" select="''"/>
 		<xsl:variable name="source_id" select="@xml:id"/>
-		<!--<xsl:if
-			test="m:titleStmt/m:title/text() 
-			or local-name()='item'
-			or m:relationList/m:relation[@rel='isReproductionOf']">-->
 		<div>
 			<xsl:attribute name="id">
 				<xsl:choose>
@@ -1653,8 +1649,11 @@
 						</xsl:if>
 					</xsl:if>
 					<xsl:apply-templates select="m:pubPlace"/>
-					<xsl:text> </xsl:text>
-					<xsl:apply-templates select="m:date"/>.
+					<xsl:if test="m:date/text()">
+						<xsl:text> </xsl:text>
+						<xsl:apply-templates select="m:date"/>
+					</xsl:if>
+					<xsl:text>.</xsl:text>
 					<!--<xsl:call-template name="list_agents"/>-->
 				</div>
 			</xsl:for-each>
