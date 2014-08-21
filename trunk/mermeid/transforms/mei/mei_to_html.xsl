@@ -11,6 +11,7 @@
 	
 -->
 
+
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 	xmlns:m="http://www.music-encoding.org/ns/mei"
@@ -155,21 +156,39 @@
 			m:titleStmt">
 
 			<xsl:if test="m:title[@type='main' or not(@type)][text()]">
-				<h1>
-					<xsl:for-each select="m:title[@type='main' or not(@type)][text()]">
+				<xsl:for-each select="m:title[@type='main' or not(@type)][text()]">
+					<xsl:variable name="lang" select="@xml:lang"/>
+					<xsl:variable name="language_class">
+						<xsl:choose>
+							<xsl:when test="position()&gt;1 and @xml:lang!=parent::node()/m:title[1]/@xml:lang"
+								>alternative_language</xsl:when>
+							<xsl:otherwise>preferred_language</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
+
+					<h1 class="work_title">
 						<xsl:element name="span">
-							<xsl:call-template name="maybe_print_lang"/>
+							<xsl:attribute name="class"><xsl:value-of
+									select="$language_class"/></xsl:attribute>
 							<xsl:apply-templates select="."/>
 						</xsl:element>
-						<xsl:call-template name="maybe_print_br"/>
+					</h1>
 
+					<xsl:for-each select="../m:title[@type='subordinate'][@xml:lang=$lang]">
+						<h2 class="subtitle">
+							<xsl:element name="span">
+								<xsl:attribute name="class"><xsl:value-of
+										select="$language_class"/></xsl:attribute>
+								<xsl:apply-templates select="."/>
+							</xsl:element>
+						</h2>
 					</xsl:for-each>
-				</h1>
+
+				</xsl:for-each>
 			</xsl:if>
 			<xsl:if
 				test="m:title[@type='alternative'][text()] |
-				m:title[@type='original'][text()]    |
-				m:title[@type='subordinate'][text()]">
+				m:title[@type='original'][text()]">
 				<!-- m:title[@type='uniform'] omitted 
 					(available for searching only, not for display - add it to the list if you want )-->
 				<xsl:element name="h2">
@@ -184,13 +203,14 @@
 					</xsl:for-each>-->
 
 					<xsl:for-each select="m:title[@type='original'][text()]">
-						<xsl:element name="span">
+						<xsl:element name="span"> 
 							<xsl:call-template name="maybe_print_lang"/>
-							<xsl:apply-templates select="."/>
+							Original title: <xsl:apply-templates select="."/>
 						</xsl:element>
 						<xsl:call-template name="maybe_print_br"/>
 					</xsl:for-each>
 
+					<!-- if subtitles are to be shown independently of main titles: 
 					<xsl:for-each select="m:title[@type='subordinate'][text()]">
 						<xsl:element name="span">
 							<xsl:call-template name="maybe_print_lang"/>
@@ -198,6 +218,7 @@
 						</xsl:element>
 						<xsl:call-template name="maybe_print_br"/>
 					</xsl:for-each>
+					-->
 
 					<xsl:for-each select="m:title[@type='alternative'][text()]">
 						<xsl:element name="span">
@@ -2040,7 +2061,7 @@
 							select="m:title[@level='s']"/>
 						<xsl:if test="m:biblScope[@unit='vol']/text()">, vol. <xsl:apply-templates
 								select="m:biblScope[@unit='vol']"/>
-						</xsl:if> )</xsl:if>
+						</xsl:if>)</xsl:if>
 					<xsl:apply-templates select="m:imprint">
 						<xsl:with-param name="append_to_text">true</xsl:with-param>
 					</xsl:apply-templates>
@@ -3086,38 +3107,16 @@
 		<br/>
 	</xsl:template>
 	<xsl:template match="m:p[child::text()]">
-		<p>
-			<xsl:apply-templates/>
-		</p>
+		<p><xsl:apply-templates/></p>
 	</xsl:template>
 	<xsl:template match="m:p[not(child::text())]">
 		<!-- ignore -->
 	</xsl:template>
-	<xsl:template match="m:rend[@fontweight = 'bold'][text()]">
-		<b>
-			<xsl:apply-templates/>
-		</b>
-	</xsl:template>
-	<xsl:template match="m:rend[@fontstyle = 'italic'][text()]">
-		<i>
-			<xsl:apply-templates/>
-		</i>
-	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'underline'][text()]">
-		<u>
-			<xsl:apply-templates/>
-		</u>
-	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'sub'][text()]">
-		<sub>
-			<xsl:apply-templates/>
-		</sub>
-	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'sup'][text()]">
-		<sup>
-			<xsl:apply-templates/>
-		</sup>
-	</xsl:template>
+	<xsl:template match="m:rend[@fontweight = 'bold'][text()]"><b><xsl:apply-templates/></b></xsl:template>
+	<xsl:template match="m:rend[@fontstyle = 'italic'][text()]"><i><xsl:apply-templates/></i></xsl:template>
+	<xsl:template match="m:rend[@rend = 'underline'][text()]"><u><xsl:apply-templates/></u></xsl:template>
+	<xsl:template match="m:rend[@rend = 'sub'][text()]"><sub><xsl:apply-templates/></sub></xsl:template>
+	<xsl:template match="m:rend[@rend = 'sup'][text()]"><sup><xsl:apply-templates/></sup></xsl:template>
 	<xsl:template match="m:rend[@fontfam or @fontsize or @color][text()]">
 		<xsl:variable name="atts">
 			<xsl:if test="@fontfam">
