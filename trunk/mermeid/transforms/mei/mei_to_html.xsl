@@ -317,9 +317,12 @@
 		<!-- works with versions: show global sources and performances before version details -->
 		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
 			<!-- global sources -->
+			<!-- was, in XSLT 1.0:  
 			<xsl:apply-templates
-				select="m:meiHead/m:fileDesc/m:sourceDesc[m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)&gt;0]]">
-				<xsl:with-param name="global">true</xsl:with-param>
+				select="m:meiHead/m:fileDesc/m:sourceDesc[m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)&gt;0]]">-->
+			<xsl:apply-templates
+					select="m:meiHead/m:fileDesc/m:sourceDesc[count(m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)]&gt;0)]">
+					<xsl:with-param name="global">true</xsl:with-param>
 			</xsl:apply-templates>
 			<!-- work-level performances  -->
 			<xsl:apply-templates
@@ -2115,7 +2118,7 @@
 							<xsl:choose>
 								<xsl:when test="normalize-space(m:title[@level='s'])!=''">, in:
 										<xsl:apply-templates
-										select="normalize-space(m:title[@level='s'])"/>
+										select="m:title[@level='s' and text()]"/>
 									<xsl:if test="normalize-space(m:biblScope[@unit='vol'])!=''">,
 										vol. <xsl:value-of
 											select="normalize-space(m:biblScope[@unit='vol'])"
@@ -2822,6 +2825,33 @@
 
 
 	<!-- HANDLE TEXT AND SPECIAL CHARACTERS -->
+	
+	
+	<!-- Automatic cross references? 
+		
+		... need to somehow get the name of the file to link to before this works ...
+		... probably better to wait until links can actually be entered and edited in MerMEId ...
+		
+	<xsl:template match="text()[contains(.,concat(/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection'],' '))]">
+		<xsl:variable name="search_for" select="concat(/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection'],' ')"/>
+		<xsl:variable name="remainder" select="substring-after(.,$search_for)"/>
+		<xsl:variable name="end_char" select="substring(translate($remainder,'0123456789',''),1,1)"/>
+		<xsl:variable name="number" select="substring-before($remainder,$end_char)"/>
+		<xsl:apply-templates select="exsl:node-set(substring-before(.,$search_for))"/>
+		<xsl:choose>
+			<xsl:when test="$number">
+				<a title="" 
+					href="http://dcm-udv-01.kb.dk/storage/cnw/document.xq?doc=cnw0132.xml" 
+					class="work_number_reference"><xsl:value-of select="concat($search_for,$number)"/></a>
+				<xsl:apply-templates select="exsl:node-set(substring-after($remainder,$number))"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$search_for"/>
+				<xsl:apply-templates select="exsl:node-set($remainder)"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	-->
 
 	<xsl:template name="key_accidental">
 		<xsl:param name="attr"/>
