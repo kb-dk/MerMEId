@@ -321,7 +321,7 @@
 			<xsl:apply-templates
 				select="m:meiHead/m:fileDesc/m:sourceDesc[m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)&gt;0]]">-->
 			<xsl:apply-templates
-					select="m:meiHead/m:fileDesc/m:sourceDesc[count(m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)]&gt;0)]">
+					select="m:meiHead/m:fileDesc/m:sourceDesc[count(m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0]">
 					<xsl:with-param name="global">true</xsl:with-param>
 			</xsl:apply-templates>
 			<!-- work-level performances  -->
