@@ -209,8 +209,17 @@ div.results {
     width: 100%;
     margin: 15px 0;
     border: 1px solid #666;
-    background-color: #eee;
+    background-color: #ddd;
     border-radius: 4px;
+    cursor: pointer;
+}
+
+.result_table:hover {
+    background-color: #fff;
+}
+
+.result_table:hover .list_id {
+    background-color: #666;
 }
 
 .result_row {
@@ -247,12 +256,9 @@ div.results {
 
 .result_table .list_id {
     width: 9%;
-    background-color: #666;
+    background-color: #444;
     white-space: nowrap;
     padding: 3px 8px;
-}
-
-#main .result_table .list_id a {
     color: #fff;
     font-weight: bold;
 }
