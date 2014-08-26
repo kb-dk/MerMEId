@@ -109,9 +109,8 @@
 		<xsl:variable name="href">
 			<xsl:choose>
 				<xsl:when test="$mermeid_crossref='true'">
-					<!-- This line is different -->
-					<!-- was: <xsl:value-of select="concat('http://',$hostname,'/storage/',$coll_dir,'/document.xq?doc=',@target)"/>-->
-					<xsl:value-of select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,$coll_dir,'/document.xq?doc=',@target)"/>
+					<!-- This line is different from mei_to_html.xsl-->
+					<xsl:value-of select="concat('document.xq?doc=',@target)"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="@target"/>
