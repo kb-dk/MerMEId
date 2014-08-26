@@ -131,11 +131,6 @@
 				select="concat('http://',$hostname,'/storage/dcm/',@target)"/>-->
 			<xsl:variable name="fileName"
 				select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,$coll_dir,'/data/',@target)"/>
-
-<p>Settings[1]: <xsl:value-of select="name($settings/*[1])"/></p>	
-			
-<p>Filename: <xsl:value-of select="$fileName"/></p>
-
 			<xsl:variable name="linkedDoc" select="document($fileName)"/>
 			<xsl:variable name="file_context"
 				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
