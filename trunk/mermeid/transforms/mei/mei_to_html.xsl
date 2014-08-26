@@ -28,9 +28,9 @@
 	<xsl:output method="xml" encoding="UTF-8" cdata-section-elements="" omit-xml-declaration="yes"
 		indent="no" xml:space="default"/>
 
-	<xsl:param name="hostname"/>
 	<xsl:param name="doc"/>
-
+	<xsl:param name="hostname"/>
+	
 
 	<!-- GLOBAL VARIABLES -->
 
@@ -46,11 +46,17 @@
 		/>
 	</xsl:variable>
 	<!-- files containing look-up information -->
+	<!-- was:
 	<xsl:variable name="bibl_file_name"
-		select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'library/standard_bibliography.xml'))"/>
+		select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'library/standard_bibliography.xml'))"/>-->
+	<xsl:variable name="bibl_file_name"
+		select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'library/standard_bibliography.xml'))"/>
 	<xsl:variable name="bibl_file" select="document($bibl_file_name)"/>
+	<!-- was:
+		<xsl:variable name="abbreviations_file_name"
+		select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'library/abbreviations.xml'))"/>-->
 	<xsl:variable name="abbreviations_file_name"
-		select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'library/abbreviations.xml'))"/>
+		select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'library/abbreviations.xml'))"/>
 	<xsl:variable name="abbreviations_file" select="document($abbreviations_file_name)"/>
 
 
@@ -552,7 +558,8 @@
 		<xsl:variable name="href">
 			<xsl:choose>
 				<xsl:when test="$mermeid_crossref='true'">
-					<xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>
+					<!-- was: <xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>-->
+					<xsl:value-of select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'present.xq?doc=',@target)"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="@target"/>
@@ -568,8 +575,9 @@
 		<a href="{$href}" title="{$label}"><xsl:value-of select="$label"/></a>&#160;
 		<xsl:if test="$mermeid_crossref='true'">
 			<!-- get collection name and number from linked files -->
+			<!-- was: <xsl:variable name="fileName"	select="concat('http://',$hostname,'/storage/dcm/',@target)"/> -->
 			<xsl:variable name="fileName"
-				select="concat('http://',$hostname,'/storage/dcm/',@target)"/>
+				select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,@target)"/>
 			<xsl:variable name="linkedDoc" select="document($fileName)"/>
 			<xsl:variable name="file_context"
 				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
@@ -694,8 +702,11 @@
 									<!-- get external source description -->
 									<xsl:variable name="ext_id"
 										select="substring-after(@target,'#')"/>
+									
+									<!-- was: <xsl:variable name="doc_name"
+										select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>-->
 									<xsl:variable name="doc_name"
-										select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
+										select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
 									<xsl:variable name="doc" select="document($doc_name)"/>
 									<xsl:copy-of
 										select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
@@ -1346,8 +1357,10 @@
 								<!-- get external source description -->
 								<xsl:variable name="ext_id"
 									select="substring-after(@target,'#')"/>
+								<!-- was: <xsl:variable name="doc_name"
+									select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>-->
 								<xsl:variable name="doc_name"
-									select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
+									select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
 								<xsl:variable name="doc" select="document($doc_name)"/>
 								<xsl:copy-of
 									select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
@@ -3049,8 +3062,11 @@
 	<!-- Look up abbreviations -->
 
 	<xsl:template match="m:identifier[@authority='RISM']">
-		<xsl:variable name="RISM_file_name"
+		<!-- was: <xsl:variable name="RISM_file_name"
 			select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'rism_sigla/',
+			substring-before(normalize-space(.),'-'),'.xml'))"/> -->
+		<xsl:variable name="RISM_file_name"
+			select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'rism_sigla/',
 			substring-before(normalize-space(.),'-'),'.xml'))"/>
 		<xsl:choose>
 			<xsl:when test="boolean(document($RISM_file_name))">

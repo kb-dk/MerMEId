@@ -28,6 +28,7 @@
 		cdata-section-elements="" 
 		omit-xml-declaration="yes"/>
 	
+	
 	<xsl:strip-space elements="*"/>
 
 	<xsl:include href="mei_to_html.xsl"/>
@@ -109,7 +110,8 @@
 			<xsl:choose>
 				<xsl:when test="$mermeid_crossref='true'">
 					<!-- This line is different -->
-					<xsl:value-of select="concat('http://',$hostname,'/storage/',$coll_dir,'/document.xq?doc=',@target)"/>
+					<!-- was: <xsl:value-of select="concat('http://',$hostname,'/storage/',$coll_dir,'/document.xq?doc=',@target)"/>-->
+					<xsl:value-of select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,$coll_dir,'/document.xq?doc=',@target)"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="@target"/>
@@ -125,8 +127,15 @@
 		<a href="{$href}" title="{$label}"><xsl:value-of select="$label"/></a>&#160;
 		<xsl:if test="$mermeid_crossref='true'">
 			<!-- get collection name and number from linked files -->
+			<!-- was: <xsl:variable name="fileName"
+				select="concat('http://',$hostname,'/storage/dcm/',@target)"/>-->
 			<xsl:variable name="fileName"
-				select="concat('http://',$hostname,'/storage/dcm/',@target)"/>
+				select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,$coll_dir,'/data/',@target)"/>
+
+<p>Settings[1]: <xsl:value-of select="name($settings/*[1])"/></p>	
+			
+<p>Filename: <xsl:value-of select="$fileName"/></p>
+
 			<xsl:variable name="linkedDoc" select="document($fileName)"/>
 			<xsl:variable name="file_context"
 				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
