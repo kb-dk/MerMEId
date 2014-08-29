@@ -2041,8 +2041,8 @@
 			</xsl:for-each>
 		</xsl:if>
 		<xsl:if
-			test="count(m:bibl[(m:genre='letter' or m:genre='diary entry') and *[local-name()!='genre']//text()])&gt;0 and 
-			count(m:bibl[m:genre!='letter' and m:genre!='diary entry' and *[local-name()!='genre']//text()])&gt;0">
+			test="count(m:bibl[(m:genre='letter' or m:genre='diary entry' or m:genre='manuscript') and *[local-name()!='genre']//text()])&gt;0 and 
+			count(m:bibl[m:genre!='letter' and m:genre!='diary entry'  and m:genre!='manuscript' and *[local-name()!='genre']//text()])&gt;0">
 			<p class="p_heading">Other:</p>
 		</xsl:if>
 		<xsl:for-each
