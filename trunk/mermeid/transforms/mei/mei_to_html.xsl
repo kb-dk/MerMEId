@@ -12,7 +12,7 @@
 -->
 
 
-<xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
+<xsl:stylesheet version="2.0" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 	xmlns:m="http://www.music-encoding.org/ns/mei"
 	xmlns:dcm="http://www.kb.dk/dcm" 
@@ -46,15 +46,9 @@
 		/>
 	</xsl:variable>
 	<!-- files containing look-up information -->
-	<!-- was:
-	<xsl:variable name="bibl_file_name"
-		select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'library/standard_bibliography.xml'))"/>-->
 	<xsl:variable name="bibl_file_name"
 		select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'library/standard_bibliography.xml'))"/>
 	<xsl:variable name="bibl_file" select="document($bibl_file_name)"/>
-	<!-- was:
-		<xsl:variable name="abbreviations_file_name"
-		select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'library/abbreviations.xml'))"/>-->
 	<xsl:variable name="abbreviations_file_name"
 		select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'library/abbreviations.xml'))"/>
 	<xsl:variable name="abbreviations_file" select="document($abbreviations_file_name)"/>
@@ -3062,9 +3056,6 @@
 	<!-- Look up abbreviations -->
 
 	<xsl:template match="m:identifier[@authority='RISM']">
-		<!-- was: <xsl:variable name="RISM_file_name"
-			select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'rism_sigla/',
-			substring-before(normalize-space(.),'-'),'.xml'))"/> -->
 		<xsl:variable name="RISM_file_name"
 			select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'rism_sigla/',
 			substring-before(normalize-space(.),'-'),'.xml'))"/>
@@ -3115,12 +3106,11 @@
 	</xsl:template>
 
 	<!-- General abbreviations, find in text blocks. -->
-	<!-- This should be improved to match only whole words (XSLT 2.0/RegEx?).
-		In that case, it could be generalized to match all text() nodes. -->
-	<xsl:template match="m:instrVoice/text() | m:identifier/text() | m:identifier/@type">
-		<xsl:variable name="string" select="."/>
-		<xsl:variable name="abbr"
-			select="$abbreviations_file/m:p/m:choice/m:abbr[contains($string,.)]"/>
+	<!-- was: <xsl:template match="m:instrVoice/text() | m:identifier/text() | m:identifier/@type">-->
+	<xsl:template match="text()[name(..)!='p'] | text()[name(..)!='persName'] | m:identifier/@type">
+		<xsl:variable name="string" select="concat(' ',.,' ')"/>
+		<xsl:variable name="abbr" select="$abbreviations_file/m:p/m:choice/m:abbr[contains(translate($string,';:[]()/','       '),concat(' ',.,' '))]"/>
+		<!--was: <xsl:variable name="abbr" select="$abbreviations_file/m:p/m:choice/m:abbr[contains($string,.)]"/>-->
 		<xsl:choose>
 			<xsl:when test="$abbr">
 				<xsl:variable name="expan"
