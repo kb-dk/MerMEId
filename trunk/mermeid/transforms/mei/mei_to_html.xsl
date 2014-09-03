@@ -3105,9 +3105,10 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<!-- General abbreviations, find in text blocks. -->
+	<!-- General abbreviations in text blocks. -->
 	<!-- was: <xsl:template match="m:instrVoice/text() | m:identifier/text() | m:identifier/@type">-->
-	<xsl:template match="text()[name(..)!='p'] | text()[name(..)!='persName'] | m:identifier/@type">
+	<xsl:template match="text()[name(..)!='p' and name(..)!='persName' and name(..)!='ptr' and name(..)!='ref'] 
+		| m:identifier/@type">
 		<xsl:variable name="string" select="concat(' ',.,' ')"/>
 		<xsl:variable name="abbr" select="$abbreviations_file/m:p/m:choice/m:abbr[contains(translate($string,';:[]()/','       '),concat(' ',.,' '))]"/>
 		<!--was: <xsl:variable name="abbr" select="$abbreviations_file/m:p/m:choice/m:abbr[contains($string,.)]"/>-->
