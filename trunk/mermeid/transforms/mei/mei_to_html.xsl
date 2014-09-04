@@ -1497,26 +1497,48 @@
 		<xsl:if test="m:respStmt/m:persName[text()] |
 			m:respStmt/m:corpName[text()]">
 			<p>
-				<xsl:for-each
-					select="m:respStmt/m:persName[text()] |
+				<xsl:for-each select="m:respStmt/m:persName[text()] |
 					m:respStmt/m:corpName[text()]">
-					<xsl:if test="string-length(@role) &gt; 0">
-						<xsl:call-template name="capitalize">
-							<xsl:with-param name="str" select="@role"/>
-						</xsl:call-template>
-						<xsl:text>: </xsl:text>
-					</xsl:if>
-					<xsl:value-of select="."/>
 					<xsl:choose>
-						<xsl:when test="position() &lt; last()">
-							<xsl:text>, </xsl:text>
+						<xsl:when test="@role!=preceding-sibling::*[1]/@role or position()=1">
+							<xsl:choose>
+								<xsl:when test="@role=following-sibling::*[1]/@role">
+									<xsl:if test="name()='persName' and normalize-space(@role)">
+										<xsl:call-template name="capitalize">
+											<xsl:with-param name="str" select="concat(@role,'s')"/>
+										</xsl:call-template><xsl:text>: </xsl:text>
+									</xsl:if>
+									<xsl:apply-templates select="."/>, </xsl:when>
+								<xsl:otherwise>
+									<xsl:if test="name()='persName' and normalize-space(@role)">
+										<xsl:call-template name="capitalize">
+											<xsl:with-param name="str" select="@role"/>
+										</xsl:call-template>
+										<xsl:text>: </xsl:text>
+									</xsl:if>
+									<xsl:apply-templates select="."/>
+									<xsl:if test="following-sibling::m:persName/text()">; </xsl:if>
+								</xsl:otherwise>
+							</xsl:choose>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:text>. </xsl:text>
+							<xsl:choose>
+								<xsl:when test="@role=following-sibling::*[1]/@role">
+									<xsl:apply-templates select="."/>, </xsl:when>
+								<xsl:when test="not(following-sibling::*[1]/@role)">
+									<xsl:apply-templates select="."/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:apply-templates select="."/>; </xsl:otherwise>
+							</xsl:choose>
 						</xsl:otherwise>
 					</xsl:choose>
+					<xsl:if test="position() = last()">
+						<xsl:text>. </xsl:text>
+					</xsl:if>
 				</xsl:for-each>
-
+				
+				
 				<xsl:for-each
 					select="m:geogName[text()] | 
 					m:date[text()] |
