@@ -606,7 +606,7 @@
 		<!-- show title/tempo/number as heading only if more than one version -->
 		<xsl:if test="count(../m:expression)&gt;1">
 			<!--<p>&#160;</p>-->
-			<xsl:variable name="title">
+			<!--<xsl:variable name="title">
 				<xsl:apply-templates select="m:titleStmt">
 					<xsl:with-param name="tempo">
 						<xsl:apply-templates select="m:tempo"/>
@@ -617,7 +617,10 @@
 				<h2>
 					<xsl:value-of select="$title"/>
 				</h2>
-			</xsl:if>
+			</xsl:if>-->
+			<h2>
+				<xsl:apply-templates select="m:titleStmt"/>
+			</h2>
 		</xsl:if>
 		<xsl:if test="m:identifier/text()">
 			<p>
@@ -803,7 +806,7 @@
 						</span>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:apply-templates/>
+						<xsl:apply-templates select="."/>
 						<xsl:if test="position()&lt;last()">
 							<br/>
 						</xsl:if>
@@ -812,7 +815,7 @@
 			</xsl:for-each>
 		</xsl:if>
 	</xsl:template>
-
+	
 	<xsl:template match="m:expression/m:componentGrp">
 		<xsl:choose>
 			<xsl:when test="count(m:expression)&gt;1">
