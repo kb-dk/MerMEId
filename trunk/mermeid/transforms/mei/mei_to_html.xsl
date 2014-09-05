@@ -674,6 +674,18 @@
 				select="/m:mei/m:meiHead/m:fileDesc/
 				m:sourceDesc[(normalize-space(*//text()) or m:source/@target!='') 
 				and m:source/m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
+				
+				<!-- collect all reproductions (reprints) - they will be needed later -->
+				<xsl:variable name="collect_reprints">
+					<sourceDesc xmlns="http://www.music-encoding.org/ns/mei">
+						<xsl:for-each select="m:source[m:relationList/m:relation[@rel='isReproductionOf']]">
+							<xsl:copy-of select="."/>
+						</xsl:for-each>
+					</sourceDesc>
+				</xsl:variable>
+				<!-- make it a nodeset -->
+				<xsl:variable name="reprints" select="exsl:node-set($collect_reprints)"/>			
+				
 				<xsl:apply-templates select="." mode="fold_section">
 					<xsl:with-param name="id"
 						select="concat('version_source',generate-id(.),$expression_id)"/>
@@ -731,7 +743,9 @@
 								select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';'))))"/>
 							<xsl:sort
 								select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
-							<xsl:apply-templates select="."/>
+							<xsl:apply-templates select=".">
+								<xsl:with-param name="reprints" select="$reprints"/>
+							</xsl:apply-templates>
 						</xsl:for-each>
 					</xsl:with-param>
 				</xsl:apply-templates>
@@ -1331,6 +1345,17 @@
 	<!-- sources -->
 	<xsl:template match="m:sourceDesc">
 		<xsl:param name="global"/>
+		<!-- collect all reproductions (reprints) - they will be needed later -->
+		<xsl:variable name="collect_reprints">
+			<sourceDesc xmlns="http://www.music-encoding.org/ns/mei">
+				<xsl:for-each select="m:source[m:relationList/m:relation[@rel='isReproductionOf']]">
+					<xsl:copy-of select="."/>
+				</xsl:for-each>
+			</sourceDesc>
+		</xsl:variable>
+		<!-- make it a nodeset -->
+		<xsl:variable name="reprints" select="exsl:node-set($collect_reprints)"/>
+		
 		<xsl:apply-templates select="." mode="fold_section">
 			<xsl:with-param name="id" select="concat('source',generate-id(.),position())"/>
 			<xsl:with-param name="heading">Sources</xsl:with-param>
@@ -1354,8 +1379,6 @@
 								<!-- get external source description -->
 								<xsl:variable name="ext_id"
 									select="substring-after(@target,'#')"/>
-								<!-- was: <xsl:variable name="doc_name"
-									select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>-->
 								<xsl:variable name="doc_name"
 									select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
 								<xsl:variable name="doc" select="document($doc_name)"/>
@@ -1387,7 +1410,10 @@
 						select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
 					<xsl:sort
 						select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
-					<xsl:apply-templates select="."/>
+					<xsl:apply-templates select=".">
+						<!-- also send the collection of all reprints to the template -->
+						<xsl:with-param name="reprints" select="$reprints"/>
+					</xsl:apply-templates>
 				</xsl:for-each>
 			</xsl:with-param>
 		</xsl:apply-templates>
@@ -1626,6 +1652,7 @@
 
 	<xsl:template match="m:source[*[name()!='classification']//text()]|m:item[*//text()]">
 		<xsl:param name="mode" select="''"/>
+		<xsl:param name="reprints"/>
 		<xsl:variable name="source_id" select="@xml:id"/>
 		<div>
 			<xsl:attribute name="id">
@@ -1647,9 +1674,7 @@
 					<xsl:when test="$mode='reprint'">4</xsl:when>
 					<xsl:when test="name(..)='componentGrp'">5</xsl:when>
 					<xsl:when test="count(ancestor-or-self::*[name()='itemList']) &gt; 0">
-						<xsl:value-of
-							select="count(ancestor-or-self::*[name()='componentGrp' or name()='itemList'])+3"
-						/>
+						<xsl:value-of select="count(ancestor-or-self::*[name()='componentGrp' or name()='itemList'])+3"/>
 					</xsl:when>
 					<xsl:otherwise>3</xsl:otherwise>
 				</xsl:choose>
@@ -1770,10 +1795,9 @@
 				</div>
 			</xsl:for-each>
 
-			<!-- List exemplars (items) last if there is more than one or it does have a heading of its own 
-					Otherwise, this is a manuscript with some information given at item level, 
-					which should be shown before the components.
-				-->
+			<!-- List exemplars (items) last if there is more than one or if it does have a heading of its own. 
+			     Otherwise, this is assumed to be a manuscript with some information given at item level, 
+			     which should be shown before the components. -->
 			<xsl:choose>
 				<xsl:when
 					test="local-name()='source' and 
@@ -1787,23 +1811,25 @@
 					<xsl:apply-templates select="m:componentGrp"/>
 				</xsl:otherwise>
 			</xsl:choose>
-			<!-- list reproductions (reprints) -->
-			<xsl:for-each
-				select="../m:source[m:relationList/m:relation[@rel='isReproductionOf'
+			
+			<!-- List reproductions (reprints) -->
+			<xsl:if test="$reprints">
+				<xsl:for-each
+					select="$reprints/m:sourceDesc/m:source[m:relationList/m:relation[@rel='isReproductionOf'
 					and substring-after(@target,'#')=$source_id]]">
-				<xsl:if test="position()=1">
-					<xsl:if test="not(m:titleStmt/m:title/text())">
-						<br/>
-						<p class="p_heading">Reprint:</p>
+					<xsl:if test="position()=1">
+						<xsl:if test="not(m:titleStmt/m:title/text())">
+							<br/>
+							<p class="p_heading">Reprint:</p>
+						</xsl:if>
 					</xsl:if>
-				</xsl:if>
-				<xsl:apply-templates select=".">
-					<xsl:with-param name="mode">reprint</xsl:with-param>
-				</xsl:apply-templates>
-			</xsl:for-each>
+					<xsl:apply-templates select=".">
+						<xsl:with-param name="mode">reprint</xsl:with-param>
+					</xsl:apply-templates>
+				</xsl:for-each>
+			</xsl:if>			
 
 		</div>
-		<!--</xsl:if>-->
 	</xsl:template>
 
 	<xsl:template match="m:itemList">
