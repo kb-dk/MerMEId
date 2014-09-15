@@ -53,6 +53,11 @@
 	<!-- omit links -->
 	<xsl:template match="m:ptr"/>
 
+	<!-- omit sources -->
+	<xsl:template match="m:sourceDesc"/>
+	<xsl:template match="m:source"/>
+	
+	
 	<!-- omit bibliography -->
 	<xsl:template match="m:work/m:biblList"/>
 	
@@ -71,13 +76,18 @@
 		<xsl:param name="heading"/>
 		<xsl:param name="id"/>
 		<xsl:param name="content"/>
-		<!-- omit "Music" and "Sections" headings in print -->
-		<xsl:if test="$heading!='Music' and $heading!='Sections'">
-			<h3 class="section_heading"><xsl:value-of select="concat(' ',$heading)"/></h3>
-		</xsl:if>
-		<div class="folded_content">
-			<xsl:copy-of select="$content"/>
-		</div>
+		<xsl:choose>
+			<!-- omit sources -->
+			<xsl:when test="$heading='Sources'"/>
+			<xsl:otherwise>
+				<!-- omit headings for "Music" and "Sections" -->
+				<xsl:if test="
+					$heading!='Music' and $heading!='Sections'">
+					<h3 class="section_heading"><xsl:value-of select="concat(' ',$heading)"/></h3>
+				</xsl:if>
+					<xsl:copy-of select="$content"/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 	<!-- Filter away all links to reproductions such as CNU -->
