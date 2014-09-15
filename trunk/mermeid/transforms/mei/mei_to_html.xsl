@@ -890,7 +890,9 @@
 			</p>
 		</xsl:for-each>
 		<xsl:apply-templates select="m:incipText[//text()]"/>
-		<xsl:if test="normalize-space(m:graphic[@targettype='lowres']/@target)!=''">
+		<!-- make img tag only if a target file is specified and the path does not end with a slash -->
+		<xsl:if test="normalize-space(m:graphic[@targettype='lowres']/@target) and 
+			substring(m:graphic[@targettype='lowres']/@target,string-length(m:graphic[@targettype='lowres']/@target),1)!='/'">
 			<p>
 				<xsl:choose>
 					<xsl:when
