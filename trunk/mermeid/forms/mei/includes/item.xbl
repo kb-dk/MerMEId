@@ -362,7 +362,7 @@
                                             </xf:input>
                                             <dcm:attribute-editor/>                                                    
                                             <dcm:element-buttons  
-                                                triggers="remove" 
+                                                triggers="add remove" 
                                                 nodeset="m:extent" 
                                                 index="physdesc-extent"
                                                 origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:extent"/>
@@ -388,7 +388,7 @@
                                             </xf:input>
                                             <dcm:attribute-editor ref="."/>                                                    
                                             <dcm:element-buttons  
-                                                triggers="remove" 
+                                                triggers="add remove" 
                                                 nodeset="m:dimensions" 
                                                 index="physdesc-dimensions"
                                                 origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:dimensions"/>
