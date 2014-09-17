@@ -45,7 +45,7 @@
                     <xf:group ref="$binding">
                         
                         
-                        <xf:group ref=".[not(m:genre='manuscript') and not(m:genre='letter') and not(m:genre='interview') and not(m:genre[contains(.,'program')])]">
+                        <xf:group ref=".[not(m:genre='manuscript') and not(m:genre='letter') and not(m:genre[contains(.,'program')])]">
                             <!-- authors are listed elsewhere if newspaper article -->
                             <h:fieldset>
                                 <h:legend>Authors</h:legend>
