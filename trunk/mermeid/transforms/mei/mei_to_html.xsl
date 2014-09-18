@@ -1789,7 +1789,7 @@
 					<xsl:text> </xsl:text>
 					<xsl:choose>
 						<!-- some CNW-specific styling here -->
-						<xsl:when test="contains(@type,'CNU_Source') or contains(@type,'CNU Source')">
+						<xsl:when test="contains(@type,'CNU') and contains(@type,'Source')">
 							<b><xsl:apply-templates select="."/></b>. </xsl:when>
 						<xsl:otherwise>
 							<xsl:apply-templates select="."/>. </xsl:otherwise>
