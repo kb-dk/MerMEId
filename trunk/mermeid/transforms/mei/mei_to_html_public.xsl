@@ -161,7 +161,6 @@
 	<!-- omit music details shown in the incipits -->
 	<xsl:template match="m:meter"/>
 	<xsl:template match="m:tempo"/>
-	<xsl:template match="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
 	<xsl:template match="m:incipText"/>
 	
 	<!-- Only show last revision instead of full colophon -->
