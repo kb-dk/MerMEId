@@ -1301,7 +1301,20 @@
 		<!-- composition history -->
 		<xsl:if test="m:creation/m:date[text()] or m:creation/m:geogName[text()]">
 			<xsl:if test="position()=1">
-				<p><span class="p_heading">Composition: </span>
+				<xsl:variable name="label">
+					<!-- Use label "Composition" only at work level or if there is only 1 expression -->
+					<xsl:choose>
+						<xsl:when test="name(..)='work' or count(/m:meiHead/m:work/m:expressionList/m:expression[//text()])=1">Composition</xsl:when>
+						<xsl:otherwise>
+							<xsl:choose>
+								<xsl:when test="m:creation/m:date[text()] and m:creation/m:geogName[text()]">Date and place</xsl:when>
+								<xsl:when test="m:creation/m:geogName[text()]">Place</xsl:when>
+								<xsl:otherwise>Date</xsl:otherwise>
+							</xsl:choose>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<p><span class="p_heading"><xsl:value-of select="$label"/>: </span>
 					<xsl:apply-templates select="m:creation/m:geogName"/>
 					<xsl:if test="m:creation/m:date[text()] and m:creation/m:geogName[text()]"
 						><xsl:text> </xsl:text></xsl:if>
