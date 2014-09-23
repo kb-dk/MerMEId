@@ -183,12 +183,33 @@
 							</xsl:element>
 						</h2>
 					</xsl:for-each>
+					
+					<xsl:for-each select="../m:title[@type='alternative'][@xml:lang=$lang and text()]">
+						<xsl:element name="h2">
+								<xsl:element name="span">
+									<xsl:attribute name="class"><xsl:value-of select="$language_class"/></xsl:attribute>
+									(<xsl:apply-templates select="."/>)
+								</xsl:element>
+						</xsl:element>
+					</xsl:for-each>
 
 				</xsl:for-each>
 			</xsl:if>
-			<xsl:if
-				test="m:title[@type='alternative'][text()] |
-				m:title[@type='original'][text()]">
+
+			<!-- don't forget alternative titles in other languages than the main title(s) -->
+			<xsl:for-each select="m:title[@type='alternative' and text()]">
+				<xsl:variable name="lang" select="@xml:lang"/>
+				<xsl:if test="not(../m:title[(@type='main' or not(@type)) and text() and @xml:lang=$lang])">
+					<xsl:element name="h2">
+						<xsl:element name="span">
+							<xsl:call-template name="maybe_print_lang"/>([<xsl:value-of select="$lang"/>]: <xsl:apply-templates
+								select="."/>)</xsl:element>
+						<xsl:call-template name="maybe_print_br"/>
+					</xsl:element>
+				</xsl:if>
+			</xsl:for-each>
+			
+			<xsl:if test="m:title[@type='original'][text()]">
 				<!-- m:title[@type='uniform'] omitted 
 					(available for searching only, not for display - add it to the list if you want )-->
 				<xsl:element name="h2">
@@ -210,22 +231,6 @@
 						<xsl:call-template name="maybe_print_br"/>
 					</xsl:for-each>
 
-					<!-- if subtitles are to be shown independently of main titles: 
-					<xsl:for-each select="m:title[@type='subordinate'][text()]">
-						<xsl:element name="span">
-							<xsl:call-template name="maybe_print_lang"/>
-							<xsl:apply-templates select="."/>
-						</xsl:element>
-						<xsl:call-template name="maybe_print_br"/>
-					</xsl:for-each>
-					-->
-
-					<xsl:for-each select="m:title[@type='alternative'][text()]">
-						<xsl:element name="span">
-							<xsl:call-template name="maybe_print_lang"/> (<xsl:apply-templates
-								select="."/>) </xsl:element>
-						<xsl:call-template name="maybe_print_br"/>
-					</xsl:for-each>
 				</xsl:element>
 
 			</xsl:if>
@@ -617,10 +622,10 @@
 				<h2>
 					<xsl:value-of select="$title"/>
 				</h2>
-			</xsl:if>-->
-			<h2>
-				<xsl:apply-templates select="m:titleStmt"/>
-			</h2>
+				</xsl:if>-->
+			<xsl:if test="normalize-space(m:titleStmt//text())">
+				<h2 class="expression_heading"><xsl:apply-templates select="m:titleStmt"/></h2>
+			</xsl:if>
 		</xsl:if>
 		<xsl:if test="m:identifier/text()">
 			<p>
