@@ -549,7 +549,8 @@
                                     <xxf:hide dialog="add_source_dialog"></xxf:hide>
                                     <xf:setvalue ref="instance('local-temp')/target_uri" value="concat($parameters/dcm:server_name,'storage/cross-link.xq')"/>
                                     <xf:setvalue ref="instance('local-temp')/mode" value="'copy'"/>
-                                    <xf:send submission="load-fileList"/>
+                                    <!-- initial submission deactivated to reduce response time -->
+                                    <!--<xf:send submission="load-fileList"/>-->
                                     <xxf:show dialog="source_reference_dialog"/>
                                     </xf:action>
                                     </xf:trigger> 
