@@ -185,12 +185,12 @@
 					</xsl:for-each>
 					
 					<xsl:for-each select="../m:title[@type='alternative'][@xml:lang=$lang and text()]">
-						<xsl:element name="h2">
+						<h2 class="subtitle alternative_title">
 								<xsl:element name="span">
 									<xsl:attribute name="class"><xsl:value-of select="$language_class"/></xsl:attribute>
 									(<xsl:apply-templates select="."/>)
 								</xsl:element>
-						</xsl:element>
+						</h2>
 					</xsl:for-each>
 
 				</xsl:for-each>
