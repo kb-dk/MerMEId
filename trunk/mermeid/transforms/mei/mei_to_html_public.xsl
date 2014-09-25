@@ -126,8 +126,8 @@
 		<a href="{$href}" title="{$label}"><xsl:value-of select="$label"/></a>&#160;
 		<xsl:if test="$mermeid_crossref='true'">
 			<!-- get collection name and number from linked files -->
-			<!-- was: <xsl:variable name="fileName"
-				select="concat('http://',$hostname,'/storage/dcm/',@target)"/>-->
+			<!-- could also be: <xsl:variable name="fileName"
+				select="concat(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,@target))"/>-->
 			<xsl:variable name="fileName"
 				select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,$coll_dir,'/data/',@target)"/>
 			<xsl:variable name="linkedDoc" select="document($fileName)"/>
