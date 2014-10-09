@@ -428,31 +428,31 @@ declare function app:generate-href($field as xs:string,
 			    attribute selected {"selected"}
 			  else
 			    "",
-			    "10 per page"},
+			    "10 results per page"},
 			    element option {attribute value {"20"},
 			    if($app:number=20) then 
 			      attribute selected {"selected"}
 			    else
 			      "",
-			      "20 per page"},
+			      "20 results per page"},
 			      element option {attribute value {"50"},
 			      if($app:number=50) then 
 				attribute selected {"selected"}
 			      else
 				"",
-				"50 per page"},
+				"50 results per page"},
 				element option {attribute value {"100"},
 				if($app:number=100) then 
 				  attribute selected {"selected"}
 				else
 				  "",
-				  "100 per page"},
+				  "100 results per page"},
 				  element option {attribute value {$total cast as xs:string},
 				  if($app:number=$total or $app:number>$total) then 
 				    attribute selected {"selected"}
 				  else
 				    "",
-				    "all"}
+				    "View all results"}
 			 )}
 		      </select>
 
