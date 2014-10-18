@@ -93,11 +93,13 @@
   
   <!-- Remove empty elements -->
   <xsl:template match="m:castList[not(*)]"/>
+  <xsl:template match="m:notesStmt[not(*)]"/>
   
   <!-- Delete duplicate language definitions (fixes an xforms problem) -->
   <xsl:template match="m:mei/m:meiHead/m:workDesc/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
 
   <!-- END CLEANING -->
+  
   
   
   <!-- Entity conversion -->    
