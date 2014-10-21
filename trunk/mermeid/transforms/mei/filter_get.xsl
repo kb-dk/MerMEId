@@ -21,8 +21,7 @@
   <xsl:template match="m:mei">
     <!-- make a copy with an extra header from the empty model document -->
     <xsl:variable name="janus">
-      <mei xmlns="http://www.music-encoding.org/ns/mei"
-        xmlns:xl="http://www.w3.org/1999/xlink">
+      <mei xmlns="http://www.music-encoding.org/ns/mei">
         <xsl:copy-of select="@*"/>
         <xsl:copy-of select="$empty_doc/m:mei/m:meiHead"/>
         <xsl:copy-of select="@*|*"/>
