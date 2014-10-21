@@ -50,12 +50,12 @@
 
 				<xsl:variable name="catalogue_no">
 					<xsl:value-of
-						select="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
+						select="m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]"/>
 				</xsl:variable>
 
 				<div class="info_bar {$file_context}">
 					<xsl:if
-						test="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]/text()">
+						test="m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]/text()">
 						<span class="list_id">
 							<xsl:value-of select="$file_context"/>
 							<xsl:text> </xsl:text>
@@ -134,7 +134,7 @@
 			<xsl:variable name="file_context"
 				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
 			<xsl:variable name="catalogue_no"
-				select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
+				select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]"/>
 			<xsl:variable name="output">
 				<xsl:value-of select="$file_context"/>
 				<xsl:text> </xsl:text>

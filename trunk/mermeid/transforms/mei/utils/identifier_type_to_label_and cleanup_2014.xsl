@@ -6,8 +6,7 @@
     xmlns:t="http://www.tei-c.org/ns/1.0" 
     xmlns:exsl="http://exslt.org/common"
     xmlns:uuid="java:java.util.UUID" version="2.0"
-    exclude-result-prefixes="m xsl" 
-    >
+    exclude-result-prefixes="m xsl">
     
     <xsl:output indent="yes" 
         xml:space="default" 
@@ -42,8 +41,8 @@
         </xsl:copy>
     </xsl:template>
     
-    <!-- move identifier/@type values to @label -->
-    <xsl:template match="m:identifier[@type and @type!='']">        
+    <!-- move identifier/@type values to @label, except for the @type="file_collection" -->
+    <xsl:template match="m:identifier[@type and @type!='' and not(@type='file_collection')]">        
        <xsl:choose>
            <xsl:when test="@label and @label!=''">
                <!-- element already has a label; do nothing -->
@@ -76,25 +75,30 @@
     
     <!-- Remove empty elements -->
     <xsl:template match="m:annot[not(* or normalize-space(.))]"/>    
-    <xsl:template match="m:availability[not(* or normalize-space(.))]"/>    
+    <xsl:template match="m:availability[not(*)]"/>    
     <xsl:template match="m:availability//*[not(* or normalize-space(.))]"/>    
+    <xsl:template match="m:bibl[not(text()) and not(*[name()!='genre' and normalize-space(.)])]"/>    
+    <xsl:template match="m:biblList[not(m:bibl)]"/>    
+    <xsl:template match="m:biblScope[not(normalize-space(.))]"/>    
     <xsl:template match="m:classification[not(m:classCode or normalize-space(.))]"/>    
     <xsl:template match="m:componentGrp[not(*)]"/>    
     <xsl:template match="m:dimensions[not(* or normalize-space(.))]"/>    
     <xsl:template match="m:extent[not(* or normalize-space(.))]"/>    
     <xsl:template match="m:event[not(normalize-space(.))]"/>    
-    <xsl:template match="m:eventList[not(m:event)]"/>    
+    <xsl:template match="m:eventList[not(m:event)]"/>
+    <xsl:template match="m:hand[not(* or normalize-space(concat(@medium,@resp,.)))]"/>    
+    <xsl:template match="m:handList[not(*)]"/>    
     <xsl:template match="m:incip[not(*)]"/>    
     <xsl:template match="m:incip//*[not(* or normalize-space(.))]"/>    
     <xsl:template match="m:key[not(@*[normalize-space(.)] or normalize-space(.))]"/>    
     <xsl:template match="m:meter[not(@*[normalize-space(.)] or normalize-space(.))]"/>    
     <xsl:template match="m:notesStmt[not(m:annot)]"/>    
-    <xsl:template match="m:perfMedium[not(* or normalize-space(.))]"/>    
-    <xsl:template match="m:perfMedium//*[not(* or normalize-space(.))]"/>    
-    <xsl:template match="m:physDesc[not(* or normalize-space(.))]"/>    
+    <xsl:template match="m:perfMedium//*[not(normalize-space(.) or @*[normalize-space(.)] or name()='head')]"/>    
+    <xsl:template match="m:perfMedium[not(*)]"/>    
     <xsl:template match="m:physMedium[not(* or normalize-space(.))]"/>    
     <xsl:template match="m:plateNum[not(* or normalize-space(.))]"/>    
     <xsl:template match="m:provenance[not(* or normalize-space(.))]"/>    
+    <xsl:template match="m:ptr[not(@*[normalize-space(.)] or normalize-space(.))]"/>    
     <xsl:template match="m:publisher[not(* or normalize-space(.))]"/>    
     <xsl:template match="m:pubPlace[not(* or normalize-space(.))]"/>    
     <xsl:template match="m:pubStmt[not(* or normalize-space(.))]"/>    

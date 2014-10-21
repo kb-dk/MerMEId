@@ -64,7 +64,7 @@
 	
 	<!-- omit pop-up information -->
 	<xsl:template match="m:bibl//m:title | m:identifier[@authority='RISM'] | m:instrVoice/text() | 
-		m:identifier/text() | m:identifier/@type">
+		m:identifier/text() | m:identifier/@label">
 		<xsl:value-of select="."/>
 	</xsl:template>
 	

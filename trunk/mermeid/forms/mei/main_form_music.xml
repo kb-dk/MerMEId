@@ -131,7 +131,7 @@
 						</xf:group>
 						<xf:repeat nodeset="m:identifier" id="work-id-repeat">
 							<h:div>					
-								<xf:input ref="@type" class="mediumshort"/>
+								<xf:input ref="@label" class="mediumshort"/>
 								<xf:input ref="." class="mediumshort"/>
 								<dcm:element-buttons 
 									triggers="add remove" 

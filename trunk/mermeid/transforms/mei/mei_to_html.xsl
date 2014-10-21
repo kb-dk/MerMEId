@@ -89,10 +89,10 @@
 		<!-- main identification -->
 
 		<xsl:variable name="catalogue_no">
-			<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
+			<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]"/>
 		</xsl:variable>
 
-		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]/text()">
+		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]/text()">
 			<div class="series_header {$file_context}">
 				<a>
 					<xsl:value-of select="$file_context"/>
@@ -241,9 +241,9 @@
 		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier/text()">
 			<p>
 				<xsl:for-each select="m:meiHead/m:workDesc/m:work/m:identifier[text()]">
-					<!--<xsl:variable name="type"><xsl:apply-templates select="@type"/></xsl:variable>
+					<!--<xsl:variable name="type"><xsl:apply-templates select="@label"/></xsl:variable>
 					<xsl:value-of select="concat($type,' ',.)"/>-->
-					<xsl:apply-templates select="@type"/>
+					<xsl:apply-templates select="@label"/>
 					<xsl:text> </xsl:text>
 					<xsl:value-of select="."/>
 					<xsl:if test="position()&lt;last()">
@@ -581,7 +581,7 @@
 			<xsl:variable name="file_context"
 				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
 			<xsl:variable name="catalogue_no"
-				select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
+				select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]"/>
 			<xsl:variable name="output">
 				<xsl:value-of select="$file_context"/>
 				<xsl:text> </xsl:text>
@@ -630,8 +630,8 @@
 		<xsl:if test="m:identifier/text()">
 			<p>
 				<xsl:for-each select="m:identifier[text()]">
-					<!-- Tjek her (se f.eks. CNW 351) -->
-					<xsl:apply-templates select="@type"/>
+					<!-- tjek her (se f.eks. CNW 351) -->
+					<xsl:apply-templates select="@label"/>
 					<xsl:text> </xsl:text>
 					<xsl:value-of select="."/>
 					<xsl:if test="position()&lt;last()">
@@ -1589,8 +1589,8 @@
 					select="m:geogName[text()] | 
 					m:date[text()] |
 					m:identifier[text()]">
-					<xsl:if test="string-length(@type) &gt; 0">
-						<xsl:apply-templates select="@type"/>
+					<xsl:if test="string-length(@label) &gt; 0">
+						<xsl:apply-templates select="@label"/>
 						<xsl:text>: </xsl:text>
 					</xsl:if>
 					<xsl:value-of select="."/>
@@ -1803,11 +1803,11 @@
 
 			<xsl:for-each select="m:identifier[text()]">
 				<div>
-					<xsl:apply-templates select="@type"/>
+					<xsl:apply-templates select="@label"/>
 					<xsl:text> </xsl:text>
 					<xsl:choose>
 						<!-- some CNW-specific styling here -->
-						<xsl:when test="contains(@type,'CNU') and contains(@type,'Source')">
+						<xsl:when test="contains(@label,'CNU') and contains(@label,'Source')">
 							<b><xsl:apply-templates select="."/></b>. </xsl:when>
 						<xsl:otherwise>
 							<xsl:apply-templates select="."/>. </xsl:otherwise>
@@ -3179,7 +3179,7 @@
 	<!-- General abbreviations in text blocks. -->
 	<!-- was: <xsl:template match="m:instrVoice/text() | m:identifier/text() | m:identifier/@type">-->
 	<xsl:template match="text()[name(..)!='p' and name(..)!='persName' and name(..)!='ptr' and name(..)!='ref'] 
-		| m:identifier/@type">
+		| m:identifier/@label">
 		<xsl:variable name="string" select="concat(' ',.,' ')"/>
 		<xsl:variable name="abbr" select="$abbreviations_file/m:p/m:choice/m:abbr[contains(translate($string,';:[]()/','       '),concat(' ',.,' '))]"/>
 		<!--was: <xsl:variable name="abbr" select="$abbreviations_file/m:p/m:choice/m:abbr[contains($string,.)]"/>-->
