@@ -7,8 +7,7 @@
 	Axel Teich Geertinger & Sigfrid Lundberg
 	Danish Centre for Music Publication
 	The Royal Library, Copenhagen
-	2010-2014
-	
+	2010-2014	
 -->
 
 
@@ -55,6 +54,7 @@
 
 
 	<!-- CREATE HTML DOCUMENT -->
+	
 	<xsl:template match="m:mei" xml:space="default">
 		<html xml:lang="en" lang="en">
 			<head>
@@ -70,6 +70,7 @@
 
 
 	<!-- MAIN TEMPLATES -->
+	
 	<xsl:template name="make_html_head">
 		<title>
 			<xsl:call-template name="page_title"/>
@@ -86,8 +87,8 @@
 	</xsl:template>
 
 	<xsl:template name="make_html_body" xml:space="default">
-		<!-- main identification -->
 
+		<!-- main identification -->
 		<xsl:variable name="catalogue_no">
 			<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]"/>
 		</xsl:variable>
@@ -322,9 +323,6 @@
 		<!-- works with versions: show global sources and performances before version details -->
 		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
 			<!-- global sources -->
-			<!-- was, in XSLT 1.0:  
-			<xsl:apply-templates
-				select="m:meiHead/m:fileDesc/m:sourceDesc[m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)&gt;0]]">-->
 			<xsl:apply-templates
 					select="m:meiHead/m:fileDesc/m:sourceDesc[count(m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0]">
 					<xsl:with-param name="global">true</xsl:with-param>
@@ -454,19 +452,14 @@
 						<div class="relation_list">
 							<xsl:variable name="label">
 								<xsl:choose>
-									<xsl:when test="@rel='hasAbridgement'">Abridged
-										version:</xsl:when>
-									<xsl:when test="@rel='isAbridgementOf'">Abridged version
-										of:</xsl:when>
+									<xsl:when test="@rel='hasAbridgement'">Abridged version:</xsl:when>
+									<xsl:when test="@rel='isAbridgementOf'">Abridged version of:</xsl:when>
 									<xsl:when test="@rel='hasAdaptation'">Adaptation:</xsl:when>
 									<xsl:when test="@rel='isAdaptationOf'">Adaptation of:</xsl:when>
-									<xsl:when test="@rel='hasAlternate'">Alternate
-										version:</xsl:when>
-									<xsl:when test="@rel='isAlternateOf'">Alternate version
-										of:</xsl:when>
+									<xsl:when test="@rel='hasAlternate'">Alternate version:</xsl:when>
+									<xsl:when test="@rel='isAlternateOf'">Alternate version of:</xsl:when>
 									<xsl:when test="@rel='hasArrangement'">Arrangement:</xsl:when>
-									<xsl:when test="@rel='isArrangementOf'">Arrangement
-										of:</xsl:when>
+									<xsl:when test="@rel='isArrangementOf'">Arrangement of:</xsl:when>
 									<xsl:when test="@rel='hasComplement'">Complement:</xsl:when>
 									<xsl:when test="@rel='isComplementOf'">Complement to:</xsl:when>
 									<xsl:when test="@rel='hasEmbodiment'">Embodiment:</xsl:when>
@@ -478,40 +471,28 @@
 									<xsl:when test="@rel='hasPart'">Contains:</xsl:when>
 									<xsl:when test="@rel='isPartOf'">Contained in:</xsl:when>
 									<xsl:when test="@rel='hasRealization'">Realization:</xsl:when>
-									<xsl:when test="@rel='isRealizationOf'">Realization
-										of:</xsl:when>
-									<xsl:when test="@rel='hasReconfiguration'"
-										>Reconfiguration:</xsl:when>
-									<xsl:when test="@rel='isReconfigurationOf'">Reconfiguration
-										of:</xsl:when>
+									<xsl:when test="@rel='isRealizationOf'">Realization of:</xsl:when>
+									<xsl:when test="@rel='hasReconfiguration'">Reconfiguration:</xsl:when>
+									<xsl:when test="@rel='isReconfigurationOf'">Reconfigurationof:</xsl:when>
 									<xsl:when test="@rel='hasReproduction'">
 										<xsl:choose>
-											<xsl:when test="contains(@label,'Edition')"
-												>Edition:</xsl:when>
-											<xsl:otherwise>Reproduction (edition or
-												facsimile):</xsl:otherwise>
+											<xsl:when test="contains(@label,'Edition')">Edition:</xsl:when>
+											<xsl:otherwise>Reproduction (edition or facsimile):</xsl:otherwise>
 										</xsl:choose>
 									</xsl:when>
-									<xsl:when test="@rel='isReproductionOf'">Reproduction
-										of:</xsl:when>
+									<xsl:when test="@rel='isReproductionOf'">Reproduction of:</xsl:when>
 									<xsl:when test="@rel='hasRevision'">Revised version:</xsl:when>
-									<xsl:when test="@rel='isRevisionOf'">Revised version
-										of:</xsl:when>
+									<xsl:when test="@rel='isRevisionOf'">Revised version of:</xsl:when>
 									<xsl:when test="@rel='hasSuccessor'">Succeeded by:</xsl:when>
 									<xsl:when test="@rel='isSuccessorOf'">Succeeds:</xsl:when>
 									<xsl:when test="@rel='hasSupplement'">Supplement:</xsl:when>
 									<xsl:when test="@rel='isSummarizationOf'">Summarizes:</xsl:when>
-									<xsl:when test="@rel='hasSummarization'"
-										>Summarization:</xsl:when>
+									<xsl:when test="@rel='hasSummarization'">Summarization:</xsl:when>
 									<xsl:when test="@rel='isSupplementOf'">Supplement to:</xsl:when>
-									<xsl:when test="@rel='hasTransformation'"
-										>Transformation:</xsl:when>
-									<xsl:when test="@rel='isTransformationOf'">Transformation
-										of:</xsl:when>
-									<xsl:when test="@rel='hasTranslation'">Translated
-										version:</xsl:when>
-									<xsl:when test="@rel='isTranslationOf'">Translation
-										of:</xsl:when>
+									<xsl:when test="@rel='hasTransformation'">Transformation:</xsl:when>
+									<xsl:when test="@rel='isTransformationOf'">Transformation of:</xsl:when>
+									<xsl:when test="@rel='hasTranslation'">Translated version:</xsl:when>
+									<xsl:when test="@rel='isTranslationOf'">Translation of:</xsl:when>
 									<xsl:otherwise>
 										<xsl:value-of select="@rel"/>
 									</xsl:otherwise>
@@ -642,6 +623,8 @@
 		</xsl:if>
 		<!-- persons -->
 		<xsl:apply-templates select="m:titleStmt/m:respStmt[m:persName]"/>
+		<!-- version history -->
+		<xsl:apply-templates select="m:history[//text()]" mode="history"/>
 		<!-- performers -->
 		<xsl:apply-templates select="m:perfMedium[*//text()]"/>
 		<!-- meter, key, incipit – only relevant at this level in single movement works -->
@@ -654,8 +637,6 @@
 		<xsl:apply-templates select="m:incip"/>
 		<!-- external relation links -->
 		<xsl:apply-templates select="m:relationList[m:relation[@target!='']]"/>
-		<!-- version history -->
-		<xsl:apply-templates select="m:history[//text()]" mode="history"/>
 		<!-- components (movements) -->
 		<xsl:for-each
 			select="m:componentGrp[normalize-space(*//text()[1]) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">
