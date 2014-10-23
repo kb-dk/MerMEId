@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns="http://www.music-encoding.org/ns/mei" 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xl="http://www.w3.org/1999/xlink" 
+<xsl:stylesheet xmlns="http://www.music-encoding.org/ns/mei"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:m="http://www.music-encoding.org/ns/mei"
-    version="1.0"
+    xmlns:xl="http://www.w3.org/1999/xlink" 
+    version="1.0" 
     exclude-result-prefixes="m xsl xl">
-
+    
     <!--  
     Occasionally MerMEId misplaces some elements. 
     These are put in the right order with this xsl.
@@ -76,6 +76,26 @@
         </xsl:element>
     </xsl:template>
 
+    <!-- Add a record of the conversion to revisionDesc -->
+    <xsl:template match="m:revisionDesc">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+            <xsl:element name="change" namespace="http://www.music-encoding.org/ns/mei">
+                <xsl:attribute name="isodate"><xsl:value-of 
+                    select="format-date(current-date(),'[Y]-[M02]-[D02]')"/></xsl:attribute>
+                <xsl:attribute name="resp">MerMEId</xsl:attribute>
+                <xsl:variable name="generated_id" select="generate-id()"/>
+                <xsl:variable name="no_of_nodes" select="count(//*)"/>
+                <xsl:attribute name="xml:id">
+                    <xsl:value-of select="concat('change_',$no_of_nodes,$generated_id)"/>
+                </xsl:attribute>
+                <xsl:element name="changeDesc" namespace="http://www.music-encoding.org/ns/mei">
+                    <xsl:element name="p" namespace="http://www.music-encoding.org/ns/mei">Batch transformation ensuring correct order of elements in source, work and biblList</xsl:element>
+                </xsl:element>
+            </xsl:element>
+        </xsl:copy>
+    </xsl:template>
+    
     <xsl:template match="@*|node()">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>

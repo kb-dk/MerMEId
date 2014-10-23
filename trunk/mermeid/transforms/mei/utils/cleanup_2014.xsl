@@ -26,7 +26,7 @@
         <physLoc>
             <xsl:apply-templates select="@*"/>
             <xsl:choose>
-                <xsl:when test="m:ptr[@*[text()] or //text()]">
+                <xsl:when test="m:ptr[normalize-space(@*) or //text()]">
                     <!-- if the ptr element is not empty, put it in the repository element -->
                     <repository>
                         <xsl:apply-templates select="m:repository/@*"/>
@@ -63,10 +63,30 @@
     <xsl:template match="m:notesStmt[not(*)]"/>    
     <xsl:template match="m:eventList[not(*)]"/>    
     
-    
+ 
     <!-- Remove misplaced empty geogName elements -->
     <xsl:template match="m:imprint/m:geogName[not(text())]"/>
     
+
+    <!-- Add a record of the conversion to revisionDesc -->
+    <xsl:template match="m:revisionDesc">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+            <change>
+                <xsl:attribute name="isodate"><xsl:value-of 
+                    select="format-date(current-date(),'[Y]-[M02]-[D02]')"/></xsl:attribute>
+                <xsl:attribute name="resp">MerMEId</xsl:attribute>
+                <xsl:variable name="generated_id" select="generate-id()"/>
+                <xsl:variable name="no_of_nodes" select="count(//*)"/>
+                <xsl:attribute name="xml:id">
+                    <xsl:value-of select="concat('change_',$no_of_nodes,$generated_id)"/>
+                </xsl:attribute>
+                <changeDesc>
+                    <p>Batch transformation removing duplicate IDs and fixing other issues</p>
+                </changeDesc>
+            </change>
+        </xsl:copy>
+    </xsl:template>
     
     <xsl:template match="@*|node()">
         <xsl:copy>
