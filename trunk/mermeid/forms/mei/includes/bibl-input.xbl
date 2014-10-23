@@ -298,11 +298,11 @@
                                 </xf:input>
                                 <dcm:attribute-editor ref="m:physLoc/m:identifier"/>
                                 <h:div>
-                                    <dcm:create ref="m:physLoc" 
+                                    <dcm:create ref="m:physLoc/m:repository" 
                                         nodeset="m:ptr"
                                         label="Add link to library record"
-                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:ptr][1]/m:physLoc/m:ptr"/>
-                                    <xf:repeat nodeset="m:physLoc/m:ptr" id="bibl-repository-ptr">
+                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:ptr][1]/m:physLoc/m:repository/m:ptr"/>
+                                    <xf:repeat nodeset="m:physLoc/m:repository/m:ptr" id="bibl-repository-ptr">
                                         <h:div>
                                             <xf:input ref="@target" class="maxlong">
                                                 <xf:label class="fixed_width">URI <h:a class="help">?<h:span
@@ -318,7 +318,7 @@
                                                 triggers="add remove" 
                                                 nodeset="m:ptr" 
                                                 index="bibl-repository-ptr"
-                                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:ptr][1]/m:physLoc/m:ptr"/>
+                                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:ptr][1]/m:physLoc/m:repository/m:ptr"/>
                                             <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>

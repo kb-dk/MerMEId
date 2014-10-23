@@ -51,7 +51,7 @@
   
   <xsl:template match="m:music">
     <music>
-      <xsl:comment>Now, we have to leave a placeholder for the music</xsl:comment>
+      <xsl:comment>a placeholder for the music</xsl:comment>
     </music>
   </xsl:template>
   
@@ -59,9 +59,7 @@
   <xsl:template match="*" mode="header">
     <!-- build an xpath string to locate the corresponding node in the model header -->
     <xsl:variable name="path"><xsl:for-each 
-      select="ancestor-or-self::*">/<xsl:if 
-        test="namespace-uri()='http://www.music-encoding.org/ns/mei'">m:</xsl:if><xsl:if 
-          test="namespace-uri()='http://www.tei-c.org/ns/1.0'">t:</xsl:if><xsl:value-of 
+      select="ancestor-or-self::*">/m:<xsl:value-of 
             select="name()"/><xsl:if test="local-name()='meiHead'">[1]</xsl:if></xsl:for-each>
     </xsl:variable>
     <xsl:element name="{name()}" namespace="{namespace-uri()}">
