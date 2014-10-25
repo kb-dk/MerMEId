@@ -113,10 +113,11 @@
                                     origin="xxf:evaluate($nodeset)[index($index)]"
                                     nodeset="xxf:evaluate($nodeset)[index($index)]"/>
                                 <xxf:variable name="added_nodeset" select="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)]"/>
-                                <xf:setvalue ref="instance('temp')/counter" value="count($added_nodeset//@xml:id)"/>
-                                <xf:action while="instance('temp')/counter &gt; 0">
+                                <!--<xf:setvalue ref="instance('temp')/counter" value="count($added_nodeset//@xml:id)"/>
+                                <xf:action while="instance('temp')/counter &gt; 0">-->
+                                <xf:action while="$added_nodeset//@xml:id[.!='']">
                                     <xf:setvalue ref="$added_nodeset//@xml:id[.!='']" value="''"/>
-                                    <xf:setvalue ref="instance('temp')/counter" value=". - 1"/>
+                                    <!--<xf:setvalue ref="instance('temp')/counter" value=". - 1"/>-->
                                 </xf:action>                                  
                                 <xf:dispatch name="id-update" target="form-group"/>
                             </xf:action>
