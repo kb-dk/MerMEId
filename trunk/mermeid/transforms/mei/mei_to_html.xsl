@@ -438,8 +438,8 @@
 	
 	<xsl:template match="m:relationList">
 		<xsl:apply-templates select="." mode="relation_list"/>
-		<!-- this detour is necessary to make it possible to override default behaviour in 
-			style sheets including this one (e.g., the print style sheet) -->
+		<!-- this detour is necessary to enable overriding the default behaviour in 
+			style sheets including this one (e.g., a print style sheet) -->
 	</xsl:template>
 
 	<xsl:template match="m:relationList" mode="relation_list">
@@ -456,8 +456,8 @@
 									<xsl:when test="@rel='isAbridgementOf'">Abridged version of:</xsl:when>
 									<xsl:when test="@rel='hasAdaptation'">Adaptation:</xsl:when>
 									<xsl:when test="@rel='isAdaptationOf'">Adaptation of:</xsl:when>
-									<xsl:when test="@rel='hasAlternate'">Alternate version:</xsl:when>
-									<xsl:when test="@rel='isAlternateOf'">Alternate version of:</xsl:when>
+									<xsl:when test="@rel='hasAlternate'">Alternate:</xsl:when>
+									<xsl:when test="@rel='isAlternateOf'">Alternate of:</xsl:when>
 									<xsl:when test="@rel='hasArrangement'">Arrangement:</xsl:when>
 									<xsl:when test="@rel='isArrangementOf'">Arrangement of:</xsl:when>
 									<xsl:when test="@rel='hasComplement'">Complement:</xsl:when>
@@ -528,7 +528,7 @@
 	</xsl:template>
 
 	<xsl:template match="m:relation" mode="relation_link">
-		<!-- cross references between works in the catalogue are treated in a special way -->
+		<!-- internal cross references between works in the catalogue are treated in a special way -->
 		<xsl:variable name="mermeid_crossref">
 			<xsl:choose>
 				<xsl:when test="contains(@target,'://') or contains(@target,'#')">false</xsl:when>
