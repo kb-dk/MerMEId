@@ -257,6 +257,7 @@
       <xf:select appearance="full" ref="instance('parameters')/dcm:show_id">
         <xf:action ev:event="xforms-value-changed">
           <xf:insert context="." origin="xxf:set-session-attribute('show_id',instance('parameters')/dcm:show_id)"/>
+          <xf:dispatch name="settings-changed" target="form-group"/>
         </xf:action>
         <xf:item>
           <xf:label>Show xml:id values <h:a class="help">?<h:span class="comment">Displays an ID icon 
@@ -274,6 +275,7 @@
       <xf:select appearance="full" ref="instance('parameters')/dcm:attr_editor">
         <xf:action ev:event="xforms-value-changed">
           <xf:insert context="." origin="xxf:set-session-attribute('attr_editor',instance('parameters')/dcm:attr_editor)"/>
+          <xf:dispatch name="settings-changed" target="form-group"/>
         </xf:action>
         <xf:item>
           <xf:label>Enable attribute editor <h:a class="help_plain"><h:img 
@@ -292,6 +294,7 @@
       <xf:select appearance="full" ref="instance('parameters')/dcm:code_inspector">
         <xf:action ev:event="xforms-value-changed">
           <xf:insert context="." origin="xxf:set-session-attribute('code_inspector',instance('parameters')/dcm:code_inspector)"/>
+          <xf:dispatch name="settings-changed" target="form-group"/>
         </xf:action>
         <xf:item>
           <xf:label>Enable code inspector <h:a class="help">?<h:span class="comment">The

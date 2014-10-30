@@ -42,22 +42,32 @@
         </xbl:resources>
 
         <xbl:implementation>
-            <xf:model>
+            <xf:model id="attr_model">
                 <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
                     id="empty-instance"
                     src="/../editor/forms/mei/model/empty_doc.xml" 
                     xxforms:readonly="true"/>
             </xf:model>
         </xbl:implementation>
+                
+        <xbl:handlers>
+            <!-- Pass on the settings-changed event to the inner group -->
+            <xbl:handler event="settings-changed" phase="target">
+                <xf:dispatch name="settings-changed" targetid="history_input_inner_grp"/>
+<xf:message>settings-changed received</xf:message>                
+            </xbl:handler>
+        </xbl:handlers>     
         
+                
         <xbl:template>
-            <!-- Local controls -->
 
             <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
-                
+
                 <xbl:content includes="xf|label,xf|help,xf|hint,xf|alert"/>                
+                
+             
                 <!-- Inner group -->
-                <xf:group appearance="xxforms:internal" xxbl:scope="inner">                    
+                <xf:group appearance="xxforms:internal" xxbl:scope="inner" id="history_input_inner_grp">                    
                     <!-- Variables pointing to external single-node bindings -->
                     <xxforms:variable name="binding" as="node()?">
                         <xxforms:sequence select="." xxbl:scope="outer"/>

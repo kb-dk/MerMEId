@@ -47,6 +47,34 @@
             </xbl:style>
         </xbl:resources>
         
+        <xbl:implementation>
+            <xf:model id="attr_model">
+                
+                <xf:instance id="mei_attr_list" 
+                    src="/../editor/forms/mei/model/MEI_attr_list.xml"/>
+                
+                <!-- Local copy of editor settings instance needed to get settings into inner scope. -->
+                <!-- Values read from the file are overwritten on loading the component to get the current settings -->
+                <xf:instance xmlns="http://www.kb.dk/dcm" id="parameters"
+                    src="/../editor/forms/mei/mermeid_configuration.xml">
+                </xf:instance>
+                
+                <xf:instance id="local_temp">
+                    <temp-values>
+                        <counter/>
+                    </temp-values>
+                </xf:instance>
+                    
+                
+                <xf:action ev:event="xforms-model-construct-done attr-settings-changed">
+                    <!-- get settings from session variables -->
+                    <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
+                    <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
+                </xf:action>   
+
+            </xf:model>
+        </xbl:implementation>
+        
         <xbl:handlers>
             <!-- Dispatching attr-activate and attr-close events from outside the component allows activating
                 and closing the editor without using the built-in trigger -->
@@ -56,31 +84,37 @@
             <xbl:handler event="attr-close" phase="target">
                 <xf:dispatch name="SaveAndClose" targetid="OK_button"/>
             </xbl:handler>
+            <xbl:handler event="settings-changed" phase="target">
+                <!-- refresh settings from session variables -->
+                <!-- (apparently not working yet...) -->
+                <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
+                <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
+            </xbl:handler>
         </xbl:handlers>     
         
         <xbl:template>
             <!-- Local controls -->
             <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
-                <xf:group ref=".[instance('parameters')/dcm:attr_editor='true']">
-                    <xbl:content includes="xf|label,xf|help,xf|hint,xf|alert"/>                
+                
+                    <xbl:content includes="xf|label,xf|help,xf|hint,xf|alert"/>         
+
                     <!-- Inner group -->
-                    <xf:group appearance="xxforms:internal" xxbl:scope="inner">                    
+                    <xf:group appearance="xxforms:internal" xxbl:scope="inner">   
+                        
+
+                        <xf:group ref=".[instance('parameters')/dcm:attr_editor='true']">
+                        
+                        
                         <!-- Variables pointing to external single-node bindings -->
                         <xxforms:variable name="binding" as="node()?">
                             <xxforms:sequence select="." xxbl:scope="outer"/>
                             <!-- initialization -->
                             <xf:action ev:event="xforms-value-changed xforms-enabled"/>
                         </xxforms:variable>
-                        <xxforms:variable name="nodename" select="local-name()" xxbl:scope="outer"/>
                         <xxforms:variable name="attributes">
-                            <!-- select attribute list depending on namespace -->
-                            <xxforms:sequence select="if (namespace-uri(.)='http://www.tei-c.org/ns/1.0')
-                                then instance('tei_attr_list')/*[local-name()=$nodename]/@*
-                                else instance('mei_attr_list')/*[local-name()=$nodename]/@*" xxbl:scope="outer"/>
+                            <xxforms:sequence select="instance('mei_attr_list')/*[local-name()=name($binding)][1]/@*" xxbl:scope="inner"/>
                         </xxforms:variable>
-                        <xxforms:variable name="counter">
-                            <xxforms:sequence select="instance('temp')/counter" xxbl:scope="outer"/>
-                        </xxforms:variable> 
+                            
                         
                         <xf:trigger appearance="minimal" id="open_button">
                             <xf:label><h:img id="attr_editor_id" src="/../editor/images/attribute.png" title="Edit attributes" alt="Edit attributes"/></xf:label>
@@ -89,10 +123,10 @@
                                 <!-- initialization -->
                                 <!-- loop through attributes -->
                                 <xf:action ev:event="xforms-value-changed xforms-enabled">
-                                    <xf:setvalue ref="$counter" value="1"/>
-                                    <xf:action while="$counter &lt; count($attributes)+1">
+                                    <xf:setvalue ref="instance('local_temp')/counter" value="1"/>
+                                    <xf:action while="instance('local_temp')/counter &lt; count($attributes)+1">
                                         <xxforms:variable name="current-attribute">
-                                            <xxforms:sequence select="name($attributes[number($counter)])" xxbl:scope="inner"/>
+                                            <xxforms:sequence select="name($attributes[number(instance('local_temp')/counter)])" xxbl:scope="inner"/>
                                         </xxforms:variable>
                                         <!-- read external value -->
                                         <xxforms:variable name="current-value">
@@ -100,7 +134,7 @@
                                         </xxforms:variable> 
                                         <!-- reset local value -->
                                         <xf:setvalue ref="$attributes[name()=$current-attribute]" value="$current-value"/>
-                                        <xf:setvalue ref="$counter" value=". + 1"/>
+                                        <xf:setvalue ref="instance('local_temp')/counter" value=". + 1"/>
                                     </xf:action>  
                                 </xf:action>
                             </xf:action>
@@ -126,13 +160,13 @@
                                         <!-- hide editor -->
                                         <xxforms:hide dialog="attr-dialog"/>                                    
                                         <!-- copy values to outer binding -->
-                                        <xf:setvalue ref="$counter" value="1"/>
-                                        <xf:action while="$counter &lt; count($attributes)+1">
+                                        <xf:setvalue ref="instance('local_temp')/counter" value="1"/>
+                                        <xf:action while="instance('local_temp')/counter &lt; count($attributes)+1">
                                             <xxforms:variable name="current-attribute">
-                                                <xxforms:sequence select="name($attributes[number($counter)])" xxbl:scope="inner"/>
+                                                <xxforms:sequence select="name($attributes[number(instance('local_temp')/counter)])" xxbl:scope="inner"/>
                                             </xxforms:variable> 
                                             <xxforms:variable name="current-value">
-                                                <xxforms:sequence select="$attributes[number($counter)]" xxbl:scope="inner"/>
+                                                <xxforms:sequence select="$attributes[number(instance('local_temp')/counter)]" xxbl:scope="inner"/>
                                             </xxforms:variable>
                                             <!-- copy value if attribute exists -->
                                             <xf:action if="$binding/@*[name()=$current-attribute]">
@@ -140,9 +174,9 @@
                                             </xf:action>
                                             <!-- create non-empty attributes if they do not exist -->
                                             <xf:action if="not($binding/@*[name()=$current-attribute]) and normalize-space($current-value)!=''">
-                                                <xf:insert context="$binding" origin="$attributes[number($counter)]"/>
+                                                <xf:insert context="$binding" origin="$attributes[number(instance('local_temp')/counter)]"/>
                                             </xf:action>
-                                            <xf:setvalue ref="$counter" value=". + 1"/>
+                                            <xf:setvalue ref="instance('local_temp')/counter" value=". + 1"/>
                                         </xf:action>                                                    
                                     </xf:action>
                                 </xf:trigger>
@@ -150,11 +184,11 @@
                                 <xf:trigger id="reset_button">
                                     <xf:label>Reset</xf:label>
                                     <xf:action ev:event="DOMActivate ResetAttr">
-                                        <xf:setvalue ref="$counter" value="1"/>
+                                        <xf:setvalue ref="instance('local_temp')/counter" value="1"/>
                                         <!-- loop through attributes -->
-                                        <xf:action while="$counter &lt; count($attributes)+1">
+                                        <xf:action while="instance('local_temp')/counter &lt; count($attributes)+1">
                                             <xxforms:variable name="current-attribute">
-                                                <xxforms:sequence select="name($attributes[number($counter)])" xxbl:scope="inner"/>
+                                                <xxforms:sequence select="name($attributes[number(instance('local_temp')/counter)])" xxbl:scope="inner"/>
                                             </xxforms:variable>
                                             <!-- read external value -->
                                             <xxforms:variable name="current-value">
@@ -162,7 +196,7 @@
                                             </xxforms:variable> 
                                             <!-- reset local value -->
                                             <xf:setvalue ev:event="xforms-enabled" ref="$attributes[name()=$current-attribute]" value="$current-value"/>
-                                            <xf:setvalue ref="$counter" value=". + 1"/>
+                                            <xf:setvalue ref="instance('local_temp')/counter" value=". + 1"/>
                                         </xf:action>  
                                     </xf:action>
                                 </xf:trigger>
@@ -175,7 +209,9 @@
                             </h:div>                                            
                         </xxforms:dialog>
                     </xf:group>                            
-                </xf:group>
+
+                    </xf:group>                            
+                
             </xf:group>
         </xbl:template>
     </xbl:binding>

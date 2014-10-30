@@ -30,7 +30,7 @@
 		
 		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:history">
 			
-			<dcm:history-input/>
+			<dcm:history-input id="history-input-work"/>
 
 			<!-- List work level performances -->
 			<dcm:performance-list ref=".[m:eventList[@type='performances']//text() or
@@ -44,7 +44,7 @@
 			</dcm:performance-list>
 		</xf:group> 
 
-		<!-- Show "work level" performances entered at expression level, if any (this is an exception)	-->
+		<!-- Show "work level" performances entered at expression level, if any	-->
 		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList[count(m:expression)=1]/m:expression/m:history[m:eventList//text()]">
 			<h:p>[Performance entered at expression (version) level]</h:p>
 			<dcm:performance-list>
@@ -74,7 +74,7 @@
 							and at version level. 
 							Versions are defined on the Music tab.</h:span></h:a>
 					</h:legend>
-					<xf:group ref="m:history">
+					<xf:group ref="m:history" id="history-input-expression">
 						<dcm:history-input/>
 						<!-- expression-level performances -->
 						<dcm:performance-list>
