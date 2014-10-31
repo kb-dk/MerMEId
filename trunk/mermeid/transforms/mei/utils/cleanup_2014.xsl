@@ -68,6 +68,15 @@
     <xsl:template match="m:imprint/m:geogName[not(text())]"/>
     
 
+    <!-- CNW-specific: change some URLs  -->
+    <xsl:template match="m:ptr[contains(@target,'www.kb.dk/export/sites/kb_dk/')]">
+        <xsl:copy>
+            <xsl:apply-templates select="@*[name()!='target']"/>
+            <xsl:attribute name="target"><xsl:value-of select="concat(substring-before(@target,'export/sites/kb_dk/'),substring-after(@target,'export/sites/kb_dk/'))"/></xsl:attribute>
+            <xsl:apply-templates select="node()"/>
+        </xsl:copy>
+    </xsl:template>
+
     <!-- Add a record of the conversion to revisionDesc -->
     <xsl:template match="m:revisionDesc">
         <xsl:copy>
