@@ -105,6 +105,18 @@
                     src="/../editor/forms/mei/model/empty_doc.xml" 
                     xxf:readonly="true"/>
                 
+                <!-- Local copy of editor settings instance needed to get settings into inner scope. -->
+                <!-- Values read from the file are overwritten on loading the component to get the current settings -->
+                <xf:instance xmlns="http://www.kb.dk/dcm" id="parameters"
+                    src="/../editor/forms/mei/mermeid_configuration.xml">
+                </xf:instance>
+                
+                <xf:action ev:event="xforms-model-construct-done settings-changed">
+                    <!-- get settings from session variables -->
+                    <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
+                    <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
+                </xf:action>   
+
             </xf:model>
         </xbl:implementation>
         <xbl:template>
@@ -128,10 +140,6 @@
                     <xxf:variable name="reduced-template" as="node()?">
                         <xxf:sequence select="instance('reduced-template')" xxbl:scope="outer"/>
                     </xxf:variable>
-                    <!--
-                        <xxf:variable name="empty-instance" as="node()?">
-                        <xxf:sequence select="instance('empty-instance')" xxbl:scope="outer"/>
-                        </xxf:variable>-->
                     <xxf:variable name="data-instance" as="node()?">
                         <xxf:sequence select="instance('data-instance')" xxbl:scope="outer"/>
                     </xxf:variable>
@@ -244,6 +252,7 @@
                                         </xf:group>
                                         <!-- end edit -->
                                         
+                                        <dcm:id/>
                                         <dcm:attribute-editor/>
                                         
                                         
@@ -453,8 +462,6 @@
                                                                                     nodeset="m:item"
                                                                                     index="repeat-items"
                                                                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[m:itemList/m:item][1]/m:itemList/m:item[last()]"/>
-                                                                            </h:td>
-                                                                            <h:td class="no_border">
                                                                                 <dcm:attribute-editor/>
                                                                             </h:td>
                                                                             <h:td>

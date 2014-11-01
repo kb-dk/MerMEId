@@ -257,7 +257,7 @@
       <xf:select appearance="full" ref="instance('parameters')/dcm:show_id">
         <xf:action ev:event="xforms-value-changed">
           <xf:insert context="." origin="xxf:set-session-attribute('show_id',instance('parameters')/dcm:show_id)"/>
-          <xf:dispatch name="settings-changed" target="form-group"/>
+          <xf:dispatch name="settings-changed" targetid="form-group"/>
         </xf:action>
         <xf:item>
           <xf:label>Show xml:id values <h:a class="help">?<h:span class="comment">Displays an ID icon 

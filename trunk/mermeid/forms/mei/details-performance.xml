@@ -215,10 +215,6 @@
                             <h:td class="number_cell">
                                 <xf:output value="position()"/>&#160;
                             </h:td>
-                            <h:td nowrap="nowrap">
-                                <dcm:id/>
-                                <dcm:attribute-editor/>
-                            </h:td>
                             <h:td>  
                                 <xf:repeat nodeset="m:author"><xf:output 
                                     value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
@@ -265,6 +261,8 @@
                                     nodeset="m:bibl" 
                                     index="repeat-review"
                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]/m:bibl[1]"/>-->
+                                <dcm:id/>
+                                <dcm:attribute-editor/>
                             </h:td>
                         </h:tr>
                         

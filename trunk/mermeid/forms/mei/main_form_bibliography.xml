@@ -159,8 +159,6 @@
                     <xf:output value="position()"/>&#160;
                   </h:td>
                   <h:td nowrap="nowrap">
-                    <dcm:id ref="."/>
-                    <dcm:attribute-editor ref="."/>
                     &#160;
                     <h:span class="genre">
                     <xf:repeat nodeset="m:genre"><xf:output 
@@ -218,6 +216,8 @@
                       nodeset="m:bibl" 
                       index="repeat-references"
                       origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]/m:bibl[1]"/>
+                    <dcm:id ref="."/>
+                    <dcm:attribute-editor ref="."/>
                   </h:td>
                 </h:tr>
               </xf:repeat>

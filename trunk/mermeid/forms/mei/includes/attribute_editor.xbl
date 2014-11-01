@@ -53,24 +53,11 @@
                 <xf:instance id="mei_attr_list" 
                     src="/../editor/forms/mei/model/MEI_attr_list.xml"/>
                 
-                <!-- Local copy of editor settings instance needed to get settings into inner scope. -->
-                <!-- Values read from the file are overwritten on loading the component to get the current settings -->
-                <xf:instance xmlns="http://www.kb.dk/dcm" id="parameters"
-                    src="/../editor/forms/mei/mermeid_configuration.xml">
-                </xf:instance>
-                
                 <xf:instance id="local_temp">
                     <temp-values>
                         <counter/>
                     </temp-values>
                 </xf:instance>
-                    
-                
-                <xf:action ev:event="xforms-model-construct-done attr-settings-changed">
-                    <!-- get settings from session variables -->
-                    <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
-                    <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
-                </xf:action>   
 
             </xf:model>
         </xbl:implementation>
@@ -84,25 +71,20 @@
             <xbl:handler event="attr-close" phase="target">
                 <xf:dispatch name="SaveAndClose" targetid="OK_button"/>
             </xbl:handler>
-            <xbl:handler event="settings-changed" phase="target">
-                <!-- refresh settings from session variables -->
-                <!-- (apparently not working yet...) -->
-                <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
-                <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
-            </xbl:handler>
         </xbl:handlers>     
         
         <xbl:template>
             <!-- Local controls -->
             <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
                 
-                    <xbl:content includes="xf|label,xf|help,xf|hint,xf|alert"/>         
+                <xbl:content includes="xf|label,xf|help,xf|hint,xf|alert"/>         
 
+                <!-- main 'switch' -->
+                <xf:group ref=".[instance('parameters')/dcm:attr_editor='true']">
+                    
+                    
                     <!-- Inner group -->
                     <xf:group appearance="xxforms:internal" xxbl:scope="inner">   
-                        
-
-                        <xf:group ref=".[instance('parameters')/dcm:attr_editor='true']">
                         
                         
                         <!-- Variables pointing to external single-node bindings -->
@@ -210,7 +192,7 @@
                         </xxforms:dialog>
                     </xf:group>                            
 
-                    </xf:group>                            
+                </xf:group>                            
                 
             </xf:group>
         </xbl:template>

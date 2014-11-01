@@ -42,19 +42,36 @@
         </xbl:resources>
 
         <xbl:implementation>
-            <xf:model id="attr_model">
+            <xf:model id="history_model">
+
                 <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
                     id="empty-instance"
                     src="/../editor/forms/mei/model/empty_doc.xml" 
                     xxforms:readonly="true"/>
+
+                <!-- Local copy of editor settings instance needed to get settings into inner scope. -->
+                <!-- Values read from the file are overwritten on loading the component to get the current settings -->
+                <xf:instance xmlns="http://www.kb.dk/dcm" id="parameters"
+                    src="/../editor/forms/mei/mermeid_configuration.xml">
+                </xf:instance>
+                
+                <xf:action ev:event="xforms-model-construct-done settings-changed">
+                    <!-- get settings from session variables -->
+                    <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
+                    <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
+                </xf:action>   
             </xf:model>
         </xbl:implementation>
                 
         <xbl:handlers>
             <!-- Pass on the settings-changed event to the inner group -->
-            <xbl:handler event="settings-changed" phase="target">
+            <xbl:handler event="settings-changed" phase="bubbling">
                 <xf:dispatch name="settings-changed" targetid="history_input_inner_grp"/>
-<xf:message>settings-changed received</xf:message>                
+<!--<xf:message>settings-changed received</xf:message>-->
+<!-- not working yet - the event does not reach this component -->                
+                <!-- refresh settings from session variables -->
+                <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
+                <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
             </xbl:handler>
         </xbl:handlers>     
         

@@ -634,8 +634,8 @@
 													<xf:action ev:event="DOMActivate">
 														<xxf:show dialog="ensemble-performer-menu"/>
 													</xf:action>
-												</xf:trigger>                                            
-												<dcm:attribute-editor ref="."/>
+												</xf:trigger>             
+												<dcm:id/>
 												<h:br/>
 											</xf:repeat>
 										</xf:group>
@@ -687,7 +687,6 @@
 											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
 											index="repeat-performer"/>
 										<dcm:id/>
-										<dcm:attribute-editor/>
 										<h:br/>
 									</xf:repeat>
 								</xf:group>
