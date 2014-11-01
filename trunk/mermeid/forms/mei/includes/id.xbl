@@ -5,6 +5,7 @@
   xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
   xmlns:xbl="http://www.w3.org/ns/xbl"
   xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+  xmlns:ev="http://www.w3.org/2001/xml-events"
   xmlns:dcm="http://www.kb.dk/dcm">
   
   <!--
@@ -31,14 +32,9 @@
     <xbl:template>
       <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
         <xf:group ref=".[instance('parameters')/dcm:show_id='true']">
-          <xf:group appearance="xxforms:internal" xxbl:scope="inner">
-            <xxforms:variable name="binding" as="node()?">
-              <xxforms:sequence select="." xxbl:scope="outer"/>
-            </xxforms:variable>
             <h:a class="dcm_id"><img src="/../editor/images/id.png" border="0" 
               alt="ID" class="id_card"/><h:span class="comment">ID: <xf:output 
-                value="if ($binding/@xml:id) then $binding/@xml:id else 'ID missing'"/></h:span></h:a>          
-          </xf:group>
+                value="if (@xml:id) then @xml:id else 'no XML:ID value'"/></h:span></h:a>          
         </xf:group>
       </xf:group>
     </xbl:template>
