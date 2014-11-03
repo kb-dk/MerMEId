@@ -165,11 +165,13 @@
                     <h:div class="vertical_spacer"/>
                     <h:div class="vertical_spacer"/>
                     
-                    <h:div>
+                    <h:div>                        
                         <xf:input ref="@n" class="short">
+                            
                             <xf:label class="fixed_width">No. <h:a class="help">?<h:span 
                                 class="comment">Movement, section or scene numbers may be entered either here 
-                                or as part of the title</h:span></h:a></xf:label>
+                                or as part of the title. No spaces, punctuation or special characters are allowed in this field (which is type xs:token).
+                                Use the title field instead to enter values using special characters or spaces.</h:span></h:a></xf:label>
                         </xf:input>
                     </h:div>
                     <xf:group ref="m:titleStmt">
