@@ -82,9 +82,13 @@
         </temp>
     </xf:instance> 
     
+    <!-- bindings -->
     <xf:bind nodeset="instance('temp')">
         <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
     </xf:bind>               
+    <!--<xf:bind nodeset="instance('data-instance')//*/@n" constraint="translate(.,'0123456789abcdefghijklmnopqrstuvwxyz','')=''"/>-->
+    <xf:bind nodeset="instance('data-instance')//*/@n" type="xs:token"/>
+    
     
     <!-- submissions - loading and saving data -->            
     
@@ -124,7 +128,7 @@
 
     <xf:submission id="save-to-file"
         ref="instance('data-instance')"
-        validate="false"
+        validate="true"
         relevant="false"
         xxf:calculate="false"
         resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
@@ -181,10 +185,7 @@
             </xf:action>
         </xf:action>
         <!-- end revisionDesc entry -->
-        
     </xf:action>
-    
-       
     
     <xf:action ev:event="xforms-submit-done">
         <!-- set instance state to unchanged on saving -->
@@ -201,11 +202,6 @@
             <xf:message>An error occurred (<xf:output value="$code"/>)</xf:message>
         </xf:action>
     </xf:action>
-    
-    
-    <!--<xf:bind nodeset="instance('data-instance')//*/@n" constraint=".=translate(.,' .;-/()','')"/>-->
-    <!--<xf:bind nodeset="instance('data-instance')//*/@n" type="xs:token"/>-->
-    
     
 </xf:model>
 
