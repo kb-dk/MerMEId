@@ -67,6 +67,8 @@
     <!-- Remove misplaced empty geogName elements -->
     <xsl:template match="m:imprint/m:geogName[not(text())]"/>
     
+    <!-- Remove revision changes without information about date or responsible person -->
+    <xsl:template match="m:revisionDesc/m:change[(not(@isodate) and not(m:date)) or (not(@resp) and not(m:respStmt))]"/>
 
     <!-- CNW-specific: change some URLs  -->
     <xsl:template match="m:ptr[contains(@target,'www.kb.dk/export/sites/kb_dk/')]">
