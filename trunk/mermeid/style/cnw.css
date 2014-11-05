@@ -128,3 +128,13 @@ a.work_number_reference:hover {
     color: #000;
 }
 */
+
+/* Print style rules */
+@media print {
+
+    body, #header, #footer, #all {
+        color: #000;
+        background-color: #fff;
+    }
+
+}
