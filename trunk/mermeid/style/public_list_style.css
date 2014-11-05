@@ -495,13 +495,23 @@ a:hover.abbr .expan {
     .result_table  {
         border: 0;
     }
+    
+    .genre_list {
+        display: none;
+    }
 
     .result_row .title,  
     .result_row .composer,
-    .info_bar .list_id {
-        padding: 0;
+    .info_bar .list_id,
+    .result_table .list_id {
+        padding: 2px;
         color: #000;
         background-color: #fff;
     }
     
+    a:link, a:visited, a:active {
+        color: #000;
+        text-decoration: none;
+    }
+
 }
