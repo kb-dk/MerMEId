@@ -8,11 +8,13 @@
     
     <!-- 
         Transforms data created with MerMEId before revision 821 to conform 
-        with MerMEId rev. 821+.
+        with MerMEId rev. 843+.
         From rev. 821 MerMEId uses @label on identifiers instead of @type      
-        to allow the use of string values.    
+        to allow the use of string values.
+        From rev. 843 MerMEId uses content class values conforming to MARC Form Category Term List
+        (http://www.loc.gov/standards/valuelist/marccategory.html)
         
-        Oct. 2014
+        Nov. 2014
     -->
     
     <xsl:output indent="yes" 
@@ -48,7 +50,33 @@
            </xsl:otherwise>
        </xsl:choose>
     </xsl:template>
+
+    <!-- Make DcmContentClass values conform to MARC Form Category Term List -->
     
+    <!-- change form classification value from "music" to "notated music" except with recordings -->
+    <xsl:template match="m:term[@classcode='DcmContentClass' and .='music']">
+        <xsl:element name="term" namespace="http://www.music-encoding.org/ns/mei">
+            <xsl:apply-templates select="@*"/>
+            <xsl:choose>
+                <xsl:when test="../m:term[@classcode='DcmPresentationClass']='recording'">
+                    <xsl:text>sound recording</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>notated music</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:element>
+    </xsl:template>
+
+    <!-- change presentation (production mode/carrier) from "recording" to "audio storage medium"  -->
+    <xsl:template match="m:term[@classcode='DcmPresentationClass'][.='recording']">
+        <xsl:element name="term" namespace="http://www.music-encoding.org/ns/mei">
+            <xsl:apply-templates select="@*"/>
+            <xsl:text>audio storage medium</xsl:text>
+        </xsl:element>
+    </xsl:template>
+    
+
     <!-- Add a record of the conversion to revisionDesc -->
     <xsl:template match="m:revisionDesc">
         <xsl:copy>

@@ -175,20 +175,32 @@
                                             <xf:label> </xf:label>
                                         </xf:item>
                                         <xf:item>
-                                            <xf:value>music</xf:value>
-                                            <xf:label>Music</xf:label>
+                                            <xf:value>notated music</xf:value>
+                                            <xf:label>Notated music</xf:label>
                                         </xf:item>
                                         <xf:item>
                                             <xf:value>text</xf:value>
                                             <xf:label>Text</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>sound recording</xf:value>
+                                            <xf:label>Sound recording</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>videorecording</xf:value>
+                                            <xf:label>Video recording</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>motion picture</xf:value>
+                                            <xf:label>Motion picture</xf:label>
                                         </xf:item>
                                     </xf:select1>
                                     <dcm:attribute-editor ref="m:term[@classcode='DcmContentClass']"/>
                                     <h:br clear="both"/>
                                     <xf:select1 ref="m:term[@classcode='DcmPresentationClass']" class="mediumlong">
                                         <xf:label class="fixed_width">Presentation <h:a class="help">?<h:span class="comment">Describes
-                                            the source's basic mode of production (manuscript or print). <br/> "Print, specific copy" refers to a 
-                                            specific copy of a printed source, e.g. the composer's own copy.</h:span></h:a></xf:label>
+                                            the source's basic mode of production or carrier (manuscript, print, sound storage medium, electronic resource). 
+                                            </h:span></h:a></xf:label>
                                         <xf:item>
                                             <xf:value/>
                                             <xf:label> </xf:label>
@@ -202,8 +214,16 @@
                                             <xf:label>Print</xf:label>
                                         </xf:item>
                                         <xf:item>
-                                            <xf:value>recording</xf:value>
-                                            <xf:label>Recording</xf:label>
+                                            <xf:value>audio storage medium</xf:value>
+                                            <xf:label>Audio storage medium</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>video storage medium</xf:value>
+                                            <xf:label>Video storage medium</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>electronic resource</xf:value>
+                                            <xf:label>Electronic resource</xf:label>
                                         </xf:item>
                                     </xf:select1>
                                     <dcm:attribute-editor ref="m:term[@classcode='DcmPresentationClass']"/>
