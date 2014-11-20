@@ -1,0 +1,35 @@
+<parameters xmlns="http://www.kb.dk/dcm">
+
+  <!-- paths -->
+  <orbeon_dir>http://dcm-frontend-01.kb.dk/orbeon/xforms-jsp/mei-form/</orbeon_dir>
+  <form_home>http://dcm-frontend-01.kb.dk/editor/forms/mei/</form_home>
+  <crud_home>http://dcm-frontend-01.kb.dk/filter/dcm/</crud_home>
+  <server_name>http://dcm-frontend-01.kb.dk/</server_name>  
+  <exist_dir>storage/</exist_dir>
+  <!-- the following one is going to cause trouble when we publish more than one catalogue 
+       - do we need a config file for each catalogue?  -->
+  <document_root>storage/cnw/data/</document_root>
+  <template_dir></template_dir>
+  <standard_data_dir></standard_data_dir>
+  
+  <!--  eXist o. filter user name and password -->
+
+  <!-- the authentication stuff shouldn't be here anymore -->
+
+  <!-- Default editor settings - (set boolean values to 'true' or nothing)  -->
+  <!-- Enable attribute editor? -->
+  <attr_editor_main_switch>true</attr_editor_main_switch>
+  <!-- Enable xml:id display component? -->
+  <id_main_switch>true</id_main_switch>
+  <!-- Enable code inspector component? -->
+  <code_inspector_main_switch/>
+  
+  <!-- Some elements used internally by XForms - not for user configuration -->
+  <xml_file/>
+  <return_uri/>
+  <this_page/>
+  <attr_editor/>
+  <show_id/>
+  <code_inspector/>
+  
+</parameters>
