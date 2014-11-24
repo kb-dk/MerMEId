@@ -8,7 +8,11 @@ binmode STDOUT,':raw';
 
 my $reserved  = "^A-Za-z0-9/&?=:;$@#.?\-";
 
-my @sheet_list = "utils/update_perfMedium_in_sub-expressions.xsl";
+my @sheet_list = ("utils/identifier_type_to_label.xsl",
+		  "utils/check_element_order.xsl",
+		  "utils/cleanup_2014.xsl");
+
+# "utils/update_perfMedium_in_sub-expressions.xsl";
 
 # ("utils/transform_2012_to_2013.xsl");
 

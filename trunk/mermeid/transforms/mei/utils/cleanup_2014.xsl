@@ -21,6 +21,16 @@
 
     <xsl:strip-space elements="*"/>
 
+    <xsl:template match="/m:mei">
+      <mei>
+	<xsl:apply-templates select="m:meiHead"/>
+	<xsl:if test="not(m:music)">
+	  <music/>
+	</xsl:if>
+      </mei>
+    </xsl:template>
+
+
     <xsl:template match="m:physLoc[m:ptr]">
         <!-- move misplaced ptr elements -->
         <physLoc>
