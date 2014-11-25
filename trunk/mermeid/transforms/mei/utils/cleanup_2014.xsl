@@ -22,12 +22,12 @@
     <xsl:strip-space elements="*"/>
 
     <xsl:template match="/m:mei">
-      <mei>
-	<xsl:apply-templates select="m:meiHead"/>
-	<xsl:if test="not(m:music)">
-	  <music/>
-	</xsl:if>
-      </mei>
+        <xsl:copy>
+            <xsl:apply-templates select="@*|*"/>
+            <xsl:if test="not(m:music)">
+                <music/>
+            </xsl:if>
+        </xsl:copy>
     </xsl:template>
 
 
