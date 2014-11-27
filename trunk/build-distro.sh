@@ -85,7 +85,7 @@ cp filter/target/filter-1.0-SNAPSHOT.war "$D_PATH/MerMEId/filter.war"
 echo "Collecting stuff in $D_PATH/MerMEId"
 
 if  [ "$M_FILE" = "distro" ]; then  
-    egrep_string="local_config/.*(demo|dev|prod|test)"
+    egrep_string="local_config/.*(demo|frontend|dev|prod|test)"
 else
     egrep_string="local_config/.*distro"
 fi
