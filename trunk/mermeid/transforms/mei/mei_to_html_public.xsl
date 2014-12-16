@@ -118,7 +118,10 @@
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="label">
-			<xsl:apply-templates select="@label"/>
+			<xsl:choose>
+				<xsl:when test="normalize-space(substring-after(@label,':'))"><xsl:value-of select="normalize-space(substring-after(@label,':'))"/></xsl:when>
+				<xsl:otherwise><xsl:apply-templates select="@label"/></xsl:otherwise>
+			</xsl:choose>
 			<xsl:if test="not(@label) or @label=''">
 				<xsl:value-of select="@target"/>
 			</xsl:if>

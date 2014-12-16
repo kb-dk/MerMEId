@@ -444,7 +444,8 @@
 
 	<xsl:template match="m:relationList" mode="relation_list">
 		<xsl:if test="m:relation[@target!='']">
-			<xsl:for-each select="m:relation[@rel!='']">
+			<!-- loop through relations, but skip those where @label contains a ":"  -->
+			<xsl:for-each select="m:relation[@rel!='' and not(normalize-space(substring-after(@label,':')))]">
 				<xsl:variable name="rel" select="@rel"/>
 				<xsl:if test="count(preceding-sibling::*[@rel=$rel])=0">
 					<!-- one <div> per relation type -->
@@ -468,7 +469,7 @@
 									<xsl:when test="@rel='isExemplarOf'">Exemplar of:</xsl:when>
 									<xsl:when test="@rel='hasImitation'">Imitation:</xsl:when>
 									<xsl:when test="@rel='isImitationOf'">Imitation of:</xsl:when>
-									<xsl:when test="@rel='hasPart'">Contains:</xsl:when>
+									<xsl:when test="@rel='hasPart'">Includes:</xsl:when>
 									<xsl:when test="@rel='isPartOf'">Contained in:</xsl:when>
 									<xsl:when test="@rel='hasRealization'">Realization:</xsl:when>
 									<xsl:when test="@rel='isRealizationOf'">Realization of:</xsl:when>
@@ -503,9 +504,35 @@
 									<xsl:value-of select="$label"/>
 								</div>
 							</xsl:if>
-							<xsl:if test="../m:relation[@rel=$rel]">
+							<xsl:if test="../m:relation[@rel=$rel or substring-before(@label,':')=$rel]">
 								<div class="relations">
-									<xsl:for-each select="../m:relation[@rel=$rel]">
+									<xsl:for-each select="../m:relation[@rel=$rel and not(normalize-space(substring-after(@label,':')))]">
+										<xsl:apply-templates select="." mode="relation_link"/>
+										<xsl:if test="position()!=last()">
+											<br/>
+										</xsl:if>
+									</xsl:for-each>
+								</div>
+							</xsl:if>
+						</div>
+					</div>
+				</xsl:if>
+			</xsl:for-each>
+			<!-- relations with @label containing ":" use the part before the ":" as label instead -->
+			<xsl:for-each select="m:relation[@rel!='' and normalize-space(substring-after(@label,':'))]">
+				<xsl:variable name="label" select="substring-before(@label,':')"/>
+				<xsl:if test="count(preceding-sibling::*[substring-before(@label,':')=$label])=0">
+					<!-- one <div> per relation type -->
+					<div class="list_block">
+						<div class="relation_list">
+							<xsl:if test="$label!=''">
+								<div class="p_heading relation_list_label">
+									<xsl:value-of select="$label"/>:
+								</div>
+							</xsl:if>
+							<xsl:if test="../m:relation[substring-before(@label,':')=$label]">
+								<div class="relations">
+									<xsl:for-each select="../m:relation[substring-before(@label,':')=$label]">
 										<xsl:apply-templates select="." mode="relation_link"/>
 										<xsl:if test="position()!=last()">
 											<br/>
@@ -518,6 +545,7 @@
 				</xsl:if>
 			</xsl:for-each>
 			<xsl:if test="m:relation[not(@rel) or @rel='']">
+				<!-- this shouldn't really be necessary - relations without @rel are not valid -->
 				<div>
 					<xsl:for-each select="m:relation[not(@rel) or @rel='']">
 						<xsl:apply-templates select="." mode="relation_link"/>
@@ -538,7 +566,6 @@
 		<xsl:variable name="href">
 			<xsl:choose>
 				<xsl:when test="$mermeid_crossref='true'">
-					<!-- was: <xsl:value-of select="concat('http://',$hostname,'/storage/present.xq?doc=',@target)"/>-->
 					<xsl:value-of select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'present.xq?doc=',@target)"/>
 				</xsl:when>
 				<xsl:otherwise>
@@ -547,7 +574,10 @@
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="label">
-			<xsl:apply-templates select="@label"/>
+			<xsl:choose>
+				<xsl:when test="normalize-space(substring-after(@label,':'))"><xsl:value-of select="normalize-space(substring-after(@label,':'))"/></xsl:when>
+				<xsl:otherwise><xsl:apply-templates select="@label"/></xsl:otherwise>
+			</xsl:choose>
 			<xsl:if test="not(@label) or @label=''">
 				<xsl:value-of select="@target"/>
 			</xsl:if>
@@ -585,7 +615,7 @@
 			</xsl:if>
 		</xsl:if>
 	</xsl:template>
-
+	
 
 	<xsl:template match="m:expression" mode="top_level">
 		<!-- top-level expression (versions and one-movement work details) -->

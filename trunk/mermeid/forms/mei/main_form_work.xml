@@ -377,7 +377,11 @@
 								<h:td>
 									<xf:input ref="@label" class="long">
 										<xf:label> Label <h:a class="help">?<h:span class="comment">The text to be 
-											displayed as the link text (usually the title of the linked item)</h:span></h:a></xf:label>
+											displayed as the link text (usually the title of the linked item).<h:br/>
+											Please note that MerMEId displays labels containing a colon (:) in a special way:
+											In that case, the text before the colon is displayed as the label before the link
+											instead of the standard description af the relation. 
+										</h:span></h:a></xf:label>
 									</xf:input>
 								</h:td>
 								<h:td style="vertical-align:top; white-space:nowrap;">
