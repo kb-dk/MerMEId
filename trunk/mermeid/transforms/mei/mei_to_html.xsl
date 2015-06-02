@@ -1727,23 +1727,7 @@
 
 			<xsl:call-template name="list_agents"/>
 
-			<xsl:for-each select="m:classification/m:termList[m:term[text()]]">
-				<div class="classification">
-					<xsl:variable name="sort_order"
-						select="'DcmContentClass,DcmPresentationClass,DcmAuthorityClass,DcmScoringClass,DcmStateClass,DcmCompletenessClass'"/>
-					<xsl:for-each select="m:term[text()]">
-						<xsl:sort select="string-length(substring-before($sort_order,@classcode))"/>
-						<xsl:if test="position()=1"> [Classification: </xsl:if>
-						<xsl:value-of select="."/>
-						<xsl:choose>
-							<xsl:when test="position()=last()">]</xsl:when>
-							<xsl:otherwise>
-								<xsl:text>, </xsl:text>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:for-each>
-				</div>
-			</xsl:for-each>
+			<xsl:apply-templates select="m:classification/m:termList[m:term[text()]]"/>
 
 			<xsl:for-each select="m:titleStmt[m:respStmt/m:persName/text()]">
 				<xsl:comment> contributors </xsl:comment>
@@ -1862,6 +1846,25 @@
 
 		</div>
 	</xsl:template>
+	
+	<xsl:template match="m:classification/m:termList[m:term[text()]]">
+		<div class="classification">
+			<xsl:variable name="sort_order"
+				select="'DcmContentClass,DcmPresentationClass,DcmAuthorityClass,DcmScoringClass,DcmStateClass,DcmCompletenessClass'"/>
+			<xsl:for-each select="m:term[text()]">
+				<xsl:sort select="string-length(substring-before($sort_order,@classcode))"/>
+				<xsl:if test="position()=1"> [Classification: </xsl:if>
+				<xsl:value-of select="."/>
+				<xsl:choose>
+					<xsl:when test="position()=last()">]</xsl:when>
+					<xsl:otherwise>
+						<xsl:text>, </xsl:text>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</div>
+	</xsl:template>
+	
 
 	<xsl:template match="m:itemList">
 		<xsl:choose>
