@@ -11,6 +11,7 @@
 -->
 
 
+
 <xsl:stylesheet version="2.0" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 	xmlns:m="http://www.music-encoding.org/ns/mei"
@@ -303,13 +304,7 @@
 					<xsl:apply-templates select="m:annot[@type='general_description']"/>
 				</p>
 			</xsl:if>
-			<xsl:for-each select="m:annot[@type='links'][m:ptr[normalize-space(@target)]]">
-				<p class="noprint">
-					<xsl:for-each select="m:ptr[normalize-space(@target)]">
-						<xsl:apply-templates select="."/>
-					</xsl:for-each>
-				</p>
-			</xsl:for-each>
+			<xsl:apply-templates select="m:annot[@type='links'][m:ptr[normalize-space(@target)]]" mode="link_list_p"/>
 		</xsl:for-each>
 
 		<!-- related files -->
@@ -1434,11 +1429,11 @@
 						select="m:classification/m:termList/m:term[@classcode='DcmPresentationClass']"/>
 					<!-- adding 100 ensures that combinations of 1- and 2-digit numbers are sorted correctly -->
 					<xsl:sort
+						select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
+					<xsl:sort
 						select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmAuthorityClass'],';'))))"/>
 					<xsl:sort
 						select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';'))))"/>
-					<xsl:sort
-						select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
 					<xsl:sort
 						select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
 					<xsl:apply-templates select=".">
@@ -1764,13 +1759,7 @@
 						<xsl:apply-templates select="."/>
 					</p>
 				</xsl:for-each>
-				<xsl:for-each select="m:annot[@type='links'][m:ptr[normalize-space(@target)]]">
-					<p>
-						<xsl:for-each select="m:ptr[normalize-space(@target)]">
-							<xsl:apply-templates select="."/>
-						</xsl:for-each>
-					</p>
-				</xsl:for-each>
+				<xsl:apply-templates select="m:annot[@type='links'][m:ptr[normalize-space(@target)]]" mode="link_list_p"/>
 			</xsl:for-each>
 
 			<!-- source location and identifiers -->
@@ -1865,6 +1854,14 @@
 		</div>
 	</xsl:template>
 	
+	
+	<xsl:template match="*[m:ptr[normalize-space(@target)]]" mode="link_list_p">
+		<!-- link list wrapped in a <p> -->
+		<p>
+			<xsl:apply-templates select="." mode="comma-separated"/>
+		</p>
+	</xsl:template>
+
 
 	<xsl:template match="m:itemList">
 		<xsl:choose>
@@ -1955,20 +1952,8 @@
 			</p>
 		</xsl:if>
 
-		<xsl:for-each select="m:titlePage[m:p//text()]">
-			<div>
-				<xsl:if test="not(@label) or @label=''">Title page</xsl:if>
-				<xsl:value-of select="@label"/>
-				<xsl:text>: </xsl:text>
-				<xsl:for-each select="m:p[//text()]">
-					<span class="titlepage">
-						<xsl:apply-templates/>
-					</span>
-				</xsl:for-each>
-				<xsl:text>
-				</xsl:text>
-			</div>
-		</xsl:for-each>
+		<xsl:apply-templates select="m:titlePage[m:p//text()]"/>
+		
 		<xsl:for-each select="m:plateNum[text()]">
 			<p>Pl. no. <xsl:apply-templates/>.</p>
 		</xsl:for-each>
@@ -1976,6 +1961,20 @@
 		<xsl:apply-templates select="m:physMedium"/>
 		<xsl:apply-templates select="m:watermark"/>
 		<xsl:apply-templates select="m:condition"/>
+	</xsl:template>
+
+	<xsl:template match="m:titlePage">
+		<div>
+			<xsl:if test="position() &gt; 1">. </xsl:if>
+			<xsl:if test="not(@label) or @label=''">Title page</xsl:if>
+			<xsl:value-of select="@label"/>
+			<xsl:text>: </xsl:text>
+			<xsl:for-each select="m:p[//text()]">
+				<span class="titlepage">
+					<xsl:apply-templates/>
+				</span>
+			</xsl:for-each>
+		</div>
 	</xsl:template>
 
 	<xsl:template match="m:physMedium[text()]">
@@ -2019,12 +2018,7 @@
 		</xsl:for-each>
 		<xsl:apply-templates select="m:identifier"/>
 		<xsl:if test="m:identifier[text()] or m:repository[*//text()]">. </xsl:if>
-		<xsl:for-each select="m:repository/m:ptr[normalize-space(@target)]">
-			<xsl:apply-templates select="."/>
-			<xsl:if test="position()!=last()">
-				<xsl:text>, </xsl:text>
-			</xsl:if>
-		</xsl:for-each>
+		<xsl:apply-templates select="m:repository/m:ptr[normalize-space(@target)]]" mode="comma-separated"/>
 		<xsl:for-each select="m:ptr[normalize-space(@target)]">
 			<xsl:apply-templates select="."/>
 			<xsl:if test="position()!=last()">
@@ -2258,18 +2252,18 @@
 							select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if><xsl:if
 						test="normalize-space(m:biblScope[@unit='issue'])!=''">/<xsl:value-of
 							select="normalize-space(m:biblScope[@unit='issue'])"/></xsl:if>
-					<xsl:if test="normalize-space(m:imprint/m:date)!=''"> (<xsl:apply-templates
-							select="m:imprint/m:date"/>)</xsl:if>
+					<xsl:if test="normalize-space(m:imprint/m:date)!=''">, <xsl:apply-templates
+							select="m:imprint/m:date"/></xsl:if>
 					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">, 
 						<xsl:apply-templates select="m:biblScope[@unit='page']" mode="pp"/></xsl:if>
 					<!-- if the author is given, but no article title, put the author last -->
 					<xsl:if test="not(normalize-space(m:title[@level='a'])!='') and m:author/text()">
-						<xsl:text> [</xsl:text>
+						<xsl:text> (</xsl:text>
 						<xsl:for-each select="m:author">
 							<xsl:if test="position()&gt;1"><xsl:text>, </xsl:text></xsl:if>
 							<xsl:apply-templates select="."/>
 						</xsl:for-each>
-						<xsl:text>]</xsl:text>
+						<xsl:text>)</xsl:text>
 					</xsl:if>
 					<xsl:text>. </xsl:text>
 				</xsl:if>
