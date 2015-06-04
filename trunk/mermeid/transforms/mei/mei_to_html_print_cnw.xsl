@@ -56,9 +56,6 @@
 	<xsl:template match="*" mode="comma-separated_links"/>
 	<xsl:template match="*[m:ptr[normalize-space(@target)]]" mode="link_list_p"/>
 
-	<!-- omit source classifications -->
-	<!--<xsl:template match="m:classification/m:termList"/>-->
-		
 	<!-- omit bibliography -->
 	<xsl:template match="m:work/m:biblList"/>
 	
@@ -70,8 +67,7 @@
 	
 	<!-- omit all things not intended for print -->
 	<xsl:template match="*[contains(@class,'noprint')]"/>
-	
-	
+		
 	<!-- expand all folding sections -->
 	<xsl:template match="*" mode="fold_section">
 		<xsl:param name="heading"/>
@@ -99,7 +95,32 @@
 		<xsl:apply-templates select="$relationList_nodeset/m:relationList" mode="relation_list"/>
 	</xsl:template>
 
-
+	<!-- Different formatting templates -->
+	
+	<!-- work identifiers -->
+	<xsl:template match="m:meiHead/m:workDesc/m:work" mode="work_identifiers">
+		<p>
+			<!-- omit opus and CNW numbers here -->
+			<xsl:for-each select="m:identifier[text() and contains(@label,'CNU')]">
+				<xsl:if test="position() &gt; 1"><br/></xsl:if>
+				<xsl:apply-templates select="@label"/>
+				<xsl:text> </xsl:text>
+				<xsl:value-of select="."/>
+			</xsl:for-each>
+			<xsl:if test="m:identifier[text() and @label='CNU'] and m:identifier[@label='FS' or @label='CNS']">
+				<br/>
+			</xsl:if>
+			<!-- put FS and CNS numbers on a single line -->
+			<xsl:for-each select="m:identifier[text() and (@label='CNS' or @label='FS')]">
+				<xsl:if test="position() &gt; 1">, </xsl:if>
+				<xsl:apply-templates select="@label"/>
+				<xsl:text> </xsl:text>
+				<xsl:value-of select="."/>
+			</xsl:for-each>
+		</p>
+	</xsl:template>
+	
+	<!-- Title pages -->
 	<xsl:template match="m:titlePage">
 		<xsl:if test="position() &gt; 1">.</xsl:if>
 		<xsl:text> </xsl:text>

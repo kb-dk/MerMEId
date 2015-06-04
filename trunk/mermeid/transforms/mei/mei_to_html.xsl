@@ -240,21 +240,9 @@
 
 
 		<!-- other identifiers -->
-		<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier/text()">
-			<p>
-				<xsl:for-each select="m:meiHead/m:workDesc/m:work/m:identifier[text()]">
-					<!--<xsl:variable name="type"><xsl:apply-templates select="@label"/></xsl:variable>
-					<xsl:value-of select="concat($type,' ',.)"/>-->
-					<xsl:apply-templates select="@label"/>
-					<xsl:text> </xsl:text>
-					<xsl:value-of select="."/>
-					<xsl:if test="position()&lt;last()">
-						<br/>
-					</xsl:if>
-				</xsl:for-each>
-			</p>
-		</xsl:if>
-
+		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work[m:identifier/text()]" mode="work_identifiers"/>
+		
+		<!-- persons -->
 		<xsl:for-each
 			select="m:meiHead/
 			m:workDesc/
@@ -409,7 +397,22 @@
 		</p>
 	</xsl:template>
 
-
+	<!-- work identifiers -->
+	<xsl:template match="m:meiHead/m:workDesc/m:work" mode="work_identifiers">
+		<p>
+			<xsl:for-each select="m:identifier[text()]">
+				<!--<xsl:variable name="type"><xsl:apply-templates select="@label"/></xsl:variable>
+					<xsl:value-of select="concat($type,' ',.)"/>-->
+				<xsl:apply-templates select="@label"/>
+				<xsl:text> </xsl:text>
+				<xsl:value-of select="."/>
+				<xsl:if test="position()&lt;last()">
+					<br/>
+				</xsl:if>
+			</xsl:for-each>
+		</p>
+	</xsl:template>
+	
 	<!-- Relations -->
 	<xsl:template match="m:relationList" mode="link_without_label">
 		<xsl:if test="m:relation[@target!='']">
