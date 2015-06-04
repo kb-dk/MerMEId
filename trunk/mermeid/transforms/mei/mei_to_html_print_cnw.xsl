@@ -53,7 +53,7 @@
 	<!-- omit links -->
 	<xsl:template match="m:ptr"/>
 	<xsl:template match="m:annot[@type='links']"/>
-	<xsl:template match="*[m:ptr[normalize-space(@target)]]" mode="comma-separated"/>
+	<xsl:template match="*" mode="comma-separated_links"/>
 	<xsl:template match="*[m:ptr[normalize-space(@target)]]" mode="link_list_p"/>
 
 	<!-- omit source classifications -->
@@ -132,7 +132,7 @@
 			<xsl:apply-templates select="m:classification/m:termList[m:term[text()]]"/>
 -->			
 			<xsl:for-each select="m:titleStmt[m:respStmt/m:persName/text()]">
-				<xsl:call-template name="list_agents"/>.
+				<xsl:call-template name="list_agents"/>
 			</xsl:for-each>
 			
 			<xsl:for-each select="m:pubStmt[normalize-space(concat(m:publisher, m:date, m:pubPlace))]">

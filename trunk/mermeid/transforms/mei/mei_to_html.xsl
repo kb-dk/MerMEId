@@ -1548,7 +1548,6 @@
 	<xsl:template name="list_agents">
 		<xsl:if test="m:respStmt/m:persName[text()] |
 			m:respStmt/m:corpName[text()]">
-			<p>
 				<xsl:for-each select="m:respStmt/m:persName[text()] |
 					m:respStmt/m:corpName[text()]">
 					<xsl:choose>
@@ -1611,7 +1610,6 @@
 				</xsl:for-each>
 				<xsl:text>
 				</xsl:text>
-			</p>
 		</xsl:if>
 	</xsl:template>
 
@@ -1720,13 +1718,20 @@
 				</xsl:element>
 			</xsl:if>
 
-			<xsl:call-template name="list_agents"/>
+			<xsl:if test="m:respStmt/m:persName[text()] |
+				m:respStmt/m:corpName[text()]">
+				<p>
+					<xsl:call-template name="list_agents"/>
+				</p>
+			</xsl:if>
 
 			<xsl:apply-templates select="m:classification/m:termList[m:term[text()]]"/>
 
 			<xsl:for-each select="m:titleStmt[m:respStmt/m:persName/text()]">
 				<xsl:comment> contributors </xsl:comment>
-				<xsl:call-template name="list_agents"/>
+				<p>
+					<xsl:call-template name="list_agents"/>
+				</p>
 			</xsl:for-each>
 
 			<xsl:for-each
@@ -1858,7 +1863,7 @@
 	<xsl:template match="*[m:ptr[normalize-space(@target)]]" mode="link_list_p">
 		<!-- link list wrapped in a <p> -->
 		<p>
-			<xsl:apply-templates select="." mode="comma-separated"/>
+			<xsl:apply-templates select="." mode="comma-separated_links"/>
 		</p>
 	</xsl:template>
 
@@ -2018,7 +2023,7 @@
 		</xsl:for-each>
 		<xsl:apply-templates select="m:identifier"/>
 		<xsl:if test="m:identifier[text()] or m:repository[*//text()]">. </xsl:if>
-		<xsl:apply-templates select="m:repository/m:ptr[normalize-space(@target)]]" mode="comma-separated"/>
+		<xsl:apply-templates select="m:repository/m:ptr[normalize-space(@target)]" mode="comma-separated_links"/>
 		<xsl:for-each select="m:ptr[normalize-space(@target)]">
 			<xsl:apply-templates select="."/>
 			<xsl:if test="position()!=last()">
@@ -2690,6 +2695,11 @@
 		<xsl:apply-templates select="."/>
 	</xsl:template>
 
+	<xsl:template match="*" mode="comma-separated_links">
+		<!-- special treatment for links to enable links-specific overriding of template -->
+		<xsl:apply-templates select="." mode="comma-separated"/>
+	</xsl:template>
+	
 	<!-- output text in multiple languages -->
 	<xsl:template match="*" mode="multilingual_text">
 		<xsl:param name="preferred_found"/>
