@@ -124,7 +124,7 @@
 			</xsl:if>
 		</xsl:variable>
 		<!-- this prints the link text -->
-		<xsl:value-of select="$label"/>&#160;
+		<i><xsl:value-of select="$label"/></i>
 		<xsl:if test="$mermeid_crossref='true'">
 			<!-- get collection name and number from linked files -->
 			<xsl:variable name="fileName"
@@ -153,7 +153,7 @@
 				</xsl:choose>
 			</xsl:variable>
 			<xsl:if test="normalize-space($catalogue_no)!=''">
-				<span class="work_number_reference"><xsl:value-of select="$output"/></span>
+				&#160;<span class="work_number_reference"><xsl:value-of select="$output"/></span>
 			</xsl:if>
 		</xsl:if>
 	</xsl:template>	
