@@ -70,13 +70,12 @@ a, a:link, a:visited, a:active, a:hover {
 }*/
 
 .hr {
-    border-top: 1px solid #999;
+    border-top: 1px solid #000;
     width: 100%;
-    height: 1px;
+    height: 2px;
 }
 
 div.work {
-    border-bottom: 2px solid black;
     padding-bottom: 12pt;
 }
 
@@ -100,6 +99,11 @@ div.work {
 .section_heading {
     font-size: 1.25em;
     margin: 1.2em 0 .4em 0;
+}
+
+.series_header {
+    border-top: 2px solid black;
+    padding-top: 10px;
 }
 
 .alternative_language {
