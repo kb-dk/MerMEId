@@ -2,6 +2,8 @@
 
 <!-- 
 	Conversion of MEI metadata to HTML using XSLT 1.0
+	This XSLT overrides a number of templates defined in mei_to_html.xsl 
+	to produce output suited for printing.
 	
 	Authors: 
 	Axel Teich Geertinger & Sigfrid Lundberg
@@ -36,14 +38,12 @@
 	
 	<!-- Exceptions/alterations -->
 	
-	<!-- show crosslinks as plain text -->
-	<!--<xsl:template match="m:relation[@label!='']" mode="relation_link">
-		<p><xsl:value-of select="@label"/></p>
-		</xsl:template>-->	
-	
 	<!-- omit colophon -->
 	<xsl:template match="*" mode="colophon"/>
-	
+
+	<!-- omit settings menu -->
+	<xsl:template match="*" mode="settings_menu"/>
+		
 	<!-- omit music details shown in the incipits -->
 	<xsl:template match="m:meter"/>
 	<xsl:template match="m:tempo"/>
@@ -95,6 +95,87 @@
 		<xsl:apply-templates select="$relationList_nodeset/m:relationList" mode="relation_list"/>
 	</xsl:template>
 
+	<!-- show crosslinks as plain text -->
+	<xsl:template match="m:relation" mode="relation_link">
+		<!-- internal cross references between works in the catalogue are treated in a special way -->
+		<xsl:variable name="mermeid_crossref">
+			<xsl:choose>
+				<xsl:when test="contains(@target,'://') or contains(@target,'#')">false</xsl:when>
+				<xsl:otherwise>true</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="href">
+			<xsl:choose>
+				<xsl:when test="$mermeid_crossref='true'">
+					<xsl:value-of select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'present.xq?doc=',@target)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="@target"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="label">
+			<xsl:choose>
+				<xsl:when test="normalize-space(substring-after(@label,':'))"><xsl:value-of select="normalize-space(substring-after(@label,':'))"/></xsl:when>
+				<xsl:otherwise><xsl:apply-templates select="@label"/></xsl:otherwise>
+			</xsl:choose>
+			<xsl:if test="not(@label) or @label=''">
+				<xsl:value-of select="@target"/>
+			</xsl:if>
+		</xsl:variable>
+		<!-- this prints the link text -->
+		<xsl:value-of select="$label"/>&#160;
+		<xsl:if test="$mermeid_crossref='true'">
+			<!-- get collection name and number from linked files -->
+			<xsl:variable name="fileName"
+				select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,@target)"/>
+			<xsl:variable name="linkedDoc" select="document($fileName)"/>
+			<xsl:variable name="file_context"
+				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
+			<xsl:variable name="catalogue_no"
+				select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]"/>
+			<xsl:variable name="output">
+				<!-- the printed catalogue omits the collection name ("CNW") -->
+				<!--<xsl:value-of select="$file_context"/>
+				<xsl:text> </xsl:text>-->
+				<xsl:choose>
+					<xsl:when test="string-length($catalogue_no)&gt;11">
+						<xsl:variable name="part1" select="substring($catalogue_no, 1, 11)"/>
+						<xsl:variable name="part2" select="substring($catalogue_no, 12)"/>
+						<xsl:variable name="delimiter"
+							select="substring(concat(translate($part2,'0123456789',''),' '),1,1)"/>
+						<xsl:value-of
+							select="concat($part1,substring-before($part2,$delimiter),'...')"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="$catalogue_no"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:if test="normalize-space($catalogue_no)!=''">
+				<span class="work_number_reference"><xsl:value-of select="$output"/></span>
+			</xsl:if>
+		</xsl:if>
+	</xsl:template>	
+	
+	
+	<!-- do not make incpit graphics links -->
+	<xsl:template match="m:incip" mode="graphic">
+		<!-- make img tag only if a target file is specified and the path does not end with a slash -->
+		<xsl:if test="normalize-space(m:graphic[@targettype='lowres']/@target) and 
+			substring(m:graphic[@targettype='lowres']/@target,string-length(m:graphic[@targettype='lowres']/@target),1)!='/'">
+			<xsl:element name="img">
+				<xsl:attribute name="border">0</xsl:attribute>
+				<xsl:attribute name="style">text-decoration: none;</xsl:attribute>
+				<xsl:attribute name="alt"/>
+				<xsl:attribute name="src">
+					<xsl:value-of select="m:graphic[@targettype='lowres']/@target"/>
+				</xsl:attribute>
+			</xsl:element>
+		</xsl:if>
+	</xsl:template>
+	
+
 	<!-- Different formatting templates -->
 	
 	<!-- work identifiers -->
@@ -119,6 +200,60 @@
 			</xsl:for-each>
 		</p>
 	</xsl:template>
+
+
+	<!-- relations to other works -->
+	<xsl:template match="m:relationList" mode="relation_list">
+		<xsl:if test="m:relation[@target!='']">
+			<!-- loop through relations, but skip those where @label contains a ":"  -->
+			<xsl:for-each select="m:relation[@rel!='' and not(normalize-space(substring-after(@label,':')))]">
+				<xsl:variable name="rel" select="@rel"/>
+				<xsl:if test="count(preceding-sibling::*[@rel=$rel])=0">
+					<!-- one <div> per relation type -->
+						<div class="relation_list">
+							<xsl:variable name="label">
+								<xsl:call-template name="translate_relation">
+									<xsl:with-param name="label" select="@label"/>
+									<xsl:with-param name="rel" select="@rel"/>
+								</xsl:call-template>
+							</xsl:variable>
+							<xsl:if test="$label!=''">
+								<span class="p_heading">
+									<xsl:value-of select="$label"/>
+								</span>
+								<xsl:text> </xsl:text>
+							</xsl:if>
+							<xsl:if test="../m:relation[@rel=$rel or substring-before(@label,':')=$rel]">
+									<xsl:for-each select="../m:relation[@rel=$rel and not(normalize-space(substring-after(@label,':')))]">
+										<xsl:if test="position() &gt; 1">, </xsl:if>
+										<xsl:apply-templates select="." mode="relation_link"/>
+									</xsl:for-each>
+							</xsl:if>
+						</div>
+				</xsl:if>
+			</xsl:for-each>
+			<!-- relations with @label containing ":" use the part before the ":" as label instead -->
+			<xsl:for-each select="m:relation[@rel!='' and normalize-space(substring-after(@label,':'))]">
+				<xsl:variable name="label" select="substring-before(@label,':')"/>
+				<xsl:if test="count(preceding-sibling::*[substring-before(@label,':')=$label])=0">
+						<div class="relation_list">
+							<xsl:if test="$label!=''">
+								<div class="p_heading">
+									<xsl:value-of select="$label"/>:
+								</div>
+							</xsl:if>
+							<xsl:if test="../m:relation[substring-before(@label,':')=$label]">
+									<xsl:for-each select="../m:relation[substring-before(@label,':')=$label]">
+										<xsl:if test="position() &gt; 1">, </xsl:if>
+										<xsl:apply-templates select="." mode="relation_link"/>
+									</xsl:for-each>
+							</xsl:if>
+						</div>
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:if>
+	</xsl:template>
+	
 	
 	<!-- Title pages -->
 	<xsl:template match="m:titlePage">
@@ -246,6 +381,11 @@
 		
 	</xsl:template>
 	
-	
+	<!-- Don't look up abbreviations -->
+	<xsl:template match="text()[name(..)!='p' and name(..)!='persName' and name(..)!='ptr' and name(..)!='ref'] 
+		| m:identifier/@label">
+		<xsl:value-of select="."/>
+	</xsl:template>
+		
 	
 </xsl:stylesheet>

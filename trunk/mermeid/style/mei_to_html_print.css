@@ -62,11 +62,12 @@ ul {
     padding-left: 1em;
 }
 
+/*
 a, a:link, a:visited, a:active, a:hover {
     color: #000;
     cursor: default;
     text-decoration: none;
-}
+}*/
 
 .hr {
     border-top: 1px solid #999;
@@ -155,8 +156,7 @@ div.perfmedium p {
 .movement_list {
     list-style-type: none;
     padding-left: 0;
-    border-left: 1px dashed black;
-    margin-left: 3px;
+    margin-left: 0;
 }
 
 ul.single_movement {
@@ -200,6 +200,11 @@ ul.single_movement {
 
 .classification {
     display: none;
+}
+
+.work_number_reference {
+    border: 1px solid black;
+    padding: 0 2px 0 2px;    
 }
 
 table.performances tr td, table.letters tr td {
@@ -297,7 +302,8 @@ a.help {
 
 
 .noprint {
-    display : none;
+/*    display : none;*/
+background-color: #EDA6A6;
 }
     
 }

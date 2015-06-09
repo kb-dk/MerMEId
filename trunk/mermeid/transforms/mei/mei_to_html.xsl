@@ -132,14 +132,9 @@
 
 
 	<xsl:template name="body_main_content">
-		<div class="settings colophon noprint">
-			<a
-				href="javascript:loadcssfile('/editor/style/html_hide_languages.css'); hide('load_alt_lang_css'); show('remove_alt_lang_css')"
-				id="load_alt_lang_css" class="noprint">Hide alternative languages</a>
-			<a style="display:none"
-				href="javascript:removecssfile('/editor/style/html_hide_languages.css'); hide('remove_alt_lang_css'); show('load_alt_lang_css')"
-				id="remove_alt_lang_css" class="noprint">Show alternative languages</a>
-		</div>
+		
+		<!-- generate links for choosing the languages to display -->
+		<xsl:apply-templates select="." mode="settings_menu"/>
 
 		<xsl:for-each select="m:meiHead/
 			m:workDesc/
@@ -375,6 +370,19 @@
 	</xsl:template>
 
 
+	<!-- settings -->
+	<xsl:template match="*" mode="settings_menu">
+		<div class="settings colophon noprint">
+			<a
+				href="javascript:loadcssfile('/editor/style/html_hide_languages.css'); hide('load_alt_lang_css'); show('remove_alt_lang_css')"
+				id="load_alt_lang_css" class="noprint">Hide alternative languages</a>
+			<a style="display:none"
+				href="javascript:removecssfile('/editor/style/html_hide_languages.css'); hide('remove_alt_lang_css'); show('load_alt_lang_css')"
+				id="remove_alt_lang_css" class="noprint">Show alternative languages</a>
+		</div>
+	</xsl:template>
+
+
 	<xsl:template match="m:titleStmt/m:respStmt[m:persName[text()]]">
 		<p>
 			<xsl:for-each select="m:persName[text()]">
@@ -450,52 +458,10 @@
 					<div class="list_block">
 						<div class="relation_list">
 							<xsl:variable name="label">
-								<xsl:choose>
-									<xsl:when test="@rel='hasAbridgement'">Abridged version:</xsl:when>
-									<xsl:when test="@rel='isAbridgementOf'">Abridged version of:</xsl:when>
-									<xsl:when test="@rel='hasAdaptation'">Adaptation:</xsl:when>
-									<xsl:when test="@rel='isAdaptationOf'">Adaptation of:</xsl:when>
-									<xsl:when test="@rel='hasAlternate'">Alternate:</xsl:when>
-									<xsl:when test="@rel='isAlternateOf'">Alternate of:</xsl:when>
-									<xsl:when test="@rel='hasArrangement'">Arrangement:</xsl:when>
-									<xsl:when test="@rel='isArrangementOf'">Arrangement of:</xsl:when>
-									<xsl:when test="@rel='hasComplement'">Complement:</xsl:when>
-									<xsl:when test="@rel='isComplementOf'">Complement to:</xsl:when>
-									<xsl:when test="@rel='hasEmbodiment'">Embodiment:</xsl:when>
-									<xsl:when test="@rel='isEmbodimentOf'">Embodiment of:</xsl:when>
-									<xsl:when test="@rel='hasExemplar'">Exemplar:</xsl:when>
-									<xsl:when test="@rel='isExemplarOf'">Exemplar of:</xsl:when>
-									<xsl:when test="@rel='hasImitation'">Imitation:</xsl:when>
-									<xsl:when test="@rel='isImitationOf'">Imitation of:</xsl:when>
-									<xsl:when test="@rel='hasPart'">Includes:</xsl:when>
-									<xsl:when test="@rel='isPartOf'">Contained in:</xsl:when>
-									<xsl:when test="@rel='hasRealization'">Realization:</xsl:when>
-									<xsl:when test="@rel='isRealizationOf'">Realization of:</xsl:when>
-									<xsl:when test="@rel='hasReconfiguration'">Reconfiguration:</xsl:when>
-									<xsl:when test="@rel='isReconfigurationOf'">Reconfigurationof:</xsl:when>
-									<xsl:when test="@rel='hasReproduction'">
-										<xsl:choose>
-											<xsl:when test="contains(@label,'Edition')">Edition:</xsl:when>
-											<xsl:otherwise>Reproduction (edition or facsimile):</xsl:otherwise>
-										</xsl:choose>
-									</xsl:when>
-									<xsl:when test="@rel='isReproductionOf'">Reproduction of:</xsl:when>
-									<xsl:when test="@rel='hasRevision'">Revised version:</xsl:when>
-									<xsl:when test="@rel='isRevisionOf'">Revised version of:</xsl:when>
-									<xsl:when test="@rel='hasSuccessor'">Succeeded by:</xsl:when>
-									<xsl:when test="@rel='isSuccessorOf'">Succeeds:</xsl:when>
-									<xsl:when test="@rel='hasSupplement'">Supplement:</xsl:when>
-									<xsl:when test="@rel='isSummarizationOf'">Summarizes:</xsl:when>
-									<xsl:when test="@rel='hasSummarization'">Summarization:</xsl:when>
-									<xsl:when test="@rel='isSupplementOf'">Supplement to:</xsl:when>
-									<xsl:when test="@rel='hasTransformation'">Transformation:</xsl:when>
-									<xsl:when test="@rel='isTransformationOf'">Transformation of:</xsl:when>
-									<xsl:when test="@rel='hasTranslation'">Translated version:</xsl:when>
-									<xsl:when test="@rel='isTranslationOf'">Translation of:</xsl:when>
-									<xsl:otherwise>
-										<xsl:value-of select="@rel"/>
-									</xsl:otherwise>
-								</xsl:choose>
+								<xsl:call-template name="translate_relation">
+									<xsl:with-param name="label" select="@label"/>
+									<xsl:with-param name="rel" select="@rel"/>
+								</xsl:call-template>
 							</xsl:variable>
 							<xsl:if test="$label!=''">
 								<div class="p_heading relation_list_label">
@@ -614,6 +580,57 @@
 		</xsl:if>
 	</xsl:template>
 	
+	<xsl:template name="translate_relation">
+		<xsl:param name="rel"/>
+		<xsl:param name="label"/>
+		<xsl:choose>
+				<xsl:when test="$rel='hasAbridgement'">Abridged version:</xsl:when>
+				<xsl:when test="$rel='isAbridgementOf'">Abridged version of:</xsl:when>
+				<xsl:when test="$rel='hasAdaptation'">Adaptation:</xsl:when>
+				<xsl:when test="$rel='isAdaptationOf'">Adaptation of:</xsl:when>
+				<xsl:when test="$rel='hasAlternate'">Alternate:</xsl:when>
+				<xsl:when test="$rel='isAlternateOf'">Alternate of:</xsl:when>
+				<xsl:when test="$rel='hasArrangement'">Arrangement:</xsl:when>
+				<xsl:when test="$rel='isArrangementOf'">Arrangement of:</xsl:when>
+				<xsl:when test="$rel='hasComplement'">Complement:</xsl:when>
+				<xsl:when test="$rel='isComplementOf'">Complement to:</xsl:when>
+				<xsl:when test="$rel='hasEmbodiment'">Embodiment:</xsl:when>
+				<xsl:when test="$rel='isEmbodimentOf'">Embodiment of:</xsl:when>
+				<xsl:when test="$rel='hasExemplar'">Exemplar:</xsl:when>
+				<xsl:when test="$rel='isExemplarOf'">Exemplar of:</xsl:when>
+				<xsl:when test="$rel='hasImitation'">Imitation:</xsl:when>
+				<xsl:when test="$rel='isImitationOf'">Imitation of:</xsl:when>
+				<xsl:when test="$rel='hasPart'">Includes:</xsl:when>
+				<xsl:when test="$rel='isPartOf'">Contained in:</xsl:when>
+				<xsl:when test="$rel='hasRealization'">Realization:</xsl:when>
+				<xsl:when test="$rel='isRealizationOf'">Realization of:</xsl:when>
+				<xsl:when test="$rel='hasReconfiguration'">Reconfiguration:</xsl:when>
+				<xsl:when test="$rel='isReconfigurationOf'">Reconfigurationof:</xsl:when>
+				<xsl:when test="$rel='hasReproduction'">
+					<xsl:choose>
+						<xsl:when test="contains($label,'Edition')">Edition:</xsl:when>
+						<xsl:otherwise>Reproduction (edition or facsimile):</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:when test="$rel='isReproductionOf'">Reproduction of:</xsl:when>
+				<xsl:when test="$rel='hasRevision'">Revised version:</xsl:when>
+				<xsl:when test="$rel='isRevisionOf'">Revised version of:</xsl:when>
+				<xsl:when test="$rel='hasSuccessor'">Succeeded by:</xsl:when>
+				<xsl:when test="$rel='isSuccessorOf'">Succeeds:</xsl:when>
+				<xsl:when test="$rel='hasSupplement'">Supplement:</xsl:when>
+				<xsl:when test="$rel='isSummarizationOf'">Summarizes:</xsl:when>
+				<xsl:when test="$rel='hasSummarization'">Summarization:</xsl:when>
+				<xsl:when test="$rel='isSupplementOf'">Supplement to:</xsl:when>
+				<xsl:when test="$rel='hasTransformation'">Transformation:</xsl:when>
+				<xsl:when test="$rel='isTransformationOf'">Transformation of:</xsl:when>
+				<xsl:when test="$rel='hasTranslation'">Translated version:</xsl:when>
+				<xsl:when test="$rel='isTranslationOf'">Translation of:</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="$rel"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		
+	</xsl:template>
 
 	<xsl:template match="m:expression" mode="top_level">
 		<!-- top-level expression (versions and one-movement work details) -->
@@ -904,45 +921,7 @@
 			</p>
 		</xsl:for-each>
 		<xsl:apply-templates select="m:incipText[//text()]"/>
-		<!-- make img tag only if a target file is specified and the path does not end with a slash -->
-		<xsl:if test="normalize-space(m:graphic[@targettype='lowres']/@target) and 
-			substring(m:graphic[@targettype='lowres']/@target,string-length(m:graphic[@targettype='lowres']/@target),1)!='/'">
-			<p>
-				<xsl:choose>
-					<xsl:when
-						test="m:graphic[@targettype='lowres']/@target and m:graphic[@targettype='hires']/@target">
-						<a target="incipit" title="Click to enlarge image"
-							style="text-decoration: none;">
-							<xsl:attribute name="href">
-								<xsl:value-of select="m:graphic[@targettype='hires']/@target"/>
-							</xsl:attribute>
-							<xsl:attribute name="onclick"> window.open("<xsl:value-of
-									select="m:graphic[@targettype='hires']/@target"
-								/>","incipit","height=550,width=1250,toolbar=0,status=0,menubar=0,resizable=1,location=0,scrollbars=1");return
-								false; </xsl:attribute>
-							<xsl:element name="img">
-								<xsl:attribute name="border">0</xsl:attribute>
-								<xsl:attribute name="style">text-decoration: none;</xsl:attribute>
-								<xsl:attribute name="alt"/>
-								<xsl:attribute name="src">
-									<xsl:value-of select="m:graphic[@targettype='lowres']/@target"/>
-								</xsl:attribute>
-							</xsl:element>
-						</a>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:element name="img">
-							<xsl:attribute name="border">0</xsl:attribute>
-							<xsl:attribute name="style">text-decoration: none;</xsl:attribute>
-							<xsl:attribute name="alt"/>
-							<xsl:attribute name="src">
-								<xsl:value-of select="m:graphic[@targettype='lowres']/@target"/>
-							</xsl:attribute>
-						</xsl:element>
-					</xsl:otherwise>
-				</xsl:choose>
-			</p>
-		</xsl:if>
+		<xsl:apply-templates select="." mode="graphic"/>
 		<xsl:apply-templates select="m:score"/>
 	</xsl:template>
 
@@ -966,6 +945,48 @@
 					</span>
 				</div>
 			</div>
+		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template match="m:incip" mode="graphic">
+		<!-- make img tag only if a target file is specified and the path does not end with a slash -->
+		<xsl:if test="normalize-space(m:graphic[@targettype='lowres']/@target) and 
+			substring(m:graphic[@targettype='lowres']/@target,string-length(m:graphic[@targettype='lowres']/@target),1)!='/'">
+			<p>
+				<xsl:choose>
+					<xsl:when
+						test="m:graphic[@targettype='lowres']/@target and m:graphic[@targettype='hires']/@target">
+						<a target="incipit" title="Click to enlarge image"
+							style="text-decoration: none;">
+							<xsl:attribute name="href">
+								<xsl:value-of select="m:graphic[@targettype='hires']/@target"/>
+							</xsl:attribute>
+							<xsl:attribute name="onclick"> window.open("<xsl:value-of
+								select="m:graphic[@targettype='hires']/@target"
+							/>","incipit","height=550,width=1250,toolbar=0,status=0,menubar=0,resizable=1,location=0,scrollbars=1");return
+								false; </xsl:attribute>
+							<xsl:element name="img">
+								<xsl:attribute name="border">0</xsl:attribute>
+								<xsl:attribute name="style">text-decoration: none;</xsl:attribute>
+								<xsl:attribute name="alt"/>
+								<xsl:attribute name="src">
+									<xsl:value-of select="m:graphic[@targettype='lowres']/@target"/>
+								</xsl:attribute>
+							</xsl:element>
+						</a>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:element name="img">
+							<xsl:attribute name="border">0</xsl:attribute>
+							<xsl:attribute name="style">text-decoration: none;</xsl:attribute>
+							<xsl:attribute name="alt"/>
+							<xsl:attribute name="src">
+								<xsl:value-of select="m:graphic[@targettype='lowres']/@target"/>
+							</xsl:attribute>
+						</xsl:element>
+					</xsl:otherwise>
+				</xsl:choose>
+			</p>
 		</xsl:if>
 	</xsl:template>
 
@@ -3198,7 +3219,6 @@
 	</xsl:template>
 
 	<!-- General abbreviations in text blocks. -->
-	<!-- was: <xsl:template match="m:instrVoice/text() | m:identifier/text() | m:identifier/@type">-->
 	<xsl:template match="text()[name(..)!='p' and name(..)!='persName' and name(..)!='ptr' and name(..)!='ref'] 
 		| m:identifier/@label">
 		<xsl:variable name="string" select="concat(' ',.,' ')"/>
@@ -3229,7 +3249,6 @@
 		</xsl:choose>
 	</xsl:template>
 	<!-- End look up abbreviations -->
-
 
 	<!-- formatted text -->
 	<xsl:template match="m:lb">
