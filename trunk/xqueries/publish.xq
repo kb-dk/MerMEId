@@ -30,19 +30,22 @@ return
     let $doc         := doc($parameter)
     let $destination :=concat($pubroot,substring-after($parameter,$dcmroot))
     let $put_to :=substring-after($parameter,$dcmroot)
-    where contains($parameter,$dcmroot)
+    where request:get-parameter($parameter,"") eq $action 
+      and not(contains($parameter,"action"))
     return 
     <tr>
-    <td>action="{$action}"</td>
-    <td>{
-	if($action eq 'publish') then
-	  xdb:store($pubroot,$put_to, $doc)
-	else
-	  if(doc-available($destination)) then
-	    xdb:remove($pubroot,$put_to)
+      <td>{$parameter}={request:get-parameter($parameter,"n/a")}</td>
+      <td>
+	{
+	  if($action eq 'publish') then
+	    xdb:store($pubroot,$put_to, $doc)
 	  else
-	    ()
-      }</td>
+	    if(doc-available($destination)) then
+	      xdb:remove($pubroot,$put_to)
+	    else
+	      ()
+    	}
+      </td>
     </tr>
   }
 </table>
