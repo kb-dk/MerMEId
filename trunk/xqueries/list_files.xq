@@ -260,7 +260,7 @@ declare function local:format-reference(
             <th class="tools">Edit</th>
             <th class="tools">Copy</th>
             <th class="tools">	   
-              <form method="post" id="publish_form" action="/storage/publish.xq" >
+              <form method="get" id="publish_form" action="/storage/publish.xq" >
                 <div id="publish">
                 Publish 
                 <img src="/editor/images/menu.png" 

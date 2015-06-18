@@ -4,6 +4,7 @@ declare namespace xdb="http://exist-db.org/xquery/xmldb";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
+declare namespace util="http://exist-db.org/xquery/util";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 
@@ -20,7 +21,7 @@ let $return_to := concat(
   "&amp;page=",        fn:escape-uri(request:get-parameter("page",""),true()),
   "&amp;itemsPerPage=",fn:escape-uri(request:get-parameter("itemsPerPage",""),true()))
 
-let $res := response:redirect-to($return_to cast as xs:anyURI)
+let $res := response:redirect-to($return_to cast as xs:anyURI) 
 let $log-in := login:function()
 let $parameters :=  request:get-parameter-names()
 return
@@ -28,20 +29,21 @@ return
   {
     for $parameter in $parameters 
     let $doc         := doc($parameter)
-    let $destination :=concat($pubroot,substring-after($parameter,$dcmroot))
-    let $put_to :=substring-after($parameter,$dcmroot)
-    where request:get-parameter($parameter,"") eq $action 
+    let $destination :=concat("public/",substring-after($parameter,"dcm/"))
+    where request:get-parameter($parameter,"") eq 'publish'
       and not(contains($parameter,"action"))
     return 
     <tr>
-      <td>{$parameter}={request:get-parameter($parameter,"n/a")}</td>
+      <td>parameter = {$parameter}</td>
+      <td>destination = {$parameter}</td>
+      <td>name = {util:document-name($doc)}</td>
       <td>
 	{
 	  if($action eq 'publish') then
-	    xdb:store($pubroot,$put_to, $doc)
+	    xdb:store($pubroot,util:document-name($doc), $doc)
 	  else
 	    if(doc-available($destination)) then
-	      xdb:remove($pubroot,$put_to)
+	      xdb:remove($pubroot,util:document-name($doc))
 	    else
 	      ()
     	}
