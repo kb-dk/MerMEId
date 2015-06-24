@@ -139,6 +139,14 @@ body.text #main.appendix ul
     max-width: 100%;
 }
 
+body.text .appendix #toc {
+    margin-top: 1em;
+}
+
+body.text .appendix #toc li {
+    margin-top: 0;
+}
+
 .appendix p {
     margin : 0 0 10px 0;
 }
@@ -160,6 +168,10 @@ body.text #main.appendix ul
 
 .appendix .list_section div p.work_number {
     white-space: nowrap;
+}
+
+body.text #main.appendix .list_section li {
+    margin-top: 0;
 }
 
 /* Print style rules */
