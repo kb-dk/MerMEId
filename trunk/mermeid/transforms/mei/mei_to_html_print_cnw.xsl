@@ -3,7 +3,7 @@
 <!-- 
 	Conversion of MEI metadata to HTML using XSLT 1.0
 	This XSLT overrides a number of templates defined in mei_to_html.xsl 
-	to produce output suited for printing.
+	to produce output suited for printing. Please note: This file is intended specifically for the CNW catalogue.
 	
 	Authors: 
 	Axel Teich Geertinger & Sigfrid Lundberg
@@ -254,11 +254,11 @@
 		</xsl:if>
 	</xsl:template>
 	
+
 	
 	<!-- Title pages -->
 	<xsl:template match="m:titlePage">
-		<xsl:if test="position() &gt; 1">.</xsl:if>
-		<xsl:text> </xsl:text>
+		<br/>
 		<xsl:if test="not(@label) or @label=''">Title page</xsl:if>
 		<xsl:value-of select="@label"/>
 		<xsl:text>: </xsl:text>
@@ -269,6 +269,7 @@
 		</xsl:for-each>
 	</xsl:template>
 	
+
 	<!-- compact source description -->
 	<xsl:template match="m:source[*[name()!='classification']//text()]|m:item[*//text()]">
 		<xsl:param name="mode" select="''"/>
@@ -350,6 +351,7 @@
 				</xsl:otherwise>
 			</xsl:choose>
 			
+			
 			<!-- List reproductions (reprints) -->
 			<xsl:if test="$reprints">
 				<xsl:for-each select="$reprints/m:sourceDesc/m:source[m:relationList/m:relation[@rel='isReproductionOf'
@@ -380,6 +382,30 @@
 		</xsl:choose>
 		
 	</xsl:template>
+	
+	<xsl:template match="m:itemList">
+		<xsl:choose>
+			<!-- Show items as bulleted list if 
+				1) there are more than one item or
+				2) an item has a label, and source is not a manuscript -->
+			<xsl:when
+				test="count(m:item)&gt;1 or 
+				(m:item/@label and m:item/@label!='' and
+				../m:classification/m:termList/m:term[@classcode='DcmPresentationClass']!='manuscript')">
+				<ul class="item_list">
+					<xsl:for-each select="m:item[*//text()]">
+						<li>
+							<xsl:apply-templates select="."/>
+						</li>
+					</xsl:for-each>
+				</ul>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:apply-templates select="m:item[*//text()]"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
 	
 	<!-- Don't look up abbreviations -->
 	<xsl:template match="text()[name(..)!='p' and name(..)!='persName' and name(..)!='ptr' and name(..)!='ref'] 

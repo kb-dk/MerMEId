@@ -1460,6 +1460,36 @@
 						select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';'))))"/>
 					<xsl:sort
 						select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
+					
+					<!-- test: add sub-headings -->
+					
+					<!--
+					<xsl:choose>
+						<xsl:value-of select="position()"/>
+						<xsl:when test="contains(m:classification/m:termList/m:term,'music')">
+							<p class="p_heading">Music: <xsl:value-of select="position()"/></p>				
+							<xsl:choose>
+								<xsl:when test="not(preceding-sibling::m:source[contains(m:classification/m:termList/m:term,'music') 
+									and contains(m:classification/m:termList/m:term,'manuscript')])">
+									<p class="p_heading">Manuscripts:</p>				
+								</xsl:when>
+								<xsl:when test="count(preceding-sibling::m:source/m:classification/m:termList[contains(m:term,'music') 
+									and contains(m:term,'print')])=0">
+									<p class="p_heading">Prints:</p>				
+								</xsl:when>
+							</xsl:choose>
+						</xsl:when>
+						<xsl:when test="contains(m:classification/m:termList/m:term,'text') and 
+							count(preceding-sibling::m:source/m:classification/m:termList[m:term='text'])=0">
+							<p class="p_heading">Text sources:</p>				
+						</xsl:when>
+					</xsl:choose>
+					
+					
+					-->
+					
+					<!-- end test -->
+					
 					<xsl:apply-templates select=".">
 						<!-- also send the collection of all reprints to the template -->
 						<xsl:with-param name="reprints" select="$reprints"/>
