@@ -1443,58 +1443,36 @@
 				</xsl:variable>
 				<!-- make the source list a nodeset -->
 				<xsl:variable name="source_nodeset" select="exsl:node-set($sources)"/>
+				
+				<xsl:variable name="sorted_sources">
 				<!-- loop through the selected sources; sort them; and skip reproductions at this point -->
-				<xsl:for-each select="$source_nodeset/m:source
+					<xsl:for-each
+						select="$source_nodeset/m:source
 					[not(m:relationList/m:relation[@rel='isReproductionOf']/@target)]">
-					<!-- process all sources, sorted according to classification -->
-					<xsl:sort
-						select="m:classification/m:termList/m:term[@classcode='DcmContentClass']"/>
-					<xsl:sort
-						select="m:classification/m:termList/m:term[@classcode='DcmPresentationClass']"/>
-					<!-- adding 100 ensures that combinations of 1- and 2-digit numbers are sorted correctly -->
-					<xsl:sort
-						select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
-					<xsl:sort
-						select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmAuthorityClass'],';'))))"/>
-					<xsl:sort
-						select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';'))))"/>
-					<xsl:sort
-						select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
+						<!-- process all sources, sorted according to classification -->
+						<xsl:sort
+							select="m:classification/m:termList/m:term[@classcode='DcmContentClass']"/>
+						<xsl:sort
+							select="m:classification/m:termList/m:term[@classcode='DcmPresentationClass']"/>
+						<!-- adding 100 ensures that combinations of 1- and 2-digit numbers are sorted correctly -->
+						<xsl:sort
+							select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
+						<xsl:sort
+							select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmAuthorityClass'],';'))))"/>
+						<xsl:sort
+							select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';'))))"/>
+						<xsl:sort
+							select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
+						<xsl:copy-of select="."/>
+					</xsl:for-each>
+				</xsl:variable>
+				<xsl:variable name="sorted_sources_nodeset"  select="exsl:node-set($sorted_sources)"/>
+				
+				<xsl:apply-templates select="$sorted_sources_nodeset/m:source">
+					<!-- also send the collection of all reprints to the template -->
+					<xsl:with-param name="reprints" select="$reprints"/>
+				</xsl:apply-templates>
 					
-					<!-- test: add sub-headings -->
-					
-					<!--
-					<xsl:choose>
-						<xsl:value-of select="position()"/>
-						<xsl:when test="contains(m:classification/m:termList/m:term,'music')">
-							<p class="p_heading">Music: <xsl:value-of select="position()"/></p>				
-							<xsl:choose>
-								<xsl:when test="not(preceding-sibling::m:source[contains(m:classification/m:termList/m:term,'music') 
-									and contains(m:classification/m:termList/m:term,'manuscript')])">
-									<p class="p_heading">Manuscripts:</p>				
-								</xsl:when>
-								<xsl:when test="count(preceding-sibling::m:source/m:classification/m:termList[contains(m:term,'music') 
-									and contains(m:term,'print')])=0">
-									<p class="p_heading">Prints:</p>				
-								</xsl:when>
-							</xsl:choose>
-						</xsl:when>
-						<xsl:when test="contains(m:classification/m:termList/m:term,'text') and 
-							count(preceding-sibling::m:source/m:classification/m:termList[m:term='text'])=0">
-							<p class="p_heading">Text sources:</p>				
-						</xsl:when>
-					</xsl:choose>
-					
-					
-					-->
-					
-					<!-- end test -->
-					
-					<xsl:apply-templates select=".">
-						<!-- also send the collection of all reprints to the template -->
-						<xsl:with-param name="reprints" select="$reprints"/>
-					</xsl:apply-templates>
-				</xsl:for-each>
 			</xsl:with-param>
 		</xsl:apply-templates>
 	</xsl:template>
@@ -2024,7 +2002,6 @@
 
 	<xsl:template match="m:titlePage">
 		<div>
-			<xsl:if test="position() &gt; 1">. </xsl:if>
 			<xsl:if test="not(@label) or @label=''">Title page</xsl:if>
 			<xsl:value-of select="@label"/>
 			<xsl:text>: </xsl:text>
