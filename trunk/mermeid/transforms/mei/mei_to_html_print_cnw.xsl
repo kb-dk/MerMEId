@@ -267,6 +267,9 @@
 				<xsl:apply-templates/>
 			</span>
 		</xsl:for-each>
+		<xsl:if test="position()=count(../m:titlePage)">
+			<br/>
+		</xsl:if>
 	</xsl:template>
 	
 
