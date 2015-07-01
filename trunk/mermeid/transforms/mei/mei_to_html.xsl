@@ -2035,15 +2035,24 @@
 			<xsl:if test="m:corpName[text()]or m:identifier[text()]">
 				<xsl:choose>
 					<xsl:when test="m:corpName[text()]">
-						<xsl:apply-templates select="m:corpName[text()]"/>
-						<xsl:if test="m:identifier[text()]"> (<em><xsl:apply-templates
-									select="m:identifier[text()]"/></em>) </xsl:if>
+						<xsl:choose>
+							<!-- if both repository name and identifier are given, 
+							     emphasize only the identifier in () -->
+							<xsl:when test="m:identifier[text()]">
+								<xsl:apply-templates select="m:corpName[text()]"/>
+								(<em><xsl:apply-templates select="m:identifier[text()]"/></em>) 
+							</xsl:when>
+							<!-- if only the repository name is given,
+							     emphasize it as if it were an identifier... -->
+							<xsl:otherwise>								
+								<em><xsl:apply-templates select="m:corpName[text()]"/></em>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
+						<!-- (RISM) identifier only -->
 						<xsl:for-each select="m:identifier[text()]">
-							<em>
-								<xsl:apply-templates select="."/>
-							</em>
+							<em><xsl:apply-templates select="."/></em>
 						</xsl:for-each>
 					</xsl:otherwise>
 				</xsl:choose>
