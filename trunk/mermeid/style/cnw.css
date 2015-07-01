@@ -155,6 +155,7 @@ body.text .appendix #toc li {
     display:table;
     display:inline-table;
     page-break-inside: auto;
+    width: 100%;
 }
 
 .appendix .list_section div {
@@ -168,8 +169,13 @@ body.text .appendix #toc li {
     padding: .2em 1em .4em 0;
 }
 
+.appendix .list_section div div {
+    width: 98%;
+}
+
 .appendix .list_section div p.work_number {
     white-space: nowrap;
+    width: 6em;
 }
 
 body.text #main.appendix .list_section li {
