@@ -57,7 +57,8 @@
             <annot type="private_notes" xml:id="annot_facd066d"/>
          </notesStmt>
          <sourceDesc>
-            <source label="Score, print" target="22228421720417.xml#source_id4caf42fc"
+            <source label="Score, print"
+                    target="22228421720417.xml#source_id4caf42fc"
                     xml:id="source_0e98f4ae">
                <relationList>
                   <relation label="" rel="isEmbodimentOf" xml:id="relation_600f0f2c"/>
@@ -86,8 +87,11 @@
                         <repository>
                            <corpName xml:id="corpName_c9fd8eec"/>
                            <geogName xml:id="geogName_0770d66c"/>
-                           <identifier authURI="http://www.rism.info" authority="RISM" xml:id="identifier_87690d1b">DK-Kk</identifier>
-                           <ptr label="Facsimile (CNS 118a)" mimetype=""
+                           <identifier authURI="http://www.rism.info"
+                                       authority="RISM"
+                                       xml:id="identifier_87690d1b">DK-Kk</identifier>
+                           <ptr label="Facsimile (CNS 118a)"
+                                mimetype=""
                                 target="http://img.kb.dk/ma/CarlNielsen/cns118a.pdf"
                                 xml:id="ptr_2d9d3169"/>
                         </repository>
@@ -124,8 +128,11 @@
                         <repository>
                            <corpName xml:id="corpName_ed27eedf"/>
                            <geogName xml:id="geogName_18d44786"/>
-                           <identifier authURI="http://www.rism.info" authority="RISM" xml:id="identifier_d28831d0">DK-Kk</identifier>
-                           <ptr label="Facsimile" mimetype=""
+                           <identifier authURI="http://www.rism.info"
+                                       authority="RISM"
+                                       xml:id="identifier_d28831d0">DK-Kk</identifier>
+                           <ptr label="Facsimile"
+                                mimetype=""
                                 target="http://img.kb.dk/ma/CarlNielsen/cns147a.pdf"
                                 xml:id="ptr_0a201f32"/>
                         </repository>
@@ -352,7 +359,8 @@
                </expression>
             </expressionList>
             <relationList>
-               <relation label="Seks sange til tekster af Ludvig Holstein" rel="isPartOf"
+               <relation label="Seks sange til tekster af Ludvig Holstein"
+                         rel="isPartOf"
                          target="nielsen_holstein_sange.xml"
                          xml:id="relation_4a226083"/>
             </relationList>
@@ -450,6 +458,21 @@
             </changeDesc>
          </change>
          <change isodate="2014-11-04" resp="MerMEId" xml:id="change_329d1e352">
+            <changeDesc>
+               <p>Batch transformation removing duplicate IDs and fixing other issues</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_302d1e352">
+            <changeDesc>
+               <p>Batch transformation moving identifier/@type data to @label</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_305d1e352">
+            <changeDesc>
+               <p>Batch transformation ensuring correct order of elements in source, work and biblList</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_308d1e352">
             <changeDesc>
                <p>Batch transformation removing duplicate IDs and fixing other issues</p>
             </changeDesc>

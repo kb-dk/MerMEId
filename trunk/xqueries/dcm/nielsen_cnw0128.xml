@@ -57,7 +57,8 @@
             <annot type="private_notes" xml:id="annot_a94a7495"/>
          </notesStmt>
          <sourceDesc>
-            <source label="Score, print" target="22228421720417.xml#source_id4caf42fc"
+            <source label="Score, print"
+                    target="22228421720417.xml#source_id4caf42fc"
                     xml:id="source_29abe7e9">
                <relationList>
                   <relation label="" rel="isEmbodimentOf" xml:id="relation_770cbb37"/>
@@ -85,8 +86,11 @@
                         <repository>
                            <corpName xml:id="corpName_4699429d"/>
                            <geogName xml:id="geogName_6cf24a65"/>
-                           <identifier authURI="http://www.rism.info" authority="RISM" xml:id="identifier_94300df8">DK-Kk</identifier>
-                           <ptr label="Facsimile (CNS 118a)" mimetype=""
+                           <identifier authURI="http://www.rism.info"
+                                       authority="RISM"
+                                       xml:id="identifier_94300df8">DK-Kk</identifier>
+                           <ptr label="Facsimile (CNS 118a)"
+                                mimetype=""
                                 target="http://img.kb.dk/ma/CarlNielsen/cns118a.pdf"
                                 xml:id="ptr_45433397"/>
                         </repository>
@@ -234,7 +238,8 @@
                </expression>
             </expressionList>
             <relationList>
-               <relation label="Seks sange til tekster af Ludvig Holstein" rel="isPartOf"
+               <relation label="Seks sange til tekster af Ludvig Holstein"
+                         rel="isPartOf"
                          target="nielsen_holstein_sange.xml"
                          xml:id="relation_8359e24a"/>
             </relationList>
@@ -332,6 +337,21 @@
             </changeDesc>
          </change>
          <change isodate="2014-11-04" resp="MerMEId" xml:id="change_229d1e227">
+            <changeDesc>
+               <p>Batch transformation removing duplicate IDs and fixing other issues</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_214d1e227">
+            <changeDesc>
+               <p>Batch transformation moving identifier/@type data to @label</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_217d1e227">
+            <changeDesc>
+               <p>Batch transformation ensuring correct order of elements in source, work and biblList</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_220d1e227">
             <changeDesc>
                <p>Batch transformation removing duplicate IDs and fixing other issues</p>
             </changeDesc>

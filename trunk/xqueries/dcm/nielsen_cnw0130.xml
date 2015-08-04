@@ -57,7 +57,8 @@
             <annot type="private_notes" xml:id="annot_644e1bc5"/>
          </notesStmt>
          <sourceDesc>
-            <source label="Score, print" target="22228421720417.xml#source_id4caf42fc"
+            <source label="Score, print"
+                    target="22228421720417.xml#source_id4caf42fc"
                     xml:id="source_d2d45f5d">
                <relationList>
                   <relation label="" rel="isEmbodimentOf" xml:id="relation_69447889"/>
@@ -70,7 +71,7 @@
                </titleStmt>
                <classification>
                   <termList>
-                     <term classcode="DcmContentClass">music</term>
+                     <term classcode="DcmContentClass">notated music</term>
                      <term classcode="DcmPresentationClass">manuscript</term>
                      <term classcode="DcmAuthorityClass">copy</term>
                      <term classcode="DcmScoringClass">score</term>
@@ -86,8 +87,11 @@
                         <repository>
                            <corpName xml:id="corpName_dde72f9b"/>
                            <geogName xml:id="geogName_45f59bf2"/>
-                           <identifier authURI="http://www.rism.info" authority="RISM" xml:id="identifier_d119eae6">DK-Kk</identifier>
-                           <ptr label="Facsimile" mimetype=""
+                           <identifier authURI="http://www.rism.info"
+                                       authority="RISM"
+                                       xml:id="identifier_d119eae6">DK-Kk</identifier>
+                           <ptr label="Facsimile"
+                                mimetype=""
                                 target="http://img.kb.dk/ma/CarlNielsen/cns158a.pdf"
                                 xml:id="ptr_c5eb5e75"/>
                         </repository>
@@ -106,7 +110,7 @@
                </titleStmt>
                <classification>
                   <termList>
-                     <term classcode="DcmContentClass">music</term>
+                     <term classcode="DcmContentClass">notated music</term>
                      <term classcode="DcmPresentationClass">manuscript</term>
                      <term classcode="DcmAuthorityClass">autograph</term>
                      <term classcode="DcmScoringClass">score</term>
@@ -122,8 +126,11 @@
                         <repository>
                            <corpName xml:id="corpName_8b990e18"/>
                            <geogName xml:id="geogName_c23d2399"/>
-                           <identifier authURI="http://www.rism.info" authority="RISM" xml:id="identifier_8b313333">DK-Kk</identifier>
-                           <ptr label="Facsimile" mimetype=""
+                           <identifier authURI="http://www.rism.info"
+                                       authority="RISM"
+                                       xml:id="identifier_8b313333">DK-Kk</identifier>
+                           <ptr label="Facsimile"
+                                mimetype=""
                                 target="http://img.kb.dk/ma/CarlNielsen/cns158b.pdf"
                                 xml:id="ptr_a9c4624f"/>
                         </repository>
@@ -351,7 +358,8 @@
                </expression>
             </expressionList>
             <relationList>
-               <relation label="Seks sange til tekster af Ludvig Holstein" rel="isPartOf"
+               <relation label="Seks sange til tekster af Ludvig Holstein"
+                         rel="isPartOf"
                          target="nielsen_holstein_sange.xml"
                          xml:id="relation_1c0a5c67"/>
             </relationList>
@@ -454,6 +462,21 @@
             </changeDesc>
          </change>
          <change isodate="2014-11-04" resp="MerMEId" xml:id="change_325d1e354">
+            <changeDesc>
+               <p>Batch transformation removing duplicate IDs and fixing other issues</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_304d1e354">
+            <changeDesc>
+               <p>Batch transformation moving identifier/@type data to @label</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_307d1e354">
+            <changeDesc>
+               <p>Batch transformation ensuring correct order of elements in source, work and biblList</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_310d1e354">
             <changeDesc>
                <p>Batch transformation removing duplicate IDs and fixing other issues</p>
             </changeDesc>

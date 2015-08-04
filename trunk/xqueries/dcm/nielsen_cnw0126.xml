@@ -54,7 +54,8 @@
             <identifier type="file_collection" xml:id="identifier_de0dcc91">MerMEId Demo</identifier>
          </seriesStmt>
          <sourceDesc>
-            <source label="Score, print" target="22228421720417.xml#source_id4caf42fc"
+            <source label="Score, print"
+                    target="22228421720417.xml#source_id4caf42fc"
                     xml:id="source_59fc686c">
                <relationList>
                   <relation label="" rel="isEmbodimentOf" xml:id="relation_9d74cc1f"/>
@@ -67,7 +68,7 @@
                </titleStmt>
                <classification>
                   <termList>
-                     <term classcode="DcmContentClass">music</term>
+                     <term classcode="DcmContentClass">notated music</term>
                      <term classcode="DcmPresentationClass">manuscript</term>
                      <term classcode="DcmAuthorityClass">autograph</term>
                      <term classcode="DcmScoringClass">score</term>
@@ -82,7 +83,9 @@
                         <repository>
                            <corpName xml:id="corpName_11d9c462"/>
                            <geogName xml:id="geogName_b6b5c6be"/>
-                           <identifier authURI="http://www.rism.info" authority="RISM" xml:id="identifier_18438987"/>
+                           <identifier authURI="http://www.rism.info"
+                                       authority="RISM"
+                                       xml:id="identifier_18438987"/>
                            <ptr label="" mimetype="" xml:id="ptr_aa2ed623"/>
                         </repository>
                         <identifier xml:id="identifier_c3cca390">CNS 277 (in CNS
@@ -114,7 +117,7 @@
                </physDesc>
                <classification>
                   <termList>
-                     <term classcode="DcmContentClass">music</term>
+                     <term classcode="DcmContentClass">notated music</term>
                      <term classcode="DcmPresentationClass">print</term>
                      <term classcode="DcmAuthorityClass"/>
                      <term classcode="DcmScoringClass">score</term>
@@ -123,7 +126,10 @@
                   </termList>
                </classification>
                <relationList>
-                  <relation label="" rel="isEmbodimentOf" target="#expression_1" xml:id="relation_53b7dad3"/>
+                  <relation label=""
+                            rel="isEmbodimentOf"
+                            target="#expression_1"
+                            xml:id="relation_53b7dad3"/>
                </relationList>
             </source>
          </sourceDesc>
@@ -449,7 +455,8 @@
                </expression>
             </expressionList>
             <relationList>
-               <relation label="Seks sange til tekster af Ludvig Holstein" rel="isPartOf"
+               <relation label="Seks sange til tekster af Ludvig Holstein"
+                         rel="isPartOf"
                          target="nielsen_holstein_sange.xml"
                          xml:id="relation_fb3babb1"/>
             </relationList>
@@ -562,6 +569,21 @@
             </changeDesc>
          </change>
          <change isodate="2014-11-04" resp="MerMEId" xml:id="change_409d1e452">
+            <changeDesc>
+               <p>Batch transformation removing duplicate IDs and fixing other issues</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_376d1e452">
+            <changeDesc>
+               <p>Batch transformation moving identifier/@type data to @label</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_379d1e452">
+            <changeDesc>
+               <p>Batch transformation ensuring correct order of elements in source, work and biblList</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_382d1e452">
             <changeDesc>
                <p>Batch transformation removing duplicate IDs and fixing other issues</p>
             </changeDesc>

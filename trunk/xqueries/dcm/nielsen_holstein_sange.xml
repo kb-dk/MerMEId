@@ -78,7 +78,7 @@
                </physDesc>
                <classification>
                   <termList>
-                     <term classcode="DcmContentClass">music</term>
+                     <term classcode="DcmContentClass">notated music</term>
                      <term classcode="DcmPresentationClass">print</term>
                      <term classcode="DcmAuthorityClass"/>
                      <term classcode="DcmScoringClass">score</term>
@@ -507,7 +507,9 @@
                      </creation>
                      <p/>
                   </history>
-                  <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_idcf0aaf41"/>
+                  <perfMedium analog="marc:048"
+                              authority="marcmusperf"
+                              xml:id="perfMedium_idcf0aaf41"/>
                   <classification>
                      <termList>
                         <term/>
@@ -518,17 +520,29 @@
                </expression>
             </expressionList>
             <relationList>
-               <relation label="Æbleblomst " rel="hasPart" target="nielsen_cnw0126.xml"
+               <relation label="Æbleblomst "
+                         rel="hasPart"
+                         target="nielsen_cnw0126.xml"
                          xml:id="relation_37757a76"/>
-               <relation label="Erindringens Sø" rel="hasPart" target="nielsen_cnw0127.xml"
+               <relation label="Erindringens Sø"
+                         rel="hasPart"
+                         target="nielsen_cnw0127.xml"
                          xml:id="relation_c60408a9"/>
-               <relation label="Sommersang" rel="hasPart" target="nielsen_cnw0128.xml"
+               <relation label="Sommersang"
+                         rel="hasPart"
+                         target="nielsen_cnw0128.xml"
                          xml:id="relation_d968aa4c"/>
-               <relation label="Sang bag Ploven" rel="hasPart" target="nielsen_cnw0129.xml"
+               <relation label="Sang bag Ploven"
+                         rel="hasPart"
+                         target="nielsen_cnw0129.xml"
                          xml:id="relation_1f48f309"/>
-               <relation label="I Aften " rel="hasPart" target="nielsen_cnw0130.xml"
+               <relation label="I Aften "
+                         rel="hasPart"
+                         target="nielsen_cnw0130.xml"
                          xml:id="relation_1d175d9f"/>
-               <relation label="Hilsen" rel="hasPart" target="nielsen_cnw0131.xml"
+               <relation label="Hilsen"
+                         rel="hasPart"
+                         target="nielsen_cnw0131.xml"
                          xml:id="relation_0d405261"/>
             </relationList>
          </work>
@@ -630,6 +644,21 @@
             </changeDesc>
          </change>
          <change isodate="2014-11-04" resp="MerMEId" xml:id="change_425d1e529">
+            <changeDesc>
+               <p>Batch transformation removing duplicate IDs and fixing other issues</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_428d1e529">
+            <changeDesc>
+               <p>Batch transformation moving identifier/@type data to @label</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_431d1e529">
+            <changeDesc>
+               <p>Batch transformation ensuring correct order of elements in source, work and biblList</p>
+            </changeDesc>
+         </change>
+         <change isodate="2015-08-04" resp="MerMEId" xml:id="change_434d1e529">
             <changeDesc>
                <p>Batch transformation removing duplicate IDs and fixing other issues</p>
             </changeDesc>
