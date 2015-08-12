@@ -2409,9 +2409,6 @@
 			<xsl:when test="contains(m:genre,'concert') and contains(m:genre,'program')">
 				<xsl:if test="m:title//text()">
 					<em><xsl:apply-templates select="m:title"/></em><xsl:if test="not(contains('.!?',substring(m:title,string-length(m:title),1)))">.</xsl:if></xsl:if>
-				<xsl:apply-templates select="m:annot">
-					<xsl:with-param name="compact" select="'true'"/>
-				</xsl:apply-templates><xsl:if test="m:imprint//text()">. </xsl:if>
 				<xsl:for-each select="m:imprint[*//text()]">
 					<xsl:if test="m:publisher/text()">
 						<xsl:apply-templates select="m:publisher"/><xsl:if test="m:pubPlace//text() or m:date//text()">, </xsl:if></xsl:if>
@@ -2421,8 +2418,12 @@
 						<xsl:apply-templates select="m:date[text()]"/>
 					</xsl:if>.
 				</xsl:for-each>
+				<xsl:apply-templates select="m:physLoc[*//text()]"/>
 				<xsl:call-template name="hosts"/>
 				<xsl:apply-templates select="m:ptr"/>
+				<xsl:apply-templates select="m:annot">
+					<xsl:with-param name="compact" select="'true'"/>
+				</xsl:apply-templates>
 			</xsl:when>
 
 			<xsl:otherwise>

@@ -83,24 +83,26 @@
                     <xf:group id="editing_status" ref="instance('data-instance')//m:bibl[@xml:id=instance('temp')/id]">
                         <h:h3>
                             <xf:repeat nodeset="m:author"><xf:output 
-                                value="if ((position() &gt; 1) and (.!='')) then ', ' else ''"/><xf:output 
+                                value="if ((position() &gt; 1) and (.!='')) then ' &amp; ' else ''"/><xf:output 
                                     value="."/></xf:repeat><xf:output 
-                                        value="if (normalize-space(m:author[1]) and not(normalize-space(m:recipient))) then ': ' else ''"/>
-                            <xf:output value="if (normalize-space(m:recipient)) then concat(' to ',m:recipient) else ''"/>
+                                        value="if (normalize-space(m:author[1]) and not(normalize-space(m:recipient[1]))) then ': ' else ''"/>
+                            <!--<xf:output value="if (normalize-space(m:recipient[1])) then concat(' to ',m:recipient[1]) else ''"/>-->
+                            <xf:repeat nodeset="m:recipient"><xf:output 
+                                value="if ((position() &gt; 1) and (.!='')) then ' &amp; ' else ' to '"/><xf:output 
+                                    value="."/></xf:repeat>
                             <h:i><xf:output value="m:title[@level='a']">
                             </xf:output></h:i><xf:output 
                                 value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='j'])) then concat('. ',m:title[@level='j']) else m:title[@level='j']"/>
                             <xf:output value="if (normalize-space(m:title[@level='a']) and normalize-space(m:title[@level='m'])) then concat('. ',m:title[@level='m']) else m:title[@level='m']"/>
                             <xf:output value="if (normalize-space(m:title[not(@level)])) then m:title[not(@level)] else ''"/>
                             <xf:output value="if (normalize-space(m:date)) then concat('(',normalize-space(m:date),')') else ''"/>
-                            <xf:group ref=".[normalize-space(concat(m:author[1],m:recipient,m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:title[not(@level)],m:date))='']"> [No description] </xf:group>
+                            <xf:group ref=".[normalize-space(concat(m:author[1],m:recipient[1],m:title[@level='a'],m:title[@level='j'],m:title[@level='m'],m:title[not(@level)],m:date))='']"> [No description] </xf:group>
                             <xf:output value="if(instance('temp')[changed='true']) then '*' else''" id="work_identifier"/>
                             <dcm:id ref="."/>
                             <dcm:attribute-editor ref="."/>
                         </h:h3>                
                     </xf:group>
                 </h:div>
-                
                 
                 <xf:group ref="instance('data-instance')//m:bibl[@xml:id=instance('temp')/id]">
                     <h:div class="blocklabel strong">Reference type: 
@@ -112,7 +114,7 @@
                     <h:div class="vertical_spacer"/>
                     <dcm:bibl-input/>
                 </xf:group>
-                
+
                 <xf:group ref=".[not(instance('data-instance')//m:bibl[@xml:id=instance('temp')/id])]">
                     <h:h3>Item not found</h:h3>
                     <h:p>Did you remember to save your work before you opened the details editor?</h:p>

@@ -44,6 +44,65 @@
                     
                     <xf:group ref="$binding">
                         
+                        <h:fieldset>
+                            <h:legend>Reference type:
+                                <h:a class="help">?<h:span class="comment">Use two genre indicators 
+                                    for articles and interviews: One to indicate the type of text 
+                                    ('Article' or 'Interview') and another one indicating the type of
+                                    the containing publication such as 'Book', 'Journal', 
+                                    or 'Newspaper'. 
+                                </h:span></h:a>
+                            </h:legend> 
+                            <dcm:create nodeset="m:genre" label="Add genre"
+                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:genre][1]/m:genre"/>
+                            <xf:repeat nodeset="m:genre" id="repeat-bibl-genre">
+                                <h:div>
+                                    <xf:select1 ref="." class="xforms-select1-appearance-minimal">
+                                        <xf:item>
+                                            <xf:value>article</xf:value>
+                                            <xf:label>Article</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>concert programme</xf:value>
+                                            <xf:label>Concert programme</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>diary entry</xf:value>
+                                            <xf:label>Diary entry</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>interview</xf:value>
+                                            <xf:label>Interview</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>journal</xf:value>
+                                            <xf:label>Journal</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>letter</xf:value>
+                                            <xf:label>Letter</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>manuscript</xf:value>
+                                            <xf:label>Manuscript</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>newspaper</xf:value>
+                                            <xf:label>Newspaper</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>web site</xf:value>
+                                            <xf:label>Web site</xf:label>
+                                        </xf:item>
+                                    </xf:select1>
+                                    <dcm:element-buttons triggers="add delete" nodeset="m:genre"
+                                        index="repeat-bibl-genre"
+                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:genre][1]/m:genre[1]"/>
+                                    <dcm:attribute-editor ref="."/>
+                                </h:div>
+                            </xf:repeat>
+                        </h:fieldset>
+                        
                         
                         <xf:group ref=".[not(m:genre='manuscript') and not(m:genre='letter') and not(m:genre[contains(.,'program')])]">
                             <!-- authors are listed elsewhere if newspaper article -->
@@ -67,7 +126,7 @@
                             </h:fieldset>
                         </xf:group>
                         
-                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry')]">
+                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript')]">
                             <h:fieldset>
                                 <h:legend>Title</h:legend>
                                 <dcm:create nodeset="m:title" label="Add title"
@@ -233,34 +292,78 @@
                                 </h:fieldset>
                         </xf:group>
                         
-                        <xf:group ref=".[m:genre='letter' or m:genre='diary entry' or m:genre='manuscript']">
-                            <xf:input ref="m:title" class="maxlong">
-                                <xf:label class="fixed_width">Title</xf:label>
-                            </xf:input>
-                            <dcm:attribute-editor ref="m:title"/>
-                            <h:br clear="all"/>
-                            <xf:input ref="m:author" class="maxlong">
-                                <xf:label class="fixed_width">Author <h:a class="help">?<h:span class="comment">For
-                                    diary entries, leave empty if author is the
-                                    composer</h:span></h:a></xf:label>
-                            </xf:input>
-                            <dcm:attribute-editor ref="m:author"/>
-                            <h:br clear="all"/>
-                            <xf:group ref=".[m:genre='letter']">
-                                <xf:input ref="m:recipient" class="maxlong">
-                                    <xf:label class="fixed_width">Recipient</xf:label>
-                                </xf:input>
-                                <dcm:attribute-editor ref="m:recipient"/>
+                        <xf:group
+                            ref=".[m:genre='letter' or m:genre='diary entry' or m:genre='manuscript']">
+                            <h:fieldset>
+                                <h:legend>Details</h:legend>
+                                <xf:repeat nodeset="m:title" id="repeat-letter-title">
+                                    <xf:input ref="." class="maxlong">
+                                        <xf:label class="fixed_width">Title</xf:label>
+                                    </xf:input>
+                                    <dcm:element-buttons 
+                                        triggers="remove" 
+                                        nodeset="m:title"
+                                        index="repeat-letter-title"
+                                        origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1][m:title[not(@level)]]//m:title[1]"/>
+                                    <dcm:attribute-editor/>
+                                </xf:repeat>
                                 <h:br clear="all"/>
-                            </xf:group>
-                            <dcm:date-editor ref="m:creation/m:date">
-                                <xf:label class="fixed_width">Date </xf:label>
-                            </dcm:date-editor>
-                            <h:div>
-                                <xf:input ref="m:creation/m:geogName">
-                                    <xf:label class="fixed_width">Place </xf:label>
-                                </xf:input>
-                            </h:div>
+                                <dcm:create nodeset="m:author" label="Add author"
+                                    origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:author[1]"/>
+                                <xf:repeat nodeset="m:author" id="repeat-letter-author">
+                                    <xf:input ref="." class="maxlong">
+                                        <xf:label class="fixed_width">Author <h:a class="help">?<h:span
+                                            class="comment">For diary entries, leave empty if
+                                            author is the composer</h:span></h:a></xf:label>
+                                    </xf:input>
+                                    <dcm:element-buttons 
+                                        triggers="add remove" 
+                                        nodeset="m:author"
+                                        index="repeat-letter-author"
+                                        origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:author[1]"/>
+                                    <dcm:attribute-editor/>
+                                    <h:br clear="all"/>
+                                </xf:repeat>
+                                <h:br clear="all"/>
+                                <xf:group ref=".[m:genre='letter']">
+                                    <dcm:create nodeset="m:recipient" label="Add recipient"
+                                        origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:recipient[1]"/>
+                                    <xf:repeat nodeset="m:recipient" id="repeat-letter-recipient">
+                                        <xf:input ref="." class="maxlong">
+                                            <xf:label class="fixed_width">Recipient</xf:label>
+                                        </xf:input>
+                                        <dcm:element-buttons 
+                                            triggers="add remove" 
+                                            nodeset="m:recipient"
+                                            index="repeat-letter-recipient"
+                                            origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:recipient[1]"/>
+                                        <dcm:attribute-editor/>
+                                        <h:br clear="all"/>
+                                    </xf:repeat>
+                                    <h:br clear="all"/>
+                                </xf:group>
+                                <h:div>
+                                    <dcm:create nodeset="m:creation" label="Add date and place"
+                                        origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[m:creation][1]//m:creation[1]"/>
+                                    <xf:group ref="m:creation">
+                                        <h:div>
+                                            <dcm:create nodeset="m:date" label="Add date"
+                                                origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:date[1]"/>
+                                            <dcm:date-editor ref="m:date">
+                                                <xf:label class="fixed_width">Date </xf:label>
+                                            </dcm:date-editor>
+                                        </h:div>
+                                        <h:div>
+                                            <dcm:create nodeset="m:geogName" label="Add place"
+                                                origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[m:creation][1]//m:geogName[1]"/>
+                                            <xf:input ref="m:geogName">
+                                                <xf:label class="fixed_width">Place </xf:label>
+                                            </xf:input>
+                                        </h:div>
+                                    </xf:group>
+                                </h:div>
+                            </h:fieldset>
+
                         </xf:group>
                         
                         <xf:group ref=".[m:genre='letter' or m:genre='diary entry' or m:genre='manuscript' or m:genre[contains(.,'concert program')]]">
