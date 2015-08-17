@@ -1,0 +1,522 @@
+h2 {
+    font-size: 1.3em;
+}
+
+input, select {
+    background-color: #fff;
+    color: #000;
+    border-radius: 4px;
+}
+
+div.spacer {
+    display: table-cell;
+}
+
+div.spacer div {
+    width: 15px;
+}
+
+/* CSS for the filter area */
+
+div.filter {
+    display: table-cell;
+    vertical-align: top;
+    width: 250px;
+    background-color: #e8e8e8;
+    font-size: 9pt;
+    padding: 10px;
+    margin: 15px 15px 0 0;
+    border-radius: 4px;
+}
+
+div.filter_block {
+    float: left;
+    width: auto;    
+}
+
+#query_input {
+    width: 232px;
+}
+
+div.search_submit {
+    margin: 5px 0 0 0;
+}
+
+.search_submit input:hover {
+    cursor: pointer;
+    background-color: #e6e6e6;
+}
+
+div.genre_filter span.genre_indicator {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+    border-radius: 8px;
+}
+
+div.genre_filter .selected {
+    background: #fff;
+}
+
+a.genre_filter_row {
+    padding: 5px;
+    padding-left: 32px;
+    text-indent: -32px;
+    display: block;
+    text-decoration: none;
+}
+
+.genre_filter_row:hover {
+    background: #f8f8f8;
+}
+
+.level1 {
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-top: 10px;
+}
+
+.genre_filter_row .num {
+    color: #666;
+    font-weight: normal;
+}
+
+div.filter_block .label {
+    font-weight: bold;
+    line-height: 2em;
+    margin: 5px 0 0 0;
+} 
+
+#notbefore,
+#notafter {
+    width : 40px;
+    font-size: 9pt;
+}
+
+#notbefore {
+    margin-right : 5px;
+}
+
+#notafter {
+    margin-left : 5px;
+}
+
+/* CSS for the "clear filter" elements */
+
+.filter_elements {
+    padding: 5px 0 0 0;
+}
+
+#main a.filter_element {
+  font-size: 12px;
+  line-height: 1em;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  margin: 0 5px 5px 0;
+  padding: 3px 21px 4px 7px;
+  background: url('/editor/images/filter_remove.png') no-repeat right 0 #515251;
+  float: left;
+  border-radius: 4px;
+}
+
+#main a.filter_element:hover {
+  background-color: #be331a;
+}
+
+#main .filter_elements a.reset {
+  background-color: #be331a;
+}
+
+
+/* CSS for the paging */
+
+.paging_div {
+    clear: right;
+    float:left;
+}
+
+a.paging:link, a.paging:active, a.paging:visited, a.paging:hover {
+    text-decoration: none; 
+}  
+
+a.paging:hover {
+    background-color: #f8f8f8;
+}
+
+.paging {
+    background-color: #e8e8e8;
+    color: #999;
+    display: block;
+    float: left;
+    position: relative;
+    text-align: center;
+    height: 21px;
+    width: 26px;
+    text-decoration: none;
+    border: 1px solid #777;
+    border-radius: 4px;
+    margin: 2px 2px 0 0;
+    padding-top: 2px;
+}
+
+.paging img {
+    margin-top: 6px;
+}
+
+#sortForm, #itemsPerPageForm {
+    margin: 0;
+}
+
+/* CSS for the result list */
+
+#itemsPerPageForm {
+    float: right;
+}
+
+div.results {
+    display: table-cell;
+    vertical-align: top;
+    width: 100%;
+}
+
+.result_row a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.result_row a:hover {
+    text-decoration: underline;
+}
+
+.result_row .composer {
+    font-size: .85em;
+    padding: 2px 5px;
+}
+
+.result_row .title {
+    font-size: 11pt;
+    padding: 4px 5px 4px 5px;
+}
+
+.result_row .list_subtitle {
+    font-size: .9em;
+}
+
+.result_row .date {
+    font-size: 8pt;
+    float: right;
+    padding: 2px 5px;
+}
+.result_table {
+    width: 100%;
+    margin: 15px 0;
+    border: 1px solid #666;
+    background-color: #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.result_table:hover {
+    background-color: #fff;
+}
+
+.result_table:hover .list_id {
+    background-color: #666;
+}
+
+.result_cell {
+    vertical-align: top;
+}
+
+
+.info_bar {
+    padding: 0;
+    font-size: 6px;
+}
+
+.info_bar .expan {
+    font-size: 10pt;
+}
+
+.info_bar .genre_list {
+    float: left;
+    padding: 0 2px 0 0;
+}
+
+.genre_cell {
+    vertical-align: bottom;
+}
+
+.info_bar div.genre_list .genre_indicator {
+    display: block;
+    width: 18px;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+}
+
+.result_table .list_id {
+    width: 9%;
+    background-color: #444;
+    white-space: nowrap;
+    padding: 5px 8px 3px 8px;
+    color: #fff;
+    font-size: 9pt
+}
+
+.alternative_language {
+    font-size : .95em;
+    color: #666;
+}
+
+/* css for help and other pop-ups */
+
+div.popup button {
+    text-align:left;
+    width: 100%;
+    min-height: 26px; 
+}
+
+a.help {
+    text-decoration: none;
+    text-align: left;
+    vertical-align:text-top;
+    color: #888888;
+    background-color: #ffffcc;
+    border: 1px solid #888888;
+    font-weight: bold;
+    padding-top: 0px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 1px;
+    font-size:.8em;   
+    cursor: help;
+    border-radius: 2px;
+    /* For non-CSS3 FireFox */
+    -moz-border-radius: 2px;    
+}
+
+a.help_plain {
+    cursor: help;
+}
+
+a.help span.comment, a.help_plain span.comment {
+    display:inline;
+    position: absolute;
+    visibility:hidden;
+    white-space: normal;
+    text-decoration:none;
+    color: black;
+    background-color:#dbd9ba;
+    padding: 1px;
+    z-index:250;
+    padding: 4px;
+    width: 200px;
+    margin-top: 20px;
+    margin-left: -5px;
+    border: 1px solid #ddd;
+    font-weight:normal;
+    box-shadow: 10px 10px 10px #333;
+    border-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 10px 10px 10px #333;
+    -moz-border-radius: 4px;
+    /* For MSIE 6-8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333')"; 
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333'); 
+}
+
+a.help span.comment {
+    font-size: 1.2em;
+}
+
+a:hover.help span.comment, a:hover.help_plain span.comment  {
+    visibility:visible;
+}
+
+form.search a.help span.comment {
+    width: 250px;
+    margin-left:-250px;
+}
+
+
+a.help .help_table {
+    display: table;
+}
+
+a.help .help_example {
+    display: table-row;
+}
+
+a.help .help_label, a.help .help_value {
+    padding-top: 6px;
+    display: table-cell;
+}
+
+form.search a.help .help_label {
+    padding-right: 8px;
+    white-space: nowrap;
+    font-family: courier, fixed, monospace;
+}
+
+a.abbr {
+    border-bottom: 1px dashed #666;
+    cursor: help;   
+    text-decoration: none;
+    color: #000;
+}
+
+.genre_list a.abbr {
+    border: none;
+}
+
+.genre_list a:link, .genre_list a:active, .genre_list a:visited, .genre_list a:hover {
+    text-decoration: none;
+}
+
+a:hover.abbr .expan {
+    visibility:visible;
+}
+
+.expan {
+    display:inline;
+    position: absolute;
+    visibility:hidden;
+    white-space: normal;
+    text-decoration:none;
+    color: black;
+    background-color:#ddd;
+    padding: 1px;
+    padding-bottom: 5px;
+    z-index:250;
+    padding: 8px 4px 4px 4px;
+    width: auto;
+    max-width: 300px;
+    margin-top: 20px;
+    margin-left: -5px;
+    border: 1px solid #ddd;
+    font-weight:normal;
+    font-style: normal;
+    text-align: left;
+    box-shadow: 7px 7px 10px 5px #333;
+    border-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 7px 7px 10px 5px #333;
+    -moz-border-radius: 4px;
+    /* For MSIE 6-8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333')"; 
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333'); 
+}
+
+/* genre color codes */
+
+/* main categories */
+.stage_music                { background-color: #812970;
+                              color: #fff; }
+.instrumental_music         { background-color: #5b8896;
+                              color: #fff; }
+.vocal_music                { background-color: #c9a044;
+                              color: #fff; }
+                              
+.pos1                       { color: #fff; }
+                              
+
+/* sub-categories */
+.opera                      { background-color: #f72c8d;
+                              color: #fff; }
+.opera_pos1                { background-color: #C72371;}
+
+.incidental_music           { background-color: #c72279;
+                              color: #fff; }
+.incidental_music_pos1     { background-color: #A01B61;}
+
+.ballet                     { background-color: #9c1dac;
+                              color: #fff; }
+.ballet_pos1               { background-color: #7E178A;}
+
+.symphony                   { background-color: #4c89fe;
+                              color: #fff; }
+.symphony_pos1             { background-color: #3D6ECD;}
+
+.concerto                   { background-color: #01aef5;
+                              color: #fff; }
+.concerto_pos1             { background-color: #008CC5; }
+
+.other_orchestral_music     { background-color: #00b7c0;
+                              color: #fff; }
+.other_orchestral_music_pos1 
+                            { background-color: #00939B;}
+
+.chamber_music              { background-color: #01df87;
+                              color: #fff; }
+.chamber_music_pos1        { background-color: #00B46D;}
+
+.piano_music, .organ_music,
+.music_for_one_instrument   { background-color: #55de01;
+                              color: #fff; }
+.piano_music_pos1, .organ_music_pos1,
+.music_for_one_instrument_pos1  
+                            { background-color: #44B300;}
+
+.music_for_vocal_soloists_and_instruments_with_or_without_choir  
+                            { background-color: #f3fb53;
+                              color: #000; }
+.music_for_vocal_soloists_and_instruments_with_or_without_choir_pos1 
+                            { background-color: #C4CA43;}
+
+.choral_music_with_instruments 
+                            { background-color: #ffb147;
+                              color: #fff; }
+.choral_music_with_instruments_pos1 
+                            { background-color: #CE8E39;}
+
+.a_cappella_choral_music    { background-color: #ff7647;
+                              color: #fff; }
+.a_cappella_choral_music_pos1 
+                            { background-color: #CE5F39;}
+
+.song                       { background-color: #fc495e;
+                              color: #fff; }
+.song_pos1                 { background-color: #CB3A4B;}
+
+/* Print style rules */
+@media print {
+
+    .filter, 
+    .spacer, 
+    .nav_bar form, 
+    .nav_bar p,
+    .filter_elements,
+    #menu { 
+        display: none !important;
+    }
+
+    #content_box div.results {
+        display: block;
+    }
+    
+    .result_table  {
+        border: 0;
+    }
+    
+    .genre_list {
+        display: none;
+    }
+
+    .result_row .title,  
+    .result_row .composer,
+    .info_bar .list_id,
+    .result_table .list_id {
+        padding: 2px;
+        color: #000;
+        background-color: #fff;
+    }
+    
+    a:link, a:visited, a:active {
+        color: #000;
+        text-decoration: none;
+    }
+
+}

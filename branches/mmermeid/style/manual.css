@@ -1,0 +1,203 @@
+div.manual_header {
+    background-color : #555;
+    border-bottom: 1px solid #888;
+    padding: 4px 8px;
+    margin: 0 -10px 10px -10px;
+    font-weight : bold;
+}
+
+div.toplink {
+    float:right;
+}
+
+div.toplink a {
+    text-decoration: none;
+}
+
+h1 {
+  font-size: 1.8em;  
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1em;
+}
+
+table {
+    width: auto;
+    padding:0px;
+}
+
+table.unicode_table {
+    border: none;
+    border-top: 1px solid #666;
+    border-left: 1px solid #666;
+}
+
+table.unicode_table td {
+    padding: .5em .5em 0 .5em;
+    font-size: 16pt;
+    text-align: center;
+    border: none;
+    border-right: 1px solid #666;
+    border-bottom: 1px solid #666;
+}
+
+table.unicode_table p {
+    font-size: .6em;
+    color: #666;
+    font-family: arial, helvetica, sans-serif;
+}
+
+table.unicode_table p.code {
+    margin-top: 1em;
+}
+
+table.music_symbols td {
+    font-size: 2em;
+    line-height: .8em;
+}
+
+a img {
+    border: none;
+}
+
+pre, kbd {
+    font-size: 1.25em;
+}
+
+ul {
+    padding-left: 25px;
+    margin-left:0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+ul.important {
+    list-style-image: url('../images/important.png');
+    padding-left: 30px;
+    margin-left:0;    
+    margin-bottom: 10px;
+    /*background-color: #ffeeaa;*/
+    background-color: #f0e0cc;
+}
+
+ul.important li {
+    padding: 5px;
+}
+
+ul.toc {
+    list-style-image: url('../images/next.png')
+}
+
+ul.toc li {
+    margin-bottom: 1em;
+}
+
+ul.toc li li {
+    margin-bottom: 0;
+}
+
+map.manual {
+    border: none;
+}
+
+map.manual area {
+    cursor: help;
+    border: 1px solid red;
+}
+
+.close_div {
+    float:right;
+}
+
+img.illustration {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border: 1px solid #888;
+    box-shadow: 10px 10px 10px #333;
+    /* For non-CSS3 FireFox */
+    -moz-box-shadow: 10px 10px 10px #333;
+}
+
+.hr {
+    border-top: 1px solid #999;
+    width: 100%;
+}
+
+a.trigger {
+    text-decoration: none;
+    padding: 1px;
+}
+
+
+a.trigger img {
+    padding: 2px;
+}
+
+a.trigger img:hover {
+    border:1px solid #999999;
+    padding: 1px;
+}
+
+div.manual_header a img {
+    margin-top: 4px;
+}
+
+.tab
+{
+    font-weight: bold;
+    padding: 0px 6px;
+    border-top: 1px solid #888;
+    border-right: 1px solid #888;
+    border-left: 1px solid #888;
+    border-bottom: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    /* For non-CSS3 FireFox */
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+}
+
+/* SPECIAL SYMBOLS */
+
+/* Embedded fonts */
+/* Unicode music symbols font */
+@font-face {
+	font-family: 'Bravura Text';
+	src: url('fonts/BravuraText.eot');
+	src: local('Bravura Text'), 
+	       url('fonts/BravuraText.eot?#iefix') format('embedded-opentype'),
+	       url('fonts/BravuraText.ttf') format('truetype'), 
+	       url('fonts/BravuraText.woff') format('woff'), 
+	       url('fonts/BravuraText.svg#BravuraText') format('svg');
+} 
+
+/* Runic font */
+@font-face {
+	font-family: 'Hnias';
+	src: url('fonts/Hnias.eot');
+	src: local('Hnias Regular'), local('Hnias'), 
+	       url('fonts/Hnias.eot?#iefix') format('embedded-opentype'),
+	       url('fonts/Hnias.ttf') format('truetype'), 
+	       url('fonts/Hnias.woff') format('woff'), 
+	       url('fonts/Hnias.svg#Hnias') format('svg');
+} 
+/* End embedded font */
+
+.runes {
+    font-family: Hnias, Junicode, sans-serif, serif;
+}
+
+.music_symbols {
+    font-family: "Bravura Text", "Arial Unicode MS", sans-serif, serif;
+}
+
+.music_symbols td p {
+    font-size: .4em;
+}

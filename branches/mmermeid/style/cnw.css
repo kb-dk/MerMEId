@@ -1,0 +1,193 @@
+/* Header and footer */
+
+#all {
+    background-color: #445566;
+}
+
+#header p {
+    padding: 0px;
+}
+
+
+/* Top menu */
+
+#menu {
+    height: 24px;
+    padding: 0 10px 0 10px;
+    border-bottom: 1px solid #fff;
+}
+
+#menu a {
+    display: block;
+    float:left;
+    width: auto;
+    height: 21px;
+    padding: 3px 10px 0 10px;
+    text-decoration: none;
+    color: #fff;
+}
+
+#menu a:hover, #menu .selected {
+    color: #fff;
+    background-color: #778899;
+}
+
+
+/* Other */
+
+.toplink {
+    float: right;
+    margin-top: 15px;
+}
+
+.new {
+    background-color: #ffff99;
+}
+
+/* CSS for text pages */
+
+body.text #main p, 
+body.text #main div, 
+body.text #main h2,
+body.text #main h3,
+body.text #main h4,
+body.text #main ul
+{
+    max-width: 45em;
+    line-height: 1.5em;
+}
+
+body.text #main h2 a,
+body.text #main h3 a
+{
+    text-decoration:none;
+    cursor: default;
+}
+
+body.text #main h2 {
+    margin-top: .5em;
+}
+
+body.text #main h3 {
+    margin-top: .5em;
+}
+
+body.text #main ul
+{
+    list-style-type: none;
+    padding-left: 0;
+}
+
+body.text #main ul ul
+{
+    padding: 0 0 0 2em;
+}
+
+body.text #main li {
+    margin-top: .5em;
+}
+
+body.text #main ul.bullet
+{
+    list-style-type: disc;
+    padding-left: 1.2em;
+}
+
+body.text #toc li {
+    margin: 1em 0 0 1.2em;
+    list-style-image: url('/editor/images/html_link.png');
+}
+
+body.text #toc li a {
+    text-decoration: none;
+}
+
+body.text #toc li a:hover {
+    text-decoration: underline;
+}
+
+body.text #toc ul li {
+    margin: 0;
+}
+
+body.text #colophon {
+    display: table;
+}
+
+body.text #colophon p {
+    display: table-row;
+}
+
+body.text #colophon p span{
+    display: table-cell;
+    padding: 5px 10px 0 0;
+}
+
+a.anchor {
+    text-decoration: none;
+}
+
+/* CSS for the appendix */
+
+body.text #main.appendix p, 
+body.text #main.appendix div, 
+body.text #main.appendix h2,
+body.text #main.appendix h3,
+body.text #main.appendix h4,
+body.text #main.appendix ul
+{
+    max-width: 100%;
+}
+
+body.text .appendix #toc {
+    margin-top: 1em;
+}
+
+body.text .appendix #toc li {
+    margin-top: 0;
+}
+
+.appendix p {
+    margin : 0 0 10px 0;
+}
+
+.appendix .list_section {
+    display:table;
+    display:inline-table;
+    page-break-inside: auto;
+    width: 100%;
+}
+
+.appendix .list_section div {
+    display: table-row;
+    page-break-inside: avoid;
+}
+
+.appendix .list_section div p,
+.appendix .list_section div div {
+    display:table-cell;
+    padding: .2em 1em .4em 0;
+}
+
+.appendix .list_section div div {
+    width: 98%;
+}
+
+.appendix .list_section div p.work_number {
+    white-space: nowrap;
+    width: 6em;
+}
+
+body.text #main.appendix .list_section li {
+    margin-top: 0;
+}
+
+/* Print style rules */
+@media print {
+
+    body, #header, #footer, #all {
+        color: #000;
+        background-color: #fff;
+    }
+
+}

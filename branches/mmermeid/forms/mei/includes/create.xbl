@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xi="http://www.w3.org/2001/XInclude" 
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
+    xmlns:xbl="http://www.w3.org/ns/xbl" 
+    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <!--
+        Component for creating new child elements using empty_doc.xml as a template.
+        Displays an add button, if the element specified does not exist.
+        
+        The component takes four attributes:
+        ref:        The reference node, i.e. the parent node of the node to be created (optional). 
+        If omitted, the context node is the reference node.
+        nodeset:    The name of the nodeset to be added
+        label:      The label to be shown on the add button   
+        origin:     The nodeset to use as a model
+        
+        Example:
+        <dcm:create 
+        ref="m:respStmt"
+        nodeset="m:persName"
+        label="Add person"
+        origin="instance('empty-instance')//m:respStmt[1]/m:persName[1]"
+        />
+        
+        
+        Danish Centre for Music Publication (DCM) 
+        Axel Teich Geertinger, 2012
+        atge@kb.dk
+    -->
+    
+    <xbl:binding id="dcm-create-binding" element="dcm|create">
+        <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+            <display-name lang="en">Create</display-name>
+        </metadata>
+        <xbl:resources>
+            <xbl:style/> 
+        </xbl:resources>
+        <xbl:template>
+            <xf:group xxbl:scope="outer" xbl:attr="ref">
+                <xxf:variable name="label" xbl:attr="xbl:text=label"/>
+                <xxf:variable name="nodeset" xbl:attr="xbl:text=nodeset"/>
+                <xxf:variable name="attr_origin" xbl:attr="xbl:text=origin"/>
+                <xxf:variable name="origin" as="node()?">
+                    <xxf:sequence select="xxf:evaluate($attr_origin)" xxbl:scope="outer"/>
+                </xxf:variable>
+                <xxf:variable name="exists" as="node()?">
+                    <xxf:sequence select="xxf:evaluate($nodeset)" xxbl:scope="outer"/>
+                </xxf:variable>
+                <xf:group ref=".[not($exists)]">
+                    <xf:trigger class="create_button">
+                        <xf:label><h:img src="/../editor/images/add.gif" alt="Add" title="Add row"/>
+                            <xf:output value="$label"/>
+                        </xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            
+                            <xi:include href="create_and_place_element.xml" parse="xml"/> 
+                            <xf:dispatch name="dcm-create" targetid="dcm-create-binding" target="dcm-create-binding"/>
+                            
+                        </xf:action>
+                    </xf:trigger>
+                </xf:group>
+            </xf:group>
+        </xbl:template>
+    </xbl:binding>
+</xbl:xbl>
+
