@@ -1,6 +1,6 @@
 <project name="mermeid" basedir="." default="all">
    
-    <property name="lib.dir"     value="/home/slu/jars"/>
+    <property name="bin.dir"     value="bin"/>
     <property name="webapp.path" value="xforms-jsp"/>
  
     <!-- Helpful declarations used within this script,
@@ -14,7 +14,15 @@
       <war destfile="${ant.project.name}.war" webxml="web.xml">
 	<zipfileset dir="${webapp.path}"
 		    prefix="${webapp.path}"/>
+  	<zipfileset dir="images" prefix="images" />
+	<zipfileset dir="js" prefix="js"/>
+	<zipfileset dir="manual" prefix="style"/>
+	<zipfileset dir="forms" prefix="forms" />
+	<zipfileset dir="jquery" prefix="jquery" />
+	<zipfileset dir="lib" prefix="lib"/>
+	<zipfileset dir="transforms" prefix="transforms"/>
       	<lib dir="${jar.dir}"/>
+      	<lib dir="${bin.dir}"/>
 	<metainf file="./context.xml"/>
       </war>
     </target>
