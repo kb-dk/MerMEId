@@ -4,7 +4,7 @@
                       http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
   version="3.0"
   metadata-complete="true">
-  <description>web.xml hellow world</description>
+  <description>MerMEId editor</description>
 
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
@@ -17,7 +17,7 @@
     <servlet-class>org.orbeon.oxf.portlet.OrbeonTrampolineServlet</servlet-class>
     <init-param>
         <param-name>oxf.xforms.renderer.context</param-name>
-        <param-value>/hello</param-value>
+        <param-value>/mermeid</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
