@@ -1,0 +1,27 @@
+<project name="hello" basedir="." default="all">
+   
+    <property name="lib.dir"     value="/home/slu/jars"/>
+    <property name="webapp.path" value="xforms-jsp"/>
+ 
+    <!-- Helpful declarations used within this script,
+	 Change these if you want another file structure -->
+
+    <property name="jsp_src"     value="public_html"/>
+    <property name="jar.dir"     value="lib"/>
+    <property name="java.dir"    value="src"/>
+  
+    <target name="war" >
+      <war destfile="${ant.project.name}.war" webxml="web.xml">
+	<zipfileset dir="${webapp.path}"
+		    prefix="${webapp.path}"/>
+      	<lib dir="${jar.dir}"/>
+	<metainf file="./context.xml"/>
+      </war>
+    </target>
+
+    <!-- Clean, compile, jar -->
+    <target name="all" 
+	    depends="war" 
+	    description="pack stuff"/>
+
+</project>
