@@ -5,6 +5,7 @@ declare namespace fn="http://www.w3.org/2005/xpath-functions";
 declare namespace m="http://www.music-encoding.org/ns/mei";
 declare namespace ft="http://exist-db.org/xquery/lucene";
 declare namespace util="http://exist-db.org/xquery/util";
+declare namespace xdb="http://exist-db.org/xquery/xmldb";
 
 declare variable $loop:vocabulary := 
   doc(concat("http://",request:get-header('HOST'),"/editor/forms/mei/model/keywords.xml"));
@@ -88,17 +89,23 @@ declare function loop:pubstatus(
 	$published_only  as xs:string,
 	$doc as node())  as xs:boolean 
 {
+
+  let $dcmtime := xdb:last-modified("dcm", util:document-name($doc))
+
   let $uri         := concat("/db/public/",util:document-name($doc))
-  let $dcm_hash    := util:hash($doc,'md5')
+
+(:  let $dcm_hash    := util:hash($doc,'md5'):)
 
   let $status := 
     if( not($published_only) ) then
       true()
     else
       if( doc-available($uri)) then
-	let $public_hash := util:hash(doc($uri),'md5')
+	(:	let $public_hash := util:hash(doc($uri),'md5') :)
+	let $pubtime := xdb:last-modified("public", util:document-name($doc))
 	return
-	if ($published_only eq 'pending' and $public_hash ne $dcm_hash) then
+	  (:if ($published_only eq 'pending' and $public_hash ne $dcm_hash) then :)
+	if ($published_only eq 'pending' and $pubtime le $dcmtime) then
 	  true()
 	else 
 	  if($published_only eq 'any') then
