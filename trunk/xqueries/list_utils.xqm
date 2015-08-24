@@ -13,6 +13,7 @@ declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xl="http://www.w3.org/1999/xlink";
+declare namespace xdb="http://exist-db.org/xquery/xmldb";
 
 declare variable $app:notbefore := request:get-parameter("notbefore",   "") cast as xs:string;
 declare variable $app:notafter  := request:get-parameter("notafter",    "") cast as xs:string;
@@ -101,10 +102,10 @@ declare function app:generate-href($field as xs:string,
       let $color_style := 
 	if(doc-available(concat("public/",$doc-name))) then
 	  (
-	    let $public_hash:=util:hash(doc(concat("public/",$doc-name)),'md5')
-	    let $dcm_hash:=util:hash($doc,'md5')
+	    let $dcmtime := xs:dateTime(xdb:last-modified("dcm",   $doc-name))
+	    let $pubtime := xs:dateTime(xdb:last-modified("public",$doc-name))
 	    return
-	      if($dcm_hash=$public_hash) then
+	      if($dcmtime lt $pubtime) then
 		"publishedIsGreen"
 	      else
 		"pendingIsYellow"

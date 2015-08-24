@@ -18,8 +18,8 @@ response.setCharacterEncoding("UTF-8");
 java.io.PrintWriter printout = response.getWriter();
 
 java.lang.Long start = System.currentTimeMillis();
-Logger logger = Logger.getLogger("jsp.mei_form.log");
-logger.setLevel(Level.DEBUG);
+//Logger logger = Logger.getRootLogger();
+//logger.setLevel(Level.DEBUG);
 
 String pathInfo    = request.getPathInfo(); 
 String uri         = request.getParameter("uri");
@@ -27,7 +27,8 @@ String queryString = request.getQueryString();
 String newRequest  = queryString;
 
 //if(logger.isInfoEnabled()){ 
-logger.info("Sending request: " + uri); 
+//logger.info("Sending request: " + uri); 
+System.out.println("Sending request: " + uri); 
 //}
 
 org.w3c.dom.Document form = null;
@@ -35,20 +36,21 @@ javax.xml.parsers.DocumentBuilder dBuilder = null;
 
 javax.xml.parsers.DocumentBuilderFactory dfactory  =
     javax.xml.parsers.DocumentBuilderFactory.newInstance();
-logger.debug("created dfactory");
+
+System.out.println("created dfactory");
 
 dfactory.setNamespaceAware(true);
 dfactory.setXIncludeAware(true);
 dBuilder = dfactory.newDocumentBuilder();
 form = dBuilder.parse(uri);
-logger.debug("done parsing");
+System.out.println("done parsing");
 serialize(form,printout);
 
 java.lang.Long completed = System.currentTimeMillis() - start;
       
-if(logger.isInfoEnabled()){ 
-    logger.info(".. work done in " + completed + " ms"); 
-}
+//if(logger.isInfoEnabled()){ 
+    System.out.println(".. work done in " + completed + " ms"); 
+//}
 
 %>
 
@@ -58,8 +60,8 @@ if(logger.isInfoEnabled()){
 
     void serialize(org.w3c.dom.Document doc, java.io.PrintWriter out) {
 
-    Logger logger = Logger.getLogger("jsp.mei_form_serialize.log");
-    logger.setLevel(Level.DEBUG);
+    //Logger logger = Logger.getLogger("jsp.mei_form_serialize.log");
+    //logger.setLevel(Level.DEBUG);
 
     try {
 
@@ -74,17 +76,17 @@ if(logger.isInfoEnabled()){
 	org.w3c.dom.ls.LSOutput output = impl.createLSOutput( );
 	output.setEncoding("UTF-8");
 	output.setCharacterStream( out ); 
-	logger.debug("after setting character stream " + output.getEncoding());
+	System.out.println("after setting character stream " + output.getEncoding());
 	serializer.write(doc,output);
-
+	System.out.println(".. serialized and written to output");
 	return;
 
     } catch (java.lang.ClassNotFoundException classNotFound) {
-	logger.fatal(classNotFound.getMessage());
+	System.out.println(classNotFound.getMessage());
     } catch (java.lang.InstantiationException instantiationPrblm) {
-	logger.fatal(instantiationPrblm.getMessage());
+	System.out.println(instantiationPrblm.getMessage());
     } catch (java.lang.IllegalAccessException accessPrblm) {
-	logger.fatal(accessPrblm.getMessage());
+	System.out.println(accessPrblm.getMessage());
     }
     return;
   }
