@@ -1,7 +1,7 @@
 <project name="mermeid" basedir="." default="all">
    
     <property name="bin.dir"     value="bin"/>
-    <property name="webapp.path" value="xforms-jsp"/>
+    <property name="webapp.path" value="formulation"/>
  
     <!-- Helpful declarations used within this script,
 	 Change these if you want another file structure -->
@@ -11,7 +11,7 @@
     <property name="java.dir"    value="src"/>
 
     <target name="war" >
-      <war destfile="${ant.project.name}.war" webxml="web.xml">
+      <war destfile="editor.war" webxml="web.xml">
 	<zipfileset dir="${webapp.path}"
 		    prefix="${webapp.path}"/>
   	<zipfileset dir="images" prefix="images" />
@@ -21,9 +21,7 @@
 	<zipfileset dir="jquery" prefix="jquery" />
 	<zipfileset dir="lib" prefix="lib"/>
 	<zipfileset dir="transforms" prefix="transforms"/>
-      	<lib dir="${jar.dir}"/>
       	<lib dir="${bin.dir}"/>
-	<metainf file="./context.xml"/>
       </war>
     </target>
   
