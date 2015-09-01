@@ -1,0 +1,85 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0"
+  metadata-complete="true">
+  <description>MerMEId editor</description>
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.jspx</welcome-file>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+  <servlet>
+    <servlet-name>default</servlet-name>
+    <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>0</param-value>
+    </init-param>
+    <init-param>
+      <param-name>listings</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>/manual/*</url-pattern>
+    <url-pattern>/forms/*</url-pattern>
+    <url-pattern>/js/*</url-pattern>
+    <url-pattern>/transforms/*</url-pattern>
+    <url-pattern>/images/*</url-pattern>
+    <url-pattern>/style/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>orbeon-trampoline-servlet</servlet-name>
+    <servlet-class>org.orbeon.oxf.portlet.OrbeonTrampolineServlet</servlet-class>
+    <init-param>
+        <param-name>oxf.xforms.renderer.context</param-name>
+        <param-value>/formulation</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>orbeon-trampoline-servlet</servlet-name>
+    <url-pattern>/xforms-trampoline</url-pattern>
+  </servlet-mapping>
+
+  <!-- Declare and configure the Orbeon Forms XForms filter -->
+  <filter>
+    <filter-name>orbeon-xforms-filter</filter-name>
+    <filter-class>org.orbeon.oxf.servlet.OrbeonXFormsFilter</filter-class>
+    <init-param>
+        <param-name>oxf.xforms.renderer.context</param-name>
+        <param-value>/orbeon</param-value>
+    </init-param>
+    <init-param>
+        <param-name>oxf.xforms.renderer.default-encoding</param-name>
+        <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+
+  <!-- Any web resource under /xforms-jsp is processed by the XForms engine -->
+  <filter-mapping>
+    <filter-name>orbeon-xforms-filter</filter-name>
+    <url-pattern>/formulation/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+
+  <!-- This is necessary so that XForms engine resources can be served
+       appropriately -->
+  <filter-mapping>
+    <filter-name>orbeon-xforms-filter</filter-name>
+    <url-pattern>/orbeon/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+
+</web-app>
