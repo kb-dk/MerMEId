@@ -18,18 +18,16 @@ response.setCharacterEncoding("UTF-8");
 java.io.PrintWriter printout = response.getWriter();
 
 java.lang.Long start = System.currentTimeMillis();
-//Logger logger = Logger.getRootLogger();
-//logger.setLevel(Level.DEBUG);
+Logger logger = Logger.getRootLogger();
 
 String pathInfo    = request.getPathInfo(); 
 String uri         = request.getParameter("uri");
 String queryString = request.getQueryString();
 String newRequest  = queryString;
 
-//if(logger.isInfoEnabled()){ 
-//logger.info("Sending request: " + uri); 
-System.out.println("Sending request: " + uri); 
-//}
+if(logger.isInfoEnabled()){ 
+logger.info("Sending request: " + uri); 
+}
 
 org.w3c.dom.Document form = null;
 javax.xml.parsers.DocumentBuilder dBuilder = null;
@@ -48,9 +46,9 @@ serialize(form,printout);
 
 java.lang.Long completed = System.currentTimeMillis() - start;
       
-//if(logger.isInfoEnabled()){ 
-    System.out.println(".. work done in " + completed + " ms"); 
-//}
+if(logger.isInfoEnabled()){ 
+    logger.info(".. work done in " + completed + " ms"); 
+}
 
 %>
 
