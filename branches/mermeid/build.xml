@@ -2,7 +2,10 @@
    
     <property name="bin.dir"     value="bin"/>
     <property name="webapp.path" value="formulation"/>
- 
+    <property name="webapp.instance" value="dcmudv"/>
+    <property name="webapp.config"   
+	      value="../local_config/mermeid_configuration.xml"/>
+
     <!-- Helpful declarations used within this script,
 	 Change these if you want another file structure -->
 
@@ -10,11 +13,17 @@
     <property name="jar.dir"     value="lib"/>
     <property name="java.dir"    value="src"/>
 
-    <target name="war" >
+    <target name="copy">
+      <copy file="${webapp.config}_${webapp.instance}"
+	    tofile="forms/mei/mermeid_configuration.xml"/>
+    </target>
+
+    <target name="war"
+ 	    depends="copy">
       <war destfile="editor.war" webxml="web.xml">
 	<zipfileset dir="${webapp.path}"
 		    prefix="${webapp.path}"/>
-	<zipfileset dir="web" prefix="/" />
+	<zipfileset dir="web" prefix="" />
   	<zipfileset dir="images" prefix="images" />
 	<zipfileset dir="js" prefix="js"/>
 	<zipfileset dir="manual" prefix="manual"/>
@@ -26,7 +35,8 @@
       </war>
     </target>
   
-    <target name="orbeon_war" >
+    <target name="orbeon_war" 
+ 	    depends="copy">
       <war destfile="${ant.project.name}.war" webxml="orbeon_web.xml">
 	<zipfileset dir="${webapp.path}"
 		    prefix="${webapp.path}"/>
