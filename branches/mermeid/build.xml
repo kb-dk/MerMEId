@@ -14,13 +14,13 @@
       <war destfile="editor.war" webxml="web.xml">
 	<zipfileset dir="${webapp.path}"
 		    prefix="${webapp.path}"/>
+	<zipfileset dir="web" prefix="/" />
   	<zipfileset dir="images" prefix="images" />
 	<zipfileset dir="js" prefix="js"/>
 	<zipfileset dir="manual" prefix="manual"/>
 	<zipfileset dir="style" prefix="style"/>
 	<zipfileset dir="forms" prefix="forms" />
 	<zipfileset dir="jquery" prefix="jquery" />
-	<zipfileset dir="lib" prefix="lib"/>
 	<zipfileset dir="transforms" prefix="transforms"/>
       	<lib dir="${bin.dir}"/>
       </war>
