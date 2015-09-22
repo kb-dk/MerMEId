@@ -27,8 +27,8 @@
         <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
             <display-name lang="en">Attribute editor</display-name>
             <icon lang="en">
-                <small-icon>/../editor/images/attribute.png</small-icon>
-                <large-icon>/../editor/images/attribute.png</large-icon>
+                <small-icon>/editor/images/attribute.png</small-icon>
+                <large-icon>/editor/images/attribute.png</large-icon>
             </icon>
             <template>
                 <dcm:attribute-editor>
@@ -51,7 +51,7 @@
             <xf:model id="attr_model">
                 
                 <xf:instance id="mei_attr_list" 
-                    src="/../editor/forms/mei/model/MEI_attr_list.xml"/>
+                    src="http://dcm-udv-01.kb.dk/editor/forms/mei/model/MEI_attr_list.xml"/>
                 
                 <xf:instance id="local_temp">
                     <temp-values>
@@ -99,7 +99,7 @@
                             
                         
                         <xf:trigger appearance="minimal" id="open_button">
-                            <xf:label><h:img id="attr_editor_id" src="/../editor/images/attribute.png" title="Edit attributes" alt="Edit attributes"/></xf:label>
+                            <xf:label><h:img id="attr_editor_id" src="/editor/images/attribute.png" title="Edit attributes" alt="Edit attributes"/></xf:label>
                             <xf:action ev:event="DOMActivate OpenAndInitialize">
                                 <xxforms:show dialog="attr-dialog"/>                                    
                                 <!-- initialization -->

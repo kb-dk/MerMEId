@@ -9,9 +9,10 @@
     <!-- Helpful declarations used within this script,
 	 Change these if you want another file structure -->
 
-    <property name="jsp_src"     value="public_html"/>
-    <property name="jar.dir"     value="lib"/>
-    <property name="java.dir"    value="src"/>
+    <property name="jsp_src"        value="public_html"/>
+    <property name="jar.dir"        value="lib"/>
+    <property name="orbeon-jar.dir" value="orbeon-lib"/>
+    <property name="java.dir"       value="src"/>
 
     <target name="copy">
       <copy file="${webapp.config}_${webapp.instance}"
@@ -32,6 +33,7 @@
 	<zipfileset dir="jquery" prefix="jquery" />
 	<zipfileset dir="transforms" prefix="transforms"/>
       	<lib dir="${bin.dir}"/>
+      	<lib dir="${jar.dir}"/>
       </war>
     </target>
   
@@ -49,6 +51,8 @@
 	<zipfileset dir="transforms" prefix="transforms"/>
       	<lib dir="${jar.dir}"/>
       	<lib dir="${bin.dir}"/>
+      	<lib dir="${jar.dir}"/>
+      	<lib dir="${orbeon-jar.dir}"/>
 	<metainf file="./context.xml"/>
       </war>
     </target>
