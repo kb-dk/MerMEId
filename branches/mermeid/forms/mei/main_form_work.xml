@@ -133,7 +133,7 @@
 						and	m:title[@type='original'] 
 						and	m:title[@type='text_source'])]">
 						<h:div class="vertical_spacer"/>
-						<h:a class="popup"><h:img src="/../editor/images/add.gif" title="Add more titles"/> Add more titles...<h:span 
+						<h:a class="popup"><h:img src="/editor/images/add.gif" title="Add more titles"/> Add more titles...<h:span 
 							class="comment">
 							<h:div style="text-align:center">
 								<h:div>
@@ -359,7 +359,7 @@
 											</xf:action>
 										</xf:trigger>
 										<xf:trigger appearance="minimal">
-											<xf:label><h:span style="vertical-align:bottom;"><h:img src="/../editor/images/go_to_link.png" 
+											<xf:label><h:span style="vertical-align:bottom;"><h:img src="/editor/images/go_to_link.png" 
 												title="Go to linked resource"/></h:span></xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xxf:variable name="uri" 
@@ -410,14 +410,14 @@
 					</h:span></h:a></h:span>
 					<h:div style="float:right">
 						<xf:trigger>
-							<xf:label><h:img src="/../editor/images/list.png" alt="Add"/> Add from list</xf:label>
+							<xf:label><h:img src="/editor/images/list.png" alt="Add"/> Add from list</xf:label>
 							<xxf:show dialog="keywords_menu" ev:event="DOMActivate"/>
 						</xf:trigger>
 					</h:div>
 					<!-- follows: a copy of the create-button code -->
 					<xf:group ref=".[not(m:termList)]">
 						<xf:trigger class="create_button" id="termList-create">
-							<xf:label><h:img src="/../editor/images/add.gif" alt="Add" title="Add term"/> Add term</xf:label>
+							<xf:label><h:img src="/editor/images/add.gif" alt="Add" title="Add term"/> Add term</xf:label>
 							<xf:action ev:event="DOMActivate">
 								<xxf:variable name="origin" select="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList"/>
 								<xf:insert context="." 
@@ -482,7 +482,7 @@
 						<td style="vertical-align:top;border-bottom: 1px solid #999; margin:0; padding:5px;">
 							<!-- level 1 keywords  -->
 							<xf:trigger submission="replace-form-with" appearance="minimal">
-								<xf:label><h:img src="/../editor/images/add.gif" alt="Add"/> <xf:output ref="m:term"/></xf:label>
+								<xf:label><h:img src="/editor/images/add.gif" alt="Add"/> <xf:output ref="m:term"/></xf:label>
 								<xf:action ev:event="DOMActivate">
 									<xf:dispatch name="check-for-termlist" target="keywords_menu"/>
 									<!-- insert new node -->
@@ -505,7 +505,7 @@
 							<!-- level 2 keywords --> 
 							<xf:repeat nodeset="following-sibling::m:termList[1]/m:term" id="level2_keywords-repeat">
 								<xf:trigger submission="replace-form-with" appearance="minimal">
-									<xf:label><h:img src="/../editor/images/add.gif" alt="Add"/> <xf:output ref="."/></xf:label>
+									<xf:label><h:img src="/editor/images/add.gif" alt="Add"/> <xf:output ref="."/></xf:label>
 									<xf:action ev:event="DOMActivate">
 										<xf:dispatch name="check-for-termlist" target="keywords_menu"/>
 										<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
@@ -537,7 +537,7 @@
 						<xf:repeat nodeset="instance('keywords-instance')/m:termList[@label='keywords']/m:term" id="additional_keywords-repeat">
 							<span style="float:left; width: 120px;">
 								<xf:trigger submission="replace-form-with" appearance="minimal">
-									<xf:label><h:img src="/../editor/images/add.gif" alt="Add"/> <xf:output ref="."/></xf:label>
+									<xf:label><h:img src="/editor/images/add.gif" alt="Add"/> <xf:output ref="."/></xf:label>
 									<xf:action ev:event="DOMActivate">
 										<xf:dispatch name="check-for-termlist" target="keywords_menu"/>
 										<xf:action ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">

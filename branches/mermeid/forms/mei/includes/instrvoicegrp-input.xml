@@ -12,13 +12,13 @@
             origin="instance('instrumentation')/m:instrVoiceGrp[1]"
             index="repeat-ensemble"/><xf:trigger 
                 appearance="minimal" class="non-standard_button">
-                <xf:label><img src="/../editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+                <xf:label><img src="/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
                 <xf:action ev:event="DOMActivate">
                     <xxf:show dialog="ensemble-menu"/>
                 </xf:action>
             </xf:trigger>
         <xf:trigger appearance="minimal">
-            <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+            <xf:label><h:img src="/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
             <xf:action ev:event="DOMActivate">
                 <xf:delete nodeset="." at="index('repeat-ensemble')"/>
                 <!-- remove references to deleted items -->

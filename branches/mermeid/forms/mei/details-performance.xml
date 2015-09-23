@@ -68,16 +68,16 @@
                     
                     <h:div style="float:right">
                         <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="/../editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                            <xf:label><h:img src="/editor/images/save_small.png" alt="Save"/> Save</xf:label>
                         </xf:submit>
                         <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="/../editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                            <xf:label><h:img src="/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{$uri}" show="replace"/>
                             </xf:action>
                         </xf:submit>
                         <xf:trigger>
-                            <xf:label><h:img src="/../editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
+                            <xf:label><h:img src="/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{$uri}" show="replace"/>
                             </xf:action>
@@ -231,7 +231,7 @@
                             </h:td>                  
                             <h:td nowrap="nowrap">
                                 <xf:trigger appearance="minimal">
-                                    <xf:label><h:img src="/../editor/images/edit.gif" title="Open reference editor"/></xf:label>
+                                    <xf:label><h:img src="/editor/images/edit.gif" title="Open reference editor"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xxf:variable name="uri" 
                                             select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-reference.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
@@ -252,7 +252,7 @@
                                 index="repeat-review"
                                 origin="instance('bibl-type-instance')//m:bibl[m:genre='article' and m:genre='journal'][1]"/><!--<xf:trigger appearance="minimal"
                                     class="non-standard_button">
-                                    <xf:label><h:img src="/../editor/images/add.gif" alt="Add"/></xf:label>
+                                    <xf:label><h:img src="/editor/images/add.gif" alt="Add"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xxf:show dialog="add-ref-dialog"/>
                                     </xf:action>
@@ -283,7 +283,7 @@
                     <xf:group ref="m:biblList[m:head='Evidence']">
                         <xf:group ref=".[not(m:bibl)]">
                             <xf:trigger class="create_button">
-                                <xf:label><h:img src="/../editor/images/add.gif" alt="Add"/> Add reference</xf:label>
+                                <xf:label><h:img src="/editor/images/add.gif" alt="Add"/> Add reference</xf:label>
                                 <xf:action ev:event="DOMActivate">
                                     <xxf:show dialog="add-ref-dialog"/>
                                 </xf:action>
@@ -324,7 +324,7 @@
                                 </h:td>                  
                                 <h:td nowrap="nowrap">
                                     <xf:trigger appearance="minimal">
-                                        <xf:label><h:img src="/../editor/images/edit.gif" title="Open reference editor"/></xf:label>
+                                        <xf:label><h:img src="/editor/images/edit.gif" title="Open reference editor"/></xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xxf:variable name="uri" 
                                                 select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-reference.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
@@ -345,7 +345,7 @@
                                     index="repeat-evidence-references"
                                     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]/m:bibl[1]"/><xf:trigger appearance="minimal"
                                     class="non-standard_button">
-                                    <xf:label><h:img src="/../editor/images/add.gif" alt="Add"/></xf:label>
+                                    <xf:label><h:img src="/editor/images/add.gif" alt="Add"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xxf:show dialog="add-ref-dialog"/>
                                     </xf:action>
@@ -371,7 +371,7 @@
                         <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl[count(m:genre[.=parent::node()/preceding-sibling::m:biblList/m:bibl/m:genre])=0]" 
                             id="ref-type-menu-repeat">
                             <xf:trigger submission="replace-form-with" appearance="minimal" class="non-standard_trigger">
-                                <xf:label><h:img src="/../editor/images/add.gif" alt="Add"/> <xf:output 
+                                <xf:label><h:img src="/editor/images/add.gif" alt="Add"/> <xf:output 
                                     value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
                                         value="if (m:genre[2]!='') then concat(', ',m:genre[2]) else ''"></xf:output>
                                 </xf:label>
@@ -410,7 +410,7 @@
                                 id="std-bibl-repeat">
                                 <xf:repeat nodeset="m:bibl" id="std-bibl-menu-repeat">
                                     <xf:trigger submission="replace-form-with" appearance="minimal">
-                                        <xf:label><h:img src="/../editor/images/add.gif" alt="Add"/> 
+                                        <xf:label><h:img src="/editor/images/add.gif" alt="Add"/> 
                                             <xf:output ref="m:author[text()]" value="concat(.[1],': ')"/>
                                             <xf:output ref="m:editor[text() and not(../m:author[text()])]" value="concat(.[1],': ')"/>
                                             <xf:output ref="m:title[text() and string-length()&gt;40][1]" value="concat(substring(.,1,40),'...')"/>
@@ -454,7 +454,7 @@
                             To keep changes, choose "Save".
                         </h:p>    
                         <xf:trigger appearance="save_proceed_button">
-                            <xf:label><h:img src="/../editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
+                            <xf:label><h:img src="/editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:dispatch name="language-update" target="form-group"/>
                                 <xf:send submission="save-to-file"/>
@@ -463,7 +463,7 @@
                             </xf:action>
                         </xf:trigger>
                         <xf:trigger>
-                            <xf:label><h:img src="/../editor/images/discard.png" alt="Discard" title="Discard changes and proceed"/> Discard</xf:label>
+                            <xf:label><h:img src="/editor/images/discard.png" alt="Discard" title="Discard changes and proceed"/> Discard</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{instance('temp')/target_uri}" show="replace"/>
                                 <xxf:hide dialog="exit-warning-dialog"/>

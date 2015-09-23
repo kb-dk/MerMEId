@@ -50,8 +50,10 @@
         <xbl:implementation>
             <xf:model id="attr_model">
                 
-                <xf:instance id="mei_attr_list" 
-                    src="http://dcm-udv-01.kb.dk/editor/forms/mei/model/MEI_attr_list.xml"/>
+                <xf:instance id="mei_attr_list">
+                  <xi:include href="../model/MEI_attr_list.xml"
+			      parse="xml"/>
+		</xf:instance>
                 
                 <xf:instance id="local_temp">
                     <temp-values>

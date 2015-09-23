@@ -10,7 +10,8 @@
   xmlns:dcm="http://www.kb.dk/dcm"
   xmlns:ev="http://www.w3.org/2001/xml-events"
   xmlns:marc="http://www.loc.gov/MARC21/slim"
-  xmlns:zs="http://www.loc.gov/zing/srw/">
+  xmlns:zs="http://www.loc.gov/zing/srw/"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
   
   <!--
     Component to select a RISM siglum from lists of countries and archives.
@@ -73,8 +74,9 @@
         
         <!-- local copy of editor settings instance -->
         <!-- needed to get settings into inner scope -->
-        <xf:instance xmlns="http://www.kb.dk/dcm" id="parameters"
-          src="/../editor/forms/mei/mermeid_configuration.xml">               
+        <xf:instance xmlns="http://www.kb.dk/dcm" 
+		     id="parameters">
+          <xi:include href="../mermeid_configuration.xml"/>               
         </xf:instance>
         
         <!-- "onload" xforms actions -->

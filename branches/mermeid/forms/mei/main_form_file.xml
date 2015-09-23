@@ -44,7 +44,7 @@
 						label="Add file collection identifier"
 						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>                        
 					<xf:group ref=".[not(m:identifier[@type='file_collection'])]">
-						<h:a class="help_plain"><h:img src="/../editor/images/warning.png" 
+						<h:a class="help_plain"><h:img src="/editor/images/warning.png" 
 							alt="warning"/><h:span class="comment">If you want MerMEId to organize
 								your files into different collections or series, a file collection 
 								identifier should be added.
@@ -72,7 +72,7 @@
 								index="repeat-collection"
 								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
 							<xf:group ref=".[count(../m:identifier[@type='file_collection'][normalize-space(.)!=''])=0]">
-								<h:a class="help_plain"><h:img src="/../editor/images/warning.png" 
+								<h:a class="help_plain"><h:img src="/editor/images/warning.png" 
 									alt="warning"/><h:span class="comment">If you want MerMEId to organize
 										your files into different collections or series, a file collection 
 										identifier should be added.
@@ -140,7 +140,7 @@
 											<xf:label class="fixed_width"><xf:output value="if ($pos=1) then 'Address' else ''"/></xf:label>
 										</xf:input>&#160;
 										<xf:trigger appearance="minimal" class="non-standard_button">
-											<xf:label><h:img src="/../editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+											<xf:label><h:img src="/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xf:insert context="parent::node()" 
 													origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[1]"
@@ -175,7 +175,7 @@
 													Select from list or enter a custom text.</h:span></h:a></xf:label>
 										</xf:input>
 										<xf:trigger appearance="minimal" class="non-standard_button">
-											<xf:label><h:img src="/../editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+											<xf:label><h:img src="/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xf:insert context="parent::node()" 
 													origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[m:ptr][1]"
@@ -355,7 +355,7 @@
 				<h:div>
 					<xf:trigger>
 						<xf:label>
-							<h:img src="/../editor/images/add.gif" alt="Add"/> Add change </xf:label>
+							<h:img src="/editor/images/add.gif" alt="Add"/> Add change </xf:label>
 						<xf:action ev:event="DOMActivate">
 							<xf:insert nodeset="m:change" context="." at="last()" position="after"
 								origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>

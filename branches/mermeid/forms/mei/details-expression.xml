@@ -69,16 +69,16 @@
                     
                     <h:div style="float:right">
                         <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="/../editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                            <xf:label><h:img src="/editor/images/save_small.png" alt="Save"/> Save</xf:label>
                         </xf:submit>
                         <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="/../editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                            <xf:label><h:img src="/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{$uri}" show="replace"/>
                             </xf:action>
                         </xf:submit>
                         <xf:trigger>
-                            <xf:label><h:img src="/../editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
+                            <xf:label><h:img src="/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{$uri}" show="replace"/>
                             </xf:action>
@@ -196,7 +196,7 @@
                             <xf:label class="fixed_width">Tempo</xf:label>
                         </xf:input>
                         <xf:trigger appearance="minimal" ref="m:tempo">
-                            <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:label><h:img src="/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete nodeset="."/>
                             </xf:action>
@@ -211,7 +211,7 @@
                     <xf:group ref="m:key">
                         <xi:include href="includes/key_select.xml" parse="xml"/>
                         <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:label><h:img src="/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete nodeset="."/>
                             </xf:action>
@@ -236,7 +236,7 @@
                                 Please use underscore _ instead.</h:span></h:a></xf:label>
                         </xf:input>
                         <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:label><h:img src="/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete nodeset="."/>
                             </xf:action>
@@ -416,7 +416,7 @@
                                             <xf:group ref="$thisInstrumentation/m:instrVoiceGrp[@n=$id]">
                                                 <h:legend>
                                                     <xf:trigger appearance="minimal">
-                                                        <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/>
+                                                        <xf:label><h:img src="/editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/>
                                                             <h:span>
                                                                 <!--<xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>-->
                                                                 <!--<xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>-->
@@ -458,7 +458,7 @@
                                             <!-- a copy of this instrVoiceGrp does not exist at this sub-level yet -->
                                             <h:legend>
                                                 <xf:trigger appearance="minimal">
-                                                    <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this ensemble"/>
+                                                    <xf:label><h:img src="/editor/images/no.png" alt="no" title="Click to add this ensemble"/>
                                                         <h:span class="disabled">
                                                             <xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>
                                                             <!--<xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>-->
@@ -503,7 +503,7 @@
                                                 <h:div>&#160;&#160;&#160;&#160;
                                                     <xf:group ref=".[@xml:id=$thisEnsemble/m:instrVoice/@n]">
                                                         <xf:trigger appearance="minimal">
-                                                            <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
+                                                            <xf:label><h:img src="/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
                                                                 <!--<h:span>
                                                                     <xf:output value="@count"/>
                                                                     <xf:output value="."/>
@@ -520,7 +520,7 @@
                                                     </xf:group>
                                                     <xf:group ref=".[not(@xml:id=$thisEnsemble/m:instrVoice/@n)]">
                                                         <xf:trigger appearance="minimal">
-                                                            <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this performer"/>
+                                                            <xf:label><h:img src="/editor/images/no.png" alt="no" title="Click to add this performer"/>
                                                                 <h:span class="disabled">
                                                                     <xf:output value="@count"/>
                                                                     <xf:output value="."/>
@@ -563,7 +563,7 @@
                                     <h:fieldset>
                                         <h:legend>
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/></xf:label>
+                                                <xf:label><h:img src="/editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/></xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:delete nodeset="."/>
                                                 </xf:action>
@@ -609,7 +609,7 @@
                                     <h:div>
                                         <xf:group ref=".[@xml:id=$thisInstrumentation/m:instrVoice/@n]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
+                                                <xf:label><h:img src="/editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:delete context="$thisInstrumentation" nodeset="m:instrVoice[@n=$thisTopLevelPerformer/@xml:id]"/>
                                                 </xf:action>
@@ -620,7 +620,7 @@
                                         </xf:group>
                                         <xf:group ref=".[not(@xml:id=$thisInstrumentation/m:instrVoice/@n)]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this performer"/>
+                                                <xf:label><h:img src="/editor/images/no.png" alt="no" title="Click to add this performer"/>
                                                     <h:span class="disabled">
                                                         <xf:output value="@count"/>
                                                         <xf:output value="."/>
@@ -658,7 +658,7 @@
                                 <xxf:variable name="thisId" select="@xml:id"/>
                                 <h:div>
                                     <xf:trigger appearance="minimal">
-                                        <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
+                                        <xf:label><h:img src="/editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:delete nodeset="."/>
                                         </xf:action>
@@ -697,7 +697,7 @@
                                     <h:div>
                                         <xf:group ref=".[@xml:id=$thisCastList/m:castItem/@n]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this role"/>
+                                                <xf:label><h:img src="/editor/images/yes.png" alt="yes" title="Click to remove this role"/>
                                                     <!-- Roles cannot be edited at this level - only added or omitted -->
                                                     <h:span>
                                                         <xf:output value="m:role//text()[1]"/>
@@ -710,7 +710,7 @@
                                         </xf:group>
                                         <xf:group ref=".[not(@xml:id=$thisCastList/m:castItem/@n)]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this role"/>
+                                                <xf:label><h:img src="/editor/images/no.png" alt="no" title="Click to add this role"/>
                                                     <h:span class="disabled">
                                                         <xf:output value="m:role//text()[1]"/>
                                                     </h:span>
@@ -745,7 +745,7 @@
                                 <xf:repeat nodeset="$thisCastList/m:castItem[count(.[@n=$topLevelCastList/m:castItem/@xml:id])=0]">
                                     <h:div>
                                         <xf:trigger appearance="minimal">
-                                            <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
+                                            <xf:label><h:img src="/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
                                                 <h:span>
                                                     <xf:output value="m:role//text()[1]"/>
                                                 </h:span>
@@ -871,7 +871,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:span style="vertical-align:bottom;"><h:img src="/../editor/images/go_to_link.png" 
+                                                <xf:label><h:span style="vertical-align:bottom;"><h:img src="/editor/images/go_to_link.png" 
                                                     title="Go to linked resource"/></h:span></xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xxf:variable name="uri" 

@@ -43,14 +43,14 @@
                     
                     <h:div style="float:right">
                         <xf:submit submission="save-bibliography">
-                            <xf:label><h:img src="/../editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                            <xf:label><h:img src="/editor/images/save_small.png" alt="Save"/> Save</xf:label>
                             <!--<xf:action ev:event="DOMActivate">
                                 <xf:setvalue ref="instance('temp')/target_uri" 
                                 value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>
                                 </xf:action>-->
                         </xf:submit>
                         <xf:submit submission="save-bibliography">
-                            <xf:label><h:img src="/../editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                            <xf:label><h:img src="/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <!--<xf:setvalue ref="instance('temp')/target_uri" 
                                     value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>-->
@@ -58,7 +58,7 @@
                             </xf:action>
                         </xf:submit>
                         <xf:trigger>
-                            <xf:label><h:img src="/../editor/images/discard.png" alt="Discard changes"/> Discard changes</xf:label>
+                            <xf:label><h:img src="/editor/images/discard.png" alt="Discard changes"/> Discard changes</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{xxf:get-session-attribute('return_url')}" show="replace"/>
                             </xf:action>
@@ -140,7 +140,7 @@
                         [None]<h:br/>&#160;
                     </h:div>
                     <xf:trigger>
-                        <xf:label><h:img src="/../editor/images/add.gif" alt="Add"/> Add reference</xf:label>
+                        <xf:label><h:img src="/editor/images/add.gif" alt="Add"/> Add reference</xf:label>
                         <xf:action ev:event="DOMActivate">
                             <xxf:show dialog="add-ref-dialog"/>
                         </xf:action>
@@ -161,14 +161,14 @@
                                 index="repeat-references"
                                 origin="instance('temp')/m:biblList/m:bibl"/><xf:trigger appearance="minimal"
                                     class="non-standard_button">
-                                    <xf:label><h:img src="/../editor/images/add.gif" alt="Add"/></xf:label>
+                                    <xf:label><h:img src="/editor/images/add.gif" alt="Add"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xxf:show dialog="add-ref-dialog"/>
                                     </xf:action>
                                 </xf:trigger><xf:group ref="." class="button_group">
                                     <xxf:variable name="number" select="count(parent::node()/m:bibl)"/>
                                     <xf:trigger appearance="minimal">
-                                        <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                                        <xf:label><h:img src="/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                                         <xf:action if="$number=1" ev:event="DOMActivate">
                                             <xf:delete nodeset="parent::node()"/>
                                             <xf:setvalue ref="instance('temp')/collection" value="''"/>
@@ -229,7 +229,7 @@
                 <xf:label>Add reference</xf:label>
                 <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl" id="ref-type-menu-bibl-repeat">
                     <xf:trigger submission="replace-form-with" appearance="minimal">
-                        <xf:label><h:img src="/../editor/images/add.gif" alt="Add"/> <xf:output 
+                        <xf:label><h:img src="/editor/images/add.gif" alt="Add"/> <xf:output 
                             value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
                                 value="if (m:genre[2]!='') then concat(', ',m:genre[2]) else ''"></xf:output>
                         </xf:label>

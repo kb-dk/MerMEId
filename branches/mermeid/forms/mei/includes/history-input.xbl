@@ -46,13 +46,15 @@
 
                 <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
                     id="empty-instance"
-                    src="/../editor/forms/mei/model/empty_doc.xml" 
-                    xxforms:readonly="true"/>
+                    xxforms:readonly="true">
+                  <xi:include href="../model/empty_doc.xml"  />
+		</xf:instance>
 
                 <!-- Local copy of editor settings instance needed to get settings into inner scope. -->
                 <!-- Values read from the file are overwritten on loading the component to get the current settings -->
-                <xf:instance xmlns="http://www.kb.dk/dcm" id="parameters"
-                    src="/../editor/forms/mei/mermeid_configuration.xml">
+                <xf:instance xmlns="http://www.kb.dk/dcm"
+			     id="parameters">
+                  <xi:include href="../mermeid_configuration.xml"/>
                 </xf:instance>
                 
                 <xf:action ev:event="xforms-model-construct-done settings-changed">
