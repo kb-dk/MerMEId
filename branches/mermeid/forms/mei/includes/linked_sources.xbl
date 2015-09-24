@@ -78,7 +78,7 @@
           </xf:action>
           
           <xf:group ref="instance('files')[dcm:file]">
-            <h:a class="help_plain"><h:img src="/editor/images/link_warning.png" 
+            <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/link_warning.png" 
               alt="files linking to this source"/><h:span class="comment" style="width:auto; margin-top:5px;">
                 There are files linking to this source description. <h:br/>
                 Deleting or altering this source will affect all files linking to it.<h:br/>

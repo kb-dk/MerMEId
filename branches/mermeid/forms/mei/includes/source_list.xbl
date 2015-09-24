@@ -161,7 +161,7 @@
           <xf:group ref="$binding">
             
             <xf:trigger ref=".[not($nodeset)]" class="create_button">
-              <xf:label><h:img src="/editor/images/add.gif" title="Add source"></h:img> Add source</xf:label>
+              <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" title="Add source"></h:img> Add source</xf:label>
               <xf:action ev:event="DOMActivate">
                 <xxf:show dialog="add_source_dialog"/>
               </xf:action>
@@ -187,7 +187,7 @@
                         <xf:output value="@label"/>
                         <xf:group ref=".[normalize-space(@label)='']"> [No title] </xf:group>
                         <xf:trigger appearance="minimal">
-                          <xf:label><h:img src="/editor/images/update.png" title="Update title (re-read from external file)"/></xf:label>
+                          <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/update.png" title="Update title (re-read from external file)"/></xf:label>
                           <xf:action ev:event="DOMActivate">
                             <xxf:variable name="source_id" select="substring-after(@target,'#')"/>
                             <xxf:variable name="doc" select="substring-before(@target,'#')"/>
@@ -216,7 +216,7 @@
                     <xf:group ref=".[not(@target) or @target='']">
                       <!-- sources included in this file -->
                       <xf:trigger appearance="minimal">
-                        <xf:label><h:img src="/editor/images/edit.gif"
+                        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/edit.gif"
                         style="margin-top: -2px;"
                         title="Edit this source"/></xf:label>
                         <xf:action ev:event="DOMActivate">
@@ -235,7 +235,7 @@
                     <xf:group ref=".[@target!='']">
                       <!-- external source data -->
                       <xf:trigger appearance="minimal">
-                        <xf:label><h:img src="/editor/images/go_to_link.png" title="Go to external source"/></xf:label>
+                        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/go_to_link.png" title="Go to external source"/></xf:label>
                         <xf:action ev:event="DOMActivate">
                           <xxf:variable name="uri" 
                                         select="concat(
@@ -264,7 +264,7 @@
                     
                     <!-- change isEmbodimentOf relation -->
                     <xf:group ref=".[count($data-instance//m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
-                      <h:a class="popup"><h:img src="/editor/images/expand.png" 
+                      <h:a class="popup"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/expand.png" 
                       title="Move this source to another version"/>Move to...<h:span 
                       class="comment">
                       <h:div>
@@ -316,13 +316,13 @@
                           <xf:repeat nodeset=".[empty(preceding-sibling::m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
                                               preceding-sibling::m:source[$expression='all'] | 
                                               preceding-sibling::m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])])]">
-                            <h:img src="/editor/images/arrow_up_disabled.gif" class="button_patch"/>
+                            <h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_up_disabled.gif" class="button_patch"/>
                           </xf:repeat>
                           <xf:trigger appearance="minimal"
                                       ref=".[exists(preceding-sibling::m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
                                            preceding-sibling::m:source[$expression='all'] | 
                                            preceding-sibling::m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])])]">
-                            <xf:label><h:img src="/editor/images/arrow_up.gif" alt="Up" title="Move up"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_up.gif" alt="Up" title="Move up"/></xf:label>
                             <xf:recalculate ev:event="DOMFocusIn"/>
                             <xf:action ev:event="DOMActivate">
                               <xf:insert context="parent::node()"
@@ -337,12 +337,12 @@
                           <xf:repeat nodeset=".[empty(following-sibling::m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
                                               following-sibling::m:source[$expression='all'] | 
                                               following-sibling::m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])])]">
-                            <h:img src="/editor/images/arrow_down_disabled.gif" class="button_patch"/>
+                            <h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_down_disabled.gif" class="button_patch"/>
                           </xf:repeat>
                           <xf:trigger appearance="minimal" ref=".[exists(following-sibling::m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
 								following-sibling::m:source[$expression='all'] | 
 								following-sibling::m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])])]">
-                            <xf:label><h:img src="/editor/images/arrow_down.gif" alt="Down" title="Move down"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_down.gif" alt="Down" title="Move down"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                               <xf:insert context="parent::node()" 
                                          origin="$nodeset[index('repeat-sources')]"
@@ -354,7 +354,7 @@
                         </xf:group>                    
                         <xf:group ref="." class="button_group">
                           <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                               <xf:insert context="parent::node()" 
                                          origin="$nodeset[index('repeat-sources')]"
@@ -374,7 +374,7 @@
                         </xf:group>
                         <xf:group ref="." class="button_group">
                           <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="/editor/images/add.gif" title="Add source"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" title="Add source"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                               <xxf:show dialog="add_source_dialog"/>
                             </xf:action>
@@ -383,7 +383,7 @@
                         <xf:group ref="." class="button_group">
                           <xxf:variable name="number" select="count(parent::node()/*)"/>
                           <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                             <xf:action if="$number=1" ev:event="DOMActivate">
                               <xf:delete nodeset="parent::node()"/>
                               <xf:dispatch name="xforms-value-changed" targetid="form-group"/>
@@ -449,7 +449,7 @@
                                       </h:td>
                                       <h:td class="buttons_cell no_border" style="width: auto;">
                                         <xf:trigger appearance="minimal">
-                                          <xf:label><h:img src="/editor/images/edit.gif" title="Edit this item"/></xf:label>
+                                          <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/edit.gif" title="Edit this item"/></xf:label>
                                           <xf:action ev:event="DOMActivate">
                                             <xxf:variable name="uri" 
                                                           select="concat($parameters/dcm:orbeon_dir,'?uri=',$parameters/dcm:form_home,'details-item.xml&amp;doc=',$parameters/dcm:xml_file,'&amp;id=',@xml:id)"/>
@@ -473,7 +473,7 @@
                                       <h:td>
                                         <!-- move item to other sources -->
                                         <xf:group ref=".[count($data-instance//m:sourceDesc/m:source)&gt;1]">
-                                          <h:a class="popup"><h:img src="/editor/images/expand.png" 
+                                          <h:a class="popup"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/expand.png" 
                                           title="Move this item to another source"/>Move to...<h:span 
                                           class="comment">
                                           <h:div>
@@ -524,7 +524,7 @@
               or by referring to an existing source in another file.</h:p>
               <h:div style="text-align:center">
                 <xf:trigger class="long">
-                  <xf:label><h:img src="/editor/images/add.gif" title="Add new source"/> Add new source </xf:label>
+                  <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" title="Add new source"/> Add new source </xf:label>
                   <xf:action ev:event="DOMActivate">
                     <xf:insert context="$binding" 
                                nodeset="$nodeset[index('repeat-sources')]"
@@ -543,7 +543,7 @@
                 </xf:trigger>
                 <h:br/>
                 <xf:trigger class="long">
-                  <xf:label><h:img src="/editor/images/add_link.png" 
+                  <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add_link.png" 
                   title="Add source as link to an external description"/> Add link to external source</xf:label>
                   <xf:action ev:event="DOMActivate">
                     <xxf:hide dialog="add_source_dialog"></xxf:hide>
@@ -556,7 +556,7 @@
                 </xf:trigger> 
                 <h:br/>
                 <xf:trigger class="long">
-                  <xf:label><h:img src="/editor/images/copy.gif" 
+                  <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/copy.gif" 
                   title="Copy source from another file"/> Copy from external source</xf:label>
                   <xf:action ev:event="DOMActivate">
                     <xxf:hide dialog="add_source_dialog"></xxf:hide>
@@ -662,7 +662,7 @@
                       <xf:switch>
                         <xf:case id="hide_source_refs" selected="true()">
                           <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="/editor/images/expand.png" title="Show sources"/>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/expand.png" title="Show sources"/>
                             <xf:output value="concat(dcm:composer,': ',dcm:title)"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                               <xf:toggle case="show_source_refs"/>
@@ -671,7 +671,7 @@
                         </xf:case>
                         <xf:case id="show_source_refs">
                           <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="/editor/images/collapse.png" title="Hide sources"/>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/collapse.png" title="Hide sources"/>
                             <xf:output value="concat(dcm:composer,': ',dcm:title)"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                               <xf:toggle case="hide_source_refs"/>
@@ -736,7 +736,7 @@
                                     <xxf:hide dialog="source_reference_dialog"/>
                                   </xf:action>
                                 </xf:trigger>
-                                <h:a class="help_plain"><h:img src="/editor/images/id.png" style="margin-bottom: -2px;"/><h:span 
+                                <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/id.png" style="margin-bottom: -2px;"/><h:span 
                                 class="comment" style="margin-top:0px; margin-left:-10px">ID: <xf:output value="../../dcm:link/@href"/>#<xf:output value="@ref"/></h:span></h:a>
                               </h:li>
                             </xf:repeat>
@@ -789,7 +789,7 @@
                 To keep changes, choose "Save".
                 </h:p>    
                 <xf:trigger appearance="save_proceed_button">
-                  <xf:label><h:img src="/editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
+                  <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
                   <xf:action ev:event="DOMActivate">
                     <!--<xf:send submission="save-to-file"/>
                         <xf:load resource="{$temp/target_uri}" show="replace"/>-->
@@ -801,7 +801,7 @@
                   </xf:action>
                 </xf:trigger>
                 <xf:trigger>
-                  <xf:label><h:img src="/editor/images/discard.png" alt="Discard" title="Discard changes and proceed"/> Discard</xf:label>
+                  <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/discard.png" alt="Discard" title="Discard changes and proceed"/> Discard</xf:label>
                   <xf:action ev:event="DOMActivate">
                     <xf:load resource="{$temp/target_uri}" show="replace"/>
                     <xxf:hide dialog="exit-warning-dialog"/>

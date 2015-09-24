@@ -26,7 +26,7 @@
             <xf:model>
                 <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
                     id="bibl-type-instance" 
-                    src="/editor/forms/mei/model/bibl_reference_types.xml" 
+                    src="{instance('parameters')/dcm:server_name}/editor/forms/mei/model/bibl_reference_types.xml" 
                     xxf:readonly="true"/>
             </xf:model>
         </xbl:implementation>
@@ -217,7 +217,7 @@
                                         </xf:input>
                                         <xf:trigger appearance="minimal">
                                             <xf:label>
-                                                <h:img src="/editor/images/remove.gif" alt="Delete" title="Delete"
+                                                <h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete"
                                                 />
                                             </xf:label>
                                             <xf:delete nodeset="../m:biblScope" at="index('repeat-bibl-biblscope')"
@@ -228,7 +228,7 @@
                                 </xf:repeat>
                                 <h:div class="vertical_spacer"/>
                                 <xf:trigger class="create_button">
-                                    <xf:label><h:img src="/editor/images/add.gif" alt="Add" title="Add row"/> Add
+                                    <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/> Add
                                         vol./issue/pages</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xxf:variable name="ref_type"

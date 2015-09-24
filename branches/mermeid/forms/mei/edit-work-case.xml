@@ -13,36 +13,36 @@
 	xmlns:t="http://www.tei-c.org/ns/1.0" 
 	xml:base="http://localhost/editor/forms/mei/"
 	xmlns:dcm="http://www.kb.dk/dcm">
+  
+  <!-- 
+       Created by the Danish Centre for Music Publication
+       The Royal Library, Copenhagen 2012
+       Authors: Sigfrid Lundberg, Axel Teich Geertinger
+  -->
+  
+  <xi:include href="edit-form-head.xml" parse="xml"/>
+  
+  <!-- set page title on load -->
+  <h:body id="editor-body" class="editor_body" onload="initialize();">
+    
+    <xi:include href="edit-form-topbar.xml" parse="xml"/>
+    
+    <h:div id="form-body">
+      <xf:group id="form-group">
 	
-	<!-- 
-		Created by the Danish Centre for Music Publication
-		The Royal Library, Copenhagen 2012
-		Authors: Sigfrid Lundberg, Axel Teich Geertinger
-	-->
+	<xi:include href="edit-form-event-handlers.xml" parse="xml"/>
 	
-	<xi:include href="edit-form-head.xml" parse="xml"/>
+	<h:div id="work-case">
+	  <h:div class="top-bar-container">
+	    <h:div id="work-border"> </h:div>
+	  </h:div>
+	  <xi:include href="main_form_work.xml" parse="xml"/>
+	</h:div>
 	
-	<!-- set page title on load -->
-	<h:body id="editor-body" class="editor_body" onload="initialize();">
-		
-		<xi:include href="edit-form-topbar.xml" parse="xml"/>
-		
-		<h:div id="form-body">
-			<xf:group id="form-group">
-				
-				<xi:include href="edit-form-event-handlers.xml" parse="xml"/>
-				
-				<h:div id="work-case">
-					<h:div class="top-bar-container">
-						<h:div id="work-border"> </h:div>
-					</h:div>
-					<xi:include href="main_form_work.xml" parse="xml"/>
-				</h:div>
-				
-			</xf:group>
-		</h:div>
-		
-		<xi:include href="edit-form-footer.xml" parse="xml"/>
-		
-	</h:body>
+      </xf:group>
+    </h:div>
+    
+    <xi:include href="edit-form-footer.xml" parse="xml"/>
+    
+  </h:body>
 </h:html>

@@ -47,7 +47,7 @@
           xxforms:readonly="true">
 	  <xi:include href="../model/relators.xml" parse="xml" />
 	</xf:instance>
-<!--           src="/editor/forms/mei/model/relators.xml" -->        
+        
         <xf:instance id="template">
           <respStmt xmlns="http://www.music-encoding.org/ns/mei">
             <persName role=""/>
@@ -84,7 +84,7 @@
           <!-- display a warning if role is not on standard relators list -->
           <xf:group ref=".[$role and not(instance('relators-instance')/role[.=$role])]">
             <xf:output value="$binding/@role"/>
-            <h:a class="help_plain"><h:img src="/editor/images/warning.png" alt="warning"/><h:span class="comment">"<xf:output value="$binding/@role"/>" does not 
+            <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/warning.png" alt="warning"/><h:span class="comment">"<xf:output value="$binding/@role"/>" does not 
               seem to be a standard MARC relation. Whenever possible, a standard value 
               from the drop-down list should be used.</h:span></h:a>
           </xf:group>

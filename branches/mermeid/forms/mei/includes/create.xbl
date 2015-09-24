@@ -53,7 +53,7 @@
                 </xxf:variable>
                 <xf:group ref=".[not($exists)]">
                     <xf:trigger class="create_button">
-                        <xf:label><h:img src="/editor/images/add.gif" alt="Add" title="Add row"/>
+                        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/>
                             <xf:output value="$label"/>
                         </xf:label>
                         <xf:action ev:event="DOMActivate">

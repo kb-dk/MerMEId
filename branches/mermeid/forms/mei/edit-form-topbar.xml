@@ -148,7 +148,7 @@
       To keep changes, choose "Save".
     </h:p>    
     <xf:trigger appearance="save_proceed_button" id="save-and-proceed-button">
-      <xf:label><h:img id="save-and-proceed-image" src="/editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
+      <xf:label><h:img id="save-and-proceed-image" src="{instance('parameters')/dcm:server_name}/editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:dispatch name="language-update" target="form-group"/>
         <xf:send submission="save-to-file"/>
@@ -157,7 +157,7 @@
       </xf:action>
     </xf:trigger>
     <xf:trigger>
-      <xf:label><h:img src="/editor/images/discard.png" alt="Discard" title="Discard changes and proceed"/> Discard</xf:label>
+      <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/discard.png" alt="Discard" title="Discard changes and proceed"/> Discard</xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:load resource="{instance('temp')/target_uri}" show="replace"/>
         <xxf:hide dialog="exit-warning-dialog"/>
@@ -180,7 +180,8 @@
     <!-- end test -->    
     
     <xf:trigger appearance="minimal" id="save-button">
-      <xf:label><h:img id="save-button-image" src="/editor/images/save.gif" alt="Save" title="Save file"/></xf:label>
+      <xf:label><h:img id="save-button-image" 
+      src="{instance('parameters')/dcm:server_name}editor/images/save.gif" alt="Save" title="Save file"/></xf:label>
       <xf:action ev:event="DOMActivate save">
         <xf:send submission="save-to-file"/>
         <xf:dispatch name="language-update" target="form-group"/>
@@ -189,13 +190,13 @@
       href="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}present.xq?doc={instance('parameters')/dcm:xml_file}"
       class="xforms-trigger" 
       target="view_{instance('parameters')/dcm:xml_file}"><h:img 
-        src="/editor/images/html.gif" alt="HTML" title="View as HTML" border="0"/></h:a><h:a 
+        src="{instance('parameters')/dcm:server_name}/editor/images/html.gif" alt="HTML" title="View as HTML" border="0"/></h:a><h:a 
       href="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:document_root}{instance('parameters')/dcm:xml_file}"
       class="xforms-trigger" 
       target="xml_{instance('parameters')/dcm:xml_file}"><h:img 
-        src="/editor/images/xml.gif" alt="XML" title="View XML data" border="0"/></h:a><xf:trigger appearance="minimal">
+        src="{instance('parameters')/dcm:server_name}/editor/images/xml.gif" alt="XML" title="View XML data" border="0"/></h:a><xf:trigger appearance="minimal">
           <xf:label><h:img  id="home-button-image" 
-        src="/editor/images/home.gif" alt="File list" 
+        src="{instance('parameters')/dcm:server_name}/editor/images/home.gif" alt="File list" 
         title="Close editor and return to file list" border="0"/></xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:action if="instance('temp')/changed='true'">
@@ -209,14 +210,14 @@
       </xf:action>
     </xf:trigger><xf:trigger appearance="minimal">
       <xf:label><h:img  id="settings-button-image" 
-        src="/editor/images/settings.png" alt="Settings" 
+        src="{instance('parameters')/dcm:server_name}/editor/images/settings.png" alt="Settings" 
         title="Change settings" border="0"/></xf:label>
       <xf:action ev:event="DOMActivate">
         <xxf:show dialog="settings-dialog"/>
       </xf:action>
     </xf:trigger><xf:trigger appearance="minimal">
       <xf:label><h:img  id="help-button-image" 
-        src="/editor/images/help.png" alt="Help" 
+        src="{instance('parameters')/dcm:server_name}/editor/images/help.png" alt="Help" 
         title="Help" border="0"/></xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:load resource="{instance('parameters')/dcm:server_name}/editor/manual/index.html" show="new"/>
@@ -231,7 +232,7 @@
   <xxf:dialog id="settings-dialog" appearance="full" level="modal">
     <xf:label>MerMEId settings</xf:label>
     <xf:trigger appearance="minimal">
-      <xf:label><h:img src="/editor/images/expand.png" title="Edit"/> Edit standard bibliographic references <h:a class="help">?<h:span class="comment">For each 
+      <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/expand.png" title="Edit"/> Edit standard bibliographic references <h:a class="help">?<h:span class="comment">For each 
       file collection (series), a list of frequently used bibliographic references may be available when adding
       a new reference at the "Bibliography" tab. The lists may be edited using this menu option.</h:span></h:a>
       </xf:label>
@@ -243,7 +244,7 @@
     <h:br/>&#160;
     <!-- to be implemented     
       <xf:trigger appearance="minimal">
-      <xf:label><h:img src="/editor/images/expand.png" title="Edit"/> Edit standard instrumentations <h:a class="help">?<h:span 
+      <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/expand.png" title="Edit"/> Edit standard instrumentations <h:a class="help">?<h:span 
       class="comment">Edit the standard ensembles and instrument groups available when adding new instruments 
       at the "Music" tab.</h:span></h:a></xf:label>
       <xf:action ev:event="DOMActivate">
@@ -261,7 +262,7 @@
         </xf:action>
         <xf:item>
           <xf:label>Show xml:id values <h:a class="help">?<h:span class="comment">Displays an ID icon 
-            (<h:img src="/editor/images/id.png" border="0" alt="ID Icon"/>) next to selected elements.
+            (<h:img src="{instance('parameters')/dcm:server_name}/editor/images/id.png" border="0" alt="ID Icon"/>) next to selected elements.
             The element's xml:id attribute value is displayed when moving the cursor over the icon.
           </h:span></h:a></xf:label>
           <xf:value>true</xf:value>
@@ -279,7 +280,7 @@
         </xf:action>
         <xf:item>
           <xf:label>Enable attribute editor <h:a class="help_plain"><h:img 
-            src="/editor/images/warning.png" alt="warning"/><h:span class="comment">This enables changing or adding
+            src="{instance('parameters')/dcm:server_name}/editor/images/warning.png" alt="warning"/><h:span class="comment">This enables changing or adding
               all possible attributes according to the XML schema. Changing attributes may compromise the validity 
               of your data and affect the way MerMEId displays them. 
               Use the attribute editor only if you know what you are doing.

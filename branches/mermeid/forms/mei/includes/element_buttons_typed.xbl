@@ -69,11 +69,11 @@
                 <h:span class="editmenu">
                     <xf:group ref=".[contains($triggers,'up') or contains($triggers,'all')]" class="button_group">
                         <xf:repeat nodeset=".[empty(xxf:evaluate(concat('preceding-sibling::',$nodeset)))]">
-                            <h:img src="/editor/images/arrow_up_disabled.gif" class="button_patch"/>
+                            <h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_up_disabled.gif" class="button_patch"/>
                         </xf:repeat>
                         <xf:trigger appearance="minimal"
                             ref=".[exists(xxf:evaluate(concat('preceding-sibling::',$nodeset)))]">
-                            <xf:label><h:img src="/editor/images/arrow_up.gif" alt="Up" title="Move up"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_up.gif" alt="Up" title="Move up"/></xf:label>
                             <xf:recalculate ev:event="DOMFocusIn"/>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert context="parent::node()"
@@ -86,10 +86,10 @@
                     </xf:group>                    
                     <xf:group ref=".[contains($triggers,'down') or contains($triggers,'all')]" class="button_group">
                         <xf:repeat nodeset=".[empty(xxf:evaluate(concat('following-sibling::',$nodeset)))]">
-                                <h:img src="/editor/images/arrow_down_disabled.gif" class="button_patch"/>
+                                <h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_down_disabled.gif" class="button_patch"/>
                         </xf:repeat>
                         <xf:trigger appearance="minimal" ref=".[exists(xxf:evaluate(concat('following-sibling::',$nodeset)))]">
-                            <xf:label><h:img src="/editor/images/arrow_down.gif" alt="Down" title="Move down"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_down.gif" alt="Down" title="Move down"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert context="parent::node()" 
                                     origin="xxf:evaluate($nodeset)[index($index)]"
@@ -101,7 +101,7 @@
                     </xf:group>                    
                     <xf:group ref=".[contains($triggers,'copy') or contains($triggers,'all')]" class="button_group">
                         <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert context="parent::node()" 
                                     origin="xxf:evaluate($nodeset)[index($index)]"
@@ -118,7 +118,7 @@
                     </xf:group>
                     <xf:group ref=".[contains($triggers,'add') or contains($triggers,'all')]" class="button_group">
                         <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:insert context="parent::node()" origin="$origin"
                                     nodeset="xxf:evaluate($nodeset)[index($index)]"/>
@@ -128,11 +128,11 @@
                     </xf:group>
                     <xf:group ref=".[contains($triggers,'delete') or contains($triggers,'all') or contains($triggers,'remove')]" class="button_group">
                         <xf:repeat nodeset=".[count(xxf:evaluate(concat('../',$nodeset)))=1 and not(contains($triggers,'remove'))]">
-                            <h:img src="/editor/images/remove_disabled.gif" class="button_patch"/>
+                            <h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove_disabled.gif" class="button_patch"/>
                         </xf:repeat>
                         <xf:trigger appearance="minimal"
                             ref=".[count(xxf:evaluate(concat('../',$nodeset)))&gt;1 or contains($triggers,'remove')]">
-                            <xf:label><h:img src="/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete ev:event="DOMActivate" nodeset="."
                                     at="index($index)"/>

@@ -32,7 +32,7 @@
     <xbl:template>
       <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
         <xf:group ref=".[instance('parameters')/dcm:show_id='true']">
-            <h:a class="dcm_id"><img src="/editor/images/id.png" border="0" 
+            <h:a class="dcm_id"><img src="{instance('parameters')/dcm:server_name}/editor/images/id.png" border="0" 
               alt="ID" class="id_card"/><h:span class="comment">ID: <xf:output 
                 value="if (@xml:id) then @xml:id else 'no XML:ID value'"/></h:span></h:a>          
         </xf:group>

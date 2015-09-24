@@ -26,7 +26,7 @@ String queryString = request.getQueryString();
 String newRequest  = queryString;
 
 if(logger.isInfoEnabled()){ 
-logger.info("Sending request: " + uri); 
+    logger.info("Sending request: " + uri); 
 }
 
 org.w3c.dom.Document form = null;
@@ -41,7 +41,7 @@ dfactory.setNamespaceAware(true);
 dfactory.setXIncludeAware(true);
 dBuilder = dfactory.newDocumentBuilder();
 form = dBuilder.parse(uri);
-System.out.println("done parsing");
+logger.info("done parsing");
 serialize(form,printout);
 
 java.lang.Long completed = System.currentTimeMillis() - start;
@@ -58,9 +58,6 @@ if(logger.isInfoEnabled()){
 
     void serialize(org.w3c.dom.Document doc, java.io.PrintWriter out) {
 
-    //Logger logger = Logger.getLogger("jsp.mei_form_serialize.log");
-    //logger.setLevel(Level.DEBUG);
-
     try {
 
 	org.w3c.dom.bootstrap.DOMImplementationRegistry registry =
@@ -74,17 +71,17 @@ if(logger.isInfoEnabled()){
 	org.w3c.dom.ls.LSOutput output = impl.createLSOutput( );
 	output.setEncoding("UTF-8");
 	output.setCharacterStream( out ); 
-	System.out.println("after setting character stream " + output.getEncoding());
+	logger.info("after setting character stream " + output.getEncoding());
 	serializer.write(doc,output);
-	System.out.println(".. serialized and written to output");
+	logger.info(".. serialized and written to output");
 	return;
 
     } catch (java.lang.ClassNotFoundException classNotFound) {
-	System.out.println(classNotFound.getMessage());
+	logger.error(classNotFound.getMessage());
     } catch (java.lang.InstantiationException instantiationPrblm) {
-	System.out.println(instantiationPrblm.getMessage());
+	logger.error(instantiationPrblm.getMessage());
     } catch (java.lang.IllegalAccessException accessPrblm) {
-	System.out.println(accessPrblm.getMessage());
+	logger.error(accessPrblm.getMessage());
     }
     return;
   }

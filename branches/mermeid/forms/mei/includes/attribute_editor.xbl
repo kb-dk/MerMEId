@@ -101,7 +101,7 @@
                             
                         
                         <xf:trigger appearance="minimal" id="open_button">
-                            <xf:label><h:img id="attr_editor_id" src="/editor/images/attribute.png" title="Edit attributes" alt="Edit attributes"/></xf:label>
+                            <xf:label><h:img id="attr_editor_id" src="{instance('parameters')/dcm:server_name}/editor/images/attribute.png" title="Edit attributes" alt="Edit attributes"/></xf:label>
                             <xf:action ev:event="DOMActivate OpenAndInitialize">
                                 <xxforms:show dialog="attr-dialog"/>                                    
                                 <!-- initialization -->
