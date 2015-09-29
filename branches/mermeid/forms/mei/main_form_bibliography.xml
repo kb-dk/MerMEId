@@ -182,7 +182,7 @@
                   <h:td nowrap="nowrap">
                     <xf:group ref=".[instance('temp')/file_exists='true']">
                       <xf:trigger appearance="minimal">
-                        <xf:label>{instance('parameters')/dcm:server_name}<h:img src="{instance('parameters')/dcm:server_name}/editor/images/edit.gif" title="Open reference editor"/></xf:label>
+                        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/edit.gif" title="Open reference editor"/></xf:label>
                         <xf:action ev:event="DOMActivate">
                           <xxf:variable name="uri" 
                             select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-reference.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>

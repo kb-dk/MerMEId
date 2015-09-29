@@ -49,6 +49,11 @@
         
         <xbl:implementation>
             <xf:model id="attr_model">
+
+                <xf:instance xmlns="http://www.kb.dk/dcm"
+                    id="parameters">
+                    <xi:include href="../mermeid_configuration.xml"/>
+                </xf:instance>
                 
                 <xf:instance id="mei_attr_list">
                   <xi:include href="../model/MEI_attr_list.xml"

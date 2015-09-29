@@ -27,11 +27,17 @@
     </metadata>
     <xbl:implementation>
       <xf:model>
+        <xf:instance xmlns="http://www.kb.dk/dcm"
+          id="parameters">
+          <xi:include href="../mermeid_configuration.xml"/>
+        </xf:instance>
+        
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
                      id="empty-instance"
                      xxf:readonly="true">
+          
           <xi:include href="../model/empty_doc.xml" />
-	</xf:instance>
+      	</xf:instance>
         
         <xf:instance id="local-temp" xmlns="http://www.music-encoding.org/ns/mei">
           <expression>
@@ -106,7 +112,7 @@
                       <h:td>
                         <xf:group ref=".[$temp/file_exists='true']">
                           <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/edit.gif" title="Open performance editor"/></xf:label>
+                            <xf:label><h:img src="{$parameters/dcm:server_name}/editor/images/edit.gif" title="Open performance editor"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                               <xxf:variable name="uri" 
                                             select="concat($parameters/dcm:orbeon_dir,'?uri=',$parameters/dcm:form_home,'details-performance.xml&amp;doc=',$parameters/dcm:xml_file,'&amp;id=',@xml:id)"/>
@@ -131,7 +137,7 @@
                       <h:td>    
                         <!-- move performance to work level or version -->
                         <xf:group ref=".[count($data-instance//m:workDesc/m:work/m:expressionList/m:expression)&gt;1 or name(../../..)='expression']">
-                          <h:a class="popup"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/expand.png" 
+                          <h:a class="popup"><h:img src="{$parameters/dcm:server_name}/editor/images/expand.png" 
                           title="Move this source to another version"/>Move to...<h:span 
                           class="comment">
                           <h:div>
@@ -239,7 +245,7 @@
           To keep changes, choose "Save".
           </h:p>    
           <xf:trigger appearance="save_proceed_button">
-            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
+            <xf:label><h:img src="{$parameters/dcm:server_name}/editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
             <xf:action ev:event="DOMActivate">
               <!--<xf:send submission="save-to-file"/>
                   <xf:load resource="{$temp/target_uri}" show="replace"/>-->
@@ -250,7 +256,7 @@
             </xf:action>
           </xf:trigger>
           <xf:trigger>
-            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/discard.png" alt="Discard" title="Discard changes and proceed"/> Discard</xf:label>
+            <xf:label><h:img src="{$parameters/dcm:server_name}/editor/images/discard.png" alt="Discard" title="Discard changes and proceed"/> Discard</xf:label>
             <xf:action ev:event="DOMActivate">
               <xf:load resource="{$temp/target_uri}" show="replace"/>
               <xxf:hide dialog="exit-warning-dialog"/>
