@@ -64,7 +64,10 @@
                 padding: 0;
                 }
                 .xbl-dcm-date-editor a:hover.help { padding: 0px 2px 1px 2px; }
-                .dcm-date-input-box { margin:2px 0 2px 0; }
+                .dcm-date-input-box { 
+                    margin:2px 0 2px 0;
+                    white-space: nowrap;
+                }
                 .dcm-date-editor-blocklabel { 
                 display: block; 
                 font-weight:normal;
@@ -76,7 +79,7 @@
                 font-weight: normal; 
                 }
                 .dcm-date-input-box .display_input { margin-top: 10px; } 
-                .dcm-date-input-box .display_input input.xforms-input-input { width: 20em; } 
+                .dcm-date-input-box .display_input input.xforms-input-input { width: 15em; } 
                 .xbl-dcm-date-editor button.xforms-trigger { padding: 0px; }
                 .dcm-date-editor-error { 
                 font-weight:bold; 

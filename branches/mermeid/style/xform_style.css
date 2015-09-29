@@ -32,11 +32,6 @@
     background-color: inherit;
 }
 
-.xforms-select1 {
-    background-color: #ffffff;
-}
-
-
 .xforms-textarea {
     background-color: transparent;
 }
@@ -82,53 +77,59 @@
 
 /* END DISABLE ORBEON STYLING */
 
+a:hover {
+    text-decoration: none;
+}
 
 div.inputdiv {
-    margin: 4px 8px 24px 8px;
+    margin: 4px 16px 24px 8px;
     padding: 0px;
     padding-top: 10px;
     margin-top:0px;
 }
 
-fieldset {
+.orbeon fieldset {
     padding: 0px 3px 5px 5px;
-    margin: 26px 0px 5px 0px;
+    margin: 18px 0px 5px 0px;
     background-color: #e8e8e8 !important; 
     border: 1px solid #999999;
 }
 
-fieldset .compact {
+.orbeon fieldset .compact {
     margin: 2px 0 2px 0;
 }
 
-fieldset fieldset {
-    margin: 26px 2px 0px 0px;
+.orbeon fieldset fieldset {
+    margin: 10px 2px 0px 0px;
 }
 
-fieldset fieldset {
+.orbeon fieldset fieldset {
     background-color: #ddd !important;
 }
 
-fieldset legend {
+.orbeon fieldset legend {
     background-color: #bbb !important;
+    margin-bottom: 3px;
+    font-size: 1em;
 }
 
-fieldset fieldset legend,
-fieldset fieldset fieldset legend,
-fieldset fieldset fieldset fieldset legend {
+
+.orbeon fieldset fieldset legend,
+.orbeon fieldset fieldset fieldset legend,
+.orbeon fieldset fieldset fieldset fieldset legend {
     background-color: #ccc !important;
 }
 
-fieldset fieldset fieldset, 
-fieldset fieldset fieldset fieldset fieldset fieldset {
+.orbeon fieldset fieldset fieldset, 
+.orbeon fieldset fieldset fieldset fieldset fieldset fieldset {
     background-color: #ccc !important;
 }
 
-fieldset fieldset fieldset fieldset {
+.orbeon fieldset fieldset fieldset fieldset {
     background-color: #e8e8e8 !important;
 }
 
-fieldset.componentGrp, legend.componentGrp {
+.orbeon fieldset.componentGrp, .orbeon legend.componentGrp {
         background-color: #F0F0B1 !important;
 }
 
@@ -148,7 +149,7 @@ fieldset.componentGrp, legend.componentGrp {
     padding: 5px;
 }
 
-legend {
+.orbeon legend {
     position:relative;
     background-color: #aaa; 
     font-weight: bold;
@@ -156,27 +157,10 @@ legend {
     border-bottom: none;
     height: 18px;
     padding: 3px 4px 1px 4px;
-    margin: -20px -6px 0px -6px;
+    margin: -6px;
     width: 100%;
 }
 
-/* rounded tab-style legends
- legend {
-    position:relative;
-    background-color: #e8e8e8; 
-    font-weight: bold;
-    border: #999999 solid 1px;
-    border-bottom: none;
-    height: 18px;
-    padding: 3px 4px 0px 4px;
-    margin: -21px 0px 0px -6px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    -moz-border-radius-topleft: 4px;
-    -moz-border-radius-topright: 4px;
-}
- */
- 
 table, tr, td {
     margin: 0px;
     padding: 0px;
@@ -220,7 +204,7 @@ div.horiz_spacer {
     vertical-align:bottom;
 }
 
-button, button.detail_button, button[type], .xforms-button {
+.orbeon button.btn {
     margin: 0px;
     padding: 0px 4px 0px 4px;
     width: auto;
@@ -240,16 +224,19 @@ a.non-standard_button {
     margin: 0px -6px !important;
 }
 
-a.xforms-trigger {
-    text-decoration: none;
+.xforms-trigger {
     padding: 1px;
     margin: 0 1px;
 }
 
-a.xforms-trigger img:hover,
-a.xforms-submit img:hover {
-    border:1px solid #999999;
-    padding: 1px;
+.xforms-trigger a {
+    text-decoration: none;
+    color: #000;
+}
+
+.xforms-trigger img:hover,
+.xforms-submit img:hover {
+    background-color: #fff;
 }
 
 button.xforms-trigger img,
@@ -260,15 +247,15 @@ button img {
     margin-top: -2px;
 }
 
-a.xforms-trigger img,
-a.xforms-submit img,
+.xforms-trigger img,
+.xforms-submit img,
 .xforms-group img {
     border: none;
     padding: 2px;
     vertical-align: baseline;
 }
 
-.instr_subselection a.xforms-trigger img {
+.instr_subselection .xforms-trigger img {
     vertical-align: middle;
 }
 
@@ -289,15 +276,24 @@ legend .xforms-group img {
 
 /* inputs and labels */
 
-select.xforms-select1 {
-    display: inline;
+.orbeon .radio input[type="radio"], 
+.orbeon .checkbox input[type="checkbox"] {
+    float: none;
 }
 
-.xforms-input,
-.xforms-input-input {
+.orbeon select {
     display: inline;
     margin: 2px 0px 0px 0px;
-    padding: 1px;
+    padding: 1px 2px;
+    height: 20px;
+}
+
+.orbeon input.xforms-input,
+.orbeon input.xforms-input-input {
+    display: inline;
+    margin: 0px 0px 0px 0px;
+    padding: 1px 2px;
+    height: 22px;
 }
 
 textarea.xforms-textarea {
@@ -367,14 +363,15 @@ span.fixed_width_long, span.fixed_width_maxlong, .blocklabel {
     margin-left: 2px; */
 }  
 
-span.label,
-label {
-    margin: 0px 5px 0px 0px;
+.orbeon label,
+.orbeon span.label.xforms-label,
+.orbeon label.xforms-label {
+    margin: 0px 5px 0px 4px;
     padding: 0px;
+    display: inline;
 }
 
 .blocklabel {
-    margin: 5px 0px 0px 0px;
     padding: 0px;
     text-align:left;
     display:block;
@@ -486,7 +483,7 @@ table.element_list td.no_border {
     margin: 0;
 }
 
-.file_ref_list a.xforms-trigger img {
+.file_ref_list .xforms-trigger img {
     vertical-align: middle;
 }
 
@@ -524,16 +521,15 @@ a.help, a.help_plain, a.warning {
     text-align: left;
     vertical-align:text-top;
     color: #888888;
-    background-color: #ffffcc;
+    background-color: #fff;
     border: 1px solid #888888;
     font-weight: bold;
-    padding-top: 0px;
-    padding-left: 2px;
-    padding-right: 2px;
-    padding-bottom: 1px;
+    padding: 0 2px;
     font-size:.8em;   
     cursor: help;
-    border-radius: 2px;
+    position: relative;
+    top: -3px;
+    border-radius: 6px;
     /* For non-CSS3 FireFox */
     -moz-border-radius: 2px;    
 }
