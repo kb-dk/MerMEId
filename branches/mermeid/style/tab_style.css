@@ -1,9 +1,10 @@
 @namespace xf url("http://www.w3.org/2002/xforms");
 @namespace h  url("http://www.w3.org/1999/xhtml");
 
-
+body.orbeon,
 body.editor_body {   
     font-size: .8em;
+    line-height: 1.2em;
     font-family: arial, helvetica, sans-serif;
     margin: 0px;
     padding:0 20px 20px 20px;
@@ -158,31 +159,31 @@ div.top-bar-container div {
     width: 100%;
 }
 
-#work-tab, #work-div, #work-border, .work {
+#work-tab, #work-div, #work-border, .work, .orbeon.work {
     background-color: #e5c2c4;
 }
 
-#music-tab,#music-div, #music-border, .music {
+#music-tab,#music-div, #music-border, .music, .orbeon.music {
     background-color: #cde1ee;
 }
 
-#source-tab, #source-div, #source-border, .source {
+#source-tab, #source-div, #source-border, .source, .orbeon.source {
     background-color: #9fe3c0;
 }
 
-#history-tab, #history-div, #history-border, .history {
+#history-tab, #history-div, #history-border, .history, .orbeon.history {
     background-color: #E8E89D;
 }
 
-#items.items, #items .items {
+#items.items, #items .items, .orbeon.items {
     background-color: #9fe3c0 !important;
 }
 
-#bibliography-tab, #bibliography-div, #bibliography-border, .bibliography {
+#bibliography-tab, #bibliography-div, #bibliography-border, .bibliography, .orbeon.bibliography {
     background-color: #e1c799;
 }
 
-#file-tab, #file-div, #file-border, .file {
+#file-tab, #file-div, #file-border, .file, .orbeon.file {
     background-color: #e5e1bf;
 }
 

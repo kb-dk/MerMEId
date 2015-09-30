@@ -187,8 +187,6 @@
                                 <xf:setvalue ref="$binding" value="$date-string"/>
                             </xf:action>
                         </xf:action>
-                        <!-- Date picker -->
-                        <!--<xf:input ref="$binding" appearance="minimal"/>-->
                     </xf:group>
                     <!-- Stop propagation of all UI events -->
                     <xf:action ev:event="#all" ev:propagate="stop"/>

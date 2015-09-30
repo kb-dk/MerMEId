@@ -745,11 +745,10 @@
                                     label="Add date"
                                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:date"/>
                                 <xf:repeat nodeset="m:date" id="repeat-pubdate">
-                                    <dcm:date-editor ref=".">
-                                        <xf:label class="fixed_width">Date 
-                                            <h:a class="help">?<h:span class="comment">This field may be used for manuscript datings also.</h:span></h:a>
-                                        </xf:label>
-                                    </dcm:date-editor>
+                                    <h:span class="fixed_width">Date 
+                                        <h:a class="help">?<h:span class="comment">This field may be used for manuscript datings also.</h:span></h:a>
+                                    </h:span>
+                                    <dcm:date-editor/>                                    
                                     <dcm:element-buttons
                                         triggers="remove" 
                                         nodeset="m:date" 

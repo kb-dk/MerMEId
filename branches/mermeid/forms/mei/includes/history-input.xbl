@@ -106,10 +106,10 @@
                                 label="Add creation date"
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:creation/m:date"/>
                             <xf:repeat nodeset="m:creation/m:date" id="repeat-creation-date">
-                                <dcm:date-editor ref="." style="display:inline;">
-                                    <xf:label class="fixed_width_mediumlong">Date of composition <h:a class="help">?<h:span class="comment">Date or time span 
-                                        of composition</h:span></h:a></xf:label>
-                                </dcm:date-editor>
+                                <h:span class="fixed_width_mediumlong">Date of composition <h:a class="help">?<h:span class="comment">Date or time span 
+                                    of composition</h:span></h:a></h:span><dcm:date-editor style="display:inline;"/>
+                                    
+                                
                                 <dcm:element-buttons 
                                     triggers="remove" 
                                     nodeset="m:date" 
@@ -185,9 +185,9 @@
                                         origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:date"/>
                                     <h:div>
                                         <xf:group ref="m:date">
-                                            <xf:label class="fixed_width">Date <h:a class="help">?<h:span class="comment">Date 
-                                                or date span of the event</h:span></h:a></xf:label>
-                                            <dcm:date-editor ref="."/>
+                                            <h:span class="fixed_width">Date <h:a class="help">?<h:span class="comment">Date 
+                                                or date span of the event</h:span></h:a></h:span>
+                                            <dcm:date-editor/>
                                         </xf:group>
                                     </h:div>
                                     <!-- this will be changed to use <desc> instead of <p> -->

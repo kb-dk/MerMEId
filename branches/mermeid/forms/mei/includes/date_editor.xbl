@@ -2,6 +2,7 @@
 <xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml"
     xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
     xmlns:xbl="http://www.w3.org/ns/xbl"
@@ -59,10 +60,6 @@
                 .date_editor_heading .xforms-select1-appearance-full input { 
                 margin-top:-5px;
                 }
-                .xbl-dcm-date-editor .xforms-group {
-                height: auto;
-                padding: 0;
-                }
                 .xbl-dcm-date-editor a:hover.help { padding: 0px 2px 1px 2px; }
                 .dcm-date-input-box { 
                     margin:2px 0 2px 0;
@@ -118,6 +115,13 @@
                         <attributes isodate="" notbefore="" notafter="" startdate="" enddate=""/>
                     </editor_date>
                 </xf:instance>
+                
+                <xf:instance id="parameters" 
+                    xmlns="http://www.kb.dk/dcm">
+                    <xi:include href="../mermeid_configuration.xml"/>
+                </xf:instance>
+                
+                
                 <xf:bind nodeset="instance('editor-instance')">
                     <xf:bind id="isodate-bind" nodeset="isodate" type="xf:date" name="date"/>
                     <xf:bind id="startdate-bind" nodeset="startdate" type="xf:date" name="date"/>
@@ -210,9 +214,8 @@
                         
                         <xf:group ref=".[instance('editor-instance')/mode='single']">
                             <h:div class="dcm-date-input-box">
-                                <dcm:dropdown-month-date ref="isodate" xbl:attr="navindex navindex=tabindex">
-                                    <xf:label class="dcm-date-editor-label">Date: </xf:label>
-                                </dcm:dropdown-month-date>
+                                <h:span class="dcm-date-editor-label">Date: </h:span>
+                                <dcm:dropdown-month-date ref="isodate" xbl:attr="navindex navindex=tabindex"/>
                                 <xf:trigger appearance="minimal">
                                     <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -224,10 +227,9 @@
                         <xf:group ref=".[instance('editor-instance')/mode='interval']">
                             <h:div class="dcm-date-input-box" xbl:attr="navindex navindex=tabindex">
                                 <h:div class="blocklabel strong">Start</h:div>
-                                <dcm:dropdown-month-date ref="startdate">
-                                    <xf:label class="dcm-date-editor-label">Date: <h:a class="help">?<h:span class="comment">Use this 
-                                        if you know the exact start date (or start month, or year) of the event</h:span></h:a></xf:label>
-                                </dcm:dropdown-month-date>
+                                <h:span class="dcm-date-editor-label">Date: <h:a class="help">?<h:span class="comment">Use this 
+                                    if you know the exact start date (or start month, or year) of the event</h:span></h:a></h:span>
+                                <dcm:dropdown-month-date ref="startdate"/>                                
                                 <xf:trigger appearance="minimal">
                                     <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -235,10 +237,9 @@
                                     </xf:action>
                                 </xf:trigger>
                                 <h:br/>
-                                <dcm:dropdown-month-date ref="notbefore">
-                                    <xf:label class="dcm-date-editor-label">Not before: <h:a class="help">?<h:span class="comment">Use this 
-                                        if you only know that the event could not have started before a certain date (or month, or year)</h:span></h:a></xf:label>
-                                </dcm:dropdown-month-date>
+                                <h:span class="dcm-date-editor-label">Not before: <h:a class="help">?<h:span class="comment">Use this 
+                                    if you only know that the event could not have started before a certain date (or month, or year)</h:span></h:a></h:span>
+                                <dcm:dropdown-month-date ref="notbefore"/>
                                 <xf:trigger appearance="minimal">
                                     <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -249,10 +250,9 @@
                             <h:hr/>
                             <h:div class="dcm-date-input-box">
                                 <h:div class="blocklabel strong">End</h:div>
-                                <dcm:dropdown-month-date ref="enddate">
-                                    <xf:label class="dcm-date-editor-label">Date: <h:a class="help">?<h:span class="comment">Use this 
-                                        if you know the exact end date (or end month, or year) of the event</h:span></h:a></xf:label>
-                                </dcm:dropdown-month-date>
+                                <h:span class="dcm-date-editor-label">Date: <h:a class="help">?<h:span class="comment">Use this 
+                                    if you know the exact end date (or end month, or year) of the event</h:span></h:a></h:span>
+                                <dcm:dropdown-month-date ref="enddate"/>
                                 <xf:trigger appearance="minimal">
                                     <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -260,10 +260,9 @@
                                     </xf:action>
                                 </xf:trigger>
                                 <h:br/>
-                                <dcm:dropdown-month-date ref="notafter">
-                                    <xf:label class="dcm-date-editor-label">Not after: <h:a class="help">?<h:span class="comment">Use this 
-                                        if you only know that the event must have ended before a certain date (or month, or year)</h:span></h:a></xf:label>
-                                </dcm:dropdown-month-date>
+                                <h:span class="dcm-date-editor-label">Not after: <h:a class="help">?<h:span class="comment">Use this 
+                                    if you only know that the event must have ended before a certain date (or month, or year)</h:span></h:a></h:span>
+                                <dcm:dropdown-month-date ref="notafter"/>                                
                                 <xf:trigger appearance="minimal">
                                     <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
                                     <xf:action ev:event="DOMActivate">

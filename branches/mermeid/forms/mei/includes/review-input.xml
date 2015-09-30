@@ -24,9 +24,8 @@
     </xf:input>
     <h:br clear="both"/>
     
-    <dcm:date-editor ref="t:date">
-        <xf:label class="fixed_width">Date</xf:label>
-    </dcm:date-editor>
+    <h:span class="fixed_width">Date</h:span>
+    <dcm:date-editor ref="t:date"/>
     
     <xf:input ref="t:author" class="medium_long">
         <xf:label class="fixed_width">Author</xf:label>

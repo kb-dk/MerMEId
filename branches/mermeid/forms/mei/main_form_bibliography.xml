@@ -74,12 +74,19 @@
           <xf:repeat nodeset="instance('bibliography-instance')/m:biblList[not(normalize-space(m:head)) or m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']]" 
             id="std-bibl-repeat">
             <xf:repeat nodeset="m:bibl" id="std-bibl-menu-repeat">
+              <xf:var name="au" value="if (m:author[text()][1]) 
+                then concat(m:author[text()][1]/string(),': ')
+                else ''"/>
+              <xf:var name="ed" value="if (m:editor[text()] and not(../m:author[text()])) 
+                then concat(m:editor[text()][1],' (ed.):')
+                else ''"/>
+              <xf:var name="ti" value="if (string-length(m:title[text()][1])&gt;40) 
+                then concat(substring(m:title[text()][1],1,40),'...')
+                else m:title[text()][1]/string()"/>
+              <xf:var name="bibl_label" value="concat($au, $ed, $ti)"/>                                    
               <xf:trigger submission="replace-form-with" appearance="minimal">
                 <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/> 
-                  <xf:output ref="m:author[text()]" value="concat(.[1],': ')"/>
-                  <xf:output ref="m:editor[text() and not(../m:author[text()])]" value="concat(.[1],': ')"/>
-                  <xf:output ref="m:title[text() and string-length()&gt;40][1]" value="concat(substring(.,1,40),'...')"/>
-                  <xf:output ref="m:title[text() and string-length()&lt;41][1]" value="."/>
+                  <xf:output value="$bibl_label"/>
                 </xf:label>
                 <xf:action ev:event="DOMActivate">
                   <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)&gt;0">

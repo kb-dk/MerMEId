@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" 
     xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:ev="http://www.w3.org/2001/xml-events" 
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
     xmlns:xbl="http://www.w3.org/ns/xbl" 
@@ -26,8 +27,15 @@
             <xf:model>
                 <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
                     id="bibl-type-instance" 
-                    src="{instance('parameters')/dcm:server_name}/editor/forms/mei/model/bibl_reference_types.xml" 
-                    xxf:readonly="true"/>
+                    xxf:readonly="true">
+                    <xi:include href="../model/bibl_reference_types.xml"/>
+                </xf:instance>
+                
+                <xf:instance xmlns="http://www.kb.dk/dcm"
+                    id="parameters">
+                    <xi:include href="../mermeid_configuration.xml"/>
+                </xf:instance>
+                
             </xf:model>
         </xbl:implementation>
         <xbl:template>
@@ -171,9 +179,8 @@
                             <xf:group ref="m:imprint/m:date">
                                 <h:fieldset>
                                     <h:legend>Date</h:legend>
-                                    <dcm:date-editor ref=".">
-                                        <xf:label class="fixed_width">Date </xf:label>
-                                    </dcm:date-editor>
+                                    <h:span class="fixed_width">Date </h:span>
+                                    <dcm:date-editor/>
                                 </h:fieldset>
                             </xf:group>
                             <h:fieldset>
@@ -284,9 +291,8 @@
                                     <h:div>
                                         <dcm:create nodeset="m:date" label="Add date"
                                             origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:date][1]/m:imprint/m:date"/>
-                                        <dcm:date-editor ref="m:date">
-                                            <xf:label class="fixed_width">Date </xf:label>
-                                        </dcm:date-editor>
+                                        <h:span class="fixed_width">Date </h:span>
+                                        <dcm:date-editor ref="m:date"/>
                                     </h:div>
                                     </xf:group>
                                 </h:fieldset>
@@ -349,9 +355,8 @@
                                         <h:div>
                                             <dcm:create nodeset="m:date" label="Add date"
                                                 origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:date[1]"/>
-                                            <dcm:date-editor ref="m:date">
-                                                <xf:label class="fixed_width">Date </xf:label>
-                                            </dcm:date-editor>
+                                            <h:span class="fixed_width">Date </h:span>
+                                            <dcm:date-editor ref="m:date"/>                                            
                                         </h:div>
                                         <h:div>
                                             <dcm:create nodeset="m:geogName" label="Add place"

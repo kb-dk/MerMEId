@@ -232,7 +232,7 @@
   <xxf:dialog id="settings-dialog" appearance="full" level="modal">
     <xf:label>MerMEId settings</xf:label>
     <xf:trigger appearance="minimal">
-      <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/expand.png" title="Edit"/> Edit standard bibliographic references <h:a class="help">?<h:span class="comment">For each 
+      <xf:label><h:img src="{instance('parameters')/dcm:server_name}editor/images/expand.png" title="Edit"/> Edit standard bibliographic references <h:a class="help">?<h:span class="comment">For each 
       file collection (series), a list of frequently used bibliographic references may be available when adding
       a new reference at the "Bibliography" tab. The lists may be edited using this menu option.</h:span></h:a>
       </xf:label>
@@ -241,7 +241,6 @@
         <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-references.xml"></xf:load>
       </xf:action>
     </xf:trigger>
-    <h:br/>&#160;
     <!-- to be implemented     
       <xf:trigger appearance="minimal">
       <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/expand.png" title="Edit"/> Edit standard instrumentations <h:a class="help">?<h:span 
@@ -261,8 +260,8 @@
           <xf:dispatch name="settings-changed" targetid="form-group"/>
         </xf:action>
         <xf:item>
-          <xf:label>Show xml:id values <h:a class="help">?<h:span class="comment">Displays an ID icon 
-            (<h:img src="{instance('parameters')/dcm:server_name}/editor/images/id.png" border="0" alt="ID Icon"/>) next to selected elements.
+          <xf:label>Show xml:id values <h:img src="{instance('parameters')/dcm:server_name}editor/images/id.png" border="0" alt="ID Icon"/><h:a class="help">?<h:span class="comment">Displays an ID icon 
+            next to selected elements.
             The element's xml:id attribute value is displayed when moving the cursor over the icon.
           </h:span></h:a></xf:label>
           <xf:value>true</xf:value>
@@ -270,8 +269,8 @@
       </xf:select>
     </xf:group>
     <h:div class="vertical_spacer"/>
-    <!--
-      <h:p><b>Advanced settings</b></h:p>-->
+
+    <!-- attribute editor -->
     <xf:group ref=".[contains(instance('parameters')/dcm:attr_editor_main_switch,'true')]">
       <xf:select appearance="full" ref="instance('parameters')/dcm:attr_editor">
         <xf:action ev:event="xforms-value-changed">
@@ -279,8 +278,7 @@
           <xf:dispatch name="settings-changed" target="form-group"/>
         </xf:action>
         <xf:item>
-          <xf:label>Enable attribute editor <h:a class="help_plain"><h:img 
-            src="{instance('parameters')/dcm:server_name}/editor/images/warning.png" alt="warning"/><h:span class="comment">This enables changing or adding
+          <xf:label>Enable attribute editor <h:a class="help_plain"><h:span class="comment">This enables changing or adding
               all possible attributes according to the XML schema. Changing attributes may compromise the validity 
               of your data and affect the way MerMEId displays them. 
               Use the attribute editor only if you know what you are doing.
@@ -289,6 +287,7 @@
         </xf:item>      
       </xf:select>
     </xf:group>
+    
     <!-- code inspector -->
     <xf:group ref=".[contains(instance('parameters')/dcm:code_inspector_main_switch,'true')]">
       <h:div class="vertical_spacer"/>

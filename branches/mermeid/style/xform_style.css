@@ -163,11 +163,21 @@ div.inputdiv {
     width: 100%;
 }
 
-table, tr, td {
+.orbeon table, .orbeon tr, .orbeon td {
     margin: 0px;
     padding: 0px;
     border: none;    
+    border-collapse: separate;
 }
+
+
+.orbeon h1, .orbeon h2, .orbeon h3 {
+    line-height: 1em;
+} 
+
+.orbeon h3 {
+    font-size: 1.3em;
+} 
 
 hr {
     margin: 4px 0px;
@@ -298,7 +308,7 @@ legend .xforms-group img {
     height: 22px;
 }
 
-textarea.xforms-textarea {
+.orbeon textarea.xforms-textarea {
     text-align:left;
     display: inline;
     height: 150px;
@@ -310,57 +320,58 @@ textarea.xforms-textarea {
     background-color: #ffffff;
 }
 
-.inputdiv fieldset textarea.mediumheight {
+.orbeon .inputdiv fieldset textarea.mediumheight {
     height: 60px;
 }
 
-textarea > value {
+.orbeon textarea > value {
     padding:2px;
 }
 
-select.auto_length {
+.orbeon select.auto_length {
     width: auto;
 }
 
-select.minimal_length,
-.minimal_length input.xforms-input-input {
+.orbeon select.minimal_length,
+.orbeon .minimal_length input.xforms-input-input {
     width: 1.5em;
 }
 
-.fixed_width_short, 
-select.short,
-.short input.xforms-input-input {
+.orbeon .fixed_width_short, 
+.orbeon select.short,
+.orbeon .short input.xforms-input-input {
     width: 4em;
 }
 
-.fixed_width,
-select.mediumshort,
-.mediumshort input.xforms-input-input {
+.orbeon .fixed_width,
+.orbeon select.mediumshort,
+.orbeon .mediumshort input.xforms-input-input {
     width: 8em;
 }
 
-.fixed_width_mediumlong,
-.mediumlong input.xforms-input-input,
-select.mediumlong,
-button.mediumlong {
+.orbeon .fixed_width_mediumlong,
+.orbeon .mediumlong input.xforms-input-input,
+.orbeon select.mediumlong,
+.orbeon button.mediumlong {
     width: 12em;
 }
 
-.fixed_width_long, 
-select.long,
-.long input.xforms-input-input,
-button.long {
+.orbeon .fixed_width_long, 
+.orbeon select.long,
+.orbeon .long input.xforms-input-input,
+.orbeon button.long {
     width: 16em;
 }
 
-.fixed_width_maxlong, 
-select.maxlong,
-.maxlong input.xforms-input-input  {
+.orbeon .fixed_width_maxlong, 
+.orbeon select.maxlong,
+.orbeon .maxlong input.xforms-input-input  {
     width: 22em;
 }
 
-span.fixed_width, span.minimal_length, span.fixed_width_short, span.fixed_width_mediumlong,
-span.fixed_width_long, span.fixed_width_maxlong, .blocklabel {
+.orbeon span.fixed_width, .orbeon span.minimal_length, .orbeon span.fixed_width_short, 
+.orbeon span.fixed_width_mediumlong, .orbeon span.fixed_width_long, 
+.orbeon span.fixed_width_maxlong, .orbeon .blocklabel {
 /*    margin-right: 6px; 
     margin-left: 2px; */
 }  
@@ -371,9 +382,10 @@ span.fixed_width_long, span.fixed_width_maxlong, .blocklabel {
     margin: 0px 5px 0px 4px;
     padding: 0px;
     display: inline;
+    display: inline-block;
 }
 
-.blocklabel {
+.orbeon .blocklabel {
     padding: 0px;
     text-align:left;
     display:block;
@@ -393,8 +405,8 @@ span.no_margin {
 }
 
 /* fixed width for some elements for alignment */
-.fixed_width, .fixed_width_short,
-.fixed_width_mediumlong, .fixed_width_long {
+.orbeon .fixed_width, .orbeon .fixed_width_short,
+.orbeon .fixed_width_mediumlong, .orbeon .fixed_width_long {
     display:inline-block;
     text-align:left;
     margin: 0;

@@ -239,9 +239,8 @@
 						label="Add publication date"
 						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:date"/>
 					<xf:repeat nodeset="m:date" id="repeat-pubdate">
-						<dcm:date-editor ref="." class="mediumshort">
-							<xf:label class="fixed_width">Date </xf:label>
-						</dcm:date-editor>
+						<h:span class="fixed_width">Date </h:span>
+						<dcm:date-editor class="mediumshort"/>						
 						<dcm:element-buttons triggers="remove"
 							nodeset="m:date" index="repeat-pubdate"
 							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:date"/>

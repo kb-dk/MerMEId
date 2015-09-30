@@ -292,10 +292,9 @@
                         <dcm:attribute-editor/>
                       </h:legend>
                       <h:div>
-                        <dcm:date-editor ref="m:date">
-                          <xf:label class="fixed_width">Date <h:a class="help">?<h:span class="comment">Date 
-                          or date span of the event</h:span></h:a></xf:label>
-                        </dcm:date-editor>
+                        <h:span class="fixed_width">Date <h:a class="help">?<h:span class="comment">Date 
+                          or date span of the event</h:span></h:a></h:span>
+                        <dcm:date-editor ref="m:date"/>                        
                       </h:div>
                       <xf:input ref="m:p" class="maxlong">
                         <xf:label class="fixed_width">Description <h:a class="help">?<h:span class="comment">Description of the event,
