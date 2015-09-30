@@ -94,14 +94,17 @@
         serialization="none" 
         validate="false"
         resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
-        replace="instance" instance="data-instance"/>
+        replace="instance" 
+        instance="data-instance"
+        xxf:show-progress="false"/>
     
     <xf:submission id="load-empty-submission"
         method="get" 
         serialization="none" 
         validate="false"
         resource="{instance('temp')/target_uri}"
-        replace="instance" instance="empty-instance"/>
+        replace="instance" instance="empty-instance"
+        xxf:show-progress="false"/>
 
     <xf:submission id="load-fileList"
         xxf:username=""
@@ -111,7 +114,8 @@
         validate="false"
         resource="{instance('temp')/target_uri}"
         replace="instance" 
-        instance="XMLfiles"/>
+        instance="XMLfiles"
+        xxf:show-progress="false"/>
     
     <xf:submission id="load-bibliography"
         xxf:username=""
@@ -121,7 +125,8 @@
         validate="false"
         resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml"
         replace="instance" 
-        instance="bibliography-instance"/>
+        instance="bibliography-instance"
+        xxf:show-progress="false"/>
 
     <xf:submission id="save-to-file"
         ref="instance('data-instance')"
@@ -130,8 +135,9 @@
         xxf:calculate="false"
         resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
         method="put"
-        replace="instance">
-    </xf:submission>
+        replace="instance"
+        xxf:show-progress="false"/>
+    
     
     <!-- "onload" xforms actions -->
     <xf:action ev:event="xforms-model-construct-done">

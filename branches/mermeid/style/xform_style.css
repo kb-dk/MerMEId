@@ -9,15 +9,17 @@
     background-color: inherit;
 }
 
-.xforms-loading-loading {
-    display:list-item !important;
+.orbeon .xforms-loading-loading {
+    display: none;
+    top: 1em;
+/*   display:list-item !important;
     margin-top: 5px;
     padding: 10px 30px 10px 0;
     list-style:square url('/editor/images/throbber.gif');
     font-size: .1px;
     color: transparent;
     background-color: transparent;
-    text-transform: uppercase;
+    text-transform: uppercase;*/
 }
 
 /* override controls style */
