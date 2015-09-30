@@ -91,6 +91,10 @@
     color: #000;
 }
 
+.orbeon a:active, a:active {
+   border: 0px;
+}
+
 div.inputdiv {
     margin: 4px 16px 24px 8px;
     padding: 0px;
@@ -550,18 +554,27 @@ a.help, a.help_plain, a.warning {
     text-decoration: none;
     text-align: left;
     vertical-align:text-top;
-    color: #888888;
+    color: #999;
     background-color: #fff;
-    border: 1px solid #888888;
+    border: 1px solid #999;
     font-weight: bold;
-    padding: 0 2px;
-    font-size:.8em;   
+    padding: 0 0 0 2px;
+    font-size:.7em;
+    line-height: 14px;
     cursor: help;
     position: relative;
-    top: -3px;
-    border-radius: 6px;
+    border-radius: 8px;
+    display: inline;
+    display: inline-block;
+    width: 11px;
+    height: 13px;
     /* For non-CSS3 FireFox */
     -moz-border-radius: 2px;    
+}
+
+a.help:hover, a.help:active {
+    color: #999;
+    text-decoration: none;
 }
 
 a.help_plain, a.popup {
