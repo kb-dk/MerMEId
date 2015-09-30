@@ -81,7 +81,7 @@ declare function loop:genre-filter(
       else
 	false()
 
-      return $occurrence
+  return $occurrence
 };
 
 
@@ -162,28 +162,31 @@ declare function loop:getlist (
     let $list   := 
       if($coll) then 
 	if($query) then
-          for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
-          where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
+          for $doc in collection($database)/m:mei[
+	    ft:query(.,$query)
+	    and m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll
+	    and loop:pubstatus($published_only,.) ] 
 	  order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	  return $doc 
 	else
-	  for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
-          where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
+	  for $doc in collection($database)/m:mei[
+	    loop:pubstatus($published_only,.) 
+	    and m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll ]
 	  order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	  return $doc 
-        else
-	  if($query) then
-            for $doc in collection($database)/m:mei[ft:query(.,$query)]
-            where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
-	    order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
-	    return $doc
-	  else
-            for $doc in collection($database)/m:mei
-            where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
-	    order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
-	    return $doc
+     else
+       if($query) then
+         for $doc in collection($database)/m:mei[
+	   ft:query(.,$query)
+	   and loop:pubstatus($published_only,.) ]
+	   order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
+	 return $doc
+       else
+         for $doc in collection($database)/m:mei[
+           loop:pubstatus($published_only,.)]
+	 order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
+	 return $doc
 	      
-	return $list
+	 return $list
 
 };
-
