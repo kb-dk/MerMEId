@@ -285,7 +285,7 @@
   <!-- End entity conversion -->
 
   <!-- HTML -> MEI -->
-  <xsl:template match="h:p">
+  <xsl:template match="h:p | h:div">
     <xsl:element name="p" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
       <xsl:call-template name="make_id_if_absent"/>
