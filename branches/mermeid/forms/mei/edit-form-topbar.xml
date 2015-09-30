@@ -252,7 +252,8 @@
       </xf:action>
       </xf:trigger>-->
     
-    <h:hr/>
+    <h:div>&#160;</h:div>
+    
     <xf:group ref=".[contains(instance('parameters')/dcm:id_main_switch,'true')]">
       <xf:select appearance="full" ref="instance('parameters')/dcm:show_id">
         <xf:action ev:event="xforms-value-changed">
@@ -260,13 +261,14 @@
           <xf:dispatch name="settings-changed" targetid="form-group"/>
         </xf:action>
         <xf:item>
-          <xf:label>Show xml:id values <h:img src="{instance('parameters')/dcm:server_name}editor/images/id.png" border="0" alt="ID Icon"/><h:a class="help">?<h:span class="comment">Displays an ID icon 
-            next to selected elements.
-            The element's xml:id attribute value is displayed when moving the cursor over the icon.
-          </h:span></h:a></xf:label>
+          <xf:label>Show xml:id values </xf:label>
           <xf:value>true</xf:value>
         </xf:item>      
       </xf:select>
+      <h:a class="help">?<h:span class="comment">Displays an ID icon 
+        next to selected elements.
+        The element's xml:id attribute value is displayed when moving the cursor over the icon.
+      </h:span></h:a>
     </xf:group>
     <h:div class="vertical_spacer"/>
 
@@ -278,14 +280,15 @@
           <xf:dispatch name="settings-changed" target="form-group"/>
         </xf:action>
         <xf:item>
-          <xf:label>Enable attribute editor <h:a class="help_plain"><h:span class="comment">This enables changing or adding
-              all possible attributes according to the XML schema. Changing attributes may compromise the validity 
-              of your data and affect the way MerMEId displays them. 
-              Use the attribute editor only if you know what you are doing.
-            </h:span></h:a></xf:label>
+          <xf:label>Enable attribute editor </xf:label>
           <xf:value>true</xf:value>
-        </xf:item>      
+        </xf:item>
       </xf:select>
+      <h:a class="help_plain"><h:span class="comment">This enables changing or adding
+        all possible attributes according to the XML schema. Changing attributes may compromise the validity 
+        of your data and affect the way MerMEId displays them. 
+        Use the attribute editor only if you know what you are doing.
+      </h:span></h:a>
     </xf:group>
     
     <!-- code inspector -->
@@ -297,15 +300,16 @@
           <xf:dispatch name="settings-changed" target="form-group"/>
         </xf:action>
         <xf:item>
-          <xf:label>Enable code inspector <h:a class="help">?<h:span class="comment">The
-            code inspector allows you to inspect your XML data as you edit.<h:br/>
-            The code inspector will be displayed at the bottom of the page.<h:br/>
-            Please note: The code inspector has occasionally proved to require extreme server resources,
-            sometimes even causing the server to crash. Use it carefully (and of course completely at own risk).
-          </h:span></h:a></xf:label>
+          <xf:label>Enable code inspector </xf:label>
           <xf:value>true</xf:value>
         </xf:item>      
       </xf:select>
+      <h:a class="help">?<h:span class="comment">The
+        code inspector allows you to inspect your XML data as you edit.<h:br/>
+        The code inspector will be displayed at the bottom of the page.<h:br/>
+        Please note: The code inspector has occasionally proved to require extreme server resources,
+        sometimes even causing the server to crash. Use it carefully (and of course completely at own risk).
+      </h:span></h:a>
     </xf:group>
     <!-- end code inspector -->
   </xxf:dialog>

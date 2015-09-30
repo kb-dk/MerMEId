@@ -362,7 +362,8 @@
                         
                     </xf:group>
                     
-                    
+
+
                     <!-- reference types menu -->
                     <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
                         close="true" draggable="true" visible="false">
@@ -370,7 +371,7 @@
                         <xf:repeat nodeset="instance('bibl-type-instance')/m:biblList/m:bibl[count(m:genre[.=parent::node()/preceding-sibling::m:biblList/m:bibl/m:genre])=0]" 
                             id="ref-type-menu-repeat">
                             <xf:trigger submission="replace-form-with" appearance="minimal" class="non-standard_trigger">
-                                <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/> <xf:output 
+                                <xf:label><h:img src="/../editor/images/add.gif" alt="Add"/> <xf:output 
                                     value="concat(translate(substring(m:genre[1],1,1),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),substring(m:genre[1],2))"/><xf:output 
                                         value="if (m:genre[2]!='') then concat(', ',m:genre[2]) else ''"></xf:output>
                                 </xf:label>
@@ -419,8 +420,7 @@
                                         else m:title[text()][1]/string()"/>
                                     <xf:var name="bibl_label" value="concat($au, $ed, $ti)"/>                                    
                                     <xf:trigger submission="replace-form-with" appearance="minimal">
-                                        <xf:label> 
-                                            <h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/>
+                                        <xf:label><h:img src="/../editor/images/add.gif" alt="Add"/> 
                                             <xf:output value="$bibl_label"/>
                                         </xf:label>
                                         <xf:action ev:event="DOMActivate">
@@ -442,13 +442,14 @@
                                             <xf:dispatch name="id-update" target="form-group"/>
                                             <xxf:hide dialog="add-ref-dialog"/>
                                         </xf:action>
-                                    </xf:trigger><h:br/>
+                                    </xf:trigger>
                                     <h:br clear="all"/>
                                 </xf:repeat>
                             </xf:repeat>
                         </xf:group>
                     </xxf:dialog>
                     <!-- end menu -->
+                    
                     
                     
                     <xxf:dialog id="exit-warning-dialog" appearance="full">

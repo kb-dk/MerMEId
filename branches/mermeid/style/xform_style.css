@@ -42,6 +42,17 @@
     display:inline;
 }
 
+.orbeon .xforms-dialog .bd {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.orbeon .xforms-dialog .xforms-trigger-appearance-minimal {
+    padding: 0 10px;    
+} 
+
+
+
 .yui-dialog {
     z-index: 2000 !important;
 }
@@ -72,15 +83,12 @@
     background-color: #000;
 }
 
-/* hide code inspector menu */
-.xbl-fr-xforms-inspector table {
-    display:none;
-}
 
 /* END DISABLE ORBEON STYLING */
 
-a:hover {
+.orbeon a:hover, a:hover {
     text-decoration: none;
+    color: #000;
 }
 
 div.inputdiv {
@@ -241,7 +249,7 @@ a.non-standard_button {
     margin: 0 1px;
 }
 
-.xforms-trigger a {
+.orbeon .xforms-trigger a {
     text-decoration: none;
     color: #000;
 }
@@ -285,12 +293,20 @@ legend .xforms-group img {
     vertical-align: top; 
 }
 
+#settings-dialog .xforms-trigger img {
+    margin-left: -10px;
+}
+
+#settings-dialog .xforms-dialog .bd {
+    overflow: hidden;
+}
 
 /* inputs and labels */
 
-.orbeon .radio input[type="radio"], 
-.orbeon .checkbox input[type="checkbox"] {
+.orbeon label.radio input[type="radio"], 
+.orbeon label.checkbox input[type="checkbox"] {
     float: none;
+    margin: -3px 6px 0 -20px;
 }
 
 .orbeon select {
