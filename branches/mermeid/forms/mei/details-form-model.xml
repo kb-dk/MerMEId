@@ -11,38 +11,45 @@
 
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
         id="empty-instance" 
-        src="/editor/forms/mei/model/empty_doc.xml"
-        xxf:readonly="true"/>
+        xxf:readonly="true">
+        <xi:include href="./model/empty_doc.xml"/> 
+    </xf:instance>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
         id="keywords-instance" 
-        src="/editor/forms/mei/model/keywords.xml" 
-        xxf:readonly="true"/>
+        xxf:readonly="true">
+        <xi:include href="./model/keywords.xml"/> 
+    </xf:instance>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
         id="languages" 
-        src="/editor/forms/mei/model/languages.xml" 
-        xxf:readonly="true"/>
+        xxf:readonly="true">
+        <xi:include href="./model/languages.xml"/> 
+    </xf:instance>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
         id="instrumentation"
-        src="/editor/forms/mei/model/standard_instrumentation.xml" 
-        xxf:readonly="true"/>
+        xxf:readonly="true">
+        <xi:include href="./model/standard_instrumentation.xml"/> 
+    </xf:instance>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
         id="ensembles" 
-        src="/editor/forms/mei/model/ensembles.xml" 
-        xxf:readonly="true"/>
+        xxf:readonly="true">
+        <xi:include href="./model/ensembles.xml"/> 
+    </xf:instance>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
         id="instruments" 
-        src="/editor/forms/mei/model/instruments.xml" 
-        xxf:readonly="true"/>
+        xxf:readonly="true">
+        <xi:include href="./model/instruments.xml"/> 
+    </xf:instance>
     
-    <xf:instance xmlns="http://www.tei-c.org/ns/1.0" 
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
         id="bibl-type-instance" 
-        src="/editor/forms/mei/model/bibl_reference_types.xml" 
-        xxf:readonly="true"/>
+        xxf:readonly="true">
+        <xi:include href="./model/bibl_reference_types.xml"/> 
+    </xf:instance>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
         id="bibliography-instance">
@@ -54,9 +61,16 @@
         <fileList/>
     </xf:instance>
         
+    <xf:instance id="mei_attr_list">
+        <xi:include href="./model/MEI_attr_list.xml"/> 
+    </xf:instance>
+    
     <xf:instance id="parameters" 
         xmlns="http://www.kb.dk/dcm"
-        src="/editor/forms/mei/mermeid_configuration.xml" parse="xml"/>
+        parse="xml">
+        <xi:include href="mermeid_configuration.xml"/> 
+    </xf:instance>
+    
    
     <xf:instance id="temp">
         <temp>
@@ -80,11 +94,11 @@
     </xf:instance> 
     
     <!-- bindings -->
-    <xf:bind nodeset="instance('temp')">
+<!--    <xf:bind nodeset="instance('temp')">
         <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
-    </xf:bind>               
+    </xf:bind>-->               
     <!--<xf:bind nodeset="instance('data-instance')//*/@n" constraint="translate(.,'0123456789abcdefghijklmnopqrstuvwxyz','')=''"/>-->
-    <xf:bind nodeset="instance('data-instance')//*/@n" type="xs:token"/>
+<!--    <xf:bind nodeset="instance('data-instance')//*/@n" type="xs:token"/>-->
     
     
     <!-- submissions - loading and saving data -->            
@@ -165,7 +179,7 @@
         <!-- to do: combine movement numbers, titles, or tempos to identify components -->
         <xf:setvalue ref="instance('temp')/path" 
             value="string-join(instance('data-instance')//m:expression[descendant-or-self::m:expression/@xml:id=instance('temp')/id]//m:title,'/')"/>
-
+        
         <!-- automatically add change entry in revisionDesc -->
         <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc/m:change)=0">
             <xf:insert context="instance('data-instance')/m:meiHead/m:revisionDesc" 
