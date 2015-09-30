@@ -5,8 +5,14 @@
 <properties xmlns:xs="http://www.w3.org/2001/XMLSchema"
      xmlns:oxf="http://www.orbeon.com/oxf/processors"> 
 
-  <property as="xs:anyURI"
+  <!-- property as="xs:anyURI"
 	    name="oxf.url-rewriting.service.base-uri" 
-	    value="/"/>
+	    value="/"/ -->
+
+  <property
+      as="xs:string"
+      name="oxf.xforms.forward-submission-headers"
+      value="Orbeon-Client Authorization SM_USER"/>
+
 
 </properties>
