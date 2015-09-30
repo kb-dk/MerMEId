@@ -28,26 +28,32 @@
         
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="bibl-type-instance" 
-            src="/editor/forms/mei/model/bibl_reference_types.xml" 
-            xxf:readonly="true"/>
+            xxf:readonly="true">
+            <xi:include href="./model/bibl_reference_types.xml"/>
+        </xf:instance>
         
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
-            id="instrumentation"
-            src="/editor/forms/mei/model/standard_instrumentation.xml"/>
+            id="instrumentation">
+            <xi:include href="./model/standard_instrumentation.xml"/>
+        </xf:instance>
         
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="ensembles" 
-            src="/editor/forms/mei/model/ensembles.xml" 
-            xxf:readonly="true"/>
+            xxf:readonly="true">
+            <xi:include href="./model/ensembles.xml"/>
+        </xf:instance>
         
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="instruments" 
-            src="/editor/forms/mei/model/instruments.xml" 
-            xxf:readonly="true"/>
+            xxf:readonly="true">
+            <xi:include href="./model/instruments.xml"/>
+        </xf:instance>
 
         <xf:instance id="parameters" 
             xmlns="http://www.kb.dk/dcm"
-            src="/editor/forms/mei/mermeid_configuration.xml" parse="xml"/>
+            parse="xml">
+            <xi:include href="mermeid_configuration.xml"/>
+        </xf:instance>
         
         <xf:instance id="XMLfiles" 
             xmlns="http://www.kb.dk/dcm">
