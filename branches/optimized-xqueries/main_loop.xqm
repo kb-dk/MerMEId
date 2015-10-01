@@ -179,7 +179,6 @@ declare function loop:getlist (
 	    m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[ ft:query(.,$coll)]
 	    and
 	    loop:pubstatus($published_only,.) ]
-(:	    and m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll ]:)
 	  order by loop:sort-key ($coll,$doc,$sort0),loop:sort-key($coll,$doc,$sort1)
 	  return $doc 
      else
