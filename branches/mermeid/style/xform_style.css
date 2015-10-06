@@ -52,7 +52,6 @@
 } 
 
 
-
 .yui-dialog {
     z-index: 2000 !important;
 }
@@ -81,6 +80,11 @@
     filter:alpha(opacity=50); 
     opacity:.50;
     background-color: #000;
+}
+
+/* hide XForms Inspector's controls */
+.fr-xforms-inspector-block {
+    display: none; 
 }
 
 
@@ -256,6 +260,7 @@ a.non-standard_button {
 .orbeon .xforms-trigger a {
     text-decoration: none;
     color: #000;
+    outline: 0px none;
 }
 
 .xforms-trigger img:hover,
