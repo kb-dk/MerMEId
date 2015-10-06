@@ -40,20 +40,20 @@
                 
                 
                 <h:div class="details_form_header">
-                    
+   <!-- library_crud_home>http://dcm-udv-01.kb.dk/filter/library/  -->
                     <h:div style="float:right">
                         <xf:submit submission="save-bibliography">
                             <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/save_small.png" alt="Save"/> Save</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:setvalue ref="instance('temp')/target_uri" 
-                                value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>
+                                value="concat(instance('parameters')/dcm:library_crud_home,'/standard_bibliography.xml')"/>
                                 </xf:action>
                         </xf:submit>
                         <xf:submit submission="save-bibliography">
                             <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:setvalue ref="instance('temp')/target_uri" 
-                                    value="concat(instance('parameters')/dcm:form_home,'model/standard_bibliography.xml')"/>
+					     value="concat(instance('parameters')/dcm:library_crud_home,'/standard_bibliography.xml')"/>
                                 <xf:load resource="{xxf:get-session-attribute('return_url')}" show="replace"/>
                             </xf:action>
                         </xf:submit>

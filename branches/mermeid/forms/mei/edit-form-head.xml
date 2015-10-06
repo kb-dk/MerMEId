@@ -163,7 +163,7 @@
       method="get" 
       serialization="none" 
       validate="false"
-      resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml"
+      resource="{instance('parameters')/dcm:library_crud_home}/standard_bibliography.xml"
       replace="instance" 
       xxf:show-progress="false"
       instance="bibliography-instance"/>
