@@ -65,8 +65,12 @@ DCM, The Royal Library, Copenhagen 2015
         
         <xbl:resources>
             <xbl:style>
-                .xbl-fr-dropdown-date .fr-component-group select.xforms-select1-appearance-minimal,
-                .xbl-fr-dropdown-date .fr-component-group span.xforms-select1-appearance-minimal select { width: auto }
+                .xbl-dcm-dropdown-month-date { display:inline; }
+                .dcm-date-input-box .dcm-width-2 select,
+                .dcm-date-input-box .dcm-width-2 input { width: 4em }
+                .dcm-date-input-box .dcm-width-4 select, 
+                .dcm-date-input-box .dcm-width-4 input {width: 4em }
+                .dcm-date-input-box select.xforms-select1 select { width: auto }
             </xbl:style>
         </xbl:resources>
         <xbl:implementation>
@@ -94,7 +98,56 @@ DCM, The Royal Library, Copenhagen 2015
                 </xf:instance>
                 
                 <xf:instance id="months-itemset">
-                    <months/>
+                    <months>
+                        <item>
+                            <value>1</value>
+                            <label>January</label>
+                        </item>
+                        <item>
+                            <value>2</value>
+                            <label>February</label>
+                        </item>
+                        <item>
+                            <value>3</value>
+                            <label>March</label>
+                        </item>
+                        <item>
+                            <value>4</value>
+                            <label>April</label>
+                        </item>
+                        <item>
+                            <value>5</value>
+                            <label>May</label>
+                        </item>
+                        <item>
+                            <value>6</value>
+                            <label>June</label>
+                        </item>
+                        <item>
+                            <value>7</value>
+                            <label>July</label>
+                        </item>
+                        <item>
+                            <value>8</value>
+                            <label>August</label>
+                        </item>
+                        <item>
+                            <value>9</value>
+                            <label>September</label>
+                        </item>
+                        <item>
+                            <value>10</value>
+                            <label>October</label>
+                        </item>
+                        <item>
+                            <value>11</value>
+                            <label>November</label>
+                        </item>
+                        <item>
+                            <value>12</value>
+                            <label>December</label>
+                        </item>
+                    </months>
                 </xf:instance>
                 
                 <xf:instance id="days-itemset">
@@ -113,16 +166,13 @@ DCM, The Royal Library, Copenhagen 2015
                 
                 <!-- Initialize itemsets upon initialization -->
                 <xf:action ev:event="xforms-model-construct-done">
+                    <!--
                     <xf:var name="start-year" value="saxon:evaluate(xxf:property('oxf.xforms.xbl.fr.dropdown-date.start-year'))" as="xs:integer"/>
                     <xf:var name="end-year"   value="saxon:evaluate(xxf:property('oxf.xforms.xbl.fr.dropdown-date.end-year'  ))" as="xs:integer"/>
                     <xf:action iterate="($start-year to $end-year)">
                         <xf:var name="year" value="." as="xs:string"/>
                         <xf:insert context="instance('years-itemset')" origin="xxf:element('year', $year)"/>
-                    </xf:action>
-                    <xf:action iterate="(1 to 12)">
-                        <xf:var name="month" value="." as="xs:string"/>
-                        <xf:insert context="instance('months-itemset')" ref="*" origin="xxf:element('month', $month)"/>
-                    </xf:action>
+                    </xf:action>-->
                     <xf:action iterate="(1 to 31)">
                         <xf:var name="day" value="." as="xs:string"/>
                         <xf:insert context="instance('days-itemset')" ref="*" origin="xxf:element('day', $day)"/>
@@ -149,7 +199,7 @@ DCM, The Royal Library, Copenhagen 2015
                         <xf:setvalue ref="instance('date-instance')/month"/>
                         <xf:setvalue ref="instance('date-instance')/day"/>
                     </xf:action>
-                    <xf:action if="not($value castable as xs:date) and count(tokenize($value, '-')) ge 3">
+                    <xf:action if="not($value castable as xs:date) and count(tokenize($value, '-')) gt 0">
                         <xf:action iterate="tokenize($value, '-')">
                             <xf:var name="position" value="position()" as="xs:integer"/>
                             <xf:setvalue ref="instance('date-instance')/*[$position]"
@@ -169,28 +219,32 @@ DCM, The Royal Library, Copenhagen 2015
                 <xf:group ref=".[not($view)]">
                     <!-- Don't show fields at all in static readonly mode -->
                     <!-- NOTE: navindex is copied to first field, but need one for second field too! -->
-                    <xf:var name="month-first" value="starts-with(xxf:property('oxf.xforms.format.input.date'), '[M]')"/>
-                    <xf:select1 ref="if ($month-first) then month else day" id="select1">
+                    <xf:select1 ref="day" id="select1" class="dcm-width-2">
                         <xf:item>
-                            <xf:label value="if ($month-first) then xxf:r('month') else xxf:r('day')"/>
+                            <xf:label value="Day"/>
                             <xf:value/>
                         </xf:item>
-                        <xf:itemset ref="if ($month-first) then instance('months-itemset')/month else instance('days-itemset')/day">
+                        <xf:itemset ref="instance('days-itemset')/day">
                             <xf:label ref="."/>
                             <xf:value ref="."/>
                         </xf:itemset>
                     </xf:select1>
-                    <xf:select1 ref="if ($month-first) then day else month">
+                    <xf:select1 ref="month">
                         <xf:item>
-                            <xf:label value="if ($month-first) then xxf:r('day') else xxf:r('month')"/>
+                            <xf:label value="Month"/>
                             <xf:value/>
                         </xf:item>
-                        <xf:itemset ref="if ($month-first) then instance('days-itemset')/day else instance('months-itemset')/month">
-                            <xf:label ref="."/>
-                            <xf:value ref="."/>
+                        <xf:itemset ref="instance('months-itemset')/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
                         </xf:itemset>
                     </xf:select1>
-                    <xf:select1 ref="year" xbl:attr="navindex navindex=tabindex">
+                    <xf:input ref="year" class="dcm-width-4">
+                        <xf:label value="Year"/>
+                    </xf:input>
+                        
+                    
+<!--                    <xf:select1 ref="year" xbl:attr="navindex navindex=tabindex" class="dcm-width-4">
                         <xf:item>
                             <xf:label value="xxf:r('year')"/>
                             <xf:value/>
@@ -199,7 +253,7 @@ DCM, The Royal Library, Copenhagen 2015
                             <xf:label ref="."/>
                             <xf:value ref="."/>
                         </xf:itemset>
-                    </xf:select1>
+                    </xf:select1>-->
                     
                     <!-- React to update to local values -->
                     <xf:action ev:event="xforms-value-changed">
@@ -212,12 +266,15 @@ DCM, The Royal Library, Copenhagen 2015
                         <!-- Non-blank result -->
                         <xf:action if="$c != ''">
                             <!-- Compute date parts -->
-                            <xf:var name="y" value="if (year  castable as xs:integer) then format-number(xs:integer(year), '0000') else '____'" as="xs:string"/>
-                            <xf:var name="m" value="if (month castable as xs:integer) then format-number(xs:integer(month),  '00') else '__'"   as="xs:string"/>
-                            <xf:var name="d" value="if (day   castable as xs:integer) then format-number(xs:integer(day),    '00') else '__'"   as="xs:string"/>
+                            <xf:var name="y" value="if (year  castable as xs:integer) then format-number(xs:integer(year), '0000') else ''" as="xs:string"/>
+                            <xf:var name="m" value="if (month castable as xs:integer) then format-number(xs:integer(month),  '00') else 'xx'"   as="xs:string"/>
+                            <xf:var name="d" value="if (day   castable as xs:integer) then format-number(xs:integer(day),    '00') else 'xx'"   as="xs:string"/>
                             
                             <!-- Create date string -->
-                            <xf:var name="date-string" value="string-join(($y, $m, $d), '-')" as="xs:string"/>
+                            <!--<xf:var name="date-string" value="string-join(($y, $m, $d), '-')" as="xs:string"/>-->
+                            <xf:var name="date-string-raw" value="string-join(($y, $m, $d), '-')" as="xs:string"/>
+                            <!-- strip off any '-xx'-parts -->
+                            <xf:var name="date-string" value="concat($date-string-raw[not(contains(.,'-xx'))],substring-before($date-string-raw,'-xx'))" as="xs:string"/>
                             
                             <!-- Set value to format like 2008-02-31 or 0000-12-01 if parts are unknown -->
                             <xf:setvalue ref="is-valid" value="$date-string castable as xs:date"/>

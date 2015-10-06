@@ -203,7 +203,7 @@
                             &#160;
                             <h:a 
                                 class="help">?<h:span 
-                                    class="comment" style="top:0; left:-100px;">A date consists of a machine-readable part (in the upper part of the form) 
+                                    class="comment" style="top:0; left:-200px; width:300px;">A date consists of a machine-readable part (in the upper part of the form) 
                                     and a text intended for display (in the lower part).
                                     Both parts must be filled in.<h:br/>
                                     Start by choosing whether you intend to 
@@ -214,7 +214,7 @@
                         
                         <xf:group ref=".[instance('editor-instance')/mode='single']">
                             <h:div class="dcm-date-input-box">
-                                <h:span class="dcm-date-editor-label">Date: </h:span>
+                                <h:span class="dcm-date-editor-label">Machine-readable date: </h:span>
                                 <dcm:dropdown-month-date ref="isodate" xbl:attr="navindex navindex=tabindex"/>
                                 <xf:trigger appearance="minimal">
                                     <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Clear" title="Clear date"/></xf:label>
