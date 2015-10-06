@@ -551,8 +551,8 @@
                     <xxf:hide dialog="add_source_dialog"></xxf:hide>
                     <xf:setvalue ref="instance('local-temp')/target_uri" value="concat($parameters/dcm:server_name,'storage/cross-link.xq')"/>
                     <xf:setvalue ref="instance('local-temp')/mode" value="'reference'"/>
-                    <!-- initial submission deactivated to reduce response time -->
-                    <!--<xf:send submission="load-fileList"/>-->
+                    <!-- load data on open - may be deactivated if performance is an issue -->
+                    <xf:send submission="load-fileList"/>
                     <xxf:show dialog="source_reference_dialog"/>
                   </xf:action>
                 </xf:trigger> 
@@ -564,8 +564,8 @@
                     <xxf:hide dialog="add_source_dialog"></xxf:hide>
                     <xf:setvalue ref="instance('local-temp')/target_uri" value="concat($parameters/dcm:server_name,'storage/cross-link.xq')"/>
                     <xf:setvalue ref="instance('local-temp')/mode" value="'copy'"/>
-                    <!-- initial submission deactivated to reduce response time -->
-                    <!--<xf:send submission="load-fileList"/>-->
+                    <!-- load data on open - may be deactivated if performance is an issue -->
+                    <xf:send submission="load-fileList"/>
                     <xxf:show dialog="source_reference_dialog"/>
                   </xf:action>
                 </xf:trigger> 
