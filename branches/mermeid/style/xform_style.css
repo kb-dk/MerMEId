@@ -83,7 +83,7 @@
 
 /* hide XForms Inspector's controls */
 .fr-xforms-inspector-block {
-    display: none; 
+/*    display: none; */ 
 }
 
 
@@ -284,9 +284,6 @@ button img {
     vertical-align: baseline;
 }
 
-.instr_subselection .xforms-trigger img {
-    vertical-align: middle;
-}
 
 img.button_patch {
     padding: 2px 4px 2px 4px;
@@ -302,8 +299,13 @@ legend .xforms-group img {
     vertical-align: top; 
 }
 
+.instr_subselection .xforms-trigger img {
+    vertical-align: middle;
+}
+
 #settings-dialog .xforms-trigger img {
     margin-left: -10px;
+    vertical-align: middle;
 }
 
 #settings-dialog .xforms-dialog .bd {
