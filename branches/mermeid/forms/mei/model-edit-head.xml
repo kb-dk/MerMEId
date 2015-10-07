@@ -91,18 +91,6 @@
         
         <!-- submissions - loading and saving data -->            
         
-        <xf:submission id="save-bibliography"
-            xxf:username=""
-            xxf:password=""
-            xxf:show-progress="false"
-            ref="instance('bibliography-instance')"
-            validate="false"
-            relevant="false"
-            xxf:calculate="false"
-            resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml" 
-            method="put"
-            replace="instance"/>        
-                
         <xf:submission id="load-fileList"
             xxf:username=""
             xxf:password=""
@@ -121,9 +109,21 @@
             method="get" 
             serialization="none" 
             validate="false"
-            resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml"
+            resource="{instance('parameters')/dcm:library_crud_home}/standard_bibliography.xml" 
             replace="instance" 
             instance="bibliography-instance"/>
+
+        <xf:submission id="save-bibliography"
+            xxf:username=""
+            xxf:password=""
+            xxf:show-progress="false"
+            ref="instance('bibliography-instance')"
+            validate="false"
+            relevant="false"
+            xxf:calculate="false"
+            resource="{instance('parameters')/dcm:library_crud_home}/standard_bibliography.xml" 
+            method="put"
+            replace="instance"/>        
         
         <!-- "onload" xforms actions -->
         <xf:action ev:event="xforms-model-construct-done">
