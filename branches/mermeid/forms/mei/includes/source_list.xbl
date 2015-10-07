@@ -472,7 +472,7 @@
                                                              origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[m:itemList/m:item][1]/m:itemList/m:item[last()]"/>
                                         <dcm:attribute-editor/>
                                       </h:td>
-                                      <h:td>
+                                      <h:td class="buttons_cell no_border">
                                         <!-- move item to other sources -->
                                         <xf:group ref=".[count($data-instance//m:sourceDesc/m:source)&gt;1]">
                                           <h:a class="popup"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/expand.png" 

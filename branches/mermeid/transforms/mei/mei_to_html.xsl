@@ -1301,7 +1301,7 @@ The Royal Library, Copenhagen
 		  select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:instrumentation"/>
     <xsl:variable name="thisExpressionId" select="parent::node()/@xml:id"/>
     <!-- create a <perfMedium> result tree containing a copy of the performers referenced in this movement -->
-    <xsl:variable name="perfMedium">
+    <!--<xsl:variable name="perfMedium">
       <xsl:element name="perfMedium" namespace="http://www.music-encoding.org/ns/mei">
 	<xsl:element name="instrumentation" namespace="http://www.music-encoding.org/ns/mei">
 	  <xsl:variable name="instrVoiceGrps"
@@ -1330,7 +1330,10 @@ The Royal Library, Copenhagen
     </xsl:variable>
     <xsl:apply-templates select="exsl:node-set($perfMedium)/m:perfMedium">
       <xsl:with-param name="full" select="false()"/>
-    </xsl:apply-templates>
+      </xsl:apply-templates>-->
+  	<xsl:apply-templates select=".">
+  		<xsl:with-param name="full" select="false()"/>
+  	</xsl:apply-templates>
   </xsl:template>
   <!-- end perfMedium -->
 

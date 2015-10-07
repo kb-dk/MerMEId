@@ -26,7 +26,6 @@
 .xforms-input, .xforms-select1 {
     width: inherit;
     height: inherit;
-    margin: inherit;
     padding: 0;
 }
 
@@ -57,7 +56,7 @@
 }
 
 .yui-panel-container {
-    box-shadow: 7px 7px 10px 5px #333;
+    box-shadow: 7px 7px 10px 5px rgba(0,0,30,0.5);
     /* For non-CSS3 FireFox */
     -moz-box-shadow: 7px 7px 15px 0px #333;
 }
@@ -174,6 +173,7 @@ div.inputdiv {
     border: #aaa solid 1px;
     border-bottom: none;
     height: 18px;
+    line-height: inherit;
     padding: 3px 4px 1px 4px;
     margin: -6px;
     width: 100%;
@@ -323,6 +323,7 @@ legend .xforms-group img {
     margin: 2px 0px 0px 0px;
     padding: 1px 2px;
     height: 20px;
+    width: auto;
 }
 
 .orbeon input.xforms-input,
@@ -556,26 +557,27 @@ div.about_header, div.about_footer {
 
 /* css for help and warning pop-ups */
 
-a.help, a.help_plain, a.warning {
+a.help, a.help_plain, a.warning,
+.orbeon .xforms-trigger a.help {
     text-decoration: none;
     text-align: left;
     vertical-align:text-top;
     color: #999;
-    background-color: #fff;
+    background-color: rgba(255,255,192,0.5);
     border: 1px solid #999;
     font-weight: bold;
-    padding: 0 0 0 1px;
+    padding: 0;
     font-size:.7em;
-    line-height: 14px;
+    line-height: 12px;
     cursor: help;
     position: relative;
-    border-radius: 8px;
+    border-radius: 6px;
     display: inline;
     display: inline-block;
-    width: 12px;
-    height: 13px;
+    width: 11px;
+    height: 11px;
     /* For non-CSS3 FireFox */
-    -moz-border-radius: 2px;    
+    -moz-border-radius: 6px;    
 }
 
 a.help:hover, a.help:active {
@@ -591,11 +593,9 @@ a.help_plain, a.popup {
     font-weight: normal;
 }
 
-
 a.help_plain img {
     margin-bottom: -8px;
 }
-
 
 a.help span.comment, a.help_plain span.comment, 
 a.warning span.comment, a.dcm_id span.comment,
@@ -619,10 +619,10 @@ div.popup {
     font-weight:normal;
     font-size: 1.2em;
     text-align: left;
-    box-shadow: 7px 7px 10px 5px #333;
+    box-shadow: 7px 7px 10px 5px rgba(0,0,30,0.5);
     border-radius: 4px;
     /* For non-CSS3 FireFox */
-    -moz-box-shadow: 7px 7px 10px 5px #333;
+    -moz-box-shadow: 7px 7px 10px 5px rgba(0,0,30,0.5);
     -moz-border-radius: 4px;
     /* For MSIE 6-8 */
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=10, Direction=135, Color='#333333')"; 
