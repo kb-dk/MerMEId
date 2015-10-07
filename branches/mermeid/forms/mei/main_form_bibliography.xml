@@ -119,7 +119,7 @@
         <h:fieldset>
           <h:legend>
             <xf:output value="if (normalize-space(m:head)) then m:head else '[Bibliography]'"/>
-            <h:a class="help">?<h:span class="comment">A list of bibliographic references related to the work.
+            <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A list of bibliographic references related to the work.
               These may range from documentary materials (for instance, evidence 
               for the existence of a work now lost) and manuscript documents such as the composer's letters 
               mentioning this work, to secondary literature (for instance, analytical or historical surveys). <h:br/>
@@ -141,7 +141,7 @@
               origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]/m:head"/>
             <xf:repeat nodeset="m:head" id="repeat-bibl-head">
               <xf:input ref=".">
-                <xf:label>Heading: <h:a class="help">?<h:span class="comment">A heading for this bibliography for display. 
+                <xf:label>Heading: <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A heading for this bibliography for display. 
                   If multiple bibliographies are used, the heading may be used to distinguish different types of bibliographic
                   lists, e.g. "Primary Texts", "Bibliography", and "Documentation".</h:span></h:a></xf:label>
               </xf:input>

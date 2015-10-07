@@ -101,7 +101,7 @@
                 
                 <xf:group ref="instance('data-instance')//m:item[@xml:id=instance('temp')/id]">
                         <h:span class="blocklabel strong">Item 
-                            <h:a class="help">?<h:span class="comment">At item level, 
+                            <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">At item level, 
                                 information specific to an individual copy of a source should be entered. <h:br/>
                                 Information common to all copies of this source should be given at source level.<h:br/>
                                 Manuscripts are somewhat special, being sources having only one item. Manuscripts, too, 

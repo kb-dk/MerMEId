@@ -28,7 +28,7 @@
 							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:title"/>
 						<xf:repeat nodeset="m:title" id="repeat-seriestitle">
 							<xf:input ref="." class="maxlong">
-								<xf:label class="fixed_width">Series title <h:a class="help">?<h:span class="comment">E.g. 
+								<xf:label class="fixed_width">Series title <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">E.g. 
 									"Complete Edition of the Works of Carl Nielsen" or "Niels W. Gade Thematic Catalogue"</h:span></h:a>
 								</xf:label>
 							</xf:input>
@@ -57,7 +57,7 @@
 						id="repeat-collection">
 						<h:div>
 							<xf:input ref=".">
-								<xf:label class="fixed_width">File collection <h:a class="help">?<h:span class="comment">An optional,
+								<xf:label class="fixed_width">File collection <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">An optional,
 									machine-readable identifier of the collection(s) of files, in which this file is to be used, 
 									e.g. "CNW" or "BWV". The collection identifier enables
 									the co-existence of several	catalogues or collections in MerMEId.<h:br/>
@@ -100,7 +100,7 @@
 						label="Add publisher"
 						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt"/>                        
 					<xf:group ref="m:respStmt">
-						<h:span class="blocklabel strong">Institutions <h:a class="help">?<h:span class="comment">The institutions, 
+						<h:span class="blocklabel strong">Institutions <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The institutions, 
 							organisations or companies publishing this file</h:span></h:a>
 						</h:span>
 						<dcm:create 
@@ -117,11 +117,11 @@
 								</h:legend>
 								<h:div>
 									<xf:input ref="m:expan" class="maxlong">
-										<xf:label class="fixed_width">Name <h:a class="help">?<h:span class="comment">E.g. "Danish Centre for Music Publication"</h:span></h:a>
+										<xf:label class="fixed_width">Name <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">E.g. "Danish Centre for Music Publication"</h:span></h:a>
 										</xf:label>
 									</xf:input>
 									<dcm:attribute-editor ref="m:expan"/>
-									<xf:input ref="m:abbr" class="short"><xf:label> Short name <h:a class="help">?<h:span class="comment">Abbreviated 
+									<xf:input ref="m:abbr" class="short"><xf:label> Short name <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Abbreviated 
 										name of the institution, e.g. "DCM"</h:span></h:a></xf:label></xf:input>
 									<dcm:attribute-editor ref="m:abbr"/>
 								</h:div>
@@ -165,13 +165,13 @@
 									<h:div>
 										<xf:input ref="m:ptr/@target" class="maxlong">
 											<xf:label class="fixed_width">URI 
-												<h:a class="help">?<h:span class="comment">Link or mail address, e.g. 
+												<h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Link or mail address, e.g. 
 													"http://www.example.com" or "mailto://someone@example.com"</h:span></h:a>
 											</xf:label>
 										</xf:input>
 										<xf:input ref="m:ptr/@label">
 											<xf:label>Link label 
-												<h:a class="help">?<h:span class="comment">A descriptive label for the link. 
+												<h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A descriptive label for the link. 
 													Select from list or enter a custom text.</h:span></h:a></xf:label>
 										</xf:input>
 										<xf:trigger appearance="minimal" class="non-standard_button">
@@ -212,7 +212,7 @@
 								<h:div class="blocklabel">
 									<h:span class="fixed_width no_margin">&#160;</h:span>
 									<h:span class="fixed_width_long">Name</h:span>
-									<h:span class="fixed_width"> Role <h:a class="help">?<h:span class="comment">Specifies the 
+									<h:span class="fixed_width"> Role <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Specifies the 
 										person's role in the process of producing this file, e.g. "editor". 
 										The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
 									</h:span>
@@ -256,7 +256,7 @@
 						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:availability/m:useRestrict"/>        
 					<xf:repeat nodeset="m:availability/m:useRestrict" id="repeat-userestrict">
 						<xf:input ref="." class="maxlong">
-							<xf:label class="fixed_width">Restrictions <h:br/>of use <h:a class="help">?<h:span class="comment">A statement
+							<xf:label class="fixed_width">Restrictions <h:br/>of use <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A statement
 								explaining any restrictions to the use of this file, e.g. a copyright notice or a license statement.</h:span></h:a></xf:label>
 						</xf:input>
 						<dcm:element-buttons triggers="remove" 
@@ -333,7 +333,7 @@
 					<dcm:attribute-editor ref="."/>
 				</h:legend>
 				<h:div class="vertical_spacer"/>
-				<h:span class="fixed_width">Date <h:a class="help">?<h:span class="comment">Use date
+				<h:span class="fixed_width">Date <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Use date
 					format YYYY-MM-DD, e.g. 2011-04-30. A new row with today's date is
 					automatically created when opening the document. Your login name is automatically added on saving. 
 					Use "Add change"-button to add rows manually.</h:span></h:a></h:span>
@@ -368,7 +368,7 @@
 		</xf:group>
 		
 		<h:fieldset>
-			<h:legend>Private notes <h:a class="help">?<h:span class="comment">A container for
+			<h:legend>Private notes <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A container for
 				annotations not intended for public viewing. These may include to-do-lists or any other 
 				comments for non-public use.<h:br/>
 				Whether private notes will be accessible to end users will depend on how this file is 

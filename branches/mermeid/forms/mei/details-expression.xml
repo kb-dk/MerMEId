@@ -147,7 +147,7 @@
                 </h:div>
                 
                 
-                <h:div class="blocklabel strong">Component <h:a class="help">?<h:span class="comment">A music "component" (in FRBR terms: component expression) 
+                <h:div class="blocklabel strong">Component <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A music "component" (in FRBR terms: component expression) 
                     describes a specific section of the music, e.g. a movement, act, or scene</h:span></h:a>
                     <dcm:attribute-editor ref="."/>
                 </h:div>
@@ -231,7 +231,7 @@
                                 optional "unit" field.</h:span></h:a></xf:label>
                         </xf:input>
                         <xf:input ref="@unit">
-                            <xf:label>Unit <h:a class="help">?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
+                            <xf:label>Unit <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Optional indication of the measurement unit, e.g. "min."
                                 <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
                                 Please use underscore _ instead.</h:span></h:a></xf:label>
                         </xf:input>
@@ -259,7 +259,7 @@
                             <xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
                                 <h:div>
                                     <xf:input ref="@target" class="maxlong">
-                                        <xf:label>URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
+                                        <xf:label>URI <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Location of a graphics file, e.g.
                                             "http://example.com/incipits/lowres/116.png"</h:span></h:a></xf:label>
                                     </xf:input>
                                     <xf:select1 ref="@targettype" class="auto_length">
@@ -276,7 +276,7 @@
                                             <xf:label>Print quality</xf:label>
                                         </xf:item>
                                     </xf:select1>
-                                    <h:a class="help">?<h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
+                                    <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
                                         web graphics, or "Print quality" for print quality graphics</h:span></h:a>
                                     <dcm:element-buttons
                                         triggers="add remove" 
@@ -295,11 +295,11 @@
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>                        
                             <xf:repeat nodeset="m:incip/m:incipCode" id="incipcode-repeat">
                                 <xf:input ref="@analog">
-                                    <xf:label>Code language <h:a class="help">?<h:span class="comment">The name of the encoding language used, 
+                                    <xf:label>Code language <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The name of the encoding language used, 
                                         e.g. "Plaine &amp; Easie Code"</h:span></h:a></xf:label>
                                 </xf:input>
                                 <xf:input ref="." class="maxlong">
-                                    <xf:label> Code <h:a class="help">?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
+                                    <xf:label> Code <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
                                 </xf:input>
                                 <dcm:element-buttons
                                     triggers="add remove" 
@@ -355,7 +355,7 @@
                             <xf:group ref="m:respStmt/m:persName">
                                 <h:div class="blocklabel">
                                     <h:span class="fixed_width_long">Name</h:span>
-                                    <h:span> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
+                                    <h:span> Relation <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
                                         or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
                                     </h:span>
                                 </h:div>
@@ -763,7 +763,7 @@
                    
                    
                     <h:fieldset>
-                        <h:legend>Notes <h:a class="help">?<h:span class="comment">Any descriptional or other notes about this component</h:span></h:a></h:legend>
+                        <h:legend>Notes <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Any descriptional or other notes about this component</h:span></h:a></h:legend>
                         <h:div class="vertical_spacer"/>
                         <dcm:create 
                             nodeset="m:notesStmt"
@@ -803,11 +803,11 @@
                         <xf:repeat nodeset="m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']" id="edited_score-repeat">
                             <h:div>
                                 <xf:input ref="@target" class="long">
-                                    <xf:label>URI <h:a class="help">?<h:span class="comment">Location of an external, edited score (this movement only).
+                                    <xf:label>URI <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Location of an external, edited score (this movement only).
                                         Not for digital representations of items listed as "Sources"</h:span></h:a></xf:label>
                                 </xf:input>
                                 <xf:input ref="@label">
-                                    <xf:label>Description <h:a class="help">?<h:span class="comment">Explanatory text for the link to the resource, 
+                                    <xf:label>Description <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Explanatory text for the link to the resource, 
                                         e.g. "Carl Nielsen Edition, full score"</h:span></h:a></xf:label>
                                 </xf:input>
                                 <dcm:element-buttons
@@ -823,7 +823,7 @@
                     
                     <!-- Relations -->
                     <h:fieldset>
-                        <h:legend>Relations <h:a class="help">?<h:span class="comment">Relations between this component and 
+                        <h:legend>Relations <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Relations between this component and 
                             other components or files may be specified here to create links between them.<h:br/>
                             For instance, if this component is an arrangement of another piece it may be specified here
                             by selecting the "is arrangement of". <h:br/>
@@ -849,7 +849,7 @@
                                         <xi:include href="includes/relation_select.xml" parse="xml"/>
                                         <xf:group ref="@target">
                                             <xf:input ref="." class="maxlong">
-                                                <xf:label>URI <h:a class="help">?<h:span class="comment">The location of the linked ressource (target). 
+                                                <xf:label>URI <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The location of the linked ressource (target). 
                                                     The target may be either an external file (such as "http://www.example.org/some_file.xml"), an internal 
                                                     reference to an element in the file you are editing (by XML ID, such as "#expression_1"), or a combination
                                                     of both (like "http://www.example.org/some_file.xml#expression_1").<h:br/>
@@ -888,7 +888,7 @@
                                     </h:td>
                                     <h:td>
                                         <xf:input ref="@label" class="long">
-                                            <xf:label> Label <h:a class="help">?<h:span class="comment">The text to be 
+                                            <xf:label> Label <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The text to be 
                                                 displayed as the link text (usually the title of the linked item).<h:br/>
                                                 Please note that MerMEId displays labels containing a colon (:) in a special way:
                                                 In that case, the text before the colon is displayed as the label before the link

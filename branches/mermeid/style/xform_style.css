@@ -410,7 +410,8 @@ legend .xforms-group img {
     display: inline-block;
 }
 
-.orbeon .blocklabel {
+.orbeon .blocklabel, 
+.orbeon label.xforms-label.blocklabel {
     padding: 0px;
     text-align:left;
     display:block;
@@ -563,7 +564,7 @@ a.help, a.help_plain, a.warning {
     background-color: #fff;
     border: 1px solid #999;
     font-weight: bold;
-    padding: 0 0 0 2px;
+    padding: 0 0 0 1px;
     font-size:.7em;
     line-height: 14px;
     cursor: help;
@@ -571,7 +572,7 @@ a.help, a.help_plain, a.warning {
     border-radius: 8px;
     display: inline;
     display: inline-block;
-    width: 11px;
+    width: 12px;
     height: 13px;
     /* For non-CSS3 FireFox */
     -moz-border-radius: 2px;    

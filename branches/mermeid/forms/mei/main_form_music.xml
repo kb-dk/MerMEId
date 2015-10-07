@@ -38,7 +38,7 @@
 				<h:fieldset>
 					<h:legend>Version
 						<dcm:id/>
-						<h:a class="help">?<h:span class="comment">Information at version level.<h:br/> 
+						<h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Information at version level.<h:br/> 
 							To create a new version, click the "add" or "copy" buttons on the right.<h:br/>
 							To indicate the individual pieces (movements, acts or any other subdivision) in this work 
 							or version, use "Components" below.<h:br/>
@@ -58,7 +58,7 @@
 					<xf:group ref=".[number($num_ex)&gt;1 or m:titleStmt/m:title[normalize-space(.)!='']]">
 						<h:div class="blocklabel" style="margin-top:10px">
 							Version title
-							<h:a class="help">?<h:span class="comment">E.g. "Version for piano" or 
+							<h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">E.g. "Version for piano" or 
 								"Discarded version". Enter a version title only if you 
 								want to distinguish different versions of the work. 
 								Otherwise leave empty.</h:span></h:a>
@@ -120,11 +120,11 @@
 									</h:span></h:a>
 							</xf:group>
 							<h:div class="blocklabel">
-								<h:span class="fixed_width"> List name <h:a class="help">?<h:span class="comment">Name of a
+								<h:span class="fixed_width"> List name <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Name of a
 									list, catalogue or other numbering system identifying this version (e.g. "Opus",
 									"CNW", "BWV", "Neue Mozart-Ausgabe" etc.)
 								</h:span></h:a></h:span>
-								<h:span class="fixed_width"> No. <h:a class="help">?<h:span class="comment">The work's number or
+								<h:span class="fixed_width"> No. <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The work's number or
 									signature in the list identifying it</h:span></h:a>
 								</h:span>
 							</h:div>
@@ -146,7 +146,7 @@
 					
 					<h:fieldset>
 						<h:legend>Music metadata
-							<h:a class="help">?<h:span class="comment">Use at this level only with single-movement works, 
+							<h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Use at this level only with single-movement works, 
 								or to specify the main key of a work or version.  
 							</h:span></h:a>
 						</h:legend>
@@ -197,7 +197,7 @@
 									optional "unit" field.</h:span></h:a></xf:label>
 								</xf:input>
 								<xf:input ref="@unit">
-									<xf:label>Unit <h:a class="help">?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
+									<xf:label>Unit <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Optional indication of the measurement unit, e.g. "min."
 										<h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
 										Please use underscore _ instead.</h:span></h:a></xf:label>
 								</xf:input>
@@ -213,7 +213,7 @@
 						</h:div>   
 						
 						<h:div class="vertical_spacer"/>
-						<h:span class="blocklabel strong">Incipits <h:a class="help">?<h:span class="comment">Both 
+						<h:span class="blocklabel strong">Incipits <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Both 
 							music and text incipits may be added. Music incipits can be added as links to graphic files
 							or entered using an encoding such as <em>Plaine &amp; Easie Code</em>.
 						</h:span></h:a></h:span>
@@ -226,7 +226,7 @@
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>                        
 						<xf:group ref=".[m:incip/m:graphic]">
 							<h:span class="blocklabel">Music incipit graphics</h:span>
-							<h:span class="blocklabel">URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
+							<h:span class="blocklabel">URI <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Location of a graphics file, e.g.
 								"http://example.com/incipits/lowres/116.png"</h:span></h:a></h:span>
 						</xf:group>
 						<xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
@@ -248,7 +248,7 @@
 										<xf:label>Print quality</xf:label>
 									</xf:item>
 								</xf:select1>
-								<h:a class="help">?<h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
+								<h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
 									web graphics, or "Print quality" for print quality graphics</h:span></h:a>
 								<dcm:element-buttons
 									triggers="add remove" 
@@ -270,11 +270,11 @@
 								class="comment">One-line incipit encoding, using e.g. <em>Plaine &amp; Easie Code</em></h:span></h:a></h:span>
 							<xf:repeat nodeset="m:incip/m:incipCode" id="incipcode-repeat">
 								<xf:input ref="@analog">
-									<xf:label>Code language <h:a class="help">?<h:span class="comment">The name of the encoding language used, 
+									<xf:label>Code language <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The name of the encoding language used, 
 										e.g. "Plaine &amp; Easie Code"</h:span></h:a></xf:label>
 								</xf:input>
 								<xf:input ref="." class="maxlong">
-									<xf:label> Code <h:a class="help">?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
+									<xf:label> Code <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
 								</xf:input>
 								<dcm:element-buttons
 									triggers="add remove" 
@@ -338,7 +338,7 @@
 							<xf:group ref=".[m:respStmt/m:persName]">
 								<h:div class="blocklabel">
 									<h:span class="fixed_width_long">Name</h:span>
-									<h:span> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
+									<h:span> Relation <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
 										or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
 									</h:span>
 								</h:div>
@@ -359,7 +359,7 @@
 					
 					<!-- Relations -->
 						<h:fieldset>
-							<h:legend>Relations <h:a class="help">?<h:span class="comment">Relations between this version and 
+							<h:legend>Relations <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Relations between this version and 
 								other versions or files may be specified here to create links between them.<h:br/>
 								For instance, if this version is a revision of an earlier version it may be specified here
 								by selecting the "is revision of". <h:br/>
@@ -387,7 +387,7 @@
 											<xi:include href="includes/relation_select.xml" parse="xml"/>
 											<xf:group ref="@target">
 												<xf:input ref="." class="maxlong">
-													<xf:label>URI <h:a class="help">?<h:span class="comment">The location of the linked ressource (target). 
+													<xf:label>URI <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The location of the linked ressource (target). 
 														The target may be either an external file (such as "http://www.example.org/some_file.xml"), an internal 
 														reference to an element in the file you are editing (by XML ID, such as "#expression_1"), or a combination
 														of both (like "http://www.example.org/some_file.xml#expression_1"). <h:br/>
@@ -426,7 +426,7 @@
 										</h:td>
 										<h:td>
 											<xf:input ref="@label" class="long">
-												<xf:label> Label <h:a class="help">?<h:span class="comment">The text to be 
+												<xf:label> Label <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The text to be 
 													displayed as the link text (usually the title of the linked item)</h:span></h:a></xf:label>
 											</xf:input>
 										</h:td>
@@ -597,7 +597,7 @@
 										</xxf:dialog>			
 										
 										<h:div><h:span class="strong">Performers in this ensemble
-											<h:a class="help">?<h:span class="comment">Optional. An ensemble may be specified by name (above), 
+											<h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Optional. An ensemble may be specified by name (above), 
 												by a list of performers, or both.</h:span></h:a></h:span>
 										</h:div>
 										<xf:trigger ref=".[count(m:instrVoice)=0]" style="margin-left: 8px;" class="create_button">
@@ -644,7 +644,7 @@
 								
 								<!-- stand-alone performers -->
 								<h:div class="blocklabel strong">Instruments and singers
-									<h:a class="help">?<h:span class="comment">List of performers not to be regarded 
+									<h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">List of performers not to be regarded 
 										as part of an ensemble. Use this section for some chamber music
 										(e.g. piano music, songs with or without piano, music for solo instruments)
 										and for soloists (vocalists and instrumentalists). 
@@ -694,7 +694,7 @@
 							
 							
 							<h:div class="blocklabel strong">Roles
-								<h:a class="help">?<h:span class="comment">A list of roles (characters)
+								<h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A list of roles (characters)
 									appearing in the piece. Role names may be entered in more than one language.                                        
 								</h:span></h:a>                                        
 								<xf:group ref="m:castList">
@@ -880,7 +880,7 @@
 					
 					<!-- Components  -->
 					<h:fieldset>
-						<h:legend>Components <h:a class="help">?<h:span class="comment">Use components to list the individual 
+						<h:legend>Components <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Use components to list the individual 
 							pieces (movements, acts, scenes, sections etc.) that constitute this 
 							<xf:group ref=".[count(../m:expression)=1]">
 								work.
