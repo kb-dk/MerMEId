@@ -266,7 +266,11 @@
 		
 		<!-- tinyMCE -->
 
-		<fr:tinymce ref="."/>
+		<fr:tinymce ref=".">
+		  <xf:label class="blocklabel">General work description 
+		  <h:a class="help">&#160;?<h:span class="comment">A general description of or introduction to the work</h:span></h:a>
+		  </xf:label>
+		</fr:tinymce>
 		
 		<dcm:element-buttons-typed triggers="remove" 
 					   index="repeat_work_description" 
