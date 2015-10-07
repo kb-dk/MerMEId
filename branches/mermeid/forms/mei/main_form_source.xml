@@ -47,7 +47,7 @@
       <xf:group ref=".[count(../m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
         <h:fieldset>
           <h:legend>Sources (work)
-            <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Sources may be listed at work level 
+            <h:a class="help">&#160;?<h:span class="comment">Sources may be listed at work level 
               and at version level. If your work has only one version, all sources will be listed as work level sources.<h:br/> 
               Versions are defined at the Music tab. </h:span></h:a>
           </h:legend>
@@ -84,7 +84,7 @@
               <xf:group ref=".[normalize-space(m:titleStmt/m:title)!='']">
                 <xf:output value="concat(' - ',m:titleStmt/m:title)"/>
               </xf:group>
-              <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Sources may be listed at work level 
+              <h:a class="help">&#160;?<h:span class="comment">Sources may be listed at work level 
                 and at version level. Versions are defined at the Music tab.</h:span></h:a>
             </h:legend>
             <h:div class="vertical_spacer"/>

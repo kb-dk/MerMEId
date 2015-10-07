@@ -110,7 +110,7 @@
 					
 					<xf:group ref=".[m:title[@type='text_source']]">
 						<h:div class="blocklabel">Text source
-							<h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The title of a textual source for a sung or 
+							<h:a class="help">&#160;?<h:span class="comment">The title of a textual source for a sung or 
 								recited text used in the work, e.g. "Psalm 101"</h:span></h:a>
 						</h:div>
 					</xf:group>
@@ -181,14 +181,14 @@
 					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:identifier"/>
 				<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:identifier">
 					<h:div class="blocklabel">
-						<h:span class="fixed_width"> List name <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Name of a
+						<h:span class="fixed_width"> List name <h:a class="help">&#160;?<h:span class="comment">Name of a
 							list, catalogue or other numbering system in which the work is identified (e.g. "Opus",
 							"CNW", "BWV", "Neue Mozart-Ausgabe" etc.)<h:br/>
 							If the name matches the name of a file collection as defined at the "File" tab, 
 							this identifier will be shown (like "BWV 1063" or "NMA II/3") next to the work's title on the file list; 
 							it will also be used as a header in the HTML preview. 
 						</h:span></h:a></h:span>
-						<h:span class="fixed_width"> No. <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The work's number or
+						<h:span class="fixed_width"> No. <h:a class="help">&#160;?<h:span class="comment">The work's number or
 							signature in the list identifying it</h:span></h:a>
 						</h:span>
 					</h:div>
@@ -210,7 +210,7 @@
 			</h:fieldset>
 			
 			<h:fieldset>
-				<h:legend>Persons <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A list of person involved in the creation or transmission 
+				<h:legend>Persons <h:a class="help">&#160;?<h:span class="comment">A list of person involved in the creation or transmission 
 					of this work in general, such as the composer or text author</h:span></h:a></h:legend>		
 				<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt"
 					nodeset="m:persName"
@@ -225,7 +225,7 @@
 					<xf:group ref="m:persName">
 						<h:div class="blocklabel">
 							<h:span class="fixed_width_long">Name</h:span>
-							<h:span class="fixed_width"> Relation <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Specifies the person's relation to the item, e.g. "Composer"
+							<h:span class="fixed_width"> Relation <h:a class="help">&#160;?<h:span class="comment">Specifies the person's relation to the item, e.g. "Composer"
 								or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
 							</h:span>
 						</h:div>
@@ -260,7 +260,7 @@
 							<h:div style="white-space:nowrap">
 								<xf:textarea ref="." class="notes"  mediatype="text/html">
 									<xf:label class="blocklabel">General work description 
-										<h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A general description of or introduction to the work</h:span></h:a>
+										<h:a class="help">&#160;?<h:span class="comment">A general description of or introduction to the work</h:span></h:a>
 									</xf:label>
 								</xf:textarea>
 								
@@ -274,7 +274,7 @@
 								<dcm:attribute-editor ref="."/>
 							</h:div>
 						</xf:repeat>
-						<h:div class="blocklabel">External descriptions <h:a class="help">?<h:span class="comment"
+						<h:div class="blocklabel">External descriptions <h:a class="help">&#160;?<h:span class="comment"
 							>Links to external resources (web pages, PDF files etc.) about
 							the work in general - not about a particular
 							source</h:span></h:a></h:div>
@@ -290,12 +290,12 @@
 							<xf:repeat nodeset="m:ptr" id="general-notesstmt-annot-repeat-ptr">
 								<h:div>
 									<xf:input ref="@target" class="long">
-										<xf:label>URI <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Link to the
+										<xf:label>URI <h:a class="help">&#160;?<h:span class="comment">Link to the
 											resource, e.g. "http://example.com/preface.pdf"</h:span></h:a>
 										</xf:label>
 									</xf:input>
 									<xf:input ref="@label">
-										<xf:label>Label <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A short, 
+										<xf:label>Label <h:a class="help">&#160;?<h:span class="comment">A short, 
 											descriptive text which may serve
 											as the link text, e.g. "CNU preface"</h:span></h:a></xf:label>
 									</xf:input>
@@ -314,7 +314,7 @@
 			
 			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">
 				<h:fieldset>
-					<h:legend>Relations <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Relations between this work and 
+					<h:legend>Relations <h:a class="help">&#160;?<h:span class="comment">Relations between this work and 
 						other works or files may be specified here to create links between them.<h:br/>
 						For instance, if this work is also part of a larger work or a collection of works 
 						defined in a different file, a link pointing to the external file may be defined here with the 
@@ -337,7 +337,7 @@
 									<xi:include href="includes/relation_select.xml" parse="xml"/>
 									<xf:group ref="@target">
 										<xf:input ref="." class="maxlong">
-											<xf:label>URI <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The location of the linked ressource (target). 
+											<xf:label>URI <h:a class="help">&#160;?<h:span class="comment">The location of the linked ressource (target). 
 												The target may be either an external file (such as "http://www.example.org/some_file.xml"), an internal 
 												reference to an element in the file you are editing (by XML ID, such as "#source_1"), or a combination
 												of both (like "http://www.example.org/some_file.xml#source_1"). <h:br/>
@@ -376,7 +376,7 @@
 								</h:td>
 								<h:td>
 									<xf:input ref="@label" class="long">
-										<xf:label> Label <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The text to be 
+										<xf:label> Label <h:a class="help">&#160;?<h:span class="comment">The text to be 
 											displayed as the link text (usually the title of the linked item).<h:br/>
 											Please note that MerMEId displays labels containing a colon (:) in a special way:
 											In that case, the text before the colon is displayed as the label before the link
@@ -404,7 +404,7 @@
 			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification">
 				<h:fieldset>
 					<h:legend>Classification and keywords</h:legend>
-					<h:span class="blocklabel">Term <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Keywords for searching, 
+					<h:span class="blocklabel">Term <h:a class="help">&#160;?<h:span class="comment">Keywords for searching, 
 						grouping and indexing, e.g.	"Symphony", "Chamber music", or "Song".
 						Pre-defined categories and keywords may be selected from a menu by clicking the add-button to the right.
 					</h:span></h:a></h:span>

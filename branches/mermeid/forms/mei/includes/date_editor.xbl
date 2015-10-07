@@ -227,7 +227,7 @@
                         <xf:group ref=".[instance('editor-instance')/mode='interval']">
                             <h:div class="dcm-date-input-box" xbl:attr="navindex navindex=tabindex">
                                 <h:div class="blocklabel strong">Start</h:div>
-                                <h:span class="dcm-date-editor-label">Date: <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Use this 
+                                <h:span class="dcm-date-editor-label">Date: <h:a class="help">&#160;?<h:span class="comment">Use this 
                                     if you know the exact start date (or start month, or year) of the event</h:span></h:a></h:span>
                                 <dcm:dropdown-month-date ref="startdate"/>                                
                                 <xf:trigger appearance="minimal">
@@ -237,7 +237,7 @@
                                     </xf:action>
                                 </xf:trigger>
                                 <h:br/>
-                                <h:span class="dcm-date-editor-label">Not before: <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Use this 
+                                <h:span class="dcm-date-editor-label">Not before: <h:a class="help">&#160;?<h:span class="comment">Use this 
                                     if you only know that the event could not have started before a certain date (or month, or year)</h:span></h:a></h:span>
                                 <dcm:dropdown-month-date ref="notbefore"/>
                                 <xf:trigger appearance="minimal">
@@ -250,7 +250,7 @@
                             <h:hr/>
                             <h:div class="dcm-date-input-box">
                                 <h:div class="blocklabel strong">End</h:div>
-                                <h:span class="dcm-date-editor-label">Date: <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Use this 
+                                <h:span class="dcm-date-editor-label">Date: <h:a class="help">&#160;?<h:span class="comment">Use this 
                                     if you know the exact end date (or end month, or year) of the event</h:span></h:a></h:span>
                                 <dcm:dropdown-month-date ref="enddate"/>
                                 <xf:trigger appearance="minimal">
@@ -260,7 +260,7 @@
                                     </xf:action>
                                 </xf:trigger>
                                 <h:br/>
-                                <h:span class="dcm-date-editor-label">Not after: <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Use this 
+                                <h:span class="dcm-date-editor-label">Not after: <h:a class="help">&#160;?<h:span class="comment">Use this 
                                     if you only know that the event must have ended before a certain date (or month, or year)</h:span></h:a></h:span>
                                 <dcm:dropdown-month-date ref="notafter"/>                                
                                 <xf:trigger appearance="minimal">
@@ -275,7 +275,7 @@
                         <h:div class="dcm-date-input-box">
                             <xf:input ref="displayed_date" class="display_input">
                                 <xf:label class="dcm-date-editor-blocklabel">Displayed date or text: 
-                                    <h:a class="help">?<h:span class="comment" style="top:-100px;">Enter the date (or date span) in whatever form 
+                                    <h:a class="help">&#160;?<h:span class="comment" style="top:-100px;">Enter the date (or date span) in whatever form 
                                     it is to be displayed, e.g. "1845-1846", "in late 1976", "1918-12-24" or "probably before 1888".</h:span></h:a>
                                 </xf:label>
                             </xf:input> 

@@ -54,7 +54,7 @@
                         
                         <h:fieldset>
                             <h:legend>Reference type:
-                                <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Use two genre indicators 
+                                <h:a class="help">&#160;?<h:span class="comment">Use two genre indicators 
                                     for articles and interviews: One to indicate the type of text 
                                     ('Article' or 'Interview') and another one indicating the type of
                                     the containing publication such as 'Book', 'Journal', 
@@ -161,7 +161,7 @@
                                         <h:hr/>
                                         <xf:input ref="@label" class="maxlong">
                                             <xf:label class="fixed_width">Abbreviation
-                                                <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">An abbreviated title or other 
+                                                <h:a class="help">&#160;?<h:span class="comment">An abbreviated title or other 
                                                     identifier may be added here (intended to be used as a short-hand
                                                     reference to the full bibliographic citation).
                                                 </h:span></h:a>
@@ -204,7 +204,7 @@
                         <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript') and count(m:genre[contains(.,'program')])=0]">
                             
                             <h:fieldset>
-                                <h:legend>Volume etc. <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Volume and issue no. to
+                                <h:legend>Volume etc. <h:a class="help">&#160;?<h:span class="comment">Volume and issue no. to
                                     be displayed as vol./no. For journal articles, the year displayed will be
                                     taken from publication date below. For example, a reference to The Musical
                                     Quarterly 88/3 (2005), pp.339-341 should be divided as follows: <h:br/> "88"
@@ -318,7 +318,7 @@
                                     origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:author[1]"/>
                                 <xf:repeat nodeset="m:author" id="repeat-letter-author">
                                     <xf:input ref="." class="maxlong">
-                                        <xf:label class="fixed_width">Author <h:a class="help">?<h:span
+                                        <xf:label class="fixed_width">Author <h:a class="help">&#160;?<h:span
                                             class="comment">For diary entries, leave empty if
                                             author is the composer</h:span></h:a></xf:label>
                                     </xf:input>
@@ -373,7 +373,7 @@
                         
                         <xf:group ref=".[m:genre='letter' or m:genre='diary entry' or m:genre='manuscript' or m:genre[contains(.,'concert program')]]">
                             <h:fieldset>
-                                <h:legend>Item location <h:a class="help">?<h:span
+                                <h:legend>Item location <h:a class="help">&#160;?<h:span
                                     class="comment">The library, archive or other repository holding this
                                     item. The name or RISM siglum may be given, or both.</h:span></h:a>
                                 </h:legend>
@@ -400,7 +400,7 @@
                                     label="Add shelf mark"
                                     origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:identifier][1]/m:physLoc/m:identifier"/>
                                 <xf:input ref="m:physLoc/m:identifier" class="maxlong">
-                                    <xf:label class="fixed_width">Shelfmark <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The shelfmark or
+                                    <xf:label class="fixed_width">Shelfmark <h:a class="help">&#160;?<h:span class="comment">The shelfmark or
                                         other signature identfying the item in the
                                         repository</h:span></h:a></xf:label>
                                 </xf:input>
@@ -413,12 +413,12 @@
                                     <xf:repeat nodeset="m:physLoc/m:repository/m:ptr" id="bibl-repository-ptr">
                                         <h:div>
                                             <xf:input ref="@target" class="maxlong">
-                                                <xf:label class="fixed_width">URI <h:a class="help">?<h:span
+                                                <xf:label class="fixed_width">URI <h:a class="help">&#160;?<h:span
                                                     class="comment">Link address to the repository or the repository's 
                                                     online catalogue, e.g. "http://www.example.org/catalogue?item=123"</h:span></h:a></xf:label>
                                             </xf:input>
                                             <xf:input ref="@label" class="long">
-                                                <xf:label>Link label <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A 
+                                                <xf:label>Link label <h:a class="help">&#160;?<h:span class="comment">A 
                                                     descriptive label for the link to the resource, e.g. 
                                                     "Archive's website" or "Library record"</h:span></h:a></xf:label>
                                             </xf:input>
@@ -436,7 +436,7 @@
                         
                         <xf:group ref=".[not(m:genre[contains(.,'web')])]">
                             <h:fieldset>
-                                <h:legend>Transcriptions and reproductions <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">If a 
+                                <h:legend>Transcriptions and reproductions <h:a class="help">&#160;?<h:span class="comment">If a 
                                     transcription, facsimile or other reproduction of this item is available,
                                     e.g. a critical edition of a composer's letters, or a digital reproduction of a manuscript,
                                     a reference to that publication may be given here</h:span></h:a></h:legend>
@@ -448,13 +448,13 @@
                                     <h:div>
                                         <xf:group ref="m:bibl">
                                             <xf:input ref="m:title" class="maxlong">
-                                                <xf:label>Title <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The title or a
+                                                <xf:label>Title <h:a class="help">&#160;?<h:span class="comment">The title or a
                                                     short-hand reference to the publication quoting or transcribing
                                                     this item, e.g. "CNB" or "Mozart:
                                                     Briefe"</h:span></h:a></xf:label>
                                             </xf:input>
                                             <xf:select1 ref="m:biblScope/@unit" class="short">
-                                                <xf:label>Page or No. <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The
+                                                <xf:label>Page or No. <h:a class="help">&#160;?<h:span class="comment">The
                                                     number of this item in the edition or the relevant pages</h:span></h:a></xf:label>
                                                 <xf:item>
                                                     <xf:label/>
@@ -487,12 +487,12 @@
                                 <xf:repeat nodeset="m:ptr" id="repeat-letter-digitizations">
                                     <h:div>
                                         <xf:input ref="@target" class="long">
-                                            <xf:label class="fixed_width_short">URI <h:a class="help">?<h:span
+                                            <xf:label class="fixed_width_short">URI <h:a class="help">&#160;?<h:span
                                                 class="comment">Link to fulltext or facsimile, e.g.
                                                 http://example.org/document.html</h:span></h:a></xf:label>
                                         </xf:input>
                                         <xf:input ref="@label" class="long">
-                                            <xf:label>Link label <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A label to
+                                            <xf:label>Link label <h:a class="help">&#160;?<h:span class="comment">A label to
                                                 be displayed as the link text, e.g. "Facsimile"</h:span></h:a></xf:label>
                                         </xf:input>
                                         <dcm:element-buttons triggers="add remove" nodeset="m:ptr"
@@ -505,7 +505,7 @@
                         </xf:group>
                                                                         
                         <h:fieldset>
-                            <h:legend>Notes <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Any notes to be added to this
+                            <h:legend>Notes <h:a class="help">&#160;?<h:span class="comment">Any notes to be added to this
                                 item, e.g. a description of contents or - in case of performance documentation -
                                 an indication of the date and place for the event documented by this
                                 item</h:span></h:a></h:legend>

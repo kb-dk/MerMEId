@@ -140,7 +140,7 @@
                                 <h:div class="blocklabel">
                                     <h:span class="fixed_width_long">Name</h:span>
                                     <h:div class="horiz_spacer"/>
-                                    <h:span> Relation <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">The person's relation to this
+                                    <h:span> Relation <h:a class="help">&#160;?<h:span class="comment">The person's relation to this
                                         performance, e.g. "conductor" or "vocalist".<h:br/> The list is based on MARC
                                         relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
                                     </h:span>
@@ -158,7 +158,7 @@
                                 </xf:repeat>
                             </h:div>
                             <h:br clear="all"/>
-                            <h:div class="blocklabel strong">Description <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">
+                            <h:div class="blocklabel strong">Description <h:a class="help">&#160;?<h:span class="comment">
                                 An optional description of the event, e.g. "First performance in Denmark".</h:span></h:a></h:div>
                             <dcm:create
                                 nodeset="m:p"
@@ -177,7 +177,7 @@
                             <h:br clear="all"/>
                             <!-- single evidence reference using the event's "evidence" attribute (disabled)
                                 <xf:select1 ref="@evidence" class="maxlong">
-                                <xf:label class="fixed_width">Evidence <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">Pointer to a bibliographic 
+                                <xf:label class="fixed_width">Evidence <h:a class="help">&#160;?<h:span class="comment">Pointer to a bibliographic 
                                 reference serving as main evidence for this performance.<h:br/>
                                 Go to the "Bibliography" tab to add references to the list.
                                 </h:span></h:a> </xf:label>
@@ -273,7 +273,7 @@
                 
                 
                 <h:fieldset>
-                    <h:legend>Evidence <h:a class="help"><img src="{instance('parameters')/dcm:server_name}/editor/images/hint.png" alt="?"/><h:span class="comment">A list of references to bibliographic items 
+                    <h:legend>Evidence <h:a class="help">&#160;?<h:span class="comment">A list of references to bibliographic items 
                         serving as evidence for this performance, such as concert programmes, announcements, or secondary literature</h:span></h:a></h:legend>
                     <dcm:create nodeset="m:biblList[m:head='Evidence']"
                         label="Add evidence bibliography"

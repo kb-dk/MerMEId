@@ -34,7 +34,7 @@
             label="Add ensemble heading"
             origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoiceGrp/m:head"/>
         <xf:input ref="m:head" class="long">
-            <xf:label class="fixed_width">Heading <h:a class="help">?<h:span 
+            <xf:label class="fixed_width">Heading <h:a class="help">&#160;?<h:span 
                 class="comment">An optional heading or name wich may be used with or 
                 instead of a detailed listing of the instruments in the ensemble. 
                 Use it to specify the type of ensemble, e.g. "Orchestra", "String quartet", 
@@ -46,7 +46,7 @@
             </h:span></h:a></xf:label>
         </xf:input>
         <xf:select1 ref="@code">
-            <xf:label>Standard code <h:a class="help">?<h:span 
+            <xf:label>Standard code <h:a class="help">&#160;?<h:span 
                 class="comment">Choosing a standard MARC code optimizes data  
                 compatibility and interchangeability with other systems. <h:br/>
                 A code should be supplied also when you do not want the ensemble 
