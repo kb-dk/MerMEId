@@ -41,7 +41,7 @@
                     
                 </xf:action>
                 
-                <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+                <!--<xi:include href="edit-form-event-handlers.xml" parse="xml"/>-->
                 <xf:var name="uri" select="xxf:get-session-attribute('return_url')"/>
                 
                 
@@ -268,7 +268,7 @@
                                     position="after" 
                                     origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-bibl-repeat')]"/>
                             </xf:action>
-                            <xf:dispatch name="id-update" target="form-group"/>
+                            <!--<xf:dispatch name="id-update" target="form-group"/>-->
                             <xxf:hide dialog="add-ref-dialog"/>
                         </xf:action>
                     </xf:trigger>
