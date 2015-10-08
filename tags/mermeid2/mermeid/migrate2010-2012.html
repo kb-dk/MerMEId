@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en">
+  <head>
+    <title>How to migrate from MEI 2010 to 2012</title>
+    <meta http-equiv="Content-Type" 
+	  content="text/html;charset=UTF-8"/>
+  </head>
+  <body>
+    <h1>HOW TO migrate from MEI 2010 to 2012</h1>
+
+    <p><strong>NB!</strong> The procedures described here is for documents
+    created and maintained using the MerMEId system. Also, it does not migrate
+    the actual music, only the meiHead.</p>
+
+    <p>
+      <strong>Assumptions:</strong> We take for granted that you store your
+      documents in an eXist native XML database in a collection called dcm,
+      and that you can do the migration on a linux computer where you have
+      access to a shell prompt. You also need Michael Kay's eminent Saxon xslt
+      processor (<a
+      href="http://www.saxonica.com/welcome/welcome.xml">Saxonica</a>).
+      You should be able to run that from comand line using a command called
+      <kbd>saxon</kbd>.
+    </p>
+
+    <ol>
+      <li>Create an empty directory. Let's call it <kbd>migration/</kbd></li>
+
+      <li>Make a backup of your collection using the recipe in the <a
+      href="./INSTALL.html#backup_and_restore">INSTALL.html</a>. If you use
+      the eXist admin GUI, you'll get a zip archive. When unpacked, your
+      files will live in <kbd>migration/db/dcm/*xml</kbd></li>
+
+      <li>copy the directory <kbd>MerMEId/mermeid/transforms/mei/utils</kbd>
+      with all its content to your <kbd>migration/</kbd></li>
+
+      <li>
+	copy the <kbd>MerMEId/mermeid/transforms/mei/filter_put.xsl</kbd>
+	transform to your <kbd>migration/</kbd> directory. When done you should
+	have the following.
+	<ul>
+	  <li>db (your records should be in db/dcm)</li>
+
+	  <li>utils, with a number of xsl scripts and a perl script called
+	  <kbd>sequential_transformer</kbd></li>
+
+	  <li>filter_put.xsl</li>
+	</ul>
+
+      </li>
+    </ol>
+
+    <p>Now you just run the migration using the command:</p>
+    <pre>
+      utils/sequential_transformer --directory db/
+    </pre>
+
+    <p>It takes some time, since there are four independent transforms to
+    make. And there will be some warning messages because some scripts are XSL
+    v2 and other v1, and saxon doesn't really like the latter. There will be
+    some intermediate results having a numeric suffix.</p>
+
+    <p>If you successfully reload the files having suffix *.xml into your
+    database, then you've migrated from mei 2010 to 2012.</p>
+
+  </body> 
+</html>

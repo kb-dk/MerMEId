@@ -1,0 +1,69 @@
+#!/usr/bin/perl -w
+
+use strict;
+use URI::Escape;
+use Getopt::Long;
+
+binmode STDOUT,':raw';
+
+my $reserved  = "^A-Za-z0-9/&?=:;$@#.?\-";
+
+my @sheet_list = ("utils/identifier_type_to_label.xsl",
+		  "utils/check_element_order.xsl",
+		  "utils/cleanup_2014.xsl");
+
+# "utils/update_perfMedium_in_sub-expressions.xsl";
+
+# ("utils/transform_2012_to_2013.xsl");
+
+# ("utils/transform_2010_to_2012.xsl",
+#		  "utils/add_ID.xsl",
+#		  "utils/add_MARC048_reg_values.xsl",
+#		  "filter_put.xsl");
+
+my $suffix     = "";
+my $directory  = "";
+my $param      = "";
+my $sheets     = "";
+
+my $result = GetOptions (
+    "sheets=s"    => \$sheets,
+    "suffix=s"    => \$suffix,
+    "param=s"     => \$param,
+    "directory=s" => \$directory);
+
+if($sheets) {
+    @sheet_list   = split /,/,$sheets;
+}
+
+die "I die since there is no directory like $directory\n" unless(-d $directory); 
+
+my $find = "find $directory -name '*$suffix' -print";
+my $in;
+if ( open($in,"$find |") ) {
+
+    while(my $source = <$in>)  {
+	chomp $source;
+	my $num_suffix = 0;
+	my $in         = $source.$num_suffix;
+	my $out        = "";
+	print "#$source ";
+	system "cp $source $in";
+	for(my $i=0;$i<=$#sheet_list;$i++) {
+	    my $stylesheet = $sheet_list[$i];
+	    $num_suffix    = $i;
+	    $in            = $source.$num_suffix;
+	    $num_suffix++;
+	    $out           = $source.$num_suffix;
+	    system "saxon $in $stylesheet > $out";
+	    print $stylesheet . " ";
+	}
+	print "\n";
+	system "mv $out $source";
+	system 'rm '.$source."[0-9]";
+    }
+
+}
+
+
+

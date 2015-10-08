@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<h:head xmlns:h="http://www.w3.org/1999/xhtml" 
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+  xmlns:xf="http://www.w3.org/2002/xforms" 
+  xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+  xmlns:oxf="http://www.orbeon.com/oxf/processors"
+  xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+  xmlns:ev="http://www.w3.org/2001/xml-events" 
+  xmlns:xl="http://www.w3.org/1999/xlink"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:m="http://www.music-encoding.org/ns/mei"
+  xmlns:t="http://www.tei-c.org/ns/1.0" 
+  xmlns:dcm="http://www.kb.dk/dcm">
+  
+  
+  <h:title id="PageTitle">MerMEId - Editing MEI metadata</h:title>
+  
+  <h:meta http-equiv="Content-Type" content="application/xhtml+xml"/>
+  
+  <h:script type="text/javascript" src="http:/editor/js/editor.js">
+    //<!-- shouldn't really be empty -->
+  </h:script>
+  
+  <h:style type="text/css" media="all"> 
+    @import "/editor/style/tab_style.css"; 
+    @import "/editor/style/xform_style.css";
+    @import "/editor/style/yui_rich_text_editor.css"; 
+  </h:style>
+  
+  <xf:model>
+    
+    <!--
+      To construct model, call with url like: 
+      http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://disdev-01.kb.dk/editor/forms/mei/edit-work-case.xml?&doc=cnw0292.xml
+    -->
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+      id="data-instance">
+      <mei/>
+    </xf:instance>
+        
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+      id="empty-instance"
+      src="/editor/forms/mei/model/empty_doc.xml" 
+      xxf:readonly="true"/>
+
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+      id="reduced-template"
+      src="/editor/forms/mei/model/new_file.xml" 
+      xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+      id="keywords-instance" 
+      src="/editor/forms/mei/model/keywords.xml" 
+      xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+      id="languages" 
+      src="/editor/forms/mei/model/languages.xml" 
+      xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+      id="instrumentation"
+      src="/editor/forms/mei/model/standard_instrumentation.xml" 
+      xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+      id="ensembles" 
+      src="/editor/forms/mei/model/ensembles.xml" 
+      xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+      id="instruments" 
+      src="/editor/forms/mei/model/instruments.xml" 
+      xxf:readonly="true"/>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+      id="bibl-type-instance" 
+      src="/editor/forms/mei/model/bibl_reference_types.xml" 
+      xxf:readonly="true"/>
+
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+      id="bibliography-instance">
+      <mei/>
+    </xf:instance>
+
+    <xf:instance id="mei_attr_list" 
+      src="/editor/forms/mei/model/MEI_attr_list.xml"/>
+    
+    <xf:instance id="parameters" 
+      xmlns="http://www.kb.dk/dcm"
+      src="/editor/forms/mei/mermeid_configuration.xml"/>
+    
+    <xf:instance id="XMLfiles" 
+      xmlns="http://www.kb.dk/dcm">
+      <fileList/>
+    </xf:instance>
+    
+    <xf:instance id="temp">
+      <temp-values>
+        <changed>false</changed>
+        <change_marker>*</change_marker>
+        <etc>...</etc>
+        <target_uri/>
+        <file_exists>true</file_exists>
+        <counter/>
+        <max/>
+        <query/>
+        <series/>
+        <page/>
+        <value/>
+        <nodeset/>
+        <instrumentation/>
+      </temp-values>
+    </xf:instance>
+    
+    <!-- submissions - loading and saving data -->
+    
+    <!-- load empty instance -->
+    <xf:submission id="load-new-submission"
+      method="get" serialization="none" validate="false"
+      resource="/editor/forms/mei/model/new_file.xml"
+      replace="instance" instance="data-instance"/>
+    
+    <xf:submission id="load-data-submission" 
+      method="get" 
+      serialization="none" 
+      validate="false"
+      resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
+      replace="instance" instance="data-instance"/>
+
+    <xf:submission id="save-to-file"
+      ref="instance('data-instance')"
+      validate="false"
+      relevant="false"
+      xxf:calculate="false"
+      resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
+      method="put"
+      replace="instance"/>
+
+    <xf:submission id="load-fileList"
+      xxf:username=""
+      xxf:password=""
+      method="get" 
+      serialization="none" 
+      validate="false"
+      resource="{instance('temp')/target_uri}"
+      replace="instance" 
+      instance="XMLfiles"/>
+
+    <xf:submission id="load-bibliography"
+      xxf:username=""
+      xxf:password=""
+      method="get" 
+      serialization="none" 
+      validate="false"
+      resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml"
+      replace="instance" 
+      instance="bibliography-instance"/>
+    
+    <!-- "onload" xforms actions -->
+    <xf:action ev:event="xforms-model-construct-done">
+      <!-- get settings from session variables -->
+      <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
+      <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
+      <xf:setvalue ref="instance('parameters')/dcm:code_inspector" value="xxf:get-session-attribute('code_inspector')"/> 
+      <xf:setvalue ref="instance('parameters')/dcm:return_uri" value="xxf:get-request-parameter('return_uri')"/>
+      <!-- store XML data file name -->
+      <xf:setvalue ref="instance('parameters')/dcm:xml_file" value="xxf:get-request-parameter('doc')"/>
+      <!-- store page URI -->
+      <xf:setvalue ref="instance('parameters')/dcm:this_page" value="concat(
+        instance('parameters')/dcm:orbeon_dir,'?uri=',xxf:get-request-parameter('uri'),
+        '&amp;doc=',instance('parameters')/dcm:xml_file)"/>
+      <!-- load standard bibliography -->
+      <xf:send submission="load-bibliography"/>
+      <!-- load XML data -->
+      <xf:send submission="load-data-submission"/>
+      
+      <!-- automatically add change entry in revisionDesc -->
+      <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc/m:change)=0">
+        <xf:insert context="instance('data-instance')/m:meiHead/m:revisionDesc" 
+          nodeset="m:change" 
+          origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
+      </xf:action>
+      <xxf:variable name="last_revision" 
+        select="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]"/>
+      <xxf:variable name="today" select="substring-before(now(), 'T')"/>
+      <xf:action if="$last_revision/@isodate!=$today or ($last_revision/@isodate=$today and ($last_revision/m:changeDesc/m:p/text() or $last_revision/@resp!=''))">
+        <xf:action if="$last_revision/@isodate!=''">
+          <xf:insert nodeset="instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
+            position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
+            value="$today"/>
+        </xf:action>
+        <xf:action if="$last_revision/@isodate=''">
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
+            value="$today"/>
+        </xf:action>
+      </xf:action>
+      <!-- end revisionDesc entry -->
+      
+      <!-- check list of language declarations -->
+      <xf:dispatch name="language-update" target="form-group"/>
+      <!-- get lists of linking sources -->
+      <xf:dispatch name="get-linking-sources" target="linking_sources"/>
+    </xf:action>
+    
+    <xf:action ev:event="xforms-submit-done">
+      <!-- set instance state to unchanged on saving -->
+      <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
+      <xf:setvalue ref="instance('temp')/file_exists" value="'true'"/>
+    </xf:action>
+    
+    <xf:action ev:event="xforms-submit-error"  ev:propagate="stop">
+      <xxf:variable name="code" select="event('response-status-code')"/>
+      <!-- This is an odd way of doing it. xforms-submit-error events should
+           not include submissions resulting in 200 OK, and there isn't any
+           200 not OK -->
+      <xf:action if="$code!=404 and $code!=200">
+        <xf:message>An error occurred (<xf:output value="$code"/>)
+          <!--h:br/>File:<xf:output value="instance('temp')/target_uri"/--></xf:message>
+      </xf:action>
+      <!-- Load empty instance if loading fails (i.e. document does not exist yet) -->
+      <xf:action if="$code=404">
+        <xf:send submission="load-new-submission"/>
+        <xf:setvalue ref="instance('temp')/file_exists" value="'false'"/>
+        <!-- generate values for empty @xml:id -->
+        <xf:action while="instance('data-instance')//*[@xml:id='']">
+          <xf:setvalue ref="instance('data-instance')//*[@xml:id='']/@xml:id" value="concat(name(..),'_id',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+        </xf:action>
+      </xf:action>
+    </xf:action>
+    
+    <xf:bind nodeset="instance('data-instance')//m:instrVoice/@solo" type="xs:boolean"/>
+    <xf:bind nodeset="instance('temp')">
+      <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
+    </xf:bind>            
+    
+  </xf:model>
+  
+  <!-- XBL components -->
+  <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
+  <xi:include href="includes/create.xbl" parse="xml"/>
+  <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
+  <xi:include href="includes/date_editor.xbl" parse="xml"/>
+  <xi:include href="includes/element_buttons.xbl" parse="xml"/>
+  <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
+  <xi:include href="includes/history-input.xbl" parse="xml"/>
+  <xi:include href="includes/id.xbl" parse="xml"/>
+  <xi:include href="includes/item.xbl" parse="xml"/>
+  <xi:include href="includes/linked_sources.xbl" parse="xml"/>
+  <xi:include href="includes/performance_list.xbl" parse="xml"/>
+  <xi:include href="includes/relator.xbl" parse="xml"/>
+  <xi:include href="includes/rism_sigla_select.xbl" parse="xml"/>
+  <xi:include href="includes/source_list.xbl" parse="xml"/>
+  
+</h:head>

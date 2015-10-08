@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+    xmlns:xf="http://www.w3.org/2002/xforms" 
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:oxf="http://www.orbeon.com/oxf/processors"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:m="http://www.music-encoding.org/ns/mei"
+    xmlns:t="http://www.tei-c.org/ns/1.0" 
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <!--
+        Item data editor 
+        Danish Centre for Music Publication (DCM) 
+        Axel Teich Geertinger, 2013
+        atge@kb.dk
+    -->
+    
+    <h:head>
+        
+        <h:title id="PageTitle">MerMEId - Editing source metadata</h:title>
+        
+        <h:meta http-equiv="Content-Type" content="application/xhtml+xml"/>
+        
+        <h:script type="text/javascript" src="http:/editor/js/editor.js"/>
+        
+        <h:style type="text/css" media="all"> 
+            @import "/editor/style/tab_style.css"; 
+            @import "/editor/style/xform_style.css";
+            @import "/editor/style/model_editor_style.css";
+            @import "/editor/style/yui_rich_text_editor.css"; 
+        </h:style>
+        
+        <xi:include href="details-form-model.xml" parse="xml"/>
+        
+        <!-- XBL components -->
+        <xi:include href="includes/element_buttons.xbl" parse="xml"/>
+        <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
+        <xi:include href="includes/create.xbl" parse="xml"/>
+        <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
+        <xi:include href="includes/date_editor.xbl" parse="xml"/>
+        <xi:include href="includes/relator.xbl" parse="xml"/>
+        <xi:include href="includes/item.xbl" parse="xml"/>
+        <xi:include href="includes/rism_sigla_select.xbl" parse="xml"/>
+        <xi:include href="includes/id.xbl" parse="xml"/>
+        <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
+        <xi:include href="includes/linked_sources.xbl" parse="xml"/>
+    </h:head>
+    
+    <h:body class="source" onload="initialize();">
+        
+        <h:div class="main">
+            
+            <xf:group id="form-group">
+                
+                <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
+                <xxf:variable name="uri" 
+                    select="concat(instance('parameters')/dcm:orbeon_dir,
+                    '?uri=',
+                    instance('parameters')/dcm:form_home,
+                    'edit-source-case.xml&amp;doc=',
+                    instance('parameters')/dcm:xml_file)"/>
+                
+                
+                <h:div class="details_form_header">  
+                    
+                    <h:div style="float:right">
+                        <xf:submit submission="save-to-file">
+                            <xf:label><h:img src="/../editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                        </xf:submit>
+                        <xf:submit submission="save-to-file">
+                            <xf:label><h:img src="/../editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:load resource="{$uri}" show="replace"/>
+                            </xf:action>
+                        </xf:submit>
+                        <xf:trigger>
+                            <xf:label><h:img src="/../editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:load resource="{$uri}" show="replace"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </h:div>
+                    
+                    <xf:group ref="instance('data-instance')//m:item[@xml:id=instance('temp')/id]">
+                        <h:h3 style="display:inline;">
+                            <xf:output value="@label"/>
+                            <xf:group ref=".[normalize-space(@label)='' or not(@label)]"> [No item label] </xf:group>
+                            <xf:output value="if(instance('temp')[changed='true']) then '*' else''" id="work_identifier"/>
+                            <dcm:id ref="."/>
+                            <dcm:attribute-editor ref="."/>
+                        </h:h3>                
+                    </xf:group>
+                    
+                </h:div>
+               
+                
+                <xf:group ref="instance('data-instance')//m:item[@xml:id=instance('temp')/id]">
+                        <h:span class="blocklabel strong">Item 
+                            <h:a class="help">?<h:span class="comment">At item level, 
+                                information specific to an individual copy of a source should be entered. <h:br/>
+                                Information common to all copies of this source should be given at source level.<h:br/>
+                                Manuscripts are somewhat special, being sources having only one item. Manuscripts, too, 
+                                will have some information at source level and some (such as location) at item level, though
+                                the distinction is less clear than with printed sources. 
+                                <h:br/>
+                                If the item consists of several components with different physical appearance, 
+                                the distinct features of each component may be specified using the item's "Components" section.
+                            </h:span></h:a>
+                        </h:span>
+                        <h:div class="vertical_spacer"> </h:div>
+                        <dcm:item ref="."/>
+                </xf:group>
+                
+                <xf:group ref=".[not(instance('data-instance')//m:item[@xml:id=instance('temp')/id])]">
+                    <h:h3>Item not found</h:h3>
+                    <h:p>Did you remember to save your work before you opened the details editor?</h:p>
+                    <h:p>Please click the "Discard" button to return to the list.</h:p>
+                </xf:group>
+                
+                
+            </xf:group>
+            <h:br style="clear:both"/>
+        </h:div>
+        
+        <xi:include href="edit-form-footer.xml" parse="xml"/>
+        
+        <xi:include href="includes/code-inspector.xml" parse="xml"/>
+        
+    </h:body>
+</h:html>

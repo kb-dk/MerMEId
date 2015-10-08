@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:span xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:dcm="http://www.kb.dk/dcm">
+    <xf:input ref=".">
+        <xf:label>Name <h:a class="help">?<h:span class="comment">The scribe's name, e.g. "Carl Nielsen"; 
+            leave empty if scribe is unidentified</h:span></h:a></xf:label>
+    </xf:input>
+    <!-- input/select emulating selection="open" behaviour -->
+    <h:span class="selection_open_short">
+        <xf:input ref="@medium">
+            <xf:label>Medium <h:a class="help">?<h:span class="comment">The medium used for writing. 
+                Select from list or enter a custom text.</h:span></h:a></xf:label>
+        </xf:input>
+        <!-- set tabindex to 1000 to skip the select on tabbing -->
+        <xf:select1 ref="@medium" tabindex="1000">
+            <xf:item>
+                <xf:label></xf:label>
+                <xf:value/>
+            </xf:item>
+            <xf:item>
+                <xf:label>ink</xf:label>
+                <xf:value>ink</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>black ink</xf:label>
+                <xf:value>black ink</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>brown ink</xf:label>
+                <xf:value>brown ink</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>blue ink</xf:label>
+                <xf:value>blue ink</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>purple ink</xf:label>
+                <xf:value>purple ink</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>red ink</xf:label>
+                <xf:value>red ink</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>pencil</xf:label>
+                <xf:value>pencil</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>red crayon</xf:label>
+                <xf:value>red crayon</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>blue crayon</xf:label>
+                <xf:value>blue crayon</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>ball pen</xf:label>
+                <xf:value>ball pen</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>black pen</xf:label>
+                <xf:value>black pen</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>blue pen</xf:label>
+                <xf:value>blue pen</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>red pen</xf:label>
+                <xf:value>red pen</xf:value>
+            </xf:item>
+        </xf:select1>
+    </h:span>
+    <!-- end selection="open" -->
+    <xf:select1 ref="@initial" class="auto_length">
+        <xf:label> Represents: <h:a class="help">?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
+            set to "additions" otherwise. For manuscript annotations in printed sources use "additions"</h:span></h:a></xf:label>
+        <xf:item>
+            <xf:label>original contents</xf:label>
+            <xf:value>true</xf:value>
+        </xf:item>
+        <xf:item>
+            <xf:label>additions</xf:label>
+            <xf:value>false</xf:value>
+        </xf:item>
+    </xf:select1>
+</h:span>

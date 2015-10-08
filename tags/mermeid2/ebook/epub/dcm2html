@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+
+use strict;
+
+system("./load_exist.pl --host-port kb-cop.kb.dk:8080 --suffix xml --get db/dcm/ --context /exist/rest/db/dcm/");
+
+my $file_list = "<files>\n";
+while(my $file =<db/dcm/cnw*xml>) {
+    system("xsltproc mei_to_html.xsl $file > $file\.html");
+    $file_list .= '<file>' . $file . '.html' . '</file>';
+}
+$file_list .= "</files>\n";
+
+print $file_list;
+

@@ -21,7 +21,7 @@ declare function loop:valid-work-number(
       let $num:=fn:number($doc//m:workDesc/m:work/m:identifier[@label=$coll]/string())
       return $num >= 1 and 413 >= $num
 
-  return $result
+      return $result
 };
   
 
@@ -32,8 +32,8 @@ declare function loop:date-filters(
   let $notbefore:= request:get-parameter("notbefore","")
 
   let $date := 
-    for $d in $doc//m:workDesc/m:work/m:history/m:creation/m:date
-      return $d
+  for $d in $doc//m:workDesc/m:work/m:history/m:creation/m:date
+  return $d
     
   let $earliest := 
     if($date/@notbefore/string()) then
@@ -177,13 +177,13 @@ declare function loop:getlist (
             where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
 	    order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	    return $doc
-      else
-        for $doc in collection($database)/m:mei
-        where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
-	order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
-	return $doc
+	  else
+            for $doc in collection($database)/m:mei
+            where loop:pubstatus($published_only,$doc) and loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
+	    order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
+	    return $doc
 	      
-    return $list
+	return $list
 
-  };
+};
 
