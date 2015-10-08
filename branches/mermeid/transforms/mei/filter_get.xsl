@@ -51,7 +51,10 @@
   
   <xsl:template match="m:music">
     <music>
-      <xsl:comment>a placeholder for the music</xsl:comment>
+      <xsl:comment>
+	Thank you for the music, the songs I'm singing /
+	Thanks for all the joy they're bringing
+      </xsl:comment>
     </music>
   </xsl:template>
   

@@ -382,7 +382,8 @@
   <xsl:template match="h:a">
     <xsl:choose>
       <xsl:when test="@href">
-        <xsl:element name="ref" namespace="http://www.music-encoding.org/ns/mei">
+        <xsl:element name="ref" 
+		     namespace="http://www.music-encoding.org/ns/mei">
           <xsl:attribute name="target">
             <xsl:value-of select="@href"/>
           </xsl:attribute>
