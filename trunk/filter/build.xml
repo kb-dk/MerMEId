@@ -1,8 +1,14 @@
-<project name="mermeid" basedir="." default="all">
+<project name="filter" basedir="." default="all">
    
-    <property name="webapp.path"    value="public_html"/>
-    <property name="webapp.instance" value="dcmudv"/>
-    <property name="config" value="http_filter.xml"/>
+    <property name="webapp.path"    
+	      value="public_html"/>
+
+    <property name="webapp.instance" 
+	      value="dcmudv"/>
+
+    <property name="config" 
+	      value="http_filter.xml"/>
+
     <property name="webapp.config"   
 	      value="../local_config/http_filter.xml"/>
 
@@ -40,13 +46,14 @@
     <target name="war" depends="copy, jar">
       <war destfile="filter.war" webxml="web.xml">
 	<zipfileset dir="${webapp.path}" />
+	<classes dir="conf" />
       	<lib dir="${bin.dir}"/>
       	<lib dir="${jar.dir}"/>
       </war>
     </target>
 
     <target name="jar" description="Jar the project" depends="compile"> 
-      <mkdir dir="${jar.dir}"/>
+      <mkdir dir="${bin.dir}"/>
       <jar destfile="${jar.dir}/${ant.project.name}.jar" 
 	   basedir="${build.dir}">
         <manifest>
@@ -56,9 +63,7 @@
       </jar>
     </target>
   
-    <!-- Clean, compile, jar -->
     <target name="all" 
-	    depends="war" 
-	    description="pack stuff"/>
+	    depends="war" />
 
 </project>
