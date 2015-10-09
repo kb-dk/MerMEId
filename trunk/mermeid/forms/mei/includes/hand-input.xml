@@ -3,13 +3,13 @@
     xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns:dcm="http://www.kb.dk/dcm">
     <xf:input ref=".">
-        <xf:label>Name <h:a class="help">?<h:span class="comment">The scribe's name, e.g. "Carl Nielsen"; 
+        <xf:label>Name <h:a class="help">&#160;?<h:span class="comment">The scribe's name, e.g. "Carl Nielsen"; 
             leave empty if scribe is unidentified</h:span></h:a></xf:label>
     </xf:input>
     <!-- input/select emulating selection="open" behaviour -->
     <h:span class="selection_open_short">
         <xf:input ref="@medium">
-            <xf:label>Medium <h:a class="help">?<h:span class="comment">The medium used for writing. 
+            <xf:label>Medium <h:a class="help">&#160;?<h:span class="comment">The medium used for writing. 
                 Select from list or enter a custom text.</h:span></h:a></xf:label>
         </xf:input>
         <!-- set tabindex to 1000 to skip the select on tabbing -->
@@ -74,7 +74,7 @@
     </h:span>
     <!-- end selection="open" -->
     <xf:select1 ref="@initial" class="auto_length">
-        <xf:label> Represents: <h:a class="help">?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
+        <xf:label> Represents: <h:a class="help">&#160;?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
             set to "additions" otherwise. For manuscript annotations in printed sources use "additions"</h:span></h:a></xf:label>
         <xf:item>
             <xf:label>original contents</xf:label>

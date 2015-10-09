@@ -46,6 +46,17 @@
 
   <!-- Generate a value for empty @xml:id -->
   <xsl:template match="@xml:id[.='']">
+    <xsl:call-template name="fill_in_id"/>
+  </xsl:template>
+
+  <xsl:template name="make_id_if_absent">
+    <xsl:if test="not(@xml:id and (string-length(@xml:id) &gt; 0))">
+      <xsl:call-template name="fill_in_id"/>
+    </xsl:if>
+  </xsl:template>
+
+
+  <xsl:template name="fill_in_id">
     <xsl:variable name="generated_id" select="generate-id()"/>
     <xsl:variable name="no_of_nodes" select="count(//*)"/>
     <xsl:attribute name="xml:id">
@@ -96,6 +107,7 @@
     <xsl:variable name="duplicateID" select="@xml:id"/>
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
+      <xsl:call-template name="make_id_if_absent"/>
       <!-- Append a number to the ID according to its number of occurrence -->
       <xsl:attribute name="xml:id">
         <xsl:value-of select="concat($duplicateID,'_',count(preceding::*[@xml:id=$duplicateID]))"/>
@@ -111,6 +123,7 @@
   <xsl:template match="m:biblList">
     <xsl:element name="biblList" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
+      <xsl:call-template name="make_id_if_absent"/>
       <xsl:apply-templates select="m:head"/>
       <xsl:apply-templates select="m:bibl"/>
     </xsl:element>
@@ -119,6 +132,7 @@
   <xsl:template match="m:source">
     <xsl:element name="source" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
+      <xsl:call-template name="make_id_if_absent"/>
       <xsl:apply-templates select="m:identifier"/>
       <xsl:apply-templates select="m:titleStmt"/>
       <xsl:apply-templates select="m:editionStmt"/>
@@ -139,6 +153,7 @@
   <xsl:template match="m:work">
     <xsl:element name="work" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
+      <xsl:call-template name="make_id_if_absent"/>
       <xsl:apply-templates select="m:identifier"/>
       <xsl:apply-templates select="m:titleStmt"/>
       <xsl:apply-templates select="m:incip"/>
@@ -270,9 +285,11 @@
   <!-- End entity conversion -->
 
   <!-- HTML -> MEI -->
-  <xsl:template match="h:p">
+  <xsl:template match="h:p | h:div">
     <xsl:element name="p" namespace="http://www.music-encoding.org/ns/mei">
-      <xsl:apply-templates select="@*|node()"/>
+      <xsl:apply-templates select="@*"/>
+      <xsl:call-template name="make_id_if_absent"/>
+      <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
   <xsl:template match="h:br">
@@ -365,7 +382,8 @@
   <xsl:template match="h:a">
     <xsl:choose>
       <xsl:when test="@href">
-        <xsl:element name="ref" namespace="http://www.music-encoding.org/ns/mei">
+        <xsl:element name="ref" 
+		     namespace="http://www.music-encoding.org/ns/mei">
           <xsl:attribute name="target">
             <xsl:value-of select="@href"/>
           </xsl:attribute>
@@ -393,15 +411,20 @@
       <xsl:attribute name="halign">
         <xsl:value-of select="substring-before(substring-after(@style,'text-align:'),';')"/>
       </xsl:attribute>
-      <xsl:apply-templates select="node() | @*"/>
+      <xsl:apply-templates select="node()"/>
+      <xsl:call-template name="make_id_if_absent"/>
+      <xsl:apply-templates select="@*"/>
     </xsl:element>
   </xsl:template>
   <xsl:template match="h:ul">
     <xsl:element name="list" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="form">simple</xsl:attribute>
       <xsl:for-each select="h:li">
-        <xsl:element name="li" namespace="http://www.music-encoding.org/ns/mei">
-          <xsl:apply-templates select="node() | @*"/>
+        <xsl:element name="li"
+		     namespace="http://www.music-encoding.org/ns/mei">
+	  <xsl:apply-templates select="node()"/>
+	  <xsl:call-template name="make_id_if_absent"/>
+	  <xsl:apply-templates select="@*"/>
         </xsl:element>
       </xsl:for-each>
     </xsl:element>
@@ -411,7 +434,9 @@
       <xsl:attribute name="form">ordered</xsl:attribute>
       <xsl:for-each select="h:li">
         <xsl:element name="li" namespace="http://www.music-encoding.org/ns/mei">
-          <xsl:apply-templates select="node() | @*"/>
+	  <xsl:apply-templates select="node()"/>
+	  <xsl:call-template name="make_id_if_absent"/>
+	  <xsl:apply-templates select="@*"/>
         </xsl:element>
       </xsl:for-each>
     </xsl:element>
@@ -477,6 +502,7 @@
                   or (not(m:changeDesc//text()) and $prevChange/m:changeDesc!='')">
                   <change>
                     <xsl:copy-of select="@*"/>
+		    <xsl:call-template name="make_id_if_absent"/>
                     <xsl:attribute name="isodate">
                       <xsl:value-of select="@isodate"/>
                     </xsl:attribute>

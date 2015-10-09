@@ -36,7 +36,7 @@ let $return_to := concat(
 
 
 let $log-in := login:function()
-let $res := response:redirect-to($return_to cast as xs:anyURI)
+let $res := response:redirect-to($return_to cast as xs:anyURI) 
 let $parameters :=  request:get-parameter-names()
 
 return

@@ -7,7 +7,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude">
     <h:span class="fixed_width_mediumlong">
         <xf:input ref="@count" class="minimal_length">
-            <!--<xf:label class="fixed_width">No. &amp; name <h:a class="help">?<h:span 
+            <!--<xf:label class="fixed_width">No. &amp; name <h:a class="help">&#160;?<h:span 
                 class="comment">Enter the number of players in the 
                 first input field, and the instrument's name, as it is to be 
                 displayed, in the second, e.g. "vl.1" or "violin".
@@ -18,7 +18,7 @@
         </xf:input>
     </h:span>
     <xf:select1 ref="@code" class="long">
-        <xf:label><!--Standard code <h:a class="help">?<h:span 
+        <xf:label><!--Standard code <h:a class="help">&#160;?<h:span 
             class="comment">Choosing a standard MARC code optimizes data  
             compatibility and interchangeability with other systems.<h:br/>
             Also, it may be used to automatically insert the 

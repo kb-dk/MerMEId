@@ -1,17 +1,31 @@
 <parameters xmlns="http://www.kb.dk/dcm">
+
+  <!-- paths -->
   <document_root>storage/dcm/</document_root>
   <exist_dir>storage/</exist_dir>
-  <orbeon_dir>http://disdev-01.kb.dk/orbeon/xforms-jsp/mei-form/</orbeon_dir>
-  <form_home>http://disdev-01.kb.dk/editor/forms/mei/</form_home>
-  <crud_home>http://disdev-01.kb.dk/filter/dcm/</crud_home>
-  <server_name>http://disdev-01.kb.dk/</server_name>
+  <orbeon_dir>http://dcm-udv-01.kb.dk/orbeon/xforms-jsp/mei-form/</orbeon_dir>
+  <form_home>http://dcm-udv-01.kb.dk/editor/forms/mei/</form_home>
+  <crud_home>http://dcm-udv-01.kb.dk/filter/dcm/</crud_home>
+  <library_crud_home>http://dcm-udv-01.kb.dk/filter/library/</library_crud_home>
+  <server_name>http://dcm-udv-01.kb.dk/</server_name>
+  <template_dir></template_dir>
+  <standard_data_dir></standard_data_dir>
   
-  <!-- Editor settings - (set boolean values to true or nothing)  -->
+  <!--  eXist & filter user name and password -->
+  <!--exist_user>no user</exist_user>
+  <exist_pwd>no password</exist_pwd>
+
+  <filter_user>no user</filter_user>
+  <filter_pwd>no password</filter_pwd-->
+  <!-- the authentication data should not be here anymore -->
+  
+  
+  <!-- Default editor settings - (set boolean values to 'true' or nothing)  -->
   <!-- Enable attribute editor? -->
   <attr_editor_main_switch>true</attr_editor_main_switch>
   <!-- Enable xml:id display component? -->
   <id_main_switch>true</id_main_switch>
-  <!-- Enable Orbeon XForms code inspector component? -->
+  <!-- Enable code inspector component? -->
   <code_inspector_main_switch>true</code_inspector_main_switch>
   
   <!-- Some elements used internally by XForms - not for user configuration -->

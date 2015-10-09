@@ -4,11 +4,11 @@
     xmlns:dcm="http://www.kb.dk/dcm">
     
     <xf:input ref="t:title[@level='a']" class="long">
-        <xf:label class="fixed_width">Title <h:a class="help">?<h:span class="comment">The article's heading (often omitted with newspaper articles)</h:span></h:a></xf:label>
+        <xf:label class="fixed_width">Title <h:a class="help">&#160;?<h:span class="comment">The article's heading (often omitted with newspaper articles)</h:span></h:a></xf:label>
     </xf:input>
     <h:br clear="both"/>
     <xf:input ref="t:title[@level='j']" class="long">
-        <xf:label class="fixed_width">Journal <h:a class="help">?<h:span class="comment">Name of the journal or newspaper</h:span></h:a></xf:label>
+        <xf:label class="fixed_width">Journal <h:a class="help">&#160;?<h:span class="comment">Name of the journal or newspaper</h:span></h:a></xf:label>
     </xf:input>
     <h:br clear="both"/>
     <xf:input ref="t:biblScope[@type='vol']" class="short">
@@ -24,9 +24,8 @@
     </xf:input>
     <h:br clear="both"/>
     
-    <dcm:date-editor ref="t:date">
-        <xf:label class="fixed_width">Date</xf:label>
-    </dcm:date-editor>
+    <h:span class="fixed_width">Date</h:span>
+    <dcm:date-editor ref="t:date"/>
     
     <xf:input ref="t:author" class="medium_long">
         <xf:label class="fixed_width">Author</xf:label>

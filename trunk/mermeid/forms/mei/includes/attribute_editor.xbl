@@ -27,8 +27,8 @@
         <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
             <display-name lang="en">Attribute editor</display-name>
             <icon lang="en">
-                <small-icon>/../editor/images/attribute.png</small-icon>
-                <large-icon>/../editor/images/attribute.png</large-icon>
+                <small-icon>/editor/images/attribute.png</small-icon>
+                <large-icon>/editor/images/attribute.png</large-icon>
             </icon>
             <template>
                 <dcm:attribute-editor>
@@ -42,16 +42,24 @@
         
         <xbl:resources>
             <xbl:style>
-                .dcm-attribute-editor-label { display: inline-block; width: 7em; }
-                .dcm-attribute-editor-input input { width: 250px; }
+                .orbeon .dcm-attribute-editor-input { white-space: nowrap; }
+                .orbeon .dcm-attribute-editor-label.xforms-label { display: inline-block; width: 7em; }
+                .orbeon .dcm-attribute-editor-input input { width: 250px; }
             </xbl:style>
         </xbl:resources>
         
         <xbl:implementation>
             <xf:model id="attr_model">
+
+                <xf:instance xmlns="http://www.kb.dk/dcm"
+                    id="parameters">
+                    <xi:include href="../mermeid_configuration.xml"/>
+                </xf:instance>
                 
-                <xf:instance id="mei_attr_list" 
-                    src="/../editor/forms/mei/model/MEI_attr_list.xml"/>
+                <xf:instance id="mei_attr_list">
+                  <xi:include href="../model/MEI_attr_list.xml"
+			      parse="xml"/>
+		</xf:instance>
                 
                 <xf:instance id="local_temp">
                     <temp-values>
@@ -99,7 +107,7 @@
                             
                         
                         <xf:trigger appearance="minimal" id="open_button">
-                            <xf:label><h:img id="attr_editor_id" src="/../editor/images/attribute.png" title="Edit attributes" alt="Edit attributes"/></xf:label>
+                            <xf:label><h:img id="attr_editor_id" src="{instance('parameters')/dcm:server_name}/editor/images/attribute.png" title="Edit attributes" alt="Edit attributes"/></xf:label>
                             <xf:action ev:event="DOMActivate OpenAndInitialize">
                                 <xxforms:show dialog="attr-dialog"/>                                    
                                 <!-- initialization -->

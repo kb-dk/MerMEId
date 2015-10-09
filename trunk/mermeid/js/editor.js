@@ -8,8 +8,8 @@ function next(elem) {
 
 function setPageTitle() {
     if(document.title) {
-        if(document.getElementById('work_identifier').innerHTML != '') {
-            document.title = 'MerMEId - '+document.getElementById('work_identifier').innerHTML;
+        if(document.getElementById('work_identifier≡≡c').innerHTML != '') {
+            document.title = 'MerMEId - '+document.getElementById('work_identifier≡≡c').innerHTML;
         }
     }
 }

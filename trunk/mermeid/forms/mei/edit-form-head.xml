@@ -85,9 +85,10 @@
       <mei/>
     </xf:instance>
 
-    <xf:instance id="mei_attr_list" 
-      src="/editor/forms/mei/model/MEI_attr_list.xml"/>
-    
+    <xf:instance id="mei_attr_list" >
+      <xi:include href="./model/MEI_attr_list.xml"/>
+    </xf:instance>
+
     <xf:instance id="parameters" 
       xmlns="http://www.kb.dk/dcm"
       src="/editor/forms/mei/mermeid_configuration.xml"/>
@@ -119,16 +120,21 @@
     
     <!-- load empty instance -->
     <xf:submission id="load-new-submission"
-      method="get" serialization="none" validate="false"
+      method="get" 
+      serialization="none" 
+      validate="false"
       resource="/editor/forms/mei/model/new_file.xml"
-      replace="instance" instance="data-instance"/>
+      replace="instance" 
+      xxf:show-progress="false"
+      instance="data-instance"/>
     
     <xf:submission id="load-data-submission" 
       method="get" 
       serialization="none" 
       validate="false"
       resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
-      replace="instance" instance="data-instance"/>
+      replace="instance" instance="data-instance"
+      xxf:show-progress="false"/>
 
     <xf:submission id="save-to-file"
       ref="instance('data-instance')"
@@ -137,7 +143,8 @@
       xxf:calculate="false"
       resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
       method="put"
-      replace="instance"/>
+      replace="instance"
+      xxf:show-progress="false"/>
 
     <xf:submission id="load-fileList"
       xxf:username=""
@@ -147,6 +154,7 @@
       validate="false"
       resource="{instance('temp')/target_uri}"
       replace="instance" 
+      xxf:show-progress="false"
       instance="XMLfiles"/>
 
     <xf:submission id="load-bibliography"
@@ -155,8 +163,9 @@
       method="get" 
       serialization="none" 
       validate="false"
-      resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml"
+      resource="{instance('parameters')/dcm:library_crud_home}/standard_bibliography.xml"
       replace="instance" 
+      xxf:show-progress="false"
       instance="bibliography-instance"/>
     
     <!-- "onload" xforms actions -->

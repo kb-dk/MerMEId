@@ -28,29 +28,32 @@
         
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="bibl-type-instance" 
-            src="/../editor/forms/mei/model/bibl_reference_types.xml" 
-            xxf:readonly="true"/>
+            xxf:readonly="true">
+            <xi:include href="./model/bibl_reference_types.xml"/>
+        </xf:instance>
         
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
-            id="instrumentation"
-            src="/../editor/forms/mei/model/standard_instrumentation.xml"/>
+            id="instrumentation">
+            <xi:include href="./model/standard_instrumentation.xml"/>
+        </xf:instance>
         
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="ensembles" 
-            src="/../editor/forms/mei/model/ensembles.xml" 
-            xxf:readonly="true"/>
+            xxf:readonly="true">
+            <xi:include href="./model/ensembles.xml"/>
+        </xf:instance>
         
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
             id="instruments" 
-            src="/../editor/forms/mei/model/instruments.xml" 
-            xxf:readonly="true"/>
+            xxf:readonly="true">
+            <xi:include href="./model/instruments.xml"/>
+        </xf:instance>
 
-        <xf:instance id="mei_attr_list" 
-            src="/../editor/forms/mei/model/MEI_attr_list.xml"/>
-        
         <xf:instance id="parameters" 
             xmlns="http://www.kb.dk/dcm"
-            src="/../editor/forms/mei/mermeid_configuration.xml" parse="xml"/>
+            parse="xml">
+            <xi:include href="mermeid_configuration.xml"/>
+        </xf:instance>
         
         <xf:instance id="XMLfiles" 
             xmlns="http://www.kb.dk/dcm">
@@ -88,20 +91,10 @@
         
         <!-- submissions - loading and saving data -->            
         
-        <xf:submission id="save-bibliography"
-            xxf:username=""
-            xxf:password=""
-            ref="instance('bibliography-instance')"
-            validate="false"
-            relevant="false"
-            xxf:calculate="false"
-            resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml" 
-            method="put"
-            replace="instance"/>        
-                
         <xf:submission id="load-fileList"
             xxf:username=""
             xxf:password=""
+            xxf:show-progress="false"
             method="get" 
             serialization="none" 
             validate="false"
@@ -112,12 +105,25 @@
         <xf:submission id="load-bibliography"
             xxf:username=""
             xxf:password=""
+            xxf:show-progress="false"
             method="get" 
             serialization="none" 
             validate="false"
-            resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}library/standard_bibliography.xml"
+            resource="{instance('parameters')/dcm:library_crud_home}/standard_bibliography.xml" 
             replace="instance" 
             instance="bibliography-instance"/>
+
+        <xf:submission id="save-bibliography"
+            xxf:username=""
+            xxf:password=""
+            xxf:show-progress="false"
+            ref="instance('bibliography-instance')"
+            validate="false"
+            relevant="false"
+            xxf:calculate="false"
+            resource="{instance('parameters')/dcm:library_crud_home}/standard_bibliography.xml" 
+            method="put"
+            replace="instance"/>        
         
         <!-- "onload" xforms actions -->
         <xf:action ev:event="xforms-model-construct-done">

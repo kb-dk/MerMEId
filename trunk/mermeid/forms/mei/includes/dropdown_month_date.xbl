@@ -1,57 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xbl:xbl xmlns:xhtml="http://www.w3.org/1999/xhtml"
+<!--
+Copyright (C) 2010 Orbeon, Inc.
+
+This program is free software; you can redistribute it and/or modify it under the terms of the
+GNU Lesser General Public License as published by the Free Software Foundation; either version
+2.1 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU Lesser General Public License for more details.
+
+The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+-->
+
+<!-- 
+Altered to allow free year range and use month names instead of numbers.
+Axel Geertinger
+DCM, The Royal Library, Copenhagen 2015
+-->
+
+<xbl:xbl xmlns:xh="http://www.w3.org/1999/xhtml"
     xmlns:xf="http://www.w3.org/2002/xforms"
-    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
-    xmlns:exf="http://www.exforms.org/exf/1-0"
-    xmlns:xbl="http://www.w3.org/ns/xbl"
-    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:saxon="http://saxon.sf.net/"
+    xmlns:xbl="http://www.w3.org/ns/xbl"
+    xmlns:exf="http://www.exforms.org/exf/1-0"
+    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
     xmlns:dcm="http://www.kb.dk/dcm">
     
     <!--
-        Component to represent a date control based on separate fields.
-        Modified to combine day and year fields with dropdown month
-        by 
-        Danish Centre for Music Publication (DCM)
-        Axel Geertinger (atge@kb.dk) 
-        2012 
+        Component to represent a date control based on drop-down menus.
     -->
-    
-    <xbl:binding id="dcm-dropdown-month-date-binding" element="dcm|dropdown-month-date">
+    <xbl:binding
+        id="dcm-dropdown-month-date-binding"
+        element="dcm|dropdown-month-date, xf|input:xxf-type('xs:date')[appearance ~= dropdowns]"
+        xxbl:container="span"
+        xxbl:mode="lhha binding value"
+        xxbl:label-for="select1">
         
         <!-- Orbeon Form Builder Component Metadata -->
         <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
-            <display-name lang="en">Fields date with dropdown month</display-name>
-            <datatype>xf:date</datatype>
-            <template>
-                <dcm:dropdown-month-date>
-                    <xf:label ref=""/>
-                    <xf:hint ref=""/>
-                    <xf:help ref=""/>
-                    <xf:alert ref=""/>
-                </dcm:dropdown-month-date>
-            </template>
+            <display-name lang="en">Dropdown Date</display-name>
+            <icon lang="en">
+                <small-icon>/ops/images/xforms/calendar.png</small-icon>
+                <large-icon>/ops/images/xforms/calendar.png</large-icon>
+            </icon>
+            <templates>
+                <bind type="xf:date"/>
+                <view>
+                    <fr:dropdown-date>
+                        <xf:label ref=""/>
+                        <xf:hint ref=""/>
+                        <xf:help ref=""/>
+                        <xf:alert ref=""/>
+                    </fr:dropdown-date>
+                </view>
+            </templates>
         </metadata>
+        
         <xbl:resources>
             <xbl:style>
                 .xbl-dcm-dropdown-month-date { display:inline; }
-                .xbl-dcm-dropdown-month-date .dcm-component-group .dcm-width-2 input { width: 2em }
-                .xbl-dcm-dropdown-month-date .dcm-component-group .dcm-width-4 input {width: 4em }
-                .xbl-dcm-dropdown-month-date .dcm-component-group select.xforms-select1-appearance-minimal,
-                .xbl-dcm-dropdown-month-date .dcm-component-group span.xforms-select1-appearance-minimal select { width: auto }
-                <!-- Make hidden date picker invisible -->
-                .fr-hidden-date-picker { position: relative }
-                .fr-hidden-date-picker img { z-index: 1; position: 
-                absolute; top: 0; left: 0; *top: 4px }
-                .fr-hidden-date-picker input.xforms-type-date { width: 1px; opacity: 0; -moz-opacity: 0; *filter: alpha(opacity: 0) }
-                .fr-hidden-date-picker span.xforms-type-date { display: inline; z-index: 2; position: relative  }
+                .dcm-date-input-box .dcm-width-2 select,
+                .dcm-date-input-box .dcm-width-2 input { width: 4em }
+                .dcm-date-input-box .dcm-width-4 select, 
+                .dcm-date-input-box .dcm-width-4 input {width: 4em }
+                .dcm-date-input-box select.xforms-select1 select { width: auto }
             </xbl:style>
         </xbl:resources>
         <xbl:implementation>
             <!-- Local model -->
-            <xf:model id="dcm-date-model">
+            <xf:model id="date-model">
                 <xf:instance id="date-instance">
                     <date>
                         <!-- Individual components of the date -->
@@ -64,137 +88,205 @@
                         <is-readonly/>
                     </date>
                 </xf:instance>
-                <!-- Set the validity on the whole instance -->
-                <xf:bind nodeset="." constraint="is-valid = 'true'"/>
+                
+                <!-- Make instance read-only when the form must be read-only -->
+                <xf:bind ref="." readonly="is-readonly = 'true'"/>
+                
+                <!-- TODO: would need global instances! -->
+                <xf:instance id="years-itemset">
+                    <years/>
+                </xf:instance>
+                
+                <xf:instance id="months-itemset">
+                    <months>
+                        <item>
+                            <value>1</value>
+                            <label>January</label>
+                        </item>
+                        <item>
+                            <value>2</value>
+                            <label>February</label>
+                        </item>
+                        <item>
+                            <value>3</value>
+                            <label>March</label>
+                        </item>
+                        <item>
+                            <value>4</value>
+                            <label>April</label>
+                        </item>
+                        <item>
+                            <value>5</value>
+                            <label>May</label>
+                        </item>
+                        <item>
+                            <value>6</value>
+                            <label>June</label>
+                        </item>
+                        <item>
+                            <value>7</value>
+                            <label>July</label>
+                        </item>
+                        <item>
+                            <value>8</value>
+                            <label>August</label>
+                        </item>
+                        <item>
+                            <value>9</value>
+                            <label>September</label>
+                        </item>
+                        <item>
+                            <value>10</value>
+                            <label>October</label>
+                        </item>
+                        <item>
+                            <value>11</value>
+                            <label>November</label>
+                        </item>
+                        <item>
+                            <value>12</value>
+                            <label>December</label>
+                        </item>
+                    </months>
+                </xf:instance>
+                
+                <xf:instance id="days-itemset">
+                    <days/>
+                </xf:instance>
+                
+                <xf:instance id="orbeon-resources" xxf:readonly="true">
+                    <resources>
+                        <resource xml:lang="en">
+                            <year>Year</year>
+                            <month>Month</month>
+                            <day>Day</day>
+                        </resource>
+                    </resources>
+                </xf:instance>
+                
+                <!-- Initialize itemsets upon initialization -->
+                <xf:action ev:event="xforms-model-construct-done">
+                    <!--
+                    <xf:var name="start-year" value="saxon:evaluate(xxf:property('oxf.xforms.xbl.fr.dropdown-date.start-year'))" as="xs:integer"/>
+                    <xf:var name="end-year"   value="saxon:evaluate(xxf:property('oxf.xforms.xbl.fr.dropdown-date.end-year'  ))" as="xs:integer"/>
+                    <xf:action iterate="($start-year to $end-year)">
+                        <xf:var name="year" value="." as="xs:string"/>
+                        <xf:insert context="instance('years-itemset')" origin="xxf:element('year', $year)"/>
+                    </xf:action>-->
+                    <xf:action iterate="(1 to 31)">
+                        <xf:var name="day" value="." as="xs:string"/>
+                        <xf:insert context="instance('days-itemset')" ref="*" origin="xxf:element('day', $day)"/>
+                    </xf:action>
+                </xf:action>
             </xf:model>
         </xbl:implementation>
         <xbl:template>
-
-            <!-- Outer group -->
-            <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
-                <xbl:content includes="xforms|label,xforms|help,xforms|hint,xforms|alert"/>
-                
-                <!-- Inner group -->
-                <xf:group appearance="xxf:internal" xxbl:scope="inner">
-                    <!-- Variable pointing to external single-node binding -->
-                    <xxf:variable name="binding" as="node()?">
-                        <xxf:sequence select="." xxbl:scope="outer"/>
-                    </xxf:variable>
-                    <!--<xf:output select="$binding"><xf:label>Binding:</xf:label></xf:output>-->                    
-                    <!-- Read external value -->
-                    <xxf:variable name="value" as="xs:string" select="$binding/string()">
-                        <xf:action ev:event="xforms-value-changed xforms-enabled">
-                            <!-- Only set local values if the bound node is an xs:date -->
-                            <xf:action if="$binding castable as xs:date">
-                                <xf:setvalue ref="instance('date-instance')/year" value="year-from-date($binding)"/>
-                                <xf:setvalue ref="instance('date-instance')/month" value="month-from-date($binding)"/>
-                                <xf:setvalue ref="instance('date-instance')/day" value="day-from-date($binding)"/>
-                            </xf:action>
-                            <xf:action if="not($binding castable as xs:date) and normalize-space($binding) = ''">
-                                <xf:setvalue ref="instance('date-instance')/year"/>
-                                <xf:setvalue ref="instance('date-instance')/month"/>
-                                <xf:setvalue ref="instance('date-instance')/day"/>
-                            </xf:action>
-                            <xf:action if="not($binding castable as xs:date) and count(tokenize($binding, '-')) &gt; 0">
-                                <xf:action xxf:iterate="tokenize($binding, '-')">
-                                    <xxf:variable name="position" select="position()" as="xs:integer"/>
-                                    <xf:setvalue ref="instance('date-instance')/*[$position]"
-                                        value="if (context() castable as xs:integer) then xs:integer(context()) else ''"/>
-                                </xf:action>
-                            </xf:action>
+            <!-- Read external value -->
+            <xf:var name="binding"
+                value="xxf:binding('dcm-dropdown-month-date-binding')"/>
+            <xf:var name="view"
+                value="exf:readonly($binding) and property('xxf:readonly-appearance') = 'static'"/>
+            <xf:var name="value" as="xs:string" value="$binding/string()">
+                <xf:action ev:event="xforms-value-changed xforms-enabled">
+                    <!-- Only set local values if the bound node is an xs:date -->
+                    <xf:action if="$value castable as xs:date">
+                        <xf:setvalue ref="instance('date-instance')/year" value="year-from-date($binding)"/>
+                        <xf:setvalue ref="instance('date-instance')/month" value="month-from-date($binding)"/>
+                        <xf:setvalue ref="instance('date-instance')/day" value="day-from-date($binding)"/>
+                    </xf:action>
+                    <xf:action if="not($value castable as xs:date) and normalize-space($value) = ''">
+                        <xf:setvalue ref="instance('date-instance')/year"/>
+                        <xf:setvalue ref="instance('date-instance')/month"/>
+                        <xf:setvalue ref="instance('date-instance')/day"/>
+                    </xf:action>
+                    <xf:action if="not($value castable as xs:date) and count(tokenize($value, '-')) gt 0">
+                        <xf:action iterate="tokenize($value, '-')">
+                            <xf:var name="position" value="position()" as="xs:integer"/>
+                            <xf:setvalue ref="instance('date-instance')/*[$position]"
+                                value="if (context() castable as xs:integer) then xs:integer(context()) else ''"/>
                         </xf:action>
-                    </xxf:variable>
-                    
-                    <xf:group class="dcm-component-group" model="dcm-date-model">
-                            <xf:input ref="day" class="dcm-width-2" xbl:attr="navindex navindex=tabindex">
-                                <xf:hint>Day</xf:hint>
-                            </xf:input>
-                            <xf:select1 ref="month" class="xforms-select1-appearance-minimal">
-                                <xf:hint>Month</xf:hint>
-                                <xf:item>
-                                    <xf:value></xf:value>
-                                    <xf:label> - </xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>1</xf:value>
-                                    <xf:label>January</xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>2</xf:value>
-                                    <xf:label>February</xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>3</xf:value>
-                                    <xf:label>March</xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>4</xf:value>
-                                    <xf:label>April</xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>5</xf:value>
-                                    <xf:label>May</xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>6</xf:value>
-                                    <xf:label>June</xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>7</xf:value>
-                                    <xf:label>July</xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>8</xf:value>
-                                    <xf:label>August</xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>9</xf:value>
-                                    <xf:label>September</xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>10</xf:value>
-                                    <xf:label>October</xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>11</xf:value>
-                                    <xf:label>November</xf:label>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:value>12</xf:value>
-                                    <xf:label>December</xf:label>
-                                </xf:item>
-                            </xf:select1>
-                            <xf:input ref="year" class="dcm-width-4">
-                                <xf:hint>Year</xf:hint>
-                            </xf:input>
+                    </xf:action>
+                </xf:action>
+            </xf:var>
+            
+            <!-- Propagate readonly -->
+            <xf:var name="readonly" as="xs:boolean" value="exf:readonly($binding)">
+                <xf:setvalue ev:event="xforms-enabled xforms-value-changed"
+                    ref="instance('date-instance')/is-readonly" value="exf:readonly($binding)"/>
+            </xf:var>
+            
+            <xf:group class="fr-component-group">
+                <xf:group ref=".[not($view)]">
+                    <!-- Don't show fields at all in static readonly mode -->
+                    <!-- NOTE: navindex is copied to first field, but need one for second field too! -->
+                    <xf:select1 ref="day" id="select1" class="dcm-width-2">
+                        <xf:item>
+                            <xf:label value="Day"/>
+                            <xf:value/>
+                        </xf:item>
+                        <xf:itemset ref="instance('days-itemset')/day">
+                            <xf:label ref="."/>
+                            <xf:value ref="."/>
+                        </xf:itemset>
+                    </xf:select1>
+                    <xf:select1 ref="month">
+                        <xf:item>
+                            <xf:label value="Month"/>
+                            <xf:value/>
+                        </xf:item>
+                        <xf:itemset ref="instance('months-itemset')/item">
+                            <xf:label ref="label"/>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                    <xf:input ref="year" class="dcm-width-4">
+                        <xf:label value="Year"/>
+                    </xf:input>
                         
-                        <!-- React to update to local values -->
-                        <xf:action ev:event="xforms-value-changed">
-                            <xxf:variable name="c" select="normalize-space(string-join((year, month, day), ''))" as="xs:string"/>
-                            <xf:action if="$c = ''">
-                                <xf:setvalue ref="is-valid" value="false()"/>
-                                <xf:setvalue ref="$binding"/>
-                            </xf:action>
-                            <xf:action if="$c != ''">
-                                <!-- Compute date parts -->
-                                <xxf:variable name="y" select="if (year castable as xs:integer) then format-number(xs:integer(year), '0000') else ''" as="xs:string"/>
-                                <xxf:variable name="m" select="if (month castable as xs:integer) then concat('-',format-number(xs:integer(month), '00')) else ''" as="xs:string"/>
-                                <xxf:variable name="d" select="if (day castable as xs:integer) then concat('-',format-number(xs:integer(day), '00')) else ''" as="xs:string"/>
-                                <!-- Create date string -->
-                                <xxf:variable name="date-string" select="string-join(($y, $m, $d), '')" as="xs:string"/>
-                                <!-- Set value to format like 2008-02-31 or 0000-12-01 if parts are unknown -->
-                                <xf:setvalue ref="is-valid" value="$date-string castable as xs:date"/>
-                                <xf:setvalue ref="$binding" value="$date-string"/>
-                            </xf:action>
+                    
+<!--                    <xf:select1 ref="year" xbl:attr="navindex navindex=tabindex" class="dcm-width-4">
+                        <xf:item>
+                            <xf:label value="xxf:r('year')"/>
+                            <xf:value/>
+                        </xf:item>
+                        <xf:itemset ref="instance('years-itemset')/year">
+                            <xf:label ref="."/>
+                            <xf:value ref="."/>
+                        </xf:itemset>
+                    </xf:select1>-->
+                    
+                    <!-- React to update to local values -->
+                    <xf:action ev:event="xforms-value-changed">
+                        <xf:var name="c" value="normalize-space(string-join((year, month, day), ''))" as="xs:string"/>
+                        <!-- Blank result -->
+                        <xf:action if="$c = ''">
+                            <xf:setvalue ref="is-valid" value="false()"/>
+                            <xf:setvalue ref="$binding"/>
                         </xf:action>
-                        <!-- Date picker -->
-                        <!--<xf:input ref="$binding" appearance="minimal"/>-->
-                    </xf:group>
-                    <!-- Stop propagation of all UI events -->
-                    <xf:action ev:event="#all" ev:propagate="stop"/>
+                        <!-- Non-blank result -->
+                        <xf:action if="$c != ''">
+                            <!-- Compute date parts -->
+                            <xf:var name="y" value="if (year  castable as xs:integer) then format-number(xs:integer(year), '0000') else ''" as="xs:string"/>
+                            <xf:var name="m" value="if (month castable as xs:integer) then format-number(xs:integer(month),  '00') else 'xx'"   as="xs:string"/>
+                            <xf:var name="d" value="if (day   castable as xs:integer) then format-number(xs:integer(day),    '00') else 'xx'"   as="xs:string"/>
+                            
+                            <!-- Create date string -->
+                            <!--<xf:var name="date-string" value="string-join(($y, $m, $d), '-')" as="xs:string"/>-->
+                            <xf:var name="date-string-raw" value="string-join(($y, $m, $d), '-')" as="xs:string"/>
+                            <!-- strip off any '-xx'-parts -->
+                            <xf:var name="date-string" value="concat($date-string-raw[not(contains(.,'-xx'))],substring-before($date-string-raw,'-xx'))" as="xs:string"/>
+                            
+                            <!-- Set value to format like 2008-02-31 or 0000-12-01 if parts are unknown -->
+                            <xf:setvalue ref="is-valid" value="$date-string castable as xs:date"/>
+                            <xf:setvalue ref="$binding" value="$date-string"/>
+                        </xf:action>
+                    </xf:action>
+                </xf:group>
+                <xf:group ref=".[$view]">
+                    <!-- Static readonly mode -->
+                    <xf:input ref="$binding"/>
                 </xf:group>
             </xf:group>
         </xbl:template>
     </xbl:binding>
 </xbl:xbl>
-

@@ -31,7 +31,7 @@
 		</xf:itemset>
 	</xf:select1> &#160;&#160;&#160;&#160;
 	<xf:input ref="instance('temp')/query">
-		<xf:label>Keywords <h:a class="help">?<span class="comment search" 
+		<xf:label>Keywords <h:a class="help">&#160;?<span class="comment search" 
 			style="width: 350px">
 			Narrow your search by adding keywords, e.g. part of the title.<h:br/>
 			Search is case insensitive. 
@@ -118,7 +118,7 @@
 						<xf:delete ref="instance('temp')/nodeset/*"/>						
 					</xf:action>
 				</xf:trigger>
-				<h:a class="help_plain"><h:img src="/../editor/images/id.png" style="margin-bottom: -2px;"/><h:span 
+				<h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/id.png" style="margin-bottom: -2px;"/><h:span 
 					class="comment" style="margin-top:0px; margin-left:-10px">File: <xf:output value="dcm:link/@href"/><xf:output value="@ref"/></h:span></h:a>
 			</h:div>
 		</xf:repeat>

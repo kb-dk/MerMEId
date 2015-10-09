@@ -1,6 +1,6 @@
 /* CSS for MerMEId XForms - supplement for model editor forms */
 
-body {   
+body.orbeon {   
     font-size: .8em;
     font-family: arial, helvetica, sans-serif;
     background-color: #e5e1bf;
@@ -10,7 +10,7 @@ body {
     margin:0px;
 }
 
-div.details_form_header {
+.orbeon div.details_form_header {
     background-color : #666;
     color: #fff;
     padding: 4px 8px;
@@ -19,16 +19,16 @@ div.details_form_header {
     height: 24px;
 }
 
-div.details_form_header h3 {
+.orbeon div.details_form_header h3 {
     margin:5px 0 0 0;
 }
 
-div.main {
+.orbeon div.main {
     background-color: #eee;
     padding: 10px;
     border: 1px solid #999;
 }
 
-.xforms-loading-loading {
+.orbeon .xforms-loading-loading {
     margin-top: 30px;
 }

@@ -69,16 +69,16 @@
                     
                     <h:div style="float:right">
                         <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="/../editor/images/save_small.png" alt="Save"/> Save</xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/save_small.png" alt="Save"/> Save</xf:label>
                         </xf:submit>
                         <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="/../editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{$uri}" show="replace"/>
                             </xf:action>
                         </xf:submit>
                         <xf:trigger>
-                            <xf:label><h:img src="/../editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:load resource="{$uri}" show="replace"/>
                             </xf:action>
@@ -147,7 +147,7 @@
                 </h:div>
                 
                 
-                <h:div class="blocklabel strong">Component <h:a class="help">?<h:span class="comment">A music "component" (in FRBR terms: component expression) 
+                <h:div class="blocklabel strong">Component <h:a class="help">&#160;?<h:span class="comment">A music "component" (in FRBR terms: component expression) 
                     describes a specific section of the music, e.g. a movement, act, or scene</h:span></h:a>
                     <dcm:attribute-editor ref="."/>
                 </h:div>
@@ -167,7 +167,7 @@
                     
                     <h:div>                        
                         <xf:input ref="@n" class="short">
-                            <xf:label class="fixed_width">No. <h:a class="help">?<h:span 
+                            <xf:label class="fixed_width">No. <h:a class="help">&#160;?<h:span 
                                 class="comment">Movement, section or scene numbers may be entered either here 
                                 or as part of the title. No spaces, punctuation or special characters are allowed in this field (which is type xs:token).
                                 Use the title field instead to enter values using special characters or spaces.</h:span></h:a></xf:label>
@@ -196,7 +196,7 @@
                             <xf:label class="fixed_width">Tempo</xf:label>
                         </xf:input>
                         <xf:trigger appearance="minimal" ref="m:tempo">
-                            <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete nodeset="."/>
                             </xf:action>
@@ -211,7 +211,7 @@
                     <xf:group ref="m:key">
                         <xi:include href="includes/key_select.xml" parse="xml"/>
                         <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete nodeset="."/>
                             </xf:action>
@@ -225,18 +225,18 @@
                         origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:extent"/>
                     <xf:group ref="m:extent">
                         <xf:input ref=".">
-                            <xf:label class="fixed_width">Duration <h:a class="help">?<h:span 
+                            <xf:label class="fixed_width">Duration <h:a class="help">&#160;?<h:span 
                                 class="comment">Any indication of the duration, like "01:23:00", "25'30''" or "approx. 10'". 
                                 The unit of measurement (minutes, for instance) may be specified in the  
                                 optional "unit" field.</h:span></h:a></xf:label>
                         </xf:input>
                         <xf:input ref="@unit">
-                            <xf:label>Unit <h:a class="help">?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
+                            <xf:label>Unit <h:a class="help">&#160;?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
                                 <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
                                 Please use underscore _ instead.</h:span></h:a></xf:label>
                         </xf:input>
                         <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="/../editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xf:delete nodeset="."/>
                             </xf:action>
@@ -259,7 +259,7 @@
                             <xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
                                 <h:div>
                                     <xf:input ref="@target" class="maxlong">
-                                        <xf:label>URI <h:a class="help">?<h:span class="comment">Location of a graphics file, e.g.
+                                        <xf:label>URI <h:a class="help">&#160;?<h:span class="comment">Location of a graphics file, e.g.
                                             "http://example.com/incipits/lowres/116.png"</h:span></h:a></xf:label>
                                     </xf:input>
                                     <xf:select1 ref="@targettype" class="auto_length">
@@ -276,7 +276,7 @@
                                             <xf:label>Print quality</xf:label>
                                         </xf:item>
                                     </xf:select1>
-                                    <h:a class="help">?<h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
+                                    <h:a class="help">&#160;?<h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
                                         web graphics, or "Print quality" for print quality graphics</h:span></h:a>
                                     <dcm:element-buttons
                                         triggers="add remove" 
@@ -287,7 +287,7 @@
                                 </h:div>
                             </xf:repeat>
                             
-                            <h:span class="blocklabel">Music incipit code <h:a class="help">?<h:span 
+                            <h:span class="blocklabel">Music incipit code <h:a class="help">&#160;?<h:span 
                                 class="comment">One-line incipit encoding, using e.g. <em>Plaine &amp; Easie Code</em></h:span></h:a></h:span>
                             <dcm:create ref="m:incip"
                                 nodeset="m:incipCode"
@@ -295,11 +295,11 @@
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>                        
                             <xf:repeat nodeset="m:incip/m:incipCode" id="incipcode-repeat">
                                 <xf:input ref="@analog">
-                                    <xf:label>Code language <h:a class="help">?<h:span class="comment">The name of the encoding language used, 
+                                    <xf:label>Code language <h:a class="help">&#160;?<h:span class="comment">The name of the encoding language used, 
                                         e.g. "Plaine &amp; Easie Code"</h:span></h:a></xf:label>
                                 </xf:input>
                                 <xf:input ref="." class="maxlong">
-                                    <xf:label> Code <h:a class="help">?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
+                                    <xf:label> Code <h:a class="help">&#160;?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
                                 </xf:input>
                                 <dcm:element-buttons
                                     triggers="add remove" 
@@ -346,7 +346,7 @@
                     
                     <xf:group ref="m:titleStmt">
                         <h:fieldset>
-                            <h:legend>Persons <h:a class="help">?<h:span 
+                            <h:legend>Persons <h:a class="help">&#160;?<h:span 
                                 class="comment">Persons with connection to this particular component
                                 only, e.g. an arranger, or a text author in a collection of songs 
                                 with different authors.<h:br/>
@@ -355,7 +355,7 @@
                             <xf:group ref="m:respStmt/m:persName">
                                 <h:div class="blocklabel">
                                     <h:span class="fixed_width_long">Name</h:span>
-                                    <h:span> Relation <h:a class="help">?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
+                                    <h:span> Relation <h:a class="help">&#160;?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
                                         or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
                                     </h:span>
                                 </h:div>
@@ -387,7 +387,7 @@
                     <xf:group ref=".[$topLevelInstrumentation[*]]" class="instr_subselection">
                         
                         <h:fieldset>
-                            <h:legend>Instruments/Performers selection <h:a class="help">?<h:span 
+                            <h:legend>Instruments/Performers selection <h:a class="help">&#160;?<h:span 
                                 class="comment">A sub-selection of the performers and ensembles defined at version level may 
                                 be specified here. You may choose to only specify certain performers which you want to to be explicitly listed, 
                                 e.g. only the sub-selection of soloists playing or characters appearing in this particular movement, but not the entire orchestra.
@@ -416,7 +416,7 @@
                                             <xf:group ref="$thisInstrumentation/m:instrVoiceGrp[@n=$id]">
                                                 <h:legend>
                                                     <xf:trigger appearance="minimal">
-                                                        <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/>
+                                                        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/>
                                                             <h:span>
                                                                 <!--<xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>-->
                                                                 <!--<xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>-->
@@ -430,7 +430,7 @@
                                                     <xf:input ref="m:head" class="long"/>                                                                
                                                     <dcm:attribute-editor ref="m:head"/>
                                                     <xf:select1 ref="@code" class="long">
-                                                        <xf:label>Standard code <h:a class="help">?<h:span 
+                                                        <xf:label>Standard code <h:a class="help">&#160;?<h:span 
                                                             class="comment">Choosing a standard MARC code optimizes data  
                                                             compatibility and interchangeability with other systems. <h:br/>
                                                             A code should be supplied also when you do not want the ensemble 
@@ -458,7 +458,7 @@
                                             <!-- a copy of this instrVoiceGrp does not exist at this sub-level yet -->
                                             <h:legend>
                                                 <xf:trigger appearance="minimal">
-                                                    <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this ensemble"/>
+                                                    <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/no.png" alt="no" title="Click to add this ensemble"/>
                                                         <h:span class="disabled">
                                                             <xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>
                                                             <!--<xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>-->
@@ -503,7 +503,7 @@
                                                 <h:div>&#160;&#160;&#160;&#160;
                                                     <xf:group ref=".[@xml:id=$thisEnsemble/m:instrVoice/@n]">
                                                         <xf:trigger appearance="minimal">
-                                                            <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
+                                                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
                                                                 <!--<h:span>
                                                                     <xf:output value="@count"/>
                                                                     <xf:output value="."/>
@@ -520,7 +520,7 @@
                                                     </xf:group>
                                                     <xf:group ref=".[not(@xml:id=$thisEnsemble/m:instrVoice/@n)]">
                                                         <xf:trigger appearance="minimal">
-                                                            <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this performer"/>
+                                                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/no.png" alt="no" title="Click to add this performer"/>
                                                                 <h:span class="disabled">
                                                                     <xf:output value="@count"/>
                                                                     <xf:output value="."/>
@@ -563,7 +563,7 @@
                                     <h:fieldset>
                                         <h:legend>
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/></xf:label>
+                                                <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/></xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:delete nodeset="."/>
                                                 </xf:action>
@@ -571,7 +571,7 @@
                                             <xf:input ref="m:head" class="long"/>                                                                
                                             <dcm:attribute-editor ref="m:head"/>
                                             <xf:select1 ref="@code" class="long">
-                                                <xf:label>Standard code <h:a class="help">?<h:span 
+                                                <xf:label>Standard code <h:a class="help">&#160;?<h:span 
                                                     class="comment">Choosing a standard MARC code optimizes data  
                                                     compatibility and interchangeability with other systems. <h:br/>
                                                     A code should be supplied also when you do not want the ensemble 
@@ -609,7 +609,7 @@
                                     <h:div>
                                         <xf:group ref=".[@xml:id=$thisInstrumentation/m:instrVoice/@n]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
+                                                <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xf:delete context="$thisInstrumentation" nodeset="m:instrVoice[@n=$thisTopLevelPerformer/@xml:id]"/>
                                                 </xf:action>
@@ -620,7 +620,7 @@
                                         </xf:group>
                                         <xf:group ref=".[not(@xml:id=$thisInstrumentation/m:instrVoice/@n)]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this performer"/>
+                                                <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/no.png" alt="no" title="Click to add this performer"/>
                                                     <h:span class="disabled">
                                                         <xf:output value="@count"/>
                                                         <xf:output value="."/>
@@ -658,7 +658,7 @@
                                 <xxf:variable name="thisId" select="@xml:id"/>
                                 <h:div>
                                     <xf:trigger appearance="minimal">
-                                        <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
+                                        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
                                         <xf:action ev:event="DOMActivate">
                                             <xf:delete nodeset="."/>
                                         </xf:action>
@@ -678,7 +678,7 @@
                     <xxf:variable name="topLevelCastList" select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:castList"/>
                     <xf:group ref=".[$topLevelCastList[*]]" class="instr_subselection">
                         <h:fieldset>
-                            <h:legend>Roles (characters) selection <h:a class="help">?<h:span 
+                            <h:legend>Roles (characters) selection <h:a class="help">&#160;?<h:span 
                                 class="comment">A sub-selection of the roles defined at version level may 
                                 be specified here.
                             </h:span></h:a></h:legend>
@@ -697,7 +697,7 @@
                                     <h:div>
                                         <xf:group ref=".[@xml:id=$thisCastList/m:castItem/@n]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this role"/>
+                                                <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this role"/>
                                                     <!-- Roles cannot be edited at this level - only added or omitted -->
                                                     <h:span>
                                                         <xf:output value="m:role//text()[1]"/>
@@ -710,7 +710,7 @@
                                         </xf:group>
                                         <xf:group ref=".[not(@xml:id=$thisCastList/m:castItem/@n)]">
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:img src="/../editor/images/no.png" alt="no" title="Click to add this role"/>
+                                                <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/no.png" alt="no" title="Click to add this role"/>
                                                     <h:span class="disabled">
                                                         <xf:output value="m:role//text()[1]"/>
                                                     </h:span>
@@ -745,7 +745,7 @@
                                 <xf:repeat nodeset="$thisCastList/m:castItem[count(.[@n=$topLevelCastList/m:castItem/@xml:id])=0]">
                                     <h:div>
                                         <xf:trigger appearance="minimal">
-                                            <xf:label><h:img src="/../editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
+                                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
                                                 <h:span>
                                                     <xf:output value="m:role//text()[1]"/>
                                                 </h:span>
@@ -763,7 +763,7 @@
                    
                    
                     <h:fieldset>
-                        <h:legend>Notes <h:a class="help">?<h:span class="comment">Any descriptional or other notes about this component</h:span></h:a></h:legend>
+                        <h:legend>Notes <h:a class="help">&#160;?<h:span class="comment">Any descriptional or other notes about this component</h:span></h:a></h:legend>
                         <h:div class="vertical_spacer"/>
                         <dcm:create 
                             nodeset="m:notesStmt"
@@ -803,11 +803,11 @@
                         <xf:repeat nodeset="m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']" id="edited_score-repeat">
                             <h:div>
                                 <xf:input ref="@target" class="long">
-                                    <xf:label>URI <h:a class="help">?<h:span class="comment">Location of an external, edited score (this movement only).
+                                    <xf:label>URI <h:a class="help">&#160;?<h:span class="comment">Location of an external, edited score (this movement only).
                                         Not for digital representations of items listed as "Sources"</h:span></h:a></xf:label>
                                 </xf:input>
                                 <xf:input ref="@label">
-                                    <xf:label>Description <h:a class="help">?<h:span class="comment">Explanatory text for the link to the resource, 
+                                    <xf:label>Description <h:a class="help">&#160;?<h:span class="comment">Explanatory text for the link to the resource, 
                                         e.g. "Carl Nielsen Edition, full score"</h:span></h:a></xf:label>
                                 </xf:input>
                                 <dcm:element-buttons
@@ -823,7 +823,7 @@
                     
                     <!-- Relations -->
                     <h:fieldset>
-                        <h:legend>Relations <h:a class="help">?<h:span class="comment">Relations between this component and 
+                        <h:legend>Relations <h:a class="help">&#160;?<h:span class="comment">Relations between this component and 
                             other components or files may be specified here to create links between them.<h:br/>
                             For instance, if this component is an arrangement of another piece it may be specified here
                             by selecting the "is arrangement of". <h:br/>
@@ -849,7 +849,7 @@
                                         <xi:include href="includes/relation_select.xml" parse="xml"/>
                                         <xf:group ref="@target">
                                             <xf:input ref="." class="maxlong">
-                                                <xf:label>URI <h:a class="help">?<h:span class="comment">The location of the linked ressource (target). 
+                                                <xf:label>URI <h:a class="help">&#160;?<h:span class="comment">The location of the linked ressource (target). 
                                                     The target may be either an external file (such as "http://www.example.org/some_file.xml"), an internal 
                                                     reference to an element in the file you are editing (by XML ID, such as "#expression_1"), or a combination
                                                     of both (like "http://www.example.org/some_file.xml#expression_1").<h:br/>
@@ -871,7 +871,7 @@
                                                 </xf:action>
                                             </xf:trigger>
                                             <xf:trigger appearance="minimal">
-                                                <xf:label><h:span style="vertical-align:bottom;"><h:img src="/../editor/images/go_to_link.png" 
+                                                <xf:label><h:span style="vertical-align:bottom;"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/go_to_link.png" 
                                                     title="Go to linked resource"/></h:span></xf:label>
                                                 <xf:action ev:event="DOMActivate">
                                                     <xxf:variable name="uri" 
@@ -888,7 +888,7 @@
                                     </h:td>
                                     <h:td>
                                         <xf:input ref="@label" class="long">
-                                            <xf:label> Label <h:a class="help">?<h:span class="comment">The text to be 
+                                            <xf:label> Label <h:a class="help">&#160;?<h:span class="comment">The text to be 
                                                 displayed as the link text (usually the title of the linked item).<h:br/>
                                                 Please note that MerMEId displays labels containing a colon (:) in a special way:
                                                 In that case, the text before the colon is displayed as the label before the link

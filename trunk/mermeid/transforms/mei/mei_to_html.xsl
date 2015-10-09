@@ -1297,40 +1297,9 @@ The Royal Library, Copenhagen
   </xsl:template>
 
   <xsl:template match="m:perfMedium" mode="subLevel">
-    <xsl:variable name="topLevelInstrumentation"
-		  select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:instrumentation"/>
-    <xsl:variable name="thisExpressionId" select="parent::node()/@xml:id"/>
-    <!-- create a <perfMedium> result tree containing a copy of the performers referenced in this movement -->
-    <xsl:variable name="perfMedium">
-      <xsl:element name="perfMedium" namespace="http://www.music-encoding.org/ns/mei">
-	<xsl:element name="instrumentation" namespace="http://www.music-encoding.org/ns/mei">
-	  <xsl:variable name="instrVoiceGrps"
-			select="$topLevelInstrumentation/m:instrVoiceGrp[@xml:id=/*//m:expression[@xml:id=$thisExpressionId]/m:perfMedium//m:instrVoiceGrp/@n]"/>
-	  <xsl:for-each select="$instrVoiceGrps">
-	    <xsl:element name="instrVoiceGrp"
-			 namespace="http://www.music-encoding.org/ns/mei">
-	      <xsl:copy-of select="m:head"/>
-	      <xsl:copy-of
-		  select="m:instrVoice[text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]/m:perfMedium//m:instrVoice/@n]"
-		  />
-	    </xsl:element>
-	  </xsl:for-each>
-	  <xsl:copy-of
-	      select="$topLevelInstrumentation/m:instrVoice[text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]/m:perfMedium/m:instrumentation/m:instrVoice/@n]"
-	      />
-	</xsl:element>
-	<xsl:element name="castList" namespace="http://www.music-encoding.org/ns/mei">
-	  <xsl:variable name="topLevelCastList"
-			select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:castList"/>
-	  <xsl:copy-of
-	      select="$topLevelCastList/m:castItem[//text()][@xml:id=/*//m:expression[@xml:id=$thisExpressionId]/m:perfMedium/m:castList/m:castItem/@n]"
-	      />
-	</xsl:element>
-      </xsl:element>
-    </xsl:variable>
-    <xsl:apply-templates select="exsl:node-set($perfMedium)/m:perfMedium">
-      <xsl:with-param name="full" select="false()"/>
-    </xsl:apply-templates>
+  	<xsl:apply-templates select=".">
+  		<xsl:with-param name="full" select="false()"/>
+  	</xsl:apply-templates>
   </xsl:template>
   <!-- end perfMedium -->
 
@@ -2409,25 +2378,24 @@ The Royal Library, Copenhagen
 	<xsl:apply-templates select="m:creation/m:date"/>. </xsl:if>
       </xsl:when>
 
-			<xsl:when test="contains(m:genre,'concert') and contains(m:genre,'program')">
-				<xsl:if test="m:title//text()">
-					<em><xsl:apply-templates select="m:title"/></em><xsl:if test="not(contains('.!?',substring(m:title,string-length(m:title),1)))">.</xsl:if></xsl:if>
-				<xsl:for-each select="m:imprint[*//text()]">
-					<xsl:if test="m:publisher/text()">
-						<xsl:apply-templates select="m:publisher"/><xsl:if test="m:pubPlace//text() or m:date//text()">, </xsl:if></xsl:if>
-					<xsl:value-of select="m:pubPlace"/>
-					<xsl:if test="m:date/text()">
-						<xsl:text> </xsl:text>
-						<xsl:apply-templates select="m:date[text()]"/>
-					</xsl:if>.
-				</xsl:for-each>
-				<xsl:apply-templates select="m:physLoc[*//text()]"/>
-				<xsl:call-template name="hosts"/>
-				<xsl:apply-templates select="m:ptr"/>
-				<xsl:apply-templates select="m:annot">
-					<xsl:with-param name="compact" select="'true'"/>
-				</xsl:apply-templates>
-			</xsl:when>
+      <xsl:when test="contains(m:genre,'concert') and contains(m:genre,'program')">
+	<xsl:if test="m:title//text()">
+	<em><xsl:apply-templates select="m:title"/></em><xsl:if test="not(contains('.!?',substring(m:title,string-length(m:title),1)))">.</xsl:if></xsl:if>
+	<xsl:apply-templates select="m:annot">
+	  <xsl:with-param name="compact" select="'true'"/>
+	  </xsl:apply-templates><xsl:if test="m:imprint//text()">. </xsl:if>
+	  <xsl:for-each select="m:imprint[*//text()]">
+	    <xsl:if test="m:publisher/text()">
+	    <xsl:apply-templates select="m:publisher"/><xsl:if test="m:pubPlace//text() or m:date//text()">, </xsl:if></xsl:if>
+	    <xsl:value-of select="m:pubPlace"/>
+	    <xsl:if test="m:date/text()">
+	      <xsl:text> </xsl:text>
+	      <xsl:apply-templates select="m:date[text()]"/>
+	      </xsl:if>.
+	  </xsl:for-each>
+	  <xsl:call-template name="hosts"/>
+	  <xsl:apply-templates select="m:ptr"/>
+      </xsl:when>
 
       <xsl:otherwise>
 	<xsl:if test="m:author//text()"><xsl:apply-templates select="m:author"/>: </xsl:if>

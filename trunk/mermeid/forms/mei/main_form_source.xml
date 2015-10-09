@@ -20,7 +20,7 @@
           <h:legend>Sources</h:legend>
           <h:div class="vertical_spacer"/>
           <xf:trigger ref=".[not(m:sourceDesc)]" class="create_button">
-            <xf:label><h:img src="/../editor/images/add.gif" alt="Add" title="Add sources"/> Add sources</xf:label>
+            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add sources"/> Add sources</xf:label>
             <xf:action ev:event="DOMActivate">
               <xf:insert context="." 
                 nodeset="*"
@@ -47,13 +47,13 @@
       <xf:group ref=".[count(../m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
         <h:fieldset>
           <h:legend>Sources (work)
-            <h:a class="help">?<h:span class="comment">Sources may be listed at work level 
+            <h:a class="help">&#160;?<h:span class="comment">Sources may be listed at work level 
               and at version level. If your work has only one version, all sources will be listed as work level sources.<h:br/> 
               Versions are defined at the Music tab. </h:span></h:a>
           </h:legend>
           <h:div class="vertical_spacer"/>
           <xf:trigger ref=".[not(m:sourceDesc)]" class="create_button">
-            <xf:label><h:img src="/../editor/images/add.gif" alt="Add" title="Add sources"/> Add sources</xf:label>
+            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add sources"/> Add sources</xf:label>
             <xf:action ev:event="DOMActivate">
               <xf:insert context="." 
                 nodeset="*"
@@ -84,12 +84,12 @@
               <xf:group ref=".[normalize-space(m:titleStmt/m:title)!='']">
                 <xf:output value="concat(' - ',m:titleStmt/m:title)"/>
               </xf:group>
-              <h:a class="help">?<h:span class="comment">Sources may be listed at work level 
+              <h:a class="help">&#160;?<h:span class="comment">Sources may be listed at work level 
                 and at version level. Versions are defined at the Music tab.</h:span></h:a>
             </h:legend>
             <h:div class="vertical_spacer"/>
             <xf:trigger ref="/*//m:fileDesc[not(m:sourceDesc)]" class="create_button">
-              <xf:label><h:img src="/../editor/images/add.gif" alt="Add" title="Add sources"/> Add sources</xf:label>
+              <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add sources"/> Add sources</xf:label>
               <xf:action ev:event="DOMActivate">
                 <xf:insert context="." 
                   nodeset="*"
