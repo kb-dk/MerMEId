@@ -25,10 +25,10 @@
       <delete dir="${class.dir}"/>
       <delete dir="${build.dir}"/>
       <delete dir="${bin.dir}"  />
+      <delete file="conf/${config}"/>
     </target>
 
     <target   name="copy">
-      <mkdir  dir="conf/"/>
       <copy   file="${webapp.config}_${webapp.instance}"
 	      tofile="conf/${config}"/>
     </target>
