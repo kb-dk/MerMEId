@@ -1,0 +1,64 @@
+<project name="mermeid" basedir="." default="all">
+   
+    <property name="webapp.path"    value="public_html"/>
+    <property name="webapp.instance" value="dcmudv"/>
+    <property name="config" value="http_filter.xml"/>
+    <property name="webapp.config"   
+	      value="../local_config/http_filter.xml"/>
+
+    <property name="build.dir" value="out"/>
+    <property name="bin.dir"   value="bin"/>
+    <property name="jar.dir"   value="lib"/>
+    <property name="src.dir"   value="src"/>
+
+    <path id="classpath">
+      <fileset dir="${jar.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target name="clean" description="Clean the project">
+      <delete dir="${class.dir}"/>
+      <delete dir="${build.dir}"/>
+      <delete dir="${bin.dir}"  />
+    </target>
+
+    <target name="copy">
+      <copy file="${webapp.config}_${webapp.instance}"
+	    tofile="conf/${config}"/>
+    </target>
+
+    <target name="compile" 
+	    depends="clean" 
+	    description="Compiles the whole bundle">
+      <mkdir dir="${build.dir}"/>
+      <javac srcdir="${src.dir}" 
+	     encoding="UTF-8" 
+	     destdir="${build.dir}" classpathref="classpath">
+        <compilerarg value="-g:source,lines,vars"/>
+      </javac>
+    </target>
+
+    <target name="war" depends="copy, jar">
+      <war destfile="filter.war" webxml="web.xml">
+	<zipfileset dir="${webapp.path}" />
+      	<lib dir="${bin.dir}"/>
+      	<lib dir="${jar.dir}"/>
+      </war>
+    </target>
+
+    <target name="jar" description="Jar the project" depends="compile"> 
+      <mkdir dir="${jar.dir}"/>
+      <jar destfile="${jar.dir}/${ant.project.name}.jar" 
+	   basedir="${build.dir}">
+        <manifest>
+          <!-- don't write anything in MANIFEST.MF -->
+        </manifest>
+        
+      </jar>
+    </target>
+  
+    <!-- Clean, compile, jar -->
+    <target name="all" 
+	    depends="war" 
+	    description="pack stuff"/>
+
+</project>
