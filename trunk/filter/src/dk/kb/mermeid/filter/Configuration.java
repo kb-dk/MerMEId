@@ -71,7 +71,7 @@ public class Configuration {
      * @return parameters as a Map rather than properties
      */
     public java.util.Map<String,Object> propertyMap(java.lang.String keyBase) {
-	java.util.HashMap<String,Object> map = new java.util.HashMap();
+	java.util.HashMap<String,Object> map = new java.util.HashMap<String,Object>();
 	
 	java.util.Enumeration<String> enumeration = this.propertyNames();
 

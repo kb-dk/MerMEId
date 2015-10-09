@@ -21,41 +21,45 @@
       <fileset dir="${jar.dir}" includes="**/*.jar"/>
     </path>
 
-    <target name="clean" description="Clean the project">
+    <target   name="clean" description="Clean the project">
       <delete dir="${class.dir}"/>
       <delete dir="${build.dir}"/>
       <delete dir="${bin.dir}"  />
     </target>
 
-    <target name="copy">
-      <copy file="${webapp.config}_${webapp.instance}"
-	    tofile="conf/${config}"/>
+    <target   name="copy">
+      <mkdir  dir="conf/"/>
+      <copy   file="${webapp.config}_${webapp.instance}"
+	      tofile="conf/${config}"/>
     </target>
 
-    <target name="compile" 
-	    depends="clean" 
-	    description="Compiles the whole bundle">
-      <mkdir dir="${build.dir}"/>
-      <javac srcdir="${src.dir}" 
-	     encoding="UTF-8" 
-	     destdir="${build.dir}" classpathref="classpath">
+    <target   name="compile" 
+	      depends="copy" 
+	      description="Compiles the whole bundle">
+      <mkdir  dir="${build.dir}"/>
+      <javac  srcdir="${src.dir}" 
+	      encoding="UTF-8" 
+	      includeAntRuntime="false"
+	      destdir="${build.dir}" 
+	      classpathref="classpath">
         <compilerarg value="-g:source,lines,vars"/>
+        <compilerarg value="-Xlint:unchecked"/>
       </javac>
     </target>
 
-    <target name="war" depends="copy, jar">
-      <war destfile="filter.war" webxml="web.xml">
+    <target   name="war" depends="copy, jar">
+      <war    destfile="filter.war" webxml="web.xml">
 	<zipfileset dir="${webapp.path}" />
 	<classes dir="conf" />
-      	<lib dir="${bin.dir}"/>
-      	<lib dir="${jar.dir}"/>
+      	<lib  dir="${bin.dir}"/>
+      	<lib  dir="${jar.dir}"/>
       </war>
     </target>
 
-    <target name="jar" description="Jar the project" depends="compile"> 
-      <mkdir dir="${bin.dir}"/>
-      <jar destfile="${jar.dir}/${ant.project.name}.jar" 
-	   basedir="${build.dir}">
+    <target   name="jar" description="Jar the project" depends="compile"> 
+      <mkdir  dir="${bin.dir}"/>
+      <jar    destfile="${jar.dir}/${ant.project.name}.jar" 
+	      basedir="${build.dir}">
         <manifest>
           <!-- don't write anything in MANIFEST.MF -->
         </manifest>
@@ -63,7 +67,7 @@
       </jar>
     </target>
   
-    <target name="all" 
-	    depends="war" />
+    <target   name="all" 
+	      depends="war" />
 
 </project>
