@@ -1,0 +1,9 @@
+<project name="filter" basedir="." default="all">
+
+   <subant failonerror="false">
+     <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
+     <target name="clean"/>
+     <target name="war"/>
+   </subant>
+
+</project>
