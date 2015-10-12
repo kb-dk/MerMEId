@@ -1,5 +1,7 @@
 <project name="mermeid" basedir="." default="all">
 
+  <property name="webapp.instance" value="demo"/>
+
   <target name="clean">
     <subant failonerror="false">
      <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
@@ -7,7 +9,7 @@
     </subant>
   </target>
 
-  <target name="war">
+  <target name="war" depends="clean">
     <subant failonerror="false">
       <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
       <target name="war"/>

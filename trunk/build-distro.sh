@@ -15,7 +15,6 @@
 
 # edit this, in case you don't have maven in your path, but installed
 # somewhere nonstandard
-export PATH="$HOME/mvnsh/bin/:$PATH"
 
 ###########
 #
@@ -24,16 +23,6 @@ export PATH="$HOME/mvnsh/bin/:$PATH"
 
 export D_PATH='.'
 export TAR='.'
-
-if [ -d distro_tar ]; then
-    rm -rf distro_tar
-fi
-
-if [ -d build_dir ]; then
-    rm -rf build_dir
-fi
-
-rm "$TAR/mermeid.tar.bz2"
 
 while getopts "f:m:d:t:" flag
 do
@@ -44,6 +33,8 @@ do
     t) TAR=$OPTARG; export TAR ;;
   esac
 done
+
+./clean.sh
 
 echo "We are about to build a $F_FILE filter and $M_FILE MerMEId in $D_PATH"
 
@@ -70,17 +61,7 @@ mkdir -p "$D_PATH"
 mkdir -p "$D_PATH/MerMEId"
 mkdir -p "$TAR"
 
-echo "I'm in"
-echo `pwd`
-
-cp "local_config/http_filter.xml_$F_FILE" filter/src/main/resources/http_filter.xml 
-(cd filter ; mvn install)
-(cd filter ; ./run_java_doc.sh)
-cp filter/target/filter-1.0-SNAPSHOT.war "$D_PATH/MerMEId/filter.war"
-(cd filter ; mvn clean)
-
-# We find everything, and greps away what we shouldn't distribute,
-# beginning with ourselves
+ant war
 
 echo "Collecting stuff in $D_PATH/MerMEId"
 

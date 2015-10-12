@@ -3,8 +3,7 @@
     <property name="webapp.path"    
 	      value="public_html"/>
 
-    <property name="webapp.instance" 
-	      value="dcmudv"/>
+    <property name="webapp.instance" value="demo"/>
 
     <property name="config" 
 	      value="http_filter.xml"/>
@@ -25,16 +24,10 @@
       <delete dir="${class.dir}"/>
       <delete dir="${build.dir}"/>
       <delete dir="${bin.dir}"  />
-      <delete file="conf/${config}"/>
-    </target>
-
-    <target   name="copy">
-      <copy   file="${webapp.config}_${webapp.instance}"
-	      tofile="conf/${config}"/>
+      <delete file="filter.war" />
     </target>
 
     <target   name="compile" 
-	      depends="copy" 
 	      description="Compiles the whole bundle">
       <mkdir  dir="${build.dir}"/>
       <javac  srcdir="${src.dir}" 
@@ -47,13 +40,16 @@
       </javac>
     </target>
 
-    <target   name="war" depends="copy, jar">
+    <target   name="war" depends="jar">
+      <copy   file="${webapp.config}_${webapp.instance}"
+	      tofile="conf/${config}"/>
       <war    destfile="filter.war" webxml="web.xml">
 	<zipfileset dir="${webapp.path}" />
 	<classes dir="conf" />
       	<lib  dir="${bin.dir}"/>
       	<lib  dir="${jar.dir}"/>
       </war>
+      <delete file="conf/${config}"/>
     </target>
 
     <target   name="jar" description="Jar the project" depends="compile"> 

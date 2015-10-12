@@ -12,5 +12,14 @@ export PATH="$HOME/mvnsh/bin/":$PATH
 # No configurations below
 #
 
-rm -rf build_dir distro_tar MerMEId mermeid.tar.bz2
-(cd filter ; mvn clean)
+if [ -d distro_tar ]; then
+    rm -rf distro_tar
+fi
+
+if [ -d build_dir ]; then
+    rm -rf build_dir
+fi
+
+rm -rf MerMEId mermeid.tar.bz2
+ant clean
+
