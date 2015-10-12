@@ -1,0 +1,70 @@
+<project name="mermeid" basedir="." default="all">
+   
+    <property name="bin.dir"     value="bin"/>
+    <property name="webapp.path" value="formulation"/>
+    <property name="webapp.instance" value="dcmudv"/>
+    <property name="webapp.config_dir"
+	      value="../local_config/" />
+    <property name="webapp.config"   
+	      value="mermeid_configuration.xml" />
+
+    <!-- Helpful declarations used within this script,
+	 Change these if you want another file structure -->
+
+    <property name="jsp_src"        value="public_html"/>
+    <property name="jar.dir"        value="lib"/>
+    <property name="orbeon-jar.dir" value="orbeon-lib"/>
+    <property name="java.dir"       value="src"/>
+
+    <target name="clean">
+      <delete file="editor.war"/>
+    </target>
+
+    <target name="war">
+      <copy file="${webapp.config_dir}${webapp.config}_${webapp.instance}"
+	    tofile="forms/mei/mermeid_configuration.xml"/>
+      <war destfile="editor.war" webxml="web.xml">
+	<zipfileset dir="${webapp.path}"
+		    prefix="${webapp.path}"/>
+	<zipfileset dir="web" prefix="" />
+  	<zipfileset dir="images" prefix="images" />
+	<zipfileset dir="js" prefix="js"/>
+	<zipfileset dir="manual" prefix="manual"/>
+	<zipfileset dir="style" prefix="style"/>
+	<zipfileset dir="forms" prefix="forms" />
+	<zipfileset dir="jquery" prefix="jquery" />
+	<zipfileset dir="transforms" prefix="transforms"/>
+      	<lib dir="${bin.dir}"/>
+      	<lib dir="${jar.dir}"/>
+      </war>
+      <delete file="forms/mei/mermeid_configuration.xml" />
+    </target>
+  
+    <target name="orbeon_war">
+      <copy file="${webapp.config}_${webapp.instance}"
+	    tofile="forms/mei/mermeid_configuration.xml"/>
+      <war destfile="${ant.project.name}.war" webxml="orbeon_web.xml">
+	<zipfileset dir="${webapp.path}"
+		    prefix="${webapp.path}"/>
+  	<zipfileset dir="images" prefix="images" />
+	<zipfileset dir="js" prefix="js"/>
+	<zipfileset dir="manual" prefix="style"/>
+	<zipfileset dir="forms" prefix="forms" />
+	<zipfileset dir="jquery" prefix="jquery" />
+	<zipfileset dir="lib" prefix="lib"/>
+	<zipfileset dir="transforms" prefix="transforms"/>
+      	<lib dir="${jar.dir}"/>
+      	<lib dir="${bin.dir}"/>
+      	<lib dir="${jar.dir}"/>
+      	<lib dir="${orbeon-jar.dir}"/>
+	<metainf file="./context.xml"/>
+      </war>
+      <delete file="forms/mei/mermeid_configuration.xml" />
+    </target>
+
+    <!-- Clean, compile, jar -->
+    <target name="all" 
+	    depends="war" 
+	    description="pack stuff"/>
+
+</project>
