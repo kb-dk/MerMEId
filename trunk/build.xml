@@ -1,9 +1,20 @@
-<project name="filter" basedir="." default="all">
+<project name="mermeid" basedir="." default="all">
 
-   <subant failonerror="false">
+  <target name="clean">
+    <subant failonerror="false">
      <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
      <target name="clean"/>
-     <target name="war"/>
-   </subant>
+    </subant>
+  </target>
+
+  <target name="war">
+    <subant failonerror="false">
+      <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
+      <target name="war"/>
+    </subant>
+  </target>
+
+  <target name="all" 
+	  depends="war" />
 
 </project>
