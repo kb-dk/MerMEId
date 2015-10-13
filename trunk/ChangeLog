@@ -1,3 +1,784 @@
+2015-09-21 12:52  atge
+
+	* xqueries/library/abbreviations.xml: typo
+
+2015-09-05 15:57  atge
+
+	* xqueries/dcm/nielsen_hjemvee.xml: forgot to transform this demo
+	  file...
+
+2015-08-24 12:22  slu
+
+	* mermeid/transforms/mei/mei_to_html.xsl, orbeon/mei_form.jsp,
+	  xqueries/list_utils.xqm, xqueries/main_loop.xqm: several minor
+	  fixes, including improved list_files.xq speed
+
+2015-08-20 11:15  slu
+
+	* xqueries/cnw-layout.xqm, xqueries/example-page.xq: these files
+	  should NOT be present here. will just confuse us
+
+2015-08-19 12:00  slu
+
+	* xqueries/main_loop.xqm: calculating pubstatus using last-modified
+
+2015-08-12 15:49  atge
+
+	* mermeid/forms/mei/main_form_music.xml: improved role editing
+
+2015-08-12 14:24  atge
+
+	* mermeid/forms/mei/details-performance.xml,
+	  mermeid/forms/mei/details-reference.xml,
+	  mermeid/forms/mei/includes/bibl-input.xbl,
+	  mermeid/transforms/mei/mei_to_html.xsl: improved bibl reference
+	  editing and displaying
+
+2015-08-12 10:16  slu
+
+	* apache-httpd/conf-devel.conf,
+	  filter/src/main/resources/http_filter.xml, mermeid/INSTALL.html,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html,
+	  mermeid/transforms/mei/mei_to_html.xsl: we are still running xslt
+	  1.0
+
+2015-08-05 14:15  atge
+
+	* local_config/standard_bibliography.xml_frontend,
+	  local_config/standard_bibliography.xml_prod: added some data to
+	  GW bibliographies
+
+2015-08-04 11:17  slu
+
+	* xqueries/dcm/gade_comala.xml, xqueries/dcm/nielsen_cnw0126.xml,
+	  xqueries/dcm/nielsen_cnw0127.xml,
+	  xqueries/dcm/nielsen_cnw0128.xml,
+	  xqueries/dcm/nielsen_cnw0129.xml,
+	  xqueries/dcm/nielsen_cnw0130.xml,
+	  xqueries/dcm/nielsen_cnw0131.xml,
+	  xqueries/dcm/nielsen_holstein_sange.xml,
+	  xqueries/dcm/nielsen_maskarade.xml: checking in example database
+
+2015-08-03 12:21  slu
+
+	* mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html,
+	  mermeid/forms/mei/edit-form-footer.xml: Making the version
+	  statement intelligble
+
+2015-08-03 10:13  slu
+
+	* ChangeLog, filter/src/main/resources/http_filter.xml,
+	  mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html,
+	  mermeid/forms/mei/edit-form-footer.xml: Checking in the stuff,
+	  and ensuring that there will be a new footer
+
+2015-07-01 18:47  atge
+
+	* mermeid/style/cnw.css, mermeid/style/mei_to_html.css,
+	  mermeid/style/mei_to_html_public.css,
+	  mermeid/transforms/mei/mei_to_html.xsl: Styling changes. RISM
+	  sigla now given a css class instead of <em>
+
+2015-07-01 13:57  atge
+
+	* mermeid/transforms/mei/mei_to_html_print_cnw.xsl: CNW printing
+	  adjustments
+
+2015-07-01 13:34  atge
+
+	* mermeid/style/cnw.css, mermeid/transforms/mei/mei_to_html.xsl:
+	  Source repositories italicized if no RISM siglum is given
+
+2015-06-30 15:57  atge
+
+	* local_config/abbreviations.xml: List of abbreviations added to
+	  repo
+
+2015-06-30 15:28  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: Adjustments to source
+	  description layout
+
+2015-06-30 14:43  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_print_cnw.xsl: Adjustments to
+	  CNW print layout
+
+2015-06-24 20:00  atge
+
+	* mermeid/style/cnw.css: more appendix styling
+
+2015-06-24 17:20  atge
+
+	* local_config/standard_bibliography.xml_frontend,
+	  local_config/standard_bibliography.xml_prod: Added CNB end date
+
+2015-06-24 17:10  atge
+
+	* local_config/standard_bibliography.xml_frontend,
+	  local_config/standard_bibliography.xml_prod,
+	  mermeid/images/Thumbs.db, mermeid/images/html_link.png,
+	  mermeid/style/cnw.css: Updated CNW bibliography; styling related
+	  to CNW text pages
+
+2015-06-18 13:52  slu
+
+	* xqueries/list_files.xq, xqueries/publish.xq: fixed publishing
+	  function
+
+2015-06-17 12:12  slu
+
+	* xqueries/publish.xq: the where clause selecting file names works
+
+2015-06-09 15:02  atge
+
+	* mermeid/style/mei_to_html_print.css: Print styling, minor
+	  correction
+
+2015-06-09 14:38  atge
+
+	* mermeid/transforms/mei/mei_to_html_print_cnw.xsl: Print styling,
+	  minor correction
+
+2015-06-09 14:12  atge
+
+	* mermeid/style/mei_to_html_print.css,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_print_cnw.xsl: Print setup,
+	  cont'd.
+
+2015-06-04 12:32  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_print_cnw.xsl: Print setup,
+	  cont'd.
+
+2015-06-04 11:09  atge
+
+	* mermeid/style/mei_to_html.css,
+	  mermeid/style/mei_to_html_print.css,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_print_cnw.xsl: more
+	  preparations for printing the CNW catalogue
+
+2015-06-03 21:04  atge
+
+	* mermeid/style/mei_to_html_print.css,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_print_cnw.xsl: Added
+	  customized xsl for the printed CNW
+
+2015-06-02 14:07  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: -
+
+2015-01-13 09:38  atge
+
+	* mermeid/style/public_list_style.css: subtitle font size
+	  adjustment
+
+2014-12-16 14:44  atge
+
+	* mermeid/forms/mei/details-expression.xml,
+	  mermeid/forms/mei/main_form_work.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_public.xsl: HTML view splits
+	  relation labels containing a colon into a label and a link text,
+	  making it possible to override the built-in relation labels.
+	  The "has part"-relation is now labeled "Includes" in HTML view.
+
+2014-11-29 08:25  atge
+
+	* xqueries/dcm/gade_comala.xml, xqueries/dcm/nielsen_cnw0127.xml:
+	  minor corrections in demo files
+
+2014-11-27 08:02  slu
+
+	* build-distro.sh: now ignoring frontend when building demo or
+	  distro
+
+2014-11-26 12:14  atge
+
+	* mermeid/forms/mei/main_form_bibliography.xml: updated description
+	  of bibliographies
+
+2014-11-25 20:21  atge
+
+	* mermeid/jquery/jquery-ui-1.10.3/css/base/jquery-ui.css,
+	  mermeid/style/public_list_style.css: navigation adjustments
+
+2014-11-25 12:49  atge
+
+	* mermeid/transforms/mei/utils/cleanup_2014.xsl: bugfix: xsl now
+	  retains <music> element and root element attributes
+
+2014-11-24 08:04  slu
+
+	* mermeid/apidoc/allclasses-frame.html,
+	  mermeid/apidoc/allclasses-noframe.html,
+	  mermeid/apidoc/constant-values.html,
+	  mermeid/apidoc/deprecated-list.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/Configuration.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/DeleteServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/FilterUtilityMethods.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/HttpFilter.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/IdGenerator.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/NewFileServlet.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-frame.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-summary.html,
+	  mermeid/apidoc/dk/kb/mermeid/filter/package-tree.html,
+	  mermeid/apidoc/help-doc.html, mermeid/apidoc/index-all.html,
+	  mermeid/apidoc/index.html, mermeid/apidoc/overview-tree.html,
+	  mermeid/apidoc/serialized-form.html,
+	  mermeid/transforms/mei/utils/cleanup_2014.xsl,
+	  mermeid/transforms/mei/utils/sequential_transformer: Merging code
+	  from the last weeks. Mostly from Axel
+
+2014-11-20 08:33  slu
+
+	* local_config/http_filter.xml_frontend,
+	  local_config/login.xqm_frontend,
+	  local_config/mermeid_configuration.xml_frontend,
+	  local_config/standard_bibliography.xml_frontend: these had
+	  conflicts
+
+2014-11-20 08:22  slu
+
+	* local_config/http_filter.xml_frontend,
+	  local_config/login.xqm_frontend,
+	  local_config/mermeid_configuration.xml_frontend: what is going
+	  on?
+
+2014-11-20 08:20  slu
+
+	* local_config/standard_bibliography.xml_frontend: OK
+
+2014-11-12 14:05  atge
+
+	* mermeid/forms/mei/details-source.xml,
+	  mermeid/transforms/mei/utils/identifier_type_to_label.xsl:
+	  changed source classifications from "music" to either "notated
+	  music" or "sound recording"
+
+2014-11-05 10:22  atge
+
+	* mermeid/style/dcm.css, mermeid/style/mei_to_html.css: improved
+	  print style
+
+2014-11-05 10:17  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/style/public_list_style.css: improved list print style
+
+2014-11-05 08:01  atge
+
+	* mermeid/style/cnw.css, mermeid/style/public_list_style.css:
+	  undeleted style sheet and improved list styles
+
+2014-11-04 22:05  atge
+
+	* mermeid/style/public_list_style.css: re-styled list results (now
+	  tables instead of divs)
+
+2014-11-04 19:49  atge
+
+	* mermeid/jquery/jquery-ui-1.10.3/css/base/jquery-ui.css,
+	  mermeid/jquery/jquery-ui-1.10.3/css/style.css,
+	  mermeid/style/public_list_style.css,
+	  xqueries/dcm/gade_comala.xml, xqueries/dcm/nielsen_cnw0127.xml:
+	  list styling adjustments; small corrections in demo data
+
+2014-11-04 16:16  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml: update revision number...
+
+2014-11-04 16:15  atge
+
+	* xqueries/dcm/gade_comala.xml, xqueries/dcm/nielsen_cnw0126.xml,
+	  xqueries/dcm/nielsen_cnw0127.xml,
+	  xqueries/dcm/nielsen_cnw0128.xml,
+	  xqueries/dcm/nielsen_cnw0129.xml,
+	  xqueries/dcm/nielsen_cnw0130.xml,
+	  xqueries/dcm/nielsen_cnw0131.xml,
+	  xqueries/dcm/nielsen_hjemvee.xml,
+	  xqueries/dcm/nielsen_holstein_sange.xml,
+	  xqueries/dcm/nielsen_maskarade.xml: updated demo files
+
+2014-11-04 16:08  atge
+
+	* mermeid/transforms/mei/utils/cleanup_2014.xsl: now also removing
+	  revision changes without indication of date or responsible person
+
+2014-11-03 15:22  atge
+
+	* mermeid/forms/mei/details-expression.xml,
+	  mermeid/forms/mei/details-form-model.xml: more validation
+	  experiments
+
+2014-11-03 12:45  atge
+
+	* mermeid/forms/mei/details-expression.xml,
+	  mermeid/forms/mei/details-form-model.xml,
+	  mermeid/forms/mei/edit-form-head.xml: first preparations for
+	  validating token input controls
+
+2014-11-01 19:50  atge
+
+	* mermeid/forms/mei/details-performance.xml,
+	  mermeid/forms/mei/edit-form-topbar.xml,
+	  mermeid/forms/mei/includes/attribute_editor.xbl,
+	  mermeid/forms/mei/includes/history-input.xbl,
+	  mermeid/forms/mei/includes/source_list.xbl,
+	  mermeid/forms/mei/main_form_bibliography.xml,
+	  mermeid/forms/mei/main_form_music.xml: attribute editor now shown
+	  on history and source tabs too; propagation of settings change
+	  events does not work yet, however: history and source pages need
+	  to be re-loaded for the attribute editor on/off switching to take
+	  effect
+
+2014-11-01 19:47  atge
+
+	* mermeid/forms/mei/includes/id.xbl: id xbl component now operates
+	  in outer scope only
+
+2014-11-01 19:21  atge
+
+	* mermeid/forms/mei/model/MEI_attr_list.xml: added listBibl
+	  attributes
+
+2014-10-31 06:43  atge
+
+	* mermeid/transforms/mei/utils/cleanup_2014.xsl: changing URLs to
+	  CNU PDF files
+
+2014-10-30 19:26  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/edit-form-topbar.xml,
+	  mermeid/forms/mei/includes/attribute_editor.xbl,
+	  mermeid/forms/mei/includes/history-input.xbl,
+	  mermeid/forms/mei/main_form_history.xml: fixed a scope issue
+	  preventing the attribute editor from displaying in nested xbl
+	  components
+
+2014-10-29 21:03  atge
+
+	* mermeid/style/public_list_style.css: font style adjustments
+
+2014-10-29 13:38  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: changed label on
+	  "alternate" FRBR relations
+
+2014-10-25 12:10  atge
+
+	* mermeid/forms/mei/includes/element_buttons.xbl: bugfix: copying a
+	  performance review caused an xforms error
+
+2014-10-23 14:26  atge
+
+	* mermeid/transforms/mei/utils/check_element_order.xsl,
+	  mermeid/transforms/mei/utils/cleanup_2014.xsl,
+	  mermeid/transforms/mei/utils/identifier_type_to_label.xsl:
+	  Transformations add a change comment to revisionDesc
+
+2014-10-23 13:11  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/bibl-input.xbl,
+	  mermeid/forms/mei/model/bibl_reference_types.xml,
+	  mermeid/forms/mei/model/empty_doc.xml,
+	  mermeid/transforms/mei/filter_get.xsl,
+	  mermeid/transforms/mei/filter_put.xsl,
+	  mermeid/transforms/mei/utils/check_element_order.xsl,
+	  mermeid/transforms/mei/utils/cleanup_2014.xsl,
+	  mermeid/transforms/mei/utils/identifier_type_to_label.xsl,
+	  mermeid/transforms/mei/utils/identifier_type_to_label_and
+	  cleanup_2014.xsl,
+	  mermeid/transforms/mei/utils/remove_empty_elements.xsl: Added
+	  three xsl stylesheets to fix a number of issues in existing data;
+	  changes to the xml models and xforms to conform with the changes
+	  in data
+
+2014-10-21 17:14  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: moved version composition
+	  dates closer to version headings
+
+2014-10-21 16:16  atge
+
+	* mermeid/forms/mei/details-source.xml,
+	  mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/item.xbl,
+	  mermeid/forms/mei/main_form_music.xml,
+	  mermeid/forms/mei/main_form_work.xml,
+	  mermeid/forms/mei/model/empty_doc.xml,
+	  mermeid/forms/mei/model/new_file.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_print.xsl,
+	  mermeid/transforms/mei/mei_to_html_public.xsl,
+	  mermeid/transforms/mei/utils/identifier_type_to_label_and
+	  cleanup_2014.xsl, xqueries/list_utils.xqm,
+	  xqueries/main_loop.xqm: identifier/@type changed to
+	  identifier/@label; added a transformation to update existing data
+	  and to remove some empty elements
+
+2014-10-21 13:29  atge
+
+	* mermeid/transforms/mei/filter_get.xsl: don't add the xl namespace
+	  on loading the document
+
+2014-10-20 15:44  atge
+
+	* mermeid/transforms/mei/utils/identifier_type_to_label_and
+	  cleanup_2014.xsl: added xsl for cleaning up xml and moving
+	  identifier/@type to @label
+
+2014-10-18 08:05  atge
+
+	* mermeid/transforms/mei/filter_put.xsl: deleting empty notesStmt
+	  elements
+
+2014-10-09 11:11  atge
+
+	* local_config/standard_bibliography.xml_dcmudv,
+	  local_config/standard_bibliography.xml_frontend,
+	  local_config/standard_bibliography.xml_prod,
+	  xqueries/list_utils.xqm: Changed text in "no. of results" select
+	  box; textual corrections to std. bibliography
+
+2014-09-25 14:51  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: added class to
+	  alternative title
+
+2014-09-25 09:04  atge
+
+	* local_config/mermeid_configuration.xml_frontend,
+	  mermeid/forms/mei/edit-form-footer.xml: changed document_root
+	  from storage/dcm/ to storage/cnw/data/ on frontend - we need to
+	  think about this when we publish more than one catalogue... do we
+	  need one config file for each catalogue?
+
+2014-09-25 09:02  atge
+
+	* local_config/mermeid_configuration.xml_frontend,
+	  mermeid/transforms/mei/mei_to_html_public.xsl: changed
+	  document_root from storage/dcm/ to storage/cnw/data/ on frontend
+	  - we need to think about this when we publish more than one
+	  catalogue... do we need one config file for each catalogue?
+
+2014-09-23 14:16  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/style/mei_to_html.css,
+	  mermeid/transforms/mei/mei_to_html.xsl: grouped alternative
+	  titles with main titles in the same language; fixed a bug related
+	  to expression headings
+
+2014-09-23 12:51  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/source_list.xbl,
+	  xqueries/library/abbreviations.xml: forgot to deactivate another
+	  initial search of the file browser...; changed the explanation of
+	  "SATB" in abbr.
+
+2014-09-22 10:07  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl: label "Composition:" for
+	  the date is now used only at work level or if there is only 1
+	  expression
+
+2014-09-19 10:40  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/style/mei_to_html_public.css,
+	  mermeid/transforms/mei/mei_to_html_public.xsl: Added key to
+	  public html
+
+2014-09-18 18:36  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/style/mei_to_html_print.css,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_print.xsl: minor adjustments
+
+2014-09-18 15:52  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/source_list.xbl,
+	  mermeid/forms/mei/main_form_work.xml: deactivated submission on
+	  opening the source and work browser to improve performance
+
+2014-09-17 18:06  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/bibl-input.xbl: bugfix
+	  (interviewer/interviewee were not editable)
+
+2014-09-17 15:20  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/item.xbl: allowing multiple extent and
+	  dimensions elements on items
+
+2014-09-15 10:00  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: omit incipit img tag if
+	  the image path ends with a /
+
+2014-09-15 09:46  atge
+
+	* mermeid/transforms/mei/mei_to_html_print.xsl: omitting list of
+	  sources in print version
+
+2014-09-12 09:51  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml: just updating revision
+	  number....
+
+2014-09-05 13:15  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: fixed a problem with
+	  listing reprints of sources
+
+2014-09-04 20:18  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: improved list of
+	  source:contributors
+
+2014-09-04 14:36  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: enabled rendition
+	  encoding in expression (=version) titles
+
+2014-09-03 16:57  atge
+
+	* mermeid/images/Thumbs.db, mermeid/transforms/mei/mei_to_html.xsl:
+
+2014-09-02 21:27  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: improved pattern matching
+	  for abbreviations replacement
+
+2014-09-02 15:25  atge
+
+	* xqueries/library/abbreviations.xml: added SATB to abbreviations
+
+2014-08-29 13:10  atge
+
+	* mermeid/forms/mei/includes/bibl-input.xbl: added author field to
+	  newspaper article editing
+
+2014-08-29 07:26  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: "Other" texts heading was
+	  missing under certain circumstances
+
+2014-08-26 17:26  atge
+
+	* mermeid/transforms/mei/mei_to_html_public.xsl: changed cross
+	  reference links to relative URLs to avoid surfing away from the
+	  server alias
+
+2014-08-26 14:59  atge
+
+	* mermeid/style/public_list_style.css: styling clickable result
+	  list rows
+
+2014-08-26 14:04  atge
+
+	* mermeid/transforms/mei/mei_to_html_public.xsl: fixed errors in
+	  references to server name and directories
+
+2014-08-26 14:03  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_public.xsl,
+	  xqueries/library/abbreviations.xml: fixed errors in references to
+	  server name and directories
+
+2014-08-25 09:52  atge
+
+	* xqueries/library/abbreviations.xml: added keyb.
+
+2014-08-25 07:34  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_public.xsl: bug fix
+
+2014-08-23 13:34  atge
+
+	* mermeid/style/dcm.css: adjustments to header and footer
+
+2014-08-23 12:54  atge
+
+	* mermeid/style/dcm.css: adjusted the footer's appearance
+
+2014-08-22 14:14  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: added some ideas for an
+	  automatic cross-link generator (probably not useful)
+
+2014-08-22 12:29  atge
+
+	* mermeid/forms/mei/details-source.xml,
+	  mermeid/forms/mei/edit-form-footer.xml: added "recording" to
+	  source classification options
+
+2014-08-21 14:00  atge
+
+	* mermeid/style/public_list_style.css: adjusted appearance of
+	  English titles in list view
+
+2014-08-21 10:38  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml: updating version
+	  counter...
+
+2014-08-21 10:14  atge
+
+	* mermeid/style/cnw.css, mermeid/style/mei_to_html.css,
+	  mermeid/style/mei_to_html_public.css,
+	  mermeid/transforms/mei/mei_to_html.xsl: subtitles now grouped
+	  with work main titles
+
+2014-08-20 19:21  atge
+
+	* xqueries/library/abbreviations.xml: added DFS to abbreviations
+
+2014-08-19 13:18  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: removed an excess space
+	  occurring when no source publishing year is given
+
+2014-08-19 12:36  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: performers separated by ;
+	  instead of ,
+
+2014-08-19 12:23  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: improved formatting of
+	  bibl titles
+
+2014-08-19 11:00  atge
+
+	* mermeid/style/mei_to_html.css: fixed small styling issue in cross
+	  references
+
+2014-08-19 10:44  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml, mermeid/images/Thumbs.db,
+	  mermeid/style/cnw.css, mermeid/style/mei_to_html.css,
+	  mermeid/style/mei_to_html_public.css,
+	  mermeid/style/public_list_style.css,
+	  mermeid/transforms/mei/mei_to_html.xsl,
+	  mermeid/transforms/mei/mei_to_html_public.xsl,
+	  xqueries/library/abbreviations.xml: styled genre indicators in
+	  public list view; styled cross references
+
+2014-08-15 14:34  atge
+
+	* mermeid/forms/mei/details-form-model.xml,
+	  mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/forms/mei/includes/bibl-input.xbl: added create button
+	  for <imprint>; fixed missing entry in revisionDesc when only
+	  detail editors are used
+
+2014-08-15 10:37  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl: bibl reference formatting
+	  details
+
+2014-08-15 09:51  atge
+
+	* mermeid/style/mei_to_html_public.css: adjusted bibliography
+	  spacing
+
+2014-08-14 14:53  atge
+
+	* mermeid/style/mei_to_html.css, xqueries/dcm/gade_comala.xml:
+	  revised demo data a little
+
+2014-08-14 14:37  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml: ... and updating the
+	  version number...
+
+2014-08-14 14:36  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: fixed a bug in handling
+	  reproductions of sources; also some formatting issues
+
+2014-08-12 13:05  slu
+
+	* local_config/http_filter.xml_frontend,
+	  local_config/login.xqm_frontend,
+	  local_config/mermeid_configuration.xml_frontend,
+	  local_config/standard_bibliography.xml_frontend: the *_frontend
+	  configurations are now in place
+
+2014-08-11 11:26  atge
+
+	* mermeid/transforms/mei/mei_to_html.xsl: Vol. --> vol.
+
+2014-08-11 10:58  atge
+
+	* mermeid/forms/mei/edit-form-footer.xml,
+	  mermeid/transforms/mei/mei_to_html.xsl: fixed an issue with
+	  p./pp.
+
 2014-08-08 09:49  atge
 
 	* mermeid/forms/mei/edit-form-footer.xml,
