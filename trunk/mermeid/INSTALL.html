@@ -124,7 +124,7 @@
 	<h2>2. System requirements</h2>
 	
 	<p>This system is lightweight. It is only tested under Apache2 HTTPD
-	with Tomcat6 servlet container under Red Hat and SUSE Linux. <strong>We
+	with Tomcat7 servlet container under Red Hat and SUSE Linux. <strong>We
 	have not been able to run it on less then 3GB, and recommend 4GB
 	internal memory. You should allocate at least 2GB to the java instance
 	that runs the various components.</strong></p>
@@ -135,7 +135,7 @@
 	<ul>
 	  <li><a href="http://httpd.apache.org/">Apache HTTPD</a></li>
 	  <li>
-	    <a href="http://tomcat.apache.org/">Apache Tomcat 6</a> running 
+	    <a href="http://tomcat.apache.org/">Apache Tomcat 7</a> running 
 	    <ul>
 	      <li><a href="http://www.orbeon.com/">Orbeon forms</a></li>
 	      <li><a href="http://exist.sourceforge.net/">eXist-db</a></li>
@@ -169,17 +169,16 @@
 	    <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">filter</td>
 	    <td>
 	      <p>a number of JAVA servlets, builds a war file using
-	      maven. You'll need to edit the java property file
-	      <strong>filter/src/main/resources/http_filter.xml</strong> (see <a
+	      <kbd>ant</kbd>. You'll need to edit a java file in local_config
+	      <kbd>filter/local_config/http_filter.xml_distro</kbd> (see <a
 	      href="#appendix">Appendix A</a>. When done you must recompile the
-	      package using maven:</p>
+	      package using <kbd>ant</kbd>:</p>
 	      <pre>
-		cd &lt;path to source&gt;/filter/
-		mvn install
-		cp target/filter*.war /&lt;PATH TO YOUR&gt;/tomcat6/webapps/filter.war     
+		cd &lt;path to source&gt;
+		ant war
 	      </pre>
 
-	      <p>If you don't have maven installed, you can always unzip the
+	      <p>If you don't have ant installed, you can always unzip the
 	      filter.war coming with the distribution, edit http_filter.xml
 	      and then repack it as a war file.</p>
 	      
@@ -193,8 +192,13 @@
 	    <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">
 	      mermeid
 	    </td>
-	    <td>the forms. The configuration here lives in
-	    <kbd><a href="forms/mermeid_configuration.xml">forms/mermeid_configuration.xml</a></kbd>
+	    <td>the forms. The configuration here lives in <kbd><a
+	    href="../local_config/mermeid_configuration.xml_distro">local_config/mermeid_configuration.xml_distro</a></kbd>
+	    and is copied into <kbd>forms/mermeid_configuration.xml</kbd> upon
+	    building. You build everything in one go
+	    <pre>
+	      ant war
+	    </pre>
 	    </td>
 	  </tr>
 	  <tr>
@@ -247,21 +251,21 @@
 	    <p>
 	      In the following we assume that tomcat lives in 
 	    </p>
-	    <pre>/&lt;PATH TO&gt;/tomcat6</pre>
+	    <pre>/&lt;PATH TO&gt;/tomcat</pre>
 	    
 	    <ol type="i">
 	      <li>
 		<strong>Install Orbeon:</strong> We are using version 3.9.0. 
 		<pre>
-		  cp orbeon.war /&lt;PATH TO&gt;/tomcat6/webapps/
+		  cp orbeon.war /&lt;PATH TO&gt;/tomcat/webapps/
 		</pre>
 		We are using some extra files, among those is a jsp script for
 		connecting our form to orbeon. They need to be installed inside
 		the orboen webapp
 		<pre>
 		  cd /home/xml-store/editor
-		  mkdir /&lt;PATH TO&gt;/tomcat6/webapps/orbeon/xforms-jsp/mei-form
-		  cp xquery/mei_form.jsp /&lt;PATH TO&gt;/tomcat6/webapps/orbeon/xforms-jsp/mei-form/index.jsp
+		  mkdir /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form
+		  cp xquery/mei_form.jsp /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form/index.jsp
 		</pre>
 		The jsp is dependent on a package called commons-httpclient. We've
 		added it in the distribution.
@@ -274,16 +278,16 @@
 		</pre>
 		This will unpack the distribution into a directory of your
 		choice. Let's call it eXist. In that directory you can repack it
-		as a *.war file which can be installed in you tomcat6.
+		as a *.war file which can be installed in you tomcat.
 		<pre>
 		  cd eXist
 		  ./build.sh dist-war
 		</pre>
 		That will create a file called something like
 		<kbd>dist/exist-&lt;version number&gt;.war</kbd>.
-		This file should be installed as <kbd>exist.war</kbd> in you tomcat6.
+		This file should be installed as <kbd>exist.war</kbd> in you tomcat.
 		<pre>
-		  cp dist/exist-*.war /&lt;PATH TO YOUR&gt;/tomcat6/webapps/exist.war
+		  cp dist/exist-*.war /&lt;PATH TO YOUR&gt;/tomcat/webapps/exist.war
 		</pre>
 	      </li>
 	    </ol>
@@ -302,7 +306,7 @@
       <div id="sect3">
 	<h2>4. Configuration</h2>
 	
-	<p>Ensure that Apache HTTPD and Apache Tomcat6 both starts with the
+	<p>Ensure that Apache HTTPD and Apache Tomcat both starts with the
 	operating system. A requisite for the following is that they are
 	healthy, up and running. We assume they that they are running on port
 	numbers 80 and 8080 respectively on a server called
