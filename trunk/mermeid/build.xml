@@ -2,7 +2,7 @@
    
     <property name="bin.dir"     value="bin"/>
     <property name="webapp.path" value="formulation"/>
-    <property name="webapp.instance" value="demo"/>
+    <property name="webapp.instance" value="distro"/>
     <property name="webapp.config_dir"
 	      value="../local_config/" />
     <property name="webapp.config"   
@@ -65,6 +65,10 @@
       </war>
       <delete file="forms/mei/mermeid_configuration.xml" />
     </target>
+
+    <target name="dist" 
+	    depends="war" 
+	    description="pack stuff"/>
 
     <target name="all" 
 	    depends="war" 

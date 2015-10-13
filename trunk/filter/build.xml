@@ -3,7 +3,7 @@
     <property name="webapp.path"    
 	      value="public_html"/>
 
-    <property name="webapp.instance" value="demo"/>
+    <property name="webapp.instance" value="distro"/>
 
     <property name="config" 
 	      value="http_filter.xml"/>
@@ -24,6 +24,12 @@
       <delete dir="${class.dir}"/>
       <delete dir="${build.dir}"/>
       <delete dir="${bin.dir}"  />
+    </target>
+
+    <target   name="realclean" 
+	      depends="clean"
+	      description="Clean the project really well">
+      <delete file="filter.war"/>
     </target>
 
     <target   name="compile" 
@@ -61,8 +67,12 @@
         
       </jar>
     </target>
+
+    <target name="dist" 
+	    depends="war" 
+	    description="pack stuff"/>
   
-    <target   name="all" 
-	      depends="war" />
+    <target name="all" 
+	    depends="war" />
 
 </project>

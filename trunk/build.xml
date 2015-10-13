@@ -1,19 +1,47 @@
 <project name="mermeid" basedir="." default="all">
 
-  <property name="webapp.instance" value="demo"/>
+  <property name="webapp.instance" value="distro"/>
 
   <target name="clean">
+    <delete file="../MerMEId.tar.gz" />
     <subant failonerror="false">
      <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
      <target name="clean"/>
     </subant>
   </target>
 
-  <target name="war" depends="clean">
-    <subant failonerror="false">
+  <target name="realclean" depends="clean">
+    <subant failonerror="true">
+      <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
+      <target name="realclean"/>
+    </subant>
+  </target>
+
+  <target name="war">
+    <subant failonerror="true">
       <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
       <target name="war"/>
     </subant>
+  </target>
+
+  <target name="dist" depends="war,clean">
+    <tar destfile="../MerMEId.tar.gz" compression="gzip">
+      <tarfileset dir="./apache-httpd" prefix="MerMEId/apache-httpd"/>
+      <tarfileset dir="./mermeid" prefix="MerMEId/mermeid"/>
+      <tarfileset dir="./xqueries" prefix="MerMEId/xqueries"/>
+      <tarfileset dir="./orbeon" prefix="MerMEId/orbeon"/>
+      <tarfileset dir="./filter" prefix="MerMEId/filter"/>
+      <tarfileset dir="./local_config" prefix="MerMEId/local_config">
+	<include name="*${webapp.instance}"/>	
+      </tarfileset>
+      <tarfileset dir="./" prefix="MerMEId">
+	<include name="INSTALL.html"/>
+	<include name="build.xml" />
+	<include name="LICENSE.txt" />
+	<include name="README.html" />
+	<exclude name="**"/>
+      </tarfileset>
+    </tar>
   </target>
 
   <target name="all" 
