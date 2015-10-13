@@ -34,12 +34,11 @@
       <tarfileset dir="./local_config" prefix="MerMEId/local_config">
 	<include name="*${webapp.instance}"/>	
       </tarfileset>
-      <tarfileset dir="./" prefix="MerMEId">
+      <tarfileset dir="." prefix="MerMEId">
 	<include name="INSTALL.html"/>
 	<include name="build.xml" />
 	<include name="LICENSE.txt" />
 	<include name="README.html" />
-	<exclude name="**"/>
       </tarfileset>
     </tar>
   </target>

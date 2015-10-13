@@ -162,6 +162,18 @@
 	    <th style="text-align:left;">Content</th>
 	  </tr>
 	  <tr>
+	    <td><kbd>local_config</kbd></td>
+	    <td>Contains configuration files that are needed for buidling
+	    and/or running <kbd>MerMEId</kbd> and its auxilliary
+	    applications. The file names are of the form
+	    <kbd>name.suffix_instance</kbd>. The name is what it sounds like,
+	    suffix determines what kind of file it is. For example, xqm is a
+	    xquery module. <kbd>instance</kbd> is for keeping track of
+	    different instances of MerMEId, which is useful if you have
+	    multiple ones for different purposes or projects. We have 
+	    demo, developement and production versions of the system.</td>
+	  </tr>
+	  <tr>
 	    <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">documents</td>
 	    <td>empty, more or less</td>
 	  </tr>
@@ -175,12 +187,15 @@
 	      package using <kbd>ant</kbd>:</p>
 	      <pre>
 		cd &lt;path to source&gt;
-		ant war
+		ant -Dwebapp.instance=distro war
 	      </pre>
 
+	      <p>This will build the <kbd>distro</kbd>-instance of the
+	      application.</p>
+
 	      <p>If you don't have ant installed, you can always unzip the
-	      filter.war coming with the distribution, edit http_filter.xml
-	      and then repack it as a war file.</p>
+	      <kbd>filter.war</kbd> coming with the distribution, edit
+	      http_filter.xml and then repack it as a war file.</p>
 	      
 	      <p>For documentation of the <kbd>filter</kbd> software itself,
 	      see its <a href="./apidoc/index.html">API javadoc</a>.
@@ -189,7 +204,8 @@
 	    </td>
 	  </tr>
 	  <tr>
-	    <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">
+	    <td valign="top" 
+		style="text-align:left;font-weight:bold;font-family:courier;">
 	      mermeid
 	    </td>
 	    <td>the forms. The configuration here lives in <kbd><a
@@ -197,14 +213,16 @@
 	    and is copied into <kbd>forms/mermeid_configuration.xml</kbd> upon
 	    building. You build everything in one go
 	    <pre>
-	      ant war
+	      ant -Dwebapp.instance=distro war
 	    </pre>
+	    See above for a description of the <kbd>webapp.instance</kbd>
+	    concept
 	    </td>
 	  </tr>
 	  <tr>
 	    <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">orbeon</td>
 	    
-	    <td>A <a href="../orbeon/mei_form.jsp">JSP script</a> which should be
+	    <td>A <a href="orbeon/mei_form.jsp">JSP script</a> which should be
 	    installed as &lt;your
 	    tomcat&gt;/webapps/orbeon/xforms-jsp/mei-form/index.jsp -- this is
 	    basically an xinclude processor</td>
