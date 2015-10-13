@@ -17,7 +17,11 @@
     <property name="java.dir"       value="src"/>
 
     <target name="clean">
-      <delete file="editor.war"/>
+      <!-- we don't delete anything here, since we want to keep the war -->
+    </target>
+
+    <target name="realclean">
+      <delete file="editor.war" />
     </target>
 
     <target name="war">
@@ -62,7 +66,6 @@
       <delete file="forms/mei/mermeid_configuration.xml" />
     </target>
 
-    <!-- Clean, compile, jar -->
     <target name="all" 
 	    depends="war" 
 	    description="pack stuff"/>
