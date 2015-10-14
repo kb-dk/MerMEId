@@ -40,6 +40,12 @@
 	<zipfileset dir="transforms" prefix="transforms"/>
       	<lib dir="${bin.dir}"/>
       	<lib dir="${jar.dir}"/>
+	<zipfileset dir=".">
+	  <include name="INSTALL.html"/>
+	  <include name="../LICENSE.txt" />
+	  <include name="README.html" />
+	  <include name="migrate2010-2012.html" />
+	</zipfileset>
       </war>
       <delete file="forms/mei/mermeid_configuration.xml" />
     </target>
