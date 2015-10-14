@@ -59,7 +59,7 @@
 
     <target   name="jar" description="Jar the project" depends="compile"> 
       <mkdir  dir="${bin.dir}"/>
-      <jar    destfile="${jar.dir}/${ant.project.name}.jar" 
+      <jar    destfile="${bin.dir}/${ant.project.name}.jar" 
 	      basedir="${build.dir}">
         <manifest>
           <!-- don't write anything in MANIFEST.MF -->
