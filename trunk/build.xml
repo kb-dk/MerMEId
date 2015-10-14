@@ -3,7 +3,6 @@
   <property name="webapp.instance" value="distro"/>
 
   <target name="clean">
-    <delete file="../MerMEId.tar.gz" />
     <subant failonerror="false">
      <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
      <target name="clean"/>
@@ -11,6 +10,7 @@
   </target>
 
   <target name="realclean" depends="clean">
+    <delete file="../MerMEId.tar.gz" />
     <subant failonerror="true">
       <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
       <target name="realclean"/>
