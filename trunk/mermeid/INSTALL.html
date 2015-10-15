@@ -72,7 +72,7 @@
 	<ol>
 	  <li><a href="#sect0.5">Overview</a></li>
 	  <li><a href="#sect1">System requirements</a></li>
-	  <li><a href="#sect2">Installation</a></li>
+	  <li><a href="#sect2">Building &amp; installation</a></li>
 	  <li><a href="#sect3">Configuration</a></li>
 	  <li><a href="#testing">Testing and Getting Started</a></li>
 	  <li><a href="#security">Authentication &amp; Security</a></li>
@@ -128,29 +128,87 @@
 	have not been able to run it on less then 3GB, and recommend 4GB
 	internal memory. You should allocate at least 2GB to the java instance
 	that runs the various components.</strong></p>
+
+	<p>The software can run on a modest system. We have it on a virtual
+	server with 4GB of internal memory. 80GB of hard-disk would be a
+	lot. In addition it requires the following readily available software
+	on the server:</p>
 	
-	<p>It requires the following readily available software on the
-	server:</p>
-	
-	<ul>
-	  <li><a href="http://httpd.apache.org/">Apache HTTPD</a></li>
+	<ol>
 	  <li>
-	    <a href="http://tomcat.apache.org/">Apache Tomcat 7</a> running 
-	    <ul>
-	      <li><a href="http://www.orbeon.com/">Orbeon forms</a></li>
-	      <li><a href="http://exist.sourceforge.net/">eXist-db</a></li>
-	    </ul>
+	    <p>
+	      <strong>Install Apache-Tomcat:</strong> We have recently run it on
+	      versions 6.0.20 to 6.0.36 of Apache-Tomcat. If the one provided in
+	      your Linux distribution is 6.0.20 or better I suggest that you use
+	      that. The advantage is that you get all the java needed without
+	      further ado.
+	    </p>
+	    
+	    <p>
+	    </p>
+	    <p>
+	      In the following we assume that tomcat lives in 
+	    </p>
+	    <pre>/&lt;PATH TO&gt;/tomcat</pre>
+	    
+	    <ol type="i">
+	      <li>
+		<strong>Install Orbeon:</strong> We are using version 3.9.0. 
+		<pre>
+		  cp orbeon.war /&lt;PATH TO&gt;/tomcat/webapps/
+		</pre>
+		We are using some extra files, among those is a jsp script for
+		connecting our form to orbeon. They need to be installed inside
+		the orboen webapp
+		<pre>
+		  cd /home/xml-store/editor
+		  mkdir /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form
+		  cp xquery/mei_form.jsp /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form/index.jsp
+		</pre>
+		The jsp is dependent on a package called commons-httpclient. We've
+		added it in the distribution.
+	      </li>
+	      <li>
+		<strong>Install eXist:</strong> We're using version 1.4.1 Prepare
+		the code and build the application by first running the installer
+		<pre>
+		  java -jar eXist-&lt;version number&gt;.jar
+		</pre>
+		This will unpack the distribution into a directory of your
+		choice. Let's call it eXist. In that directory you can repack it
+		as a *.war file which can be installed in you tomcat.
+		<pre>
+		  cd eXist
+		  ./build.sh dist-war
+		</pre>
+		That will create a file called something like
+		<kbd>dist/exist-&lt;version number&gt;.war</kbd>.
+		This file should be installed as <kbd>exist.war</kbd> in you tomcat.
+		<pre>
+		  cp dist/exist-*.war /&lt;PATH TO YOUR&gt;/tomcat/webapps/exist.war
+		</pre>
+	      </li>
+	    </ol>
+	    
 	  </li>
-	  <li><a href="http://xerces.apache.org/xerces2-j/">xerces2-j (i.e., the java version)</a></li>
-	  <li><a href="http://xml.apache.org/xalan-j/">xalan-j (xslt processor, java version)</a></li>
-	</ul>
-	
-	<p>Software can run on a modest system. We have it on a virtual server
-	with 4GB of internal memory. 80GB of hard-disk would be a lot.</p>
+	  
+	  <li>
+	    <strong>Install apache httpd:</strong> If it isn't installed
+	    already. We've used the one that comes with the Linux
+	    distribution.  Should work with <kbd>Apache/2.2.3</kbd> or
+	    better. Ensure that you have <kbd>mod_proxy</kbd> and
+	    <kbd>mod_proxy_ajp</kbd> installed.
+	  </li>
+
+	  <li><a href="http://xerces.apache.org/xerces2-j/">xerces2-j (i.e.,
+	  the java version)</a></li>
+	  <li><a href="http://xml.apache.org/xalan-j/">xalan-j (xslt
+	  processor, java version)</a></li>
+	</ol>
       </div>
-      
+
       <div id="sect2">
-	<h2>3. Installation</h2>
+	<h2>3. Building &amp; installation</h2>
 	
 	<p><strong>Unpack and install the MerMEId:</strong> We suggest that
 	you create a directory called <kbd>/home/xml-store</kbd> and unpack it
@@ -162,29 +220,33 @@
 	    <th style="text-align:left;">Content</th>
 	  </tr>
 	  <tr>
-	    <td><kbd>local_config</kbd></td>
+	    <td style="text-align:left;font-weight:bold;font-family:courier;">local_config</td>
 	    <td>Contains configuration files that are needed for buidling
-	    and/or running <kbd>MerMEId</kbd> and its auxilliary
-	    applications. The file names are of the form
+	    and/or running <kbd
+	    style="text-align:left;font-weight:bold;font-family:courier;">MerMEId</kbd>
+	    and its auxilliary applications. The file names are of the form
 	    <kbd>name.suffix_instance</kbd>. The name is what it sounds like,
 	    suffix determines what kind of file it is. For example, xqm is a
-	    xquery module. <kbd>instance</kbd> is for keeping track of
-	    different instances of MerMEId, which is useful if you have
-	    multiple ones for different purposes or projects. We have 
-	    demo, developement and production versions of the system.</td>
+	    xquery module. <kbd
+	    style="text-align:left;font-weight:bold;font-family:courier;">instance</kbd>
+	    is for keeping track of different instances of MerMEId, which is
+	    useful if you have multiple ones for different purposes or
+	    projects. We have demo, developement and production versions of
+	    the system.</td>
 	  </tr>
+	 
 	  <tr>
-	    <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">documents</td>
-	    <td>empty, more or less</td>
-	  </tr>
-	  <tr>
-	    <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">filter</td>
+	    <td valign="top" 
+		style="text-align:left;font-weight:bold;font-family:courier;">
+	      filter
+	    </td>
 	    <td>
-	      <p>a number of JAVA servlets, builds a war file using
-	      <kbd>ant</kbd>. You'll need to edit a java file in local_config
-	      <kbd>filter/local_config/http_filter.xml_distro</kbd> (see <a
-	      href="#appendix">Appendix A</a>. When done you must recompile the
-	      package using <kbd>ant</kbd>:</p>
+	      <p>a number of JAVA servlets. You can build a war file using
+	      <kbd>ant</kbd>. To build it you'll need to edit a java property
+	      file in local_config
+	      <kbd>local_config/http_filter.xml_distro</kbd> (see <a
+	      href="#appendix">Appendix A</a>. When done you must recompile
+	      the package using <kbd>ant</kbd>:</p>
 	      <pre>
 		cd &lt;path to source&gt;
 		ant -Dwebapp.instance=distro war
@@ -253,72 +315,6 @@
 	</pre>
 	
 	<p>See below how apache is configured in the two cases.</p>
-	
-	<ol>
-	  <li>
-	    <p>
-	      <strong>Install Apache-Tomcat:</strong> We have recently run it on
-	      versions 6.0.20 to 6.0.36 of Apache-Tomcat. If the one provided in
-	      your Linux distribution is 6.0.20 or better I suggest that you use
-	      that. The advantage is that you get all the java needed without
-	      further ado.
-	    </p>
-	    
-	    <p>
-	    </p>
-	    <p>
-	      In the following we assume that tomcat lives in 
-	    </p>
-	    <pre>/&lt;PATH TO&gt;/tomcat</pre>
-	    
-	    <ol type="i">
-	      <li>
-		<strong>Install Orbeon:</strong> We are using version 3.9.0. 
-		<pre>
-		  cp orbeon.war /&lt;PATH TO&gt;/tomcat/webapps/
-		</pre>
-		We are using some extra files, among those is a jsp script for
-		connecting our form to orbeon. They need to be installed inside
-		the orboen webapp
-		<pre>
-		  cd /home/xml-store/editor
-		  mkdir /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form
-		  cp xquery/mei_form.jsp /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form/index.jsp
-		</pre>
-		The jsp is dependent on a package called commons-httpclient. We've
-		added it in the distribution.
-	      </li>
-	      <li>
-		<strong>Install eXist:</strong> We're using version 1.4.1 Prepare
-		the code and build the application by first running the installer
-		<pre>
-		  java -jar eXist-&lt;version number&gt;.jar
-		</pre>
-		This will unpack the distribution into a directory of your
-		choice. Let's call it eXist. In that directory you can repack it
-		as a *.war file which can be installed in you tomcat.
-		<pre>
-		  cd eXist
-		  ./build.sh dist-war
-		</pre>
-		That will create a file called something like
-		<kbd>dist/exist-&lt;version number&gt;.war</kbd>.
-		This file should be installed as <kbd>exist.war</kbd> in you tomcat.
-		<pre>
-		  cp dist/exist-*.war /&lt;PATH TO YOUR&gt;/tomcat/webapps/exist.war
-		</pre>
-	      </li>
-	    </ol>
-	    
-	  </li>
-	  
-	  <li>
-	    <strong>Install apache httpd:</strong> If it isn't installed
-	    already. We're using the one that came with the distribution
-	    <kbd>Apache/2.2.3</kbd> Ensure that you have <kbd>mod_proxy</kbd> and
-	    <kbd>mod_proxy_ajp</kbd> installed.
-	  </li>
-	</ol>
       </div>
       
       <div id="sect3">
