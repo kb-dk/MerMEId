@@ -20,8 +20,13 @@
       <div class="manual_header">
 	
 	<div class="close_div">
-	  <a href="javascript:window.close();" class="trigger"><img alt="Close"
-	  title="Close" src="images/close.gif" width="12" height="12" /></a>
+	  <a href="javascript:window.close();" class="trigger">
+	    <img alt="Close"
+		 title="Close" 
+		 src="images/close.gif" 
+		 width="12" 
+		 height="12" />
+	  </a>
 	</div>
 	<img alt="MerMEId" 
 	     src="images/mermeid_30px_inv.png" 
@@ -30,7 +35,7 @@
       </div>
       
       <div class="toclink">
-	<a href="manual/index.html">To table of contents</a>
+	<a href="manual/index.html">To MANUAL</a>
       </div>
 
       <p>&#160; </p>
@@ -50,7 +55,7 @@
 	</div>
 	
 	<div style="float: left; text-align:center; padding:0 20px;">
-	  <kbd>&#160;</kbd>
+	  &#160;
 	</div>
 	
 	<div style="width:30%; float: left; text-align: left;">
@@ -67,7 +72,7 @@
 
       
       <div id="sect0">
-	<h2>0. Table of Contents</h2>
+	<h2>Table of Contents</h2>
 	
 	<p>For information on how to use the editor, please refer to the <a
 	href="./manual/index.html">manual</a></p>
@@ -430,12 +435,25 @@
 	      </pre>
 	      
 	      
-	      <p>Please note that we've folded the command line using '\' just for
-	      typographical reasons.</p>
+	      <p>Please note that we've folded the command line using '\' just
+	      for typographical reasons.</p>
 	      </li>
+
 	      <li>
-		<strong>Load the query/queries</strong>. <p>While still in xquery,
-		you can do this from the command line. First the xquery files:</p>
+		<strong>Configure the <kbd>xqueries</kbd></strong>.  
+		<p>Some xqueries need more privileges than the rest (for
+		copying and publishing resources). Those scripts are using
+		login.xqm. You need to copy login.xqm_distro to login.xqm and
+		edit it to provide credentials for these operations.</p>
+	      </li>
+
+	      <li>
+
+		<strong>Load the <kbd>xqueries</kbd></strong>.  
+
+		<p>You can do this from the command line. First the xquery
+		files:</p>
+
 		<pre>
 		  ./load_exist.pl --user admin \
 		  --password your_own_very_secret_password \
@@ -444,6 +462,7 @@
 		  --context "/exist/rest/db" \
 		  --suffix xq
 		</pre>
+
 		<p>And then the xquery modules:</p>
 		<pre>
 		  ./load_exist.pl --user admin \
@@ -692,9 +711,7 @@
 	  &lt;comment>HTTP Filter parameters&lt;/comment>
 	  
 	  &lt;!--
-	  
 	  The filter is meant to operate on top of an eXist XML database
-	  
 	  -->
 	  
 	  &lt;entry key="exist.host">mei.example.org&lt;/entry>
@@ -705,37 +722,46 @@
 	  &lt;entry key="exist.password">your very secret word&lt;/entry>
 	  
 	  &lt;!--
-	  
 	  get is the retrieval filter
-	  
 	  -->
 	  
-	  &lt;entry key="get">http://mei.example.org/editor/transforms/mei/filter_get.xsl&lt;/entry>
-	  &lt;entry key="get.mime">application/xml&lt;/entry>
-	  &lt;entry key="get.charset">UTF-8&lt;/entry>
+	  &lt;entry key="get.dcm">http://mei.example.org/editor/transforms/mei/filter_get.xsl&lt;/entry>
+	  &lt;entry key="get.dcm.mime">application/xml&lt;/entry>
+	  &lt;entry key="get.dcm.charset">UTF-8&lt;/entry>
+
+
+	  &lt;entry 
+	  key="get.library">http://mei.example.org/editor/transforms/mei/null_transform.xsl&lt;/entry>
+	  &lt;entry key="get.library.mime">application/xml&lt;/entry>
+	  &lt;entry key="get.library.charset">UTF-8&lt;/entry>
 	  
 	  &lt;!--
-	  
 	  put is for updating
-	  
 	  -->
 	  
-	  &lt;entry key="put">http://mei.example.org/editor/transforms/mei/filter_put.xsl&lt;/entry>
-	  &lt;entry key="put.mime">application/xml&lt;/entry>
-	  &lt;entry key="put.charset">UTF-8&lt;/entry>
+	  &lt;entry 
+	         key="put.dcm">http://mei.example.org/editor/transforms/mei/filter_put.xsl&lt;/entry>
+	  &lt;entry key="put.dcm.mime">application/xml&lt;/entry>
+	  &lt;entry key="put.dcm.charset">UTF-8&lt;/entry>
+
+	  &lt;entry 
+	         key="put.library">http://mei.example.org/editor/transforms/mei/null_transform.xsl&lt;/entry>
+	  &lt;entry key="put.library.mime">application/xml&lt;/entry>
+	  &lt;entry key="put.library.charset">UTF-8&lt;/entry>
+
 	  
 	  &lt;!--
-	  
 	  del is for removing stuff
-	  
 	  -->
 	  
-	  &lt;entry key="del.redirect">http://mei.example.org/storage/list_files.xq&lt;/entry>
+	  &lt;entry 
+                 key="del.redirect">http://mei.example.org/storage/list_files.xq&lt;/entry>
 	  
 	  &lt;!-- 
 	  
-	  Create is for what it seems to be. A URI that is good to use for creating new
-	  documents. We're doing that using uri templates (RFC6570). The URI should look like
+	  Create is for what it seems to be. A URI that is good to use for
+	  creating new documents. We're doing that using uri templates
+	  (RFC6570). The URI should look like
 	  
 	  http://mei.example.org/orbeon/xforms-jsp/mei-form/?uri=http://mei.example.org/form/dcm/&amp;doc=cnw0361.xml
 	  
@@ -758,6 +784,7 @@
 	  &lt;orbeon_dir>http://mei.example.org/orbeon/xforms-jsp/mei-form/&lt;/orbeon_dir>
 	  &lt;form_home>http://mei.example.org/editor/forms/mei/&lt;/form_home>
 	  &lt;crud_home>http://mei.example.org/filter/&lt;/crud_home>
+	  &lt;library_crud_home>http://mei.example.org/filter/library/&lt;/library_crud_home>
 	  &lt;server_name>http://mei.example.org/&lt;/server_name>
 	  &lt;xml_file/>
 	  
