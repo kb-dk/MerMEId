@@ -1,0 +1,19 @@
+<!-- This file is an properties-local.xml file. 
+     Please follow the instructions here:
+     http://wiki.orbeon.com/forms/doc/developer-guide/configuration-properties
+     --> 
+<properties xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:oxf="http://www.orbeon.com/oxf/processors"> 
+
+<!-- 
+This is for orbeon to forward the credentials sent for POST and PUT to filter
+http://wiki.orbeon.com/forms/doc/developer-guide/xforms-advanced-submissions#TOC-HTTP-headers-forwarding
+-->  
+
+  <property
+      as="xs:string"
+      name="oxf.xforms.forward-submission-headers"
+      value="Orbeon-Client Authorization SM_USER"/>
+
+
+</properties>
