@@ -21,11 +21,18 @@
 	
 	<div class="close_div">
 	  <a href="javascript:window.close();" class="trigger"><img alt="Close"
-	  title="Close" src="images/close.gif" width="12" height="12" /></a></div>
-	  <img alt="MerMEId" src="images/mermeid_30px_inv.png" width="130" height="23" />
+	  title="Close" src="images/close.gif" width="12" height="12" /></a>
+	</div>
+	<img alt="MerMEId" 
+	     src="images/mermeid_30px_inv.png" 
+	     width="130" 
+	     height="23" />
       </div>
       
-      <div class="toclink"><a href="manual/index.html">To table of contents</a></div>
+      <div class="toclink">
+	<a href="manual/index.html">To table of contents</a>
+      </div>
+
       <p>&#160; </p>
       
       <h1>Installing and configuring the MerMEId editor</h1>
@@ -43,11 +50,7 @@
 	</div>
 	
 	<div style="float: left; text-align:center; padding:0 20px;">
-	  |<br/>
-	  |<br/>
-	  |<br/>
-	  |<br/>
-	  |<br/>
+	  <kbd>&#160;</kbd>
 	</div>
 	
 	<div style="width:30%; float: left; text-align: left;">
@@ -163,10 +166,22 @@
 		<pre>
 		  cd /home/xml-store/editor
 		  mkdir /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form
-		  cp xquery/mei_form.jsp /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form/index.jsp
+		  cp orbeon/mei_form.jsp /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form/index.jsp
 		</pre>
-		The jsp is dependent on a package called commons-httpclient. We've
-		added it in the distribution.
+		The jsp is dependent on a package called
+		commons-httpclient. We've added it in the distribution. In
+		addition we are dependent on that orbeon forwards the user's
+		credentials to the backend components, notably the
+		<kbd>filter</kbd> web app. This requires setting a config
+		property called
+		<kbd>oxf.xforms.forward-submission-headers</kbd>.
+		You do this by copying 
+		<pre>
+		  cp orbeon/properties-local.xml /&lt;PATH TO&gt;/tomcat/webapps/orbeon/WEB-INF/resources/config/
+		</pre>
+		<strong>NB!</strong> If have other local customizations in
+		that file, you might need to edit it rather than copying our
+		version.
 	      </li>
 	      <li>
 		<strong>Install eXist:</strong> We're using version 1.4.1 Prepare
@@ -182,8 +197,8 @@
 		  ./build.sh dist-war
 		</pre>
 		That will create a file called something like
-		<kbd>dist/exist-&lt;version number&gt;.war</kbd>.
-		This file should be installed as <kbd>exist.war</kbd> in you tomcat.
+		<kbd>dist/exist-&lt;version number&gt;.war</kbd>.  This file
+		should be installed as <kbd>exist.war</kbd> in you tomcat.
 		<pre>
 		  cp dist/exist-*.war /&lt;PATH TO YOUR&gt;/tomcat/webapps/exist.war
 		</pre>
@@ -234,7 +249,7 @@
 	    projects. We have demo, developement and production versions of
 	    the system.</td>
 	  </tr>
-	 
+	  
 	  <tr>
 	    <td valign="top" 
 		style="text-align:left;font-weight:bold;font-family:courier;">
@@ -291,7 +306,8 @@
 	    
 	  </tr>
 	  <tr>
-	    <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">transforms</td>
+	    <td valign="top" 
+		style="text-align:left;font-weight:bold;font-family:courier;">transforms</td>
 	    <td>some transforms used for presentation, filtering and also for
 	    migration of mei2010 to 2012 just copy them on top of the old
 	    ones</td>
@@ -364,31 +380,32 @@
 	    software we haven't authored in house. </p>
 	    
 	    <p>Direct your browser to
-	    <kbd>http://mei.example.org:8080/exist/</kbd> (i.e., <strong>to where
-	    you installed exist</strong>). You will get a page as in Figure 1.</p>
+	    <kbd>http://mei.example.org:8080/exist/</kbd> (i.e., <strong>to
+	    where you installed exist</strong>). You will get a page as in
+	    Figure 1.</p>
 
 	    <ol type="i">
 	      
-	      <li><strong>Set a password for the database admin.</strong> This is
-	      done under Admin &lt; User management.</li>
+	      <li><strong>Set a password for the database admin.</strong> This
+	      is done under Admin &lt; User management.</li>
 	      
 	      <li><strong>Create the dcm collection and the user
 	      dcm</strong>. We do all the adminstrative tasks using the JNLP
 	      based client IcedTea. It should work on all platforms. Click on
 	      "Web Start Client" and log on as admin with the user credentials
 	      you just created. The admin's credentials should be put into the
-	      <a href="#appendix">configuration files</a> Figure 2 shows the client after
-	      installation and configuration.</li>
+	      <a href="#appendix">configuration files</a> Figure 2 shows the
+	      client after installation and configuration.</li>
 	      
 	      <li><strong>Create a collection called library</strong>. Used to
 	      keep a standard set of bibliographic references that are often
 	      used.</li>
 	      
 	      <li><strong>Load some content:</strong>
-	      <p>After configuring eXist, it is just to populate the database with
-	      some content. The easiest way to do that is to use the admin client
-	      (see above). The fastest way is perhaps the command line tool,
-	      xquery/load_exist.pl</p>
+	      <p>After configuring eXist, it is just to populate the database
+	      with some content. The easiest way to do that is to use the
+	      admin client (see above). The fastest way is perhaps the command
+	      line tool, xquery/load_exist.pl</p>
 	      
 	      <pre>
 		cd xquery
