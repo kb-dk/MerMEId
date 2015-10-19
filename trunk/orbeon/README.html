@@ -17,10 +17,15 @@
     <p>Orbeon is invoked by delivering the form through a jsp situated in the
     directory.</p>
     <pre>
-      /&lt;PATH TO&gt;/tomcat6/webapps/orbeon/xforms-jsp/mei-form
+      /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form
     </pre>
     <p>Orbeon interpretes everything deliverd that way as being xforms. The
     mei_form.jsp is a kind of proxy executing xinclude.</p>
+
+    <p>You should also</p>
+    <pre>
+      cp properties-local.xml /&lt;PATH TO&gt;/tomcat/webapps/orbeon/WEB-INF/resources/config/properties-local.xml
+    </pre>
 
     
 
