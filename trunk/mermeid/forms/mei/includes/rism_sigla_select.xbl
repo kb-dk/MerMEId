@@ -105,12 +105,14 @@
                   <xxf:variable name="siglum" select="normalize-space($binding)"/>
                   <xf:setvalue ref="instance('temp')/archive_code" value="$siglum"/>
                   <xf:setvalue ref="instance('temp')/country_code" value="substring-before($siglum,'-')"/>
+                  <xf:send submission="load-rism-sigla"/>
                   <xxf:show dialog="rism-dialog"/>
                 </xf:action>
               </xf:trigger>
+              
               <xxf:dialog id="rism-dialog" appearance="full" level="modal"
                 close="true" draggable="true" visible="false">
-                <xf:label>RISM sigla selection</xf:label>         
+                <xf:label>RISM sigla selection</xf:label>
                 <xf:select1 ref="instance('temp')/country_code" xxf:refresh-items="false" class="maxlong">
                   <xf:label class="fixed_width">Country</xf:label>
                   <xf:action ev:event="xforms-value-changed">

@@ -12,8 +12,8 @@
 	 xmlns:zs="http://www.loc.gov/zing/srw/">
   
   <!--
-      Component generating source item list
-      Danish Centre for Music Publication (DCM) 
+      Component for item-level editing 
+      Danish Centre for MusHTMLic Publication (DCM) 
       Axel Teich Geertinger, 2012
       atge@kb.dk
   -->
@@ -21,7 +21,7 @@
   <xbl:binding id="dcm-item-binding" element="dcm|item">
     <!-- Orbeon Form Builder Component Metadata -->
     <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
-      <display-name lang="en">Item list</display-name>
+      <display-name lang="en">Item editor</display-name>
     </metadata>
     <xbl:resources>
       <xbl:style> 
@@ -316,7 +316,6 @@
                 <h:legend>Title page 
                 <h:a class="help">&#160;?<h:span class="comment">Transcription of the item's title page. Multiple title pages
                 may be added if necessary</h:span></h:a>
-                <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                 </h:legend>
                 <dcm:create nodeset="m:titlePage"
                             label="Add title page"
@@ -607,7 +606,6 @@
                                     <h:legend>Title page 
                                     <h:a class="help">&#160;?<h:span class="comment">Transcription of the item's title page. Multiple title pages
                                     may be added if necessary</h:span></h:a>
-                                    <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                                     </h:legend>
                                     <xf:repeat nodeset="m:titlePage" id="component-physdesc-titlepage">
                                       <xf:input ref="@label">
