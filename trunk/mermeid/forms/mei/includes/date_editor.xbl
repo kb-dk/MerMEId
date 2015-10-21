@@ -155,9 +155,7 @@
                         
                         <xf:trigger class="date-editor-output" appearance="minimal">
                             <xf:label>
-                                <xf:output value="$binding">
-                                    <xf:label/>
-                                </xf:output>                                    
+                                <xf:output value="$binding"/>       
                             </xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xxf:show dialog="date-editor-dialog"/>
