@@ -20,6 +20,12 @@ Read more at the
 
 This is the source distribution. 
 
+<<<<<<< HEAD
 There is also a [binary distribution](http://labs.kb.dk/editor/mermeid.tar.bz2) (~ 8MB tar.bz2), which
 in addition to the source also includes jar and war files for an application
 server.
+=======
+There is also a [binary distribution](http://labs.kb.dk/editor/mermeid.tar.bz2) (~ 8MB tar.bz2), which in addition to the source also includes jar and war files for an application server.
+
+
+>>>>>>> a new and improved README.md
