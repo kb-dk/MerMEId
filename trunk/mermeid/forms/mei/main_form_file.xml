@@ -5,6 +5,7 @@
 	xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
 	xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:dcm="http://www.kb.dk/dcm"
 	xmlns:m="http://www.music-encoding.org/ns/mei">
 	<h:div class="inputdiv">
@@ -134,7 +135,7 @@
 									label="Add address line"
 									origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName/m:address/m:addrLine[not(m:ptr)]"/>                        
 								<xf:repeat nodeset="m:address/m:addrLine[not(m:ptr)]" id="repeat-addrLine">
-									<xxf:variable name="pos" select="position()"/>
+									<xf:var name="pos" select="position()"/>
 									<h:div>
 										<xf:input ref="." class="maxlong">
 											<xf:label class="fixed_width"><xf:output value="if ($pos=1) then 'Address' else ''"/></xf:label>
@@ -207,7 +208,7 @@
 							</h:div>							
 						</xf:group>
 						<xf:repeat nodeset="m:persName" id="repeat-file-publication-person">
-							<xxf:variable name="pos" select="position()"/>
+							<xf:var name="pos" select="position()"/>
 							<xf:group ref=".[$pos=1]">
 								<h:div class="blocklabel">
 									<h:span class="fixed_width no_margin">&#160;</h:span>
@@ -286,8 +287,8 @@
 					label="Add project description"
 					origin="instance('empty-instance')/m:meiHead/m:encodingDesc/m:projectDesc/m:p"/>
 				<xf:repeat nodeset="m:projectDesc/m:p" id="repeat-projectdesc-p">
-					<xf:textarea ref="." class="mediumheight" mediatype="text/html"/>
-					<dcm:element-buttons triggers="add del-parent-with-last"
+					<fr:tinymce ref="." class="mediumheight" mediatype="text/html"/>
+					<dcm:element-buttons triggers="del-parent-with-last"
 						nodeset="m:p" 
 						index="repeat-projectdesc-p" 
 						origin="instance('empty-instance')/m:meiHead/m:encodingDesc/m:projectDesc/m:p"/>
@@ -386,12 +387,12 @@
 				nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes']"
 				id="repeat-private_notes">
 				<h:div>
-					<xf:textarea ref=".[index('repeat-private_notes')]" class="mediumheight" mediatype="text/html"/>
-					<dcm:element-buttons-typed triggers="add remove" 
+					<fr:tinymce ref="m:p" class="mediumheight"/>
+					<dcm:element-buttons-typed triggers="remove" 
 						index="repeat-private_notes" 
 						nodeset="m:annot[@type='private_notes']" 
 						origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes']"/>
-					<dcm:attribute-editor ref="."/>
+					<dcm:attribute-editor/>
 				</h:div>
 			</xf:repeat>
 		</h:fieldset>

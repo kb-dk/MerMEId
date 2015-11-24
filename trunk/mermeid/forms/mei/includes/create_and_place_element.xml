@@ -15,8 +15,8 @@
     
     Use example:
     <xf:action if="not(m:persName)">
-      <xxf:variable name="nodeset">m:persName</xxf:variable>
-      <xxf:variable name="origin" select="instance('empty-instance')//m:respStmt[1]/m:persName[1]"/>
+      <xf:var name="nodeset">m:persName</xf:var>
+      <xf:var name="origin" select="instance('empty-instance')//m:respStmt[1]/m:persName[1]"/>
       <xi:include href="includes/create_and_place_element.xml"/>
     </xf:action>
     
@@ -29,31 +29,31 @@
     <xf:insert context="." origin="$origin" nodeset="xxf:evaluate($nodeset)"/>
     
     <!-- now, move the new element into place according to the empty model if necessary-->
-    <xxf:variable name="local-name" select="local-name($origin)"/>
+    <xf:var name="local-name" select="local-name($origin)"/>
     
     <xf:action if="*[local-name(.)=$local-name]/following-sibling::*[local-name()!=$local-name]">
         <!-- there are _differently_ named siblings after this one -->
-        <xxf:variable name="following-name" select="local-name(*[local-name(.)=$local-name][1]/following-sibling::*[local-name()!=$local-name][1])"/>
-        <xxf:variable name="parent_nodeset" select="."/>
+        <xf:var name="following-name" select="local-name(*[local-name(.)=$local-name][1]/following-sibling::*[local-name()!=$local-name][1])"/>
+        <xf:var name="parent_nodeset" select="."/>
         <!-- keep moving down until the order fits the model or reaching the end -->
         <xf:action while="$origin/preceding-sibling::*[local-name()=local-name($parent_nodeset/*[local-name(.)=$local-name]/following-sibling::*[local-name()!=$local-name][1])] 
             and count($parent_nodeset/*[local-name(.)=$local-name][1]/preceding-sibling::*)+1 &lt; count($parent_nodeset/*)">
-            <xxf:variable name="pos" select="count(*[local-name(.)=$local-name][1]/preceding-sibling::*)+1"/>
+            <xf:var name="pos" select="count(*[local-name(.)=$local-name][1]/preceding-sibling::*)+1"/>
             <xf:insert origin="../*[$pos]"
                 nodeset="*" at="$pos+1"/>
             <xf:delete nodeset="*" at="$pos"/>
         </xf:action>
     </xf:action>
     
-    <!-- The hard one: elements of the same name exist already, i.e. this is just one with a new predicate 
+    <!-- The hard one: elements of the same name exist already, i.e. this is maybe just one with a new predicate 
         (usually @type or a child element). Moving further down may be necessary -->
     <xf:action if="count(*[local-name()=$local-name])&gt;1">
-        <xxf:variable name="parent_nodeset" select="."/>
-        <xxf:variable name="att_name" select="normalize-space(substring-before(substring-after($nodeset,'[@'),'='))"/>
-        <xxf:variable name="element_name" select="normalize-space(substring-before(substring-after($nodeset,'[m:'),'='))"/>                                
+        <xf:var name="parent_nodeset" select="."/>
+        <xf:var name="att_name" select="normalize-space(substring-before(substring-after($nodeset,'[@'),'='))"/>
+        <xf:var name="element_name" select="normalize-space(substring-before(substring-after($nodeset,'[m:'),'='))"/>                                
         <xf:action if="$att_name">
             <!-- predicate is an attribute -->
-            <xxf:variable name="att_value" select="xxf:evaluate($nodeset)/@*[name()=$att_name]"/>
+            <xf:var name="att_value" select="xxf:evaluate($nodeset)/@*[name()=$att_name]"/>
             <!-- keep moving down until the order fits the model or reaching the end -->
             <xf:action while="($origin/preceding-sibling::*[local-name()=$local-name]/@*[name()=$att_name and .!=$att_value][.=$parent_nodeset/*[local-name(.)=$local-name][@*[name()=$att_name and .=$att_value]]/following-sibling::*[local-name()=$local-name]/@*[name()=$att_name]]
                 or $origin/preceding-sibling::*[local-name()=$local-name][not(@*[name()=$att_name])][$parent_nodeset/*[local-name(.)=$local-name][@*[name()=$att_name and .=$att_value]]/following-sibling::*[local-name()=$local-name][not(@*[name()=$att_name])]])
@@ -63,7 +63,7 @@
                     OR in the template there is any element without any predicate (=untyped) before the new one, while there is an untyped one coming _after_ in the data
                     AND as long as we haven't reached the end
                 -->
-                <xxf:variable name="pos" select="count(*[local-name(.)=$local-name][@*[name()=$att_name and .=$att_value]][1]/preceding-sibling::*)+1"/>
+                <xf:var name="pos" select="count(*[local-name(.)=$local-name][@*[name()=$att_name and .=$att_value]][1]/preceding-sibling::*)+1"/>
                 <!-- move new element down one position -->
                 <xf:insert origin="../*[$pos]"
                     nodeset="*" at="$pos+1"/>
@@ -72,20 +72,31 @@
         </xf:action>
         <xf:action if="$element_name">
             <!-- predicate is an element; otherwise same procedure as above -->
-            <xxf:variable name="element_value" select="xxf:evaluate($nodeset)/*[name()=$element_name]"/>
+            <xf:var name="element_value" select="xxf:evaluate($nodeset)/*[name()=$element_name]"/>
             <xf:action while="($origin/preceding-sibling::*[local-name()=$local-name]/*[name()=$element_name and .!=$element_value][.=$parent_nodeset/*[local-name(.)=$local-name][*[name()=$element_name and .=$element_value]]/following-sibling::*[local-name()=$local-name]/*[name()=$element_name]]
                 or $origin/preceding-sibling::*[local-name()=$local-name][not(*[name()=$element_name])]
                 [$parent_nodeset/*[local-name(.)=$local-name][*[name()=$element_name and .=$element_value]]/following-sibling::*[local-name()=$local-name][not(*[name()=$element_name])]])
                 and count($parent_nodeset/*[local-name(.)=$local-name][1]/preceding-sibling::*)+1 &lt; count($parent_nodeset/*)">
-                <xxf:variable name="pos" select="count(*[local-name(.)=$local-name][*[name()=$element_name and .=$element_value]][1]/preceding-sibling::*)+1"/>
+                <xf:var name="pos" select="count(*[local-name(.)=$local-name][*[name()=$element_name and .=$element_value]][1]/preceding-sibling::*)+1"/>
                 <xf:insert origin="../*[$pos]"
                     nodeset="*" at="$pos+1"/>
                 <xf:delete nodeset="*" at="$pos"/>
             </xf:action>
         </xf:action>
     </xf:action>
-    
     <!-- end moving -->
-    <xf:dispatch name="id-update" targetid="form-group" target="form-group"/>
+
+    <!-- Add xml:id -->    
+    <!--<xf:insert xxf:iterate="*[name()=normalize-space(substring-after($nodeset,'m:'))][not(@xml:id)]" --> 
+    <xf:insert xxf:iterate="descendant-or-self::*[not(@xml:id)]" 
+        context="."
+        origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
+    <!-- Check for duplicate IDs -->
+    <xf:action while="xxf:instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id]">
+        <xf:setvalue
+            ref="xxf:instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id]/@xml:id"
+            value="concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+    </xf:action>
+    <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
     
 </xf:action>

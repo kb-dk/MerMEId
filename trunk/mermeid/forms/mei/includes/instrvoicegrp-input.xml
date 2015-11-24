@@ -57,7 +57,7 @@
                 <xf:value ref="@code"/>
             </xf:itemset>
             <xf:action ev:event="xforms-value-changed">
-                <xxf:variable name="ensemble" select="."></xxf:variable>
+                <xf:var name="ensemble" select="."></xf:var>
                 <xf:action if="../m:head=''">
                     <!-- set ensemble name if empty -->
                     <xf:setvalue ref="../m:head" value="instance('ensembles')/m:instrVoiceGrp[@code=$ensemble]"/>

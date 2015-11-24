@@ -184,7 +184,7 @@
                                         <xxf:show dialog="add-ref-dialog"/>
                                     </xf:action>
                                 </xf:trigger><xf:group ref="." class="button_group">
-                                    <xxf:variable name="number" select="count(parent::node()/m:bibl)"/>
+                                    <xf:var name="number" select="count(parent::node()/m:bibl)"/>
                                     <xf:trigger appearance="minimal">
                                         <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                                         <xf:action if="$number=1" ev:event="DOMActivate">

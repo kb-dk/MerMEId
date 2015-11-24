@@ -3,6 +3,7 @@
     xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:ev="http://www.w3.org/2001/xml-events" 
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
     xmlns:xbl="http://www.w3.org/ns/xbl" 
     xmlns:xxbl="http://orbeon.org/oxf/xml/xbl" 
@@ -46,9 +47,9 @@
                 <xf:group appearance="xxf:internal" xxbl:scope="inner">
                     
                     <!-- Variables pointing to external single-node bindings -->
-                    <xxf:variable name="binding" as="node()?">
-                        <xxf:sequence select="." xxbl:scope="outer"/>
-                    </xxf:variable>
+                    <xf:var name="binding" as="node()?">
+                        <xxf:value select="." xxbl:scope="outer"/>
+                    </xf:var>
 
 
                     <xf:group ref="$binding">
@@ -89,11 +90,12 @@
                                     origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:author][1]/m:author"/>
                                 <xf:repeat nodeset="m:author" id="repeat-bibl-author">
                                     <h:div>
-                                        <xxf:variable name="auth_type"
+                                        <xf:var name="auth_type"
                                             select="if (@type and @type!='') then concat(translate(substring(@type, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), substring(@type, 2)) else 'Name'"/>
                                         <xf:input ref="." class="maxlong">
                                             <xf:label class="fixed_width"><xf:output value="$auth_type"/></xf:label>
                                         </xf:input>
+                                        <dcm:authority/>
                                         <dcm:element-buttons triggers="add delete" nodeset="m:author"
                                             index="repeat-bibl-author"
                                             origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[m:author][1]/m:author[1]"/>
@@ -156,7 +158,7 @@
                                 <h:legend>Authors</h:legend>
                                 <xf:repeat nodeset="m:author" id="repeat-bibl-newspaper-author">
                                     <h:div>
-                                        <xxf:variable name="auth_type"
+                                        <xf:var name="auth_type"
                                             select="if (@type and @type!='') then concat(translate(substring(@type, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), substring(@type, 2)) else 'Name'"/>
                                         <xf:input ref="." class="maxlong">
                                             <xf:label class="fixed_width"><xf:output value="$auth_type"/></xf:label>
@@ -209,7 +211,7 @@
                                     <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/> Add
                                         vol./issue/pages</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xxf:variable name="ref_type"
+                                        <xf:var name="ref_type"
                                             select="if (count(m:genre)&gt;1) then m:genre[.!='article'][1] else m:genre"/>
                                         <xf:insert context="."
                                             origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:genre=$ref_type][1]/m:biblScope"
@@ -227,12 +229,13 @@
                                         <xf:input ref="." class="maxlong">
                                             <xf:label class="fixed_width_short">Name</xf:label>
                                         </xf:input>
+                                        <dcm:authority/>
                                         <dcm:element-buttons triggers="add remove" nodeset="m:editor"
                                             index="repeat-bibl-editor"
                                             origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:editor][1]/m:editor"
                                         />
                                     </h:div>
-                                    <dcm:attribute-editor ref="."/>
+                                    <dcm:attribute-editor/>
                                 </xf:repeat>
                             </h:fieldset>
                         </xf:group>
@@ -293,6 +296,7 @@
                                             class="comment">For diary entries, leave empty if
                                             author is the composer</h:span></h:a></xf:label>
                                     </xf:input>
+                                    <dcm:authority/>
                                     <dcm:element-buttons 
                                         triggers="add remove" 
                                         nodeset="m:author"
@@ -309,6 +313,7 @@
                                         <xf:input ref="." class="maxlong">
                                             <xf:label class="fixed_width">Recipient</xf:label>
                                         </xf:input>
+                                        <dcm:authority/>
                                         <dcm:element-buttons 
                                             triggers="add remove" 
                                             nodeset="m:recipient"
@@ -485,9 +490,7 @@
                                 origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
                             <xf:repeat nodeset="m:annot" id="repeat-bibl-notes">
                                 <h:div>
-                                    <xf:textarea ref="." class="notes" mediatype="text/html">
-                                        <xf:label/>
-                                    </xf:textarea>
+                                    <fr:tinymce ref="m:p"/>	
                                     <dcm:element-buttons triggers="remove" nodeset="m:annot" index="repeat-bibl-notes"
                                         origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
                                     <dcm:attribute-editor/>

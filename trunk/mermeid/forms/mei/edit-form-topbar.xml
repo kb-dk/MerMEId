@@ -18,7 +18,7 @@
     <xf:trigger id="work-tab"  appearance="minimal">
       <xf:label>Work</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xxf:variable name="uri" 
+        <xf:var name="uri" 
           select="concat(instance('parameters')/dcm:orbeon_dir,
           '?uri=',
           instance('parameters')/dcm:form_home,
@@ -35,7 +35,7 @@
     </xf:trigger><xf:trigger id="music-tab" appearance="minimal">
       <xf:label>Music</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xxf:variable name="uri" 
+        <xf:var name="uri" 
           select="concat(instance('parameters')/dcm:orbeon_dir,
           '?uri=',
           instance('parameters')/dcm:form_home,
@@ -52,7 +52,7 @@
     </xf:trigger><xf:trigger id="source-tab" appearance="minimal">
       <xf:label>Sources</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xxf:variable name="uri" 
+        <xf:var name="uri" 
           select="concat(instance('parameters')/dcm:orbeon_dir,
           '?uri=',
           instance('parameters')/dcm:form_home,
@@ -69,7 +69,7 @@
     </xf:trigger><xf:trigger id="history-tab" appearance="minimal">
       <xf:label>History</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xxf:variable name="uri" 
+        <xf:var name="uri" 
           select="concat(instance('parameters')/dcm:orbeon_dir,
           '?uri=',
           instance('parameters')/dcm:form_home,
@@ -86,7 +86,7 @@
     </xf:trigger><xf:trigger  id="bibliography-tab" appearance="minimal">
       <xf:label>Bibliography</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xxf:variable name="uri" 
+        <xf:var name="uri" 
           select="concat(instance('parameters')/dcm:orbeon_dir,
           '?uri=',
           instance('parameters')/dcm:form_home,
@@ -103,7 +103,7 @@
     </xf:trigger><xf:trigger  id="file-tab"   appearance="minimal">
       <xf:label>File</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xxf:variable name="uri" 
+        <xf:var name="uri" 
           select="concat(instance('parameters')/dcm:orbeon_dir,
           '?uri=',
           instance('parameters')/dcm:form_home,
@@ -189,7 +189,7 @@
         title="Close editor and return to file list" border="0"/></xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:action if="instance('temp')/changed='true'">
-          <xxf:variable name="uri" select="concat(instance('parameters')/dcm:server_name,instance('parameters')/dcm:exist_dir,'list_files.xq')"/>
+          <xf:var name="uri" select="concat(instance('parameters')/dcm:server_name,instance('parameters')/dcm:exist_dir,'list_files.xq')"/>
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
         </xf:action>	
@@ -368,8 +368,8 @@
       </xf:select>
       <h:a class="help">&#160;?<h:span class="comment" style="top:-75px;left:-120px;">The attribute
           editor enables changing or adding all possible attributes according to the XML schema.
-          Changing attributes may compromise the validity of your data and affect the way MerMEId
-          displays them. </h:span></h:a>
+          Caution: Changing attributes may compromise the validity of your data and affect the way MerMEId
+          handles them. </h:span></h:a>
     </xf:group>
 
     <!-- code inspector -->

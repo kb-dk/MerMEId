@@ -86,6 +86,11 @@
 /*    display: none; */ 
 }
 
+.xbl-fr-tinymce {
+    display: inline;
+    display: inline-block;
+    width: 90%;
+}
 
 /* END DISABLE ORBEON STYLING */
 
@@ -195,7 +200,7 @@ div.inputdiv {
     font-size: 1.3em;
 } 
 
-hr {
+.orbeon hr {
     margin: 4px 0px;
     padding: 0px;
     height: 1px;
@@ -204,7 +209,7 @@ hr {
     background: transparent;
 }
 
-.hr {
+.orbeon .hr {
     border-top: 1px solid #999;
     width: 100%;
 }
@@ -360,39 +365,39 @@ legend .xforms-group img {
     width: auto;
 }
 
-.orbeon select.minimal_length,
+.orbeon .minimal_length select,
 .orbeon .minimal_length input.xforms-input-input {
     width: 1.5em;
 }
 
 .orbeon .fixed_width_short, 
-.orbeon select.short,
+.orbeon .short select,
 .orbeon .short input.xforms-input-input {
     width: 4em;
 }
 
 .orbeon .fixed_width,
-.orbeon select.mediumshort,
+.orbeon .mediumshort select,
 .orbeon .mediumshort input.xforms-input-input {
     width: 8em;
 }
 
 .orbeon .fixed_width_mediumlong,
+.orbeon .mediumlong select,
 .orbeon .mediumlong input.xforms-input-input,
-.orbeon select.mediumlong,
 .orbeon button.mediumlong {
     width: 12em;
 }
 
 .orbeon .fixed_width_long, 
-.orbeon select.long,
+.orbeon .long select,
 .orbeon .long input.xforms-input-input,
 .orbeon button.long {
     width: 16em;
 }
 
 .orbeon .fixed_width_maxlong, 
-.orbeon select.maxlong,
+.orbeon .maxlong select,
 .orbeon .maxlong input.xforms-input-input  {
     width: 22em;
 }

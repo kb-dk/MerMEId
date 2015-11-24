@@ -1,10 +1,10 @@
 <h:span 
   xmlns:h="http://www.w3.org/1999/xhtml"
   xmlns:xf="http://www.w3.org/2002/xforms"
-  xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"	
+  xmlns:xxf="http://orbeon.org/oxf/xml/xforms"	
   xmlns:ev="http://www.w3.org/2001/xml-events"><xf:input 
     class="maxlong" ref="."/>
-  <xf:select1 ref="./@xml:lang" xxforms:refresh-items="false" class="mediumlong">
+  <xf:select1 ref="./@xml:lang" xxf:refresh-items="false" class="mediumlong">
     <!--<xf:action ev:event="xforms-value-changed">
       <xf:dispatch name="language-update" target="form-group"/>
     </xf:action>-->

@@ -76,8 +76,8 @@
 			<xf:send submission="load-fileList"/>
 		</xf:action>
 	</xf:trigger>
-	<xxf:variable name="page" select="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
-	<xxf:variable name="max_page" select="floor(instance('XMLfiles')/opensearch:totalResults div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
+	<xf:var name="page" select="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
+	<xf:var name="max_page" select="floor(instance('XMLfiles')/opensearch:totalResults div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
 	<h:p>Found <xf:output value="instance('XMLfiles')/opensearch:totalResults"/> record(s).
 		<xf:group ref=".[$max_page &gt; 1]">
 			Displaying page <xf:output value="$page"/> of <xf:output value="$max_page"/>.
@@ -107,7 +107,7 @@
 						<xf:output value="concat(dcm:composer,': ',dcm:title)"/>
 					</xf:label>
 					<xf:action ev:event="DOMActivate">
-						<xxf:variable name="context_node" select="xxf:evaluate(string(instance('temp')/nodeset))"/>
+						<xf:var name="context_node" select="xxf:evaluate(string(instance('temp')/nodeset))"/>
 						<xf:setvalue ref="$context_node/@target"
 							value="instance('XMLfiles')/dcm:file[index('repeat-files')]/dcm:link/@href"/>
 						<xf:action if="$context_node/@label=''">

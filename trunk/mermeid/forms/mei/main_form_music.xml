@@ -37,7 +37,6 @@
 				
 				<h:fieldset>
 					<h:legend>Version
-						<dcm:id/>
 						<h:a class="help">&#160;?<h:span class="comment">Information at version level.<h:br/> 
 							To create a new version, click the "add" or "copy" buttons on the right.<h:br/>
 							To indicate the individual pieces (movements, acts or any other subdivision) in this work 
@@ -48,11 +47,12 @@
 							nodeset="m:expression" 
 							index="repeat-expression"
 							origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]"/>
+						<dcm:id/>
 						<dcm:attribute-editor ref="."/>
 					</h:legend>
 					
-					<xxf:variable name="num_ex" as="string" select="count(../m:expression)"/>
-					<xxf:variable name="binding" select="."/>
+					<xf:var name="num_ex" as="string" select="count(../m:expression)"/>
+					<xf:var name="binding" select="."/>
 					
 					<!-- display expression-specific details at top level only if more than one expression or not empty -->
 					<xf:group ref=".[number($num_ex)&gt;1 or m:titleStmt/m:title[normalize-space(.)!='']]">
@@ -331,28 +331,9 @@
 								nodeset="m:respStmt"
 								label="Add person"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt"/>
-							<dcm:create ref="m:respStmt"
-								nodeset="m:persName"
-								label="Add person"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
-							<xf:group ref=".[m:respStmt/m:persName]">
-								<h:div class="blocklabel">
-									<h:span class="fixed_width_long">Name</h:span>
-									<h:span> Relation <h:a class="help">&#160;?<h:span class="comment">Specifies the person's relation to the item, e.g. "Arranger"
-										or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
-									</h:span>
-								</h:div>
+							<xf:group ref="m:respStmt">
+								<xi:include href="includes/person-input.xml"/>
 							</xf:group>
-							<xf:repeat nodeset="m:respStmt/m:persName" id="version-relators-repeat">
-								<dcm:relator ref="."/>
-								<dcm:element-buttons 
-									triggers="add del-parent-with-last" 
-									nodeset="m:persName" 
-									index="version-relators-repeat"
-									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt/m:persName[1]"/>
-								<dcm:attribute-editor ref="."/>
-								<h:br/>
-							</xf:repeat>
 						</xf:group>
 					</h:fieldset>
 					
@@ -380,7 +361,7 @@
 							
 							<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
 								<xf:repeat nodeset="m:relationList/m:relation" id="version_relations">
-									<xxf:variable name="context_node" select="."/>
+									<xf:var name="context_node" select="."/>
 									<h:tr>
 										<h:td>
 											<h:span>This version </h:span>
@@ -412,7 +393,7 @@
 													<xf:label><h:span style="vertical-align:bottom;"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/go_to_link.png" 
 														title="Go to linked resource"/></h:span></xf:label>
 													<xf:action ev:event="DOMActivate">
-														<xxf:variable name="uri" 
+														<xf:var name="uri" 
 															select="concat(
 															instance('parameters')/dcm:orbeon_dir,
 															'?uri=',
@@ -455,6 +436,7 @@
 							Both ensembles and performers should have a MARC standard code added to improve
 							data compatibility and interchange. Codes are selected from the dropdown menus.							
 						</h:span></h:a>
+							<dcm:id ref="m:perfMedium"/>
 							<dcm:attribute-editor ref="m:perfMedium"/>
 						</h:legend>
 						
@@ -475,7 +457,7 @@
 							<xxf:dialog id="ensemble-menu" appearance="full" level="modal"
 								close="true" draggable="true" visible="false">
 								<xf:label>Ensembles</xf:label>
-								<xf:repeat nodeset="instance('instrumentation')/m:instrVoiceGrp[@code]" id="ensemble-menu-repeat">
+								<xf:repeat nodeset="instance('instrument-groups')/m:instrVoiceGrp[@code]" id="ensemble-menu-repeat">
 									<xf:trigger submission="replace-form-with" appearance="minimal">
 										<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/>
 											<xf:output ref="if (m:head!='') then m:head else '[empty ensemble]'"/>
@@ -485,7 +467,7 @@
 												nodeset="m:instrVoiceGrp"
 												at="index('repeat-ensemble')"
 												position="after" 
-												origin="instance('instrumentation')/m:instrVoiceGrp[@code][index('ensemble-menu-repeat')]"/>
+												origin="instance('instrument-groups')/m:instrVoiceGrp[@code][index('ensemble-menu-repeat')]"/>
 											<!-- generate IDs for added performers -->
 											<xf:dispatch name="id-update" target="form-group"/>
 											<xxf:hide dialog="ensemble-menu"/>
@@ -511,7 +493,7 @@
 											<dcm:element-buttons 
 												triggers="up down" 
 												nodeset="m:instrVoiceGrp" 
-												origin="instance('instrumentation')/m:instrVoiceGrp[1]"
+												origin="instance('instrument-groups')/m:instrVoiceGrp[1]"
 												index="repeat-ensemble"/><xf:trigger 
 													appearance="minimal" class="non-standard_button">
 													<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
@@ -527,7 +509,8 @@
 													<!--<xf:setvalue ref="$binding/m:castList/m:castItem/m:role/m:ref/@target[not(.=$binding//@xml:id)]" value="''"/>-->
 												</xf:action>
 											</xf:trigger>
-											<dcm:attribute-editor ref="."/>
+											<dcm:id/>
+											<dcm:attribute-editor/>
 										</h:legend>
 										<h:div class="vertical_spacer"/> 
 										<h:div>
@@ -559,7 +542,7 @@
 													<xf:value ref="@code"/>
 												</xf:itemset>
 												<xf:action ev:event="xforms-value-changed">
-													<xxf:variable name="ensemble" select="."></xxf:variable>
+													<xf:var name="ensemble" select="."></xf:var>
 													<xf:action if="../m:head=''">
 														<!-- set ensemble name if empty -->
 														<!--<xf:setvalue ref="../m:head" value="instance('ensembles')/m:instrVoiceGrp[@code=$ensemble]"/>-->
@@ -575,8 +558,8 @@
 										<!-- dialog for adding performers to existing ensembles -->
 										<xxf:dialog id="ensemble-performer-menu" appearance="full" level="modal"
 											close="true" draggable="true" visible="false">
-											<xf:label>Performers</xf:label>
-											<xf:repeat nodeset="instance('instrumentation')/m:instrVoiceGrp[m:instrVoice]" id="ensemble-performer-menu-repeat">
+											<xf:label>Instrument groups</xf:label>
+											<xf:repeat nodeset="instance('instrument-groups')/m:instrVoiceGrp[m:instrVoice]" id="ensemble-performer-menu-repeat">
 												<xf:trigger submission="replace-form-with" appearance="minimal">
 													<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/>
 														<xf:output ref="if (m:head!='') then m:head else '[single performer]'"/>
@@ -586,7 +569,7 @@
 															nodeset="m:instrVoice"
 															at="index('repeat-ensemble-performer')"
 															position="after" 
-															origin="instance('instrumentation')/m:instrVoiceGrp[m:instrVoice][index('ensemble-performer-menu-repeat')]/m:instrVoice"/>
+															origin="instance('instrument-groups')/m:instrVoiceGrp[m:instrVoice][index('ensemble-performer-menu-repeat')]/m:instrVoice"/>
 														<!-- generate IDs for added performers -->
 														<xf:dispatch name="id-update" target="form-group"/>
 														<xxf:hide dialog="ensemble-performer-menu"/>
@@ -601,7 +584,7 @@
 												by a list of performers, or both.</h:span></h:a></h:span>
 										</h:div>
 										<xf:trigger ref=".[count(m:instrVoice)=0]" style="margin-left: 8px;" class="create_button">
-											<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add performer(s)</xf:label>
+											<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add from list</xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xxf:show dialog="ensemble-performer-menu"/>
 											</xf:action>
@@ -624,11 +607,6 @@
 											<h:br/>
 											<xf:repeat nodeset="m:instrVoice" id="repeat-ensemble-performer">
 												<xi:include href="includes/instrvoice-input.xml" parse="xml"/>
-												<dcm:element-buttons
-													triggers="up down add remove" 
-													nodeset="m:instrVoice" 
-													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
-													index="repeat-ensemble-performer"/>
 												<xf:trigger>
 													<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add" title="Add from list"/> Add from list</xf:label>
 													<xf:action ev:event="DOMActivate">
@@ -636,6 +614,12 @@
 													</xf:action>
 												</xf:trigger>             
 												<dcm:id/>
+												<dcm:attribute-editor/>
+												<dcm:element-buttons
+													triggers="up down add remove" 
+													nodeset="m:instrVoice" 
+													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
+													index="repeat-ensemble-performer"/>
 												<h:br/>
 											</xf:repeat>
 										</xf:group>
@@ -680,13 +664,13 @@
 										<h:span class="fixed_width_short"  style="text-align:center;">
 											<xf:input ref="@solo"><xf:label> </xf:label></xf:input>
 										</h:span>
-										<dcm:id ref="."/>
 										<dcm:element-buttons
 											triggers="add up down copy remove" 
 											nodeset="m:instrVoice" 
 											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
 											index="repeat-performer"/>
 										<dcm:id/>
+										<dcm:attribute-editor/>
 										<h:br/>
 									</xf:repeat>
 								</xf:group>
@@ -742,12 +726,15 @@
 												</xf:group>
 											<xf:repeat nodeset="m:name" id="repeat-role">
 												<h:div>
-													<xxf:variable name="pos" select="position()"/>
+													<xf:var name="pos" select="position()"/>
 													<xf:input ref="."><xf:label>Name: <h:a class="help">&#160;?<h:span
 														class="comment">E.g. "Erik", "A servant" or "Villagers"</h:span></h:a></xf:label></xf:input>
+													<dcm:id/>
+													<dcm:attribute-editor/>
 													<xf:input ref="../../m:roleDesc[$pos]" class="long"><xf:label> Description: <h:a class="help">&#160;?<h:span
 														class="comment">An optional description of the role, e.g. 
 														"King of Denmark" or "Rigoletto's daughter"</h:span></h:a></xf:label></xf:input>
+													<dcm:id ref="../../m:roleDesc[$pos]"/>										
 													<dcm:attribute-editor ref="../../m:roleDesc[$pos]"/>										
 													<xf:select1 ref="@xml:lang" xxf:refresh-items="false">
 														<xf:label/>
@@ -757,7 +744,7 @@
 														</xf:itemset>
 														
 														<xf:action ev:event="xforms-value-changed">
-															<xxf:variable name="lang" select="."/>
+															<xf:var name="lang" select="."/>
 															<xf:setvalue ref="../../../m:roleDesc[$pos]/@xml:lang" value="$lang"/>
 															<!--<xf:setvalue ref="$binding/m:perfMedium/m:castList/m:castItem[index('repeat-cast')]/m:roleDesc[$pos]/@xml:lang" value="$lang"/>-->
 														</xf:action>
@@ -767,7 +754,7 @@
 														<xf:trigger appearance="minimal" class="element-button">
 															<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
 															<xf:action ev:event="DOMActivate">
-																<xxf:variable name="idx" select="index('repeat-role')"/>
+																<xf:var name="idx" select="index('repeat-role')"/>
 																<xf:insert context="parent::node()" nodeset="m:name" at="$idx"
 																	origin="m:name[$idx]"/>
 																<xf:insert context="../.." nodeset="m:roleDesc" at="$idx"
@@ -778,7 +765,7 @@
 														<xf:trigger appearance="minimal" class="element-button">
 															<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
 															<xf:action ev:event="DOMActivate">
-																<xxf:variable name="idx" select="index('repeat-role')"/>
+																<xf:var name="idx" select="index('repeat-role')"/>
 																<xf:insert context="parent::node()" nodeset="m:name" at="$idx"
 																	origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]/m:role/m:name"/>
 																<xf:insert context="../.." nodeset="m:roleDesc" at="$idx"
@@ -793,7 +780,7 @@
 															<xf:trigger appearance="minimal" class="element-button">
 																<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 																<xf:action ev:event="DOMActivate">
-																	<xxf:variable name="idx" select="index('repeat-role')"/>
+																	<xf:var name="idx" select="index('repeat-role')"/>
 																	<xf:delete nodeset="../m:name" at="$idx"/>
 																	<xf:delete nodeset="../../m:roleDesc" at="$idx"/>
 																	<xf:dispatch name="xforms-value-changed" target="form-group"/>
@@ -802,7 +789,6 @@
 														</xf:group>
 													</h:span>
 													<!-- end buttons -->
-													<dcm:attribute-editor/>
 												</h:div>
 											</xf:repeat>
 											</h:div>
@@ -846,7 +832,7 @@
 													</xf:itemset>
 													<xf:action ev:event="xforms-value-changed">
 														<!-- insert voice name (display name) if empty -->
-														<xxf:variable name="instrument" select="."></xxf:variable>
+														<xf:var name="instrument" select="."></xf:var>
 														<xf:action if="..=''">
 															<xf:setvalue ref=".." value="instance('instruments')/m:instrVoice[@code=$instrument]"/>
 														</xf:action>
@@ -857,7 +843,6 @@
 													regarded as soloists as opposed to an ensemble.<h:br/> 
 													"Solo" should usually not be used with chamber music or 
 													songs.</h:span></h:a></xf:label></xf:input>
-												<dcm:id ref="."/>
 												<dcm:element-buttons
 													triggers="add up down copy remove" 
 													nodeset="m:instrVoice" 
@@ -908,7 +893,6 @@
 									<h:tr class="hoverclass">
 										<h:td>
 											<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
-											<dcm:id ref="."/>
 											<xf:output 
 												value="m:titleStmt/m:title"/><xf:group 
 													ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
@@ -923,7 +907,7 @@
 												<xf:trigger appearance="minimal">
 													<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/edit.gif" title="Open component editor"/></xf:label>
 													<xf:action ev:event="DOMActivate">
-														<xxf:variable name="uri" 
+														<xf:var name="uri" 
 															select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-expression.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
 														<xf:action if="instance('temp')/changed='true'">
 															<xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
@@ -939,28 +923,28 @@
 												<h:small>File must be saved before components can be edited</h:small>
 											</xf:group>
 										</h:td>
-										<h:td class="buttons_cell" style="text-align:right;">
+										<h:td class="buttons_cell" style="text-align:right; white-space:nowrap;">
 											
 											<h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_left_disabled.png" class="button_patch"/>
 											
-											<xxf:variable name="tooManySublevels" select="m:componentGrp/m:expression/m:componentGrp/m:expression"/> 
-											<xxf:variable name="expTarget" select="preceding-sibling::m:expression[1][not($tooManySublevels)]"/>
+											<xf:var name="tooManySublevels" select="m:componentGrp/m:expression/m:componentGrp/m:expression"/> 
+											<xf:var name="expTarget" select="preceding-sibling::m:expression[1][not($tooManySublevels)]"/>
 											<xf:group ref=".[not($expTarget)]">
 												<h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_right_disabled.png" class="button_patch"/><xf:output value="''"/>
 											</xf:group>
 											<xf:trigger appearance="minimal" ref=".[$expTarget]">
 												<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_right.png" alt="move right" title="Make this a sub-component (child) of the above"/></xf:label>
 												<xf:action ev:event="DOMActivate">
-													<xxf:variable name="expOrig" select="."/>
+													<xf:var name="expOrig" select="."/>
 													<xf:action if="not($expTarget/m:componentGrp)">
 														<!-- insert <componentGrp> if it doesn't exist -->
-														<xxf:variable name="origin" select="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
+														<xf:var name="origin" select="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
 														<xf:insert context="$expTarget" origin="$origin" nodeset="m:componentGrp" at="1" position="before"/>
 														<!-- move the componentGrp into place according to the empty model if necessary-->
-														<xxf:variable name="emptyDocExp" select="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
+														<xf:var name="emptyDocExp" select="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
 														<xf:action while="$emptyDocExp/preceding-sibling::*[local-name()=local-name($expTarget/m:componentGrp/following-sibling::*[1])]
 															and count($expTarget/m:componentGrp/preceding-sibling::*)+1 &lt; count($expTarget/*)">
-															<xxf:variable name="pos" select="count($expTarget/m:componentGrp/preceding-sibling::*)+1"/>
+															<xf:var name="pos" select="count($expTarget/m:componentGrp/preceding-sibling::*)+1"/>
 															<xf:insert context="$expTarget" origin="m:componentGrp"
 																nodeset="*" at="$pos+1" position="after"/>
 															<xf:delete context="$expTarget" nodeset="*" at="$pos"/>	
@@ -973,7 +957,8 @@
 											
 											<dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list1" 
 												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>
-											<dcm:attribute-editor ref="."/>
+											<dcm:id/>
+											<dcm:attribute-editor/>
 										</h:td>
 									</h:tr>
 									
@@ -994,7 +979,6 @@
 															</h:td>
 															<h:td>
 																<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
-																<dcm:id ref="."/>
 																<xf:output value="m:titleStmt/m:title[1]"/><xf:group
 																	ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
 																<xf:output value="m:tempo"/>
@@ -1008,7 +992,7 @@
 																	<xf:trigger appearance="minimal">
 																		<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/edit.gif" title="Open component editor"/></xf:label>
 																		<xf:action ev:event="DOMActivate">
-																			<xxf:variable name="uri" 
+																			<xf:var name="uri" 
 																				select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-expression.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
 																			<xf:action if="instance('temp')/changed='true'">
 																				<xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
@@ -1024,35 +1008,35 @@
 																	<h:small>File must be saved before components can be edited</h:small>
 																</xf:group>
 															</h:td>
-															<h:td class="buttons_cell" style="text-align:right;">
+															<h:td class="buttons_cell" style="text-align:right; white-space: nowrap;">
 																
 																<xf:trigger appearance="minimal">
 																	<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
 																	<xf:action ev:event="DOMActivate">
-																		<xxf:variable name="origin" select="."/>
+																		<xf:var name="origin" select="."/>
 																		<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list1')" position="after"/>
 																		<xf:delete nodeset="."/>
 																	</xf:action>
 																</xf:trigger>
 																
-																<xxf:variable name="tooManySublevels" select="m:componentGrp/m:expression"/> 
-																<xxf:variable name="expTarget" select="preceding-sibling::m:expression[1][not($tooManySublevels)]"/>
+																<xf:var name="tooManySublevels" select="m:componentGrp/m:expression"/> 
+																<xf:var name="expTarget" select="preceding-sibling::m:expression[1][not($tooManySublevels)]"/>
 																<xf:group ref=".[not($expTarget)]">
 																	<h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_right_disabled.png" class="button_patch"/><xf:output value="''"/>
 																</xf:group>
 																<xf:trigger appearance="minimal" ref=".[$expTarget]">
 																	<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_right.png" alt="move right" title="Make this a sub-component (child) of the above"/></xf:label>
 																	<xf:action ev:event="DOMActivate">
-																		<xxf:variable name="expOrig" select="."/>
+																		<xf:var name="expOrig" select="."/>
 																		<xf:action if="not($expTarget/m:componentGrp)">
 																			<!-- insert <componentGrp> if it doesn't exist -->
-																			<xxf:variable name="origin" select="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
+																			<xf:var name="origin" select="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
 																			<xf:insert context="$expTarget" origin="$origin" nodeset="m:componentGrp" at="1" position="before"/>
 																			<!-- move the componentGrp into place according to the empty model if necessary-->
-																			<xxf:variable name="emptyDocExp" select="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
+																			<xf:var name="emptyDocExp" select="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
 																			<xf:action while="$emptyDocExp/preceding-sibling::*[local-name()=local-name($expTarget/m:componentGrp/following-sibling::*[1])]
 																				and count($expTarget/m:componentGrp/preceding-sibling::*)+1 &lt; count($expTarget/*)">
-																				<xxf:variable name="pos" select="count($expTarget/m:componentGrp/preceding-sibling::*)+1"/>
+																				<xf:var name="pos" select="count($expTarget/m:componentGrp/preceding-sibling::*)+1"/>
 																				<xf:insert context="$expTarget" origin="m:componentGrp"
 																					nodeset="*" at="$pos+1" position="after"/>
 																				<xf:delete context="$expTarget" nodeset="*" at="$pos"/>	
@@ -1065,7 +1049,8 @@
 																
 																<dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list2" 
 																	origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>
-																<dcm:attribute-editor ref="."/>
+																<dcm:id/>
+																<dcm:attribute-editor/>
 															</h:td>
 														</h:tr>
 														
@@ -1094,7 +1079,6 @@
 																				</h:td>
 																				<h:td>
 																					<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
-																					<dcm:id ref="."/>
 																					<xf:output value="m:titleStmt/m:title[1]"/><xf:group
 																						ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
 																					<xf:output value="m:tempo"/>
@@ -1108,7 +1092,7 @@
 																						<xf:trigger appearance="minimal">
 																							<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/edit.gif" title="Open component editor"/></xf:label>
 																							<xf:action ev:event="DOMActivate">
-																								<xxf:variable name="uri" 
+																								<xf:var name="uri" 
 																									select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-expression.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
 																								<xf:action if="instance('temp')/changed='true'">
 																									<xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
@@ -1124,12 +1108,12 @@
 																						<h:small>File must be saved before components can be edited</h:small>
 																					</xf:group>
 																				</h:td>
-																				<h:td class="buttons_cell" style="text-align:right;">
+																				<h:td class="buttons_cell" style="text-align:right; white-space: nowrap;">
 																					
 																					<xf:trigger appearance="minimal">
 																						<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
 																						<xf:action ev:event="DOMActivate">
-																							<xxf:variable name="origin" select="."/>
+																							<xf:var name="origin" select="."/>
 																							<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list2')" position="after"/>
 																							<xf:delete nodeset="."/>
 																						</xf:action>
@@ -1139,7 +1123,8 @@
 																					
 																					<dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list3" 
 																						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>
-																					<dcm:attribute-editor ref="."/>
+																					<dcm:id/>
+																					<dcm:attribute-editor/>
 																				</h:td>
 																			</h:tr>
 																		</xf:repeat>

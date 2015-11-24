@@ -58,19 +58,19 @@
     <xbl:template>
       
       <xf:group xbl:attr="model context ref bind" xxbl:scope="outer" id="outer-group"> 
-        <xxf:variable name="q_text" xbl:attr="xbl:text=query"/>
+        <xf:var name="q_text" xbl:attr="xbl:text=query"/>
         
         <xf:group appearance="xxf:internal" xxbl:scope="inner" id="inner-group">
-          <xxf:variable name="query">
-            <xxf:sequence select="xxf:evaluate($q_text)" xxbl:scope="outer"/>
-          </xxf:variable>
+          <xf:var name="query">
+            <xxf:value select="xxf:evaluate($q_text)" xxbl:scope="outer"/>
+          </xf:var>
           <!-- bind to outer instances -->
-          <xxf:variable name="parameters" as="node()?">
-            <xxf:sequence select="instance('parameters')" xxbl:scope="outer"/>
-          </xxf:variable>
-          <xxf:variable name="changed">
-            <xxf:sequence select="instance('temp')/changed" xxbl:scope="outer"/>
-          </xxf:variable>
+          <xf:var name="parameters" as="node()?">
+            <xxf:value select="instance('parameters')" xxbl:scope="outer"/>
+          </xf:var>
+          <xf:var name="changed">
+            <xxf:value select="instance('temp')/changed" xxbl:scope="outer"/>
+          </xf:var>
           
           <xf:action ev:event="xforms-enabled" ev:target="inner-group">
             <!-- send query and load result into instance('files') -->
@@ -85,7 +85,7 @@
                 Deleting or altering this source will affect all files linking to it.<h:br/>
                 The following files are using this source description:<h:br/>
                 <xf:repeat nodeset="dcm:file">
-                  <xxf:variable name="ext_doc" select="dcm:link/@href"/>
+                  <xf:var name="ext_doc" select="dcm:link/@href"/>
                   <h:span style="white-space:nowrap">
                     <xf:output value="concat(dcm:composer,': ',dcm:title,' (',dcm:link/@href,')')"/>
                     <xf:trigger>

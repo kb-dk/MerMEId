@@ -62,18 +62,18 @@
         <xf:group appearance="xxf:internal" xxbl:scope="inner">
           
           <!-- Variables pointing to external single-node bindings -->
-          <xxf:variable name="binding" as="node()?">
-            <xxf:sequence select="." xxbl:scope="outer"/>
-          </xxf:variable>
-          <xxf:variable name="parameters" as="node()?">
-            <xxf:sequence select="instance('parameters')" xxbl:scope="outer"/>
-          </xxf:variable>
-          <xxf:variable name="temp" as="node()?">
-            <xxf:sequence select="instance('temp')" xxbl:scope="outer"/>
-          </xxf:variable>
-          <xxf:variable name="data-instance" as="node()?">
-            <xxf:sequence select="instance('data-instance')" xxbl:scope="outer"/>
-          </xxf:variable>
+          <xf:var name="binding" as="node()?">
+            <xxf:value select="." xxbl:scope="outer"/>
+          </xf:var>
+          <xf:var name="parameters" as="node()?">
+            <xxf:value select="instance('parameters')" xxbl:scope="outer"/>
+          </xf:var>
+          <xf:var name="temp" as="node()?">
+            <xxf:value select="instance('temp')" xxbl:scope="outer"/>
+          </xf:var>
+          <xf:var name="data-instance" as="node()?">
+            <xxf:value select="instance('data-instance')" xxbl:scope="outer"/>
+          </xf:var>
           
           
           <xf:group ref="$binding">
@@ -81,7 +81,7 @@
               <h:legend>Performances <h:a class="help">&#160;?<h:span class="comment">Performances 
               may be listed at work level and at version level. 
               Versions are defined on the Music tab.</h:span></h:a>
-              <dcm:attribute-editor ref="."/>
+                <dcm:attribute-editor ref="m:eventList[@type='performances']"/>
               </h:legend>
               <h:div class="vertical_spacer"/> 
               <dcm:create 
@@ -95,15 +95,14 @@
               <xf:group ref="m:eventList[@type='performances']">
                 <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
                   <xf:repeat nodeset="m:event" id="repeat-work-performance">
-                    <xxf:variable name="event_id" select="@xml:id"/>
-                    <xxf:variable name="event" select="."/>
-                    <xxf:variable name="ancestor" select="../../../@xml:id"/>
+                    <xf:var name="event_id" select="@xml:id"/>
+                    <xf:var name="event" select="."/>
+                    <xf:var name="ancestor" select="../../../@xml:id"/>
                     <h:tr class="hoverclass">
                       <h:td class="number_cell">
                         <xf:output value="position()"/>&#160;
                       </h:td>
                       <h:td>
-                        <dcm:id ref="."/>&#160;
                         <xf:output value="concat(m:date,' ',m:geogName[2],' ',m:geogName[1])"/>
                         <xf:group ref=".[normalize-space(m:title)!='']"> (<xf:output value="m:title"/>) </xf:group>
                         <xf:group ref=".[normalize-space(concat(m:title,m:date,m:geogName[2],m:geogName[1]))='']"> [No date or place] </xf:group>
@@ -114,7 +113,7 @@
                           <xf:trigger appearance="minimal">
                             <xf:label><h:img src="{$parameters/dcm:server_name}/editor/images/edit.gif" title="Open performance editor"/></xf:label>
                             <xf:action ev:event="DOMActivate">
-                              <xxf:variable name="uri" 
+                              <xf:var name="uri" 
                                             select="concat($parameters/dcm:orbeon_dir,'?uri=',$parameters/dcm:form_home,'details-performance.xml&amp;doc=',$parameters/dcm:xml_file,'&amp;id=',@xml:id)"/>
                               <xf:action if="$temp/changed='true'">
                                 <xf:setvalue ref="$temp/target_uri" value="$uri"/>
@@ -132,7 +131,8 @@
                       </h:td>
                       <h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add del-parent-with-last" nodeset="m:event" index="repeat-work-performance" 
                       origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
-                      <dcm:attribute-editor ref="."/>
+                        <dcm:id/>
+                        <dcm:attribute-editor/>
                       </h:td>    
                       <h:td>    
                         <!-- move performance to work level or version -->
@@ -151,8 +151,8 @@
                                                origin="instance('local-temp')/m:history"/>
                                   </xf:action>
                                   <xf:action ref="$data-instance//m:work/m:history[not(m:eventList[@type='performances'])]">
-                                    <xxf:variable name="nodeset">m:eventList[@type='performances']</xxf:variable>
-                                    <xxf:variable name="origin" select="instance('local-temp')/m:history/m:eventList"/>
+                                    <xf:var name="nodeset">m:eventList[@type='performances']</xf:var>
+                                    <xf:var name="origin" select="instance('local-temp')/m:history/m:eventList"/>
                                     <xi:include href="create_and_place_element.xml"/>
                                   </xf:action>
                                   <xf:insert context="$data-instance//m:work/m:history/m:eventList[@type='performances']" 
@@ -163,8 +163,8 @@
                               </xf:trigger>
                             </h:div>
                             <xf:repeat nodeset="$data-instance//m:workDesc/m:work/m:expressionList/m:expression[@xml:id!=$ancestor]">
-                              <xxf:variable name="exp" select="@xml:id"/>
-                              <xxf:variable name="title" select="if (m:titleStmt/m:title/text()) then m:titleStmt/m:title else concat('[',$exp,']')"/>
+                              <xf:var name="exp" select="@xml:id"/>
+                              <xf:var name="title" select="if (m:titleStmt/m:title/text()) then m:titleStmt/m:title else concat('[',$exp,']')"/>
                               <h:div>
                                 <xf:trigger>
                                   <xf:label><xf:output value="$title"/></xf:label>
@@ -180,8 +180,8 @@
                                         origin="instance('local-temp')//m:eventList"/>
                                         </xf:action>-->
                                     <xf:action ref="m:history[not(m:eventList[@type='performances'])]">
-                                      <xxf:variable name="nodeset">m:eventList[@type='performances']</xxf:variable>
-                                      <xxf:variable name="origin" select="instance('local-temp')/m:history/m:eventList"/>
+                                      <xf:var name="nodeset">m:eventList[@type='performances']</xf:var>
+                                      <xf:var name="origin" select="instance('local-temp')/m:history/m:eventList"/>
                                       <xi:include href="create_and_place_element.xml"/>
                                     </xf:action>
                                     <xf:insert context="$data-instance//*[@xml:id=$exp]/m:history/m:eventList[@type='performances']" 

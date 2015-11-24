@@ -92,9 +92,9 @@
     <xbl:template>
       <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
           <xf:group appearance="xxf:internal" xxbl:scope="inner">
-            <xxf:variable name="binding" as="node()?">
-              <xxf:sequence select="." xxbl:scope="outer"/>
-            </xxf:variable>
+            <xf:var name="binding" as="node()?">
+              <xxf:value select="." xxbl:scope="outer"/>
+            </xf:var>
             <h:div>
               <xf:input ref="$binding">
                 <xf:label class="fixed_width">RISM siglum </xf:label>
@@ -102,7 +102,7 @@
               <xf:trigger>
                 <xf:label>Select from list</xf:label>
                 <xf:action ev:event="DOMActivate">
-                  <xxf:variable name="siglum" select="normalize-space($binding)"/>
+                  <xf:var name="siglum" select="normalize-space($binding)"/>
                   <xf:setvalue ref="instance('temp')/archive_code" value="$siglum"/>
                   <xf:setvalue ref="instance('temp')/country_code" value="substring-before($siglum,'-')"/>
                   <xf:send submission="load-rism-sigla"/>

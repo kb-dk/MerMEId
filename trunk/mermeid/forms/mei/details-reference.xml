@@ -38,14 +38,15 @@
         <xi:include href="details-form-model.xml" parse="xml"/>
         
         <!-- XBL components -->
+        <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
+        <xi:include href="includes/authority.xbl" parse="xml"/>
+        <xi:include href="includes/bibl-input.xbl" parse="xml"/>
+        <xi:include href="includes/create.xbl" parse="xml"/>
+        <xi:include href="includes/date_editor.xbl" parse="xml"/>
+        <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
         <xi:include href="includes/element_buttons.xbl" parse="xml"/>
         <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
-        <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
-        <xi:include href="includes/date_editor.xbl" parse="xml"/>
         <xi:include href="includes/id.xbl" parse="xml"/>
-        <xi:include href="includes/create.xbl" parse="xml"/>
-        <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
-        <xi:include href="includes/bibl-input.xbl" parse="xml"/>
         <xi:include href="includes/rism_sigla_select.xbl" parse="xml"/>
         
     </h:head>
@@ -58,7 +59,7 @@
                 
                 <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
 
-                <xxf:variable name="uri" select="instance('parameters')/dcm:return_uri"/>
+                <xf:var name="uri" select="instance('parameters')/dcm:return_uri"/>
 
                 <h:div class="details_form_header">
                     

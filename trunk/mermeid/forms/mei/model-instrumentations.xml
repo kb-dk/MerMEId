@@ -22,7 +22,7 @@
         <xf:group id="form-group">
             
             <xi:include href="edit-form-event-handlers.xml" parse="xml"/>
-            <xxf:variable name="uri" 
+            <xf:var name="uri" 
                 select="xxf:get-session-attribute('return_url')"/>
             
             <h:div class="inputdiv">

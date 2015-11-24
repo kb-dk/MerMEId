@@ -6,7 +6,7 @@
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
-    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
     xmlns:exforms="http://www.exforms.org/exf/1-0"
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:saxon="http://saxon.sf.net/"
@@ -46,9 +46,9 @@
 
                 <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
                     id="empty-instance"
-                    xxforms:readonly="true">
+                    xxf:readonly="true">
                   <xi:include href="../model/empty_doc.xml"  />
-		</xf:instance>
+		        </xf:instance>
 
                 <!-- Local copy of editor settings instance needed to get settings into inner scope. -->
                 <!-- Values read from the file are overwritten on loading the component to get the current settings -->
@@ -56,28 +56,10 @@
 			     id="parameters">
                   <xi:include href="../mermeid_configuration.xml"/>
                 </xf:instance>
-                
-                <xf:action ev:event="xforms-model-construct-done settings-changed">
-                    <!-- get settings from session variables -->
-                    <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
-                    <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
-                </xf:action>   
+
             </xf:model>
         </xbl:implementation>
-                
-        <xbl:handlers>
-            <!-- Pass on the settings-changed event to the inner group -->
-            <xbl:handler event="settings-changed" phase="bubbling">
-                <xf:dispatch name="settings-changed" targetid="history_input_inner_grp"/>
-<!--<xf:message>settings-changed received</xf:message>-->
-<!-- not working yet - the event does not reach this component -->                
-                <!-- refresh settings from session variables -->
-                <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
-                <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
-            </xbl:handler>
-        </xbl:handlers>     
-        
-                
+                                
         <xbl:template>
 
             <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
@@ -86,11 +68,11 @@
                 
              
                 <!-- Inner group -->
-                <xf:group appearance="xxforms:internal" xxbl:scope="inner" id="history_input_inner_grp">                    
+                <xf:group appearance="xxf:internal" xxbl:scope="inner" id="history_input_inner_grp">                    
                     <!-- Variables pointing to external single-node bindings -->
-                    <xxforms:variable name="binding" as="node()?">
-                        <xxforms:sequence select="." xxbl:scope="outer"/>
-                    </xxforms:variable>
+                    <xf:var name="binding" as="node()?">
+                        <xxf:value select="." xxbl:scope="outer"/>
+                    </xf:var>
                     
                     <xf:group ref="$binding">
                         
@@ -137,21 +119,19 @@
                         
                         <h:fieldset>
                             <h:legend>History note <h:a class="help">&#160;?<h:span class="comment">Text
-                                explaining details and circumstances concerning the work's genesis and history</h:span></h:a></h:legend>
+                                explaining details and circumstances concerning the work's genesis and history</h:span></h:a>&#160;
+                            </h:legend>
                             <dcm:create
                                 nodeset="m:p"
                                 label="Add history note"
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:p"/>
                             <xf:repeat nodeset="m:p" id="repeat-history-p">
-                                <xf:textarea ref="." class="notes" mediatype="text/html">
-                                    <xf:label/>
-                                </xf:textarea>
+                                <fr:tinymce ref="."/>
                                 <dcm:element-buttons 
                                     triggers="remove" 
                                     nodeset="m:p" 
                                     index="repeat-history-p" 
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:creation/m:p"/>					
-                                <dcm:attribute-editor/>
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:p"/>					
                             </xf:repeat>
                         </h:fieldset>
                         
@@ -171,12 +151,14 @@
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event"/>
                             <xf:repeat nodeset="m:eventList[@type='history']/m:event" id="repeat-work-history">
                                 <h:fieldset>
-                                    <h:legend>Event <dcm:element-buttons 
+                                    <h:legend>Event 
+                                        <dcm:element-buttons 
                                         triggers="up down copy add del-parent-with-last" 
                                         nodeset="m:event" 
                                         index="repeat-work-history"
                                         origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event"/>
-                                        <dcm:attribute-editor ref="."/>
+                                        <dcm:id/>
+                                        <dcm:attribute-editor/>
                                         <h:br clear="all"/>
                                     </h:legend>
                                     <dcm:create  

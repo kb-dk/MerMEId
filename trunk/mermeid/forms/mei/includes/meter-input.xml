@@ -9,7 +9,7 @@
     label="Add metre"
     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:meter"/>
 <xf:repeat nodeset="m:meter" id="repeat-meter">
-    <xxf:variable name="pos" select="position()"/> 
+    <xf:var name="pos" select="position()"/> 
     <xf:group ref=".[$pos!=1]">
         <h:br/>
     </xf:group>

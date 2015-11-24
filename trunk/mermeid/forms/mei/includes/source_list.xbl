@@ -23,7 +23,7 @@
       
       Example:
       <xf:group ref="m:sourceDesc">
-      <xxf:variable name="expression" select="'global'"/>
+      <xf:var name="expression" select="'global'"/>
       <dcm:source-list/>
       </xf:group>
       
@@ -135,30 +135,30 @@
         <xf:group appearance="xxf:internal" xxbl:scope="inner">
           
           <!-- Variables pointing to external single-node bindings -->
-          <xxf:variable name="binding" as="node()?">
-            <xxf:sequence select="." xxbl:scope="outer"/>
-          </xxf:variable>
+          <xf:var name="binding" as="node()?">
+            <xxf:value select="." xxbl:scope="outer"/>
+          </xf:var>
           <!-- copy variables and instances to inner scope -->
-          <xxf:variable name="expression">
-            <xxf:sequence select="$expression" xxbl:scope="outer"/>
-          </xxf:variable>
-          <xxf:variable name="parameters" as="node()?">
-            <xxf:sequence select="instance('parameters')" xxbl:scope="outer"/>
-          </xxf:variable>
-          <xxf:variable name="reduced-template" as="node()?">
-            <xxf:sequence select="instance('reduced-template')" xxbl:scope="outer"/>
-          </xxf:variable>
-          <xxf:variable name="data-instance" as="node()?">
-            <xxf:sequence select="instance('data-instance')" xxbl:scope="outer"/>
-          </xxf:variable>
-          <xxf:variable name="temp" as="node()?">
-            <xxf:sequence select="instance('temp')" xxbl:scope="outer"/>
-          </xxf:variable>
-          <xxf:variable name="nodeset" as="node()?">
-            <xxf:sequence select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
+          <xf:var name="expression">
+            <xxf:value select="$expression" xxbl:scope="outer"/>
+          </xf:var>
+          <xf:var name="parameters" as="node()?">
+            <xxf:value select="instance('parameters')" xxbl:scope="outer"/>
+          </xf:var>
+          <xf:var name="reduced-template" as="node()?">
+            <xxf:value select="instance('reduced-template')" xxbl:scope="outer"/>
+          </xf:var>
+          <xf:var name="data-instance" as="node()?">
+            <xxf:value select="instance('data-instance')" xxbl:scope="outer"/>
+          </xf:var>
+          <xf:var name="temp" as="node()?">
+            <xxf:value select="instance('temp')" xxbl:scope="outer"/>
+          </xf:var>
+          <xf:var name="nodeset" as="node()?">
+            <xxf:value select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
 				  m:source[$expression='all'] | 
-				  m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])]" xxbl:scope="outer"></xxf:sequence>
-          </xxf:variable>
+				  m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])]" xxbl:scope="outer"/>
+          </xf:var>
           
           <xf:group ref="$binding">
             
@@ -176,13 +176,11 @@
                     <xf:output value="position()"/>
                   </h:span>
                   <h:span>
-                    <dcm:id ref="."/>
-                    &#160;
                     <h:span class="strong">
                       <xf:group ref=".[not(@target) or @target='']">
                         <!-- source data included in this file -->
-                        <xf:output value="m:titleStmt/m:title"/>
-                        <xf:group ref=".[normalize-space(m:titleStmt/m:title)='']"> [No title] </xf:group>
+                        <xf:output value="m:titleStmt/m:title[text()][1]"/>
+                        <xf:group ref=".[not(normalize-space(m:titleStmt/m:title))]"> [No title] </xf:group>
                       </xf:group>
                       <xf:group ref=".[@target!='']">
                         <!-- external source data -->
@@ -191,8 +189,8 @@
                         <xf:trigger appearance="minimal">
                           <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/update.png" title="Update title (re-read from external file)"/></xf:label>
                           <xf:action ev:event="DOMActivate">
-                            <xxf:variable name="source_id" select="substring-after(@target,'#')"/>
-                            <xxf:variable name="doc" select="substring-before(@target,'#')"/>
+                            <xf:var name="source_id" select="substring-after(@target,'#')"/>
+                            <xf:var name="doc" select="substring-before(@target,'#')"/>
                             <xf:setvalue ref="instance('local-temp')/target_uri" 
                                          value="concat($parameters/dcm:server_name,$parameters/dcm:document_root,$doc)"/>
                             <xf:send submission="load-fileList"/>
@@ -222,7 +220,7 @@
                         style="margin-top: -2px;"
                         title="Edit this source"/></xf:label>
                         <xf:action ev:event="DOMActivate">
-                          <xxf:variable name="uri" 
+                          <xf:var name="uri" 
                                         select="concat($parameters/dcm:orbeon_dir,'?uri=',$parameters/dcm:form_home,'details-source.xml&amp;doc=',$parameters/dcm:xml_file,'&amp;id=',@xml:id)"/>
                           <xf:action if="$temp/changed='true'">
                             <xf:setvalue ref="$temp/target_uri" value="$uri"/>
@@ -239,7 +237,7 @@
                       <xf:trigger appearance="minimal">
                         <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/go_to_link.png" title="Go to external source"/></xf:label>
                         <xf:action ev:event="DOMActivate">
-                          <xxf:variable name="uri" 
+                          <xf:var name="uri" 
                                         select="concat(
                                                 $parameters/dcm:orbeon_dir,
                                                 '?uri=',
@@ -279,11 +277,11 @@
                             </xf:action>
                           </xf:trigger>
                         </h:div>
-                        <xxf:variable name="source" select="@xml:id"/>
-                        <xxf:variable name="target" select="substring-after(m:relationList/m:relation[@rel='isEmbodimentOf']/@target,'#')"/>
+                        <xf:var name="source" select="@xml:id"/>
+                        <xf:var name="target" select="substring-after(m:relationList/m:relation[@rel='isEmbodimentOf']/@target,'#')"/>
                         <xf:repeat nodeset="$data-instance//m:workDesc/m:work/m:expressionList/m:expression[@xml:id!=$target or not($target)]">
-                          <xxf:variable name="exp" select="@xml:id"/>
-                          <xxf:variable name="title" select="if (m:titleStmt/m:title/text()) then m:titleStmt/m:title else concat('[',$exp,']')"/>
+                          <xf:var name="exp" select="@xml:id"/>
+                          <xf:var name="title" select="if (m:titleStmt/m:title/text()) then m:titleStmt/m:title[text()][1] else concat('[',$exp,']')"/>
                           <h:div>
                             <xf:trigger>
                               <xf:label><xf:output value="$title"/></xf:label>
@@ -299,6 +297,7 @@
                                 <xf:setvalue 
                                     ref="$data-instance//m:source[@xml:id=$source]/m:relationList/m:relation[@rel='isEmbodimentOf']/@target"
                                     value="concat('#',$exp)"/>
+                                <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
                               </xf:action>
                             </xf:trigger>
                           </h:div>
@@ -315,6 +314,7 @@
                     <xf:group ref="." class="xbl-dcm-element-buttons">
                       <h:span class="editmenu">
                         <xf:group ref="." class="button_group">
+                          <!-- move up -->
                           <xf:repeat nodeset=".[empty(preceding-sibling::m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
                                               preceding-sibling::m:source[$expression='all'] | 
                                               preceding-sibling::m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])])]">
@@ -336,6 +336,7 @@
                           </xf:trigger>
                         </xf:group>
                         <xf:group ref="." class="button_group">
+                          <!-- move down -->
                           <xf:repeat nodeset=".[empty(following-sibling::m:source[m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression]] |
                                               following-sibling::m:source[$expression='all'] | 
                                               following-sibling::m:source[$expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])])]">
@@ -355,26 +356,26 @@
                           </xf:trigger>
                         </xf:group>                    
                         <xf:group ref="." class="button_group">
+                          <!-- copy -->
                           <xf:trigger appearance="minimal">
                             <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/copy.gif" alt="Copy" title="Duplicate row"/></xf:label>
                             <xf:action ev:event="DOMActivate">
                               <xf:insert context="parent::node()" 
                                          origin="$nodeset[index('repeat-sources')]"
                                          nodeset="$nodeset[index('repeat-sources')]"/>
-                              <xxf:variable name="added_nodeset" as="node()?" 
+                              <xf:var name="added_nodeset" as="node()?" 
                                             select="$binding/m:source[(m:relationList/m:relation[@rel='isEmbodimentOf' and @target=$expression])
                                                     or $expression='all' or ($expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!='']))]
                                                     [index('repeat-sources')+1]"/>
-                              <xf:setvalue ref="$temp/counter" value="count($added_nodeset//@xml:id)"/>
-                              <xf:action while="$temp/counter &gt; 0">
-                                <xf:setvalue ref="$added_nodeset//@xml:id[.!='']" value="''"/>
-                                <xf:setvalue ref="$temp/counter" value=". - 1"/>
-                              </xf:action>                                  
+                              <xf:insert xxf:iterate="descendant-or-self::*" context="$added_nodeset"
+                                origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
+                              <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
                               <xf:dispatch name="id-update" targetid="form-group"/>
                             </xf:action>
                           </xf:trigger>
                         </xf:group>
                         <xf:group ref="." class="button_group">
+                          <!-- add -->
                           <xf:trigger appearance="minimal">
                             <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" title="Add source"/></xf:label>
                             <xf:action ev:event="DOMActivate">
@@ -383,7 +384,8 @@
                           </xf:trigger>
                         </xf:group>
                         <xf:group ref="." class="button_group">
-                          <xxf:variable name="number" select="count(parent::node()/*)"/>
+                          <!-- delete -->
+                          <xf:var name="number" select="count(parent::node()/*)"/>
                           <xf:trigger appearance="minimal">
                             <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                             <xf:action if="$number=1" ev:event="DOMActivate">
@@ -429,19 +431,18 @@
                               <xf:group ref="m:itemList[m:item]">
                                 <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
                                   <xf:repeat nodeset="m:item" id="repeat-items">
-                                    <xxf:variable name="item_id" select="@xml:id"/>
-                                    <xxf:variable name="item" select="."/>
-                                    <xxf:variable name="ancestor_id" select="../../@xml:id"/>
+                                    <xf:var name="item_id" select="@xml:id"/>
+                                    <xf:var name="item" select="."/>
+                                    <xf:var name="ancestor_id" select="../../@xml:id"/>
                                     <h:tr class="hoverclass">
                                       <h:td class="no_border">
                                         <h:ul style="margin:0; padding-left:15px;">
                                           <h:li>
-                                            <dcm:id/>
                                             <xf:group ref=".[not(@label) or @label='']">
                                               <xf:group ref="m:physLoc[m:repository//text() or m:identifier/text()]">
                                                 <xf:output value="concat(m:repository/*[text()][1],' ',m:identifier[1])"/>
                                               </xf:group>
-                                              <xf:group ref=".[not(m:physLoc[*//text()])]">
+                                              <xf:group ref=".[not(normalize-space(m:physLoc[//*]))]">
                                                 [No item label or identifier]
                                               </xf:group>
                                             </xf:group>
@@ -453,7 +454,7 @@
                                         <xf:trigger appearance="minimal">
                                           <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/edit.gif" title="Edit this item"/></xf:label>
                                           <xf:action ev:event="DOMActivate">
-                                            <xxf:variable name="uri" 
+                                            <xf:var name="uri" 
                                                           select="concat($parameters/dcm:orbeon_dir,'?uri=',$parameters/dcm:form_home,'details-item.xml&amp;doc=',$parameters/dcm:xml_file,'&amp;id=',@xml:id)"/>
                                             <xf:action if="$temp/changed='true'">
                                               <xf:setvalue ref="$temp/target_uri" value="$uri"/>
@@ -470,10 +471,13 @@
                                                              nodeset="m:item"
                                                              index="repeat-items"
                                                              origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[m:itemList/m:item][1]/m:itemList/m:item[last()]"/>
+                                        <dcm:id/>
                                         <dcm:attribute-editor/>
                                       </h:td>
                                       <h:td class="buttons_cell no_border">
-                                        <!-- move item to other sources -->
+                                        <!-- Move item to other sources -->
+                                        <!-- Disabled as of rev. 1012 (probably not needed any more) -->
+                                        <!--
                                         <xf:group ref=".[count($data-instance//m:sourceDesc/m:source)&gt;1]">
                                           <h:a class="popup"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/expand.png" 
                                           title="Move this item to another source"/>Move to...<h:span 
@@ -481,8 +485,8 @@
                                           <h:div>
                                             <h:p class="blocklabel strong" style="font-size:.9em;">Move this item to</h:p>
                                             <xf:repeat nodeset="$data-instance//m:sourceDesc/m:source[@xml:id!=$ancestor_id and (@target='' or not(@target))]">
-                                              <xxf:variable name="this_source" select="@xml:id"/>
-                                              <xxf:variable name="title" select="if (m:titleStmt/m:title/text()) then m:titleStmt/m:title else concat('[',$this_source,']')"/>
+                                              <xf:var name="this_source" select="@xml:id"/>
+                                              <xf:var name="title" select="if (m:titleStmt/m:title/text()) then m:titleStmt/m:title[text()][1] else concat('[',$this_source,']')"/>
                                               <h:div>
                                                 <xf:trigger>
                                                   <xf:label><xf:output value="$title"/></xf:label>
@@ -491,15 +495,15 @@
                                                                at="last()" position="after"
                                                                origin="$item"/>
                                                     <xf:delete ref="$data-instance//m:sourceDesc/m:source[@xml:id=$ancestor_id]/m:itemList/m:item[@xml:id=$item_id]"/>
+                                                    <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
                                                   </xf:action>
                                                 </xf:trigger>
                                               </h:div>
                                             </xf:repeat>
                                           </h:div>
                                           </h:span></h:a>
-                                        </xf:group>
+                                        </xf:group>-->
                                         <!-- end move item -->
-                                        
                                       </h:td>
                                     </h:tr>
                                   </xf:repeat>
@@ -531,7 +535,7 @@
                     <xf:insert context="$binding" 
                                nodeset="$nodeset[index('repeat-sources')]"
                                origin="$reduced-template/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]"/>
-                    <xxf:variable name="added_nodeset" as="node()?" 
+                    <xf:var name="added_nodeset" as="node()?" 
                                   select="$binding/m:source[(m:relationList/m:relation[@rel='isEmbodimentOf' and (@target=$expression or @target='')])
                                           or $expression='all' or ($expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!='']))]
                                           [index('repeat-sources')+1]"/>
@@ -539,6 +543,9 @@
                       <xf:setvalue ref="$added_nodeset/m:relationList/m:relation[@rel='isEmbodimentOf']/@target"
                                    value="$expression"/>
                     </xf:action>
+                    <xf:insert xxf:iterate="descendant-or-self::*" context="$added_nodeset"
+                      origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
+                    <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
                     <xf:dispatch name="id-update" targetid="form-group"/>
                     <xxf:hide dialog="add_source_dialog"></xxf:hide>
                   </xf:action>
@@ -635,8 +642,8 @@
                     <xf:send submission="load-fileList"/>
                   </xf:action>
                 </xf:trigger>
-                <xxf:variable name="page" select="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
-                <xxf:variable name="max_page" select="floor(instance('XMLfiles')/opensearch:totalResults div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
+                <xf:var name="page" select="floor(instance('XMLfiles')/opensearch:startIndex div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
+                <xf:var name="max_page" select="floor(instance('XMLfiles')/opensearch:totalResults div instance('XMLfiles')/opensearch:itemsPerPage)+1"/>
                 <h:p>Found <xf:output value="instance('XMLfiles')/opensearch:totalResults"/> record(s).
                 <xf:group ref=".[$max_page &gt; 1]">
                   Displaying page <xf:output value="$page"/> of <xf:output value="$max_page"/>.
@@ -688,15 +695,15 @@
                                   </xf:label>
                                   <xf:action ev:event="DOMActivate">
                                     
-                                    <xxf:variable name="copy_source_id" select="@ref"/>
-                                    <xxf:variable name="copy_file" select="../../dcm:link/@href"/>                                                                        
+                                    <xf:var name="copy_source_id" select="@ref"/>
+                                    <xf:var name="copy_file" select="../../dcm:link/@href"/>                                                                        
                                     
                                     <xf:action if="instance('local-temp')/mode='reference'">
-                                      <!-- insert an (almost) empty source element -->
+                                      <!-- insert an (almost) empty source element with a pointer to the external source -->
                                       <xf:insert context="$binding" 
                                                  nodeset="$nodeset[index('repeat-sources')]"
                                                  origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[2]"/>
-                                      <xxf:variable name="added_nodeset" as="node()?" 
+                                      <xf:var name="added_nodeset" as="node()?" 
                                                     select="$binding/m:source[(m:relationList/m:relation[@rel='isEmbodimentOf' and (@target=$expression or @target='')])
                                                             or $expression='all' or ($expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!='']))]
                                                             [index('repeat-sources')+1]"/>
@@ -708,6 +715,10 @@
                                         <xf:setvalue ref="$added_nodeset/m:relationList/m:relation[@rel='isEmbodimentOf']/@target"
                                                      value="$expression"/>
                                       </xf:action>
+                                      <xf:insert xxf:iterate="descendant-or-self::*" context="$added_nodeset"
+                                        origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
+                                      <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
+                                      <xf:dispatch name="id-update" targetid="form-group"/>
                                     </xf:action>
 
                                     <xf:action if="instance('local-temp')/mode='copy'">
@@ -715,7 +726,7 @@
                                       <xf:setvalue ref="instance('local-temp')/target_uri" 
                                                    value="concat($parameters/dcm:server_name,'storage/dcm/',$copy_file)"/>
                                       <xf:send submission="load-external-file"/>
-                                      <xxf:variable name="added_nodeset" as="node()?" 
+                                      <xf:var name="added_nodeset" as="node()?" 
                                                     select="instance('externalFile')//m:source[@xml:id=$copy_source_id]"/> 
                                       <!-- add information on the embodied version if needed -->
                                       <xf:action if="$expression!='all' and $expression!='global'">
@@ -733,7 +744,9 @@
                                                  nodeset="$nodeset[index('repeat-sources')]"
                                                  origin="$added_nodeset"/>
                                     </xf:action>
-                                    
+                                    <xf:insert xxf:iterate="descendant-or-self::*" context="$added_nodeset"
+                                      origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
+                                    <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
                                     <xf:dispatch name="id-update" targetid="form-group"/>
                                     <xxf:hide dialog="source_reference_dialog"/>
                                   </xf:action>

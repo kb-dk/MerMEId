@@ -42,25 +42,25 @@
         </xbl:resources>
         <xbl:template>
             <xf:group xxbl:scope="outer" xbl:attr="ref">
-                <xxf:variable name="label" xbl:attr="xbl:text=label"/>
-                <xxf:variable name="nodeset" xbl:attr="xbl:text=nodeset"/>
-                <xxf:variable name="attr_origin" xbl:attr="xbl:text=origin"/>
-                <xxf:variable name="origin" as="node()?">
-                    <xxf:sequence select="xxf:evaluate($attr_origin)" xxbl:scope="outer"/>
-                </xxf:variable>
-                <xxf:variable name="exists" as="node()?">
-                    <xxf:sequence select="xxf:evaluate($nodeset)" xxbl:scope="outer"/>
-                </xxf:variable>
+                <xf:var name="label" xbl:attr="xbl:text=label"/>
+                <xf:var name="nodeset" xbl:attr="xbl:text=nodeset"/>
+                <xf:var name="attr_origin" xbl:attr="xbl:text=origin"/>
+                <xf:var name="origin" as="node()?">
+                    <xxf:value select="xxf:evaluate($attr_origin)" xxbl:scope="outer"/>
+                </xf:var>
+                <xf:var name="exists" as="node()?">
+                    <xxf:value select="xxf:evaluate($nodeset)" xxbl:scope="outer"/>
+                </xf:var>
+                
+                
                 <xf:group ref=".[not($exists)]">
                     <xf:trigger class="create_button">
-                        <xf:label><h:img src="{instance('parameters')/dcm:server_name}editor/images/add.gif" alt="Add" title="Add row"/>
+                        <xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}editor/images/add.gif" alt="Add" title="Add row"/>
                             <xf:output value="$label"/>
                         </xf:label>
                         <xf:action ev:event="DOMActivate">
-                            
                             <xi:include href="create_and_place_element.xml" parse="xml"/> 
                             <xf:dispatch name="dcm-create" targetid="dcm-create-binding" target="dcm-create-binding"/>
-                            
                         </xf:action>
                     </xf:trigger>
                 </xf:group>

@@ -2,6 +2,7 @@
 <xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" 
 	 xmlns:xf="http://www.w3.org/2002/xforms"
 	 xmlns:ev="http://www.w3.org/2001/xml-events"
+	 xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	 xmlns:xi="http://www.w3.org/2001/XInclude" 
 	 xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
 	 xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
@@ -92,15 +93,7 @@
         <xf:bind nodeset="instance('temp')">
           <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
         </xf:bind>      
-        
-        <xf:action ev:event="xforms-model-construct-done">
-          <!-- get settings from session variables -->
-          <xf:setvalue ref="instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
-          <xf:setvalue ref="instance('parameters')/dcm:attr_editor" value="xxf:get-session-attribute('attr_editor')"/>
-          <!-- load rism country list -->
-          <xf:send submission="load-rism-countries"/>
-        </xf:action>
-        
+               
       </xf:model>
     </xbl:implementation>
     <xbl:template>
@@ -111,13 +104,13 @@
         <xf:group appearance="xxf:internal" xxbl:scope="inner">
           
           <!-- Variables pointing to external single-node bindings -->
-          <xxf:variable name="binding" as="node()?">
-            <xxf:sequence select="." xxbl:scope="outer"/>
-          </xxf:variable>
+          <xf:var name="binding" as="node()?">
+            <xxf:value select="." xxbl:scope="outer"/>
+          </xf:var>
           <!-- get item level (itemList or componentGrp) -->
-          <xxf:variable name="parent" as="string">
-            <xxf:sequence select="name(..)" xxbl:scope="outer"/>
-          </xxf:variable>
+          <xf:var name="parent" as="string">
+            <xxf:value select="name(..)" xxbl:scope="outer"/>
+          </xf:var>
           
           <xf:group ref="$binding">
             
@@ -135,22 +128,23 @@
               <h:legend>Location <h:a class="help">&#160;?<h:span
               class="comment">The library, archive or other repository holding this
               item. The name or RISM siglum may be given, or both.</h:span></h:a>
-              <xf:group ref=".[count(m:repository)&lt;2]">
+              <xf:group ref="m:physLoc[count(m:repository)&lt;2]">
                 <xf:trigger appearance="minimal">
                   <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                   <xf:action ev:event="DOMActivate">
-                    <xf:delete nodeset="parent::node()"/>
+                    <xf:delete nodeset="."/>
                     <xf:dispatch name="xforms-value-changed" target="form-group"/>
                   </xf:action>
                 </xf:trigger>                           
               </xf:group>
-              <xf:group ref=".[count(m:repository)&gt;1]">
+              <xf:group ref="m:physLoc[count(m:repository)&gt;1]">
                 <dcm:element-buttons 
                     triggers="remove" 
                     nodeset="m:repository" 
                     index="repeat-repository"
                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
-              </xf:group></h:legend>
+              </xf:group>
+              </h:legend>
               <dcm:create 
                   nodeset="m:physLoc"
                   label="Add location"
@@ -224,7 +218,6 @@
                   <h:br clear="all"/>
                 </h:div>
               </xf:group>
-              <h:hr/>
             </h:fieldset>
             
             <h:fieldset>
@@ -336,7 +329,7 @@
                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
                     <dcm:attribute-editor ref="."/>
                     <h:br/>
-                    <xf:textarea ref="m:p"  class="mediumheight" mediatype="text/html"/>
+                    <fr:tinymce ref="m:p"/>	                    
                     <h:br/>
                   </xf:repeat>
                 </xf:group>
@@ -428,11 +421,11 @@
                               label="Add physical medium"
                               origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physMedium"/>
                   <xf:repeat nodeset="m:physMedium" id="repeat-physMedium">
-                    <xf:textarea ref="." class="mediumheight" mediatype="text/html">
+                    <fr:tinymce ref="." class="mediumheight">
                       <xf:label class="blocklabel">Physical medium <h:a class="help">&#160;?<h:span class="comment">Description of 
                       paper, number of staves on page, printing technique etc.
                       </h:span></h:a></xf:label>
-                    </xf:textarea>
+                    </fr:tinymce>
                     <dcm:attribute-editor/>
                     <dcm:element-buttons triggers="remove"
                                          nodeset="m:physMedium"
@@ -447,9 +440,9 @@
                               label="Add condition"
                               origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:condition"/>
                   <xf:repeat nodeset="m:condition" id="repeat-condition">
-                    <xf:textarea ref="." class="mediumheight" mediatype="text/html">
+                    <fr:tinymce ref="." class="mediumheight">
                       <xf:label class="blocklabel">Condition</xf:label>
-                    </xf:textarea>
+                    </fr:tinymce>
                     <dcm:attribute-editor/>
                     <dcm:element-buttons triggers="remove"
                                          nodeset="m:condition"
@@ -464,9 +457,9 @@
                               label="Add watermark"
                               origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:watermark"></dcm:create>
                   <xf:repeat nodeset="m:watermark" id="repeat-watermark">
-                    <xf:textarea ref="." class="mediumheight" mediatype="text/html">
+                    <fr:tinymce ref="." class="mediumheight">
                       <xf:label class="blocklabel">Watermark</xf:label>
-                    </xf:textarea>
+                    </fr:tinymce>
                     <dcm:attribute-editor/>
                     <dcm:element-buttons triggers="remove"
                                          nodeset="m:watermark"
@@ -493,24 +486,24 @@
                   label="Add general description"
                   origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='source_description']"/>
               <xf:repeat nodeset="m:annot[@type='source_description']" id="item-generaldesc">
-                <xf:textarea ref="." class="mediumheight" mediatype="text/html"/>
-                <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
+                <fr:tinymce ref="m:p" class="mediumheight"/>
+                <dcm:attribute-editor/>
                 <dcm:element-buttons-typed triggers="remove"
 					   nodeset="m:annot[@type='source_description']"
 					   index="item-generaldesc"
 					   origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='source_description']"/>
               </xf:repeat>
-              <h:span class="blocklabel">External source descriptions <h:a class="help">&#160;?<h:span class="comment">Links to external resources (texts) about 
-              this particular source.</h:span></h:a>
+              <h:span class="blocklabel">Links <h:a class="help">&#160;?<h:span class="comment">Links to external resources (for instance, texts) related to 
+              this particular item.</h:span></h:a>
               </h:span>
               <dcm:create 
                   nodeset="m:annot[@type='links']"
-                  label="Add external description"
+                  label="Add links"
                   origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='links']"/>
               <xf:group ref="m:annot[@type='links']">
                 <dcm:create 
                     nodeset="m:ptr"
-                    label="Add external description"
+                    label="Add links"
                     origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='links']/m:ptr"/>
                 <xf:repeat nodeset="m:ptr" id="source-notesstmt-annot-repeat-extptr">
                   <h:div>
@@ -620,9 +613,9 @@
                                           nodeset="m:titlePage" 
                                           index="component-physdesc-titlepage"
                                           origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
-                                      <dcm:attribute-editor ref="."/>
+                                      <dcm:attribute-editor/>
                                       <h:br/>
-                                      <xf:textarea ref="m:p" class="mediumheight" mediatype="text/html"/>
+                                      <fr:tinymce ref="m:p" class="mediumheight"/>
                                       <h:br/>
                                     </xf:repeat>
                                   </h:fieldset>
@@ -630,7 +623,7 @@
                                 
                                 <h:fieldset>
                                   <h:legend>Physical description
-                                  <dcm:attribute-editor ref="."/>
+                                  <dcm:attribute-editor/>
                                   </h:legend>
                                   <xf:repeat nodeset="m:extent" id="component-physdesc-extent">
                                     <h:div>
@@ -676,16 +669,16 @@
                                     </xf:repeat>
                                     <h:hr/>
                                   </xf:group>
-                                  <xf:textarea ref="m:physMedium" class="mediumheight" mediatype="text/html">
+                                  <fr:tinymce ref="m:physMedium" class="mediumheight">
                                     <xf:label class="blocklabel">Physical medium <h:a class="help">&#160;?<h:span class="comment">Description of 
                                     paper, number of staves on page, printing technique etc.
                                     </h:span></h:a></xf:label>
-                                  </xf:textarea>
+                                  </fr:tinymce>
                                   <dcm:attribute-editor ref="m:physMedium"/>                                                    
                                   <h:br/>						
-                                  <xf:textarea ref="m:condition" class="mediumheight" mediatype="text/html">
+                                  <fr:tinymce ref="m:condition" class="mediumheight" mediatype="text/html">
                                     <xf:label class="blocklabel">Condition</xf:label>
-                                  </xf:textarea>
+                                  </fr:tinymce>
                                   <dcm:attribute-editor ref="m:condition"/>                                                    
                                 </h:fieldset>
                                 
@@ -697,11 +690,11 @@
                                 </h:span></h:a> 
                                 <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                                   </h:span>
-                                  <xf:textarea ref="m:annot[@type='source_description']" mediatype="text/html"/>
+                                  <fr:tinymce ref="m:annot[@type='source_description']/m:p"/>
                                   <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
                                   <xf:group ref="m:annot[@type='links']">
-                                    <h:span class="blocklabel">External source descriptions <h:a class="help">&#160;?<h:span class="comment">Links to external resources (texts) about 
-                                    this particular source.</h:span></h:a>
+                                    <h:span class="blocklabel">Links <h:a class="help">&#160;?<h:span class="comment">Links to external resources (for instance, texts) related to 
+                                    this particular item.</h:span></h:a>
                                     </h:span>
                                     <xf:repeat nodeset="m:ptr" id="component-notesstmt-annot-repeat-extptr">
                                       <h:div>

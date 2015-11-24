@@ -9,6 +9,7 @@
   extension-element-prefixes="dyn exsl"
   exclude-result-prefixes="xsl m t"
   version="1.0">
+
   
   <xsl:output method="xml"
     encoding="UTF-8"
@@ -28,7 +29,8 @@
       </mei>
     </xsl:variable>
     <xsl:variable name="second_run">
-      <!-- make it a nodeset and start copying from model -->
+      <!-- make it a nodeset and start copying all possible attributes from model 
+          (because attributes are hard to add by XForms) -->
       <xsl:apply-templates select="exsl:node-set($janus)" mode="second_run"/>
     </xsl:variable>
     <!-- output after second run: -->
@@ -54,11 +56,13 @@
       <xsl:comment>
 	Thank you for the music, the songs I'm singing /
 	Thanks for all the joy they're bringing
+	
+	[actual music data will be put back in place on saving]
       </xsl:comment>
     </music>
   </xsl:template>
   
-  <!-- the actual copying from the model header to the data header -->
+  <!-- copying attributes from the model header to the data header -->
   <xsl:template match="*" mode="header">
     <!-- build an xpath string to locate the corresponding node in the model header -->
     <xsl:variable name="path"><xsl:for-each 
@@ -155,10 +159,31 @@
   </xsl:template>
   
   <!-- MEI -> HTML -->
+
+  <!-- tinyMCE-related stuff -->
+  
+  <!-- wrap sibling <p>s in a temporary parent <p> for editing in a single tinyMCE. -->
+  <!-- An exception is needed for all <p> elements NOT to be edited with tinyMCE. -->
+  <xsl:template match="m:p[1]
+    [not(
+    name(..)='changeDesc' or 
+    name(..)='event' or
+    name(..)='incipText'
+    )]" 
+    mode="mei2html">
+    <p n="MerMEId_temporary_wrapper">
+        <xsl:for-each select="../m:p">&lt;p&gt;<xsl:apply-templates mode="mei2html"/>&lt;/p&gt;</xsl:for-each>
+    </p>
+  </xsl:template>
+  <xsl:template match="m:p[position()!=1]" mode="mei2html"/>  
+  
+  <!-- end tinyMCE -->
+  
   <xsl:template match="m:lb" mode="mei2html">&lt;br/&gt;</xsl:template> 
   <xsl:template match="m:rend[@fontweight = 'bold']" mode="mei2html">&lt;b&gt;<xsl:apply-templates mode="mei2html"/>&lt;/b&gt;</xsl:template>
   <xsl:template match="m:rend[@fontstyle = 'italic']" mode="mei2html">&lt;i&gt;<xsl:apply-templates mode="mei2html"/>&lt;/i&gt;</xsl:template>
-  <xsl:template match="m:rend[@rend = 'underline']" mode="mei2html">&lt;u&gt;<xsl:apply-templates mode="mei2html"/>&lt;/u&gt;</xsl:template>
+  <xsl:template match="m:rend[@rend = 'underline']" mode="mei2html">&lt;span style="text-decoration: underline;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
+  <xsl:template match="m:rend[@rend = 'strikethrough']" mode="mei2html">&lt;span style="text-decoration: line-through;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sub']" mode="mei2html">&lt;sub&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sub&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sup']" mode="mei2html">&lt;sup&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sup&gt;</xsl:template>
   <xsl:template match="m:rend[@fontfam or @fontsize or @color]" mode="mei2html"><xsl:variable name="atts">

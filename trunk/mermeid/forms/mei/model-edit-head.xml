@@ -26,29 +26,6 @@
             <mei/>
         </xf:instance>
         
-        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
-            id="bibl-type-instance" 
-            xxf:readonly="true">
-            <xi:include href="./model/bibl_reference_types.xml"/>
-        </xf:instance>
-        
-        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
-            id="instrumentation">
-            <xi:include href="./model/standard_instrumentation.xml"/>
-        </xf:instance>
-        
-        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
-            id="ensembles" 
-            xxf:readonly="true">
-            <xi:include href="./model/ensembles.xml"/>
-        </xf:instance>
-        
-        <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
-            id="instruments" 
-            xxf:readonly="true">
-            <xi:include href="./model/instruments.xml"/>
-        </xf:instance>
-
         <xf:instance id="parameters" 
             xmlns="http://www.kb.dk/dcm"
             parse="xml">
@@ -155,7 +132,7 @@
         </xf:action>
         
         <xf:action ev:event="xforms-submit-error">
-            <xxf:variable name="code" select="event('response-status-code')"/>
+            <xf:var name="code" select="event('response-status-code')"/>
             <xf:action>
                 <xf:message>An error occurred (<xf:output value="$code"/>)</xf:message>
             </xf:action>

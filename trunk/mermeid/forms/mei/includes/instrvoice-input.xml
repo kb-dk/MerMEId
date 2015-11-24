@@ -30,11 +30,10 @@
         </xf:itemset>
         <xf:action ev:event="xforms-value-changed">
             <!-- insert instrument name (display name) if empty -->
-            <xxf:variable name="instrument" select="."></xxf:variable>
+            <xf:var name="instrument" select="."></xf:var>
             <xf:action if="..=''">
                 <xf:setvalue ref=".." value="instance('instruments')/m:instrVoice[@code=$instrument]"/>
             </xf:action>
         </xf:action>
     </xf:select1>
-    <dcm:attribute-editor/>
 </h:span>

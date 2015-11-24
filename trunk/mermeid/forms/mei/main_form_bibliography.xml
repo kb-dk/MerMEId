@@ -7,7 +7,6 @@
   xmlns:xf="http://www.w3.org/2002/xforms" 
   xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
   xmlns:ev="http://www.w3.org/2001/xml-events"
-  xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
   xmlns:dcm="http://www.kb.dk/dcm">
   
   <h:div class="inputdiv">
@@ -58,6 +57,10 @@
                   position="after" 
                   origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-repeat')]"/>
               </xf:action>
+              <xf:insert nodeset="@*" 
+                context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl[index('repeat-references')]"
+                origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
+              <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
               <xf:dispatch name="id-update" target="form-group"/>
               <xxf:hide dialog="add-ref-dialog"/>
             </xf:action>
@@ -191,7 +194,7 @@
                       <xf:trigger appearance="minimal">
                         <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/edit.gif" title="Open reference editor"/></xf:label>
                         <xf:action ev:event="DOMActivate">
-                          <xxf:variable name="uri" 
+                          <xf:var name="uri" 
                             select="concat(instance('parameters')/dcm:orbeon_dir,'?uri=',instance('parameters')/dcm:form_home,'details-reference.xml&amp;doc=',instance('parameters')/dcm:xml_file,'&amp;id=',@xml:id)"/>
                           <xf:insert context="." origin="xxf:set-session-attribute('return_uri',instance('parameters')/dcm:this_page)"/>
                           <xf:action if="instance('temp')/changed='true'">

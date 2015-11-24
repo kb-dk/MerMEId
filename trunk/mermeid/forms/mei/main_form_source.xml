@@ -4,7 +4,6 @@
   xmlns:h="http://www.w3.org/1999/xhtml" 
   xmlns:xf="http://www.w3.org/2002/xforms"
   xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
-  xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" 
   xmlns:ev="http://www.w3.org/2001/xml-events" 
   xmlns:m="http://www.music-encoding.org/ns/mei"
   xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
@@ -31,7 +30,7 @@
               <xf:dispatch name="id-update" targetid="form-group"/>
             </xf:action>
           </xf:trigger> 
-          <xxf:variable name="expression" select="'all'"/>
+          <xf:var name="expression" select="'all'"/>
           <dcm:source-list ref="m:sourceDesc" id="all_sources_list">
             <xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
             <xf:action ev:event="save-data">
@@ -64,7 +63,7 @@
               <xf:dispatch name="id-update" targetid="form-group"/>
             </xf:action>
           </xf:trigger> 
-          <xxf:variable name="expression" select="'global'"/>
+          <xf:var name="expression" select="'global'"/>
           <dcm:source-list ref="m:sourceDesc" id="global_sources_list">
             <xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
             <xf:action ev:event="save-data">
@@ -81,8 +80,8 @@
         <xf:repeat nodeset="m:expression">
           <h:fieldset>
             <h:legend>Sources (version)
-              <xf:group ref=".[normalize-space(m:titleStmt/m:title)!='']">
-                <xf:output value="concat(' - ',m:titleStmt/m:title)"/>
+              <xf:group ref=".[m:titleStmt/m:title/text()]">
+                <xf:output value="concat(' - ',m:titleStmt/m:title[text()][1])"/>
               </xf:group>
               <h:a class="help">&#160;?<h:span class="comment">Sources may be listed at work level 
                 and at version level. Versions are defined at the Music tab.</h:span></h:a>
@@ -100,7 +99,7 @@
                 <xf:dispatch name="id-update" targetid="form-group"/>
               </xf:action>
             </xf:trigger> 
-            <xxf:variable name="expression" select="concat('#',@xml:id)"/>
+            <xf:var name="expression" select="concat('#',@xml:id)"/>
             <dcm:source-list ref="/*//m:fileDesc/m:sourceDesc" id="expression_sources_list">
               <xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
               <xf:action ev:event="save-data">
