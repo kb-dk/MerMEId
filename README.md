@@ -18,6 +18,5 @@ Read more at the
 [demo](http://labs.kb.dk/editor/) websites.
 [Recent changes](http://www.kb.dk/en/nb/dcm/projekter/mermeid/index.html) are described on DCM's web site
 
-This is the source distribution. 
+This is the source distribution.
 
-There is also a [binary distribution](http://labs.kb.dk/editor/mermeid.tar.bz2) (~ 25MB tar.bz2), which in addition to the source also includes jar and war files for an application server.
