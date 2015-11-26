@@ -54,10 +54,10 @@
   <xsl:template match="m:music">
     <music>
       <xsl:comment>
-	Thank you for the music, the songs I'm singing /
-	Thanks for all the joy they're bringing
-	
-	[actual music data will be put back in place on saving]
+      	Thank you for the music, the songs I'm singing /
+      	Thanks for all the joy they're bringing
+      	
+      	[actual music data will be put back in place on saving]
       </xsl:comment>
     </music>
   </xsl:template>
@@ -162,28 +162,48 @@
 
   <!-- tinyMCE-related stuff -->
   
-  <!-- wrap sibling <p>s in a temporary parent <p> for editing in a single tinyMCE. -->
-  <!-- An exception is needed for all <p> elements NOT to be edited with tinyMCE. -->
-  <xsl:template match="m:p[1]
-    [not(
-    name(..)='changeDesc' or 
-    name(..)='event' or
-    name(..)='incipText'
-    )]" 
-    mode="mei2html">
-    <p n="MerMEId_temporary_wrapper">
-        <xsl:for-each select="../m:p">&lt;p&gt;<xsl:apply-templates mode="mei2html"/>&lt;/p&gt;</xsl:for-each>
-    </p>
+  <!--  Wrap sibling p and list elements in a temporary parent <p> for editing in a single tinyMCE instance. 
+        Wrapping is needed whenever the parent element may contain more than one <p> or <list> element as well as other elements
+        not to be edited with tinyMCE. Also needed for <titlePage> which must contain at least one <p>. -->
+  <xsl:template match="m:history | m:event | m:titlePage" mode="mei2html">
+    <xsl:variable name="element" select="name()"/>
+    <xsl:element name="{$element}">
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates select="*[name()!='p' and name()!='list' and name()!='biblList']" mode="mei2html"/>
+      <xsl:if test="m:p or m:list">
+        <p n="MerMEId_temporary_wrapper">
+          <xsl:apply-templates select="m:p | m:list" mode="mei2html"/>
+        </p>
+      </xsl:if>
+      <xsl:apply-templates select="m:biblList" mode="mei2html"/>
+    </xsl:element>
   </xsl:template>
-  <xsl:template match="m:p[position()!=1]" mode="mei2html"/>  
+
+  <!-- Convert <p> and <list> to entities for editing in tinymce (with some exceptions handled with simple input fields). -->
+  <!-- An exception is needed for all <p> elements NOT to be edited with tinyMCE. -->
+  <xsl:template match="m:p [name(..)!='changeDesc' and name(..)!='incipText'] | m:list" mode="mei2html">
+        <xsl:variable name="element">
+          <xsl:choose>
+            <xsl:when test="name()='list'">
+              <xsl:choose>
+                <xsl:when test="@form = 'simple'">ul</xsl:when>
+                <xsl:when test="@form = 'ordered'">ol</xsl:when>
+              </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise><xsl:value-of select="name()"/></xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>&lt;<xsl:value-of select="$element"/>&gt;<xsl:apply-templates mode="mei2html"/>&lt;/<xsl:value-of 
+          select="$element"/>&gt;
+  </xsl:template>
   
   <!-- end tinyMCE -->
   
+  <xsl:template match="m:li" mode="mei2html">&lt;li&gt;<xsl:apply-templates mode="mei2html"/>&lt;/li&gt;</xsl:template>
   <xsl:template match="m:lb" mode="mei2html">&lt;br/&gt;</xsl:template> 
   <xsl:template match="m:rend[@fontweight = 'bold']" mode="mei2html">&lt;b&gt;<xsl:apply-templates mode="mei2html"/>&lt;/b&gt;</xsl:template>
   <xsl:template match="m:rend[@fontstyle = 'italic']" mode="mei2html">&lt;i&gt;<xsl:apply-templates mode="mei2html"/>&lt;/i&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'underline']" mode="mei2html">&lt;span style="text-decoration: underline;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
-  <xsl:template match="m:rend[@rend = 'strikethrough']" mode="mei2html">&lt;span style="text-decoration: line-through;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
+  <xsl:template match="m:rend[@rend = 'line-through']" mode="mei2html">&lt;span style="text-decoration: line-through;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sub']" mode="mei2html">&lt;sub&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sub&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sup']" mode="mei2html">&lt;sup&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sup&gt;</xsl:template>
   <xsl:template match="m:rend[@fontfam or @fontsize or @color]" mode="mei2html"><xsl:variable name="atts">

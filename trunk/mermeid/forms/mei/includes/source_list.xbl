@@ -179,13 +179,16 @@
                     <h:span class="strong">
                       <xf:group ref=".[not(@target) or @target='']">
                         <!-- source data included in this file -->
+                        <xf:var name="label" value="if(m:titleStmt/m:title[text()] and @label!='') then 
+                          concat(@label,': ') else @label"/>
+                        <xf:output value="$label"/>
                         <xf:output value="m:titleStmt/m:title[text()][1]"/>
-                        <xf:group ref=".[not(normalize-space(m:titleStmt/m:title))]"> [No title] </xf:group>
+                        <xf:group ref=".[not(normalize-space(m:titleStmt/m:title) or @label!='')]"> [No title or label] </xf:group>
                       </xf:group>
                       <xf:group ref=".[@target!='']">
                         <!-- external source data -->
                         <xf:output value="@label"/>
-                        <xf:group ref=".[normalize-space(@label)='']"> [No title] </xf:group>
+                        <xf:group ref=".[normalize-space(@label)='']"> [No label] </xf:group>
                         <xf:trigger appearance="minimal">
                           <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/update.png" title="Update title (re-read from external file)"/></xf:label>
                           <xf:action ev:event="DOMActivate">

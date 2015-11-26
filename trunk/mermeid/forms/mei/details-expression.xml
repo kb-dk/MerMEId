@@ -28,6 +28,9 @@
         <h:meta http-equiv="Content-Type" content="application/xhtml+xml"/>
         
         <h:script type="text/javascript" src="http:/editor/js/editor.js"/>
+        <h:script type="text/javascript" src="http:/editor/js/tinymce.js">
+            //<!-- tinymce configuration -->
+        </h:script>
         
         <h:style type="text/css" media="all"> 
             @import "/editor/style/tab_style.css"; 
@@ -295,9 +298,9 @@
                                 label="Add music incipit code"
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>                        
                             <xf:repeat nodeset="m:incip/m:incipCode" id="incipcode-repeat">
-                                <xf:input ref="@analog">
-                                    <xf:label>Code language <h:a class="help">&#160;?<h:span class="comment">The name of the encoding language used, 
-                                        e.g. "Plaine &amp; Easie Code"</h:span></h:a></xf:label>
+                                <xf:input ref="@form">
+                                    <xf:label>Code language <h:a class="help">&#160;?<h:span class="comment">The name of the encoding language used. 
+                                        The MEI Guidelines suggest values such as 'plaineAndEasie',  'humdrumKern' or 'parsons'</h:span></h:a></xf:label>
                                 </xf:input>
                                 <xf:input ref="." class="maxlong">
                                     <xf:label> Code <h:a class="help">&#160;?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
@@ -758,7 +761,7 @@
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:notesStmt/m:annot"/>
                             <xf:repeat nodeset="m:annot" id="repeat_expression_note">
                                 <h:div style="white-space:nowrap">
-                                    <fr:tinymce ref="m:p"/>										
+                                    <fr:tinymce ref="."/>										
                                     <dcm:element-buttons triggers="remove" 
                                         index="repeat_expression_note" 
                                         nodeset="m:annot" 

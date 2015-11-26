@@ -60,7 +60,7 @@
                        method="get" 
                        serialization="none" 
                        validate="false"
-                       resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/RISM_country_codes.xml"
+                       resource="{xxf:instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/RISM_country_codes.xml"
                        replace="instance" 
                        instance="rism-country-instance"/>
         
@@ -71,7 +71,7 @@
                        method="get" 
                        serialization="none" 
                        validate="false"
-                       resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/{instance('temp')/country_code}.xml"
+                       resource="{xxf:instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/{instance('temp')/country_code}.xml"
                        replace="instance" 
                        instance="rism-sigla-instance"/>
         
@@ -81,13 +81,6 @@
             <country_code/>
             <archive_code/>
           </temp>
-        </xf:instance> 
-        
-        <!-- local copy of editor settings instance -->
-        <!-- needed to get settings into inner scope -->
-        <xf:instance xmlns="http://www.kb.dk/dcm" 
-		     id="parameters">
-          <xi:include href="../mermeid_configuration.xml"/>               
         </xf:instance>
         
         <xf:bind nodeset="instance('temp')">
@@ -471,14 +464,14 @@
               </h:fieldset>
             </xf:group>
             
-            <h:span class="blocklabel">General description <h:a class="help">&#160;?<h:span class="comment">Text 
+            <h:span class="blocklabel">General description and links<h:a class="help">&#160;?<h:span class="comment">Text 
             describing or introducing to the item, its history, its significance etc.<br/>
             Information on the item's physical appearance and condition should be given in the 
             "physical description" area.
           </h:span></h:a> 
             </h:span>
             <dcm:create nodeset="m:notesStmt"
-                        label="Add general description"
+                        label="Add links or general description"
                         origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt"/>
             <xf:group ref="m:notesStmt">
               <dcm:create
@@ -486,13 +479,15 @@
                   label="Add general description"
                   origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='source_description']"/>
               <xf:repeat nodeset="m:annot[@type='source_description']" id="item-generaldesc">
-                <fr:tinymce ref="m:p" class="mediumheight"/>
+                <fr:tinymce ref="." class="mediumheight"/>
+                
                 <dcm:attribute-editor/>
                 <dcm:element-buttons-typed triggers="remove"
-					   nodeset="m:annot[@type='source_description']"
-					   index="item-generaldesc"
-					   origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='source_description']"/>
+      					   nodeset="m:annot[@type='source_description']"
+      					   index="item-generaldesc"
+      					   origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='source_description']"/>
               </xf:repeat>
+              <h:div class="vertical_spacer"/>
               <h:span class="blocklabel">Links <h:a class="help">&#160;?<h:span class="comment">Links to external resources (for instance, texts) related to 
               this particular item.</h:span></h:a>
               </h:span>
@@ -549,7 +544,7 @@
                   <xf:repeat nodeset="m:componentGrp/m:item" id="repeat-item-component">
                     <h:tr class="component">
                       <h:td class="{if(position()=last()) then 'last_cell' else 'index_cell'}">
-                        <h:img src="{instance('parameters')/dcm:server_name}/editor/images/tree-1.png" alt="component" border="0"/>
+                        <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/tree-1.png" alt="component" border="0"/>
                       </h:td>
                       <h:td>
                         <h:fieldset class="compact">
@@ -563,19 +558,12 @@
                           </h:span>
                           <h:div class="vertical_spacer"> </h:div>
                           
-                          
-                          <xf:input ref="@label" class="short">
+                          <xf:input ref="@label" class="mediumshort">
                             <xf:label>Label <h:a class="help">&#160;?<h:span 
                             class="comment">An optional label for this component, explaining the 
                             component's position in the source, e.g. "pp.3-4"</h:span></h:a>
                             </xf:label>
                           </xf:input>
-                          <xf:input ref="m:titleStmt/m:title" class="maxlong">
-                            <xf:label>Title <h:a class="help">&#160;?<h:span 
-                            class="comment">The component's title, e.g. "First movement" or "Song No.1"</h:span></h:a>
-                            </xf:label>
-                          </xf:input>
-                          <dcm:attribute-editor ref="m:titleStmt/m:title"/>
                           
                           <xf:switch>
                             <xf:case id="hide_component_details" selected="true()">
@@ -683,14 +671,14 @@
                                 </h:fieldset>
                                 
                                 <xf:group ref="m:notesStmt">
-                                  <h:span class="blocklabel">General description <h:a class="help">&#160;?<h:span class="comment">Text 
+                                  <h:span class="blocklabel">General description and links<h:a class="help">&#160;?<h:span class="comment">Text 
                                   describing or introducing to the item, its history, its significance etc.<br/>
                                   Information on the item's physical appearance and condition should be given in the 
                                   "physical description" area below.
                                 </h:span></h:a> 
                                 <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                                   </h:span>
-                                  <fr:tinymce ref="m:annot[@type='source_description']/m:p"/>
+                                  <fr:tinymce ref="m:annot[@type='source_description']"/>
                                   <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
                                   <xf:group ref="m:annot[@type='links']">
                                     <h:span class="blocklabel">Links <h:a class="help">&#160;?<h:span class="comment">Links to external resources (for instance, texts) related to 

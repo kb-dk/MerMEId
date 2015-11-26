@@ -27,10 +27,6 @@
     </metadata>
     <xbl:implementation>
       <xf:model>
-        <xf:instance xmlns="http://www.kb.dk/dcm"
-          id="parameters">
-          <xi:include href="../mermeid_configuration.xml"/>
-        </xf:instance>
         
         <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
                      id="empty-instance"
@@ -66,7 +62,7 @@
             <xxf:value select="." xxbl:scope="outer"/>
           </xf:var>
           <xf:var name="parameters" as="node()?">
-            <xxf:value select="instance('parameters')" xxbl:scope="outer"/>
+            <xxf:value select="xxf:instance('parameters')" xxbl:scope="outer"/>
           </xf:var>
           <xf:var name="temp" as="node()?">
             <xxf:value select="instance('temp')" xxbl:scope="outer"/>

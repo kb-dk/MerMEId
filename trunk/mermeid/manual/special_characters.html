@@ -8,588 +8,403 @@
     <link href="../style/front_page.css" rel="stylesheet" type="text/css" />
     <link href="../style/manual.css" rel="stylesheet" type="text/css" />
   </head>
-  
+
   <body>
     <div class="main">
       <div class="manual_header">
-        
         <div class="close_div">
-          <a href="javascript:window.close();" class="trigger"><img alt="Close"
-            title="Close" src="../images/close.gif" width="12" height="12" /></a></div>
+          <a href="javascript:window.close();" class="trigger"><img alt="Close" title="Close"
+              src="../images/close.gif" width="12" height="12" /></a></div>
         <img alt="MerMEId" src="../images/mermeid_30px_inv.png" width="130" height="23" />
       </div>
-      
       <div class="toclink"><a href="index.html">Back to table of contents</a></div>
-      
       <h2>Special characters</h2>
       
+      <p>The built-in text editor offers a number of special characters (look for the 'Omega' button).
+      It does not yet include musical symbols, however.</p>
       
-      <p>The following is a list of selected unicode characters that you may copy and paste
-        into your data. Their Unicode character codes are shown for reference.
-        Be aware, however, that the correct displaying of these
-        characters may depend on the fonts available on the user's computer and/or the
-        way your data are processed for display. </p>
-      
-      <h3>Music symbols</h3>
-      <p>These three accidentals are supported by a number of common fonts and are fairly safe to use. 
-        MerMEId's HTML preview furthermore supports them by providing an embedded font (see below). </p>
-      
-      <table border="0" cellpadding="0" cellspacing="0" class="unicode_table music_symbols">
-        <tbody>
-          <tr>
-            <td>&#x266d; 
-              
-              <p>266d</p>
-            </td>
-            <td>&#x266e; 
-              
-              <p>266e</p>
-            </td>
-            <td>&#x266f; 
-              
-              <p>266f</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      
-      <h3>Additional music symbols</h3>
-      
-      <ul class="important"><li>The following music symbols are very rarely supported by Unicode fonts yet and should be used with caution.
-        MerMEId embeds the <em>Bravura Text</em> music font to display them correctly in the HTML preview and below. 
-        <br/>If files are used in other contexts, be aware
-        that these characters may need special treatment in order to be displayed as expected. For such purposes 
-        you may want to download the Bravura Text font. The font is freely available at <a href="http://www.smufl.org/fonts/" 
-          title="Download Bravura Fonts">www.smufl.org/fonts/</a>. 
-        It contains all <a href="http://www.unicode.org/charts/PDF/U1D100.pdf" target="_blank" 
-          title="Full list of Unicode music characters">standard Unicode music characters</a> and a lot more, 
-        though only the selection below is currently supported in MerMEId's HTML preview.</li>
-      </ul>
       <ul class="important">
-        <li>
-          Older browsers often do not support printing embedded fonts. If some of these special characters are displayed correctly
-          on screen, but do not print, you may want to try updating your browser. 
-        </li>
+        <li> Please note: the 'less than' and 'greater than' characters (&lt; and &gt;) have special meaning in XML 
+          and cannot be used i text fields. Please use angle quotation marks instead. </li>
       </ul>
+      <p>To have your symbols displayed correctly in other contexts that the MerMEId preview, you
+        
       
+      <p>The following is a list of selected additional unicode characters that you may copy and paste into
+        your data. Their Unicode character codes are shown for reference. Be aware, however, that
+        the correct displaying of these characters may depend on the fonts available on the user's
+        computer and/or the way your data are processed for display. </p>
+      <h3>Music symbols</h3>
+      <p>These three accidentals are supported by a number of common fonts and are fairly safe to
+        use. MerMEId's HTML preview furthermore supports them by providing an embedded font (see
+        below). </p>
       <table border="0" cellpadding="0" cellspacing="0" class="unicode_table music_symbols">
         <tbody>
           <tr>
-            <td>&#x1d10b; 
-              <p class="code">1d10b</p>
+            <td>&#x266d; <p>266d</p>
             </td>
-            <td>&#x1d10c; 
-              <p class="code">1d10c</p>
+            <td>&#x266e; <p>266e</p>
             </td>
-            <td>&#x1d11e; 
-              <p class="code">1d11e</p>
-            </td>
-            <td>&#x1d122; 
-              <p class="code">1d122</p>
-            </td>
-            <td>&#x1d12a; 
-              <p class="code">1d12a</p>
-            </td>
-            <td>&#x1d12b; 
-              <p class="code">1d12b</p>
-            </td>
-            <td>&#x1d134; 
-              <p class="code">1d134</p>
-            </td>
-            <td>&#x1d135; 
-              <p class="code">1d135</p>
-            </td>
-            <td>&#x1d13b; 
-              <p class="code">1d13b</p>
-            </td>
-          </tr>
-          <tr>
-            <td>&#x1d13c; 
-              <p class="code">1d13c</p>
-            </td>
-            <td>&#x1d13d; 
-              <p class="code">1d13d</p>
-            </td>
-            <td>&#x1d13e; 
-              <p class="code">1d13e</p>
-            </td>
-            <td>&#x1d13f; 
-              <p class="code">1d13f</p>
-            </td>
-            <td>&#x1d15d; 
-              <p class="code">1d15d</p>
-            </td>
-            <td>&#x1d15e; 
-              <p class="code">1d15e</p>
-            </td>
-            <td>&#x1d15f; 
-              <p class="code">1d15f</p>
-            </td>
-            <td>&#x1d160; 
-              <p class="code">1d160</p>
-            </td>
-            <td>&#x1d161; 
-              <p class="code">1d161</p>
+            <td>&#x266f; <p>266f</p>
             </td>
           </tr>
         </tbody>
       </table>
-      
+      <p>You can include additional musical symbols in your texts by entering og pasting the desired
+        characters into the text editor. Then, select them and choose the desired music font in the
+        'Font Family' drop-down list. </p>
+      <p>The easiest way to insert the music characters may be to copy them from a font character
+        map (such as the selection below). Be aware, however, that the characters' position in font
+        you are copying from must match its position in the font you intend to use with your
+        MerMEId-edited text. To optimize compatibility with other music symbol fonts, we recommend
+        using a <a href="http://www.smufl.org/fonts/" title="SMuFL Fonts">SMuFL-compliant
+        font</a>.</p>
+      <p>If you are copying symbols from the table below, mark them as font family "Bravura", which
+        is the music font MerMEId uses.</p>
+      <ul class="important">
+        <li> Please note: Unfortunately, the built-in text editor seems to be unable to display the
+          symbols correctly. Once saved, however, they should appear using the correct font in the
+          HTML preview, provided that you are using the Bravura font. </li>
+      </ul>
+      <p>To have your symbols displayed correctly in other contexts that the MerMEId preview, you
+        will need to make sure that the Bravura font (or whatever font you have selected) is
+        available in that context. For web applications, for instance, this may involve <a
+          href="http://www.w3schools.com/css/css3_fonts.asp" title="W3Schools: Web Fonts">web font
+          embedding with CSS</a>.</p>
+      <ul class="important">
+        <li> Older browsers may not support printing web fonts. If some of these special characters
+          are displayed correctly on screen, but do not print, you may want to try updating your
+          browser. </li>
+      </ul>
+      <h4>A selection of some common music symbols (font: Bravura Text)</h4>
+      <p>The Bravura Text font contains musical symbols for use in a text. The font is available at
+          <a href="http://www.smufl.org/fonts/" title="Download SMuFL Fonts"
+          >www.smufl.org/fonts/</a>.</p>
+      <p>A complete list of SMuFL characters is available at <a
+          href="http://www.smufl.org/version/latest/" target="_blank" title="Browse SMuFL Glyphs"
+          >www.smufl.org/version/latest/</a>. You may copy and paste your symbols from there too. </p>
+      <table border="0" cellpadding="0" cellspacing="0" class="unicode_table music_symbols">
+        <tbody>
+          <tr>
+            <td>&#x1d10b; <p class="code">1d10b</p>
+            </td>
+            <td>&#x1d10c; <p class="code">1d10c</p>
+            </td>
+            <td>&#x1d11e; <p class="code">1d11e</p>
+            </td>
+            <td>&#x1d122; <p class="code">1d122</p>
+            </td>
+            <td>&#x1d12a; <p class="code">1d12a</p>
+            </td>
+            <td>&#x1d12b; <p class="code">1d12b</p>
+            </td>
+            <td>&#x1d134; <p class="code">1d134</p>
+            </td>
+            <td>&#x1d135; <p class="code">1d135</p>
+            </td>
+            <td>&#x1d13b; <p class="code">1d13b</p>
+            </td>
+          </tr>
+          <tr>
+            <td>&#x1d13c; <p class="code">1d13c</p>
+            </td>
+            <td>&#x1d13d; <p class="code">1d13d</p>
+            </td>
+            <td>&#x1d13e; <p class="code">1d13e</p>
+            </td>
+            <td>&#x1d13f; <p class="code">1d13f</p>
+            </td>
+            <td>&#x1d15d; <p class="code">1d15d</p>
+            </td>
+            <td>&#x1d15e; <p class="code">1d15e</p>
+            </td>
+            <td>&#x1d15f; <p class="code">1d15f</p>
+            </td>
+            <td>&#x1d160; <p class="code">1d160</p>
+            </td>
+            <td>&#x1d161; <p class="code">1d161</p></td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Beamed notes</h4>
+      <table border="0" cellpadding="0" cellspacing="0" class="unicode_table music_symbols">
+        <tbody>
+          <tr>
+            <td>&#xe1f1; <p class="code">e1f1</p></td>
+            <td>&#xe1f3; <p class="code">e1f3</p></td>
+            <td>&#xe1f5; <p class="code">e1f5</p></td>
+            <td>&#xe1f6; <p class="code">e1f6</p></td>
+            <td>&#xe1f8; <p class="code">e1f8</p></td>
+            <td>&#xe1fa; <p class="code">e1fa</p></td>
+            <td>&#xe1fb; <p class="code">e1fb</p></td>
+            <td>&#xe1fc; <p class="code">e1fc</p></td>
+            <td>&#xe1fd; <p class="code">e1fd</p></td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Groups of notes (examples)</h4>
+      <table border="0" cellpadding="0" cellspacing="0" class="unicode_table music_symbols">
+        <tbody>
+          <tr>
+            <td>&#xe1f1;&#xe1f8;&#xe1f3;</td>
+            <td>&#xe1f1;&#xe1fa;&#xe1f5;</td>
+            <td>&#xe1f1;&#xe1fb;&#xe1f6;</td>
+            <td>&#xe1f1;&#xe1f8;&#xe1fc;&#xe1f8;&#xe1f5;</td>
+            <td>&#xe1f1;&#xe1f8;&#xe1f3;&#xe1f8;&#xe1f3;&#xe1f8;&#xe1f3;</td>
+            <td>&#xe1f1;&#xe1fa;&#xe1f5;&#xe1fa;&#xe1f5;&#xe1fa;&#xe1f5;</td>
+            <td>&#xe1f1;&#xe1fb;&#xe1f6;&#xe1fb;&#xe1f6;&#xe1fb;&#xe1f6;</td>
+            <td>&#xe1f1;&#xe1fd;&#xe1f1;</td>
+          </tr>
+        </tbody>
+      </table>
+      <!--
       <h3>Greek letters</h3>
-      
+      <p>These are usually included in standard text fonts such as Arial or Times New Roman and need
+        not use a special font.</p>
       <table border="0" cellpadding="0" cellspacing="0" class="unicode_table">
         <tbody>
           <tr>
-            <td>&#x3b1; 
-              
-              <p>03b1</p>
+            <td>&#x3b1; <p>03b1</p>
             </td>
-            <td>&#x3b2; 
-              
-              <p>03b2</p>
+            <td>&#x3b2; <p>03b2</p>
             </td>
-            <td>&#x3b3; 
-              
-              <p>03b3</p>
+            <td>&#x3b3; <p>03b3</p>
             </td>
-            <td>&#x3b4; 
-              
-              <p>03b4</p>
+            <td>&#x3b4; <p>03b4</p>
             </td>
-            <td>&#x3b5; 
-              
-              <p>03b5</p>
+            <td>&#x3b5; <p>03b5</p>
             </td>
-            <td>&#x3b6; 
-              
-              <p>03b6</p>
+            <td>&#x3b6; <p>03b6</p>
             </td>
-            <td>&#x3b7; 
-              
-              <p>03b7</p>
+            <td>&#x3b7; <p>03b7</p>
             </td>
-            <td>&#x3b8; 
-              
-              <p>03b8</p>
+            <td>&#x3b8; <p>03b8</p>
             </td>
-            <td>&#x3b9; 
-              
-              <p>03b9</p>
+            <td>&#x3b9; <p>03b9</p>
             </td>
-            <td>&#x3ba; 
-              
-              <p>03ba</p>
+            <td>&#x3ba; <p>03ba</p>
             </td>
-            <td>&#x3bb; 
-              
-              <p>03bb</p>
+            <td>&#x3bb; <p>03bb</p>
             </td>
-            <td>&#x3bc; 
-              
-              <p>03bc</p>
+            <td>&#x3bc; <p>03bc</p>
             </td>
-            <td>&#x3bd; 
-              
-              <p>03bd</p>
+            <td>&#x3bd; <p>03bd</p>
             </td>
           </tr>
           <tr>
-            <td>&#x3be; 
-              
-              <p>03be</p>
+            <td>&#x3be; <p>03be</p>
             </td>
-            <td>&#x3bf; 
-              
-              <p>03bf</p>
+            <td>&#x3bf; <p>03bf</p>
             </td>
-            <td>&#x3c0; 
-              
-              <p>03c0</p>
+            <td>&#x3c0; <p>03c0</p>
             </td>
-            <td>&#x3c1; 
-              
-              <p>03c1</p>
+            <td>&#x3c1; <p>03c1</p>
             </td>
-            <td>&#x3c2; 
-              
-              <p>03c2</p>
+            <td>&#x3c2; <p>03c2</p>
             </td>
-            <td>&#x3c3; 
-              
-              <p>03bc3</p>
+            <td>&#x3c3; <p>03bc3</p>
             </td>
-            <td>&#x3c4; 
-              
-              <p>03c4</p>
+            <td>&#x3c4; <p>03c4</p>
             </td>
-            <td>&#x3c5; 
-              
-              <p>03c5</p>
+            <td>&#x3c5; <p>03c5</p>
             </td>
-            <td>&#x3c6; 
-              
-              <p>03c6</p>
+            <td>&#x3c6; <p>03c6</p>
             </td>
-            <td>&#x3c7; 
-              
-              <p>03c7</p>
+            <td>&#x3c7; <p>03c7</p>
             </td>
-            <td>&#x3c8; 
-              
-              <p>03c8</p>
+            <td>&#x3c8; <p>03c8</p>
             </td>
-            <td>&#x3c9; 
-              
-              <p>03c9</p>
+            <td>&#x3c9; <p>03c9</p>
             </td>
             <td>
               <p></p>
             </td>
           </tr>
         </tbody>
-      </table>
-      
+      </table>-->
       <h3>Runes</h3>
-      
+      <p>To use runes in MerMEId texts, copy the desired characters from the list below an paste
+        them into your text. Then select them and choose the 'Hnias' runic font from the text
+        editor's 'Font Family' drop-down list.</p>
       <table border="0" cellpadding="0" cellspacing="0" class="unicode_table runes">
         <tbody>
           <tr>
-            <td>&#x16a0; 
-              
-              <p>16a0</p>
+            <td>&#x16a0; <p>16a0</p>
             </td>
-            <td>&#x16a1; 
-              
-              <p>16a1</p>
+            <td>&#x16a1; <p>16a1</p>
             </td>
-            <td>&#x16a2; 
-              
-              <p>16a2</p>
+            <td>&#x16a2; <p>16a2</p>
             </td>
-            <td>&#x16a3; 
-              
-              <p>16a3</p>
+            <td>&#x16a3; <p>16a3</p>
             </td>
-            <td>&#x16a4; 
-              
-              <p>16a4</p>
+            <td>&#x16a4; <p>16a4</p>
             </td>
-            <td>&#x16a5; 
-              
-              <p>16a5</p>
+            <td>&#x16a5; <p>16a5</p>
             </td>
-            <td>&#x16a6; 
-              
-              <p>16a6</p>
+            <td>&#x16a6; <p>16a6</p>
             </td>
-            <td>&#x16a7; 
-              
-              <p>16a7</p>
+            <td>&#x16a7; <p>16a7</p>
             </td>
-            <td>&#x16a8; 
-              
-              <p>16a8</p>
+            <td>&#x16a8; <p>16a8</p>
             </td>
-            <td>&#x16a9; 
-              
-              <p>16a9</p>
+            <td>&#x16a9; <p>16a9</p>
             </td>
-            <td>&#x16aa; 
-              
-              <p>16aa</p>
+            <td>&#x16aa; <p>16aa</p>
             </td>
-            <td>&#x16ab; 
-              
-              <p>16ab</p>
+            <td>&#x16ab; <p>16ab</p>
             </td>
-            <td>&#x16ac; 
-              
-              <p>16ac</p>
+            <td>&#x16ac; <p>16ac</p>
             </td>
-            <td>&#x16ad; 
-              
-              <p>16ad</p>
+            <td>&#x16ad; <p>16ad</p>
             </td>
-            <td>&#x16ae; 
-              
-              <p>16ae</p>
+            <td>&#x16ae; <p>16ae</p>
             </td>
-            <td>&#x16af; 
-              
-              <p>16af</p>
+            <td>&#x16af; <p>16af</p>
             </td>
           </tr>
           <tr>
-            <td>&#x16b0; 
-              
-              <p>16b0</p>
+            <td>&#x16b0; <p>16b0</p>
             </td>
-            <td>&#x16b1; 
-              
-              <p>16b1</p>
+            <td>&#x16b1; <p>16b1</p>
             </td>
-            <td>&#x16b2; 
-              
-              <p>16b2</p>
+            <td>&#x16b2; <p>16b2</p>
             </td>
-            <td>&#x16b3; 
-              
-              <p>16b3</p>
+            <td>&#x16b3; <p>16b3</p>
             </td>
-            <td>&#x16b4; 
-              
-              <p>16b4</p>
+            <td>&#x16b4; <p>16b4</p>
             </td>
-            <td>&#x16b5; 
-              
-              <p>16b5</p>
+            <td>&#x16b5; <p>16b5</p>
             </td>
-            <td>&#x16b6; 
-              
-              <p>16b6</p>
+            <td>&#x16b6; <p>16b6</p>
             </td>
-            <td>&#x16b7; 
-              
-              <p>16b7</p>
+            <td>&#x16b7; <p>16b7</p>
             </td>
-            <td>&#x16b8; 
-              
-              <p>16b8</p>
+            <td>&#x16b8; <p>16b8</p>
             </td>
-            <td>&#x16b9; 
-              
-              <p>16b9</p>
+            <td>&#x16b9; <p>16b9</p>
             </td>
-            <td>&#x16ba; 
-              
-              <p>16ba</p>
+            <td>&#x16ba; <p>16ba</p>
             </td>
-            <td>&#x16bb; 
-              
-              <p>16bb</p>
+            <td>&#x16bb; <p>16bb</p>
             </td>
-            <td>&#x16bc; 
-              
-              <p>16bc</p>
+            <td>&#x16bc; <p>16bc</p>
             </td>
-            <td>&#x16bd; 
-              
-              <p>16bd</p>
+            <td>&#x16bd; <p>16bd</p>
             </td>
-            <td>&#x16be; 
-              
-              <p>16be</p>
+            <td>&#x16be; <p>16be</p>
             </td>
-            <td>&#x16bf; 
-              
-              <p>16bf</p>
+            <td>&#x16bf; <p>16bf</p>
             </td>
           </tr>
           <tr>
-            <td>&#x16c0; 
-              
-              <p>16c0</p>
+            <td>&#x16c0; <p>16c0</p>
             </td>
-            <td>&#x16c1; 
-              
-              <p>16c1</p>
+            <td>&#x16c1; <p>16c1</p>
             </td>
-            <td>&#x16c2; 
-              
-              <p>16c2</p>
+            <td>&#x16c2; <p>16c2</p>
             </td>
-            <td>&#x16c3; 
-              
-              <p>16c3</p>
+            <td>&#x16c3; <p>16c3</p>
             </td>
-            <td>&#x16c4; 
-              
-              <p>16c4</p>
+            <td>&#x16c4; <p>16c4</p>
             </td>
-            <td>&#x16c5; 
-              
-              <p>16c5</p>
+            <td>&#x16c5; <p>16c5</p>
             </td>
-            <td>&#x16c6; 
-              
-              <p>16c6</p>
+            <td>&#x16c6; <p>16c6</p>
             </td>
-            <td>&#x16c7; 
-              
-              <p>16c7</p>
+            <td>&#x16c7; <p>16c7</p>
             </td>
-            <td>&#x16c8; 
-              
-              <p>16c8</p>
+            <td>&#x16c8; <p>16c8</p>
             </td>
-            <td>&#x16c9; 
-              
-              <p>16c9</p>
+            <td>&#x16c9; <p>16c9</p>
             </td>
-            <td>&#x16ca; 
-              
-              <p>16ca</p>
+            <td>&#x16ca; <p>16ca</p>
             </td>
-            <td>&#x16cb; 
-              
-              <p>16cb</p>
+            <td>&#x16cb; <p>16cb</p>
             </td>
-            <td>&#x16cc; 
-              
-              <p>16cc</p>
+            <td>&#x16cc; <p>16cc</p>
             </td>
-            <td>&#x16cd; 
-              
-              <p>16cd</p>
+            <td>&#x16cd; <p>16cd</p>
             </td>
-            <td>&#x16ce; 
-              
-              <p>16ce</p>
+            <td>&#x16ce; <p>16ce</p>
             </td>
-            <td>&#x16cf; 
-              
-              <p>16cf</p>
+            <td>&#x16cf; <p>16cf</p>
             </td>
           </tr>
           <tr>
-            <td>&#x16d0; 
-              
-              <p>16d0</p>
+            <td>&#x16d0; <p>16d0</p>
             </td>
-            <td>&#x16d1; 
-              
-              <p>16d1</p>
+            <td>&#x16d1; <p>16d1</p>
             </td>
-            <td>&#x16d2; 
-              
-              <p>16d2</p>
+            <td>&#x16d2; <p>16d2</p>
             </td>
-            <td>&#x16d3; 
-              
-              <p>16d3</p>
+            <td>&#x16d3; <p>16d3</p>
             </td>
-            <td>&#x16d4; 
-              
-              <p>16d4</p>
+            <td>&#x16d4; <p>16d4</p>
             </td>
-            <td>&#x16d5; 
-              
-              <p>16d5</p>
+            <td>&#x16d5; <p>16d5</p>
             </td>
-            <td>&#x16d6; 
-              
-              <p>16d6</p>
+            <td>&#x16d6; <p>16d6</p>
             </td>
-            <td>&#x16d7; 
-              
-              <p>16d7</p>
+            <td>&#x16d7; <p>16d7</p>
             </td>
-            <td>&#x16d8; 
-              
-              <p>16d8</p>
+            <td>&#x16d8; <p>16d8</p>
             </td>
-            <td>&#x16d9; 
-              
-              <p>16d9</p>
+            <td>&#x16d9; <p>16d9</p>
             </td>
-            <td>&#x16da; 
-              
-              <p>16da</p>
+            <td>&#x16da; <p>16da</p>
             </td>
-            <td>&#x16db; 
-              
-              <p>16db</p>
+            <td>&#x16db; <p>16db</p>
             </td>
-            <td>&#x16dc; 
-              
-              <p>16dc</p>
+            <td>&#x16dc; <p>16dc</p>
             </td>
-            <td>&#x16dd; 
-              
-              <p>16dd</p>
+            <td>&#x16dd; <p>16dd</p>
             </td>
-            <td>&#x16de; 
-              
-              <p>16de</p>
+            <td>&#x16de; <p>16de</p>
             </td>
-            <td>&#x16df; 
-              
-              <p>16df</p>
+            <td>&#x16df; <p>16df</p>
             </td>
           </tr>
           <tr>
-            <td>&#x16e0; 
-              
-              <p>16e0</p>
+            <td>&#x16e0; <p>16e0</p>
             </td>
-            <td>&#x16e1; 
-              
-              <p>16e1</p>
+            <td>&#x16e1; <p>16e1</p>
             </td>
-            <td>&#x16e2; 
-              
-              <p>16e2</p>
+            <td>&#x16e2; <p>16e2</p>
             </td>
-            <td>&#x16e3; 
-              
-              <p>16e3</p>
+            <td>&#x16e3; <p>16e3</p>
             </td>
-            <td>&#x16e4; 
-              
-              <p>16e4</p>
+            <td>&#x16e4; <p>16e4</p>
             </td>
-            <td>&#x16e5; 
-              
-              <p>16e5</p>
+            <td>&#x16e5; <p>16e5</p>
             </td>
-            <td>&#x16e6; 
-              
-              <p>16e6</p>
+            <td>&#x16e6; <p>16e6</p>
             </td>
-            <td>&#x16e7; 
-              
-              <p>16e7</p>
+            <td>&#x16e7; <p>16e7</p>
             </td>
-            <td>&#x16e8; 
-              
-              <p>16e8</p>
+            <td>&#x16e8; <p>16e8</p>
             </td>
-            <td>&#x16e9; 
-              
-              <p>16e9</p>
+            <td>&#x16e9; <p>16e9</p>
             </td>
-            <td>&#x16ea; 
-              
-              <p>16ea</p>
+            <td>&#x16ea; <p>16ea</p>
             </td>
-            <td>&#x16eb; 
-              
-              <p>16eb</p>
+            <td>&#x16eb; <p>16eb</p>
             </td>
-            <td>&#x16ec; 
-              
-              <p>16ec</p>
+            <td>&#x16ec; <p>16ec</p>
             </td>
-            <td>&#x16ed; 
-              
-              <p>16ed</p>
+            <td>&#x16ed; <p>16ed</p>
             </td>
-            <td>&#x16ee; 
-              
-              <p>16ee</p>
+            <td>&#x16ee; <p>16ee</p>
             </td>
-            <td>&#x16ef; 
-              
-              <p>16ef</p>
+            <td>&#x16ef; <p>16ef</p>
             </td>
           </tr>
         </tbody>
       </table>
-      
     </div>
-    <p class="footer"><a href="http://www.kb.dk/dcm" title="DCM"><img style="border: 0px; vertical-align:middle;" alt="DCM Logo" src="../images/dcm_logo_small.png"/></a> 
-      2013 Danish Centre for Music Publication | The Royal Library,
-      Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
-        href="http://www.kb.dk/dcm">www.kb.dk/dcm</a></p>
+    <p class="footer"><a href="http://www.kb.dk/dcm" title="DCM"><img
+          style="border: 0px; vertical-align:middle;" alt="DCM Logo"
+          src="../images/dcm_logo_small.png" /></a> 2013 Danish Centre for Music Publication | The
+      Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm"
+        >www.kb.dk/dcm</a></p>
   </body>
 </html>

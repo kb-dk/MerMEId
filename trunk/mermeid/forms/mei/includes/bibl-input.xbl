@@ -482,15 +482,13 @@
                         </xf:group>
 
                         <h:fieldset>
-                            <h:legend>Notes <h:a class="help">&#160;?<h:span class="comment">Any notes to be added to this
-                                item, e.g. a description of contents or - in case of performance documentation -
-                                an indication of the date and place for the event documented by this
-                                item</h:span></h:a></h:legend>
+                            <h:legend>Notes <h:a class="help">&#160;?<h:span class="comment">Any supplementary comments to be added to this
+                                item, e.g. a description of contents.</h:span></h:a></h:legend>
                             <dcm:create nodeset="m:annot" label="Add annotation"
                                 origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
                             <xf:repeat nodeset="m:annot" id="repeat-bibl-notes">
                                 <h:div>
-                                    <fr:tinymce ref="m:p"/>	
+                                    <fr:tinymce ref="."/>	
                                     <dcm:element-buttons triggers="remove" nodeset="m:annot" index="repeat-bibl-notes"
                                         origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
                                     <dcm:attribute-editor/>

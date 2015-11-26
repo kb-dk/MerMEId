@@ -70,10 +70,9 @@
 
   <!-- Remove empty attributes -->
   <xsl:template
-    match="m:identifier/@type[.='']|@unit[.='']|@pname|@accid|@mode|@count|@sym|@code|@solo|
-    @n|@evidence|@target|@targettype|@resp|
-    @notbefore|@notafter|@reg|@isodate|@startdate|@enddate|@notAfter-iso|@notBefore-iso|@when-iso|
-    @xml:lang">
+    match="@accid|@authority|@authURI|@code|@count|@dbkey|@enddate|@evidence|
+    @isodate|@mode|@n|@notafter|@notbefore|@pname|@reg|@resp|
+    @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang">
     <xsl:if test="normalize-space(.)">
       <xsl:copy-of select="."/>
     </xsl:if>
@@ -99,9 +98,11 @@
 
   <!-- Remove empty elements -->
   <xsl:template match="m:castList[not(*)]"/>
-  <xsl:template match="m:notesStmt[not(*)]"/>
   <xsl:template match="m:eventList[not(*)]"/>
-
+  <xsl:template match="m:incipCode[not(text())]"/>
+  <xsl:template match="m:notesStmt[not(*)]"/>
+  <xsl:template match="m:titlePage[not(*)]"/>
+  
   <!-- Delete duplicate language definitions (fixes an xforms problem) -->
   <xsl:template
     match="m:mei/m:meiHead/m:workDesc/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
@@ -295,6 +296,12 @@
       </xsl:if>
     </xsl:if>
   </xsl:template>
+  
+  <!-- trying to get rid of &nbsp; ... 
+  <xsl:template match="text[contains(.,'&amp;nbsp;')]">
+    <xsl:apply-templates select="substring-before(.,'&amp;nbsp;')"/><xsl:text> </xsl:text><xsl:apply-templates select="substring-after(.,'&amp;nbsp;')"/>
+  </xsl:template>-->
+  
   <!-- End entity conversion -->
 
   <!-- HTML -> MEI -->
@@ -409,7 +416,7 @@
             </xsl:attribute>
           </xsl:if>
           <xsl:if test="contains(@style, 'text-decoration: line-through')">
-            <xsl:attribute name="rend">strikethrough</xsl:attribute>
+            <xsl:attribute name="rend">line-through</xsl:attribute>
           </xsl:if>
           <xsl:apply-templates select="node()"/>
         </xsl:element>

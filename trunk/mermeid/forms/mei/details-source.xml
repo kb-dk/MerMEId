@@ -21,6 +21,9 @@
         <h:meta http-equiv="Content-Type" content="application/xhtml+xml"/>
 
         <h:script type="text/javascript" src="http:/editor/js/editor.js"/>
+        <h:script type="text/javascript" src="http:/editor/js/tinymce.js">
+            //<!-- tinymce configuration -->
+        </h:script>
 
         <h:style type="text/css" media="all"> @import "/editor/style/tab_style.css"; @import
             "/editor/style/xform_style.css"; @import "/editor/style/model_editor_style.css"; @import
@@ -131,90 +134,41 @@
 
                     <h:fieldset>
                         <h:legend> Source title </h:legend>
+                        
                         <dcm:create nodeset="m:titleStmt" label="Add title"
                             origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt"/>
                         <xf:input ref="m:titleStmt/m:title" class="maxlong">
-                            <xf:label class="fixed_width_long">Short description or title <h:a
+                            <xf:label class="fixed_width">Source title <h:a
                                     class="help">&#160;?<h:span class="comment">A heading
-                                        identifying the source, e.g. "Printed score, first edition",
-                                        "Autograph score, draft" or "Source A"</h:span></h:a>
+                                        identifying the source, either reproducing the source's written or 
+                                        printed title, or a descriptive heading 
+                                        such as "Printed score, first edition" or
+                                        "Autograph score, draft"</h:span></h:a>
                             </xf:label>
                         </xf:input>
                         <dcm:id ref="m:titleStmt/m:title"/>
                         <dcm:attribute-editor ref="m:titleStmt/m:title"/>
-                    </h:fieldset>
-
-
-                    <!-- General description -->
-                    <h:fieldset>
-                        <h:legend>General source description <h:a class="help">&#160;?<h:span
-                                    class="comment">Text describing or introducing to the source,
-                                    its history, its significance etc.<br/> Information on the
-                                    source's physical appearance and condition should be given in
-                                    the "physical description" area below. </h:span></h:a>
-                        </h:legend>
-                        <dcm:create nodeset="m:notesStmt" label="Add general description"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt"/>
-                        <xf:group ref="m:notesStmt">
-                            <dcm:create nodeset="m:annot[@type='source_description']"
-                                label="Add general description"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='source_description']"/>
-                            <fr:tinymce ref="m:annot[@type='source_description']/m:p"/>
-                            <xf:trigger appearance="minimal"
-                                ref="m:annot[@type='source_description']">
-                                <xf:label>
-                                    <h:img
-                                        src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif"
-                                        alt="Delete" title="Delete"/>
-                                </xf:label>
+                        <h:br/>
+                        <xf:input ref="@label" class="mediumlong">
+                            <xf:label class="fixed_width">Source label <h:a
+                                class="help">&#160;?<h:span class="comment">A short label for 
+                                    this source, such as a letter, number, or short description.
+                                    If both a source title and a label are given, MerMEId will display the
+                                    label, followed by a colon and the source title (for 
+                                    instance, "Source A: Printed first edition of the full score"). 
+                                </h:span></h:a>
+                            </xf:label>
+                        </xf:input>
+                        <xf:group ref=".[not(@label)]">
+                            <xf:trigger appearance="minimal">
+                                <xf:label><h:img style="vertical-align: middle;"
+                                    src="{instance('parameters')/dcm:server_name}/editor/images/add.gif"
+                                    alt="Add authority file reference" title="Add authority file reference"/> Add label</xf:label>
                                 <xf:action ev:event="DOMActivate">
-                                    <xf:var name="parent" select="parent::node()"/>
-                                    <xf:delete nodeset="."/>
-                                    <xf:action if="count($parent/*)=0">
-                                        <xf:delete nodeset="$parent"/>
-                                    </xf:action>
+                                    <xf:insert nodeset="@*" context="." origin="xxf:attribute('label','')"/>
+                                    <xf:setvalue ref="instance('temp')/changed" value="'true'"/>
                                 </xf:action>
                             </xf:trigger>
-                            <dcm:id ref="m:annot[@type='source_description']"/>
-                            <dcm:attribute-editor ref="m:annot[@type='source_description']"/>
-                            <h:div>
-                                <h:span class="blocklabel">Links <h:a class="help">&#160;?<h:span
-                                            class="comment">Links to external resources (for
-                                            instance, texts) related to this particular
-                                            source.</h:span></h:a>
-                                </h:span>
-                                <dcm:create nodeset="m:annot[@type='links']" label="Add links"
-                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']"
-                                />
-                            </h:div>
-                            <xf:group ref="m:annot[@type='links']">
-                                <dcm:create nodeset="m:ptr" label="Add links"
-                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
-                                <xf:repeat nodeset="m:ptr" id="source-notesstmt-annot-repeat-extptr">
-                                    <h:div>
-                                        <xf:input ref="@target" class="long">
-                                            <xf:label>URI <h:a class="help">&#160;?<h:span
-                                                  class="comment">Link to the resource, e.g.
-                                                  "http://example.com/source_description.pdf"</h:span></h:a>
-                                            </xf:label>
-                                        </xf:input>
-                                        <xf:input ref="@label">
-                                            <xf:label>Label <h:a class="help">&#160;?<h:span
-                                                  class="comment">A short, descriptive text which
-                                                  may serve as the link text, e.g. "The Carl Nielsen
-                                                  Edition's source
-                                                description"</h:span></h:a></xf:label>
-                                        </xf:input>
-                                        <dcm:element-buttons
-                                            triggers="up down add copy del-parent-with-last"
-                                            nodeset="m:ptr"
-                                            index="source-notesstmt-annot-repeat-extptr"
-                                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
-                                        <dcm:id/>
-                                        <dcm:attribute-editor/>
-                                    </h:div>
-                                </xf:repeat>
-                            </xf:group>
                         </xf:group>
                     </h:fieldset>
 
@@ -309,7 +263,7 @@
                                         <h:td
                                             class="{if(position()=last()) then 'last_cell' else 'index_cell'}">
                                             <h:img
-                                                src="{instance('parameters')/dcm:server_name}/editor/images/tree-1.png"
+                                                src="{xxf:instance('parameters')/dcm:server_name}/editor/images/tree-1.png"
                                                 alt="component" border="0"/>
                                         </h:td>
                                         <h:td>
@@ -366,28 +320,7 @@
                                                   contents.</h:span></h:a>
                                                   </h:span>
 
-                                                  <dcm:create nodeset="m:notesStmt"
-                                                  label="Add description"
-                                                  origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp/m:source/m:notesStmt"/>
-                                                  <xf:group ref="m:notesStmt">
-                                                  <dcm:create nodeset="m:annot"
-                                                  label="Add description"
-                                                  origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp/m:source/m:notesStmt/m:annot[1]"/>
-                                                  <xf:repeat
-                                                  nodeset="m:annot[@type='source_description']"
-                                                  id="component-description">
-                                                  <fr:tinymce ref="m:p" class="mediumheight"/>
-                                                  <dcm:attribute-editor/>
-                                                  <dcm:element-buttons-typed triggers="remove"
-                                                  nodeset="m:annot[@type='source_description']"
-                                                  index="component-description"
-                                                  origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:componentGrp/m:source/m:notesStmt/m:annot[1]"
-                                                  />
-                                                  </xf:repeat>
-                                                  </xf:group>
-
                                                   <dcm:source-input/>
-
 
                                                   </xf:case>
                                                 </xf:switch>

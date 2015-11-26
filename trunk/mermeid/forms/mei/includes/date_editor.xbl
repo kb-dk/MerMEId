@@ -85,10 +85,6 @@
                     </editor_date>
                 </xf:instance>
 
-                <xf:instance id="parameters" xmlns="http://www.kb.dk/dcm">
-                    <xi:include href="../mermeid_configuration.xml"/>
-                </xf:instance>
-
 
                 <xf:bind nodeset="instance('editor-instance')">
                     <xf:bind id="isodate-bind" nodeset="isodate" type="xf:date" name="date"/>
@@ -147,7 +143,7 @@
 
                         <xf:trigger>
                             <xf:label><h:img
-                                    src="{instance('parameters')/dcm:server_name}/editor/images/date.png"
+                                    src="{xxf:instance('parameters')/dcm:server_name}/editor/images/date.png"
                                     alt="Edit date" title="Edit date"/> Edit date</xf:label>
                             <xf:action ev:event="DOMActivate">
                                 <xxf:show dialog="date-editor-dialog"/>
@@ -191,7 +187,7 @@
                                 <xf:trigger appearance="minimal">
                                     <xf:label>
                                         <h:img
-                                            src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif"
+                                            src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif"
                                             alt="Clear" title="Clear date"/>
                                     </xf:label>
                                     <xf:action ev:event="DOMActivate">
@@ -219,7 +215,7 @@
                                             <xf:trigger appearance="minimal">
                                                 <xf:label>
                                                   <h:img
-                                                  src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif"
+                                                  src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif"
                                                   alt="Clear" title="Clear date"/>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -236,7 +232,7 @@
                                             <xf:trigger appearance="minimal">
                                                 <xf:label>
                                                   <h:img
-                                                  src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif"
+                                                  src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif"
                                                   alt="Clear" title="Clear date"/>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -255,7 +251,7 @@
                                             <xf:trigger appearance="minimal">
                                                 <xf:label>
                                                   <h:img
-                                                  src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif"
+                                                  src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif"
                                                   alt="Clear" title="Clear date"/>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -272,7 +268,7 @@
                                             <xf:trigger appearance="minimal">
                                                 <xf:label>
                                                   <h:img
-                                                  src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif"
+                                                  src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif"
                                                   alt="Clear" title="Clear date"/>
                                                 </xf:label>
                                                 <xf:action ev:event="DOMActivate">

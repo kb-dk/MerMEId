@@ -269,9 +269,9 @@
 							<h:span class="blocklabel">Music incipit code <h:a class="help">&#160;?<h:span 
 								class="comment">One-line incipit encoding, using e.g. <em>Plaine &amp; Easie Code</em></h:span></h:a></h:span>
 							<xf:repeat nodeset="m:incip/m:incipCode" id="incipcode-repeat">
-								<xf:input ref="@analog">
-									<xf:label>Code language <h:a class="help">&#160;?<h:span class="comment">The name of the encoding language used, 
-										e.g. "Plaine &amp; Easie Code"</h:span></h:a></xf:label>
+								<xf:input ref="@form">
+									<xf:label>Code language <h:a class="help">&#160;?<h:span class="comment">The name of the encoding language used. 
+										The MEI Guidelines suggest values such as 'plaineAndEasie',  'humdrumKern' or 'parsons'</h:span></h:a></xf:label>
 								</xf:input>
 								<xf:input ref="." class="maxlong">
 									<xf:label> Code <h:a class="help">&#160;?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
@@ -532,7 +532,7 @@
 											</xf:input>
 											<xf:select1 ref="@code">
 												<xf:label>Standard code <h:a class="help">&#160;?<h:span 
-													class="comment">Choosing a standard MARC code optimizes data  
+													class="comment">Choosing a standard MARC code improves data  
 													compatibility and interchangeability with other systems. <h:br/>
 													A code should be supplied also when you do not want the ensemble 
 													to have a heading (name).
@@ -542,10 +542,10 @@
 													<xf:value ref="@code"/>
 												</xf:itemset>
 												<xf:action ev:event="xforms-value-changed">
-													<xf:var name="ensemble" select="."></xf:var>
+													<xf:var name="ensemble" select="."/>
 													<xf:action if="../m:head=''">
 														<!-- set ensemble name if empty -->
-														<!--<xf:setvalue ref="../m:head" value="instance('ensembles')/m:instrVoiceGrp[@code=$ensemble]"/>-->
+														<xf:setvalue ref="../m:head" value="normalize-space(instance('ensembles')/m:instrVoiceGrp[@code=$ensemble])"/>
 													</xf:action>
 												</xf:action>
 											</xf:select1>
@@ -599,7 +599,7 @@
 												choosing a standard instrument code in the last field.
 											</h:span></h:a></h:span>
 											<h:span class="fixed_width_long">Standard code <h:a class="help">&#160;?<h:span 
-												class="comment">Choosing a standard MARC code optimizes data  
+												class="comment">Choosing a standard MARC code improves data  
 												compatibility and interchangeability with other systems.<h:br/>
 												Also, it may be used to automatically insert the 
 												instrument's name in the "name" field if no name has been entered yet.
@@ -648,7 +648,7 @@
 										choosing a standard instrument code in the last field.
 									</h:span></h:a></h:span>
 									<h:span class="fixed_width_long">Standard code <h:a class="help">&#160;?<h:span 
-										class="comment">Choosing a standard MARC code optimizes data  
+										class="comment">Choosing a standard MARC code improves data  
 										compatibility and interchangeability with other systems.<h:br/>
 										Also, it may be used to automatically insert the 
 										instrument's name in the "name" field if no name has been entered yet.

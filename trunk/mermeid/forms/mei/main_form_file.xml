@@ -27,18 +27,15 @@
 							nodeset="m:title"
 							label="Add series title"
 							origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:title"/>
-						<xf:repeat nodeset="m:title" id="repeat-seriestitle">
+						<xf:group ref="m:title">
 							<xf:input ref="." class="maxlong">
 								<xf:label class="fixed_width">Series title <h:a class="help">&#160;?<h:span class="comment">E.g. 
 									"Complete Edition of the Works of Carl Nielsen" or "Niels W. Gade Thematic Catalogue"</h:span></h:a>
 								</xf:label>
 							</xf:input>
 							<dcm:attribute-editor/>
-							<dcm:element-buttons triggers="remove"
-								nodeset="m:title"
-								index="repeat-seriestitle"
-								origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:title"/>
-						</xf:repeat>
+							<!-- title is required; no 'delete' button! -->
+						</xf:group>
 					</h:div>
 					<dcm:create 
 						nodeset="m:identifier[@type='file_collection']"
@@ -282,17 +279,13 @@
 					nodeset="m:projectDesc"
 					label="Add project description"
 					origin="instance('empty-instance')/m:meiHead/m:encodingDesc/m:projectDesc"/>
-				<dcm:create ref="m:projectDesc"
-					nodeset="m:p"
-					label="Add project description"
-					origin="instance('empty-instance')/m:meiHead/m:encodingDesc/m:projectDesc/m:p"/>
-				<xf:repeat nodeset="m:projectDesc/m:p" id="repeat-projectdesc-p">
-					<fr:tinymce ref="." class="mediumheight" mediatype="text/html"/>
-					<dcm:element-buttons triggers="del-parent-with-last"
-						nodeset="m:p" 
-						index="repeat-projectdesc-p" 
-						origin="instance('empty-instance')/m:meiHead/m:encodingDesc/m:projectDesc/m:p"/>
-				</xf:repeat>
+				<xf:group ref="m:projectDesc" id="repeat-projectdesc">
+					<fr:tinymce ref="."/>
+					<dcm:element-buttons triggers="remove"
+						nodeset="m:projectDesc" 
+						index="repeat-projectdesc" 
+						origin="instance('empty-instance')/m:meiHead/m:encodingDesc/m:projectDesc"/>
+				</xf:group>
 				<dcm:attribute-editor ref="m:projectDesc"/>
 				<h:br/>
 				<h:span class="blocklabel strong">Applications <h:a class="help">&#160;?<h:span 

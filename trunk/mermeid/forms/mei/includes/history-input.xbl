@@ -50,13 +50,6 @@
                   <xi:include href="../model/empty_doc.xml"  />
 		        </xf:instance>
 
-                <!-- Local copy of editor settings instance needed to get settings into inner scope. -->
-                <!-- Values read from the file are overwritten on loading the component to get the current settings -->
-                <xf:instance xmlns="http://www.kb.dk/dcm"
-			     id="parameters">
-                  <xi:include href="../mermeid_configuration.xml"/>
-                </xf:instance>
-
             </xf:model>
         </xbl:implementation>
                                 
@@ -143,7 +136,7 @@
                             </h:legend>
                             <dcm:create 
                                 nodeset="m:eventList[@type='history']"
-                                label="Add event"
+                                label="Add time line"
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']"/>
                             <dcm:create ref="m:eventList[@type='history']" 
                                 nodeset="m:event"
@@ -172,15 +165,14 @@
                                             <dcm:date-editor/>
                                         </xf:group>
                                     </h:div>
-                                    <!-- this will be changed to use <desc> instead of <p> -->
                                     <dcm:create  
                                         nodeset="m:p"
                                         label="Add description"
                                         origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:p"/>
-                                    <xf:input ref="m:p" class="maxlong">
+                                    <fr:tinymce ref="m:p">
                                         <xf:label class="fixed_width">Description <h:a class="help">&#160;?<h:span class="comment">A description of the 
                                             event, e.g. "Third movement finished" or "Arranged for piano by NN"</h:span></h:a></xf:label>
-                                    </xf:input>
+                                    </fr:tinymce>
                                     <dcm:attribute-editor ref="m:p"/>
                                     <!-- end change -->
                                 </h:fieldset>					

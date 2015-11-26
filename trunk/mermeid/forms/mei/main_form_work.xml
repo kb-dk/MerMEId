@@ -239,7 +239,7 @@
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='general_description']"/>
 							<dcm:id/>
 							<dcm:attribute-editor/>
-							<fr:tinymce ref="m:p"/>
+							<fr:tinymce ref="."/>
 							<h:hr/>
 						</xf:repeat>
 
@@ -392,15 +392,8 @@
 								>Keywords for searching, grouping and indexing, e.g. "Symphony",
 								"Chamber music", or "Song". Pre-defined categories and keywords may
 								be selected from a menu by clicking the add-button to the right.
-							</h:span></h:a></h:span>
-					<h:div style="float:right">
-						<xf:trigger>
-							<xf:label><h:img
-									src="{instance('parameters')/dcm:server_name}/editor/images/list.png"
-									alt="Add"/> Add from list</xf:label>
-							<xxf:show dialog="keywords_menu" ev:event="DOMActivate"/>
-						</xf:trigger>
-					</h:div>
+					</h:span></h:a></h:span>
+					<h:div class="vertical_spacer">&#160;</h:div>
 					<!-- follows: a copy of the create-button code -->
 					<xf:group ref=".[not(m:termList)]">
 						<xf:trigger class="create_button" id="termList-create">
@@ -428,11 +421,20 @@
 								<xf:dispatch name="id-update" target="form-group"/>
 							</xf:action>
 						</xf:trigger>
+						&#160;
 					</xf:group>
-
+					
+					<xf:trigger>
+						<xf:label><h:img
+							src="{instance('parameters')/dcm:server_name}/editor/images/list.png"
+							alt="Add"/> Add from list</xf:label>
+						<xxf:show dialog="keywords_menu" ev:event="DOMActivate"/>
+					</xf:trigger>
+					<h:div class="vertical_spacer">&#160;</h:div>
+					
 					<xf:repeat nodeset="m:termList/m:term" id="repeat-work-terms">
 						<h:div>
-							<xf:input ref="." class="long"/>
+							<xf:input ref="." class="maxlong"/>
 							<dcm:element-buttons triggers="add del-parent-with-last up down"
 								nodeset="m:term" index="repeat-work-terms"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term"/>
