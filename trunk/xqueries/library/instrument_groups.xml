@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<instrumentation xmlns="http://www.music-encoding.org/ns/mei">
+    <!-- Pre-defined instrument groups for easy inserting. -->
+    
+    <!-- First, a few empty (undefined) instrument groups. Please do not change. -->
+    <instrVoiceGrp code="on">
+        <head/>
+    </instrVoiceGrp>
+    <instrVoiceGrp>
+        <head/>
+        <instrVoice count="1" code=""></instrVoice>
+    </instrVoiceGrp>
+    
+    <!-- Customizable part starts here -->
+
+    <!-- Pre-defined ensembles. The <instrVoiceGrp> must have @code value to be recognized as an ensemble. -->
+    <!-- The @code value does not need to be unique, however. 
+         For instance, several orchestras of different sizes may be defined, all having @code value "oa". -->
+    <instrVoiceGrp code="oa">
+        <head>Orchestra 2.2.2.2/4.2.3.1/timp./str.</head>
+        <instrVoice count="2" code="wa">fl.</instrVoice>
+        <instrVoice count="2" code="wb">ob.</instrVoice>
+        <instrVoice count="2" code="wc">cl.</instrVoice>
+        <instrVoice count="2" code="wd">fg.</instrVoice>
+        <instrVoice count="4" code="ba">cor.</instrVoice>
+        <instrVoice count="2" code="bb">tr.</instrVoice>
+        <instrVoice count="3" code="bd">trb.</instrVoice>
+        <instrVoice count="1" code="be">tb.</instrVoice>
+        <instrVoice count="1" code="pa">timp.</instrVoice>
+        <instrVoice count="" code="sn">str.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp code="oc">
+        <head>Strings (vl.1,2, va., vc., cb.)</head>
+        <instrVoice count="" code="sa">vl.1</instrVoice>
+        <instrVoice count="" code="sa">vl.2</instrVoice>
+        <instrVoice count="" code="sb">va.</instrVoice>
+        <instrVoice count="" code="sc">vc.</instrVoice>
+        <instrVoice count="" code="sd">cb.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp code="oc">
+        <head>String quartet</head>
+        <instrVoice count="2" code="sa">vl.</instrVoice>
+        <instrVoice count="1" code="sb">va.</instrVoice>
+        <instrVoice count="1" code="sc">vc.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp code="ca">
+        <head>Choir SATB</head>
+        <instrVoice count="1" code="va">S.</instrVoice>
+        <instrVoice count="1" code="vc">A.</instrVoice>
+        <instrVoice count="1" code="vd">T.</instrVoice>
+        <instrVoice count="1" code="vf">B.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp code="ca">
+        <head>Choir SSAATTBB</head>
+        <instrVoice count="2" code="va">S.</instrVoice>
+        <instrVoice count="2" code="vc">A.</instrVoice>
+        <instrVoice count="2" code="vd">T.</instrVoice>
+        <instrVoice count="2" code="vf">B.</instrVoice>
+    </instrVoiceGrp>
+
+    <!-- Groups without a "code" attribute are not shown in the 
+        list of pre-defined entire ensembles; instead, MerMEId uses them to insert a number of 
+        individual instruments at "performer" level, i.e. as part of an 
+        orchestra or as non-ensemble performers. -->
+
+    <instrVoiceGrp>
+        <head>Woodwinds 2.2.2.2</head>
+        <instrVoice count="2" code="wa">fl.</instrVoice>
+        <instrVoice count="2" code="wb">ob.</instrVoice>
+        <instrVoice count="2" code="wc">cl.</instrVoice>
+        <instrVoice count="2" code="wd">fg.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp>
+        <head>Brass 4.2.3.1 + timp.</head>
+        <instrVoice count="4" code="ba">cor.</instrVoice>
+        <instrVoice count="2" code="bb">tr.</instrVoice>
+        <instrVoice count="3" code="bd">trb.</instrVoice>
+        <instrVoice count="1" code="be">tb.</instrVoice>
+        <instrVoice count="1" code="pa">timp.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp>
+        <head>Strings (unspec.)</head>
+        <instrVoice count="" code="sn">str.</instrVoice>
+    </instrVoiceGrp>
+    <instrVoiceGrp>
+        <head>Voice &amp; piano</head>
+        <instrVoice count="1" code="vn">voice</instrVoice>
+        <instrVoice count="1" code="ka">pno.</instrVoice>
+    </instrVoiceGrp>
+    
+</instrumentation>
