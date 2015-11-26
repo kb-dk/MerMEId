@@ -1,0 +1,71 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <comment>HTTP Filter parameters</comment>
+
+
+  <entry key="filter">/</entry>
+
+<!--
+
+The filter is meant to operate on top of an eXist XML database
+
+-->
+
+  <entry key="exist.host">dcm-udv-01.kb.dk</entry>
+  <entry key="exist.port">8080</entry>
+  <entry key="exist.realm">exist</entry>
+  <entry key="exist.context">/exist/rest/db</entry>
+  <entry key="exist.user">admin</entry>
+  <entry key="exist.password">flormelis</entry>
+
+<!--
+
+get is the retrieval filter
+
+-->
+
+  <entry key="get.dcm">http://dcm-udv-01.kb.dk/editor/transforms/mei/filter_get.xsl</entry>
+  <entry key="get.dcm.mime">application/xml</entry>
+  <entry key="get.dcm.charset">UTF-8</entry>
+
+  <entry 
+      key="get.library">http://dcm-udv-01.kb.dk/editor/transforms/mei/null_transform.xsl</entry>
+  <entry key="get.library.mime">application/xml</entry>
+  <entry key="get.library.charset">UTF-8</entry>
+
+
+
+<!--
+
+put is for updating
+
+-->
+
+  <entry key="put.dcm">http://dcm-udv-01.kb.dk/editor/transforms/mei/filter_put.xsl</entry>
+  <entry key="put.dcm.mime">application/xml</entry>
+  <entry key="put.dcm.charset">UTF-8</entry>
+
+  <entry 
+      key="put.library">http://dcm-udv-01.kb.dk/editor/transforms/mei/null_transform.xsl</entry>
+  <entry key="put.library.mime">application/xml</entry>
+  <entry key="put.library.charset">UTF-8</entry>
+
+
+  <!--
+
+del is for removing stuff
+the del.dcm.redirect doesn't seem to be very clever...
+  -->
+
+  <entry key="del.dcm.redirect">http://dcm-udv-01.kb.dk/storage/list_files.xq</entry>
+
+  <entry key="create.dcm">http://dcm-udv-01.kb.dk/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}</entry>
+  <entry key="create.dcm.uri">http://dcm-udv-01.kb.dk/editor/forms/mei/edit-work-case.xml</entry>
+  <entry key="create.dcm.dir">http://dcm-udv-01.kb.dk/filter/dcm/</entry>
+
+  <entry key="create.library">http://dcm-udv-01.kb.dk/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}</entry>
+  <entry key="create.library.uri">http://dcm-udv-01.kb.dk/editor/forms/mei/edit-bibliography-case.xml</entry>
+  <entry key="create.library.dir">http://dcm-udv-01.kb.dk/filter/library/</entry>
+
+   <entry key="del.library.redirect">http://dcm-udv-01.kb.dk/orbeon/xforms-jsp/mei-form/?uri=http://dcm-udv-01.kb.dk/editor/forms/mei/model-references.xml</entry>
+</properties>

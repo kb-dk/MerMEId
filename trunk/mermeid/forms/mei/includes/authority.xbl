@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" 
+  xmlns:xf="http://www.w3.org/2002/xforms"
+  xmlns:ev="http://www.w3.org/2001/xml-events" 
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
+  xmlns:xbl="http://www.w3.org/ns/xbl"
+  xmlns:xxbl="http://orbeon.org/oxf/xml/xbl" 
+  xmlns:dcm="http://www.kb.dk/dcm">
+
+  <!--
+    Component for adding a reference to an authority file to the context node.
+    Danish Centre for Music Publication (DCM) 
+    Axel Teich Geertinger, 2015
+    atge@kb.dk
+  -->
+
+  <xbl:binding id="dcm-authority-binding" element="dcm|authority">
+
+    <!-- Orbeon Form Builder Component Metadata -->
+    <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+      <display-name lang="en">Authority file reference component</display-name>
+      <template>
+        <dcm:authority>
+          <xf:label ref=""/>
+          <xf:hint ref="Add authority file reference"/>
+          <xf:help ref="Add authority file reference"/>
+          <xf:alert ref=""/>
+        </dcm:authority>
+      </template>
+    </metadata>
+
+    <xbl:template>
+      <!-- Local controls -->
+      <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
+        <xbl:content includes="xf|label,xf|help,xf|hint,xf|alert"/>
+
+        <!-- Inner group -->
+        <xf:group appearance="xxf:internal" xxbl:scope="inner">
+
+          <xf:var name="binding" as="node()?">
+            <xxf:value select="." xxbl:scope="outer"/>
+          </xf:var>
+          <xf:var name="nodename" value="if (xxf:instance('authority-instance')/*[name()=name($binding)]) then name($binding) else 'persName'"/>
+
+          <!-- no authority-related attributes yet? -->
+          <xf:group ref="$binding[not(@authority and @authURI and @dbkey)]">
+            <xf:trigger appearance="minimal">
+              <xf:label><h:img style="vertical-align: middle;"
+                  src="{xxf:instance('parameters')/dcm:server_name}/editor/images/authority.png"
+                  alt="Add authority file reference" title="Add authority file reference"/></xf:label>
+              <xf:action ev:event="DOMActivate">
+                <xf:action if="not(@authority)">
+                  <xf:insert nodeset="@*" context="." origin="xxf:attribute('authority','')"/>
+                </xf:action>
+                <xf:action if="not(@authURI)">
+                  <xf:insert nodeset="@*" context="." origin="xxf:attribute('authURI','')"/>
+                </xf:action>
+                <xf:action if="not(@dbkey)">
+                  <xf:insert nodeset="@*" context="." origin="xxf:attribute('dbkey','')"/>
+                </xf:action>
+                <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
+                <xf:dispatch name="id-update" target="form-group"/>
+              </xf:action>
+            </xf:trigger>
+          </xf:group>
+          
+          <!-- select authority -->
+          <xf:select1 ref="$binding/@authority">
+            <xf:item>
+              <xf:label/>
+              <xf:value/>
+            </xf:item>
+            <xf:itemset
+              nodeset="xxf:instance('authority-instance')/*[name()=$nodename]/@authority">
+              <xf:label>
+                <xf:output value="concat(.,' (',../@authURI,')')"/>
+              </xf:label>
+              <xf:value ref="."/>
+            </xf:itemset>
+            <xf:action ev:event="xforms-value-changed">
+              <xf:var name="authority" select="."/>
+              <xf:setvalue ref="$binding/@authURI" value="xxf:instance('authority-instance')/*[name()=$nodename][@authority=$authority]/@authURI"/>
+            </xf:action>
+          </xf:select1>
+          <xf:input ref="$binding/@dbkey" class="mediumlong">
+            <xf:label>ID <h:a class="help">?<h:span class="comment">The corresponding number or unique
+                  identifier in the selected authority file</h:span></h:a></xf:label>
+          </xf:input>
+          
+        </xf:group>
+      </xf:group>
+    </xbl:template>
+  </xbl:binding>
+</xbl:xbl>

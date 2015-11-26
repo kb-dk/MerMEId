@@ -1,0 +1,38 @@
+/* CSS for tinyMCE musical symbols popup */
+
+
+/* Embedded fonts */
+/* Unicode music symbols font */
+@font-face {
+	font-family: 'Bravura Text';
+	src: url('fonts/BravuraText.eot');
+	src: local('Bravura Text'), 
+	       url('fonts/BravuraText.eot?#iefix') format('embedded-opentype'),
+	       url('fonts/BravuraText.ttf') format('truetype'), 
+	       url('fonts/BravuraText.woff') format('woff'), 
+	       url('fonts/BravuraText.svg#BravuraText') format('svg');
+} 
+
+/* Runic font */
+@font-face {
+	font-family: 'Hnias';
+	src: url('fonts/Hnias.eot');
+	src: local('Hnias Regular'), local('Hnias'), 
+	       url('fonts/Hnias.eot?#iefix') format('embedded-opentype'),
+	       url('fonts/Hnias.ttf') format('truetype'), 
+	       url('fonts/Hnias.woff') format('woff'), 
+	       url('fonts/Hnias.svg#Hnias') format('svg');
+} 
+/* End embedded fonts */
+
+.music_symbols,
+.music_symbols td.charmap,
+#codeV {
+    font-family: "Bravura Text", "Arial Unicode MS", sans-serif, serif;
+    /*line-height: .5em;*/
+}
+
+.runes {
+    font-family: Hnias, Junicode, sans-serif, serif;
+}
+

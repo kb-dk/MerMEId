@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xbl="http://www.w3.org/ns/xbl" 
+    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl" 
+    xmlns:dcm="http://www.kb.dk/dcm">
+    
+    
+    <!--
+        Source input fields. Context node is expected to be m:source        
+        
+        Danish Centre for Music Publication (DCM) 
+        Axel Teich Geertinger, 2015
+        atge@kb.dk
+    -->
+    
+    
+    <xbl:binding id="dcm-source-input-binding" element="dcm|source-input">
+        <!-- Orbeon Form Builder Component Metadata -->
+        <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+            <display-name lang="en">Source input</display-name>
+        </metadata>
+        <xbl:template>
+            <!-- outer group -->
+            <xf:group xxbl:scope="outer" xbl:attr="model context ref bind">
+                
+                <!-- Inner group -->
+                <xf:group appearance="xxf:internal" xxbl:scope="inner">
+                    
+                    <!-- Variables pointing to external single-node bindings -->
+                    <xf:var name="binding" as="node()?">
+                        <xxf:value select="." xxbl:scope="outer"/>
+                    </xf:var>
+                    
+                    <xf:group ref="$binding">
+
+                        <!-- General description -->
+                        <h:fieldset>
+                            <h:legend>General description <h:a class="help">&#160;?<h:span
+                                        class="comment">Text describing or introducing to the
+                                        source, its history, its significance etc.<br/> Information
+                                        on the source's physical appearance and condition should be
+                                        given in the "physical description" area below.
+                                    </h:span></h:a>
+                            </h:legend>
+                            <dcm:create nodeset="m:notesStmt" label="Add general description"
+                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt"/>
+                            <xf:group ref="m:notesStmt">
+                                <dcm:create nodeset="m:annot[@type='source_description']"
+                                    label="Add general description"
+                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='source_description']"/>
+                                <xf:repeat nodeset="m:annot[@type='source_description']"
+                                    id="source-desc-annot-repeat">
+                                    <fr:tinymce ref="."/>
+                                    <dcm:element-buttons-typed triggers="remove"
+                                        nodeset="m:annot[@type='source_description']"
+                                        index="source-notesstmt-annot-repeat-extptr"
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='source_description']"/>
+                                    <dcm:id/>
+                                    <dcm:attribute-editor/>
+                                </xf:repeat>
+                                <h:div>
+                                    <h:span class="blocklabel">Links <h:a class="help"
+                                                >&#160;?<h:span class="comment">Links to external
+                                                resources (for instance, texts) related to this
+                                                particular source.</h:span></h:a>
+                                    </h:span>
+                                    <dcm:create nodeset="m:annot[@type='links']" label="Add links"
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']"
+                                    />
+                                </h:div>
+                                <xf:group ref="m:annot[@type='links']">
+                                    <dcm:create nodeset="m:ptr" label="Add links"
+                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+                                    <xf:repeat nodeset="m:ptr"
+                                        id="source-notesstmt-annot-repeat-extptr">
+                                        <h:div>
+                                            <xf:input ref="@target" class="long">
+                                                <xf:label>URI <h:a class="help">&#160;?<h:span
+                                                  class="comment">Link to the resource, e.g.
+                                                  "http://example.com/source_description.pdf"</h:span></h:a>
+                                                </xf:label>
+                                            </xf:input>
+                                            <xf:input ref="@label">
+                                                <xf:label>Label <h:a class="help">&#160;?<h:span
+                                                  class="comment">A short, descriptive text which
+                                                  may serve as the link text, e.g. "The Carl Nielsen
+                                                  Edition's source
+                                                  description"</h:span></h:a></xf:label>
+                                            </xf:input>
+                                            <dcm:element-buttons
+                                                triggers="up down add copy del-parent-with-last"
+                                                nodeset="m:ptr"
+                                                index="source-notesstmt-annot-repeat-extptr"
+                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+                                            <dcm:id/>
+                                            <dcm:attribute-editor/>
+                                        </h:div>
+                                    </xf:repeat>
+                                </xf:group>
+                            </xf:group>
+                        </h:fieldset>
+
+
+
+
+                        <!-- Source classification -->
+                        <!-- For now, editing classification requires either the DCM classcodes being defined already 
+                            in <work> or that a termList exists already -->
+                        <h:fieldset>
+                            <h:legend>Classification <xf:trigger appearance="minimal"
+                                    ref="m:classification[//m:work/m:classification/m:classCode[@xml:id='DcmContentClass']]">
+                                    <xf:label><h:img
+                                            src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif"
+                                            alt="Delete" title="Delete"/></xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:delete nodeset="."/>
+                                    </xf:action>
+                                </xf:trigger>
+                                <dcm:attribute-editor ref="m:classification/m:termList"/>
+                            </h:legend>
+                            <dcm:create nodeset="m:classification" label="Add source classification"
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:classification"/>
+                            <xf:group
+                                ref=".[m:classification/m:termList or //m:work/m:classification/m:classCode[@xml:id='DcmContentClass']]">
+                                <h:div class="vertical_spacer"> </h:div>
+                                <xf:group
+                                    ref=".[//m:work/m:classification/m:classCode[@xml:id='DcmContentClass']]">
+                                    <dcm:create ref="m:classification" nodeset="m:termList"
+                                        label="Add classification terms"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:classification/m:termList"
+                                    />
+                                </xf:group>
+                                <xf:group
+                                    ref="m:classification/m:termList[m:term[contains(@classcode,'Dcm')]]">
+                                    <xf:select1 ref="m:term[@classcode='DcmContentClass']"
+                                        class="mediumlong">
+                                        <xf:label class="fixed_width">Content</xf:label>
+                                        <xf:item>
+                                            <xf:value/>
+                                            <xf:label> </xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>notated music</xf:value>
+                                            <xf:label>Notated music</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>text</xf:value>
+                                            <xf:label>Text</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>sound recording</xf:value>
+                                            <xf:label>Sound recording</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>videorecording</xf:value>
+                                            <xf:label>Video recording</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>motion picture</xf:value>
+                                            <xf:label>Motion picture</xf:label>
+                                        </xf:item>
+                                    </xf:select1>
+                                    <dcm:attribute-editor ref="m:term[@classcode='DcmContentClass']"/>
+                                    <h:br clear="both"/>
+                                    <xf:select1 ref="m:term[@classcode='DcmPresentationClass']"
+                                        class="mediumlong">
+                                        <xf:label class="fixed_width">Presentation <h:a class="help"
+                                                  >&#160;?<h:span class="comment">Describes the
+                                                  source's basic mode of production or carrier
+                                                  (manuscript, print, sound storage medium,
+                                                  electronic resource). </h:span></h:a></xf:label>
+                                        <xf:item>
+                                            <xf:value/>
+                                            <xf:label> </xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>manuscript</xf:value>
+                                            <xf:label>Manuscript</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>print</xf:value>
+                                            <xf:label>Print</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>audio storage medium</xf:value>
+                                            <xf:label>Audio storage medium</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>video storage medium</xf:value>
+                                            <xf:label>Video storage medium</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>electronic resource</xf:value>
+                                            <xf:label>Electronic resource</xf:label>
+                                        </xf:item>
+                                    </xf:select1>
+                                    <dcm:attribute-editor
+                                        ref="m:term[@classcode='DcmPresentationClass']"/>
+                                    <h:br clear="both"/>
+                                    <xf:select1 ref="m:term[@classcode='DcmAuthorityClass']"
+                                        class="mediumlong">
+                                        <xf:label class="fixed_width">Authority <h:a class="help"
+                                                  >&#160;?<h:span class="comment">For use with
+                                                  manuscript sources. Describes the composer's
+                                                  degree of involvement in the production of the
+                                                  source. Thus, an arranger's own manuscript would
+                                                  <u>not</u> be classified an
+                                                autograph.</h:span></h:a>
+                                        </xf:label>
+                                        <xf:item>
+                                            <xf:value/>
+                                            <xf:label> </xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>autograph</xf:value>
+                                            <xf:label>Autograph</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>doubtful autograph</xf:value>
+                                            <xf:label>Doubtful autograph</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>partly autograph</xf:value>
+                                            <xf:label>Partly autograph</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>copy</xf:value>
+                                            <xf:label>Copy</xf:label>
+                                        </xf:item>
+                                    </xf:select1>
+                                    <dcm:attribute-editor
+                                        ref="m:term[@classcode='DcmAuthorityClass']"/>
+                                    <h:br clear="both"/>
+                                    <xf:select1 ref="m:term[@classcode='DcmScoringClass']"
+                                        class="mediumlong">
+                                        <xf:label class="fixed_width">Scoring</xf:label>
+                                        <xf:item>
+                                            <xf:value/>
+                                            <xf:label> </xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>score</xf:value>
+                                            <xf:label>Score</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>short score</xf:value>
+                                            <xf:label>Short score</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>vocal score</xf:value>
+                                            <xf:label>Vocal score</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>choral score</xf:value>
+                                            <xf:label>Choral score</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>piano score</xf:value>
+                                            <xf:label>Piano score</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>parts</xf:value>
+                                            <xf:label>Parts</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>score and parts</xf:value>
+                                            <xf:label>Score and parts</xf:label>
+                                        </xf:item>
+                                    </xf:select1>
+                                    <dcm:attribute-editor ref="m:term[@classcode='DcmScoringClass']"/>
+                                    <h:br clear="both"/>
+                                    <xf:select1 ref="m:term[@classcode='DcmStateClass']"
+                                        class="mediumlong">
+                                        <xf:label class="fixed_width">State</xf:label>
+                                        <xf:item>
+                                            <xf:value/>
+                                            <xf:label> </xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>sketch</xf:value>
+                                            <xf:label>Sketch</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>draft</xf:value>
+                                            <xf:label>Draft</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>fair copy</xf:value>
+                                            <xf:label>Fair copy</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>printer's copy</xf:value>
+                                            <xf:label>Printer's copy</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>first edition</xf:value>
+                                            <xf:label>First edition</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>later edition</xf:value>
+                                            <xf:label>Later edition</xf:label>
+                                        </xf:item>
+                                    </xf:select1>
+                                    <dcm:attribute-editor ref="m:term[@classcode='DcmStateClass']"/>
+                                    <h:br clear="both"/>
+                                    <xf:select1 ref="m:term[@classcode='DcmCompletenessClass']"
+                                        class="mediumlong">
+                                        <xf:label class="fixed_width">Completeness <h:a class="help"
+                                                  >&#160;?<h:span class="comment">Describes the
+                                                  completeness of the source: "Complete" indicates
+                                                  that this source is complete (this would also be
+                                                  true with a single solo violin part from an
+                                                  orchestral work, if it is not the remainder of an
+                                                  originally larger set of parts).<br/> "Incomplete"
+                                                  indicates that one or more parts are missing from
+                                                  a set of parts.<br/> "Excerpt" designates a
+                                                  section of a work, published or copied for
+                                                  stand-alone performance (like "Hanedansen" from
+                                                  Nielsen's "Maskarade").<br/> "Fragment(s)"
+                                                  indicates that portions of the music are missing,
+                                                  e.g. a fragmentary sketch or a source from which
+                                                  pages are lost. </h:span></h:a>
+                                        </xf:label>
+                                        <xf:item>
+                                            <xf:value/>
+                                            <xf:label> </xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>complete</xf:value>
+                                            <xf:label>Complete</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>incomplete</xf:value>
+                                            <xf:label>Incomplete</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>excerpt</xf:value>
+                                            <xf:label>Excerpt</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>fragment</xf:value>
+                                            <xf:label>Fragment(s)</xf:label>
+                                        </xf:item>
+                                    </xf:select1>
+                                    <dcm:attribute-editor
+                                        ref="m:term[@classcode='DcmCompletenessClass']"/>
+                                </xf:group>
+
+                                <xf:group
+                                    ref="m:classification/m:termList[count(m:term[contains(@classcode,'Dcm')])&gt;0]">
+                                    <h:span class="blocklabel">Other classification terms</h:span>
+                                </xf:group>
+                                <xf:group
+                                    ref="m:classification/m:termList[count(m:term[not(contains(@classcode,'Dcm'))])=0]">
+                                    <dcm:create
+                                        nodeset="m:term[not(@classcode) or not(contains(@classcode,'Dcm'))]"
+                                        label="Add classification term"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:classification/m:termList/m:term[not(@classcode)]"
+                                    />
+                                </xf:group>
+                                <xf:repeat
+                                    nodeset="m:classification/m:termList/m:term[not(@classcode) or not(contains(@classcode,'Dcm'))]"
+                                    id="repeat-classification-terms">
+                                    <h:div>
+                                        <xf:input ref=".">
+                                            <xf:label>Term</xf:label>
+                                        </xf:input>&#160; <dcm:element-buttons-typed
+                                            triggers="add remove"
+                                            nodeset="m:term[not(@classcode) or not(contains(@classcode,'Dcm'))]"
+                                            index="repeat-classification-terms"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:classification/m:termList/m:term[not(@classcode)]"
+                                        />
+                                    </h:div>
+                                </xf:repeat>
+                            </xf:group>
+                        </h:fieldset>
+                        <!-- End source classification -->
+
+                        <!-- identifiers -->
+                        <h:fieldset>
+                            <h:legend>Identification <h:a class="help">&#160;?<h:span
+                                        class="comment">Identifiers other than item-specific ones.
+                                        For instance, RISM identifiers of prints can be entered
+                                        here. <h:br/> With manuscripts, RISM identifiers should be
+                                        given at item level.<h:br/> A source's shelf mark within an
+                                        archive should not be entered here; place it in the
+                                        "Location" section at item level instead.
+                                </h:span></h:a></h:legend>
+
+                            <dcm:create nodeset="m:identifier" label="Add identifier"
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
+                            <xf:repeat nodeset="m:identifier" id="repeat-source-identifier">
+                                <xf:input ref="@label" class="mediumshort">
+                                    <xf:label class="fixed_width">List name <h:a class="help"
+                                                >&#160;?<h:span class="comment">The name of the
+                                                catalogue or list identifying this specific item,
+                                                e.g. "RISM"</h:span></h:a></xf:label>
+                                </xf:input>
+                                <xf:input ref="." class="mediumlong">
+                                    <xf:label> No. <h:a class="help">&#160;?<h:span class="comment"
+                                                >The number identifying this particular source in
+                                                the list, e.g. "B 1234"</h:span></h:a></xf:label>
+                                </xf:input>
+                                <dcm:element-buttons triggers="add remove up down"
+                                    nodeset="m:identifier" index="repeat-source-identifier"
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
+                                <dcm:id/>
+                                <dcm:attribute-editor/>
+                                <h:br clear="all"/>
+                            </xf:repeat>
+                        </h:fieldset>
+
+                        <!-- contributors -->
+                        <h:fieldset>
+                            <h:legend>Contributors <h:a class="help">&#160;?<h:span class="comment"
+                                        >Lists persons other than the composer or a scribe,
+                                        contributing to the intellectual contents of this source,
+                                        e.g. an arranger or editor; the composer is usually
+                                        specified under "Identification" and need not be specified
+                                        here. Scribes are identified below under "List of
+                                        hands".</h:span></h:a>
+                                <dcm:attribute-editor ref="."/>
+                            </h:legend>
+                            <h:div class="vertical_spacer"> </h:div>
+                            <dcm:create nodeset="m:titleStmt" label="Add persons"
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt"/>
+                            <dcm:create ref="m:titleStmt" nodeset="m:respStmt" label="Add persons"
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:respStmt"/>
+                            <xf:group ref="m:titleStmt/m:respStmt">
+                                <xi:include href="person-input.xml"/>
+                            </xf:group>
+                        </h:fieldset>
+
+                        <h:fieldset>
+                            <h:legend>Physical description <h:a class="help">&#160;?<h:span
+                                        class="comment">Describes features shared by all copies of
+                                        this source. <h:br/> For details on a specific item (a
+                                        specific copy, or a manuscript), use the "Items" section
+                                        below.</h:span></h:a>
+                                <dcm:attribute-editor ref="."/>
+                            </h:legend>
+                            <h:div class="vertical_spacer"> </h:div>
+                            <dcm:create nodeset="m:physDesc" label="Add physical description"
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc"/>
+                            <xf:group ref="m:physDesc">
+                                <h:div>
+                                    <dcm:create nodeset="m:extent" label="Add extent"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:extent"/>
+                                    <xf:repeat nodeset="m:extent" id="physdesc-extent">
+                                        <h:div>
+                                            <h:span class="fixed_width">Extent:</h:span>
+                                            <xf:input ref=".">
+                                                <xf:label>Value <h:a class="help">&#160;?<h:span
+                                                  class="comment">The number of pages or folios,
+                                                  e.g. '48', '12 + 236', 'XII + 36' or
+                                                  'VIII'</h:span></h:a></xf:label>
+                                            </xf:input>
+                                            <xf:input ref="@unit">
+                                                <xf:label>Unit <h:a class="help">&#160;?<h:span
+                                                  class="comment">Usually 'pages' or 'folios'
+                                                  <h:br/>Note: Please do not enter spaces in this
+                                                  field, as this is a so-called NMTOKEN type field.
+                                                  Please use underscore _
+                                                  instead.</h:span></h:a></xf:label>
+                                            </xf:input>
+                                            <dcm:element-buttons triggers="add remove"
+                                                nodeset="m:extent" index="physdesc-extent"
+                                                origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:extent"/>
+                                            <dcm:id/>
+                                            <dcm:attribute-editor/>
+                                        </h:div>
+                                    </xf:repeat>
+                                </h:div>
+
+                                <h:div>
+                                    <dcm:create nodeset="m:dimensions" label="Add dimensions"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:dimensions"/>
+                                    <xf:repeat nodeset="m:dimensions" id="physdesc-dimensions">
+                                        <h:div>
+                                            <h:span class="fixed_width">Dimensions:</h:span>
+                                            <xf:input ref=".">
+                                                <xf:label>Value <h:a class="help">&#160;?<h:span
+                                                  class="comment">Numbers describing the physical
+                                                  dimensions of the source given as height x width,
+                                                  e.g. '23.5x34'</h:span></h:a></xf:label>
+                                            </xf:input>
+                                            <xf:input ref="@unit">
+                                                <xf:label>Unit <h:a class="help">&#160;?<h:span
+                                                  class="comment">Unit of measurement, usually 'cm'
+                                                  <h:br/>Note: Please do not enter spaces in this
+                                                  field, as this is a so-called NMTOKEN type field.
+                                                  Please use underscore _
+                                                  instead.</h:span></h:a></xf:label>
+                                            </xf:input>
+                                            <dcm:element-buttons triggers="add remove"
+                                                nodeset="m:dimensions" index="physdesc-dimensions"
+                                                origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:dimensions"/>
+                                            <dcm:id/>
+                                            <dcm:attribute-editor/>
+                                        </h:div>
+                                    </xf:repeat>
+                                </h:div>
+
+                                <h:div>
+                                    <dcm:create nodeset="m:physMedium" label="Add physical medium"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:physMedium"/>
+                                    <xf:repeat nodeset="m:physMedium" id="repeat-source-physMedium">
+                                        <fr:tinymce ref="." class="mediumheight">
+                                            <xf:label class="blocklabel">Physical medium <h:a
+                                                  class="help">&#160;?<h:span class="comment"
+                                                  >Description of paper, number of staves on page,
+                                                  printing technique etc. </h:span></h:a></xf:label>
+                                        </fr:tinymce>
+                                        <dcm:element-buttons triggers="remove"
+                                            nodeset="m:physMedium" index="repeat-source-physMedium"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:physMedium"/>
+                                        <dcm:id/>
+                                        <dcm:attribute-editor/>
+                                    </xf:repeat>
+                                </h:div>
+
+                                <h:div>
+                                    <dcm:create nodeset="m:watermark" label="Add watermark"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:watermark"/>
+                                    <xf:repeat nodeset="m:watermark" id="repeat-source-watermark">
+                                        <fr:tinymce ref="." class="mediumheight">
+                                            <xf:label class="blocklabel">Watermark</xf:label>
+                                        </fr:tinymce>
+                                        <dcm:element-buttons triggers="remove" nodeset="m:watermark"
+                                            index="repeat-source-watermark"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:watermark"/>
+                                        <dcm:id/>
+                                        <dcm:attribute-editor/>
+                                    </xf:repeat>
+                                </h:div>
+
+                                <h:div>
+                                    <dcm:create nodeset="m:plateNum" label="Add plate number"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:plateNum"/>
+                                    <xf:repeat nodeset="m:plateNum" id="repeat-source-plateNum">
+                                        <xf:input ref="." class="mediumlong">
+                                            <xf:label class="fixed_width">Plate no. </xf:label>
+                                        </xf:input>
+                                        <dcm:element-buttons triggers="remove" nodeset="m:plateNum"
+                                            index="repeat-source-plateNum"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:plateNum"/>
+                                        <dcm:id/>
+                                        <dcm:attribute-editor/>
+                                    </xf:repeat>
+                                </h:div>
+                            </xf:group>
+                        </h:fieldset>
+
+                        <xf:group ref="m:physDesc">
+                            <h:fieldset>
+                                <h:legend>Title page <h:a class="help">&#160;?<h:span
+                                            class="comment">Transcription of the source's title
+                                            page. Multiple title pages may be added if
+                                            necessary</h:span></h:a>
+                                </h:legend>
+                                <h:div class="vertical_spacer"> </h:div>
+                                <dcm:create nodeset="m:titlePage" label="Add title page"
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
+                                <xf:repeat nodeset="m:titlePage" id="physdesc-titlepage">
+                                    <xf:input ref="@label">
+                                        <xf:label>Label <h:a class="help">&#160;?<h:span
+                                                  class="comment">Optional label overriding the
+                                                  default "Title page" label, e.g. "Secondary title
+                                                  page" or "title page after first fly leaf".
+                                                  Especially, a label should be given to if more
+                                                  than one title page is quoted.</h:span></h:a>
+                                        </xf:label>
+                                    </xf:input>
+                                    <dcm:element-buttons triggers="up down add copy remove"
+                                        nodeset="m:titlePage" index="physdesc-titlepage"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
+                                    <dcm:id/>
+                                    <dcm:attribute-editor/>
+                                    <h:br/>
+                                    <dcm:create nodeset="m:p" label="Add transcript"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage/m:p"/>
+                                    <fr:tinymce ref="m:p" class="mediumheight"/>
+                                    <h:hr/>
+                                </xf:repeat>
+                            </h:fieldset>
+                        </xf:group>
+
+                        <h:fieldset>
+                            <h:legend>Publication <h:a class="help">&#160;?<h:span class="comment"
+                                        >Publication data (publisher, place and date).<h:br/> If the
+                                        source is a manuscript, the date and place of its creation
+                                        may be entered here. </h:span></h:a>
+                                <dcm:attribute-editor ref="m:pubStmt"/>
+                            </h:legend>
+                            <h:div class="vertical_spacer"> </h:div>
+                            <dcm:create nodeset="m:pubStmt" label="Add publication/creation"
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt"/>
+                            <xf:repeat nodeset="m:pubStmt" id="repeat-source-publication">
+                                <h:div>
+                                    <dcm:create nodeset="m:publisher" label="Add publisher"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:publisher"/>
+                                    <xf:repeat nodeset="m:publisher" id="repeat-publisher">
+                                        <xf:input ref="." class="mediumlong">
+                                            <xf:label class="fixed_width">Publisher </xf:label>
+                                        </xf:input>
+                                        <dcm:id/>
+                                        <dcm:attribute-editor/>
+                                        <dcm:element-buttons triggers="remove" nodeset="m:publisher"
+                                            index="repeat-publisher"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:publisher"
+                                        />
+                                    </xf:repeat>
+                                </h:div>
+                                <h:div>
+                                    <dcm:create nodeset="m:pubPlace" label="Add place"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:pubPlace"/>
+                                    <xf:repeat nodeset="m:pubPlace" id="repeat-pubPlace">
+                                        <xf:input ref="." class="mediumlong">
+                                            <xf:label class="fixed_width">Place </xf:label>
+                                        </xf:input>
+                                        <dcm:id/>
+                                        <dcm:attribute-editor/>
+                                        <dcm:element-buttons triggers="remove" nodeset="m:pubPlace"
+                                            index="repeat-pubPlace"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:pubPlace"
+                                        />
+                                    </xf:repeat>
+                                </h:div>
+                                <dcm:create nodeset="m:date" label="Add date"
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:date"/>
+                                <xf:repeat nodeset="m:date" id="repeat-pubdate">
+                                    <h:span class="fixed_width">Date <h:a class="help"
+                                                >&#160;?<h:span class="comment">This field may be
+                                                used for manuscript datings also.</h:span></h:a>
+                                    </h:span>
+                                    <dcm:date-editor/>
+                                    <dcm:element-buttons triggers="remove" nodeset="m:date"
+                                        index="repeat-pubdate"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:pubStmt/m:date"
+                                    />
+                                </xf:repeat>
+                            </xf:repeat>
+                        </h:fieldset>
+
+                    </xf:group>
+                 </xf:group>
+                
+            </xf:group>
+            
+        </xbl:template>
+    </xbl:binding>
+</xbl:xbl>

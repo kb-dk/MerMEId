@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>MerMEId manual - Frequently Asked Questions</title>
+    <link href="../style/tab_style.css" rel="stylesheet" type="text/css" />
+    <link href="../style/list_style.css" rel="stylesheet" type="text/css" />
+    <link href="../style/front_page.css" rel="stylesheet" type="text/css" />
+    <link href="../style/manual.css" rel="stylesheet" type="text/css" />
+  </head>
+  
+  <body>
+    
+    <div class="main">
+      <div class="manual_header">
+        
+        <div class="close_div">
+          <a href="javascript:window.close();" class="trigger"><img alt="Close"
+            title="Close" src="../images/close.gif" width="12" height="12" /></a></div>
+        <img alt="MerMEId" src="../images/mermeid_30px_inv.png" width="130" height="23" />
+      </div>
+      
+      <div class="toclink"><a href="index.html">Back to table of contents</a></div>
+      <h1>Frequently Asked Questions (FAQ)</h1>
+    <p>Installation and access </p>
+    <ul>
+      <li><a href="#laptop_installation">Can I install MerMEId on my laptop?</a></li>
+      <li><a href="#kb_hosting">Can I use The Royal Library's MerMEId server for our project?</a>
+      </li>
+      <li><a href="#number_of_installations">How many MerMEId installations do I need for my
+          project?</a>
+      </li>
+      <li><a href="#copying_data">How do I copy or move my data from one MerMEId instance to
+          another?</a>
+      </li>
+      <li><a href="#discontinuation">What if some day MerMEId is no longer maintained? Will I lose
+          my data?</a>
+      </li>
+      <li><a href="#version">How do I know which MerMEId version is running on my server?</a>
+      </li>
+    </ul>
+    <p>HTML preview and presentation of data</p>
+    <ul>
+      <li><a href="#changing_presentation">Can I change the way MerMEId displays my data?</a></li>
+      <li><a href="#information_not_shown">I have entered information, but MerMEId does not show
+          everything. Why?</a></li>
+    </ul> Using the editor<br />
+    <ul>
+      <li><a href="#start_a_collection">How do I start a new file collection or catalogue?</a></li>
+      <li><a href="#add_work_number">How do I make MerMEId recognize a certain number as a catalogue
+          work number?</a><br />
+      </li>
+    </ul> Customizing the MerMEId editor<br />
+    <ul>
+      <li><a href="#customize">Can I add fields to the editor form or alter existing ones?</a></li>
+      <li><a href="#customize_instruments">Can I change the pre-defined instrument names?</a></li>
+      <li><a href="#add_authorities">The authority file I use is not listed. Can I add it?</a></li>
+      <li><a href="#add_abbreviations">How do I make MerMEId recognize other abbreviations?</a></li>
+      <li><a href="#change_genres">How do I change the genre keywords in the 'Keywords'
+        menu?</a><br />
+      </li>
+    </ul> Publishing<br />
+    <ul>
+      <li><a href="#publishing">I have published a file from the file list, but nothing happens
+          except that the 'Publish' indicator turns green. What is supposed to happen?</a></li>
+      <li><a href="#cnw_ui">I would like to make a web catalog like the CNW. Is the user interface
+          included in MerMEId?</a></li>
+    </ul> Contact<br />
+    <ul>
+      <li><a href="#updates">How do I stay informed about changes and updates?</a></li>
+      <li><a href="#contact">How do&nbsp;I get in touch with you if I have other questions?</a>
+      </li>
+    </ul>
+    <h2>Installation and access </h2>
+    <h3>Can I install MerMEId on my laptop?<a name="laptop_installation"></a></h3>
+    <p>In principle, yes. Please note, however, that MerMEId is a web application, not a desktop
+      application. This means that it needs a web server to run; the user interacts with MerMEId
+      through a web browser. It also means that installation requires the skills of a system
+      administrator to set up all the components of the web server. Technically, it is possible to
+      do it on a laptop, but usually that's not advisable, because your installation and your data
+      wouldn't be accessible from any other machine. Also, if your laptop crashes or is stolen, you
+      are likely to lose your data. Installation on a proper web server located at your institution
+      gives you much better data protection, and not least: You will be able to use MerMEId and
+      access your data from any computer that has access to your server. All you need is a web
+      browser. </p>
+    <h3>Can I use The Royal Library's MerMEId server for our project?<a name="kb_hosting"></a>
+    </h3>
+    <p>Unfortunately no. The Royal Library's demo installation at <a
+        href="http://labs.kb.dk/editor/" target="_blank">labs.kb.dk/editor/</a> is meant for
+      demonstration only. The library cannot host other projects' data. You are welcome, on the
+      other hand, to use the demo installation to try out MerMEId or even to do preliminary work
+      until you have set up your own server. Note, however, that the library does not take any
+      responsibility for any loss of data stored on the demo server. The data at the demo server are
+      freely accessible for anyone to edit or even delete. If you are doing any serious work there,
+      make sure to make local copies of your data frequently (See: How do I copy or move my data
+      from one MerMEId instance to another?). We are also likely to clean up the server by deleting
+      user data every now and then. If there is something you would like us not to delete please let
+      us know. </p>
+    <h3>How many MerMEId installations do I need for my project?<a name="number_of_installations"
+      ></a>
+    </h3>
+    <p>Preferably only one. MerMEId is a web application (See: <a href="#laptop_installation">Can I
+        install MerMEId on my laptop?</a>), and your data will need to be stored on the same server.
+      If you have more than one installation, you will have trouble synchronizing your data across
+      MerMEId intances (probably by copying files back and forth manually). </p>
+    <h3>How do I copy or move my data from one MerMEId instance to another?<a name="copying_data"
+      ></a>
+    </h3>
+    <p>To move or copy XML data files from one MerMEId installation to another, download your files
+      to your hard drive first. You can do so one file at a time by right-clicking (on Windows
+      machines) the file's XML icon in the file list and selecting "Save as..." or equivalent. If
+      you need to download many files it will probably be easier to use the eXist database's admin
+      client. You will need to have administrator access to the database in order to use it. You
+      will probably find the adminstration page at http://[yourservername.yourdomain]:8080/exist/.
+      Click the 'Collections' option to open the database's file manager which allows you to
+      download all or some of your files. You will find your files in the 'dcm' folder. Use the same
+      component on another server to upload your data (again, to the 'dcm' folder). </p>
+    <h3>What if some day MerMEId is no longer maintained? Will I lose my data?<a
+        name="discontinuation"></a></h3>
+    <p>No. One of the core ideas of MerMEId is that it produces data compliant to the <a
+        href="http://www.music-encoding.org">MEI</a> XML schema – an open, well-documented standard
+      for encoding musical information. Basically, MerMEId is simply a user interface to allow you
+      to produce MEI XML without having to hand-code everything. You can use other tools such as a
+      generic XML editor to do the same, just in a less convenient way. So even without MerMEId, you
+      can still have valid MEI XML data and continue your work using other tools. Just make sure
+      always to keep a copy of your data somewhere safe. </p>
+      <h3>How do I know which MerMEId version is running on my server?<a
+        name="version"></a></h3>
+      <p>To see the version (revision) number of your installation, open any file in the editor (or create a new one) 
+        and click the <img src="../images/mermeid_12px.png" alt="MerMEId logo"/> logo in the lower right corner.</p>
+    <h2>HTML preview and presentation of data </h2>
+    <h3>Can I change the way MerMEId displays my data?<a name="changing_presentation"></a></h3>
+    <p>Even though MerMEId can produce HTML to display your data (either by clicking a work's title
+      in the file list or by clicking the 'View as HTML' icon in the editor), MerMEId does not tell
+      you how to present your data to the public or in any other context. The built-in HTML preview
+      is meant for reviewing your data for convenient proofreading etc. You are welcome to re-use or
+      alter the XSL style sheet used to create the preview for your presentation, but more likely
+      you will want to define your own. There is no forced connection between the way MerMEIds
+      displays your data and the way your final presentation does. In the public version of the <a
+        href="http://www.kb.dk/dcm/cnw.html" target="_blank">Catalogue of Carl Nielsen's Works
+        (CNW)</a>, we are using MerMEId's HTML preview style sheet to do the basic formatting; we
+      have just added a supplementary XSL style sheet to override some formattings and to filter out
+      certain information. You can download MerMEId's basic MEI-to-HTML <a
+        href="https://github.com/Det-Kongelige-Bibliotek/MerMEId/blob/master/trunk/mermeid/transforms/mei/mei_to_html.xsl"
+        target="_blank">XSL style sheet</a> at Github.org. You may also want to download the
+      corresponding <a
+        href="https://github.com/Det-Kongelige-Bibliotek/MerMEId/blob/master/trunk/mermeid/style/mei_to_html.css"
+        target="_blank">CSS style sheet</a>. </p>
+    <h3>MerMEId does not show some information I have entered. Why?<a name="information_not_shown"
+      ></a>
+    </h3>
+    <p>The built-in HTML preview is designed to display all the information you may enter in the
+      editor, with a few exceptions. Some information is very complex to handle; for instance, only
+      some of the possible relations between sources, versions etc. are pre-defined to have a
+      visible effect in the HTML preview. If you want other relations to have a an effect, you will
+      have to define it in your presentation. Another example is a person name's reference to an
+      authority file. This information is usually not intended for displaying directly; instead,
+      projects may use it for linking to other resources. There is no obvious way of displaying it
+      (other than a link to the file, which would be useful only for verifying that the reference is
+      indeed correct; we might consider implementing that in the preview). Finally, there is
+      definitely a chance that we have simply forgotten to implement a certain feature in the HTML
+      preview because we haven't used it yet. Please let us know if something is missing. </p>
+    <h2>Using the editor </h2>
+    <h3>How do I start a new file collection or catalogue?<a name="start_a_collection"></a>
+    </h3>
+    <p>You may have noticed the use of 'Collection' names in MerMEId's file list, for instance,
+      'MerMEId Demo'. The collection names are intended to enable you to distinguish or select files
+      belonging to a certain catalogue in your database. This makes it possible to have any number
+      of catalogues in the same database. To make your file part of a specific catalogue or
+      collection, open the file in the editor, go to the 'File' tab, and enter the collection name
+      in the field labeled 'File Collection' under 'Series' (and save your work, of course). In the
+      file list, you will now see the collection name in the 'Collection' column, and it will also
+      appear in the collection drop-down list, allowing you to search for files in that collection
+      only.&nbsp; </p>
+    <h3>How do I make MerMEId recognize a certain number as a catalogue work number?<a
+        name="add_work_number"></a></h3>
+    <p>You may have noticed that the demo files in MerMEId's file list are labeled like'MerMEId Demo
+      3' in the 'Collection' column. To make MerMEId recognize a number as the work's or file's
+      number in your collection (equivalent to the numbers in the BWV, for instance), go to the
+      'Work' tab, add a work identifier (under 'Identifier'), enter the file collection's name as
+      the list name and the desired number in the 'No.' field. If MerMEId finds a work identifier
+      corresponding to the file collection defined at the 'File' tab, it regards the identifier's
+      number as the catalogue number.</p>
+    <h2>Customizing the MerMEId editor</h2>
+    <h3>Can I add fields to the editor form or alter existing ones?<a name="customize"></a></h3>
+    <p>In principle yes, if you know how to write <a href="http://www.orbeon.com/" target="_blank"
+        >Orbeon XForms</a>. You will find the MerMEId source code at <a
+        href="https://github.com/Det-Kongelige-Bibliotek/MerMEId" target="_blank">GitHub</a>. You
+      are free to change it to make your&nbsp;customized version of MerMEId. However, note that this
+      will require you to make the same changes again after installing one of our&nbsp;MerMEId
+      updates. Also, MerMEId is based on sharing. No one else will&nbsp;benefit from your changes if
+      you keep them for yourself. Therefore we would like to encourage you to share your
+      improvements either by forking the code at GitHub and submitting a pull request or to discuss
+      your wishes with us; if we agree that the changes will be of general interest, we may be
+      willing to implement them if&nbsp;we have the time. Another possibility is&nbsp;to pay us
+      (that is, the <a href="http://www.kb.dk/en/nb/dcm/">Danish Centre for Music Publication</a> at
+      the Royal Library) to make the desired improvements. That's a great way to support the MerMEId
+      project.&nbsp;</p>
+    <h3>Can I change the pre-defined instrument names?<a name="customize_instruments"></a></h3>
+    <p>Yes. The simplest way is to manually change the text MerMEId inserts in every instance. The
+      more efficient way is to change the&nbsp;instrument name list (instruments.xml), which
+      is&nbsp;kept in the eXist database in a folder named 'Library' together with&nbsp;other lists
+      for more convenient customization. Ask your system administrator about how to access and edit
+      the files. The structure of the&nbsp;files should be pretty self-explanatory.</p>
+    <h3>The authority file I use is not listed. Can I add it?<a name="add_authorities"></a></h3>
+    <p>Yes. You can edit the list the same way you would <a href="faq.html#customize_instruments"
+        >change pre-defined instruments names</a>.</p>
+    <h3>How do I make MerMEId recognize other abbreviations?<a name="add_abbreviations"></a></h3>
+    <p>The same way you would <a href="#customize_instruments">change pre-defined instruments
+        names</a>.</p>
+    <h3>How do I change the genre keywords in the 'Keywords' menu?<a name="change_genres"></a></h3>
+    <p>The same way you would <a href="faq.html#customize_instruments">change pre-defined
+        instruments names</a>. The keyword file ('keywords.xml') has two sections: first,&nbsp;a
+      list of hierarchically ordered keywords (called 'level 1' and 'level 2' terms); second,&nbsp;a
+      list of unordered supplementary keywords. The two-level ordered list of genre terms is useful
+      if you intend to order your files by genre at some point or enable users to browse your
+      catalogue by genre. That's how we generated the genre menu in the <a
+        href="http://www.kb.dk/dcm/cnw.html" target="_blank">CNW</a>.</p>
+    <h2>Publishing</h2>
+    <h3>I have published a file from the file list, but nothing happens&nbsp;except that the
+      'Publish' indicator turns green. What is supposed to happen?<a name="publishing"></a></h3>
+    <p>There's no way we can predict how and where you want to publish your data. By default,
+      therefore,&nbsp;MerMEId does nothing but copying the selected file(s) from an eXist database
+      folder&nbsp;named 'dcm' (where all your data are stored) to another folder&nbsp;named
+      'public'. It is up to you or your system administrator to decide what is going to happen next.
+      At DCM, we have set up a script that automatically copies all files from the 'public' folder
+      through the firewall to the published catalog on the web once a day. The script is not part of
+      MerMEId, but you are welcome to contact us if you would like to know in detail how it works. </p>
+    <h3>I would like to make a web catalog like the CNW. Is the user interface included in
+        MerMEId?<a name="cnw_ui"></a></h3>
+    <p>No. MerMEId is&nbsp;a tool for creating and editing the XML data for a catalogue of works or
+      sources, not a presentation tool. We're quite sure that every project will want to have their
+      data presented in their own way, so we haven't made our presentation part of MerMEId. To
+      create the&nbsp;<a href="http://www.kb.dk/dcm/cnw.html" target="_blank">public CNW</a>
+      catalogue, we basically use MerMEId's&nbsp;MEI-to-HTML transformation, add a few exceptions
+      and alterations on top of it. We have&nbsp;added a few XQuery&nbsp;files for the search
+      facilities and a couple of flat HTML files for the text-only pages. A few more XQuery scripts
+      wrap the pages with a header and a footer. We are happy to share the code with you if you
+      like.</p>
+    <h2>Contact</h2>
+    <h3>How do I stay informed about changes and updates?<a name="updates"></a></h3>
+    <p>We recommend that you sign up for MerMEId news. There's a subscription form at <a
+        href="http://www.kb.dk/en/nb/dcm/projekter/mermeid.html" target="_blank">DCM's MerMEId
+        project page</a> (in the right column). Don't worry – we will not flood your inbox with
+      mails. We will send a mail only when releasing major upgrades or if there are other important
+      MerMEId-related&nbsp;announcements. <br /> A list of important information about
+      releases,&nbsp;transformation of data, and known issues is compiled at <a
+        href="http://www.kb.dk/en/nb/dcm/projekter/mermeid/" target="_blank"
+        >http://www.kb.dk/en/nb/dcm/projekter/mermeid/</a>.<br /> Finally, you may also want to
+      follow the discussions about the development of the MEI schema&nbsp;which defines the
+      structure of the (meta-)data produced by MerMEId. The MEI community even has a <a
+        href="http://music-encoding.org/community/mei-organization/interest-groups-ig/"
+        target="_blank">special interest group concerned with cataloging and metadata</a> with its
+      own mailing list where discussions regarding the encoding of musical metadata take place.
+      Important MerMEId&nbsp;announcements will be posted there as well.</p>
+    <h3>How do&nbsp;I get in touch with you if I have other questions?<a name="contact"></a></h3>
+    <p>For general enquiries, questions about the user interface or the MEI encoding please contact
+        <a href="mailto:atge@kb.dk">Axel Teich Geertinger</a>. For questions
+      regarding&nbsp;installation, maintenance and updates please contact <a href="mailto:slu@kb.dk"
+        >Sigfrid Lundberg</a>. For general information about the Danish Centre for Music Publication
+      please refer to our <a href="http://www.kb.dk/en/nb/dcm/" target="_blank">web site</a>.</p>
+    </div>
+    
+    <p class="footer"><a href="http://www.kb.dk/dcm" title="DCM"><img style="border: 0px; vertical-align:middle;" alt="DCM Logo" src="../images/dcm_logo_small.png"/></a> 
+      2013 Danish Centre for Music Publication | The Royal Library,
+      Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
+        href="http://www.kb.dk/dcm">www.kb.dk/dcm</a></p>
+  </body>
+</html>

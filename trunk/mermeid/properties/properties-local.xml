@@ -1,0 +1,18 @@
+<!-- This file is an empty template for your own properties-local.xml
+     file. Please follow the instructions here:
+     http://wiki.orbeon.com/forms/doc/developer-guide/configuration-properties
+     --> 
+<properties xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:oxf="http://www.orbeon.com/oxf/processors"> 
+
+  <!-- property as="xs:anyURI"
+	    name="oxf.url-rewriting.service.base-uri" 
+	    value="/"/ -->
+
+  <property
+      as="xs:string"
+      name="oxf.xforms.forward-submission-headers"
+      value="Orbeon-Client Authorization SM_USER"/>
+
+
+</properties>
