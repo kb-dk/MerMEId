@@ -146,7 +146,7 @@ declare function app:generate-href($field as xs:string,
     declare function app:get-edition-and-number($doc as node() ) as xs:string* {
       let $c := 
 	  $doc//m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"][1]/string()
-      let $no := $doc//m:meiHead/m:workDesc/m:work[1]/m:identifier[@label=$c]/string()
+      let $no := $doc//m:meiHead/m:workDesc/m:work[1]/m:identifier[@label=$c][1]/string()
       (: shorten very long identifiers (i.e. lists of numbers) :)
 	  let $part1 := substring($no, 1, 11)
 	  let $part2 := substring($no, 12)
@@ -283,7 +283,7 @@ declare function app:generate-href($field as xs:string,
 	value="{request:get-header('HOST')}/storage/dcm/{util:document-name($doc)}"
 	title="file name"/>
 	<input 
-	onclick="{string-join(('show_confirm(&quot;del',$form-id,'&quot;,&quot;',$doc//m:workDesc/m:work/m:titleStmt/m:title[string()]/string()[1],'&quot;);return false;'),'')}" 
+	onclick="{string-join(('show_confirm(&quot;del',$form-id,'&quot;,&quot;',$doc//m:workDesc/m:work/m:titleStmt/m:title[string()][1]/string(),'&quot;);return false;'),'')}" 
 	type="image" 
 	src="/editor/images/remove.gif"  
 	name="button"
@@ -376,19 +376,6 @@ declare function app:generate-href($field as xs:string,
 		    }
 		  )
 
-		  let $dates := for $date in $list//m:workDesc/m:work/m:history/m:creation/m:date
-		    for $attr in $date/@notafter|$date/@isodate|$date/@notbeforep
-  		       return filter:get-date($attr/string())
-
-		  let $notafter  := max($dates)
-		  let $notbefore  := min($dates)
-		  let $date_span := 
-		    if($notafter and $notafter!=$notbefore) then
-		      fn:concat(" (composed between ",$notbefore," and ",$notafter,")")
-		    else if ($notafter and $notafter=$notbefore) then
-		      fn:concat(" (composed in ",$notbefore,")")
-		    else
-		      ""
 		  let $work := 
 		    if($total=1) then
 		      " work"
@@ -398,7 +385,7 @@ declare function app:generate-href($field as xs:string,
 		  let $links := ( 
 		    element div {
 		      element strong {
-			"Found ",$total, $work, $date_span 
+			"Found ",$total, $work 
 		      },
 		      if($sort-options) then
 			(<form action="" id="sortForm" style="display:inline;float:right;">

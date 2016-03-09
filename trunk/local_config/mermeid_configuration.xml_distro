@@ -1,16 +1,15 @@
 <parameters xmlns="http://www.kb.dk/dcm">
 
   <!-- paths -->
-  <document_root>storage/dcm/</document_root>
-  <exist_dir>storage/</exist_dir>
   <orbeon_dir>http://mei.example.org/orbeon/xforms-jsp/mei-form/</orbeon_dir>
   <form_home>http://mei.example.org/editor/forms/mei/</form_home>
   <crud_home>http://mei.example.org/filter/dcm/</crud_home>
   <library_crud_home>http://mei.example.org/filter/library/</library_crud_home>
-  <server_name>http://mei.example.org/</server_name>
-  <template_dir></template_dir>
-  <standard_data_dir></standard_data_dir>
-   
+  <rism_crud_home>http://mei.example.org/filter/rism_sigla/</rism_crud_home>
+  <server_name>http://mei.example.org/</server_name>  
+  <exist_dir>storage/</exist_dir>
+  <document_root>storage/dcm/</document_root>
+  
   <!-- Default editor settings - (set boolean values to 'true' or nothing)  -->
   <!-- Enable attribute editor? -->
   <attr_editor_main_switch>true</attr_editor_main_switch>

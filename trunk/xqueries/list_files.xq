@@ -52,8 +52,13 @@ declare function local:format-reference(
 	"even"
 
       let $date_output :=
-        if($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore!='' or $doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter!='') then
-          concat(substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore,1,4),'-',substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter,1,4))
+	if($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore!='' or $doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter!=''
+	  or $doc//m:workDesc/m:work/m:history/m:creation/m:date/@startdate!='' or $doc//m:workDesc/m:work/m:history/m:creation/m:date/@enddate!='') then
+	  concat(substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore,1,4),
+	  substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@startdate,1,4),
+	  '-',
+	  substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@enddate,1,4),
+	  substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter,1,4))
         else
           substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@isodate,1,4)
 
@@ -63,7 +68,8 @@ declare function local:format-reference(
 	  <td nowrap="nowrap">
 	    {$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']}
 	  </td>
-	  <td>{app:view-document-reference($doc)} {"  ",$date_output}</td>
+	  <td>{app:view-document-reference($doc)}</td>
+	  <td>{"  ",$date_output}</td>
 	  <td nowrap="nowrap">{app:get-edition-and-number($doc)} </td>
 	  <td class="tools">
 	    <a target="_blank"
@@ -124,7 +130,7 @@ declare function local:format-reference(
 	      alt="Help" 
 	      border="0"/></a>
 	    </div>
-	    <img src="/editor/images/mermeid_30px_inv.png" 
+	    <img src="/editor/images/mermeid_30px.png" 
             title="MerMEId - Metadata Editor and Repository for MEI Data" 
 	    alt="MerMEId Logo"/>
 	  </div>
@@ -162,7 +168,7 @@ declare function local:format-reference(
 		  <select onchange="location.href=this.value; return false;">
 		    {
             	      for $c in distinct-values(
-            		collection("/db/dcm")//m:seriesStmt/m:identifier[@type="file_collection"]/string()[string-length(.) > 0])
+            		collection("/db/dcm")//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0]/string())
             		let $querystring  := 
             		  if($query) then
             		    fn:string-join(
@@ -173,33 +179,33 @@ declare function local:format-reference(
             		      fn:escape-uri($query,true())),
             		      ""
             		       )
-            		     else
-            		       concat("c=",$c,
-            		       "&amp;published_only=",$published_only,
-            		       "&amp;itemsPerPage="  ,$number cast as xs:string)
+            		  else
+            		    concat("c=",$c,
+            		    "&amp;published_only=",$published_only,
+            		    "&amp;itemsPerPage="  ,$number cast as xs:string)
 			       
-            		       return
-            			 if(not($coll=$c)) then 
-            			 <option value="?{$querystring}">{$c}</option>
-            	               else
-            		       <option value="?{$querystring}" selected="selected">{$c}</option>
-            }
-            {
+            		    return
+            		      if(not($coll=$c)) then 
+            		      <option value="?{$querystring}">{$c}</option>
+            	              else
+            		      <option value="?{$querystring}" selected="selected">{$c}</option>
+                     }
+                     {
             
-            	let $get-uri := 
-            	if($query) then
-            	fn:string-join(("?published_only=",$published_only,"&amp;query=",fn:escape-uri($query,true())),"")
-            	else
-            	concat("?c=&amp;published_only=",$published_only)
+		       let $get-uri := 
+            		 if($query) then
+            		   fn:string-join(("?published_only=",$published_only,"&amp;query=",fn:escape-uri($query,true())),"")
+            		 else
+            		   concat("?c=&amp;published_only=",$published_only)
             
-            	let $link := 
-            	if($coll) then 
-            	<option value="{$get-uri}">All collections</option>
-            	else
-            	<option value="{$get-uri}" selected="selected">All collections</option>
-            	return $link
-            }
-            </select>
+            	       let $link := 
+            		 if($coll) then 
+            		 <option value="{$get-uri}">All collections</option>
+            	         else
+            		 <option value="{$get-uri}" selected="selected">All collections</option>
+            	       return $link
+		     }
+		  </select>
                     
           </td>
           <td>
@@ -255,6 +261,7 @@ declare function local:format-reference(
           <tr>
             <th>Composer</th>
             <th>Title</th>
+            <th>Year</th>
             <th>Collection</th>
             <th class="tools" >XML</th>
             <th class="tools">Edit</th>
@@ -327,8 +334,8 @@ declare function local:format-reference(
       style="text-decoration:none;"><img 
            style="border: 0px; vertical-align:middle;" 
            alt="DCM Logo" 
-           src="/editor/images/dcm_logo_small.png"/></a>
-           2013 Danish Centre for Music Publication | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
+           src="/editor/images/dcm_logo_small_white.png"/></a>
+           Danish Centre for Music Editing | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
     </div>
   </body>
 </html>

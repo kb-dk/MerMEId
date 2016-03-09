@@ -17,7 +17,7 @@
         <div class="close_div">
           <a href="javascript:window.close();" class="trigger"><img alt="Close"
             title="Close" src="../images/close.gif" width="12" height="12" /></a></div>
-        <img alt="MerMEId" src="../images/mermeid_30px_inv.png" width="130" height="23" />
+        <img alt="MerMEId" src="../images/mermeid_30px.png" width="130" height="23" />
       </div>
       
       <div class="toclink"><a href="index.html">Back to table of contents</a></div>
@@ -130,22 +130,24 @@
         and click the <img src="../images/mermeid_12px.png" alt="MerMEId logo"/> logo in the lower right corner.</p>
     <h2>HTML preview and presentation of data </h2>
     <h3>Can I change the way MerMEId displays my data?<a name="changing_presentation"></a></h3>
-    <p>Even though MerMEId can produce HTML to display your data (either by clicking a work's title
+    <p>Yes, you can.   
+      MerMEId's basic MEI-to-HTML XSL style sheet, mei_to_html.xsl, is located in the eXist database (in db/style/). By modifying it you may alter 
+      the way MerMEId displays your data, or you can make a copy of it to use for your presentation outside 
+      of MerMEId. 
+      You may also want to download and/or alter the
+      corresponding CSS style sheet, mei_to_html.css, found in the same location. 
+      Even though MerMEId can produce HTML to display your data (either by clicking a work's title
       in the file list or by clicking the 'View as HTML' icon in the editor), MerMEId does not tell
       you how to present your data to the public or in any other context. The built-in HTML preview
-      is meant for reviewing your data for convenient proofreading etc. You are welcome to re-use or
+      is meant for reviewing your data for convenient proofreading etc. <br/>
+      You are welcome to re-use or
       alter the XSL style sheet used to create the preview for your presentation, but more likely
       you will want to define your own. There is no forced connection between the way MerMEIds
       displays your data and the way your final presentation does. In the public version of the <a
         href="http://www.kb.dk/dcm/cnw.html" target="_blank">Catalogue of Carl Nielsen's Works
-        (CNW)</a>, we are using MerMEId's HTML preview style sheet to do the basic formatting; we
-      have just added a supplementary XSL style sheet to override some formattings and to filter out
-      certain information. You can download MerMEId's basic MEI-to-HTML <a
-        href="https://github.com/Det-Kongelige-Bibliotek/MerMEId/blob/master/trunk/mermeid/transforms/mei/mei_to_html.xsl"
-        target="_blank">XSL style sheet</a> at Github.org. You may also want to download the
-      corresponding <a
-        href="https://github.com/Det-Kongelige-Bibliotek/MerMEId/blob/master/trunk/mermeid/style/mei_to_html.css"
-        target="_blank">CSS style sheet</a>. </p>
+        (CNW)</a>, we are using a slightly modified version of MerMEId's HTML preview XSL style sheet 
+      to do the basic formatting; we have basically just filtered out
+      certain information and libked to a different CSS style sheet.</p>
     <h3>MerMEId does not show some information I have entered. Why?<a name="information_not_shown"
       ></a>
     </h3>
@@ -193,7 +195,7 @@
       improvements either by forking the code at GitHub and submitting a pull request or to discuss
       your wishes with us; if we agree that the changes will be of general interest, we may be
       willing to implement them if&nbsp;we have the time. Another possibility is&nbsp;to pay us
-      (that is, the <a href="http://www.kb.dk/en/nb/dcm/">Danish Centre for Music Publication</a> at
+      (that is, the <a href="http://www.kb.dk/en/nb/dcm/">Danish Centre for Music Editing</a> at
       the Royal Library) to make the desired improvements. That's a great way to support the MerMEId
       project.&nbsp;</p>
     <h3>Can I change the pre-defined instrument names?<a name="customize_instruments"></a></h3>
@@ -232,7 +234,7 @@
       sources, not a presentation tool. We're quite sure that every project will want to have their
       data presented in their own way, so we haven't made our presentation part of MerMEId. To
       create the&nbsp;<a href="http://www.kb.dk/dcm/cnw.html" target="_blank">public CNW</a>
-      catalogue, we basically use MerMEId's&nbsp;MEI-to-HTML transformation, add a few exceptions
+      catalogue, we basically use MerMEId's&nbsp;MEI-to-HTML transformation, and add a few exceptions
       and alterations on top of it. We have&nbsp;added a few XQuery&nbsp;files for the search
       facilities and a couple of flat HTML files for the text-only pages. A few more XQuery scripts
       wrap the pages with a header and a footer. We are happy to share the code with you if you
@@ -257,12 +259,12 @@
     <p>For general enquiries, questions about the user interface or the MEI encoding please contact
         <a href="mailto:atge@kb.dk">Axel Teich Geertinger</a>. For questions
       regarding&nbsp;installation, maintenance and updates please contact <a href="mailto:slu@kb.dk"
-        >Sigfrid Lundberg</a>. For general information about the Danish Centre for Music Publication
+        >Sigfrid Lundberg</a>. For general information about the Danish Centre for Music Editing
       please refer to our <a href="http://www.kb.dk/en/nb/dcm/" target="_blank">web site</a>.</p>
     </div>
     
-    <p class="footer"><a href="http://www.kb.dk/dcm" title="DCM"><img style="border: 0px; vertical-align:middle;" alt="DCM Logo" src="../images/dcm_logo_small.png"/></a> 
-      2013 Danish Centre for Music Publication | The Royal Library,
+    <p class="footer"><a href="http://www.kb.dk/dcm" title="DCM"><img style="border: 0px; vertical-align:middle;" alt="DCM Logo" src="../images/dcm_logo_small_white.png"/></a> 
+      2016 Danish Centre for Music Editing | The Royal Library,
       Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
         href="http://www.kb.dk/dcm">www.kb.dk/dcm</a></p>
   </body>

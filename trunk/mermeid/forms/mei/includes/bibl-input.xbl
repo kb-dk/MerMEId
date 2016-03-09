@@ -11,7 +11,7 @@
     
     <!--
         Component for editing a bibliographic reference
-        Danish Centre for Music Publication (DCM) 
+        Danish Centre for Music Editing (DCM) 
         Axel Teich Geertinger, 2012
         atge@kb.dk
     -->
@@ -143,39 +143,9 @@
 
                             </h:fieldset>
                         </xf:group>
-                        
-                        
-                        <!-- newspaper article date and author here ?
-                        <xf:group ref=".[m:genre='newspaper' or m:genre='interview']">
-                            <xf:group ref="m:imprint/m:date">
-                                <h:fieldset>
-                                    <h:legend>Date</h:legend>
-                                    <h:span class="fixed_width">Date </h:span>
-                                    <dcm:date-editor/>
-                                </h:fieldset>
-                            </xf:group>
-                            <h:fieldset>
-                                <h:legend>Authors</h:legend>
-                                <xf:repeat nodeset="m:author" id="repeat-bibl-newspaper-author">
-                                    <h:div>
-                                        <xf:var name="auth_type"
-                                            select="if (@type and @type!='') then concat(translate(substring(@type, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), substring(@type, 2)) else 'Name'"/>
-                                        <xf:input ref="." class="maxlong">
-                                            <xf:label class="fixed_width"><xf:output value="$auth_type"/></xf:label>
-                                        </xf:input>
-                                        <dcm:element-buttons triggers="add delete" nodeset="m:author"
-                                            index="repeat-bibl-author"
-                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:author]/m:author"/>
-                                        <dcm:attribute-editor ref="."/>
-                                    </h:div>
-                                </xf:repeat>
-                            </h:fieldset>
-                        </xf:group>-->
-
-
-
-                        <xf:group ref=".[not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript') and count(m:genre[contains(.,'program')])=0]">
-                            
+                  
+                  
+                        <xf:group ref=".[not(m:genre='web site') and not(m:genre='letter') and not(m:genre='diary entry') and not(m:genre='manuscript') and count(m:genre[contains(.,'program')])=0]">
                             <h:fieldset>
                                 <h:legend>Volume etc. <h:a class="help">&#160;?<h:span class="comment">Volume and issue no. to
                                     be displayed as vol./no. For journal articles, the year displayed will be
@@ -211,8 +181,7 @@
                                     <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/> Add
                                         vol./issue/pages</xf:label>
                                     <xf:action ev:event="DOMActivate">
-                                        <xf:var name="ref_type"
-                                            select="if (count(m:genre)&gt;1) then m:genre[.!='article'][1] else m:genre"/>
+                                        <xf:var name="ref_type" select="if (count(m:genre)&gt;1) then m:genre[.!='article'][1] else m:genre"/>
                                         <xf:insert context="."
                                             origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:genre=$ref_type][1]/m:biblScope"
                                             nodeset="m:biblScope"/>
@@ -246,28 +215,30 @@
                                     <dcm:create nodeset="m:imprint" label="Add publication data"
                                         origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:publisher][1]/m:imprint"/>
                                     <xf:group ref="m:imprint">
-                                    <h:div>
-                                        <dcm:create nodeset="m:publisher" label="Add publisher"
-                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:publisher][1]/m:imprint/m:publisher"/>
-                                        <xf:input ref="m:publisher" class="maxlong">
-                                            <xf:label class="fixed_width">Publisher</xf:label>
-                                        </xf:input>
-                                        <dcm:attribute-editor ref="m:publisher"/>
-                                    </h:div>
-                                    <h:div>
-                                        <dcm:create nodeset="m:pubPlace" label="Add place"
-                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:pubPlace][1]/m:imprint/m:pubPlace"/>
-                                        <xf:input ref="m:pubPlace" class="maxlong">
-                                            <xf:label class="fixed_width">Place</xf:label>
-                                        </xf:input>
-                                        <dcm:attribute-editor ref="m:pubPlace"/>
-                                    </h:div>
-                                    <h:div>
-                                        <dcm:create nodeset="m:date" label="Add date"
-                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:date][1]/m:imprint/m:date"/>
-                                        <h:span class="fixed_width">Date </h:span>
-                                        <dcm:date-editor ref="m:date"/>
-                                    </h:div>
+                                        <xf:group ref=".[not(../m:genre='web site')]">
+                                            <h:div>
+                                                <dcm:create nodeset="m:publisher" label="Add publisher"
+                                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:publisher][1]/m:imprint/m:publisher"/>
+                                                <xf:input ref="m:publisher" class="maxlong">
+                                                    <xf:label class="fixed_width">Publisher</xf:label>
+                                                </xf:input>
+                                                <dcm:attribute-editor ref="m:publisher"/>
+                                            </h:div>
+                                            <h:div>
+                                                <dcm:create nodeset="m:pubPlace" label="Add place"
+                                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:pubPlace][1]/m:imprint/m:pubPlace"/>
+                                                <xf:input ref="m:pubPlace" class="maxlong">
+                                                    <xf:label class="fixed_width">Place</xf:label>
+                                                </xf:input>
+                                                <dcm:attribute-editor ref="m:pubPlace"/>
+                                            </h:div>
+                                        </xf:group>
+                                        <h:div>
+                                            <dcm:create nodeset="m:date" label="Add date"
+                                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:date][1]/m:imprint/m:date"/>
+                                            <h:span class="fixed_width">Date </h:span>
+                                            <dcm:date-editor ref="m:date"/>
+                                        </h:div>
                                     </xf:group>
                                 </h:fieldset>
                         </xf:group>
@@ -457,16 +428,16 @@
                                     </h:div>
                                 </xf:repeat>
                                 <h:hr/>
-                                <h:span class="blocklabel">Link to digital reproduction</h:span>
+                                <h:span class="blocklabel">Digital resource</h:span>
                                 <dcm:create nodeset="m:ptr"
-                                    label="Add digital reproduction"
+                                    label="Add digital resource"
                                     origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
                                 <xf:repeat nodeset="m:ptr" id="repeat-letter-digitizations">
                                     <h:div>
-                                        <xf:input ref="@target" class="long">
+                                        <xf:input ref="@target" class="maxlong">
                                             <xf:label class="fixed_width_short">URI <h:a class="help">&#160;?<h:span
-                                                class="comment">Link to fulltext or facsimile, e.g.
-                                                http://example.org/document.html</h:span></h:a></xf:label>
+                                                class="comment">Link to a digital resource containing the full text or a facsimile of the item,
+                                                e.g. http://example.org/document.html</h:span></h:a></xf:label>
                                         </xf:input>
                                         <xf:input ref="@label" class="long">
                                             <xf:label>Link label <h:a class="help">&#160;?<h:span class="comment">A label to
@@ -481,14 +452,42 @@
                             </h:fieldset>
                         </xf:group>
 
+
+                        <xf:group ref=".[m:genre[contains(.,'web')]]">
+                            <h:fieldset>
+                                <h:legend>Digital resource </h:legend>
+                                <dcm:create nodeset="m:ptr"
+                                    label="Add link"
+                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
+                                <xf:repeat nodeset="m:ptr" id="repeat-web-links">
+                                    <h:div>
+                                        <xf:input ref="@target" class="maxlong">
+                                            <xf:label class="fixed_width_short">URI <h:a class="help">&#160;?<h:span
+                                                class="comment">Link to the web site,
+                                                e.g. http://example.org/document.html</h:span></h:a></xf:label>
+                                        </xf:input>
+                                        <xf:input ref="@label" class="long">
+                                            <xf:label>Link label <h:a class="help">&#160;?<h:span class="comment">A label to
+                                                be displayed as the link text, e.g. "Facsimile"</h:span></h:a></xf:label>
+                                        </xf:input>
+                                        <dcm:element-buttons triggers="add remove" nodeset="m:ptr"
+                                            index="repeat-web-links"
+                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
+                                        <dcm:attribute-editor/>
+                                    </h:div>
+                                </xf:repeat>
+                            </h:fieldset>
+                        </xf:group>
+                        
+
                         <h:fieldset>
-                            <h:legend>Notes <h:a class="help">&#160;?<h:span class="comment">Any supplementary comments to be added to this
-                                item, e.g. a description of contents.</h:span></h:a></h:legend>
+                            <h:legend>Notes <h:a class="help">&#160;?<h:span class="comment">Any supplementary comments, 
+                               e.g. a description of contents or the date accessed (for web resources).</h:span></h:a></h:legend>
                             <dcm:create nodeset="m:annot" label="Add annotation"
                                 origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
                             <xf:repeat nodeset="m:annot" id="repeat-bibl-notes">
                                 <h:div>
-                                    <fr:tinymce ref="."/>	
+                                    <fr:tinymce ref="m:p" class="mediumheight"/>	
                                     <dcm:element-buttons triggers="remove" nodeset="m:annot" index="repeat-bibl-notes"
                                         origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
                                     <dcm:attribute-editor/>

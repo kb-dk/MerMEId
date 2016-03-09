@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
@@ -15,7 +15,7 @@
         <div class="close_div">
           <a href="javascript:window.close();" class="trigger"><img alt="Close" title="Close"
               src="../images/close.gif" width="12" height="12" /></a></div>
-        <img alt="MerMEId" src="../images/mermeid_30px_inv.png" width="130" height="23" />
+        <img alt="MerMEId" src="../images/mermeid_30px.png" width="130" height="23" />
       </div>
       <div class="toclink"><a href="index.html">Back to table of contents</a></div>
       <h2>Special characters</h2>
@@ -24,11 +24,12 @@
       It does not yet include musical symbols, however.</p>
       
       <ul class="important">
-        <li> Please note: the 'less than' and 'greater than' characters (&lt; and &gt;) have special meaning in XML 
-          and cannot be used i text fields. Please use angle quotation marks instead. </li>
+        <li>
+          Please note: the 'less than' and 'greater than' characters (&lt; and &gt;) have special meaning in XML and cannot be used in simple
+          (that is, single-line) text fields. 
+          Please use angle quotation marks ‹ and › instead.
+        </li>
       </ul>
-      <p>To have your symbols displayed correctly in other contexts that the MerMEId preview, you
-        
       
       <p>The following is a list of selected additional unicode characters that you may copy and paste into
         your data. Their Unicode character codes are shown for reference. Be aware, however, that
@@ -50,11 +51,11 @@
           </tr>
         </tbody>
       </table>
-      <p>You can include additional musical symbols in your texts by entering og pasting the desired
+      <p>You can include additional musical symbols in your texts by entering or pasting the desired
         characters into the text editor. Then, select them and choose the desired music font in the
         'Font Family' drop-down list. </p>
       <p>The easiest way to insert the music characters may be to copy them from a font character
-        map (such as the selection below). Be aware, however, that the characters' position in font
+        map (such as the selection below). Be aware, however, that the characters' position in the font
         you are copying from must match its position in the font you intend to use with your
         MerMEId-edited text. To optimize compatibility with other music symbol fonts, we recommend
         using a <a href="http://www.smufl.org/fonts/" title="SMuFL Fonts">SMuFL-compliant
@@ -66,7 +67,7 @@
           symbols correctly. Once saved, however, they should appear using the correct font in the
           HTML preview, provided that you are using the Bravura font. </li>
       </ul>
-      <p>To have your symbols displayed correctly in other contexts that the MerMEId preview, you
+      <p>To have your symbols displayed correctly in other contexts than the MerMEId preview, you
         will need to make sure that the Bravura font (or whatever font you have selected) is
         available in that context. For web applications, for instance, this may involve <a
           href="http://www.w3schools.com/css/css3_fonts.asp" title="W3Schools: Web Fonts">web font
@@ -157,75 +158,20 @@
           </tr>
         </tbody>
       </table>
-      <!--
-      <h3>Greek letters</h3>
-      <p>These are usually included in standard text fonts such as Arial or Times New Roman and need
-        not use a special font.</p>
-      <table border="0" cellpadding="0" cellspacing="0" class="unicode_table">
-        <tbody>
-          <tr>
-            <td>&#x3b1; <p>03b1</p>
-            </td>
-            <td>&#x3b2; <p>03b2</p>
-            </td>
-            <td>&#x3b3; <p>03b3</p>
-            </td>
-            <td>&#x3b4; <p>03b4</p>
-            </td>
-            <td>&#x3b5; <p>03b5</p>
-            </td>
-            <td>&#x3b6; <p>03b6</p>
-            </td>
-            <td>&#x3b7; <p>03b7</p>
-            </td>
-            <td>&#x3b8; <p>03b8</p>
-            </td>
-            <td>&#x3b9; <p>03b9</p>
-            </td>
-            <td>&#x3ba; <p>03ba</p>
-            </td>
-            <td>&#x3bb; <p>03bb</p>
-            </td>
-            <td>&#x3bc; <p>03bc</p>
-            </td>
-            <td>&#x3bd; <p>03bd</p>
-            </td>
-          </tr>
-          <tr>
-            <td>&#x3be; <p>03be</p>
-            </td>
-            <td>&#x3bf; <p>03bf</p>
-            </td>
-            <td>&#x3c0; <p>03c0</p>
-            </td>
-            <td>&#x3c1; <p>03c1</p>
-            </td>
-            <td>&#x3c2; <p>03c2</p>
-            </td>
-            <td>&#x3c3; <p>03bc3</p>
-            </td>
-            <td>&#x3c4; <p>03c4</p>
-            </td>
-            <td>&#x3c5; <p>03c5</p>
-            </td>
-            <td>&#x3c6; <p>03c6</p>
-            </td>
-            <td>&#x3c7; <p>03c7</p>
-            </td>
-            <td>&#x3c8; <p>03c8</p>
-            </td>
-            <td>&#x3c9; <p>03c9</p>
-            </td>
-            <td>
-              <p></p>
-            </td>
-          </tr>
-        </tbody>
-      </table>-->
-      <h3>Runes</h3>
-      <p>To use runes in MerMEId texts, copy the desired characters from the list below an paste
+      <h3><a name="other">Other special chracters</a></h3>
+      <p>The <a href="https://www.tinymce.com/" title="TinyMCE web page">TinyMCE</a> text edtior offers a number of special characters supported by most standard fonts such as Arial, 
+        Times New Roman and Helvetica. Click the special characters icon 
+        <img src="../images/tinymce_special_chracters.png" alt="" style="vertical-align:bottom;" title="tinymce special characters icon" 
+          height="16" width="16"/> 
+          and select the desired symbol to insert it in your text.</p>
+      <p>[We hope to be able to customize the TinyMCE editor at some point to include musical symbols in the menu]</p>
+      <h4>Runes</h4>
+      <p>To enable the use of runes in text blocks (which is useful with some composers such as Niels W. Gade),
+        MerMEId comes with the runic font 'Hnias'.</p>
+      <p>
+        To write runes in texts, copy the desired characters from the list below an paste
         them into your text. Then select them and choose the 'Hnias' runic font from the text
-        editor's 'Font Family' drop-down list.</p>
+        editor's 'Font Family' drop-down list to make MerMEId display it correctly in the HTML preview.</p>
       <table border="0" cellpadding="0" cellspacing="0" class="unicode_table runes">
         <tbody>
           <tr>
@@ -403,7 +349,7 @@
     </div>
     <p class="footer"><a href="http://www.kb.dk/dcm" title="DCM"><img
           style="border: 0px; vertical-align:middle;" alt="DCM Logo"
-          src="../images/dcm_logo_small.png" /></a> 2013 Danish Centre for Music Publication | The
+          src="../images/dcm_logo_small_white.png" /></a> 2016 Danish Centre for Music Editing | The
       Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm"
         >www.kb.dk/dcm</a></p>
   </body>

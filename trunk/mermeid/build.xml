@@ -41,6 +41,7 @@
       	<lib dir="${bin.dir}"/>
       	<lib dir="${jar.dir}"/>
 	<zipfileset dir=".">
+	  <include name="index.html"/>
 	  <include name="INSTALL.html"/>
 	  <include name="../LICENSE.txt" />
 	  <include name="README.html" />

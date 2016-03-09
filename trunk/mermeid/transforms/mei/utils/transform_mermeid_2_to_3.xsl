@@ -5,17 +5,19 @@
     xmlns:xl="http://www.w3.org/1999/xlink"
     xmlns:h="http://www.w3.org/1999/xhtml"
     xmlns:exsl="http://exslt.org/common"
-    exclude-result-prefixes="xsl m exsl xl h"
+    xmlns:date="http://exslt.org/dates-and-times"
+    exclude-result-prefixes="xsl m exsl xl h date"
     version="1.0">
 
     <!-- 
-    Transformation of MEI metadata from MerMEId revision <948 to MerMEId 3 (revision 948+).
-    Caution: This transform is made specifically for transforming metadata created using 
-    the MerMEId versions between 821 and 948. Metadata from other applications or versions may or may not 
-    be successfully transformed with it. 
+    Transformation of MEI metadata from MerMEId revision <948 to MerMEId 3
+    (revision 948+).  Caution: This transform is made specifically for
+    transforming metadata created using the MerMEId versions between 821 and
+    948. Metadata from other applications or versions may or may not be
+    successfully transformed with it.
 
     Axel Teich Geertinger (atge@kb.dk)
-    Danish Centre for Music Publication
+    Danish Centre for Music Editing
     The Royal Library 
     Copenhagen 2015    
     -->
@@ -91,6 +93,9 @@
             </xsl:choose>
         </xsl:copy>
     </xsl:template>
+
+  
+
     
     <!-- Add a record of the conversion to revisionDesc -->
     <xsl:template match="m:revisionDesc">
@@ -98,7 +103,7 @@
             <xsl:apply-templates select="@*|node()"/>
             <change>
                 <xsl:attribute name="isodate"><xsl:value-of 
-                    select="format-date(current-date(),'[Y]-[M02]-[D02]')"/></xsl:attribute>
+                    select="concat(date:year(),'-0',date:month-in-year(),'-0',date:day-in-month())"/></xsl:attribute>
                 <xsl:attribute name="resp">MerMEId</xsl:attribute>
                 <xsl:variable name="generated_id" select="generate-id()"/>
                 <xsl:variable name="no_of_nodes" select="count(//*)"/>

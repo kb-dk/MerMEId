@@ -12,7 +12,7 @@
   This XSLT creates a clean MEI encoding for public download 
   
   Axel Teich Geertinger & Sigfrid Lundberg
-  Danish Centre for Music Publication
+  Danish Centre for Music Editing
   The Royal Library, Copenhagen 2014
 -->
   

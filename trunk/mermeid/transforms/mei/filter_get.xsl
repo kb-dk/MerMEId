@@ -165,7 +165,7 @@
   <!--  Wrap sibling p and list elements in a temporary parent <p> for editing in a single tinyMCE instance. 
         Wrapping is needed whenever the parent element may contain more than one <p> or <list> element as well as other elements
         not to be edited with tinyMCE. Also needed for <titlePage> which must contain at least one <p>. -->
-  <xsl:template match="m:history | m:event | m:titlePage" mode="mei2html">
+  <xsl:template match="m:history | m:event | m:titlePage | m:projectDesc" mode="mei2html">
     <xsl:variable name="element" select="name()"/>
     <xsl:element name="{$element}">
       <xsl:apply-templates select="@*"/>

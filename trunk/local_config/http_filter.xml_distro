@@ -2,7 +2,6 @@
 <properties>
   <comment>HTTP Filter parameters</comment>
 
-
   <entry key="filter">/</entry>
 
 <!--
@@ -15,26 +14,35 @@ The filter is meant to operate on top of an eXist XML database
   <entry key="exist.port">8080</entry>
   <entry key="exist.realm">exist</entry>
   <entry key="exist.context">/exist/rest/db</entry>
-  <entry key="exist.user">exist-user</entry>
-  <entry key="exist.password">secret-exist-user-password</entry>
+  <entry key="exist.user">admin</entry>
+  <entry key="exist.password">your very secret password goes here</entry>
 
 <!--
 
 get is the retrieval filter
 
+entry key="exist.context"
+/exist/rest/db/dcm
 -->
 
   <entry key="get.dcm">http://mei.example.org/editor/transforms/mei/filter_get.xsl</entry>
   <entry key="get.dcm.mime">application/xml</entry>
   <entry key="get.dcm.charset">UTF-8</entry>
 
-  <entry 
-      key="get.library">http://mei.example.org/editor/transforms/mei/null_transform.xsl</entry>
+
+  <entry key="get.library">http://mei.example.org/editor/transforms/mei/null_transform.xsl</entry>
   <entry key="get.library.mime">application/xml</entry>
   <entry key="get.library.charset">UTF-8</entry>
+  
+  
+  <entry key="get.rism_sigla">http://mei.example.org/editor/transforms/mei/null_transform.xsl</entry>
+  <entry key="get.rism_sigla.mime">application/xml</entry>
+  <entry key="get.rism_sigla.charset">UTF-8</entry>
 
-
-
+  <entry key="get.filtered_scripts">http://mei.example.org/editor/transforms/mei/null_transform.xsl</entry>
+  <entry key="get.filtered_scripts.mime">application/xml</entry>
+  <entry key="get.filtered_scripts.charset">UTF-8</entry>
+  
 <!--
 
 put is for updating
@@ -45,27 +53,33 @@ put is for updating
   <entry key="put.dcm.mime">application/xml</entry>
   <entry key="put.dcm.charset">UTF-8</entry>
 
-  <entry 
-      key="put.library">http://mei.example.org/editor/transforms/mei/null_transform.xsl</entry>
+
+  <entry key="put.library">http://mei.example.org/editor/transforms/mei/null_transform.xsl</entry>
   <entry key="put.library.mime">application/xml</entry>
   <entry key="put.library.charset">UTF-8</entry>
-
-
-  <!--
+  
+  
+<!--
 
 del is for removing stuff
-the del.dcm.redirect doesn't seem to be very clever...
-  -->
+
+-->
 
   <entry key="del.dcm.redirect">http://mei.example.org/storage/list_files.xq</entry>
 
-  <entry key="create.dcm">http://mei.example.org/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}</entry>
-  <entry key="create.dcm.uri">http://mei.example.org/editor/forms/mei/edit-work-case.xml</entry>
-  <entry key="create.dcm.dir">http://mei.example.org/filter/dcm/</entry>
+<!-- 
 
-  <entry key="create.library">http://mei.example.org/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}</entry>
-  <entry key="create.library.uri">http://mei.example.org/editor/forms/mei/edit-bibliography-case.xml</entry>
-  <entry key="create.library.dir">http://mei.example.org/filter/library/</entry>
+Create is for what it seems to be. A URI that is good to use for creating new
+documents. We're doing that using uri templates (RFC6570). The URI should look like
 
-   <entry key="del.library.redirect">http://mei.example.org/orbeon/xforms-jsp/mei-form/?uri=http://mei.example.org/editor/forms/mei/model-references.xml</entry>
+http://mei.example.org/orbeon/xforms-jsp/mei-form/?doc=cnw0361.xml
+
+when ready
+
+-->
+
+   <entry key="create.dcm">http://mei.example.org/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}</entry>
+   <entry key="create.dcm.uri">http://mei.example.org/editor/forms/mei/edit-work-case.xml</entry>
+   <entry key="create.dcm.dir">http://mei.example.org/filter/</entry>
+
 </properties>

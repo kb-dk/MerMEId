@@ -60,7 +60,7 @@
                        method="get" 
                        serialization="none" 
                        validate="false"
-                       resource="{xxf:instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/RISM_country_codes.xml"
+                       resource="{xxf:instance('parameters')/dcm:rism_crud_home}RISM_country_codes.xml"
                        replace="instance" 
                        instance="rism-country-instance"/>
         
@@ -71,7 +71,7 @@
                        method="get" 
                        serialization="none" 
                        validate="false"
-                       resource="{xxf:instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/{instance('temp')/country_code}.xml"
+                       resource="{xxf:instance('parameters')/dcm:rism_crud_home}{instance('temp')/country_code}.xml"
                        replace="instance" 
                        instance="rism-sigla-instance"/>
         
@@ -120,10 +120,10 @@
             <h:fieldset>
               <h:legend>Location <h:a class="help">&#160;?<h:span
               class="comment">The library, archive or other repository holding this
-              item. The name or RISM siglum may be given, or both.</h:span></h:a>
+              item. The name and place or the RISM siglum may be given, or both.</h:span></h:a>
               <xf:group ref="m:physLoc[count(m:repository)&lt;2]">
                 <xf:trigger appearance="minimal">
-                  <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+                  <xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                   <xf:action ev:event="DOMActivate">
                     <xf:delete nodeset="."/>
                     <xf:dispatch name="xforms-value-changed" target="form-group"/>
@@ -157,6 +157,16 @@
                       <xf:label class="fixed_width">Repository name </xf:label>
                     </xf:input>
                     <dcm:attribute-editor ref="m:corpName"/>
+                  </h:div>
+                  <h:div>
+                    <dcm:create  
+                      nodeset="m:geogName"
+                      label="Add place (city)"
+                      origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:itemList/m:item/m:physLoc/m:repository/m:geogName"/>
+                    <xf:input ref="m:geogName" class="maxlong">
+                      <xf:label class="fixed_width">Place (city) </xf:label>
+                    </xf:input>
+                    <dcm:attribute-editor ref="m:geogName"/>
                   </h:div>
                   
                   <!-- RISM sigla input -->
@@ -676,7 +686,6 @@
                                   Information on the item's physical appearance and condition should be given in the 
                                   "physical description" area below.
                                 </h:span></h:a> 
-                                <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>
                                   </h:span>
                                   <fr:tinymce ref="m:annot[@type='source_description']"/>
                                   <dcm:attribute-editor ref="m:annot[@type='source_description']"/>

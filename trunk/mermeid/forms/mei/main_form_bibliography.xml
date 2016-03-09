@@ -57,11 +57,12 @@
                   position="after" 
                   origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-repeat')]"/>
               </xf:action>
-              <xf:insert nodeset="@*" 
-                context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl[index('repeat-references')]"
+              <xf:insert xxf:iterate="//*[not(@xml:id)]"
+                context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]"
                 origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
-              <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
               <xf:dispatch name="id-update" target="form-group"/>
+              <xf:dispatch name="id-update" target="form-group"/>
+              <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
               <xxf:hide dialog="add-ref-dialog"/>
             </xf:action>
           </xf:trigger>
@@ -107,6 +108,9 @@
                       position="after" 
                       origin="instance('bibliography-instance')/m:biblList[not(normalize-space(m:head)) or m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']][index('std-bibl-repeat')]/m:bibl[index('std-bibl-menu-repeat')]"/>
                   </xf:action>
+                  <xf:insert xxf:iterate="//*[not(@xml:id)]"
+                    context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]"
+                    origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
                   <xf:dispatch name="id-update" target="form-group"/>
                   <xxf:hide dialog="add-ref-dialog"/>
                 </xf:action>

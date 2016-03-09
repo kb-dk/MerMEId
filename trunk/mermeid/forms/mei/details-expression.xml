@@ -16,7 +16,7 @@
     
     <!--
         Expression component (e.g. movement) data editor 
-        Danish Centre for Music Publication (DCM) 
+        Danish Centre for Music Editing (DCM) 
         Axel Teich Geertinger, 2012
         atge@kb.dk
     -->
@@ -225,13 +225,14 @@
                     <h:br clear="all"/>
                     <dcm:create 
                         nodeset="m:extent"
-                        label="Add duration"
+                        label="Add extent"
                         origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:extent"/>
                     <xf:group ref="m:extent">
                         <xf:input ref=".">
-                            <xf:label class="fixed_width">Duration <h:a class="help">&#160;?<h:span 
-                                class="comment">Any indication of the duration, like "01:23:00", "25'30''" or "approx. 10'". 
-                                The unit of measurement (minutes, for instance) may be specified in the  
+                            <xf:label class="fixed_width">Extent <h:a class="help">&#160;?<h:span 
+                                class="comment">Extent in any medium: number of measures, pages, or the approximate duration, for instance. <br/>
+                                Duration can be indicated in any form, such as "01:23:00", "25'30''" or "approx. 10'". 
+                                The unit of measurement (measures, pages, minutes, etc.) may be specified in the  
                                 optional "unit" field.</h:span></h:a></xf:label>
                         </xf:input>
                         <xf:input ref="@unit">
@@ -249,7 +250,13 @@
                     </xf:group>
                     
                     <h:fieldset>
-                        <h:legend>Incipit</h:legend>
+                        <h:legend>Incipit                         
+                            <h:a class="help">&#160;?<h:span class="comment">Both 
+                                music and text incipits may be added. Music incipits can be added as links to graphic files or
+                                entered using an encoding such as <em>Plaine &amp; Easie Code</em>. <br/>
+                                Incipits encoded in MEI will be displayed in the HTML preview but are not editable in MerMEId.
+                            </h:span></h:a>
+                        </h:legend>
                         <dcm:create 
                             nodeset="m:incip"
                             label="Add incipits"
@@ -281,7 +288,10 @@
                                         </xf:item>
                                     </xf:select1>
                                     <h:a class="help">&#160;?<h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
-                                        web graphics, or "Print quality" for print quality graphics</h:span></h:a>
+                                        web graphics, or "Print quality" for print quality graphics.
+                                        <br/>MerMEId's HTML preview by default only displays 
+                                        the file specified as the low resolution image, while a high resolution image makes the 
+                                        low resolution image clickable for enlargment.</h:span></h:a>
                                     <dcm:element-buttons
                                         triggers="add remove" 
                                         nodeset="m:graphic" 
@@ -298,19 +308,24 @@
                                 label="Add music incipit code"
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>                        
                             <xf:repeat nodeset="m:incip/m:incipCode" id="incipcode-repeat">
-                                <xf:input ref="@form">
-                                    <xf:label>Code language <h:a class="help">&#160;?<h:span class="comment">The name of the encoding language used. 
-                                        The MEI Guidelines suggest values such as 'plaineAndEasie',  'humdrumKern' or 'parsons'</h:span></h:a></xf:label>
-                                </xf:input>
-                                <xf:input ref="." class="maxlong">
-                                    <xf:label> Code <h:a class="help">&#160;?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
-                                </xf:input>
-                                <dcm:element-buttons
-                                    triggers="add remove" 
-                                    nodeset="m:incipCode" 
-                                    index="incipcode-repeat"
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
-                                <dcm:attribute-editor ref="."/>
+                                <h:div>
+                                    <xf:input ref="@form">
+                                        <xf:label>Code language <h:a class="help">&#160;?<h:span class="comment">The name of the encoding language used. 
+                                            The MEI Guidelines suggest values such as 'plaineAndEasie',  'humdrumKern' or 'parsons'.<h:br/>
+                                            MerMEId also supports 'pae' for Plaine and Easie. <h:br/>
+                                            Plaine and Easie-encoded incipits are rendered in MerMEId's HTML preview using the Verovio javascript toolkit.
+                                        </h:span></h:a></xf:label>
+                                    </xf:input>
+                                    <xf:input ref="." class="maxlong">
+                                        <xf:label> Code <h:a class="help">&#160;?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
+                                    </xf:input>
+                                    <dcm:element-buttons
+                                        triggers="add remove" 
+                                        nodeset="m:incipCode" 
+                                        index="incipcode-repeat"
+                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
+                                    <dcm:attribute-editor ref="."/>
+                                </h:div>
                             </xf:repeat>
                             
                             <h:div class="vertical_spacer"/>

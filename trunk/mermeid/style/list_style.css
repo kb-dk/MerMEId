@@ -3,14 +3,14 @@ body {
     font-family: arial, helvetica, sans-serif;
     padding:20px;
     margin:0px;
-    background-color: #E5E1BF;
+    background-color: #555;
 }
 
 div.list_header,
 div.filter_bar,
 div.files_list,
 div.nav_bar {
-    background-color: #ddd;
+    background-color: #eee;
     border: 1px solid #888;
     border-top: none;
     padding: 4px 8px;
@@ -18,8 +18,8 @@ div.nav_bar {
 }
 
 div.list_header {
-    background-color : #555;
-    border: none;
+    background-color : #d5d5d5;
+    border-bottom: 1px solid #888;
     padding: 5px 9px;
 }
 
@@ -66,7 +66,7 @@ a.addLink:hover img {
 
 
 .footer, .footer a:link, .footer a:visited, .footer a:active {
-    color: #444;
+    color: #fff;
 }
 
 table {
@@ -124,11 +124,13 @@ table.result_table {
 table.result_table td,
 table.result_table th {
     padding:3px 8px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 table.result_table th {
-    background-color: #555;
-    color: #fff;
+    background-color: #bbb;
+    color: #000;
 }
 
 table.result_table .tools {
@@ -137,7 +139,13 @@ table.result_table .tools {
 }
 
 tbody tr.result:hover {
-    background-color: #F4F3EB;
+/*    background-color: #F4F3EB;*/
+    background-color: #DDD;
+}
+
+tbody tr.result:hover td {
+    border-top: 1px solid #555;
+    border-bottom: 1px solid #555;
 }
 
 table.filter_block {
@@ -158,7 +166,7 @@ table.filter_block td.label {
 }
 
 .odd {
-    background-color: #ddd;
+    background-color: #eee;
 }
 
 #publish .check_link {

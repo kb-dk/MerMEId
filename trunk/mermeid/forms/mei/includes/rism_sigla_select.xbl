@@ -15,7 +15,7 @@
   
   <!--
     Component to select a RISM siglum from lists of countries and archives.
-    Danish Centre for Music Publication (DCM) 
+    Danish Centre for Music Editing (DCM) 
     Axel Teich Geertinger, 2012
     atge@kb.dk
   -->
@@ -45,46 +45,42 @@
         </xf:instance>
         
         <xf:submission id="load-rism-countries"
-          xxf:username=""
-          xxf:password=""
           xxf:show-progress="false"
           method="get" 
           serialization="none" 
           validate="false"
-          resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/RISM_country_codes.xml"
+          resource="{xxf:instance('parameters')/dcm:rism_crud_home}RISM_country_codes.xml"
           replace="instance" 
           instance="rism-country-instance"/>
         
         <xf:submission id="load-rism-sigla"
-          xxf:username=""
-          xxf:password=""
           xxf:show-progress="false"
           method="get" 
           serialization="none" 
           validate="false"
-          resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}rism_sigla/{instance('temp')/country_code}.xml"
+          resource="{xxf:instance('parameters')/dcm:rism_crud_home}{instance('temp')/country_code}.xml"
           replace="instance" 
           instance="rism-sigla-instance"/>
         
         <xf:instance id="temp">
           <temp>
+            <file_name/>
             <counter/>
             <country_code/>
             <archive_code/>
           </temp>
         </xf:instance> 
         
-        <!-- local copy of editor settings instance -->
-        <!-- needed to get settings into inner scope--> 
-        <xf:instance xmlns="http://www.kb.dk/dcm" 
-		     id="parameters">
-          <xi:include href="../mermeid_configuration.xml"/>               
-        </xf:instance>
-        
+     
         <!-- "onload" xforms actions -->
         <xf:action ev:event="xforms-model-construct-done">
           <!-- load rism country list -->
           <xf:send submission="load-rism-countries"/>
+        </xf:action>
+        
+        <xf:action ev:event="xforms-submit-error"  ev:propagate="stop">
+          <xf:var name="code" select="event('response-status-code')"/>
+          <xf:message>Error. Submission return code: <xf:output value="$code"/></xf:message>
         </xf:action>
         
       </xf:model>
@@ -105,7 +101,9 @@
                   <xf:var name="siglum" select="normalize-space($binding)"/>
                   <xf:setvalue ref="instance('temp')/archive_code" value="$siglum"/>
                   <xf:setvalue ref="instance('temp')/country_code" value="substring-before($siglum,'-')"/>
-                  <xf:send submission="load-rism-sigla"/>
+                  <xf:action if="instance('temp')/country_code!=''">
+                    <xf:send submission="load-rism-sigla"/>
+                  </xf:action>
                   <xxf:show dialog="rism-dialog"/>
                 </xf:action>
               </xf:trigger>

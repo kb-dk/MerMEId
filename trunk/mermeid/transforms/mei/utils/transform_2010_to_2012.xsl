@@ -13,7 +13,7 @@
 
     Sigfrid Lundberg (slu@kb.dk) 
     & Axel Teich Geertinger (atge@kb.dk)
-    Danish Centre for Music Publication
+    Danish Centre for Music Editing
     The Royal Library 
     Copenhagen 2012    
     -->
@@ -133,7 +133,7 @@
             <resp>Publisher</resp>
             <corpName>
                 <abbr>DCM</abbr>
-                <expan>Danish Centre for Music Publication</expan>
+                <expan>Danish Centre for Music Editing</expan>
                 <address>
               <addrLine>The Royal Library</addrLine>
               <addrLine>Søren Kierkegaards Plads 1</addrLine>

@@ -329,7 +329,7 @@
 												value="&quot;instance(&apos;data-instance&apos;)/m:meiHead/m:workDesc/m:work/m:relationList/m:relation[index(&apos;work_relations&apos;)]&quot;"/>
 												<xxf:show dialog="relation_dialog"/>
 												<xf:setvalue ref="instance('temp')/target_uri"
-												value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?get=works')"/>
+												value="concat(instance('parameters')/dcm:server_name,'filter/filtered_scripts/cross-link.xq?get=works')"/>
 												<!-- load data on open - may be deactivated if performance is an issue -->
 												<xf:send submission="load-fileList"/>
 											</xf:action>

@@ -16,7 +16,7 @@
     be successfully transformed with it. 
 
     Axel Teich Geertinger (atge@kb.dk)
-    Danish Centre for Music Publication
+    Danish Centre for Music Editing
     The Royal Library 
     Copenhagen 2013    
     -->

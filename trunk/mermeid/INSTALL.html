@@ -10,7 +10,7 @@
     <link href="style/manual.css" rel="stylesheet" type="text/css"/>
     
     <!--
-	$Id$
+	$Id: INSTALL.html 1083 2016-03-02 18:33:37Z atge $
     -->
     
   </head>
@@ -29,7 +29,7 @@
 	  </a>
 	</div>
 	<img alt="MerMEId" 
-	     src="images/mermeid_30px_inv.png" 
+	     src="images/mermeid_30px.png" 
 	     width="130" 
 	     height="23" />
       </div>
@@ -91,7 +91,7 @@
       </div>
 
       <div id="license2.0">
-	<h2>Copyright 2013 Danish Center for Music Publication</h2>
+	<h2>Copyright 2013 Danish Center for Music Editing</h2>
 
 	<p>Licensed under the Apache License, Version 2.0 (the "License"); you
 	may not use this file except in compliance with the License.  You may
@@ -149,7 +149,7 @@
 	    
 	    <ol type="i">
 	      <li>
-		<strong>Install Orbeon:</strong> We are using version 4.9.0. 
+		<strong>Install Orbeon:</strong> We are using version 4.9. 
 		<pre>
 		  cp orbeon.war /&lt;PATH TO&gt;/tomcat/webapps/
 		</pre>
@@ -177,7 +177,7 @@
 		version.
 	      </li>
 	      <li>
-		<strong>Install eXist:</strong> We're using version 2.2 Prepare
+		<strong>Install eXist:</strong> We're using version 1.4.1 Prepare
 		the code and build the application by first running the installer
 		<pre>
 		  java -jar eXist-&lt;version number&gt;.jar
@@ -350,7 +350,7 @@
 	easier to deploye it in your tomcat. </p>
 	
 	<pre>
-	  cp editor.war /&lt;PATH TO YOUR&gt;/tomcat/webapps/editor.war
+	  cp editor.war /&lt;PATH TO YOUR&gt;/tomcat6/webapps/editor.war
 	</pre>
 	
 	<p>See below how apache is configured in the two cases.</p>
@@ -396,11 +396,11 @@
 	      which is used for many tasks. See main text.</small>
 	    </p>
 	    
-	    <p><strong>Configure eXist:</strong> The database engine is entirely
-	    web based, and all work of it can be done via an ordinary browser or a
-	    web service client bundled with the eXist. Please not that the Royal
-	    Library cannot not provide support for this or indeed any other
-	    software we haven't authored in house. </p>
+	    <p><strong>Configure eXist:</strong> The database engine is
+	    entirely web based, and all work of it can be done via an ordinary
+	    browser or a web service client bundled with the eXist. Please not
+	    that the Royal Library cannot not provide support for this or
+	    indeed any other software we haven't authored in house. </p>
 	    
 	    <p>Direct your browser to
 	    <kbd>http://mei.example.org:8080/exist/</kbd> (i.e., <strong>to
@@ -721,6 +721,37 @@
       
       <div id="appendix">
 	<h2>Appendix A. Configuration files</h2>
+
+	<h3>eXist configuration</h3>
+
+	<p>In the eXist DB WEB-INF directory there is a file called
+	conf.xml. Load it in your favourite editor and change</p>
+
+	<ol>
+	  <li>
+	    <pre>
+&lt;xquery enable-java-binding="no" 
+
+to
+
+&lt;xquery enable-java-binding="yes" 
+	    </pre>
+	  </li>
+	  <li>
+	    The XSLT-implementation should be changed from saxon to
+	    xalan. Change from
+	    <pre>
+&lt;transformer class="net.sf.saxon.TransformerFactoryImpl">
+    &lt;attribute name="http://saxon.sf.net/feature/version-warning" value="false" type="boolean"/>
+&lt;/transformer>
+	    </pre>
+	    to
+	    <pre>
+ &lt;transformer class="org.apache.xalan.processor.TransformerFactoryImpl" caching="yes">
+&lt;/transformer>
+	    </pre>
+	  </li>
+	</ol>
 	
 	<h3>Filter configuration</h3>
 	<pre>

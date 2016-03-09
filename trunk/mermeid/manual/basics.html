@@ -5,6 +5,7 @@
     
     <link href="../style/tab_style.css" rel="stylesheet" type="text/css"/>
     <link href="../style/list_style.css" rel="stylesheet" type="text/css"/>
+    <link href="../style/xform_style.css" rel="stylesheet" type="text/css"/>
     <link href="../style/front_page.css" rel="stylesheet" type="text/css"/>
     <link href="../style/manual.css" rel="stylesheet" type="text/css"/>
   </head>
@@ -13,7 +14,7 @@
     <div class="main">
       <div class="manual_header">
         <div class="close_div"> <a href="javascript:window.close();" class="trigger"><img alt="Close" title="Close" src="../images/close.gif" height="12" width="12"/></a></div>
-        <img alt="MerMEId" src="../images/mermeid_30px_inv.png" height="23" width="130"/> </div>
+        <img alt="MerMEId" src="../images/mermeid_30px.png" height="23" width="130"/> </div>
       <div class="toclink"><a href="index.html">Back
         to table of contents</a></div>
       <h2><a name="basics" id="basics">MerMEId
@@ -40,14 +41,14 @@
         provided you have specified file collection information in your files. 
         You may also narrow the results using the keywords search.</p> 
       <p>Navigate through the result
-        pages using the page numbers or the "Previous page" / "Next page" links.</p>
+        pages using the page numbers or the 'Previous page' / 'Next page' links.</p>
       <p>From the list, you have the following options:</p>
       <ul>
         <li><strong>HTML preview</strong>:<strong></strong>
           Click the title of any file to see its metadata displayed as formatted
           HTML.</li>
         <li><strong>XML source</strong>: Click the XML view
-          icon <img alt="XML" src="../images/xml.gif" height="16" width="16"/> to see file's the plain XML
+          icon <img alt="XML" src="../images/xml.gif" height="16" width="16"/> to see the file's plain XML
           data</li>
         <li><strong>Edit file</strong>: Click the edit icon
           <img alt="Edit" src="../images/edit.gif" height="16" width="16"/> to open the file in the
@@ -62,18 +63,17 @@
           To publish or unpublish files, check the appropriate checkboxes and select the desired action from the 
           publish menu activated by moving the cursor over the publish menu button
           <img alt="Menu" src="../images/menu.gif" height="16" width="16" style="vertical-align:bottom;"/>.<br/>
-          <strong>Publishing</strong> in this context means that MerMEId copies the file to a separate 
-          <a href="/storage/public/" target="_blank" title="Click to see the contents of your 'public' eXist collection">folder named "public"</a> in your eXist database.
+          <strong>Publishing</strong> in this context simply means that MerMEId copies the file to a separate 
+          <a href="/storage/public/" target="_blank" title="Click to see the contents of your 'public' eXist collection">folder named 'public'</a> in your eXist database.
             How files placed in the public folder are further processed or made available to others is outside the scope
             of MerMEId and entirely depends on what your system is set up to do with them.<br/>
           <strong>Unpublishing</strong> means that MerMEId deletes the copy of the file from the public folder.
         </li>
         <li><strong>Delete file</strong>: Clicking the
           delete icon <img alt="Delete" src="../images/remove.gif" height="12" width="12"/> will display a warning that
-          you are about to delete the selected file. Click "OK" to delete,
-          otherwise "Cancel". <br/>
+          you are about to delete the selected file. Click 'OK' to delete, otherwise 'Cancel'. <br/>
           Please note that only unpublished files can be deleted. To delete a previously published file
-          you will ned to unpublish it first to make sure it is deleted from the public folder as well.           
+          you will need to unpublish it first to make sure it is deleted from the public folder as well.           
         </li>
       </ul>
       <h3><a name="editor" id="editor">The editor &#8211;
@@ -163,17 +163,26 @@
             </td>
             <td>Go to a linked resource (implies closing the current file and opening a different one for editing) </td>
           </tr>
+          <tr>
+            <td><img style="width: 16px; height: 16px;" alt="Edit" src="../images/authority.png"/>
+            </td>
+            <td>Add reference to an authority file (applies to personal names) </td>
+          </tr>
         </tbody>
       </table>
+      <p><strong>Hints: </strong>Next to many input fields you will find a question mark 
+        <a class="help">&#160;?<span
+          class="comment">Hint or explanation</span></a>. 
+        Hovering over the question mark displays a hint, an explanation or other useful information.</p>
       <h3><a name="HTML" id="HTML">HTML Preview</a></h3>
       <p>The purpose of the HTML preview is to give you an overview of
-        the data you have entered. Your project may or may not use it as a
+        the (meta-)data you have entered. Your project may or may not use it as a
         basis for public display of your data as well, but probably this is not
         how your data will be displayed in the end. </p>
       <p><img alt="HTML preview" src="../images/manual/html_view.png" class="illustration"/></p>
       <p>If titles or other texts are given in more than one language,
-        all other alternatives than the first one are shown in grey with an
-        abbreviated indication of the language at the beginning. To hide these
+        all other alternatives than the first one are shown in grey<!--with an
+        abbreviated indication of the language at the beginning-->. To hide these
         alternative language texts, click the "Hide alternative languages" link
         in the upper right corner.</p>
       <p>By default, only the headings of the main sections are shown.
@@ -183,7 +192,7 @@
       <p>At the bottom of the page, in grey, metadata about the file
         are displayed (i.e. the colophon).</p>
     </div>
-    <p class="footer"><a href="http://www.kb.dk/dcm" title="DCM"><img style="border: 0px none ; vertical-align: middle;" alt="DCM Logo" src="../images/dcm_logo_small.png"/></a>
-      2013 Danish Centre for Music Publication | The Royal Library,
+    <p class="footer"><a href="http://www.kb.dk/dcm" title="DCM"><img style="border: 0px none ; vertical-align: middle;" alt="DCM Logo" src="../images/dcm_logo_small_white.png"/></a>
+      2016 Danish Centre for Music Editing | The Royal Library,
       Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a></p>
   </body></html>

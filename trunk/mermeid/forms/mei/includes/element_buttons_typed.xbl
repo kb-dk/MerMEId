@@ -32,7 +32,7 @@
                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:titleStmt/m:title[@type='main']"/>
         </xf:repeat>
         
-        Danish Centre for Music Publication (DCM) 
+        Danish Centre for Music Editing (DCM) 
         Axel Teich Geertinger, 2012
         atge@kb.dk
     -->
@@ -125,8 +125,11 @@
                                     nodeset="xxf:evaluate($nodeset)[index($index)]"/>
                                 <!-- Add xml:ids -->    
                                 <xf:var name="added_nodeset" select="xxf:evaluate(concat('parent::node()/',$nodeset))[index($index)]"/>
-                                <xf:insert xxf:iterate="descendant-or-self::*" context="$added_nodeset"
-                                    origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
+                                <!--<xf:insert xxf:iterate="descendant-or-self::*" context="$added_nodeset"
+                                    origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>-->
+                                <xf:insert xxf:iterate="//*[not(@xml:id)]" 
+                                    context="$added_nodeset"
+                                    origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>                                
                                 <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
                                 <xf:dispatch name="id-update" target="form-group"/>
                             </xf:action>

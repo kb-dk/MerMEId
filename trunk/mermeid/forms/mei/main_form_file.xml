@@ -115,7 +115,7 @@
 								</h:legend>
 								<h:div>
 									<xf:input ref="m:expan" class="maxlong">
-										<xf:label class="fixed_width">Name <h:a class="help">&#160;?<h:span class="comment">E.g. "Danish Centre for Music Publication"</h:span></h:a>
+										<xf:label class="fixed_width">Name <h:a class="help">&#160;?<h:span class="comment">E.g. "Danish Centre for Music Editing"</h:span></h:a>
 										</xf:label>
 									</xf:input>
 									<dcm:attribute-editor ref="m:expan"/>
@@ -279,13 +279,13 @@
 					nodeset="m:projectDesc"
 					label="Add project description"
 					origin="instance('empty-instance')/m:meiHead/m:encodingDesc/m:projectDesc"/>
-				<xf:group ref="m:projectDesc" id="repeat-projectdesc">
-					<fr:tinymce ref="."/>
+				<xf:repeat nodeset="m:projectDesc" id="repeat-projectdesc">
+					<fr:tinymce ref="m:p"/>
 					<dcm:element-buttons triggers="remove"
 						nodeset="m:projectDesc" 
 						index="repeat-projectdesc" 
 						origin="instance('empty-instance')/m:meiHead/m:encodingDesc/m:projectDesc"/>
-				</xf:group>
+				</xf:repeat>
 				<dcm:attribute-editor ref="m:projectDesc"/>
 				<h:br/>
 				<h:span class="blocklabel strong">Applications <h:a class="help">&#160;?<h:span 
@@ -380,7 +380,7 @@
 				nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes']"
 				id="repeat-private_notes">
 				<h:div>
-					<fr:tinymce ref="m:p" class="mediumheight"/>
+					<fr:tinymce ref="."/>
 					<dcm:element-buttons-typed triggers="remove" 
 						index="repeat-private_notes" 
 						nodeset="m:annot[@type='private_notes']" 

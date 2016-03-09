@@ -26,5 +26,5 @@ let $params :=
 </parameters>
 
 for $doc in $list
-return transform:transform($doc,xs:anyURI(concat("","http://",request:get-header('HOST'),"/editor/transforms/mei/mei_to_html.xsl")),$params)
+return transform:transform($doc,doc("/db/style/mei_to_html.xsl"),$params)
  

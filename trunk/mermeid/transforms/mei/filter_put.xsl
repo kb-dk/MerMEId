@@ -3,7 +3,7 @@
   Filter for cleaning MEI data when saving from MerMEId 
   
   Axel Teich Geertinger & Sigfrid Lundberg
-  Danish Centre for Music Publication
+  Danish Centre for Music Editing
   The Royal Library, Copenhagen
   
   2010-2015

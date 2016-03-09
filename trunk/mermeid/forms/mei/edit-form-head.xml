@@ -139,8 +139,9 @@
       serialization="none" 
       validate="false"
       resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
-      replace="instance" instance="data-instance"
-      xxf:show-progress="false"/>
+      replace="instance" 
+      xxf:show-progress="false"
+      instance="data-instance"/>
 
     <xf:submission id="save-to-file"
       ref="instance('data-instance')"
@@ -159,7 +160,7 @@
       resource="{instance('temp')/target_uri}"
       replace="instance" 
       xxf:show-progress="false"
-      instance="XMLfiles"/>
+      instance="XMLfiles"/> 
 
     <xf:submission id="load-keywords"
       method="get" 

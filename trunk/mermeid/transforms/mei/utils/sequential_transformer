@@ -8,9 +8,12 @@ binmode STDOUT,':raw';
 
 my $reserved  = "^A-Za-z0-9/&?=:;$@#.?\-";
 
-my @sheet_list = ("utils/identifier_type_to_label.xsl",
-		  "utils/check_element_order.xsl",
-		  "utils/cleanup_2014.xsl");
+my @sheet_list = ("utils/id_deduplicator.xsl",
+		  "utils/transform_mermeid_2_to_3.xsl");
+
+#("utils/identifier_type_to_label.xsl",
+#		  "utils/check_element_order.xsl",
+#		  "utils/cleanup_2014.xsl");
 
 # "utils/update_perfMedium_in_sub-expressions.xsl";
 
@@ -55,7 +58,8 @@ if ( open($in,"$find |") ) {
 	    $in            = $source.$num_suffix;
 	    $num_suffix++;
 	    $out           = $source.$num_suffix;
-	    system "saxon $in $stylesheet > $out";
+	    system "xsltproc $stylesheet $in > $out";
+#	    system "saxon $in $stylesheet > $out";
 	    print $stylesheet . " ";
 	}
 	print "\n";
