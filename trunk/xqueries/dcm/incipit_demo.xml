@@ -1,0 +1,457 @@
+<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="2013" xml:id="mei_95N20005">
+    <meiHead>
+        <fileDesc>
+            <titleStmt>
+                <title>Incipit Demo</title>
+            </titleStmt>
+            <pubStmt>
+                <respStmt xml:id="respStmt_iddc416a37">
+                    <resp>Publisher</resp>
+                    <corpName xml:id="corpName_id84e44811">
+                        <abbr>DCM</abbr>
+                        <expan>Danish Centre for Music Editing</expan>
+                        <address>
+                            <addrLine>
+                                <ptr label="" target="http://www.kb.dk/dcm/"/>
+                            </addrLine>
+                        </address>
+                    </corpName>
+                    <persName role="editor" xml:id="persName_idbb50be25">Axel Geertinger</persName>
+                </respStmt>
+                <date isodate="2016">2016</date>
+                <availability>
+                    <useRestrict>For demonstration purposes only</useRestrict>
+                </availability>
+            </pubStmt>
+            <seriesStmt>
+                <title xml:id="title_idf5e1bc02"/>
+                <identifier type="file_collection" xml:id="identifier_id8eeb9ee5">Demo</identifier>
+            </seriesStmt>
+        </fileDesc>
+        <encodingDesc>
+            <appInfo>
+                <application version="2016">
+                    <name>MerMEId</name>
+                </application>
+            </appInfo>
+            <projectDesc xml:id="projectDesc_id39e1bb63">
+                <p xml:id="p_314N20039">Created using MerMEId</p>
+            </projectDesc>
+        </encodingDesc>
+        <workDesc>
+            <work analog="frbr:work" xml:id="work_id1f34e2a8">
+                <identifier label="Demo" xml:id="identifier_3d2646a5">10</identifier>
+                <titleStmt xml:id="titleStmt_2d08d145">
+                    <title xml:id="title_id61c00f52" xml:lang="en">Incipit Demo</title>
+                    <respStmt xml:id="respStmt_b66bc145"/>
+                </titleStmt>
+                <history xml:id="history_id41e5cd2f">
+                    <creation xml:id="creation_id6ab651d4"/>
+                </history>
+                <langUsage xml:id="langUsage_822e6124">
+                    <language xml:id="en">English</language>
+                </langUsage>
+                <notesStmt xml:id="notesStmt_471582e5">
+                    <annot label="" type="links" xml:id="annot_f463a756"/>
+                    <annot label="" type="general_description" xml:id="annot_4b3f6f65">
+                        <p xml:id="p_314N20060">This file illustrates various ways of including incipits. Incipits are defined at the editor's 'Music' tab.</p>
+                        <p xml:id="p_314N20064">Incipits encoded in MEI or Plaine And Easie Code are rendered in MerMEId's HTML preview with <ref target="http://verovio.org" xl:show="_blank" xl:title="Verovio">Verovio</ref>
+  
+  . 
+                            Please note that Internet Explorer requires version 10 or newer for this to work.</p>
+                        <p xml:id="p_314N2006E">The incipits in this sample file show the beginning of Carl Nielsen's <ref target="http://www.kb.dk/dcm/cnw/document.xq?doc=cnw0060.xml" xl:show="_blank" xl:title="Romance CNW 60">Romance for Violin and Piano, CNW 60</ref>
+  
+  
+  
+   .</p>
+                    </annot>
+                </notesStmt>
+                <classification xml:id="classification_8c2dad93">
+                    <classCode xml:id="DcmContentClass"/>
+                    <classCode xml:id="DcmPresentationClass"/>
+                    <classCode xml:id="DcmAuthorityClass"/>
+                    <classCode xml:id="DcmScoringClass"/>
+                    <classCode xml:id="DcmStateClass"/>
+                    <classCode xml:id="DcmCompletenessClass"/>
+                </classification>
+                <expressionList xml:id="expressionList_389a76cf">
+                    <expression analog="frbr:expression" xml:id="expression_23d59f2a">
+                        <titleStmt xml:id="titleStmt_c0b207d8">
+                            <title xml:id="title_74168954" xml:lang="en">1. Incipit encoded in MEI (not editable in the MerMEId editor):</title>
+                        </titleStmt>
+                        <incip xml:id="incip_35852e2f">
+                            <score>
+                                <scoreDef key.sig.showchange="true" meter.count="4" meter.sym="common" meter.unit="4">
+                                    <staffGrp>
+                                        <staffDef clef.line="2" clef.shape="G" key.mode="major" key.sig="1s" label="" lines="5" n="1" xml:id="sd1"/>
+                                        <staffGrp barthru="true" n="1" symbol="brace">
+                                            <staffDef clef.line="2" clef.shape="G" key.mode="major" key.sig="1s" label=" " lines="5" n="2" xml:id="sd2"/>
+                                            <staffDef clef.line="4" clef.shape="F" key.mode="major" key.sig="1s" label="" lines="5" n="3" xml:id="sd3"/>
+                                        </staffGrp>
+                                    </staffGrp>
+                                </scoreDef>
+                                <section>
+                                    <pb n="1"/>
+                                    <measure label="1" n="1">
+                                        <staff n="1">
+                                            <layer n="1">
+                                                <note dur="2" oct="4" pname="b" xml:id="p1cbd4n0v1b1s1"/>
+                                                <note dur="2" oct="4" pname="b" xml:id="p1cbd4n512v1b1s1"/>
+                                            </layer>
+                                        </staff>
+                                        <staff n="2">
+                                            <layer n="1">
+                                                <rest dur="4" xml:id="p1r0v1b1s2"/>
+                                                <chord dur="4" xml:id="c256v1b1s2">
+                                                    <note dur="4" oct="3" pname="b" xml:id="p1cbd3n256v1b1s2"/>
+                                                    <note dur="4" oct="4" pname="d" xml:id="p2cdd4n256v1b1s2"/>
+                                                    <note dur="4" oct="4" pname="g" xml:id="p3cgd4n256v1b1s2"/>
+                                                    <note dur="4" oct="4" pname="b" xml:id="p4cbd4n256v1b1s2"/>
+                                                </chord>
+                                                <rest dur="4" xml:id="p1r512v1b1s2"/>
+                                                <chord dur="4" xml:id="c768v1b1s2">
+                                                    <note dur="4" oct="3" pname="b" xml:id="p1cbd3n768v1b1s2"/>
+                                                    <note dur="4" oct="4" pname="d" xml:id="p2cdd4n768v1b1s2">
+                                                        <accid accid="s"/>
+                                                    </note>
+                                                    <note dur="4" oct="4" pname="g" xml:id="p3cgd4n768v1b1s2"/>
+                                                    <note dur="4" oct="4" pname="b" xml:id="p4cbd4n768v1b1s2"/>
+                                                </chord>
+                                            </layer>
+                                        </staff>
+                                        <staff n="3">
+                                            <layer n="1">
+                                                <rest dur="4" xml:id="p1r0v1b1s3"/>
+                                                <chord dur="4" stem.dir="up" xml:id="c256v1b1s3">
+                                                    <note dur="4" oct="2" pname="g" xml:id="p1cgd2n256v1b1s3"/>
+                                                    <note dur="4" oct="3" pname="d" xml:id="p2cdd3n256v1b1s3"/>
+                                                    <note dur="4" oct="3" pname="g" xml:id="p3cgd3n256v1b1s3"/>
+                                                </chord>
+                                                <rest dur="4" xml:id="p1r512v1b1s3"/>
+                                                <chord dur="4" stem.dir="up" xml:id="c768v1b1s3">
+                                                    <note dur="4" oct="2" pname="g" xml:id="p1cgd2n768v1b1s3"/>
+                                                    <note dur="4" oct="3" pname="d" xml:id="p2cdd3n768v1b1s3">
+                                                        <accid accid="s"/>
+                                                    </note>
+                                                    <note dur="4" oct="3" pname="g" xml:id="p3cgd3n768v1b1s3"/>
+                                                </chord>
+                                            </layer>
+                                        </staff>
+                                        <dynam staff="1" tstamp="1">p</dynam>
+                                        <dynam staff="2" tstamp="2">p</dynam>
+                                        <tie curvedir="below" endid="p1cgd2n0v2b2s3" startid="p1cgd2n768v1b1s3"/>
+                                    </measure>
+                                    <measure n="2">
+                                        <staff n="1">
+                                            <layer n="1">
+                                                <beam>
+                                                    <note dur="8" oct="4" pname="g" xml:id="p1cgd4n0v1b2s1">
+                                                        <accid accid="s"/>
+                                                    </note>
+                                                    <note dur="8" oct="4" pname="a" xml:id="p1cad4n128v1b2s1"/>
+                                                    <note dur="8" oct="5" pname="c" xml:id="p1ccd5n256v1b2s1"/>
+                                                    <note dur="8" oct="4" pname="b" xml:id="p1cbd4n384v1b2s1"/>
+                                                </beam>
+                                                <note dur="4" oct="4" pname="a" xml:id="p1cad4n512v1b2s1"/>
+                                                <note dur="4" oct="4" pname="b" xml:id="p1cbd4n768v1b2s1"/>
+                                            </layer>
+                                        </staff>
+                                        <staff n="2">
+                                            <layer n="1">
+                                                <rest dur="4" xml:id="p1r0v1b2s2"/>
+                                                <chord dur="4" xml:id="c256v1b2s2">
+                                                    <note dur="4" oct="4" pname="c" xml:id="p1ccd4n256v1b2s2"/>
+                                                    <note dur="4" oct="4" pname="e" xml:id="p2ced4n256v1b2s2"/>
+                                                    <note dur="4" oct="4" pname="a" xml:id="p3cad4n256v1b2s2"/>
+                                                    <note dur="4" oct="5" pname="c" xml:id="p4ccd5n256v1b2s2"/>
+                                                </chord>
+                                                <rest dur="4" xml:id="p1r512v1b2s2"/>
+                                                <chord dur="4" xml:id="c768v1b2s2">
+                                                    <note accid="n" dur="4" oct="4" pname="d" xml:id="p1cdd4n768v1b2s2"/>
+                                                    <note dur="4" oct="4" pname="f" xml:id="p2cfd4n768v1b2s2"/>
+                                                    <note dur="4" oct="4" pname="a" xml:id="p3cad4n768v1b2s2"/>
+                                                </chord>
+                                            </layer>
+                                        </staff>
+                                        <staff n="3">
+                                            <layer n="1">
+                                                <note dur="4" oct="3" pname="c" xml:id="p1ccd3n0v1b2s3"/>
+                                                <beam>
+                                                    <note dur="8" oct="3" pname="e" xml:id="p1ced3n256v1b2s3"/>
+                                                    <note accid="n" dur="8" oct="3" pname="d" xml:id="p1cdd3n384v1b2s3"/>
+                                                </beam>
+                                                <note dur="2" oct="3" pname="c" xml:id="p1ccd3n512v1b2s3"/>
+                                            </layer>
+                                            <layer n="2">
+                                                <note dur="1" oct="2" pname="g" xml:id="p1cgd2n0v2b2s3"/>
+                                            </layer>
+                                        </staff>
+                                        <slur endid="p1cbd4n384v1b2s1" layer="1" staff="1" startid="p1cgd4n0v1b2s1"/>
+                                        <tie curvedir="below" endid="p1cgd2n0v1b3s3" startid="p1cgd2n0v2b2s3"/>
+                                    </measure>
+                                    <measure n="3">
+                                        <staff n="1">
+                                            <layer n="1">
+                                                <note accid="n" dur="4" oct="4" pname="g" xml:id="p1cgd4n0v1b3s1"/>
+                                                <note dur="4" oct="4" pname="b" xml:id="p1cbd4n256v1b3s1"/>
+                                                <note dur="4" oct="5" pname="e" xml:id="p1ced5n512v1b3s1"/>
+                                                <beam>
+                                                    <note dur="8" oct="5" pname="d" xml:id="p1cdd5n768v1b3s1"/>
+                                                    <note dur="8" oct="5" pname="c" xml:id="p1ccd5n896v1b3s1">
+                                                        <accid accid="s"/>
+                                                    </note>
+                                                </beam>
+                                            </layer>
+                                        </staff>
+                                        <staff n="2">
+                                            <layer n="1">
+                                                <rest dur="4" xml:id="p1r0v1b3s2"/>
+                                                <chord artic="acc" dur="2" xml:id="c256v1b3s2">
+                                                    <note dur="2" oct="4" pname="d" xml:id="p1cdd4n256v1b3s2"/>
+                                                    <note dur="2" oct="4" pname="g" xml:id="p2cgd4n256v1b3s2"/>
+                                                    <note dur="2" oct="4" pname="b" xml:id="p3cbd4n256v1b3s2"/>
+                                                </chord>
+                                                <chord dur="4" xml:id="c768v1b3s2">
+                                                    <note dur="4" oct="4" pname="c" xml:id="p1ccd4n768v1b3s2">
+                                                        <accid accid="s"/>
+                                                    </note>
+                                                    <note dur="4" oct="4" pname="g" xml:id="p2cgd4n768v1b3s2"/>
+                                                    <note dur="4" oct="4" pname="a" xml:id="p3cad4n768v1b3s2"/>
+                                                </chord>
+                                            </layer>
+                                        </staff>
+                                        <staff n="3">
+                                            <layer n="1">
+                                                <chord dots="1" dur="4" xml:id="c0v1b3s3">
+                                                    <note dots="1" dur="4" oct="2" pname="g" tie="t" xml:id="p1cgd2n0v1b3s3"/>
+                                                    <note dots="1" dur="4" oct="2" pname="b" xml:id="p2cbd2n0v1b3s3"/>
+                                                </chord>
+                                                <note dur="8" oct="2" pname="f" xml:id="p1cfd2n384v1b3s3"/>
+                                                <note dur="4" oct="2" pname="e" xml:id="p1ced2n512v1b3s3"/>
+                                                <note dur="4" oct="2" pname="a" xml:id="p1cad2n768v1b3s3"/>
+                                            </layer>
+                                        </staff>
+                                        <slur endid="p1cbd4n256v1b3s1" layer="1" staff="1" startid="p1cgd4n0v1b3s1"/>
+                                        <slur endid="p1ccd5n896v1b3s1" layer="1" staff="1" startid="p1ced5n512v1b3s1"/>
+                                    </measure>
+                                    <measure n="4">
+                                        <staff n="1">
+                                            <layer n="1">
+                                                <note dur="4" oct="5" pname="e" xml:id="p1ced5n0v1b4s1"/>
+                                                <note dur="2" oct="5" pname="d" xml:id="p1cdd5n256v1b4s1"/>
+                                                <beam>
+                                                    <note dur="8" oct="5" pname="e" xml:id="p1ced5n768v1b4s1"/>
+                                                    <note dur="8" oct="5" pname="f" xml:id="p1cfd5n896v1b4s1"/>
+                                                </beam>
+                                            </layer>
+                                        </staff>
+                                        <staff n="2">
+                                            <layer n="1">
+                                                <rest dur="4" xml:id="p1r0v1b4s2"/>
+                                                <chord dur="4" xml:id="c256v1b4s2">
+                                                    <note dur="4" oct="4" pname="d" xml:id="p1cdd4n256v1b4s2"/>
+                                                    <note dur="4" oct="4" pname="f" xml:id="p2cfd4n256v1b4s2"/>
+                                                    <note dur="4" oct="4" pname="a" xml:id="p3cad4n256v1b4s2"/>
+                                                </chord>
+                                                <rest dur="4" xml:id="p1r512v1b4s2"/>
+                                                <chord dur="4" xml:id="c768v1b4s2">
+                                                    <note dur="4" oct="3" pname="b" xml:id="p1cbd3n768v1b4s2"/>
+                                                    <note dur="4" oct="4" pname="d" xml:id="p2cdd4n768v1b4s2"/>
+                                                    <note dur="4" oct="4" pname="f" xml:id="p3cfd4n768v1b4s2"/>
+                                                    <note dur="4" oct="4" pname="a" xml:id="p4cad4n768v1b4s2"/>
+                                                </chord>
+                                            </layer>
+                                        </staff>
+                                        <staff n="3">
+                                            <layer n="1">
+                                                <note dur="2" oct="2" pname="d" xml:id="p1cdd2n0v1b4s3"/>
+                                                <chord dur="2" xml:id="c512v1b4s3">
+                                                    <note dur="2" oct="2" pname="d" xml:id="p1cdd2n512v1b4s3"/>
+                                                    <note dur="2" oct="3" pname="d" xml:id="p2cdd3n512v1b4s3"/>
+                                                </chord>
+                                            </layer>
+                                        </staff>
+                                        <slur endid="p1cdd5n256v1b4s1" layer="1" staff="1" startid="p1ced5n0v1b4s1"/>
+                                        <slur endid="p1cfd5n896v1b4s1" layer="1" staff="1" startid="p1ced5n768v1b4s1"/>
+                                    </measure>
+                                    <measure n="5">
+                                        <staff n="1">
+                                            <layer n="1">
+                                                <note artic="acc" dur="2" oct="5" pname="g" xml:id="p1cgd5n0v1b5s1"/>
+                                                <note artic="acc" dur="2" oct="5" pname="g" xml:id="p1cgd5n512v1b5s1"/>
+                                            </layer>
+                                        </staff>
+                                        <staff n="2">
+                                            <layer n="1">
+                                                <rest dur="4" xml:id="p1r0v1b5s2"/>
+                                                <chord dur="4" xml:id="c256v1b5s2">
+                                                    <note dur="4" oct="4" pname="c" xml:id="p1ccd4n256v1b5s2"/>
+                                                    <note dur="4" oct="4" pname="g" xml:id="p2cgd4n256v1b5s2"/>
+                                                </chord>
+                                                <rest dur="4" xml:id="p1r512v1b5s2"/>
+                                                <chord dur="4" xml:id="c768v1b5s2">
+                                                    <note dur="4" oct="3" pname="g" xml:id="p1cgd3n768v1b5s2"/>
+                                                    <note dur="4" oct="3" pname="b" xml:id="p2cbd3n768v1b5s2"/>
+                                                    <note dur="4" oct="4" pname="g" xml:id="p3cgd4n768v1b5s2"/>
+                                                </chord>
+                                            </layer>
+                                        </staff>
+                                        <staff n="3">
+                                            <layer n="1">
+                                                <chord dur="2" xml:id="c0v1b5s3">
+                                                    <note accid="f" dur="2" oct="2" pname="e" xml:id="p1ced2n0v1b5s3"/>
+                                                    <note accid="f" dur="2" oct="3" pname="e" xml:id="p2ced3n0v1b5s3"/>
+                                                </chord>
+                                                <chord dur="2" xml:id="c512v1b5s3">
+                                                    <note accid="n" dur="2" oct="2" pname="e" xml:id="p1ced2n512v1b5s3"/>
+                                                    <note accid="n" dur="2" oct="3" pname="e" xml:id="p2ced3n512v1b5s3"/>
+                                                </chord>
+                                            </layer>
+                                        </staff>
+                                        <hairpin endid="p1cbd5n768v1b6s1" form="cres" staff="1" startid="p2ced3n0v1b5s3"/>
+                                    </measure>
+                                    <measure n="6">
+                                        <staff n="1">
+                                            <layer n="1">
+                                                <beam>
+                                                    <note dur="8" oct="5" pname="g" xml:id="p1cgd5n0v1b6s1"/>
+                                                    <note dur="8" oct="5" pname="a" xml:id="p1cad5n128v1b6s1"/>
+                                                    <note dur="8" oct="5" pname="b" xml:id="p1cbd5n256v1b6s1"/>
+                                                    <note dur="8" oct="5" pname="e" xml:id="p1ced5n384v1b6s1"/>
+                                                </beam>
+                                                <note dur="4" oct="5" pname="g" xml:id="p1cgd5n512v1b6s1"/>
+                                                <note artic="ten" dur="4" oct="5" pname="b" xml:id="p1cbd5n768v1b6s1">
+                                                    <accid accid="f"/>
+                                                </note>
+                                            </layer>
+                                        </staff>
+                                        <staff n="2">
+                                            <layer n="1">
+                                                <rest dur="4" xml:id="p1r0v1b6s2"/>
+                                                <chord dur="4" xml:id="c256v1b6s2">
+                                                    <note dur="4" oct="3" pname="g" xml:id="p1cgd3n256v1b6s2"/>
+                                                    <note dur="4" oct="3" pname="b" xml:id="p2cbd3n256v1b6s2"/>
+                                                    <note dur="4" oct="4" pname="g" xml:id="p3cgd4n256v1b6s2"/>
+                                                </chord>
+                                                <chord dur="4" xml:id="c512v1b6s2">
+                                                    <note dur="4" oct="3" pname="g" xml:id="p1cgd3n512v1b6s2"/>
+                                                    <note dur="4" oct="4" pname="c" xml:id="p2ccd4n512v1b6s2">
+                                                        <accid accid="s"/>
+                                                    </note>
+                                                    <note dur="4" oct="4" pname="g" xml:id="p3cgd4n512v1b6s2"/>
+                                                </chord>
+                                                <rest dur="4" xml:id="p1r768v1b6s2"/>
+                                            </layer>
+                                        </staff>
+                                        <staff n="3">
+                                            <layer n="1">
+                                                <chord dur="2" xml:id="c0v1b6s3">
+                                                    <note accid="n" dur="2" oct="2" pname="f" xml:id="p1cfd2n0v1b6s3"/>
+                                                    <note accid="n" dur="2" oct="3" pname="f" xml:id="p2cfd3n0v1b6s3"/>
+                                                </chord>
+                                                <chord dur="4" xml:id="c512v1b6s3">
+                                                    <note dur="4" oct="2" pname="e" xml:id="p1ced2n512v1b6s3"/>
+                                                    <note dur="4" oct="3" pname="e" xml:id="p2ced3n512v1b6s3"/>
+                                                </chord>
+                                                <rest dur="4" xml:id="p1r768v1b6s3"/>
+                                            </layer>
+                                        </staff>
+                                        <slur endid="p1ced5n384v1b6s1" layer="1" staff="1" startid="p1cgd5n0v1b6s1"/>
+                                    </measure>
+                                </section>
+                            </score>
+                        </incip>
+                        <history xml:id="history_5b845292">
+                            <creation xml:id="creation_a9b88e21"/>
+                            <p xml:id="p_314N203A0">MerMEId can render MEI-encoded incipits in the HTML preview using the <ref target="http://verovio.org" xl:show="_blank" xl:title="Verovio">Verovio</ref>
+  
+  
+  
+  
+  
+  
+  
+   toolkit. The MEI encoding is neither editable nor visible in the MerMEId editor, so you will need some other XML editing tool to add and edit them. Please note that Verovio currently does not yet support detailed information such as articulation and dynamics.</p>
+                        </history>
+                        <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_5d276875"/>
+                        <classification xml:id="classification_58460514">
+                            <termList xml:id="termList_05e56b35">
+                                <term xml:id="term_a5773ab3"/>
+                            </termList>
+                        </classification>
+                        <componentGrp xml:id="componentGrp_42ddf13c"/>
+                        <relationList xml:id="relationList_5ff3c496"/>
+                    </expression>
+                    <expression analog="frbr:expression" xml:id="expression_01033728">
+                        <titleStmt xml:id="titleStmt_6fb6581d">
+                            <title xml:id="title_8965a4e1" xml:lang="en">2. Incipit entered as Plaine and Easie code:</title>
+                        </titleStmt>
+                        <incip xml:id="incip_dab5ceb7">
+                            <incipCode form="pae" xml:id="incipCode_a6c01738">%G-2 $xF @c  '2BB/{x8GA''C'B}4A/nGB''4E{8DxC}/4E2D{8EF}/2GG/{''8GABE}4GbB</incipCode>
+                        </incip>
+                        <history xml:id="history_74021b98">
+                            <creation xml:id="creation_86ec1071"/>
+                            <p xml:id="p_314N203CE">
+                                <ref target="http://www.iaml.info/plaine-easie-code" xl:show="_blank" xl:title="IAML Plaine and Easie Code reference">Plaine and Easie Code</ref>
+  
+  
+   can be entered directly at the 'Music' tab for rendering with Verovio in the HTML preview. If single-staff, single-voice incipits without any slurs, dynamics or articulation is all you need, this is probably the most efficient way of adding incipits. Enter 'plaineAndEasie' or simply 'pae' in the code language field to have MerMEId/Verovio recognize the code correctly.</p>
+                        </history>
+                        <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_7ec2e148"/>
+                        <classification xml:id="classification_f3c02a4f">
+                            <termList xml:id="termList_6f439ba2">
+                                <term xml:id="term_6ae174c4"/>
+                            </termList>
+                        </classification>
+                        <componentGrp xml:id="componentGrp_bf1e9db4"/>
+                        <relationList xml:id="relationList_fe94fe22"/>
+                    </expression>
+                    <expression analog="frbr:expression" xml:id="expression_bb6dc476">
+                        <titleStmt xml:id="titleStmt_bb9bfdff">
+                            <title xml:id="title_821c4cb0" xml:lang="en">3. Link to an image file:</title>
+                        </titleStmt>
+                        <incip xml:id="incip_df7f33be">
+                            <graphic label="" target="http://www.kb.dk/export/sites/kb_dk/da/nb/dcm/udgivelser/cnw/incipits/lowres/cnw_060.png" targettype="lowres" xml:id="graphic_9e3cf184"/>
+                            <graphic label="" target="http://www.kb.dk/export/sites/kb_dk/da/nb/dcm/udgivelser/cnw/incipits/hires/cnw_060.png" targettype="hires" xml:id="graphic_05e03b6d"/>
+                        </incip>
+                        <history xml:id="history_d5b9f7ec">
+                            <creation xml:id="creation_f065cb92"/>
+                            <p xml:id="p_314N20401">You can create graphic files (png, jpg or other) using your favorite music editing software and use MerMEId to create a link to the files. Just remember that the images must be accessible on the Internet in order to be visible for others (that is, they must be placed on a publicly accessible web server). If images are provided in both low and high resolutions, MerMEId will make the low resolution image clickable and display the high resolution image in a pop-up window.</p>
+                        </history>
+                        <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_ed99f4fe"/>
+                        <classification xml:id="classification_667ab942">
+                            <termList xml:id="termList_9ba46183">
+                                <term xml:id="term_d16da9da"/>
+                            </termList>
+                        </classification>
+                        <componentGrp xml:id="componentGrp_430dfbed"/>
+                        <relationList xml:id="relationList_7ca0f6fb"/>
+                    </expression>
+                </expressionList>
+            </work>
+        </workDesc>
+        <revisionDesc>
+            <change isodate="2016-02-23" resp="atge" xml:id="change_200N101C1">
+                <changeDesc>
+                    <p/>
+                </changeDesc>
+            </change>
+            <change isodate="2016-02-24" resp="atge" xml:id="change_157N101B6">
+                <changeDesc>
+                    <p/>
+                </changeDesc>
+            </change>
+            <change isodate="2016-03-01" resp="atge" xml:id="change_317N104A5">
+                <changeDesc>
+                    <p/>
+                </changeDesc>
+            </change>
+            <change isodate="2016-03-02" resp="atge" xml:id="change_303N103F8">
+                <changeDesc>
+                    <p/>
+                </changeDesc>
+            </change>
+        </revisionDesc>
+    </meiHead>
+    <music/>
+</mei>
