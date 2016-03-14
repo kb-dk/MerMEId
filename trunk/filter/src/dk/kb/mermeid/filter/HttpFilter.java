@@ -18,8 +18,8 @@ package dk.kb.mermeid.filter;
  * there after passing the <q>put filter</q>.</p>
  *
  * @author Sigfrid Lundberg (slu@kb.dk)
- * @version $Revision$
- * Last modified $Date$
+ * @version $Revision: 392 $
+ * Last modified $Date: 2013-01-16 14:39:17 +0100 (Wed, 16 Jan 2013) $
  */
 public class HttpFilter extends javax.servlet.http.HttpServlet {
 

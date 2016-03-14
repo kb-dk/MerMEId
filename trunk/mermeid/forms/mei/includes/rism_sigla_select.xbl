@@ -71,7 +71,6 @@
           </temp>
         </xf:instance> 
         
-     
         <!-- "onload" xforms actions -->
         <xf:action ev:event="xforms-model-construct-done">
           <!-- load rism country list -->
@@ -84,7 +83,9 @@
         </xf:action>
         
       </xf:model>
+      
     </xbl:implementation>
+    
     <xbl:template>
       <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
           <xf:group appearance="xxf:internal" xxbl:scope="inner">
@@ -92,9 +93,29 @@
               <xxf:value select="." xxbl:scope="outer"/>
             </xf:var>
             <h:div>
-              <xf:input ref="$binding">
+              <xf:input ref="$binding" id="rism-input">
                 <xf:label class="fixed_width">RISM siglum </xf:label>
               </xf:input>
+                  
+              <!-- validate RISM siglum basic pattern and country -->              
+              <xf:group ref=".[normalize-space($binding)]">
+                <xf:group ref=".[matches($binding,'^[A-Z]+-[A-Z]+[a-z]*$')]">
+                  <xf:var name="country" select="substring-before($binding,'-')"/>
+                  <xf:var name="archive" select="substring-after($binding,'-')"/>
+                  <xf:group ref=".[not(instance('rism-country-instance')/m:li/m:geogName[@dbkey=$country])]">
+                    <!-- country not found -->
+                    <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning.png" style="vertical-align:middle;"
+                      title="MerMEId does not recognize the country code &apos;{$country}&apos;. Please make sure you have entered a valid country code (all upper case)."/>
+                  </xf:group>
+                  <!-- validation at archive level not implemented; requires loading the relevant RISM sigla file (how?) -->
+                </xf:group>
+                <xf:group ref=".[not(matches($binding,'^[A-Z]+-[A-Z]+[a-z]*$'))]">
+                  <!-- pattern doesn't match -->
+                  <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning_important.png" style="vertical-align:middle;"
+                    title="RISM sigla must match a pattern of upper and lower case letters like XXX-XXXxxx or XXX-XXX (number of letters may vary, though)"/>
+                </xf:group>
+              </xf:group>
+                  
               <xf:trigger>
                 <xf:label>Select from list</xf:label>
                 <xf:action ev:event="DOMActivate">

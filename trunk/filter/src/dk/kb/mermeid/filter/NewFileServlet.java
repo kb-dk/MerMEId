@@ -5,8 +5,8 @@ package dk.kb.mermeid.filter;
  * /new/* pattern.  It will as a response generate a new unique URI and
  * redirect a client to it.</p>
  * @author Sigfrid Lundberg (slu@kb.dk)
- * @version $Revision$
- * Last modified $Date$
+ * @version $Revision: 390 $
+ * Last modified $Date: 2013-01-15 15:45:59 +0100 (Tue, 15 Jan 2013) $
  */
 public class NewFileServlet extends javax.servlet.http.HttpServlet {
 

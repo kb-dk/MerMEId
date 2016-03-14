@@ -164,14 +164,17 @@
                         <xf:var name="number" select="count(parent::node()/*)"/>
                         <xf:trigger appearance="minimal">
                             <xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-                            <xf:action if="$number=1" ev:event="DOMActivate">
-                                <xf:delete nodeset="parent::node()"/>
-                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
-                            </xf:action>
-                            <xf:action if="$number&gt;1" ev:event="DOMActivate">
-                                <xf:delete nodeset="." at="index($index)"/>
-                                <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
-                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:action if="$number=1">
+                                    <xf:delete nodeset="parent::node()"/>
+                                    <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
+                                    <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                                </xf:action>
+                                <xf:action if="$number&gt;1">
+                                    <xf:delete nodeset="." at="index($index)"/>
+                                    <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
+                                    <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                                </xf:action>
                             </xf:action>
                         </xf:trigger> 
                     </xf:group>

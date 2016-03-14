@@ -11,7 +11,10 @@
     <h:meta http-equiv="Content-Type" content="application/xhtml+xml"/>
     
     <h:script type="text/javascript" src="http:/editor/js/editor.js"/>
-    
+    <h:script type="text/javascript" src="http:/editor/js/tinymce.js">
+        //<!-- tinymce configuration -->
+    </h:script>
+        
     
     <h:style type="text/css" media="all"> 
         @import "/editor/style/tab_style.css"; 
@@ -26,10 +29,22 @@
             <mei/>
         </xf:instance>
         
+        <!-- For some reason, this instance can't be loaded directly as in edit-form-head... :-(  --> 
+        <!-- Why??? -->
+        <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+            id="bibl-type-instance">
+            <biblList/>
+        </xf:instance>
+        
         <xf:instance id="parameters" 
             xmlns="http://www.kb.dk/dcm"
             parse="xml">
             <xi:include href="mermeid_configuration.xml"/>
+        </xf:instance>
+
+        <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+            id="authority-instance">
+            <mei/>
         </xf:instance>
         
         <xf:instance id="XMLfiles" 
@@ -101,6 +116,27 @@
             resource="{instance('parameters')/dcm:library_crud_home}/standard_bibliography.xml" 
             method="put"
             replace="instance"/>        
+
+        <xf:submission id="load-bibl-types"
+            xxf:username=""
+            xxf:password=""
+            xxf:show-progress="false"
+            method="get" 
+            serialization="none" 
+            validate="false"
+            resource="{instance('parameters')/dcm:server_name}editor/forms/mei/model/bibl_reference_types.xml" 
+            replace="instance" 
+            instance="bibl-type-instance"/>
+        
+        <xf:submission id="load-authorities"
+            method="get" 
+            serialization="none" 
+            validate="false"
+            resource="{instance('parameters')/dcm:library_crud_home}/authority_files.xml"
+            replace="instance" 
+            xxf:show-progress="false"
+            instance="authority-instance"/>
+        
         
         <!-- "onload" xforms actions -->
         <xf:action ev:event="xforms-model-construct-done">
@@ -124,13 +160,17 @@
                 '&amp;subject=dummy')"/>
             <!-- load standard bibliography -->
             <xf:send submission="load-bibliography"/>
+            <!-- load list of reference types -->
+            <xf:send submission="load-bibl-types"/>
+            <!-- load list of authority files -->
+            <xf:send submission="load-authorities"/>
         </xf:action>
         
         <xf:action ev:event="xforms-submit-done">
             <!-- set instance state to unchanged on saving -->
             <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
         </xf:action>
-        
+
         <xf:action ev:event="xforms-submit-error">
             <xf:var name="code" select="event('response-status-code')"/>
             <xf:action>
@@ -141,14 +181,15 @@
     </xf:model>
     
     <!-- XBL components -->
-    <xi:include href="includes/element_buttons.xbl" parse="xml"/>
-    <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
+    <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
+    <xi:include href="includes/authority.xbl" parse="xml"/>
+    <xi:include href="includes/bibl-input.xbl" parse="xml"/>
     <xi:include href="includes/create.xbl" parse="xml"/>
     <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
     <xi:include href="includes/date_editor.xbl" parse="xml"/>
+    <xi:include href="includes/element_buttons.xbl" parse="xml"/>
+    <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
     <xi:include href="includes/id.xbl" parse="xml"/>
-    <xi:include href="includes/attribute_editor.xbl" parse="xml"/>
-    <xi:include href="includes/bibl-input.xbl" parse="xml"/>
     
 </h:head>
 

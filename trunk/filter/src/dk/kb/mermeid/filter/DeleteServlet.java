@@ -5,8 +5,8 @@ package dk.kb.mermeid.filter;
  * URI pattern, this gateway sends a HTTP DELETE request to
  * the corresponding entity in the CRUD engine.</p>
  * @author Sigfrid Lundberg (slu@kb.dk)
- * @version $Revision$
- * Last modified $Date$
+ * @version $Revision: 390 $
+ * Last modified $Date: 2013-01-15 15:45:59 +0100 (Tue, 15 Jan 2013) $
  */
 public class DeleteServlet extends javax.servlet.http.HttpServlet {
 

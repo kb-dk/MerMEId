@@ -4,8 +4,8 @@ package dk.kb.mermeid.filter;
  * <p>This class implements the filter mechanisms in the filter
  * application.</p>
  * @author Sigfrid Lundberg (slu@kb.dk)
- * @version $Revision$
- * Last modified $Date$
+ * @version $Revision: 665 $
+ * Last modified $Date: 2014-02-05 11:22:10 +0100 (Wed, 05 Feb 2014) $
  */
 public class FilterUtilityMethods  {
 

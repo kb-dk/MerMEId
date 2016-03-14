@@ -382,8 +382,10 @@
                     </xf:group>
                     
                     
-                    <!--  instrumentation selection -->
+                    <!-- Movement-specific instrumentation selection -->
+                    <!-- Overall intrumentation is assumed to be defined at top expression level, not work level -->
                     <xf:var name="topLevelInstrumentation" select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:instrumentation"/>
+                    
                     <xf:group ref=".[$topLevelInstrumentation[*]]" class="instr_subselection">
                         
                         <h:fieldset>
@@ -468,11 +470,19 @@
                                                         <!-- put a copy in the temp instance and turn it into a reference before putting it in place -->
                                                         <xf:delete context="instance('temp')/element" nodeset="*"/>
                                                         <xf:insert context="instance('temp')/element" nodeset="m:instrVoiceGrp" origin="$topLevelEnsemble"/>
+                                                        <!-- add @n and xml:id if missing -->
+                                                        <xf:insert context="instance('temp')/element" nodeset="m:instrVoiceGrp[not(@n)]" 
+                                                            origin="xxf:attribute('n','')"/>
                                                         <!-- move the main element's @xml:id to @n for identification (to do: add attribute @sameas for this?) -->
                                                         <xf:setvalue ref="instance('temp')/element/*[1]/@n" value="instance('temp')/element/*[1]/@xml:id"/>
-                                                        <xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-                                                        <!-- delete instrVoice child elements -->
+                                                        
+                                                        <!--<xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>-->
+                                                        <!-- delete instrVoice child elements; they can be added individually later -->
                                                         <xf:delete context="instance('temp')/element/m:instrVoiceGrp" nodeset="m:instrVoice"/>
+                                                        <!-- generate new xml:id -->
+                                                        <xf:setvalue context="instance('temp')/element/*[1]/@xml:id" 
+                                                            value="concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>                                
+                                                        <!-- copy the instrumentation to the sub-level expression -->
                                                         <xf:insert context="$thisInstrumentation" nodeset="m:instrVoiceGrp" 
                                                             origin="instance('temp')/element/m:instrVoiceGrp" at="1" position="before"/>
                                                         

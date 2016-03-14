@@ -287,7 +287,8 @@
               <xf:label>Search for more collections</xf:label>
               <xf:action ev:event="DOMActivate">
                 <xf:setvalue ref="instance('temp')/target_uri"
-                  value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?get=works')"/>
+                  value="concat(instance('parameters')/dcm:server_name,
+                  'filter/filtered_scripts/cross-link.xq?get=works')"/>
                 <xf:send submission="load-fileList"/>
               </xf:action>
             </xf:trigger>

@@ -78,6 +78,9 @@
         <xsl:variable name="this_att" select="local-name()"/>
         <xsl:if test="not($data_node/@*[local-name()=$this_att])"><xsl:attribute name="{name()}"/></xsl:if>
       </xsl:for-each>
+      <!-- Add xml:id if missing -->
+      <xsl:if test="not(@xml:id)"><xsl:attribute name="xml:id"><xsl:value-of select="concat(name(),'_',generate-id())"/></xsl:attribute></xsl:if>
+      
       <xsl:choose>
         <!-- component expressions need special treatment -->
         <xsl:when test="local-name(..)='expression' and local-name()='componentGrp'">
@@ -96,6 +99,7 @@
       <xsl:copy-of select="@*"/>
       <xsl:if test="not(@target)"><xsl:attribute name="target"/></xsl:if>
       <xsl:if test="not(@label)"><xsl:attribute name="label"/></xsl:if>
+      <xsl:if test="not(@xml:id)"><xsl:attribute name="xml:id"><xsl:value-of select="concat(name(),'_',generate-id())"/></xsl:attribute></xsl:if>
       <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>

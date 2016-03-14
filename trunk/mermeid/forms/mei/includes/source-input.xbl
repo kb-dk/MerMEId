@@ -48,18 +48,18 @@
                                     </h:span></h:a>
                             </h:legend>
                             <dcm:create nodeset="m:notesStmt" label="Add general description"
-                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt"/>
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt"/>
                             <xf:group ref="m:notesStmt">
                                 <dcm:create nodeset="m:annot[@type='source_description']"
                                     label="Add general description"
-                                    origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='source_description']"/>
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='source_description']"/>
                                 <xf:repeat nodeset="m:annot[@type='source_description']"
                                     id="source-desc-annot-repeat">
                                     <fr:tinymce ref="."/>
                                     <dcm:element-buttons-typed triggers="remove"
                                         nodeset="m:annot[@type='source_description']"
                                         index="source-notesstmt-annot-repeat-extptr"
-                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='source_description']"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='source_description']"/>
                                     <dcm:id/>
                                     <dcm:attribute-editor/>
                                 </xf:repeat>
@@ -70,12 +70,12 @@
                                                 particular source.</h:span></h:a>
                                     </h:span>
                                     <dcm:create nodeset="m:annot[@type='links']" label="Add links"
-                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']"
                                     />
                                 </h:div>
                                 <xf:group ref="m:annot[@type='links']">
                                     <dcm:create nodeset="m:ptr" label="Add links"
-                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
                                     <xf:repeat nodeset="m:ptr"
                                         id="source-notesstmt-annot-repeat-extptr">
                                         <h:div>
@@ -96,7 +96,7 @@
                                                 triggers="up down add copy del-parent-with-last"
                                                 nodeset="m:ptr"
                                                 index="source-notesstmt-annot-repeat-extptr"
-                                                origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+                                                origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
                                             <dcm:id/>
                                             <dcm:attribute-editor/>
                                         </h:div>
@@ -292,6 +292,10 @@
                                         <xf:item>
                                             <xf:value>fair copy</xf:value>
                                             <xf:label>Fair copy</xf:label>
+                                        </xf:item>
+                                        <xf:item>
+                                            <xf:value>engraver's copy</xf:value>
+                                            <xf:label>Engraver's copy</xf:label>
                                         </xf:item>
                                         <xf:item>
                                             <xf:value>printer's copy</xf:value>

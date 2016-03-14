@@ -24,21 +24,6 @@
         <xbl:resources>
             <xbl:style/>
         </xbl:resources>
-        <xbl:implementation>
-            <xf:model>
-                <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
-                    id="bibl-type-instance" 
-                    xxf:readonly="true">
-                    <xi:include href="../model/bibl_reference_types.xml"/>
-                </xf:instance>
-                
-                <xf:instance xmlns="http://www.kb.dk/dcm"
-                    id="parameters">
-                    <xi:include href="../mermeid_configuration.xml"/>
-                </xf:instance>
-                
-            </xf:model>
-        </xbl:implementation>
         <xbl:template>
             <!-- outer group -->
             <xf:group xxbl:scope="outer" xbl:attr="model context ref bind">
@@ -64,18 +49,18 @@
                                 </h:span></h:a>
                             </h:legend> 
                             <dcm:create nodeset="m:genre" label="Add genre"
-                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:genre][1]/m:genre"/>
+                                origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:genre][1]/m:genre"/>
                             <xf:repeat nodeset="m:genre" id="repeat-bibl-genre">
                                 <h:div>
                                     <xf:select1 ref="." class="xforms-select1-appearance-minimal">
-                                        <xf:itemset nodeset="distinct-values(instance('bibl-type-instance')/m:biblList/m:bibl/m:genre)">
+                                        <xf:itemset nodeset="distinct-values(xxf:instance('bibl-type-instance')/m:biblList/m:bibl/m:genre)">
                                             <xf:label ref="."/>
                                             <xf:value ref="."/>
                                         </xf:itemset>
                                     </xf:select1>
                                     <dcm:element-buttons triggers="add delete" nodeset="m:genre"
                                         index="repeat-bibl-genre"
-                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:genre][1]/m:genre[1]"/>
+                                        origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:genre][1]/m:genre[1]"/>
                                     <dcm:attribute-editor ref="."/>
                                 </h:div>
                             </xf:repeat>
@@ -87,7 +72,7 @@
                             <h:fieldset>
                                 <h:legend>Authors</h:legend>
                                 <dcm:create nodeset="m:author" label="Add author"
-                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:author][1]/m:author"/>
+                                    origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:author][1]/m:author"/>
                                 <xf:repeat nodeset="m:author" id="repeat-bibl-author">
                                     <h:div>
                                         <xf:var name="auth_type"
@@ -98,7 +83,7 @@
                                         <dcm:authority/>
                                         <dcm:element-buttons triggers="add delete" nodeset="m:author"
                                             index="repeat-bibl-author"
-                                            origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[m:author][1]/m:author[1]"/>
+                                            origin="xxf:instance('bibl-type-instance')/m:biblList[1]/m:bibl[m:author][1]/m:author[1]"/>
                                         <dcm:attribute-editor ref="."/>
                                     </h:div>
                                 </xf:repeat>
@@ -109,7 +94,7 @@
                             <h:fieldset>
                                 <h:legend>Title</h:legend>
                                 <dcm:create nodeset="m:title" label="Add title"
-                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:title][1]/m:title"/>
+                                    origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:title][1]/m:title"/>
                                 <xf:repeat nodeset="m:title" id="repeat-bibl-title">
                                     <h:div>
                                         <xf:input ref="." class="maxlong">
@@ -167,7 +152,7 @@
                                         </xf:input>
                                         <xf:trigger appearance="minimal">
                                             <xf:label>
-                                                <h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete"
+                                                <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete"
                                                 />
                                             </xf:label>
                                             <xf:delete nodeset="../m:biblScope" at="index('repeat-bibl-biblscope')"
@@ -178,12 +163,12 @@
                                 </xf:repeat>
                                 <h:div class="vertical_spacer"/>
                                 <xf:trigger class="create_button">
-                                    <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/> Add
+                                    <xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/> Add
                                         vol./issue/pages</xf:label>
                                     <xf:action ev:event="DOMActivate">
                                         <xf:var name="ref_type" select="if (count(m:genre)&gt;1) then m:genre[.!='article'][1] else m:genre"/>
                                         <xf:insert context="."
-                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:genre=$ref_type][1]/m:biblScope"
+                                            origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:genre=$ref_type][1]/m:biblScope"
                                             nodeset="m:biblScope"/>
                                     </xf:action>
                                 </xf:trigger>
@@ -192,7 +177,7 @@
                             <h:fieldset>
                                 <h:legend>Editors</h:legend>
                                 <dcm:create nodeset="m:editor" label="Add editor"
-                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:editor][1]/m:editor"/>
+                                    origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:editor][1]/m:editor"/>
                                 <xf:repeat nodeset="m:editor" id="repeat-bibl-editor">
                                     <h:div>
                                         <xf:input ref="." class="maxlong">
@@ -201,7 +186,7 @@
                                         <dcm:authority/>
                                         <dcm:element-buttons triggers="add remove" nodeset="m:editor"
                                             index="repeat-bibl-editor"
-                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:editor][1]/m:editor"
+                                            origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:editor][1]/m:editor"
                                         />
                                     </h:div>
                                     <dcm:attribute-editor/>
@@ -213,12 +198,12 @@
                                 <h:fieldset>
                                     <h:legend>Publication</h:legend>
                                     <dcm:create nodeset="m:imprint" label="Add publication data"
-                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:publisher][1]/m:imprint"/>
+                                        origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:publisher][1]/m:imprint"/>
                                     <xf:group ref="m:imprint">
                                         <xf:group ref=".[not(../m:genre='web site')]">
                                             <h:div>
                                                 <dcm:create nodeset="m:publisher" label="Add publisher"
-                                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:publisher][1]/m:imprint/m:publisher"/>
+                                                    origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:publisher][1]/m:imprint/m:publisher"/>
                                                 <xf:input ref="m:publisher" class="maxlong">
                                                     <xf:label class="fixed_width">Publisher</xf:label>
                                                 </xf:input>
@@ -226,7 +211,7 @@
                                             </h:div>
                                             <h:div>
                                                 <dcm:create nodeset="m:pubPlace" label="Add place"
-                                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:pubPlace][1]/m:imprint/m:pubPlace"/>
+                                                    origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:pubPlace][1]/m:imprint/m:pubPlace"/>
                                                 <xf:input ref="m:pubPlace" class="maxlong">
                                                     <xf:label class="fixed_width">Place</xf:label>
                                                 </xf:input>
@@ -235,7 +220,7 @@
                                         </xf:group>
                                         <h:div>
                                             <dcm:create nodeset="m:date" label="Add date"
-                                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:date][1]/m:imprint/m:date"/>
+                                                origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:imprint/m:date][1]/m:imprint/m:date"/>
                                             <h:span class="fixed_width">Date </h:span>
                                             <dcm:date-editor ref="m:date"/>
                                         </h:div>
@@ -255,12 +240,12 @@
                                         triggers="remove" 
                                         nodeset="m:title"
                                         index="repeat-letter-title"
-                                        origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1][m:title[not(@level)]]//m:title[1]"/>
+                                        origin="xxf:instance('bibl-type-instance')/m:biblList[1]/m:bibl[1][m:title[not(@level)]]//m:title[1]"/>
                                     <dcm:attribute-editor/>
                                 </xf:repeat>
                                 <h:br clear="all"/>
                                 <dcm:create nodeset="m:author" label="Add author"
-                                    origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:author[1]"/>
+                                    origin="xxf:instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:author[1]"/>
                                 <xf:repeat nodeset="m:author" id="repeat-letter-author">
                                     <xf:input ref="." class="maxlong">
                                         <xf:label class="fixed_width">Author <h:a class="help">&#160;?<h:span
@@ -272,14 +257,14 @@
                                         triggers="add remove" 
                                         nodeset="m:author"
                                         index="repeat-letter-author"
-                                        origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:author[1]"/>
+                                        origin="xxf:instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:author[1]"/>
                                     <dcm:attribute-editor/>
                                     <h:br clear="all"/>
                                 </xf:repeat>
                                 <h:br clear="all"/>
                                 <xf:group ref=".[m:genre='letter']">
                                     <dcm:create nodeset="m:recipient" label="Add recipient"
-                                        origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:recipient[1]"/>
+                                        origin="xxf:instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:recipient[1]"/>
                                     <xf:repeat nodeset="m:recipient" id="repeat-letter-recipient">
                                         <xf:input ref="." class="maxlong">
                                             <xf:label class="fixed_width">Recipient</xf:label>
@@ -289,7 +274,7 @@
                                             triggers="add remove" 
                                             nodeset="m:recipient"
                                             index="repeat-letter-recipient"
-                                            origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:recipient[1]"/>
+                                            origin="xxf:instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:recipient[1]"/>
                                         <dcm:attribute-editor/>
                                         <h:br clear="all"/>
                                     </xf:repeat>
@@ -297,17 +282,17 @@
                                 </xf:group>
                                 <h:div>
                                     <dcm:create nodeset="m:creation" label="Add date and place"
-                                        origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[m:creation][1]//m:creation[1]"/>
+                                        origin="xxf:instance('bibl-type-instance')/m:biblList[1]/m:bibl[m:creation][1]//m:creation[1]"/>
                                     <xf:group ref="m:creation">
                                         <h:div>
                                             <dcm:create nodeset="m:date" label="Add date"
-                                                origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:date[1]"/>
+                                                origin="xxf:instance('bibl-type-instance')/m:biblList[1]/m:bibl[1]//m:date[1]"/>
                                             <h:span class="fixed_width">Date </h:span>
                                             <dcm:date-editor ref="m:date"/>                                            
                                         </h:div>
                                         <h:div>
                                             <dcm:create nodeset="m:geogName" label="Add place"
-                                                origin="instance('bibl-type-instance')/m:biblList[1]/m:bibl[m:creation][1]//m:geogName[1]"/>
+                                                origin="xxf:instance('bibl-type-instance')/m:biblList[1]/m:bibl[m:creation][1]//m:geogName[1]"/>
                                             <xf:input ref="m:geogName">
                                                 <xf:label class="fixed_width">Place </xf:label>
                                             </xf:input>
@@ -329,7 +314,7 @@
                                     <dcm:create ref="m:physLoc/m:repository" 
                                         nodeset="m:corpName"
                                         label="Add repository name"
-                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc][1]/m:physLoc/m:repository/m:corpName"/>
+                                        origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc][1]/m:physLoc/m:repository/m:corpName"/>
                                     <xf:input ref="m:physLoc/m:repository/m:corpName" class="maxlong">
                                         <xf:label class="fixed_width">Repository name </xf:label>
                                     </xf:input>
@@ -339,14 +324,14 @@
                                     <dcm:create ref="m:physLoc/m:repository" 
                                         nodeset="m:identifier[@authority='RISM']"
                                         label="Add RISM siglum"
-                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:identifier][1]/m:physLoc/m:repository/m:identifier[@authority='RISM']"/>
+                                        origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:identifier][1]/m:physLoc/m:repository/m:identifier[@authority='RISM']"/>
                                     <dcm:rism-sigla ref="m:physLoc/m:repository/m:identifier[@authority='RISM' or @authority='rism']"/>
                                     <dcm:attribute-editor ref="m:physLoc/m:repository/m:identifier[@authority='RISM' or @authority='rism']"/>
                                 </h:div>
                                 <dcm:create ref="m:physLoc" 
                                     nodeset="m:identifier"
                                     label="Add shelf mark"
-                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:identifier][1]/m:physLoc/m:identifier"/>
+                                    origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:identifier][1]/m:physLoc/m:identifier"/>
                                 <xf:input ref="m:physLoc/m:identifier" class="maxlong">
                                     <xf:label class="fixed_width">Shelfmark <h:a class="help">&#160;?<h:span class="comment">The shelfmark or
                                         other signature identfying the item in the
@@ -357,7 +342,7 @@
                                     <dcm:create ref="m:physLoc/m:repository" 
                                         nodeset="m:ptr"
                                         label="Add link to library record"
-                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:ptr][1]/m:physLoc/m:repository/m:ptr"/>
+                                        origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:ptr][1]/m:physLoc/m:repository/m:ptr"/>
                                     <xf:repeat nodeset="m:physLoc/m:repository/m:ptr" id="bibl-repository-ptr">
                                         <h:div>
                                             <xf:input ref="@target" class="maxlong">
@@ -374,7 +359,7 @@
                                                 triggers="add remove" 
                                                 nodeset="m:ptr" 
                                                 index="bibl-repository-ptr"
-                                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:ptr][1]/m:physLoc/m:repository/m:ptr"/>
+                                                origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:ptr][1]/m:physLoc/m:repository/m:ptr"/>
                                             <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>
@@ -391,7 +376,7 @@
                                 <h:span class="blocklabel">Printed reproductions</h:span>
                                 <dcm:create nodeset="m:relatedItem"
                                     label="Add printed reproduction"
-                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:relatedItem[@rel='host']][1]/m:relatedItem[@rel='host']"/>
+                                    origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:relatedItem[@rel='host']][1]/m:relatedItem[@rel='host']"/>
                                 <xf:repeat nodeset="m:relatedItem[@rel='host']" id="repeat-letter-editions">
                                     <h:div>
                                         <xf:group ref="m:bibl">
@@ -423,7 +408,7 @@
                                         </xf:group>
                                         <dcm:element-buttons triggers="add delete" nodeset="m:relatedItem"
                                             index="repeat-letter-editions"
-                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:relatedItem[@rel='host']][1]/m:relatedItem[@rel='host']"/>
+                                            origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:relatedItem[@rel='host']][1]/m:relatedItem[@rel='host']"/>
                                         <dcm:attribute-editor/>
                                     </h:div>
                                 </xf:repeat>
@@ -431,7 +416,7 @@
                                 <h:span class="blocklabel">Digital resource</h:span>
                                 <dcm:create nodeset="m:ptr"
                                     label="Add digital resource"
-                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
+                                    origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
                                 <xf:repeat nodeset="m:ptr" id="repeat-letter-digitizations">
                                     <h:div>
                                         <xf:input ref="@target" class="maxlong">
@@ -445,7 +430,7 @@
                                         </xf:input>
                                         <dcm:element-buttons triggers="add remove" nodeset="m:ptr"
                                             index="repeat-letter-digitizations"
-                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
+                                            origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
                                         <dcm:attribute-editor/>
                                     </h:div>
                                 </xf:repeat>
@@ -458,7 +443,7 @@
                                 <h:legend>Digital resource </h:legend>
                                 <dcm:create nodeset="m:ptr"
                                     label="Add link"
-                                    origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
+                                    origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
                                 <xf:repeat nodeset="m:ptr" id="repeat-web-links">
                                     <h:div>
                                         <xf:input ref="@target" class="maxlong">
@@ -472,7 +457,7 @@
                                         </xf:input>
                                         <dcm:element-buttons triggers="add remove" nodeset="m:ptr"
                                             index="repeat-web-links"
-                                            origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
+                                            origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:ptr][1]/m:ptr[1]"/>
                                         <dcm:attribute-editor/>
                                     </h:div>
                                 </xf:repeat>
@@ -484,12 +469,12 @@
                             <h:legend>Notes <h:a class="help">&#160;?<h:span class="comment">Any supplementary comments, 
                                e.g. a description of contents or the date accessed (for web resources).</h:span></h:a></h:legend>
                             <dcm:create nodeset="m:annot" label="Add annotation"
-                                origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
+                                origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
                             <xf:repeat nodeset="m:annot" id="repeat-bibl-notes">
                                 <h:div>
                                     <fr:tinymce ref="m:p" class="mediumheight"/>	
                                     <dcm:element-buttons triggers="remove" nodeset="m:annot" index="repeat-bibl-notes"
-                                        origin="instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
+                                        origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
                                     <dcm:attribute-editor/>
                                 </h:div>
                             </xf:repeat>
