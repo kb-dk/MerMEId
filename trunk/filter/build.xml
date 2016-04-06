@@ -35,6 +35,7 @@
     <target   name="compile" 
 	      description="Compiles the whole bundle">
       <mkdir  dir="${build.dir}"/>
+      <mkdir  dir="${bin.dir}"  />
       <javac  srcdir="${src.dir}" 
 	      encoding="UTF-8" 
 	      includeAntRuntime="false"

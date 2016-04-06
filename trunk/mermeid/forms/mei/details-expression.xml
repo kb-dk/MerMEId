@@ -419,14 +419,10 @@
                                                 <h:legend>
                                                     <xf:trigger appearance="minimal">
                                                         <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/>
-                                                            <h:span>
-                                                                <!--<xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>-->
-                                                                <!--<xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>-->
-                                                                
-                                                            </h:span>
                                                         </xf:label>
                                                         <xf:action ev:event="DOMActivate">
                                                             <xf:delete context="$thisInstrumentation" nodeset="m:instrVoiceGrp[@n=$id]"/>
+                                                            <xf:dispatch name="xforms-value-changed" target="form-group"/>
                                                         </xf:action>
                                                     </xf:trigger>
                                                     <xf:input ref="m:head" class="long"/>                                                                
@@ -463,7 +459,6 @@
                                                     <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/no.png" alt="no" title="Click to add this ensemble"/>
                                                         <h:span class="disabled">
                                                             <xf:output value="if (normalize-space(m:head)) then m:head else '[ensemble]'"/>
-                                                            <!--<xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>-->
                                                         </h:span>
                                                     </xf:label>
                                                     <xf:action ev:event="DOMActivate">
@@ -475,13 +470,13 @@
                                                             origin="xxf:attribute('n','')"/>
                                                         <!-- move the main element's @xml:id to @n for identification (to do: add attribute @sameas for this?) -->
                                                         <xf:setvalue ref="instance('temp')/element/*[1]/@n" value="instance('temp')/element/*[1]/@xml:id"/>
-                                                        
-                                                        <!--<xf:setvalue ref="instance('temp')/element//@xml:id" value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>-->
                                                         <!-- delete instrVoice child elements; they can be added individually later -->
                                                         <xf:delete context="instance('temp')/element/m:instrVoiceGrp" nodeset="m:instrVoice"/>
-                                                        <!-- generate new xml:id -->
-                                                        <xf:setvalue context="instance('temp')/element/*[1]/@xml:id" 
-                                                            value="concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>                                
+                                                        <!-- generate new xml:ids -->
+                                                        <xf:setvalue context="instance('temp')/element/*/@xml:id" 
+                                                            value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>                                
+                                                        <xf:setvalue context="instance('temp')/element/m:instrVoiceGrp/*/@xml:id" 
+                                                            value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>                                
                                                         <!-- copy the instrumentation to the sub-level expression -->
                                                         <xf:insert context="$thisInstrumentation" nodeset="m:instrVoiceGrp" 
                                                             origin="instance('temp')/element/m:instrVoiceGrp" at="1" position="before"/>
@@ -497,11 +492,12 @@
                                                             <xf:delete context="$thisInstrumentation" nodeset="*" at="$pos"/>
                                                         </xf:action>                                                    
                                                         <!-- end moving -->
-                                                        
+                                                        <xf:dispatch name="xforms-value-changed" target="form-group"/>
                                                     </xf:action>
                                                 </xf:trigger>
                                             </h:legend>
                                         </xf:group>
+                                        
                                         
                                         <!-- performers within this ensemble -->
                                         <!-- show only if the ensemble is checked -->
@@ -510,18 +506,16 @@
                                             <xf:repeat nodeset="$topLevelEnsemble/m:instrVoice">
                                                 <xf:var name="thisTopLevelPerformer" select="."/>
                                                 <xf:var name="perfId" select="@xml:id"/>
-                                                <h:div>&#160;&#160;&#160;&#160;
+                                                <h:div><h:img src="{instance('parameters')/dcm:server_name}/editor/images/spacer.png" style="height: 14px; width: 11px"/>
                                                     <xf:group ref=".[@xml:id=$thisEnsemble/m:instrVoice/@n]">
+                                                        <!-- checked -->
                                                         <xf:trigger appearance="minimal">
-                                                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
-                                                                <!--<h:span>
-                                                                    <xf:output value="@count"/>
-                                                                    <xf:output value="."/>
-                                                                    <xf:group ref=".[@code!='']"> (<xf:output value="@code"/>)</xf:group>
-                                                                    </h:span>-->
+                                                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" 
+                                                                alt="yes" title="Click to remove this performer"/>
                                                             </xf:label>
                                                             <xf:action ev:event="DOMActivate">
                                                                 <xf:delete context="$thisEnsemble" nodeset="m:instrVoice[@n=$thisTopLevelPerformer/@xml:id]"/>
+                                                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
                                                             </xf:action>
                                                         </xf:trigger>
                                                         <xf:group ref="$thisEnsemble/m:instrVoice[@n=$perfId]">
@@ -529,6 +523,7 @@
                                                         </xf:group>
                                                     </xf:group>
                                                     <xf:group ref=".[not(@xml:id=$thisEnsemble/m:instrVoice/@n)]">
+                                                        <!-- unchecked -->
                                                         <xf:trigger appearance="minimal">
                                                             <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/no.png" alt="no" title="Click to add this performer"/>
                                                                 <h:span class="disabled">
@@ -557,21 +552,50 @@
                                                                     <xf:delete context="$thisEnsemble" nodeset="*" at="$pos"/>
                                                                 </xf:action>                                                    
                                                                 <!-- end moving -->
+                                                                <xf:dispatch name="xforms-value-changed" target="form-group"/>
                                                             </xf:action>
                                                         </xf:trigger>
                                                     </xf:group>
                                                 </h:div>
                                             </xf:repeat>
-                                        </xf:group>
+
+                                            <!-- performers not referring to top-level performers (+warning) -->
+                                            <xf:repeat nodeset="$thisEnsemble/m:instrVoice[not(@n) or (@n and count(.[@n=$topLevelEnsemble/m:instrVoice/@xml:id])=0)]">
+                                                <xf:var name="thisPerformer" select="."/>
+                                                <xf:var name="perfId" select="@xml:id"/>
+                                                <h:div>
+                                                    <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/warning.png" alt="warning" 
+                                                        style="vertical-align:inherit;" title=""/><h:span
+                                                        class="comment">This performer does not seem to correspond to a performer defined at top level. <h:br/>
+                                                        You may safely ignore this warning if you do not want instrumentation at this level to be a subset of the instrumentation
+                                                        defined at top level.</h:span></h:a> 
+                                                    <xf:trigger appearance="minimal">
+                                                        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
+                                                        </xf:label>
+                                                        <xf:action ev:event="DOMActivate">
+                                                            <xf:delete nodeset="."/>
+                                                            <xf:dispatch name="xforms-value-changed" target="form-group"/>
+                                                        </xf:action>
+                                                    </xf:trigger>
+                                                    <xi:include href="includes/instrvoice-input.xml" parse="xml"/>
+                                                </h:div>
+                                            </xf:repeat>
+                                        </xf:group>                                            
                                         <!-- end performers in ensemble -->
                                     </h:fieldset>
                                 </xf:repeat>
+                                
                                 
                                 <!-- list ensembles not linked to top-level ensembles  -->
                                 <xf:repeat nodeset="m:instrVoiceGrp[count(.[@n=$topLevelInstrumentation/m:instrVoiceGrp/@xml:id])=0]">
                                     <xf:var name="thisId" select="@xml:id"/>
                                     <h:fieldset>
                                         <h:legend>
+                                            <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/warning.png" alt="warning" 
+                                                style="vertical-align:inherit;" title=""/><h:span
+                                                class="comment">This ensemble does not seem to correspond to an ensemble defined at top level. <h:br/>
+                                                You may safely ignore this warning if you do not want instrumentation at this level to be a subset of the instrumentation
+                                                defined at top level.</h:span></h:a> 
                                             <xf:trigger appearance="minimal">
                                                 <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this ensemble"/></xf:label>
                                                 <xf:action ev:event="DOMActivate">
@@ -601,16 +625,17 @@
                                             </xf:select1>
                                             <dcm:attribute-editor ref="."/>
                                         </h:legend>
-                                        <h:div class="vertical_spacer"/> 
-                                        
+                                        <h:div class="vertical_spacer"/>
                                         
                                     </h:fieldset>
                                 </xf:repeat>
                                 <!-- end ensembles -->
+
+                                <h:div class="vertical_spacer"/>
                                 
-                                <!-- select performers -->
-                                <!-- list performers defines at top level -->
-                                <xf:repeat nodeset="$topLevelInstrumentation/m:instrVoice">
+                                <!-- select (solo) performers -->
+                                <!-- list performers defined at top level -->
+                                <xf:repeat nodeset="$topLevelInstrumentation/m:instrVoice[//text()]">
                                     <xf:group ref=".[count(preceding-sibling::m:instrVoice)=0]">
                                         <h:span class="blocklabel">Performers</h:span>
                                     </xf:group>
@@ -662,21 +687,27 @@
                                         </xf:group>
                                     </h:div>
                                 </xf:repeat>
+
+                                <!-- list performers not linked to top-level performers  -->
+                                <xf:repeat nodeset="m:instrVoice[count(.[@n=$topLevelInstrumentation/m:instrVoice/@xml:id])=0][//text()]">
+                                    <xf:var name="thisId" select="@xml:id"/>
+                                    <h:div>
+                                        <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/warning.png" alt="warning" 
+                                            style="vertical-align:inherit;" title=""/><h:span
+                                        class="comment">This performer does not seem to correspond to a performer defined at top level. <h:br/>
+                                        You may safely ignore this warning if you do not want instrumentation at this level to be a subset of the instrumentation
+                                        defined at top level.</h:span></h:a> 
+                                        <xf:trigger appearance="minimal">
+                                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:delete nodeset="."/>
+                                            </xf:action>
+                                        </xf:trigger>
+                                        <xi:include href="includes/instrvoice-input.xml" parse="xml"/>
+                                    </h:div>
+                                </xf:repeat>
+                                 
                             </xf:group>
-                            <!-- list performers not linked to top-level performers  -->
-                            <xf:repeat nodeset="$thisInstrumentation/m:instrVoice[count(.[@n=$topLevelInstrumentation/m:instrVoice/@xml:id])=0]">
-                                <xf:var name="thisId" select="@xml:id"/>
-                                <h:div>
-                                    <xf:trigger appearance="minimal">
-                                        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this performer"/></xf:label>
-                                        <xf:action ev:event="DOMActivate">
-                                            <xf:delete nodeset="."/>
-                                        </xf:action>
-                                    </xf:trigger>
-                                    <xi:include href="includes/instrvoice-input.xml" parse="xml"/>
-                                </h:div>
-                            </xf:repeat>
-                            
                             <!-- end select performers -->
                             
                         </h:fieldset>
@@ -751,11 +782,16 @@
                                         </xf:group>
                                     </h:div>
                                 </xf:repeat>
-                                <!-- list castItems not linked to top-level castList -->
-                                <xf:repeat nodeset="$thisCastList/m:castItem[count(.[@n=$topLevelCastList/m:castItem/@xml:id])=0]">
+                                <!-- list non-empty castItems not linked to top-level castList -->
+                                <xf:repeat nodeset="$thisCastList/m:castItem[count(.[@n=$topLevelCastList/m:castItem/@xml:id])=0][*]">
                                     <h:div>
+                                        <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/warning.png" alt="warning" 
+                                            style="vertical-align:inherit;" title=""/><h:span
+                                            class="comment">This role does not seem to correspond to a role defined at top level. <h:br/>
+                                            You may safely ignore this warning if you do not want the cast list at this level to be a subset of the cast list
+                                            defined at top level.</h:span></h:a> 
                                         <xf:trigger appearance="minimal">
-                                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this performer"/>
+                                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/yes.png" alt="yes" title="Click to remove this role"/>
                                                 <h:span>
                                                     <xf:output value="m:role//text()[1]"/>
                                                 </h:span>

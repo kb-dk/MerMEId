@@ -2,6 +2,7 @@
 <h:div xmlns:h="http://www.w3.org/1999/xhtml" 
 	xmlns:xf="http://www.w3.org/2002/xforms" 
 	xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:xi="http://www.w3.org/2001/XInclude" 
 	xmlns:dcm="http://www.kb.dk/dcm"
 	xmlns:m="http://www.music-encoding.org/ns/mei" 
@@ -38,10 +39,10 @@
 				<h:fieldset>
 					<h:legend>Version
 						<h:a class="help">&#160;?<h:span class="comment">Information at version level.<h:br/> 
-							To create a new version, click the "add" or "copy" buttons on the right.<h:br/>
+							To create a new version, click the 'add' or 'copy' buttons on the right.<h:br/>
 							To indicate the individual pieces (movements, acts or any other subdivision) in this work 
-							or version, use "Components" below.<h:br/>
-							In FRBR terms, versions and components correspond to the "expression" level.</h:span></h:a>
+							or version, use 'Components' below.<h:br/>
+							In FRBR terms, versions and components correspond to the 'expression' level.</h:span></h:a>
 						<dcm:element-buttons 
 							triggers="all" 
 							nodeset="m:expression" 
@@ -58,8 +59,8 @@
 					<xf:group ref=".[number($num_ex)&gt;1 or m:titleStmt/m:title[normalize-space(.)!='']]">
 						<h:div class="blocklabel" style="margin-top:10px">
 							Version title
-							<h:a class="help">&#160;?<h:span class="comment">E.g. "Version for piano" or 
-								"Discarded version". Enter a version title only if you 
+							<h:a class="help">&#160;?<h:span class="comment">E.g. 'Version for piano' or 
+								'Discarded version'. Enter a version title only if you 
 								want to distinguish different versions of the work. 
 								Otherwise leave empty.</h:span></h:a>
 						</h:div>
@@ -75,7 +76,7 @@
 												When only one version is given, 
 												no title should be entered at this level. <h:br/>
 												If no alternative versions are added, please indicate the 
-												title at work level (i.e., the "Work" tab) instead.
+												title at work level (i.e., the 'Work' tab) instead.
 											</h:span></h:a>
 									</xf:group>
 									<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>
@@ -121,8 +122,8 @@
 							</xf:group>
 							<h:div class="blocklabel">
 								<h:span class="fixed_width"> List name <h:a class="help">&#160;?<h:span class="comment">Name of a
-									list, catalogue or other numbering system identifying this version (e.g. "Opus",
-									"CNW", "BWV", "Neue Mozart-Ausgabe" etc.)
+									list, catalogue or other numbering system identifying this version (e.g. 'Opus',
+									'CNW', 'BWV', 'Neue Mozart-Ausgabe' etc.)
 								</h:span></h:a></h:span>
 								<h:span class="fixed_width"> No. <h:a class="help">&#160;?<h:span class="comment">The work's number or
 									signature in the list identifying it</h:span></h:a>
@@ -193,9 +194,9 @@
 								<xf:input ref=".">
 									<xf:label class="fixed_width">Extent <h:a class="help">&#160;?<h:span 
 										class="comment">Extent in any medium: number of measures, pages, or the approximate duration, for instance. <br/>
-										Duration can be indicated in any form, such as "01:23:00", "25'30''" or "approx. 10'". 
+										Duration can be indicated in any form, such as 01:23:00, 25'30" or 'approx. 10 minutes'. 
 										The unit of measurement (measures, pages, minutes, etc.) may be specified in the  
-									optional "unit" field.</h:span></h:a></xf:label>
+									optional 'unit' field.</h:span></h:a></xf:label>
 								</xf:input>
 								<xf:input ref="@unit">
 									<xf:label>Unit <h:a class="help">&#160;?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
@@ -251,8 +252,8 @@
 										<xf:label>Print quality</xf:label>
 									</xf:item>
 								</xf:select1>
-								<h:a class="help">&#160;?<h:span class="comment">Choose "Low resolution" for standard web graphics, "High resolution" for high quality
-									web graphics, or "Print quality" for print quality graphics.
+								<h:a class="help">&#160;?<h:span class="comment">Choose 'Low resolution' for standard web graphics, 'High resolution' for high quality
+									web graphics, or 'Print quality' for print quality graphics.
 									<br/>MerMEId's HTML preview by default only displays 
 									the file specified as the low resolution image, while a high resolution image makes the 
 									low resolution image clickable for enlargment.</h:span></h:a>
@@ -354,11 +355,11 @@
 							<h:legend>Relations <h:a class="help">&#160;?<h:span class="comment">Relations between this version and 
 								other versions or files may be specified here to create links between them.<h:br/>
 								For instance, if this version is a revision of an earlier version it may be specified here
-								by selecting the "is revision of". <h:br/>
+								by selecting the 'is revision of'. <h:br/>
 								On the target of the relation, you may want to add a link pointing to this one and defining 
-								the relation as "has revision" to make the linking bidirectional.<h:br/>
+								the relation as 'has revision' to make the linking bidirectional.<h:br/>
 								The relation can also point to an external ressource such as an edition or digitization. 
-								In that case select the "has reproduction" relation.
+								In that case select the 'has reproduction' relation.
 							</h:span></h:a></h:legend>
 							<dcm:create 
 								nodeset="m:relationList"
@@ -380,9 +381,9 @@
 											<xf:group ref="@target">
 												<xf:input ref="." class="maxlong">
 													<xf:label>URI <h:a class="help">&#160;?<h:span class="comment">The location of the linked ressource (target). 
-														The target may be either an external file (such as "http://www.example.org/some_file.xml"), an internal 
-														reference to an element in the file you are editing (by XML ID, such as "#expression_1"), or a combination
-														of both (like "http://www.example.org/some_file.xml#expression_1"). <h:br/>
+														The target may be either an external file (such as 'http://www.example.org/some_file.xml'), an internal 
+														reference to an element in the file you are editing (by XML ID, such as '#expression_1'), or a combination
+														of both (like 'http://www.example.org/some_file.xml#expression_1'). <h:br/>
 														The target URI may be entered manually or selected using the "Select file" button.<h:br/>
 														Please note: in MerMEId's HTML preview, relative URIs are interpreted as being links to other 
 														MEI files to be displayed as MerMEId previews as well. To avoid this, make the URI absolute 
@@ -441,7 +442,7 @@
 					<h:fieldset>                                                     
 						<h:legend>Instruments, singers and roles <h:a class="help">&#160;?<h:span 
 							class="comment">Instruments and singers may be grouped into ensembles or specified
-							as "stand-alone" performers. A group of performers acting as an ensemble (including choirs)
+							as 'stand-alone' performers. A group of performers acting as an ensemble (including choirs)
 							should be defined as such. Each ensemble may or may not have a name (label) for display, 
 							and may or may not list its individual performers.<h:br/>
 							Both ensembles and performers should have a MARC standard code added to improve
@@ -480,7 +481,9 @@
 												position="after" 
 												origin="instance('instrument-groups')/m:instrVoiceGrp[@code][index('ensemble-menu-repeat')]"/>
 											<!-- generate IDs for added performers -->
-											<xf:dispatch name="id-update" target="form-group"/>
+											<xf:insert xxf:iterate="//*[not(@xml:id)]"
+												context="$binding/m:perfMedium/m:instrumentation"
+												origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
 											<xxf:hide dialog="ensemble-menu"/>
 										</xf:action>
 									</xf:trigger>
@@ -498,28 +501,74 @@
 								</xf:trigger>
 								<xf:repeat nodeset="m:instrVoiceGrp" id="repeat-ensemble">
 									<h:fieldset>
-										<!--<xi:include href="includes/instrvoicegrp-input.xml" parse="xml"/>-->
 										<h:legend>
 											<xf:output value="if (m:head!='') then m:head else '[Ensemble]'"/> &#160;
 											<dcm:element-buttons 
 												triggers="up down" 
 												nodeset="m:instrVoiceGrp" 
 												origin="instance('instrument-groups')/m:instrVoiceGrp[1]"
-												index="repeat-ensemble"/><xf:trigger 
-													appearance="minimal" class="non-standard_button">
-													<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
-													<xf:action ev:event="DOMActivate">
-														<xxf:show dialog="ensemble-menu"/>
-													</xf:action>
-												</xf:trigger>
-											<xf:trigger appearance="minimal">
-												<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+												index="repeat-ensemble"/>
+											<xf:trigger style="margin:0 -7px 0 -6px;"
+												appearance="minimal" class="non-standard_button">
+												<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add ensemble"/></xf:label>
 												<xf:action ev:event="DOMActivate">
-													<xf:delete nodeset="." at="index('repeat-ensemble')"/>
-													<!-- remove references to deleted items -->
-													<!--<xf:setvalue ref="$binding/m:castList/m:castItem/m:role/m:ref/@target[not(.=$binding//@xml:id)]" value="''"/>-->
+													<xxf:show dialog="ensemble-menu"/>
 												</xf:action>
 											</xf:trigger>
+											<h:span class="editmenu">
+												<xxf:dialog id="delete-ensemble-dialog" appearance="full">
+													<xf:label>There are references to this ensemble</xf:label>
+													<xf:var name="thisid" select="@xml:id"/>
+													<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoiceGrp[@n=$thisid])"/> 
+														music component(s) (movements or sections defined below) refer to this
+														ensemble.<h:br/>
+														Do you want to delete all occurrences in components also?
+													</h:p>
+													<xf:trigger id="delete-ensemble-button">
+														<xf:label>No, delete only at this level</xf:label>
+														<xf:action ev:event="DOMActivate">
+															<xf:delete nodeset="."/>
+															<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+															<xxf:hide dialog="delete-ensemble-dialog"/>
+															<xf:dispatch name="xforms-value-changed" target="form-group"/>
+														</xf:action>
+													</xf:trigger>
+													<xf:trigger id="delete-ensemble-button-all">
+														<xf:label>Yes, delete all occurrences</xf:label>
+														<xf:action ev:event="DOMActivate">
+															<xf:delete nodeset="."/>
+															<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoiceGrp[@n=$thisid]">
+																<xf:delete nodeset="."/>
+															</xf:action>
+															<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+															<xxf:hide dialog="delete-ensemble-dialog"/>
+															<xf:dispatch name="xforms-value-changed" target="form-group"/>
+														</xf:action>
+													</xf:trigger>
+													<xf:trigger>
+														<xf:label>Cancel</xf:label>
+														<xf:action ev:event="DOMActivate">
+															<xxf:hide dialog="delete-ensemble-dialog"/>
+														</xf:action>
+													</xf:trigger>
+												</xxf:dialog>												
+												<xf:trigger appearance="minimal">
+													<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xf:var name="id" select="@xml:id"/>
+														<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoiceGrp[@n=$id])"/>
+														<xf:action if="$no = 0">
+															<xf:delete nodeset="."/>
+															<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+															<xf:dispatch name="xforms-value-changed" target="form-group"/>
+														</xf:action>
+														<xf:action if="$no != 0">
+															<xxf:show dialog="delete-ensemble-dialog"/>
+														</xf:action>
+													</xf:action>
+												</xf:trigger>
+											</h:span>
+											
 											<dcm:id/>
 											<dcm:attribute-editor/>
 										</h:legend>
@@ -533,9 +582,9 @@
 												<xf:label class="fixed_width">Heading <h:a class="help">&#160;?<h:span 
 													class="comment">An optional heading or name wich may be used with or 
 													instead of a detailed listing of the instruments in the ensemble. 
-													Use it to specify the type of ensemble, e.g. "Orchestra", "String quartet", 
-													"Choir", to give a general heading like "Instrumentation" or 
-													an orchestration string like "2.2.2.2/4.2.3.1/timp/str".<h:br/> 
+													Use it to specify the type of ensemble, e.g. 'Orchestra', 'String quartet', 
+													'Choir', to give a general heading like 'Instrumentation' or 
+													an orchestration string like '2.2.2.2/4.2.3.1/timp/str'.<h:br/> 
 													If no heading has been entered, 
 													a suggested ensemble name is automatically inserted when choosing
 													a standard ensemble code in the last field.
@@ -582,7 +631,9 @@
 															position="after" 
 															origin="instance('instrument-groups')/m:instrVoiceGrp[m:instrVoice][index('ensemble-performer-menu-repeat')]/m:instrVoice"/>
 														<!-- generate IDs for added performers -->
-														<xf:dispatch name="id-update" target="form-group"/>
+														<xf:insert xxf:iterate="//*[not(@xml:id)]"
+															context="$binding/m:perfMedium/m:instrumentation"
+															origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
 														<xxf:hide dialog="ensemble-performer-menu"/>
 													</xf:action>
 												</xf:trigger>
@@ -605,7 +656,7 @@
 											<h:span class="fixed_width_mediumlong">No. &amp; name <h:a class="help">&#160;?<h:span 
 												class="comment">Enter the number of players in the 
 												first input field, and the instrument's name, as it is to be 
-												displayed, in the second, e.g. "vl.1" or "violin".
+												displayed, in the second, e.g. 'vl.1' or 'violin'.
 												If no name is entered, a suggested name is inserted when 
 												choosing a standard instrument code in the last field.
 											</h:span></h:a></h:span>
@@ -613,7 +664,7 @@
 												class="comment">Choosing a standard MARC code improves data  
 												compatibility and interchangeability with other systems.<h:br/>
 												Also, it may be used to automatically insert the 
-												instrument's name in the "name" field if no name has been entered yet.
+												instrument's name in the 'name' field if no name has been entered yet.
 											</h:span></h:a></h:span>
 											<h:br/>
 											<xf:repeat nodeset="m:instrVoice" id="repeat-ensemble-performer">
@@ -627,10 +678,63 @@
 												<dcm:id/>
 												<dcm:attribute-editor/>
 												<dcm:element-buttons
-													triggers="up down add remove" 
+													triggers="up down add" 
 													nodeset="m:instrVoice" 
 													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
 													index="repeat-ensemble-performer"/>
+												<h:span class="editmenu">
+													<xxf:dialog id="delete-ensemble-performer-dialog" appearance="full">
+														<xf:label>There are references to this performer</xf:label>
+														<xf:var name="thisid" select="@xml:id"/>
+														<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$thisid])"/> 
+															music component(s) (movements or sections defined below) refer to this
+															performer.<h:br/>
+															Do you want to delete all occurrences in components also?
+														</h:p>
+														<xf:trigger>
+															<xf:label>No, delete only at this level</xf:label>
+															<xf:action ev:event="DOMActivate">
+																<xf:delete nodeset="."/>
+																<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+																<xxf:hide dialog="delete-ensemble-performer-dialog"/>
+																<xf:dispatch name="xforms-value-changed" target="form-group"/>
+															</xf:action>
+														</xf:trigger>
+														<xf:trigger>
+															<xf:label>Yes, delete all occurrences</xf:label>
+															<xf:action ev:event="DOMActivate">
+																<xf:delete nodeset="."/>
+																<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$thisid]">
+																	<xf:delete nodeset="."/>
+																</xf:action>
+																<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+																<xxf:hide dialog="delete-ensemble-performer-dialog"/>
+																<xf:dispatch name="xforms-value-changed" target="form-group"/>
+															</xf:action>
+														</xf:trigger>
+														<xf:trigger>
+															<xf:label>Cancel</xf:label>
+															<xf:action ev:event="DOMActivate">
+																<xxf:hide dialog="delete-ensemble-performer-dialog"/>
+															</xf:action>
+														</xf:trigger>
+													</xxf:dialog>												
+													<xf:trigger appearance="minimal" style="margin-left:-7px;">
+														<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+														<xf:action ev:event="DOMActivate">
+															<xf:var name="id" select="@xml:id"/>
+															<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$id])"/>
+															<xf:action if="$no = 0">
+																<xf:delete nodeset="."/>
+																<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+																<xf:dispatch name="xforms-value-changed" target="form-group"/>
+															</xf:action>
+															<xf:action if="$no != 0">
+																<xxf:show dialog="delete-ensemble-performer-dialog"/>
+															</xf:action>
+														</xf:action>
+													</xf:trigger>
+												</h:span>
 												<h:br/>
 											</xf:repeat>
 										</xf:group>
@@ -654,7 +758,7 @@
 									<h:span class="fixed_width_mediumlong">No. &amp; name <h:a class="help">&#160;?<h:span 
 										class="comment">Enter the number of players in the 
 										first input field, and the instrument's name, as it is to be 
-										displayed, in the second, e.g. "vl.1" or "violin".
+										displayed, in the second, e.g. 'vl.1' or 'violin'.
 										If no name is entered, a suggested name is inserted when 
 										choosing a standard instrument code in the last field.
 									</h:span></h:a></h:span>
@@ -662,12 +766,12 @@
 										class="comment">Choosing a standard MARC code improves data  
 										compatibility and interchangeability with other systems.<h:br/>
 										Also, it may be used to automatically insert the 
-										instrument's name in the "name" field if no name has been entered yet.
+										instrument's name in the 'name' field if no name has been entered yet.
 									</h:span></h:a></h:span>
 									<h:span class="fixed_width_short" style="text-align:center;">Solo <h:a class="help">&#160;?<h:span 
 										class="comment">Mark performers as soloists only when they are to be 
 										regarded as soloists as opposed to an ensemble.<h:br/> 
-										"Solo" should usually not be used with chamber music or 
+										'Solo' should usually not be used with chamber music or 
 										music for one instrument.</h:span></h:a></h:span>
 									<h:br/>
 									<xf:repeat nodeset="m:instrVoice" id="repeat-performer">
@@ -676,10 +780,63 @@
 											<xf:input ref="@solo"><xf:label> </xf:label></xf:input>
 										</h:span>
 										<dcm:element-buttons
-											triggers="add up down copy remove" 
+											triggers="add up down copy" 
 											nodeset="m:instrVoice" 
 											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
 											index="repeat-performer"/>
+										<h:span class="editmenu">
+											<xxf:dialog id="delete-performer-dialog" appearance="full">
+												<xf:label>There are references to this performer</xf:label>
+												<xf:var name="thisid" select="@xml:id"/>
+												<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$thisid])"/> 
+													music component(s) (movements or sections defined below) refer to this
+													performer.<h:br/>
+													Do you want to delete all occurrences in components also?
+												</h:p>
+												<xf:trigger>
+													<xf:label>No, delete only at this level</xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xf:delete nodeset="."/>
+														<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+														<xxf:hide dialog="delete-performer-dialog"/>
+														<xf:dispatch name="xforms-value-changed" target="form-group"/>
+													</xf:action>
+												</xf:trigger>
+												<xf:trigger>
+													<xf:label>Yes, delete all occurrences</xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xf:delete nodeset="."/>
+														<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$thisid]">
+															<xf:delete nodeset="."/>
+														</xf:action>
+														<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+														<xxf:hide dialog="delete-performer-dialog"/>
+														<xf:dispatch name="xforms-value-changed" target="form-group"/>
+													</xf:action>
+												</xf:trigger>
+												<xf:trigger>
+													<xf:label>Cancel</xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xxf:hide dialog="delete-performer-dialog"/>
+													</xf:action>
+												</xf:trigger>
+											</xxf:dialog>												
+											<xf:trigger appearance="minimal" style="margin-left:-7px;">
+												<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+												<xf:action ev:event="DOMActivate">
+													<xf:var name="id" select="@xml:id"/>
+													<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$id])"/>
+													<xf:action if="$no = 0">
+														<xf:delete nodeset="."/>
+														<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+														<xf:dispatch name="xforms-value-changed" target="form-group"/>
+													</xf:action>
+													<xf:action if="$no != 0">
+														<xxf:show dialog="delete-performer-dialog"/>
+													</xf:action>
+												</xf:action>
+											</xf:trigger>
+										</h:span>
 										<dcm:id/>
 										<dcm:attribute-editor/>
 										<h:br/>
@@ -715,10 +872,65 @@
 										<h:legend>
 											<xf:output value="if (m:role/m:name[1]!='') then m:role/m:name[1] else '[Role]'"/>
 											<dcm:element-buttons
-												triggers="add up down del-parent-with-last" 
+												triggers="add up down" 
 												nodeset="m:castItem" 
 												index="repeat-cast"
 												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]"/>
+											
+											<h:span class="editmenu">
+												<xxf:dialog id="delete-cast-dialog" appearance="full">
+													<xf:label>There are references to this performer</xf:label>
+													<xf:var name="thisid" select="@xml:id"/>
+													<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$thisid])"/> 
+														music component(s) (movements or sections defined below) refer to this
+														performer.<h:br/>
+														Do you want to delete all occurrences in components also?
+													</h:p>
+													<xf:trigger>
+														<xf:label>No, delete only at this level</xf:label>
+														<xf:action ev:event="DOMActivate">
+															<xf:delete nodeset="."/>
+															<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+															<xxf:hide dialog="delete-cast-dialog"/>
+															<xf:dispatch name="xforms-value-changed" target="form-group"/>
+														</xf:action>
+													</xf:trigger>
+													<xf:trigger>
+														<xf:label>Yes, delete all occurrences</xf:label>
+														<xf:action ev:event="DOMActivate">
+															<xf:delete nodeset="."/>
+															<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:castItem[@n=$thisid]">
+																<xf:delete nodeset="."/>
+															</xf:action>
+															<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+															<xxf:hide dialog="delete-cast-dialog"/>
+															<xf:dispatch name="xforms-value-changed" target="form-group"/>
+														</xf:action>
+													</xf:trigger>
+													<xf:trigger>
+														<xf:label>Cancel</xf:label>
+														<xf:action ev:event="DOMActivate">
+															<xxf:hide dialog="delete-cast-dialog"/>
+														</xf:action>
+													</xf:trigger>
+												</xxf:dialog>												
+												<xf:trigger appearance="minimal" style="margin-left:-7px;">
+													<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xf:var name="id" select="@xml:id"/>
+														<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:castItem[@n=$id])"/>
+														<xf:action if="$no = 0">
+															<xf:delete nodeset="."/>
+															<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
+															<xf:dispatch name="xforms-value-changed" target="form-group"/>
+														</xf:action>
+														<xf:action if="$no != 0">
+															<xxf:show dialog="delete-cast-dialog"/>
+														</xf:action>
+													</xf:action>
+												</xf:trigger>
+											</h:span>
+											
 											<dcm:id/>
 											<dcm:attribute-editor/>
 										</h:legend>

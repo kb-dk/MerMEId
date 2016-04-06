@@ -78,8 +78,8 @@
         <xsl:variable name="this_att" select="local-name()"/>
         <xsl:if test="not($data_node/@*[local-name()=$this_att])"><xsl:attribute name="{name()}"/></xsl:if>
       </xsl:for-each>
-      <!-- Add xml:id if missing -->
-      <xsl:if test="not(@xml:id)"><xsl:attribute name="xml:id"><xsl:value-of select="concat(name(),'_',generate-id())"/></xsl:attribute></xsl:if>
+      <!-- Add xml:id to instrumentation list elements if missing -->
+      <!--<xsl:if test="not(@xml:id)"><xsl:attribute name="xml:id"><xsl:value-of select="concat(name(),'_',generate-id())"/></xsl:attribute></xsl:if>-->
       
       <xsl:choose>
         <!-- component expressions need special treatment -->
@@ -210,6 +210,7 @@
   <xsl:template match="m:rend[@rend = 'line-through']" mode="mei2html">&lt;span style="text-decoration: line-through;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sub']" mode="mei2html">&lt;sub&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sub&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sup']" mode="mei2html">&lt;sup&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sup&gt;</xsl:template>
+  <xsl:template match="m:rend[@halign]" mode="mei2html">&lt;div style="text-align:<xsl:value-of select="@halign"/>;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/div&gt;</xsl:template>
   <xsl:template match="m:rend[@fontfam or @fontsize or @color]" mode="mei2html"><xsl:variable name="atts">
     <xsl:if test="@fontfam">
       <xsl:value-of select="concat('font-family:',@fontfam,';')"/>
@@ -221,6 +222,12 @@
       <xsl:value-of select="concat('color:',@color,';')"/>
     </xsl:if>
   </xsl:variable>&lt;span style="<xsl:value-of select="$atts"/>"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
+  
+  <xsl:template match="m:rend[count(@*)=0 or (@xml:id and count(@*)=1)]" mode="mei2html">
+    <!-- omit <rend> if empty or without any rendition information -->
+    <xsl:apply-templates mode="mei2html"/>
+  </xsl:template>
+
   <!-- this one must be limited to operate only within blocks of HTML ...
     <xsl:template match="m:persName|m:corpName|m:name|m:ptr|m:address|m:bibl|m:date|m:geogName|m:title|m:quote" mode="mei2html">
     <xsl:variable name="atts">
@@ -235,20 +242,20 @@
     &lt;/span&gt;
     </xsl:template>
   -->
-  <xsl:template match="m:ref[@target]" mode="mei2html">
-    <xsl:text>&lt;a href="</xsl:text><xsl:value-of select="@target"/><xsl:text>" </xsl:text>
-    <xsl:text>target="</xsl:text><xsl:value-of select="@xl:show"/><xsl:text>" </xsl:text>
-    <xsl:text>title="</xsl:text><xsl:value-of
-    select="@xl:title"/><xsl:text>"&gt;</xsl:text>
-    <xsl:apply-templates mode="mei2html"/>&lt;/a&gt;
-  </xsl:template>
 
-  <xsl:template match="m:rend[@halign]" mode="mei2html">&lt;div style="text-align:<xsl:value-of select="@halign"/>;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/div&gt;</xsl:template>
   <xsl:template match="m:list" mode="mei2html"><xsl:choose>
     <xsl:when test="@form = 'simple'">&lt;ul&gt;<xsl:for-each select="m:li">&lt;li&gt;<xsl:apply-templates mode="mei2html"/>&lt;/li&gt;</xsl:for-each>&lt;/ul&gt;</xsl:when>
     <xsl:when test="@form = 'ordered'">&lt;ol&gt;<xsl:for-each select="m:li">&lt;li&gt;<xsl:apply-templates mode="mei2html"/>&lt;/li&gt;</xsl:for-each>&lt;/ol&gt;</xsl:when>
   </xsl:choose></xsl:template>
-
+  
+  <xsl:template match="m:ref[@target]" mode="mei2html">
+    <xsl:text>&lt;a href="</xsl:text><xsl:value-of select="@target"/><xsl:text>" </xsl:text>
+    <xsl:text>target="</xsl:text><xsl:value-of select="@xl:show"/><xsl:text>" </xsl:text>
+    <xsl:text>title="</xsl:text><xsl:value-of
+      select="@xl:title"/><xsl:text>"&gt;</xsl:text>
+    <xsl:apply-templates mode="mei2html"/>&lt;/a&gt;
+  </xsl:template>
+  
   <xsl:template match="m:fig[m:graphic]" mode="mei2html">&lt;img 
     src="<xsl:value-of select="m:graphic/@target"/>" 
     alt="<xsl:value-of select="m:graphic/@xl:title"/>"

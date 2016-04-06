@@ -1256,14 +1256,14 @@ The Royal Library, Copenhagen
 	<!-- perfMedium templates -->
 	<xsl:template match="m:perfMedium">
 		<xsl:param name="full" select="true()"/>
-		<xsl:if test="m:instrumentation[*]">
+		<xsl:if test="m:instrumentation[* and //text()]">
 			<div class="perfmedium list_block">
 				<xsl:for-each select="m:instrumentation[*]">
 					<div class="relation_list">
 						<xsl:if test="position()=1 and $full">
 							<span class="p_heading relation_list_label">Instrumentation: </span>
 						</xsl:if>
-						<xsl:apply-templates select="m:instrVoiceGrp"/>
+						<xsl:apply-templates select="m:instrVoiceGrp[*//text()]"/>
 						<xsl:apply-templates select="m:instrVoice[not(@solo='true')][text()]"/>
 						<xsl:if test="count(m:instrVoice[@solo='true'])&gt;0">
 							<xsl:if test="count(m:instrVoice[not(@solo='true')])&gt;0">
@@ -1282,7 +1282,7 @@ The Royal Library, Copenhagen
 		</xsl:apply-templates>
 	</xsl:template>
 
-	<xsl:template match="m:instrVoiceGrp[//text()]">
+	<xsl:template match="m:instrVoiceGrp[*//text()]">
 		<div>
 		<xsl:if test="m:head[text()]">
 			<xsl:value-of select="m:head"/>
@@ -1518,9 +1518,9 @@ The Royal Library, Copenhagen
 			      m:persName[text()]">
 					<xsl:if test="position()=1"> (</xsl:if>
 					<xsl:choose>
-						<xsl:when test="@role!=preceding-sibling::*[1]/@role or position()=1">
+						<xsl:when test="@role!=preceding-sibling::*[name()='persName' or name()='corpName'][1]/@role or position()=1">
 							<xsl:choose>
-								<xsl:when test="@role=following-sibling::*[1]/@role">
+								<xsl:when test="@role=following-sibling::*[name()='persName' or name()='corpName'][1]/@role">
 									<xsl:if test="name()='persName' and normalize-space(@role)">
 										<xsl:value-of select="concat(@role,'s')"
 										/><xsl:text>: </xsl:text>
@@ -1538,9 +1538,9 @@ The Royal Library, Copenhagen
 						</xsl:when>
 						<xsl:otherwise>
 							<xsl:choose>
-								<xsl:when test="@role=following-sibling::*[1]/@role">
+								<xsl:when test="@role=following-sibling::*[name()='persName' or name()='corpName'][1]/@role">
 									<xsl:apply-templates select="."/>; </xsl:when>
-								<xsl:when test="not(following-sibling::*[1]/@role)">
+								<xsl:when test="not(following-sibling::*[name()='persName' or name()='corpName'][1]/@role)">
 									<xsl:apply-templates select="."/>
 								</xsl:when>
 								<xsl:otherwise>
@@ -1780,12 +1780,18 @@ The Royal Library, Copenhagen
 						</xsl:element>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:element name="{$heading_element}">
-							<xsl:if test="normalize-space($label)">
-								<xsl:value-of select="$label"/>
-							</xsl:if>
-							<xsl:apply-templates select="m:titleStmt/m:title"/>
-						</xsl:element>
+						<xsl:choose>
+							<xsl:when test="normalize-space($label)">
+								<xsl:element name="{$heading_element}">
+										<xsl:value-of select="$label"/>
+								</xsl:element>
+							</xsl:when>
+							<xsl:when test="m:titleStmt/m:title/text()">
+								<xsl:element name="{$heading_element}">
+									<xsl:apply-templates select="m:titleStmt/m:title"/>
+								</xsl:element>
+							</xsl:when>
+						</xsl:choose>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:if>
@@ -3298,7 +3304,7 @@ The Royal Library, Copenhagen
 			<xsl:apply-templates/>
 		</u>
 	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'strikethrough'][text()]">
+	<xsl:template match="m:rend[@rend = 'line-through'][text()]">
 		<span style="text-decoration: line-through;">
 			<xsl:apply-templates/>
 		</span>

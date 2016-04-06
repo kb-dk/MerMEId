@@ -22,6 +22,9 @@
   <xsl:param name="target" select="''"/>
 
   <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes" indent="yes"/>
+  
+  <xsl:key name="ids" match="*[@xml:id]" use="@xml:id"/> 
+  
   <xsl:strip-space elements="*"/>
   <xsl:strip-space elements="node"/>
 
@@ -68,6 +71,42 @@
     </xsl:attribute>
   </xsl:template>
 
+  <!-- Change duplicate IDs -->
+  <xsl:template match="*[@xml:id and count(key('ids', @xml:id)) &gt; 1]">
+    <xsl:variable name="duplicateID" select="@xml:id"/>        
+    <xsl:element name="{name()}">
+      <xsl:apply-templates select="@*"/>
+      <!-- Append a number to the ID according to its number of occurrence -->
+      <xsl:variable name="newval">
+        <xsl:choose>
+          <xsl:when test="substring(@xml:id,1,1)='_'">
+            <!-- add element name if xml:id seems to be something like '_13' -->
+            <xsl:value-of select="concat(name(),@xml:id)"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="@xml:id"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:attribute name="xml:id">
+        <xsl:value-of select="concat($newval,'_',count(preceding::*[@xml:id=$duplicateID]))"/>
+      </xsl:attribute>
+      <!-- To log changes: -->
+      <!--<xsl:comment>Duplicate ID (<xsl:value-of select="$duplicateID"/>) changed</xsl:comment>-->
+      <xsl:apply-templates select="node()"/>        
+    </xsl:element>
+  </xsl:template>    
+  
+  <!-- Add xml:id to certain elements if missing -->
+  <xsl:template match="m:expression | m:item | m:bibl | m:instrVoice | m:instrVoiceGrp | m:castItem">
+    <xsl:element name="{name()}" namespace="http://www.music-encoding.org/ns/mei">
+      <xsl:apply-templates select="@*"/>
+      <xsl:call-template name="make_id_if_absent"/>
+      <xsl:apply-templates select="node()"/>
+    </xsl:element>
+  </xsl:template>
+  
+
   <!-- Remove empty attributes -->
   <xsl:template
     match="@accid|@authority|@authURI|@code|@count|@dbkey|@enddate|@evidence|
@@ -78,7 +117,7 @@
     </xsl:if>
   </xsl:template>
 
-  <!-- Clean-up double-escaped ampersands (&amp;amp;) -->
+  <!-- Clean up double-escaped ampersands (&amp;amp;) -->
   <xsl:template match="text()[contains(.,'&amp;amp;')]">
     <xsl:call-template name="cleanup_amp">
       <xsl:with-param name="string" select="."/>
@@ -96,8 +135,32 @@
     </xsl:choose>
   </xsl:template>
 
+  <!-- Trying to convert &nbsp; to &#160; ... -->
+  <!--<xsl:template match="text()[contains(.,'&amp;nbsp;')]">
+    <xsl:apply-templates select="substring-before(.,'&amp;nbsp;')"/>&#160;<xsl:apply-templates select="substring-after(.,'&amp;nbsp;')"/>
+    </xsl:template>-->
+  
+  <xsl:template match="text()[contains(.,'&amp;nbsp;')]">
+    <xsl:call-template name="cleanup_nbsp">
+      <xsl:with-param name="string" select="."/>
+    </xsl:call-template>
+  </xsl:template>  
+
+  <xsl:template name="cleanup_nbsp">
+    <xsl:param name="string"/>
+    <xsl:variable name="remainder" select="substring-after($string,'&amp;nbsp;')"/>
+    <xsl:value-of select="substring-before($string,'&amp;nbsp;')"/>&#160;<xsl:choose>
+      <xsl:when test="contains($remainder,'&amp;nbsp;')"><xsl:call-template name="cleanup_nbsp">
+        <xsl:with-param name="string" select="$remainder"/></xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise><xsl:value-of select="$remainder"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+
   <!-- Remove empty elements -->
-  <xsl:template match="m:castList[not(*)]"/>
+  <xsl:template match="m:castItem[not(//text())]"/>
+  <xsl:template match="m:castList[not(* or //text())]"/>
   <xsl:template match="m:eventList[not(*)]"/>
   <xsl:template match="m:incipCode[not(text())]"/>
   <xsl:template match="m:notesStmt[not(*)]"/>
@@ -107,31 +170,24 @@
   <xsl:template
     match="m:mei/m:meiHead/m:workDesc/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
 
-  <!-- Change duplicate IDs -->
-  <xsl:template match="*[@xml:id=preceding::*/@xml:id]">
-    <xsl:variable name="duplicateID" select="@xml:id"/>
-    <xsl:element name="{name()}">
-      <xsl:apply-templates select="@*"/>
-      <xsl:call-template name="make_id_if_absent"/>
-      <!-- Append a number to the ID according to its number of occurrence -->
-      <xsl:attribute name="xml:id">
-        <xsl:value-of select="concat($duplicateID,'_',count(preceding::*[@xml:id=$duplicateID]))"/>
-      </xsl:attribute>
-      <!-- To log changes: -->
-      <!--<xsl:comment>Duplicate ID (<xsl:value-of select="$duplicateID"/>) changed</xsl:comment>-->
-      <xsl:apply-templates select="node()"/>
-    </xsl:element>
+  <!-- Remove <rend> elements without any rendition information or empty -->
+  <xsl:template match="m:rend">
+    <xsl:choose>
+      <xsl:when test="count(@*[local-name(.)!='xml:id'])>0 and (* or text())">
+        <!-- contains relevant attributes and content; just copy it -->
+        <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
+          <xsl:apply-templates select="@*"/>
+          <xsl:apply-templates select="node()"/>
+        </xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- no qualifying attributes or no content; omit <rend> -->
+        <xsl:apply-templates select="node()"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
-
-  <!-- Add xml:id to certain elements if missing -->
-  <xsl:template match="m:expression | m:item | m:bibl">
-    <xsl:element name="{name()}" namespace="http://www.music-encoding.org/ns/mei">
-      <xsl:apply-templates select="@*"/>
-      <xsl:call-template name="make_id_if_absent"/>
-      <xsl:apply-templates select="*"/>
-    </xsl:element>
-  </xsl:template>
-
+  
+  
   <!-- Ensure correct order of elements -->
 
   <xsl:template match="m:biblList">
@@ -297,16 +353,11 @@
     </xsl:if>
   </xsl:template>
   
-  <!-- trying to get rid of &nbsp; ... 
-  <xsl:template match="text[contains(.,'&amp;nbsp;')]">
-    <xsl:apply-templates select="substring-before(.,'&amp;nbsp;')"/><xsl:text> </xsl:text><xsl:apply-templates select="substring-after(.,'&amp;nbsp;')"/>
-  </xsl:template>-->
-  
   <!-- End entity conversion -->
 
   <!-- HTML -> MEI -->
   
-  <!-- Strip off any temporary <p> wrappers for tinymce -->
+  <!-- Strip off any temporary <p> wrappers for TinyMCE -->
   <xsl:template match="m:p[@n='MerMEId_temporary_wrapper']">
       <xsl:apply-templates select="node()"/>
   </xsl:template>
@@ -329,7 +380,7 @@
       <xsl:otherwise>
         <xsl:element name="p" namespace="http://www.music-encoding.org/ns/mei">
           <xsl:apply-templates select="@*"/>
-          <xsl:call-template name="make_id_if_absent"/>
+          <!--<xsl:call-template name="make_id_if_absent"/>-->
           <xsl:apply-templates select="node()"/>
         </xsl:element>
       </xsl:otherwise>
@@ -496,7 +547,6 @@
         <xsl:attribute name="target">
           <xsl:value-of select="@src"/>
         </xsl:attribute>
-
       </xsl:element>
     </xsl:element>
   </xsl:template>
