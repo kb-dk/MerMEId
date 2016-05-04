@@ -1,75 +1,47 @@
-<?xml version="1.0"?>
-<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
-  <zs:version>1.1</zs:version>
-  <zs:numberOfRecords>4</zs:numberOfRecords>
-  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00402nz a2200133 4500</leader>
-          <controlfield tag="001">30006091</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Uruguay</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://www.loc.gov/MARC21/slim">
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30006091</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">ROU-MVmh</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">XD-UY</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">Museo Histórico Nacional</subfield>
             <subfield code="c">Montevideo</subfield>
             <subfield code="g">ROU-MVmh</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
             <subfield code="e">Museo Histórico Nacional, Rincón 437, C.P. 1000 Montevideo, Uruguay</subfield>
             <subfield code="u">http://www.mec.gub.uy/museo/</subfield>
-          </datafield>
-          <datafield tag="670" ind1="2" ind2=" ">
-            <subfield code="a">21</subfield>
-          </datafield>
-          <datafield tag="852" ind1="2" ind2=" ">
-            <subfield code="b">-34.9066236, -56.2074164</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>402</size>
-            <score>816</score>
-            <localnumber>830587</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>2</zs:recordPosition>
-    </zs:record><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00403nz a2200121 4500</leader>
-          <controlfield tag="001">30076528</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Uruguay</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+        </datafield>
+    </record>
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30076528</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">ROU-MVsf</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">XD-UY</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">Iglesia de San Francisco de Asís, Archivo Musical</subfield>
             <subfield code="c">Montevideo</subfield>
             <subfield code="g">ROU-MVsf</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
-            <subfield code="e">Iglesia de San Francisco de Asís,, Archivo Musical, C/ Vitoria, 59, 11900 Montevideo,
-              Uruguay</subfield>
-          </datafield>
-          <datafield tag="852" ind1="2" ind2=" ">
-            <subfield code="b">-34.8836111, -56.1819444</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>403</size>
-            <score>816</score>
-            <localnumber>834839</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>4</zs:recordPosition>
-    </zs:record></zs:records>
-</zs:searchRetrieveResponse>
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Iglesia de San Francisco de Asís,, Archivo Musical, C/ Vitoria, 59, 11900 Montevideo, Uruguay</subfield>
+        </datafield>
+    </record>
+</collection>
+

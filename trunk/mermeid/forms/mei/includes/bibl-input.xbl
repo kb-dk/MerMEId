@@ -472,7 +472,7 @@
                                 origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
                             <xf:repeat nodeset="m:annot" id="repeat-bibl-notes">
                                 <h:div>
-                                    <fr:tinymce ref="m:p" class="mediumheight"/>	
+                                    <fr:tinymce ref="." class="mediumheight"/>	
                                     <dcm:element-buttons triggers="remove" nodeset="m:annot" index="repeat-bibl-notes"
                                         origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:annot][1]/m:annot"/>
                                     <dcm:attribute-editor/>

@@ -1025,10 +1025,8 @@ The Royal Library, Copenhagen
 							<xsl:attribute name="href">
 								<xsl:value-of select="m:graphic[@targettype='hires']/@target"/>
 							</xsl:attribute>
-							<xsl:attribute name="onclick"> window.open("<xsl:value-of
-									select="m:graphic[@targettype='hires']/@target"
-								/>","incipit","height=550,width=1250,toolbar=0,status=0,menubar=0,resizable=1,location=0,scrollbars=1");return
-								false; </xsl:attribute>
+							<xsl:attribute name="onclick"> window.open('<xsl:value-of
+									select="m:graphic[@targettype='hires']/@target"/>','incipit','height=550,width=1250,toolbar=0,status=0,menubar=0,resizable=1,location=0,scrollbars=1');return false; </xsl:attribute>
 							<xsl:element name="img">
 								<xsl:attribute name="border">0</xsl:attribute>
 								<xsl:attribute name="style">text-decoration: none;</xsl:attribute>

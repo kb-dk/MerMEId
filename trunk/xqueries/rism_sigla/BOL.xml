@@ -1,62 +1,48 @@
-<?xml version="1.0"?>
-<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
-  <zs:version>1.1</zs:version>
-  <zs:numberOfRecords>3</zs:numberOfRecords>
-  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00238nz a2200097 4500</leader>
-          <controlfield tag="001">30003956</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Bolivia, Plurinational State of</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://www.loc.gov/MARC21/slim">
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30003956</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">BOL-CHa</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">XD-BO</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">Archivo Musical</subfield>
             <subfield code="c">Chiquitos</subfield>
             <subfield code="g">BOL-CHa</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>238</size>
-            <score>843</score>
-            <localnumber>829604</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>1</zs:recordPosition>
-    </zs:record><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00376nz a2200109 4500</leader>
-          <controlfield tag="001">30076524</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Bolivia, Plurinational State of</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
-            <subfield code="a">Biblioteca Nacional de Bolivia, Sección de Música</subfield>
+        </datafield>
+    </record>
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30076524</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">BOL-SUbn</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">XD-BO</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Archivo y Biblioteca Nacionales de Bolivia</subfield>
             <subfield code="c">Sucre</subfield>
             <subfield code="g">BOL-SUbn</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
-            <subfield code="e">Biblioteca Nacional de Bolivia, Sección, de Música, Calle España, 43, Sucre,
-              Bolivien</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>376</size>
-            <score>843</score>
-            <localnumber>835026</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>3</zs:recordPosition>
-    </zs:record></zs:records>
-</zs:searchRetrieveResponse>
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
+            <subfield code="a">Sección de Música</subfield>
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Archivo y Biblioteca Nacionales de,  Bolivia, Calle España N° 43, Sucre, Bolivia</subfield>
+            <subfield code="u">http://www.archivoybibliotecanacionales.org.bo/index.php</subfield>
+        </datafield>
+    </record>
+</collection>
+
+

@@ -130,7 +130,7 @@
       validate="false"
       resource="/editor/forms/mei/model/new_file.xml"
       replace="instance" 
-      xxf:show-progress="false"
+      xxf:show-progress="true"
       instance="data-instance"/>
     
     <xf:submission id="load-data-submission" 
@@ -139,7 +139,7 @@
       validate="false"
       resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
       replace="instance" 
-      xxf:show-progress="false"
+      xxf:show-progress="true"
       instance="data-instance"/>
 
     <xf:submission id="save-to-file"
@@ -150,7 +150,7 @@
       resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
       method="put"
       replace="instance"
-      xxf:show-progress="false"/>
+      xxf:show-progress="true"/>
 
     <xf:submission id="load-fileList"
       method="get" 
@@ -158,7 +158,7 @@
       validate="false"
       resource="{instance('temp')/target_uri}"
       replace="instance" 
-      xxf:show-progress="false"
+      xxf:show-progress="true"
       instance="XMLfiles"/> 
 
     <xf:submission id="load-keywords"
@@ -167,7 +167,7 @@
       validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/keywords.xml"
       replace="instance" 
-      xxf:show-progress="false"
+      xxf:show-progress="true"
       instance="keywords-instance"/>
     
     <xf:submission id="load-ensembles"
@@ -176,7 +176,7 @@
       validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/ensembles.xml"
       replace="instance" 
-      xxf:show-progress="false"
+      xxf:show-progress="true"
       instance="ensembles"/>
     
     <xf:submission id="load-instruments"
@@ -185,7 +185,7 @@
       validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/instruments.xml"
       replace="instance" 
-      xxf:show-progress="false"
+      xxf:show-progress="true"
       instance="instruments"/>
 
     <xf:submission id="load-instrument-groups"
@@ -194,7 +194,7 @@
       validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/instrument_groups.xml"
       replace="instance" 
-      xxf:show-progress="false"
+      xxf:show-progress="true"
       instance="instrument-groups"/>
     
     <xf:submission id="load-bibliography"
@@ -203,7 +203,7 @@
       validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/standard_bibliography.xml"
       replace="instance" 
-      xxf:show-progress="false"
+      xxf:show-progress="true"
       instance="bibliography-instance"/>
 
     <xf:submission id="load-authorities"
@@ -212,7 +212,7 @@
       validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/authority_files.xml"
       replace="instance" 
-      xxf:show-progress="false"
+      xxf:show-progress="true"
       instance="authority-instance"/>
     
     <!-- "onload" xforms actions -->
@@ -312,7 +312,6 @@
   <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
   <xi:include href="includes/history-input.xbl" parse="xml"/>
   <xi:include href="includes/id.xbl" parse="xml"/>
-  <xi:include href="includes/item.xbl" parse="xml"/>
   <xi:include href="includes/linked_sources.xbl" parse="xml"/>
   <xi:include href="includes/performance_list.xbl" parse="xml"/>
   <xi:include href="includes/relator.xbl" parse="xml"/>

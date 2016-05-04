@@ -1,38 +1,25 @@
-<?xml version="1.0"?>
-<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
-  <zs:version>1.1</zs:version>
-  <zs:numberOfRecords>1</zs:numberOfRecords>
-  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00304nz a2200121 4500</leader>
-          <controlfield tag="001">30003855</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Azerbaijan</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://www.loc.gov/MARC21/slim">
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30003855</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">AZ-Ban</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">XB-AZ</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">Biblioteka Akademii nauk Azerbajdžana</subfield>
             <subfield code="c">Baku</subfield>
             <subfield code="g">AZ-Ban</subfield>
-          </datafield>
-          <datafield tag="410" ind1="2" ind2=" ">
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
             <subfield code="a">Akademija Nauk</subfield>
-          </datafield>
-          <datafield tag="852" ind1="2" ind2=" ">
-            <subfield code="b">40.4349504, 49.8676232</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>304</size>
-            <score>870</score>
-            <localnumber>835456</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>1</zs:recordPosition>
-    </zs:record></zs:records>
-</zs:searchRetrieveResponse>
+        </datafield>
+    </record>
+</collection>
+

@@ -49,7 +49,7 @@
         <xi:include href="includes/element_buttons.xbl" parse="xml"/>
         <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
         <xi:include href="includes/id.xbl" parse="xml"/>
-        <xi:include href="includes/item.xbl" parse="xml"/>
+        <xi:include href="includes/item-input.xbl" parse="xml"/>
         <xi:include href="includes/linked_sources.xbl" parse="xml"/>
         <xi:include href="includes/relator.xbl" parse="xml"/>
         <xi:include href="includes/rism_sigla_select.xbl" parse="xml"/>
@@ -104,20 +104,108 @@
                
                 
                 <xf:group ref="instance('data-instance')//m:item[@xml:id=instance('temp')/id]">
-                        <h:span class="blocklabel strong">Item 
-                            <h:a class="help">&#160;?<h:span class="comment">At item level, 
-                                information specific to an individual copy of a source should be entered. <h:br/>
-                                Information common to all copies of this source should be given at source level.<h:br/>
-                                Manuscripts are somewhat special, being sources having only one item. Manuscripts, too, 
-                                will have some information at source level and some (such as location) at item level, though
-                                the distinction is less clear than with printed sources. 
-                                <h:br/>
-                                If the item consists of several components with different physical appearance, 
-                                the distinct features of each component may be specified using the item's "Components" section.
-                            </h:span></h:a>
-                        </h:span>
+                    <h:span class="blocklabel strong">Item 
+                        <h:a class="help">&#160;?<h:span class="comment">At item level, 
+                            information specific to an individual copy of a source should be entered. <h:br/>
+                            Information common to all copies of this source should be given at source level.<h:br/>
+                            Manuscripts are somewhat special, being sources having only one item. Manuscripts, too, 
+                            will have some information at source level and some (such as location) at item level, though
+                            the distinction is less clear than with printed sources. 
+                            <h:br/>
+                            If the item consists of several components with different physical appearance, 
+                            the distinct features of each component may be specified using the item's "Components" section.
+                        </h:span></h:a>
+                    </h:span>
+                    <h:div class="vertical_spacer"> </h:div>
+                
+                    
+                    <h:fieldset>
+                        <h:legend>Item label</h:legend>
+                        <xf:input ref="@label" class="maxlong">
+                            <xf:label class="fixed_width">Label <h:a class="help">&#160;?<h:span 
+                                class="comment">An optional label for this item, e.g. "Carl Nielsen's copy"</h:span></h:a>
+                            </xf:label>
+                        </xf:input>
+                        <dcm:attribute-editor/>
+                    </h:fieldset>
+                
+                    <dcm:item-input ref="."/>
+                
+                
+                    
+                    <!-- Components -->
+                    <h:fieldset class="item-components">
+                        <h:legend class="item-components">Components <h:a 
+                            class="help">?<h:span class="comment">Descriptions of the individual parts that 
+                                constitute a composite source</h:span></h:a>
+                            <dcm:attribute-editor ref="m:componentGrp"/>
+                        </h:legend>
                         <h:div class="vertical_spacer"> </h:div>
-                        <dcm:item ref="."/>
+                        <dcm:create
+                            nodeset="m:componentGrp"
+                            label="Add components"
+                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentGrp"/>
+                        <dcm:create ref="m:componentGrp"
+                            nodeset="m:item"
+                            label="Add component"
+                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentGrp/m:item"/>
+                        <xf:group ref=".[m:componentGrp]">
+                            <h:table class="component_list" cellpadding="0" cellspacing="0" border="0">
+                                <xf:repeat nodeset="m:componentGrp/m:item" id="repeat-item-component">
+                                    <h:tr class="component">
+                                        <h:td class="{if(position()=last()) then 'last_cell' else 'index_cell'}">
+                                            <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/tree-1.png" alt="component" border="0"/>
+                                        </h:td>
+                                        <h:td>
+                                            <h:fieldset class="compact">
+                                                <h:span class="blocklabel strong">Component <dcm:id/> 
+                                                    <dcm:element-buttons 
+                                                        triggers="up down copy add remove" 
+                                                        nodeset="m:item" 
+                                                        index="repeat-item-component"
+                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentGrp/m:item"/>
+                                                    <dcm:attribute-editor ref="."/>
+                                                </h:span>
+                                                <h:div class="vertical_spacer"> </h:div>
+                                                
+                                                <xf:input ref="@label" class="maxlong">
+                                                    <xf:label>Label <h:a class="help">&#160;?<h:span 
+                                                        class="comment">An optional label for this component, explaining the 
+                                                        component's position in the source, e.g. "pp.3-4"</h:span></h:a>
+                                                    </xf:label>
+                                                </xf:input>
+                                                
+                                                <xf:switch>
+                                                    <xf:case id="hide_component_details" selected="true()">
+                                                        <xf:trigger class="detail_button">
+                                                            <xf:label>Show details</xf:label>
+                                                            <xf:toggle case="show_component_details" ev:event="DOMActivate"/>
+                                                        </xf:trigger>
+                                                    </xf:case>
+                                                    
+                                                    <xf:case id="show_component_details" selected="false()">
+                                                        <xf:trigger class="detail_button">
+                                                            <xf:label>Hide details</xf:label>
+                                                            <xf:toggle case="hide_component_details" ev:event="DOMActivate"/>
+                                                        </xf:trigger>	
+                                                        
+                                                        <dcm:item-input ref="."/>   
+                                                        
+                                                    </xf:case>
+                                                </xf:switch>
+                                            </h:fieldset>
+                                        </h:td>
+                                    </h:tr>
+                                </xf:repeat>
+                            </h:table>
+                        </xf:group>
+                    </h:fieldset>
+                    <!-- End components -->
+                    
+                    
+                    
+                    
+                    
                 </xf:group>
                 
                 <xf:group ref=".[not(instance('data-instance')//m:item[@xml:id=instance('temp')/id])]">

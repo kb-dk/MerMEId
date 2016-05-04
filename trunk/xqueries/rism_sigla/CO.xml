@@ -1,41 +1,44 @@
-<?xml version="1.0"?>
-<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
-  <zs:version>1.1</zs:version>
-  <zs:numberOfRecords>6</zs:numberOfRecords>
-  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00337nz a2200133 4500</leader>
-          <controlfield tag="001">30000560</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Colombia</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://www.loc.gov/MARC21/slim">
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30000560</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">CO-B</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">XD-CO</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">Archivo de la Catedral</subfield>
             <subfield code="c">Bogotá</subfield>
             <subfield code="g">CO-B</subfield>
-          </datafield>
-          <datafield tag="410" ind1="2" ind2=" ">
-            <subfield code="a">Catedral</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
-            <subfield code="e">Archivo de la Catedral, Bogotá, Kolumbien</subfield>
-          </datafield>
-          <datafield tag="852" ind1="2" ind2=" ">
-            <subfield code="b">4.5939361, -74.0769</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>337</size>
-            <score>816</score>
-            <localnumber>832189</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>4</zs:recordPosition>
-    </zs:record></zs:records>
-</zs:searchRetrieveResponse>
+        </datafield>
+    </record>
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30080294</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">CO-Bbn</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">CO</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Biblioteca Nacional de Colombia - Centro de Documentación Musical</subfield>
+            <subfield code="c">Bogotá</subfield>
+            <subfield code="g">CO-Bbn</subfield>
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Biblioteca Nacional de Colombia - Centro,  de Documentación Musical, Calle 24, No. 5 – 60, Bogotá, Colombia</subfield>
+            <subfield code="u">http://www.bibliotecanacional.gov.co/content/centro-de-documentaci%C3%B3n-musical-1</subfield>
+        </datafield>
+    </record>
+</collection>
+

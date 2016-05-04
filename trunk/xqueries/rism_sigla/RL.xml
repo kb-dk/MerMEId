@@ -1,44 +1,31 @@
-<?xml version="1.0"?>
-<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
-  <zs:version>1.1</zs:version>
-  <zs:numberOfRecords>3</zs:numberOfRecords>
-  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00488nz a2200145 4500</leader>
-          <controlfield tag="001">30002349</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Lebanon</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://www.loc.gov/MARC21/slim">
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30002349</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">RL-B</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">XB-LB</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">Habib Zayyat Collection and Library of the Greek Orthodox School</subfield>
             <subfield code="c">Bayr¯ut</subfield>
             <subfield code="g">RL-B</subfield>
-          </datafield>
-          <datafield tag="410" ind1="2" ind2=" ">
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
             <subfield code="a">Habib Zayyat Collection</subfield>
-          </datafield>
-          <datafield tag="410" ind1="2" ind2=" ">
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
             <subfield code="a">Library of the Greek Orthodox School</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
             <subfield code="e">Habib Zayyat Collection and Library of, the Greek Orthodox School, RL-Bayr¯ut</subfield>
-          </datafield>
-          <datafield tag="852" ind1="2" ind2=" ">
-            <subfield code="b">39.3209801, -111.0937311</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>488</size>
-            <score>843</score>
-            <localnumber>835075</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>2</zs:recordPosition>
-    </zs:record></zs:records>
-</zs:searchRetrieveResponse>
+        </datafield>
+    </record>
+</collection>
+

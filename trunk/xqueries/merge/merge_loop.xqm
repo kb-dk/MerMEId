@@ -129,23 +129,23 @@ declare function loop:getlist (
       if($coll) then 
 	if($query) then
           for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
-          where loop:genre-filter($genre,$doc) and loop:date-filters($doc) and loop:valid-work-number($doc)
+          where loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
 	  order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	  return $doc 
 	else
 	  for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
-          where loop:genre-filter($genre,$doc) and loop:date-filters($doc) and loop:valid-work-number($doc)
+          where loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
 	  order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	  return $doc 
         else
 	  if($query) then
             for $doc in collection($database)/m:mei[ft:query(.,$query)]
-            where loop:genre-filter($genre,$doc) and loop:date-filters($doc) and loop:valid-work-number($doc)
+            where loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
 	    order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	    return $doc
       else
         for $doc in collection($database)/m:mei
-        where loop:genre-filter($genre,$doc) and loop:date-filters($doc) and loop:valid-work-number($doc)
+        where loop:genre-filter($genre,$doc) and loop:date-filters($doc)
 	order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	return $doc
 	      

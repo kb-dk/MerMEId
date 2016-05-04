@@ -153,22 +153,22 @@
                     <xf:label>- Select archive -</xf:label>
                     <xf:value/>
                   </xf:item>
-                  <xf:itemset nodeset="instance('rism-sigla-instance')/zs:records/zs:record">
+                  <xf:itemset nodeset="instance('rism-sigla-instance')//marc:record">
                     <xf:label>
                       <xf:output value="if (string-length(concat(
-                        zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='g'],
-                        zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='c'],
-                        zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='a']))&gt;60) 
+                        marc:datafield[@tag='110']/marc:subfield[@code='g'],
+                        marc:datafield[@tag='110']/marc:subfield[@code='c'],
+                        marc:datafield[@tag='110']/marc:subfield[@code='a']))&gt;60) 
                         then  concat(substring(concat( 
-                        zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='g'],': ',
-                        zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='c'],', ',
-                        zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='a']),1,60),'...') 
+                        marc:datafield[@tag='110']/marc:subfield[@code='g'],': ',
+                        marc:datafield[@tag='110']/marc:subfield[@code='c'],', ',
+                        marc:datafield[@tag='110']/marc:subfield[@code='a']),1,60),'...') 
                         else  concat( 
-                        zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='g'],': ',
-                        zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='c'],', ',
-                        zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='a'])"/>
+                        marc:datafield[@tag='110']/marc:subfield[@code='g'],': ',
+                        marc:datafield[@tag='110']/marc:subfield[@code='c'],', ',
+                        marc:datafield[@tag='110']/marc:subfield[@code='a'])"/>
                     </xf:label>
-                    <xf:value ref="zs:recordData/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='g']"></xf:value>
+                    <xf:value ref="marc:datafield[@tag='110']/marc:subfield[@code='g']"></xf:value>
                   </xf:itemset>
                 </xf:select1>    
                 <h:br/>&#160;

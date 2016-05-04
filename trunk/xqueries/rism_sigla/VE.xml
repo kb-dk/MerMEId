@@ -1,97 +1,66 @@
-<?xml version="1.0"?>
-<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
-  <zs:version>1.1</zs:version>
-  <zs:numberOfRecords>6</zs:numberOfRecords>
-  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00458nz a2200121 4500</leader>
-          <controlfield tag="001">30077439</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Venezuela, Bolivarian Republic of</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://www.loc.gov/MARC21/slim">
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30077439</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">VE-Cbc</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">VE</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">Biblioteca Central de la Universidad Central de Venezuela</subfield>
             <subfield code="c">Caracas</subfield>
             <subfield code="g">VE-Cbc</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
-            <subfield code="e">Biblioteca Central de la Universidad, Central de Venezuela, Los Chaguaramos, 1050
-              Caracas, Venezuela</subfield>
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Biblioteca Central de la Universidad,  Central de Venezuela, Los Chaguaramos, 1050 Caracas, Venezuela</subfield>
             <subfield code="u">http://www.sicht.ucv.ve:8080/bc/index.jsp</subfield>
-          </datafield>
-          <datafield tag="670" ind1="2" ind2=" ">
-            <subfield code="a">1</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>458</size>
-            <score>816</score>
-            <localnumber>829246</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>1</zs:recordPosition>
-    </zs:record><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00425nz a2200109 4500</leader>
-          <controlfield tag="001">30077787</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Venezuela, Bolivarian Republic of</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+        </datafield>
+    </record>
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30077787</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">VE-Cbn</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">VE</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">Biblioteca Nacional de Venezuela</subfield>
             <subfield code="c">Caracas</subfield>
             <subfield code="g">VE-Cbn</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
-            <subfield code="e">Biblioteca Nacional de Venezuela, Parroquia Altagracia, Final Av. Panteón,, Foro
-              Libertador, Edif. Sede, Caracas 1010, Venezuela</subfield>
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Biblioteca Nacional de Venezuela, Parroquia Altagracia, Final Av. Panteón,,  Foro Libertador, Edif. Sede, Caracas 1010, Venezuela</subfield>
             <subfield code="u">http://www.bnv.gob.ve/</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>425</size>
-            <score>816</score>
-            <localnumber>835345</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>6</zs:recordPosition>
-    </zs:record><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00282nz a2200097 4500</leader>
-          <controlfield tag="001">30006636</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Venezuela, Bolivarian Republic of</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+        </datafield>
+    </record>
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30006636</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">VE-Ctc</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">XD-VE</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">Archivo Historico de Teresa Carreño, Teatro Teresa Carreño</subfield>
             <subfield code="c">Caracas</subfield>
             <subfield code="g">VE-Ctc</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>282</size>
-            <score>816</score>
-            <localnumber>832395</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>4</zs:recordPosition>
-    </zs:record></zs:records>
-</zs:searchRetrieveResponse>
+        </datafield>
+    </record>
+</collection>
+

@@ -1,78 +1,57 @@
-<?xml version="1.0"?>
-<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
-  <zs:version>1.1</zs:version>
-  <zs:numberOfRecords>6</zs:numberOfRecords>
-  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00387nz a2200121 4500</leader>
-          <controlfield tag="001">30070514</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Iceland</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://www.loc.gov/MARC21/slim">
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30070514</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">IS-Ram</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">XA-IS</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">Stofnun Árna Magnússonar</subfield>
             <subfield code="c">Reykjavík</subfield>
             <subfield code="g">IS-Ram</subfield>
-          </datafield>
-          <datafield tag="410" ind1="2" ind2=" ">
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
             <subfield code="a">The Árni Magnússon Institute</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
             <subfield code="e">Stofnun Árna Magnússonar, Árnagaròi v/Sudurgötu, 101 Reykjavík, Iceland</subfield>
             <subfield code="u">http://www.am.hi.is</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>387</size>
-            <score>816</score>
-            <localnumber>834582</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>5</zs:recordPosition>
-    </zs:record><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00483nz a2200145 4500</leader>
-          <controlfield tag="001">30003065</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">Iceland</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+        </datafield>
+    </record>
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30003065</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">IS-Rl</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">XA-IS</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">Landsbókasafn Íslands Háskólabókasafn</subfield>
             <subfield code="c">Reykjavík</subfield>
             <subfield code="g">IS-Rl</subfield>
-          </datafield>
-          <datafield tag="410" ind1="2" ind2=" ">
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
             <subfield code="a">National and University Library of Iceland</subfield>
-          </datafield>
-          <datafield tag="410" ind1="2" ind2=" ">
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
             <subfield code="a">National Library</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
             <subfield code="e">Landsbókasafn Íslands Háskólabókasafn, Arngrímsgata 3, 107 Reykjavík, Iceland</subfield>
             <subfield code="u">http://www.bok.hi.is</subfield>
-          </datafield>
-          <datafield tag="688" ind1="2" ind2=" ">
-            <subfield code="a">N-Grove: Rn</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>483</size>
-            <score>816</score>
-            <localnumber>829415</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>1</zs:recordPosition>
-    </zs:record></zs:records>
-</zs:searchRetrieveResponse>
+        </datafield>
+    </record>
+</collection>
+

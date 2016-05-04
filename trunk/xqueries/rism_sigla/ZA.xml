@@ -1,69 +1,129 @@
-<?xml version="1.0"?>
-<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
-  <zs:version>1.1</zs:version>
-  <zs:numberOfRecords>3</zs:numberOfRecords>
-  <zs:records xmlns:marc="http://www.loc.gov/MARC21/slim"><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00446nz a2200133 4500</leader>
-          <controlfield tag="001">30003846</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">South Africa</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
+<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://www.loc.gov/MARC21/slim">
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30003846</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">ZA-Csa</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">XC-ZA</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
             <subfield code="a">National Library of South Africa</subfield>
             <subfield code="c">Cape Town</subfield>
             <subfield code="g">ZA-Csa</subfield>
-          </datafield>
-          <datafield tag="410" ind1="2" ind2=" ">
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
             <subfield code="a">South African Library</subfield>
-          </datafield>
-          <datafield tag="622" ind1=" " ind2=" ">
-            <subfield code="e">National Library of South Africa, 5 Queen Victoria Street, 8000 Cape Town, South
-              Africa</subfield>
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">National Library of South Africa, 5 Queen Victoria Street, 8000 Cape Town, South Africa</subfield>
             <subfield code="u">http://www.nlsa.ac.za/NLSA/</subfield>
-          </datafield>
-          <datafield tag="852" ind1="2" ind2=" ">
-            <subfield code="b">-33.9271432, 18.4160526</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>446</size>
-            <score>843</score>
-            <localnumber>832183</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>1</zs:recordPosition>
-    </zs:record><zs:record>
-      <zs:recordPacking>xml</zs:recordPacking>
-      <zs:recordData>
-        <record xmlns="http://www.loc.gov/MARC21/slim">
-          <leader>00256nz a2200097 4500</leader>
-          <controlfield tag="001">30070460</controlfield>
-          <controlfield tag="003">RISM</controlfield>
-          <controlfield tag="005">20121108</controlfield>
-          <controlfield tag="008">121108n||az|||||||##########||||||||||||</controlfield>
-          <datafield tag="043" ind1=" " ind2=" ">
-            <subfield code="c">South Africa</subfield>
-          </datafield>
-          <datafield tag="110" ind1="2" ind2=" ">
-            <subfield code="a">University of Stellenbosch, Music Library &lt;Matieland&gt;</subfield>
-            <subfield code="c">Matieland</subfield>
-            <subfield code="g">ZA-MAu</subfield>
-          </datafield>
-          <idzebra xmlns="http://www.indexdata.dk/zebra/">
-            <size>256</size>
-            <score>843</score>
-            <localnumber>834545</localnumber>
-            <filename>sigla/sigla.mrc</filename>
-          </idzebra>
-        </record>
-      </zs:recordData>
-      <zs:recordPosition>2</zs:recordPosition>
-    </zs:record></zs:records>
-</zs:searchRetrieveResponse>
+        </datafield>
+    </record>
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30080131</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">ZA-STusa</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">ZA</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Die Universiteit Stellenbosch Argief</subfield>
+            <subfield code="c">Stellenbosch</subfield>
+            <subfield code="g">ZA-STusa</subfield>
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
+            <subfield code="a">The Stellenbosch University Archives</subfield>
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Die Universiteit Stellenbosch Argief, Wilcocksgebou, Hoek v. Ryneveld en,  Victoria Straat, Privaatsak X1, 7602 Stellenbosch, South Africa</subfield>
+            <subfield code="u">http://www.sun.ac.za/afrikaans/entities/archives/Pages/default.aspx</subfield>
+        </datafield>
+    </record>
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30080130</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">ZA-STusdm</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">ZA</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Universiteit van Stellenbosch, Dokumentasiesentrum vir Musiek</subfield>
+            <subfield code="c">Stellenbosch</subfield>
+            <subfield code="g">ZA-STusdm</subfield>
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
+            <subfield code="a">Stellenbosch University, Documentation Centre for Music</subfield>
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Universiteit van Stellenbosch,,  Dokumentasiesentrum vir Musiek, Departement Musiek, Neethlingstraat, Privaatsak X1, 7602 Stellenbosch, South Africa</subfield>
+            <subfield code="u">http://www.domus.ac.za/afrikaans/</subfield>
+        </datafield>
+    </record>
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30080129</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">ZA-STusmb</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">ZA</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Universiteit van Stellenbosch, Musiek Biblioteek</subfield>
+            <subfield code="c">Stellenbosch</subfield>
+            <subfield code="g">ZA-STusmb</subfield>
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
+            <subfield code="a">Stellenbosch University, Music Library</subfield>
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Universiteit van Stellenbosch, Musiek,  Biblioteek, Konservatorium, Neethlingstraat, Privaatsak X5036, 7599 Stellenbosch, South Africa</subfield>
+            <subfield code="u">http://library.sun.ac.za/Afrikaans/libraries/music/about/Pages/default.aspx</subfield>
+        </datafield>
+    </record>
+    <record>
+        <leader>00000nz  a2200169   4500</leader>
+        <controlfield tag="001">30080132</controlfield>
+        <controlfield tag="003">RISM</controlfield>
+        <controlfield tag="005">20160216</controlfield>
+        <controlfield tag="008">160216n||az|||||||##########||||||||||||</controlfield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">ZA-STussv</subfield>
+        </datafield>
+        <datafield tag="043" ind1=" " ind2=" ">
+            <subfield code="c">ZA</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Universiteit van Stellenbosch, Biblioteek: Spesiale Versamelings</subfield>
+            <subfield code="c">Stellenbosch</subfield>
+            <subfield code="g">ZA-STussv</subfield>
+        </datafield>
+        <datafield tag="410" ind1="2" ind2=" ">
+            <subfield code="a">Stellenbosch University, Library: Special Collections</subfield>
+        </datafield>
+        <datafield tag="622" ind1=" " ind2=" ">
+            <subfield code="e">Universiteit van Stellenbosch,,  Biblioteek: Spesiale Versamelings, JS Gericke Biblioteek, JS Marais Plein, Privaatsak X5036, 7599 Stellenbosch, South Africa</subfield>
+            <subfield code="u">http://library.sun.ac.za/Afrikaans/libraries/jsg/Pages/default.aspx</subfield>
+        </datafield>
+    </record>
+</collection>
+

@@ -60,7 +60,7 @@
         <xf:submission id="load-fileList"
 		       xxf:username=""
 		       xxf:password=""
-		       xxf:show-progress="false"
+		       xxf:show-progress="true"
 		       method="get" 
 		       serialization="none" 
 		       validate="false"
@@ -71,7 +71,7 @@
         <xf:submission id="load-external-file"
 		       xxf:username=""
 		       xxf:password=""
-		       xxf:show-progress="false"
+		       xxf:show-progress="true"
 		       method="get" 
 		       serialization="none" 
 		       validate="false"
@@ -90,18 +90,17 @@
                 <physDesc/>
                 <physLoc>
                   <repository>
-                    <corpName  />
-                    <geogName  />
+                    <corpName/>
+                    <geogName/>
                     <identifier authority="RISM" authURI="http://www.rism.info"  />
-                    <ptr target="" mimetype="" label=""  />
                   </repository>
-                  <identifier  />
+                  <identifier/>
                 </physLoc>
                 <componentGrp/>
               </item>
             </itemList>
             <relationList xmlns="http://www.music-encoding.org/ns/mei">
-              <relation rel="isEmbodimentOf" target=""   label=""/>
+              <relation rel="isEmbodimentOf" target="" label=""/>
             </relationList>
           </temp-values>
         </xf:instance>
@@ -328,7 +327,7 @@
                                          origin="$nodeset[index('repeat-sources')]"
                                          nodeset="$nodeset[index('repeat-sources')-2]"/>
                               <xf:delete nodeset="." at="index('repeat-sources')"/> 
-                              <xf:dispatch name="xforms-value-changed" targetid="form-group"/>
+                              <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
                             </xf:action>
                           </xf:trigger>
                         </xf:group>
@@ -348,7 +347,7 @@
                                          origin="$nodeset[index('repeat-sources')]"
                                          nodeset="$nodeset[index('repeat-sources')+1]"/>
                               <xf:delete nodeset="." at="index('repeat-sources')-2"/>
-                              <xf:dispatch name="xforms-value-changed" targetid="form-group"/>
+                              <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
                             </xf:action>
                           </xf:trigger>
                         </xf:group>                    
@@ -367,7 +366,6 @@
                               <xf:insert xxf:iterate="descendant-or-self::*" context="$added_nodeset"
                                 origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
                               <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
-                              <xf:dispatch name="id-update" targetid="form-group"/>
                             </xf:action>
                           </xf:trigger>
                         </xf:group>
@@ -387,11 +385,11 @@
                             <xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
                             <xf:action if="$number=1" ev:event="DOMActivate">
                               <xf:delete nodeset="parent::node()"/>
-                              <xf:dispatch name="xforms-value-changed" targetid="form-group"/>
+                              <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
                             </xf:action>
                             <xf:action if="$number&gt;1" ev:event="DOMActivate">
                               <xf:delete nodeset="." at="index('repeat-sources')"/>
-                              <xf:dispatch name="xforms-value-changed" targetid="form-group"/>
+                              <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
                             </xf:action>
                           </xf:trigger> 
                         </xf:group>

@@ -49,7 +49,6 @@
         <xi:include href="includes/dropdown_month_date.xbl" parse="xml"/>
         <xi:include href="includes/element_buttons.xbl" parse="xml"/>
         <xi:include href="includes/id.xbl" parse="xml"/>
-        <xi:include href="includes/item.xbl" parse="xml"/>
         <xi:include href="includes/relator.xbl" parse="xml"/>
         
     </h:head>
@@ -227,27 +226,29 @@
                         nodeset="m:extent"
                         label="Add extent"
                         origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:extent"/>
-                    <xf:group ref="m:extent">
-                        <xf:input ref=".">
-                            <xf:label class="fixed_width">Extent <h:a class="help">&#160;?<h:span 
-                                class="comment">Extent in any medium: number of measures, pages, or the approximate duration, for instance. <br/>
-                                Duration can be indicated in any form, such as "01:23:00", "25'30''" or "approx. 10'". 
-                                The unit of measurement (measures, pages, minutes, etc.) may be specified in the  
-                                optional "unit" field.</h:span></h:a></xf:label>
-                        </xf:input>
-                        <xf:input ref="@unit">
-                            <xf:label>Unit <h:a class="help">&#160;?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
-                                <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
-                                Please use underscore _ instead.</h:span></h:a></xf:label>
-                        </xf:input>
-                        <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:delete nodeset="."/>
-                            </xf:action>
-                        </xf:trigger>
-                        <dcm:attribute-editor/>
-                    </xf:group>
+                    <xf:repeat nodeset="m:extent" id="details-expression-extent-repeat">
+                        <h:div>
+                            <xf:input ref=".">
+                                <xf:label class="fixed_width_long">Extent (duration) <h:a class="help">&#160;?<h:span 
+                                    class="comment">Extent in any medium: number of measures, pages, or the approximate duration, for instance. <br/>
+                                    Duration can be indicated in any form, such as "01:23:00", "25'30''" or "approx. 10'". 
+                                    The unit of measurement (measures, pages, minutes, etc.) may be specified in the  
+                                    optional "unit" field.</h:span></h:a></xf:label>
+                            </xf:input>
+                            <xf:input ref="@unit">
+                                <xf:label>Unit <h:a class="help">&#160;?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
+                                    <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
+                                    Please use underscore _ instead.</h:span></h:a></xf:label>
+                            </xf:input>
+                            <!-- to make <extent> repeatable, add 'add' to triggers -->
+                            <dcm:element-buttons
+                                triggers="remove" 
+                                nodeset="m:extent" 
+                                index="details-expression-extent-repeat"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:extent"/>
+                            <dcm:attribute-editor/>
+                        </h:div>
+                    </xf:repeat>
                     
                     <h:fieldset>
                         <h:legend>Incipit                         
@@ -473,14 +474,11 @@
                                                         <!-- delete instrVoice child elements; they can be added individually later -->
                                                         <xf:delete context="instance('temp')/element/m:instrVoiceGrp" nodeset="m:instrVoice"/>
                                                         <!-- generate new xml:ids -->
-                                                        <xf:setvalue context="instance('temp')/element/*/@xml:id" 
-                                                            value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>                                
-                                                        <xf:setvalue context="instance('temp')/element/m:instrVoiceGrp/*/@xml:id" 
+                                                        <xf:setvalue context="instance('temp')/element//*/@xml:id" 
                                                             value="concat(name(..),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>                                
                                                         <!-- copy the instrumentation to the sub-level expression -->
                                                         <xf:insert context="$thisInstrumentation" nodeset="m:instrVoiceGrp" 
-                                                            origin="instance('temp')/element/m:instrVoiceGrp" at="1" position="before"/>
-                                                        
+                                                            origin="instance('temp')/element/m:instrVoiceGrp"/>
                                                         <!-- move the new element into place according to the top level instrumentation -->
                                                         <!-- keep moving down until the order fits the model or reaching the end -->
                                                         <xf:action while="$topLevelEnsemble/preceding-sibling::m:instrVoiceGrp/@xml:id[.!=$id][.=$thisInstrumentation/m:instrVoiceGrp[@n[.=$id]]/following-sibling::m:instrVoiceGrp/@n]
@@ -833,35 +831,6 @@
                         </xf:group>                        
                     </h:fieldset>
 
-                    <!--<h:fieldset>
-                        <h:legend>Edited score</h:legend>
-                        <dcm:create nodeset="m:relationList"
-                            label="Add links to edited score"
-                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:relationList"/>
-                        <dcm:create ref="m:relationList" 
-                            nodeset="m:relation[@rel='hasReproduction' and @targettype='edited_score']"
-                            label="Add link to edited score"
-                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList/m:relation[@rel='hasReproduction']"/>
-                        <xf:repeat nodeset="m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']" id="edited_score-repeat">
-                            <h:div>
-                                <xf:input ref="@target" class="long">
-                                    <xf:label>URI <h:a class="help">&#160;?<h:span class="comment">Location of an external, edited score (this movement only).
-                                        Not for digital representations of items listed as "Sources"</h:span></h:a></xf:label>
-                                </xf:input>
-                                <xf:input ref="@label">
-                                    <xf:label>Description <h:a class="help">&#160;?<h:span class="comment">Explanatory text for the link to the resource, 
-                                        e.g. "Carl Nielsen Edition, full score"</h:span></h:a></xf:label>
-                                </xf:input>
-                                <dcm:element-buttons
-                                    triggers="add remove" 
-                                    nodeset="m:relation" 
-                                    index="edited_score-repeat"
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:relationList/m:relation[@rel='hasReproduction' and @targettype='edited_score']"/>
-                                <dcm:attribute-editor ref="."/>
-                            </h:div>
-                        </xf:repeat>
-                        </h:fieldset>-->
-                    
                     
                     <!-- Relations -->
                     <h:fieldset>

@@ -169,7 +169,8 @@
   <!--  Wrap sibling p and list elements in a temporary parent <p> for editing in a single tinyMCE instance. 
         Wrapping is needed whenever the parent element may contain more than one <p> or <list> element as well as other elements
         not to be edited with tinyMCE. Also needed for <titlePage> which must contain at least one <p>. -->
-  <xsl:template match="m:history | m:event | m:titlePage | m:projectDesc" mode="mei2html">
+  <!--  Exception: <p> in provenance events (not edited with tinymce) -->
+  <xsl:template match="m:history | m:event[not(name(../..)='provenance')] | m:titlePage | m:projectDesc" mode="mei2html">
     <xsl:variable name="element" select="name()"/>
     <xsl:element name="{$element}">
       <xsl:apply-templates select="@*"/>
@@ -185,7 +186,7 @@
 
   <!-- Convert <p> and <list> to entities for editing in tinymce (with some exceptions handled with simple input fields). -->
   <!-- An exception is needed for all <p> elements NOT to be edited with tinyMCE. -->
-  <xsl:template match="m:p [name(..)!='changeDesc' and name(..)!='incipText'] | m:list" mode="mei2html">
+  <xsl:template match="m:p [name(..)!='changeDesc' and name(..)!='incipText' and name(../../..)!='provenance'] | m:list" mode="mei2html">
         <xsl:variable name="element">
           <xsl:choose>
             <xsl:when test="name()='list'">

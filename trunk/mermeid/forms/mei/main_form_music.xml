@@ -190,27 +190,29 @@
 								nodeset="m:extent"
 								label="Add extent"
 								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:extent"/>
-							<xf:group ref="m:extent">
-								<xf:input ref=".">
-									<xf:label class="fixed_width">Extent <h:a class="help">&#160;?<h:span 
-										class="comment">Extent in any medium: number of measures, pages, or the approximate duration, for instance. <br/>
-										Duration can be indicated in any form, such as 01:23:00, 25'30" or 'approx. 10 minutes'. 
-										The unit of measurement (measures, pages, minutes, etc.) may be specified in the  
-									optional 'unit' field.</h:span></h:a></xf:label>
-								</xf:input>
-								<xf:input ref="@unit">
-									<xf:label>Unit <h:a class="help">&#160;?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
-										<h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
-										Please use underscore _ instead.</h:span></h:a></xf:label>
-								</xf:input>
-								<xf:trigger appearance="minimal">
-									<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-									<xf:action ev:event="DOMActivate">
-										<xf:delete nodeset="."/>
-									</xf:action>
-								</xf:trigger>
-								<dcm:attribute-editor/>
-							</xf:group>
+							<xf:repeat nodeset="m:extent" id="details-expression-extent-repeat">
+								<h:div>
+									<xf:input ref=".">
+										<xf:label class="fixed_width_long">Extent (duration) <h:a class="help">&#160;?<h:span 
+											class="comment">Extent in any medium: number of measures, pages, or the approximate duration, for instance. <br/>
+											Duration can be indicated in any form, such as "01:23:00", "25'30''" or "approx. 10'". 
+											The unit of measurement (measures, pages, minutes, etc.) may be specified in the  
+											optional "unit" field.</h:span></h:a></xf:label>
+									</xf:input>
+									<xf:input ref="@unit">
+										<xf:label>Unit <h:a class="help">&#160;?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
+											<h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
+											Please use underscore _ instead.</h:span></h:a></xf:label>
+									</xf:input>
+									<!-- to make <extent> repeatable, add 'add' to triggers -->
+									<dcm:element-buttons
+										triggers="remove" 
+										nodeset="m:extent" 
+										index="details-expression-extent-repeat"
+										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:extent"/>
+									<dcm:attribute-editor/>
+								</h:div>
+							</xf:repeat>
 							
 						</h:div>   
 						

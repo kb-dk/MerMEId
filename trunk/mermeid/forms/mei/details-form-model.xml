@@ -93,7 +93,7 @@
         resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
         replace="instance" 
         instance="data-instance"
-        xxf:show-progress="false"/>
+        xxf:show-progress="true"/>
     
     <xf:submission id="load-empty-submission"
         method="get" 
@@ -101,7 +101,7 @@
         validate="false"
         resource="{instance('temp')/target_uri}"
         replace="instance" instance="empty-instance"
-        xxf:show-progress="false"/>
+        xxf:show-progress="true"/>
 
     <xf:submission id="load-fileList"
         method="get" 
@@ -110,7 +110,7 @@
         resource="{instance('temp')/target_uri}"
         replace="instance" 
         instance="XMLfiles"
-        xxf:show-progress="false"/>
+        xxf:show-progress="true"/>
     
     <xf:submission id="load-bibliography"
         method="get" 
@@ -119,7 +119,7 @@
         resource="{instance('parameters')/dcm:library_crud_home}/standard_bibliography.xml"
         replace="instance" 
         instance="bibliography-instance"
-        xxf:show-progress="false"/>
+        xxf:show-progress="true"/>
 
     <xf:submission id="load-authorities"
         method="get" 
@@ -127,7 +127,7 @@
         validate="false"
         resource="{instance('parameters')/dcm:library_crud_home}/authority_files.xml"
         replace="instance" 
-        xxf:show-progress="false"
+        xxf:show-progress="true"
         instance="authority-instance"/>
     
     <xf:submission id="load-ensembles"
@@ -136,7 +136,7 @@
         validate="false"
         resource="{instance('parameters')/dcm:library_crud_home}/ensembles.xml"
         replace="instance" 
-        xxf:show-progress="false"
+        xxf:show-progress="true"
         instance="ensembles"/>
     
     <xf:submission id="load-instruments"
@@ -145,7 +145,7 @@
         validate="false"
         resource="{instance('parameters')/dcm:library_crud_home}/instruments.xml"
         replace="instance" 
-        xxf:show-progress="false"
+        xxf:show-progress="true"
         instance="instruments"/>
     
     <xf:submission id="save-to-file"
@@ -156,7 +156,7 @@
         resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
         method="put"
         replace="instance"
-        xxf:show-progress="false"/>
+        xxf:show-progress="true"/>
     
     
     <!-- "onload" xforms actions -->

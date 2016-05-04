@@ -48,8 +48,6 @@ let $formpage :=
 	      <p><strong>Search query</strong> (filter by free text search, for instance a title)<br/>
 	      <input type="text" value="{$query}" name="query" style="width: 30em;"/><br/>&#160; 
 	      </p>
-	      <!--<p><strong>Anthologies</strong><br/>
-	      <input type="text" value="{$anthologies}" name="anthologies"/></p>-->
 	      <p><strong>XSL style sheet URI</strong><br/> 
 	      The XSLT style sheet to be used for the transformation. MerMEId includes one named mei_to_html.xsl (the one used for the 
 	      HTML preview from inside the editor) and another one named mei_to_html_print.xsl, which improves output for printing.<br/>
