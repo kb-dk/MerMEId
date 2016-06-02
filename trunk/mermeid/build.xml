@@ -27,8 +27,8 @@
     <target name="war">
       <copy file="${webapp.config_dir}${webapp.config}_${webapp.instance}"
 	    tofile="forms/mei/mermeid_configuration.xml"/>
+      <mkdir  dir="${bin.dir}"/>
       <war destfile="editor.war" webxml="web.xml">
-	<mkdir  dir="${bin.dir}"/>
 	<zipfileset dir="${webapp.path}"
 		    prefix="${webapp.path}"/>
 	<zipfileset dir="web" prefix="" />
