@@ -48,7 +48,7 @@
       </javac>
     </target>
 
-    <target   name="war" depends="compile jar">
+    <target   name="war" depends="jar">
       <copy   file="${webapp.config}_${webapp.instance}"
 	      tofile="conf/${config}"/>
       <war    destfile="filter.war" webxml="web.xml">
