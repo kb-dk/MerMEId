@@ -28,6 +28,7 @@
       <copy file="${webapp.config_dir}${webapp.config}_${webapp.instance}"
 	    tofile="forms/mei/mermeid_configuration.xml"/>
       <war destfile="editor.war" webxml="web.xml">
+	<mkdir  dir="${bin.dir}"/>
 	<zipfileset dir="${webapp.path}"
 		    prefix="${webapp.path}"/>
 	<zipfileset dir="web" prefix="" />
@@ -55,6 +56,7 @@
       <copy file="${webapp.config}_${webapp.instance}"
 	    tofile="forms/mei/mermeid_configuration.xml"/>
       <war destfile="${ant.project.name}.war" webxml="orbeon_web.xml">
+	<mkdir  dir="${bin.dir}"/>
 	<zipfileset dir="${webapp.path}"
 		    prefix="${webapp.path}"/>
   	<zipfileset dir="images" prefix="images" />
