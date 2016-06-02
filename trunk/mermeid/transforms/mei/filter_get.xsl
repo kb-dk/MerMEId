@@ -251,7 +251,13 @@
   
   <xsl:template match="m:ref[@target]" mode="mei2html">
     <xsl:text>&lt;a href="</xsl:text><xsl:value-of select="@target"/><xsl:text>" </xsl:text>
-    <xsl:text>target="</xsl:text><xsl:value-of select="@xl:show"/><xsl:text>" </xsl:text>
+    <xsl:if test="@xl:show!=''">
+      <xsl:text>target="</xsl:text><xsl:choose>
+        <xsl:when test="@xl:show='new'">_blank</xsl:when>
+        <xsl:when test="@xl:show='replace'">_self</xsl:when>
+        <xsl:otherwise><xsl:value-of select="@xl:show"/></xsl:otherwise>
+      </xsl:choose><xsl:text>" </xsl:text>
+    </xsl:if>
     <xsl:text>title="</xsl:text><xsl:value-of
       select="@xl:title"/><xsl:text>"&gt;</xsl:text>
     <xsl:apply-templates mode="mei2html"/>&lt;/a&gt;

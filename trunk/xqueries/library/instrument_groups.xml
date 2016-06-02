@@ -15,7 +15,8 @@
 
     <!-- Pre-defined ensembles. The <instrVoiceGrp> must have @code value to be recognized as an ensemble. -->
     <!-- The @code value does not need to be unique, however. 
-         For instance, several orchestras of different sizes may be defined, all having @code value "oa". -->
+    For instance, several orchestras of different sizes may be defined, all having @code value "oa". -->
+    <!-- @code values refer to MARC:048 ensembles as defined at http://www.loc.gov/marc/bibliographic/bd048.html -->
     <instrVoiceGrp code="oa">
         <head>Orchestra 2.2.2.2/4.2.3.1/timp./str.</head>
         <instrVoice count="2" code="wa">fl.</instrVoice>

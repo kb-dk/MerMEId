@@ -40,6 +40,7 @@
         <xi:include href="includes/element_buttons.xbl" parse="xml"/>
         <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
         <xi:include href="includes/id.xbl" parse="xml"/>
+        <xi:include href="includes/item-input.xbl" parse="xml"/>
         <xi:include href="includes/linked_sources.xbl" parse="xml"/>
         <xi:include href="includes/relator.xbl" parse="xml"/>
         <xi:include href="includes/rism_sigla_select.xbl" parse="xml"/>
@@ -321,6 +322,68 @@
 
                                                   <dcm:source-input/>
 
+
+                                                  <!-- Source component items -->
+                                                  <h:fieldset> 
+                                                      <h:legend>Items <h:a 
+                                                          class="help">?<h:span class="comment">A list of items (copies, exemplars) of 
+                                                              this particular source component</h:span></h:a>
+                                                          <dcm:attribute-editor ref="m:itemList"/>
+                                                      </h:legend>
+                                                      <h:div class="vertical_spacer"> </h:div>
+                                                      <dcm:create
+                                                          nodeset="m:itemList"
+                                                          label="Add items"
+                                                          origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[m:itemList and count(*)=1]/m:itemList"/>
+                                                      <dcm:create ref="m:itemList"
+                                                          nodeset="m:item"
+                                                          label="Add item"
+                                                          origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[m:itemList and count(*)=1]/m:itemList/m:item"/>
+                                                      <xf:repeat nodeset="m:itemList/m:item" id="repeat-source-component-item">
+                                                          
+                                                          <h:fieldset class="compact source">
+                                                              <h:legend>Item  
+                                                                  <dcm:element-buttons 
+                                                                      triggers="up down copy add remove" 
+                                                                      nodeset="m:item" 
+                                                                      index="repeat-source-component-item"
+                                                                      origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[m:itemList and count(*)=1]/m:itemList/m:item"/>
+                                                                  <dcm:id/>
+                                                                  <dcm:attribute-editor/>
+                                                              </h:legend>
+                                                              <h:div>
+                                                                  <xf:input ref="@label" class="maxlong">
+                                                                      <xf:label class="fixed_width">Label <h:a class="help">&#160;?<h:span 
+                                                                          class="comment">An optional label for this item, e.g. "Carl Nielsen's copy"</h:span></h:a>
+                                                                      </xf:label>
+                                                                  </xf:input>
+                                                              </h:div>
+                                                              <xf:switch>
+                                                                  <xf:case id="hide_item_details" selected="true()">
+                                                                      <xf:trigger class="detail_button">
+                                                                          <xf:label>Show details</xf:label>
+                                                                          <xf:toggle case="show_item_details" ev:event="DOMActivate"/>
+                                                                      </xf:trigger>
+                                                                  </xf:case>
+                                                                  
+                                                                  <xf:case id="show_item_details" selected="false()">
+                                                                      <xf:trigger class="detail_button">
+                                                                          <xf:label>Hide details</xf:label>
+                                                                          <xf:toggle case="hide_item_details" ev:event="DOMActivate"/>
+                                                                      </xf:trigger>	
+                                                                      
+                                                                      <dcm:item-input ref="."/>   
+                                                                      
+                                                                  </xf:case>
+                                                              </xf:switch>
+
+                                                          </h:fieldset>
+                                                          
+                                                      </xf:repeat>
+                                                      
+                                                  </h:fieldset>
+                                                  <!-- End source component items -->
+                                                  
                                                   </xf:case>
                                                 </xf:switch>
                                             </h:fieldset>

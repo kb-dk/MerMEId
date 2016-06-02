@@ -135,9 +135,9 @@
                                 <h:legend>Volume etc. <h:a class="help">&#160;?<h:span class="comment">Volume and issue no. to
                                     be displayed as vol./no. For journal articles, the year displayed will be
                                     taken from publication date below. For example, a reference to The Musical
-                                    Quarterly 88/3 (2005), pp.339-341 should be divided as follows: <h:br/> "88"
-                                    goes in <h:em>Volume</h:em>, "3" in <h:em>Issue</h:em>, "339-341" in
-                                    <h:em>Pages</h:em> and "2005" in <h:em>Date</h:em> (under "Publication",
+                                    Quarterly 88/3 (2005), pp.339-341 should be divided as follows: <h:br/> '88'
+                                    goes in <h:em>Volume</h:em>, '3' in <h:em>Issue</h:em>, '339-341' in
+                                    <h:em>Pages</h:em> and '2005' in <h:em>Date</h:em> (under 'Publication',
                                     see below).<h:br/> For references to more than one volume, additional sets
                                     of volume/issue/pages can be added. </h:span></h:a>
                                 </h:legend>
@@ -150,6 +150,15 @@
                                                 <xf:output value="if (@unit='page') then 'Pages' else ''"/>
                                             </xf:label>
                                         </xf:input>
+                                        <xf:trigger>
+                                            <xf:label>Clear unit</xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:setvalue ref="@unit" value="''"/> 
+                                            </xf:action>
+                                        </xf:trigger><h:a class="help">&#160;?<h:span class="comment">If you 
+                                            need to refer to something different than volume, issue og pages, click the 
+                                            'Clear unit' button to un-set the unit of measurement. Then enter the unit 
+                                            along with the value as desired (for instance, 'cols. 123–25')</h:span></h:a>
                                         <xf:trigger appearance="minimal">
                                             <xf:label>
                                                 <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete"

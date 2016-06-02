@@ -25,8 +25,14 @@
     The Royal Library, Copenhagen 2014
     -->
     
+    <xf:action if="$origin">
+        <xf:insert context="." origin="$origin" nodeset="xxf:evaluate($nodeset)"/>
+    </xf:action>
+    <xf:action if="not($origin)">
+        <!-- if no model is pointed to, just create an empty element of the name indicated -->
+        <xf:insert context="." origin="xf:element($nodeset)"/>
+    </xf:action>
     
-    <xf:insert context="." origin="$origin" nodeset="xxf:evaluate($nodeset)"/>
     
     <!-- now, move the new element into place according to the empty model if necessary-->
     <xf:var name="local-name" select="local-name($origin)"/>

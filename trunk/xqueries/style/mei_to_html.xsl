@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- 
-Conversion of MEI metadata to HTML using XSLT 1.0
-
-Authors: 
-Axel Teich Geertinger & Sigfrid Lundberg
-Danish Centre for Music Editing
-The Royal Library, Copenhagen
-2010-2016	
--->
-
-
-
-<xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:m="http://www.music-encoding.org/ns/mei"
-	xmlns:dcm="http://www.kb.dk/dcm" xmlns:xl="http://www.w3.org/1999/xlink"
-	xmlns:foo="http://www.kb.dk/foo" xmlns:exsl="http://exslt.org/common"
-	xmlns:java="http://xml.apache.org/xalan/java" xmlns:zs="http://www.loc.gov/zing/srw/"
+<xsl:stylesheet version="1.0" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:m="http://www.music-encoding.org/ns/mei"
+	xmlns:dcm="http://www.kb.dk/dcm" 
+	xmlns:xl="http://www.w3.org/1999/xlink"
+	xmlns:foo="http://www.kb.dk/foo" 
+	xmlns:exsl="http://exslt.org/common"
+	xmlns:java="http://xml.apache.org/xalan/java" 
+	xmlns:zs="http://www.loc.gov/zing/srw/"
 	xmlns:marc="http://www.loc.gov/MARC21/slim" extension-element-prefixes="exsl java"
 	exclude-result-prefixes="m xsl exsl foo java">
 
+	<!-- 
+		Conversion of MEI metadata to HTML using XSLT 1.0
+		
+		Authors: 
+		Axel Teich Geertinger & Sigfrid Lundberg
+		Danish Centre for Music Editing
+		The Royal Library, Copenhagen
+		2010-2016	
+	-->
+	
 	<xsl:output method="xml" encoding="UTF-8" cdata-section-elements="" omit-xml-declaration="yes"
 		indent="no" xml:space="default"/>
 
@@ -48,7 +50,7 @@ The Royal Library, Copenhagen
 		select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'library/abbreviations.xml'))"/>
 	<xsl:variable name="abbreviations_file" select="document($abbreviations_file_name)"/>
 
-
+	
 	<!-- CREATE HTML DOCUMENT -->
 
 	<xsl:template match="m:mei" xml:space="default">
@@ -534,7 +536,7 @@ The Royal Library, Copenhagen
 			</xsl:if>
 		</xsl:if>
 	</xsl:template>
-
+	
 	<xsl:template match="m:relation" mode="relation_link">
 		<!-- internal cross references between works in the catalogue are treated in a special way -->
 		<xsl:variable name="mermeid_crossref">
@@ -565,7 +567,13 @@ The Royal Library, Copenhagen
 				<xsl:value-of select="@target"/>
 			</xsl:if>
 		</xsl:variable>
-		<a href="{$href}" title="{$label}"><xsl:value-of select="$label"/></a>&#160; <xsl:if
+		<xsl:apply-templates select="." mode="relation_reference">
+			<xsl:with-param name="href"><xsl:value-of select="$href"/></xsl:with-param>
+			<xsl:with-param name="title"><xsl:value-of select="$label"/></xsl:with-param>
+			<xsl:with-param name="class"/>
+			<xsl:with-param name="text"><xsl:value-of select="$label"/></xsl:with-param>
+		</xsl:apply-templates>
+		<!--<a href="{$href}" title="{$label}"><xsl:value-of select="$label"/></a>-->&#160;<xsl:if
 			test="$mermeid_crossref='true'">
 			<!-- get collection name and number from linked files -->
 			<!-- was: <xsl:variable name="fileName"	select="concat('http://',$hostname,'/storage/dcm/',@target)"/> -->
@@ -594,12 +602,26 @@ The Royal Library, Copenhagen
 				</xsl:choose>
 			</xsl:variable>
 			<xsl:if test="normalize-space($catalogue_no)!=''">
-				<a class="work_number_reference" href="{$href}" title="{$label}"><xsl:value-of
-						select="$output"/></a>
+				<xsl:apply-templates select="." mode="relation_reference">
+					<xsl:with-param name="href"><xsl:value-of select="$href"/></xsl:with-param>
+					<xsl:with-param name="title"><xsl:value-of select="$label"/></xsl:with-param>
+					<xsl:with-param name="class">work_number_reference</xsl:with-param>
+					<xsl:with-param name="text"><xsl:value-of select="$output"/></xsl:with-param>
+				</xsl:apply-templates>
+				<!--<a class="work_number_reference" href="{$href}" title="{$label}"><xsl:value-of
+						select="$output"/></a>-->
 			</xsl:if>
 		</xsl:if>
 	</xsl:template>
-
+	
+	<xsl:template match="*" mode="relation_reference">
+		<xsl:param name="href"/>
+		<xsl:param name="title"/>
+		<xsl:param name="class"/>
+		<xsl:param name="text"/>
+		<a href="{$href}" title="{$title}" class="{$class}"><xsl:value-of select="$text"/></a>
+	</xsl:template>
+	
 	<xsl:template name="translate_relation">
 		<xsl:param name="rel"/>
 		<xsl:param name="label"/>
@@ -1127,7 +1149,7 @@ The Royal Library, Copenhagen
 
 
 	<xsl:template match="m:expression/m:extent[text()]">
-		<p>Duration: <xsl:apply-templates/>&#160;<xsl:apply-templates select="@unit"/></p>
+		<p>Extent: <xsl:apply-templates/>&#160;<xsl:apply-templates select="@unit"/></p>
 	</xsl:template>
 
 
@@ -2265,6 +2287,7 @@ The Royal Library, Copenhagen
 							</xsl:if>
 						</xsl:otherwise>
 					</xsl:choose>
+					<xsl:apply-templates select="m:biblScope[not(@unit) or @unit='']" mode="volumes_pages"/>
 					<xsl:if test="normalize-space(m:title[@level='s'])=''"> </xsl:if>
 				</xsl:if>. </xsl:when>
 
@@ -2327,7 +2350,8 @@ The Royal Library, Copenhagen
 					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">
 						<xsl:text>, </xsl:text>
 						<xsl:apply-templates select="m:biblScope[@unit='page']" mode="pp"/>
-					</xsl:if>. </xsl:if>
+					</xsl:if>
+					<xsl:apply-templates select="m:biblScope[not(@unit) or @unit='']" mode="volumes_pages"/>. </xsl:if>
 			</xsl:when>
 
 			<xsl:when
@@ -2359,6 +2383,7 @@ The Royal Library, Copenhagen
 					<xsl:if test="normalize-space(m:biblScope[@unit='page'])!=''">,
 							<xsl:apply-templates select="m:biblScope[@unit='page']" mode="pp"
 						/></xsl:if>
+					<xsl:apply-templates select="m:biblScope[not(@unit) or @unit='']" mode="volumes_pages"/>
 					<!-- if the author is given, but no article title, put the author last -->
 					<xsl:if test="not(normalize-space(m:title[@level='a'])!='') and m:author/text()">
 						<xsl:text> (</xsl:text>
@@ -2492,6 +2517,7 @@ The Royal Library, Copenhagen
 			</xsl:when>
 
 			<xsl:otherwise>
+				<!-- unrecognized reference types are marked with an asterisk -->
 				<xsl:if test="m:author//text()"><xsl:apply-templates select="m:author"/>: </xsl:if>
 				<xsl:if test="m:title//text()">
 					<em><xsl:apply-templates select="m:title"/></em>
@@ -2501,9 +2527,9 @@ The Royal Library, Copenhagen
 					<xsl:apply-templates select="m:imprint"/>
 				<xsl:if test="m:creation/m:date//text()">
 					<xsl:apply-templates select="m:creation/m:date"/></xsl:if>
-				<!-- unrecognized reference types are marked with an asterisk -->
 				<xsl:if test="m:biblScope[@unit='page']//text()">, <xsl:apply-templates
-						select="m:biblScope[@unit='page']" mode="pp"/></xsl:if>.* </xsl:otherwise>
+					select="m:biblScope[@unit='page']" mode="pp"/></xsl:if>
+				<xsl:apply-templates select="m:biblScope[not(@unit) or @unit='']" mode="volumes_pages"/>.* </xsl:otherwise>
 		</xsl:choose>
 
 		<!-- links to full text (exception: letters and diary entries handled elsewhere) -->
@@ -2703,10 +2729,13 @@ The Royal Library, Copenhagen
 			<xsl:text> </xsl:text>
 			<xsl:value-of select="."/>
 		</xsl:for-each>
-		<xsl:for-each select="m:biblScope[not(@unit)]">
-			<xsl:text> </xsl:text>
-			<xsl:value-of select="."/>
-		</xsl:for-each>
+		<xsl:apply-templates select="m:biblScope[not(@unit) or @unit='']" mode="volumes_pages"/>
+	</xsl:template>
+
+	<xsl:template match="m:biblScope[not(@unit) or @unit='']" mode="volumes_pages">
+		<xsl:if test="preceding-sibling::*[name()='biblScope']">,</xsl:if>
+		<xsl:text> </xsl:text>
+		<xsl:value-of select="."/>		
 	</xsl:template>
 
 	<xsl:template match="m:biblScope[@unit='page' and text()]" mode="pp">
@@ -2754,7 +2783,18 @@ The Royal Library, Copenhagen
 			</xsl:choose>
 		</a>
 	</xsl:template>
-
+	
+	<!-- authority files -->
+	<xsl:template match="*[@authURI!='' and @dbkey!='']">
+		<xsl:value-of select="."/>
+		<xsl:element name="a">
+			<xsl:attribute name="href"><xsl:value-of select="concat(@authURI,'/',@dbkey)"/></xsl:attribute>
+			<xsl:attribute name="target">_blank</xsl:attribute>
+			<xsl:attribute name="style">text-decoration:none;</xsl:attribute>
+			<img src="/editor/images/external_link.gif" alt="link" title="Link to authority file" border="0"/></xsl:element>
+	</xsl:template>
+	
+	<!-- display change log -->
 	<xsl:template match="m:revisionDesc">
 		<xsl:apply-templates select="m:change[normalize-space(@isodate)!=''][last()]" mode="last"/>
 		<xsl:if test="count(m:change) &gt; 0">

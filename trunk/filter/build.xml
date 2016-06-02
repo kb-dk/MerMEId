@@ -21,6 +21,7 @@
     </path>
 
     <target   name="clean" description="Clean the project">
+      <delete dir="${webapp.path}"/>
       <delete dir="${class.dir}"/>
       <delete dir="${build.dir}"/>
       <delete dir="${bin.dir}"  />
@@ -34,6 +35,7 @@
 
     <target   name="compile" 
 	      description="Compiles the whole bundle">
+      <mkdir  dir="${webapp.path}"/>
       <mkdir  dir="${build.dir}"/>
       <mkdir  dir="${bin.dir}"  />
       <javac  srcdir="${src.dir}" 
@@ -46,7 +48,7 @@
       </javac>
     </target>
 
-    <target   name="war" depends="jar">
+    <target   name="war" depends="compile jar">
       <copy   file="${webapp.config}_${webapp.instance}"
 	      tofile="conf/${config}"/>
       <war    destfile="filter.war" webxml="web.xml">

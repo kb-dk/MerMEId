@@ -1,3 +1,5 @@
+<?oxygen SCHSchema="file:/P:/MEI/schema/MEI2013_v2.1.0/schemata/mei-all.rng"?>
+<?oxygen RNGSchema="file:/P:/MEI/schema/MEI2013_v2.1.0/schemata/mei-all.rng" type="xml"?>
 <mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="2013" xml:id="mei_95N20005">
     <meiHead>
         <fileDesc>
@@ -57,9 +59,9 @@
                     <annot label="" type="links" xml:id="annot_f463a756"/>
                     <annot label="" type="general_description" xml:id="annot_4b3f6f65">
                         <p xml:id="p_314N20060">This file illustrates various ways of including incipits. Incipits are defined at the editor's 'Music' tab.</p>
-                        <p xml:id="p_314N20064">Incipits encoded in MEI or Plaine And Easie Code are rendered in MerMEId's HTML preview with <ref target="http://verovio.org" xl:show="_blank" xl:title="Verovio">Verovio</ref>. 
+                        <p xml:id="p_314N20064">Incipits encoded in MEI or Plaine And Easie Code are rendered in MerMEId's HTML preview with <ref target="http://verovio.org" xl:show="new" xl:title="Verovio">Verovio</ref>. 
                             Please note that Internet Explorer requires version 10 or newer for this to work.</p>
-                        <p xml:id="p_314N2006E">The incipits in this sample file show the beginning of Carl Nielsen's <ref target="http://www.kb.dk/dcm/cnw/document.xq?doc=cnw0060.xml" xl:show="_blank" xl:title="Romance CNW 60">Romance for Violin and Piano, CNW 60</ref>.</p>
+                        <p xml:id="p_314N2006E">The incipits in this sample file show the beginning of Carl Nielsen's <ref target="http://www.kb.dk/dcm/cnw/document.xq?doc=cnw0060.xml" xl:show="new" xl:title="Romance CNW 60">Romance for Violin and Piano, CNW 60</ref>.</p>
                     </annot>
                 </notesStmt>
                 <classification xml:id="classification_8c2dad93">
@@ -304,7 +306,7 @@
                                                 </chord>
                                             </layer>
                                         </staff>
-                                        <hairpin endid="p1cbd5n768v1b6s1" form="cres" staff="1" startid="p2ced3n0v1b5s3"/>
+                                        <hairpin form="cres" staff="1" startid="p2ced3n0v1b5s3" tstamp2="1m+5"/>
                                     </measure>
                                     <measure n="6">
                                         <staff n="1">
@@ -359,8 +361,8 @@
                         </incip>
                         <history xml:id="history_5b845292">
                             <creation xml:id="creation_a9b88e21"/>
-                            <p xml:id="p_314N203A0">MerMEId can render MEI-encoded incipits in the HTML preview using the <ref target="http://verovio.org" xl:show="_blank" xl:title="Verovio">Verovio</ref> 
-                        toolkit. The MEI encoding is neither editable nor visible in the MerMEId editor, so you will need some other XML editing tool to add and edit them. Please note that Verovio currently does not yet support detailed information such as articulation and dynamics.</p>
+                            <p xml:id="p_314N203A0">MerMEId can render MEI-encoded incipits in the HTML preview using the <ref target="http://verovio.org" xl:show="new" xl:title="Verovio">Verovio</ref> 
+                        toolkit. The MEI encoding is neither editable nor visible in the MerMEId editor, so you will need some other XML editing tool to add and edit them.</p>
                         </history>
                         <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_5d276875"/>
                         <classification xml:id="classification_58460514">
@@ -381,7 +383,7 @@
                         <history xml:id="history_74021b98">
                             <creation xml:id="creation_86ec1071"/>
                             <p xml:id="p_314N203CE">
-                                <ref target="http://www.iaml.info/plaine-easie-code" xl:show="_blank" xl:title="IAML Plaine and Easie Code reference">Plaine and Easie Code</ref>
+                                <ref target="http://www.iaml.info/plaine-easie-code" xl:show="new" xl:title="IAML Plaine and Easie Code reference">Plaine and Easie Code</ref>
    can be entered directly at the 'Music' tab for rendering with Verovio in the HTML preview. If single-staff, single-voice incipits without any slurs, dynamics or articulation is all you need, this is probably the most efficient way of adding incipits. Enter 'plaineAndEasie' or simply 'pae' in the code language field to have MerMEId/Verovio recognize the code correctly.</p>
                         </history>
                         <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_7ec2e148"/>

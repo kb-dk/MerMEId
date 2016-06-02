@@ -12,6 +12,7 @@ declare namespace ft="http://exist-db.org/xquery/lucene";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 declare variable $document := request:get-parameter("doc", "");
+declare variable $xsl := request:get-parameter("xsl", "mei_to_html.xsl");
 
 
 let $list := 
@@ -26,5 +27,5 @@ let $params :=
 </parameters>
 
 for $doc in $list
-return transform:transform($doc,doc("/db/style/mei_to_html.xsl"),$params)
+return transform:transform($doc,doc(concat("/db/style/",$xsl)),$params)
  

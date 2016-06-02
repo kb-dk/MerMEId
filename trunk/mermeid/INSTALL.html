@@ -10,7 +10,7 @@
     <link href="style/manual.css" rel="stylesheet" type="text/css"/>
     
     <!--
-	$Id: INSTALL.html 1083 2016-03-02 18:33:37Z atge $
+	$Id: INSTALL.html 1187 2016-06-02 09:04:14Z slu $
     -->
     
   </head>
@@ -79,8 +79,8 @@
 	
 	<ol>
 	  <li><a href="#sect0.5">Overview</a></li>
-	  <li><a href="#sect1">System requirements</a></li>
-	  <li><a href="#sect2">Building &amp; installation</a></li>
+	  <li><a href="#sect1">Requirements</a></li>
+	  <li><a href="#sect2">Building &amp; installing MerMEId</a></li>
 	  <li><a href="#sect3">Configuration</a></li>
 	  <li><a href="#testing">Testing and Getting Started</a></li>
 	  <li><a href="#security">Authentication &amp; Security</a></li>
@@ -118,17 +118,21 @@
       
       <div id="sect1">
 	
-	<h2>2. System requirements</h2>
+	<h2>2. Requirements</h2>
 	
-	<p>This system is lightweight. It is only tested under Apache2 HTTPD
-	with Tomcat7 servlet container under Red Hat and SUSE Linux. <strong>We
-	have not been able to run it on less then 3GB, and recommend 4GB
-	internal memory. You should allocate at least 2GB to the java instance
-	that runs the various components.</strong></p>
+	<h3>2.1. The Server</h3>
 
-	<p>The software can run on a modest system. We have it on a virtual
-	server with 4GB of internal memory. 80GB of hard-disk would be a
-	lot. In addition it requires the following readily available software
+	<p>This system is lightweight. It is only tested under Apache2
+	HTTPD with Tomcat7 servlet container under Red Hat and SUSE
+	Linux. <strong>We have not been able to run it on less then
+	3GB, and recommend 4GB internal memory. You should allocate at
+	least 2GB to the java instance that runs the various
+	components.</strong>. On the other hand, 80GB of hard-disk
+	would be a lot.</p>
+
+	<h3>2.2. Installing the basic software environment.</h3>
+
+	<p>In addition it requires the following readily available software
 	on the server:</p>
 	
 	<ol>
@@ -149,7 +153,10 @@
 	    
 	    <ol type="i">
 	      <li>
-		<strong>Install Orbeon:</strong> We are using version 4.9. 
+		<strong>Install Orbeon:</strong> We are using version
+		4.9, Community Edition. (<a
+		href="http://www.orbeon.com/download">Orbeon
+		Downloads</a>)
 		<pre>
 		  cp orbeon.war /&lt;PATH TO&gt;/tomcat/webapps/
 		</pre>
@@ -177,7 +184,14 @@
 		version.
 	      </li>
 	      <li>
-		<strong>Install eXist:</strong> We're using version 1.4.1 Prepare
+		<strong>Install eXist:</strong> We're using version
+		2.2 (<a
+		href="http://exist-db.org/exist/apps/homepage/index.html#downloads">the
+		stable release as of June 2016</a>)
+
+		Prepare the code and build the application by first
+		running the installer
+		<strong>Install eXist:</strong> We're using version 2.2. Prepare
 		the code and build the application by first running the installer
 		<pre>
 		  java -jar eXist-&lt;version number&gt;.jar
@@ -216,7 +230,7 @@
       </div>
 
       <div id="sect2">
-	<h2>3. Building &amp; installation</h2>
+	<h2>3. Building &amp; installing MerMEId</h2>
 
 	<p>
 	  To compile and build you need ant, which is available as a package

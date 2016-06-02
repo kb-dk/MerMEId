@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- 
-	Conversion of MEI metadata to HTML using XSLT 1.0
-	Additional style sheet for printable output (modifies html output only slightly) 
-	
-	Authors: 
-	Axel Teich Geertinger & Sigfrid Lundberg
-	Danish Centre for Music Editing
-	The Royal Library, Copenhagen
-	2010-2016	
-	
--->
-
-
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:m="http://www.music-encoding.org/ns/mei" 
@@ -26,22 +12,28 @@
 	extension-element-prefixes="exsl java" 
 	exclude-result-prefixes="m xsl exsl foo java">
 	
+	<!-- 
+		Conversion of MEI metadata to HTML using XSLT 1.0
+		Additional style sheet for printable output (modifies html output only slightly) 
+		
+		Authors: 
+		Axel Teich Geertinger & Sigfrid Lundberg
+		Danish Centre for Music Editing
+		The Royal Library, Copenhagen
+		2010-2016	
+		
+	-->
+
 	<xsl:output method="xml" encoding="UTF-8" 
 		cdata-section-elements="" 
 		omit-xml-declaration="yes" indent="no"/>
 	
 	<xsl:strip-space elements="*"/>
 	
-	
+	<!-- Based on the full MEI to HTML transform -->
 	<xsl:include href="mei_to_html.xsl"/>
 	
-	<!-- Exceptions/alterations -->
-	
-	<!-- show crosslinks as plain text -->
-	<!--<xsl:template match="m:relation[@label!='']" mode="relation_link">
-		<p><xsl:value-of select="@label"/></p>
-		</xsl:template>-->	
-	
+	<!-- Exceptions/alterations to the default transform -->
 	
 	<!-- omit settings menu -->
 	<xsl:template match="*" mode="settings_menu"/>
@@ -49,8 +41,22 @@
 	<!-- omit colophon -->
 	<xsl:template match="*" mode="colophon"/>
 	
+	<!-- show crosslinks as plain text -->
+	<xsl:template match="*" mode="relation_reference">
+		<xsl:param name="href"/>
+		<xsl:param name="title"/>
+		<xsl:param name="class"/>
+		<xsl:param name="text"/>
+		<span class="{$class}"><xsl:value-of select="$text"/></span>
+	</xsl:template>
+	
+	<!-- show inline links as plain text -->
+	<xsl:template match="m:ref[@target][text()]">
+		<xsl:value-of select="."/>
+	</xsl:template>
+		
 	<!-- omit links -->
-	<xsl:template match="m:ptr"/>
+	<xsl:template match="m:ptr | m:repository/m:ptr | m:annot[@type='links']"/>
 	
 	<!-- omit pop-up information -->
 	<xsl:template match="m:bibl//m:title | m:identifier[@authority='RISM'] | m:instrVoice/text() | 

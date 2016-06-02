@@ -483,7 +483,11 @@
           </xsl:attribute>
           <xsl:if test="@target">
             <xsl:attribute name="xl:show">
-              <xsl:value-of select="@target"/>
+              <xsl:choose>
+                <xsl:when test="@target='_blank'">new</xsl:when>
+                <xsl:when test="@target='_self'">replace</xsl:when>
+                <xsl:otherwise><xsl:value-of select="@target"/></xsl:otherwise>
+              </xsl:choose>
             </xsl:attribute>
           </xsl:if>
           <xsl:if test="@title">
