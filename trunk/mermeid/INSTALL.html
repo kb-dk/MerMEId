@@ -10,7 +10,7 @@
     <link href="style/manual.css" rel="stylesheet" type="text/css"/>
     
     <!--
-	$Id: INSTALL.html 1187 2016-06-02 09:04:14Z slu $
+	$Id: INSTALL.html 1195 2016-06-03 08:34:02Z slu $
     -->
     
   </head>
@@ -91,7 +91,7 @@
       </div>
 
       <div id="license2.0">
-	<h2>Copyright 2013 Danish Center for Music Editing</h2>
+	<h2>Copyright 2013-2016 Danish Center for Music Editing</h2>
 
 	<p>Licensed under the Apache License, Version 2.0 (the "License"); you
 	may not use this file except in compliance with the License.  You may
@@ -122,8 +122,8 @@
 	
 	<h3>2.1. The Server</h3>
 
-	<p>This system is lightweight. It is only tested under Apache2
-	HTTPD with Tomcat7 servlet container under Red Hat and SUSE
+	<p>This system is lightweight. It is only tested under Apache 
+	HTTPD together with Tomcat servlet container under Red Hat and SUSE
 	Linux. <strong>We have not been able to run it on less then
 	3GB, and recommend 4GB internal memory. You should allocate at
 	least 2GB to the java instance that runs the various
@@ -138,50 +138,54 @@
 	<ol>
 	  <li>
 	    <p>
-	      <strong>Install Apache-Tomcat:</strong> We have recently run it
-	      on versions 6.0.20 to 7.0.47 of Apache-Tomcat. If the one
-	      provided in your Linux distribution is 6.0.20 or better we
-	      suggest that you use that. The advantage is that you get all the
-	      java needed without further ado. The current distribution is
-	      tested under java 7 (JDK 1.7.0_45 to 1.7.0_85, to be precise)
+	      <strong>Install Apache-Tomcat:</strong> We have recently run it in production
+	      on versions 7.* of Apache-Tomcat. The advantage is that you get all the
+	      java needed without further ado. The current distribution has been run
+	      under java 7 and 8.
 	    </p>
 	    
 	    <p>
 	      In the following we assume that tomcat lives in 
 	    </p>
-	    <pre>/&lt;PATH TO&gt;/tomcat</pre>
+<pre>
+  /&lt;PATH TO&gt;/tomcat
+</pre>
 	    
 	    <ol type="i">
-	      <li>
+	      <li id="inst_orbeon">
 		<strong>Install Orbeon:</strong> We are using version
 		4.9, Community Edition. (<a
 		href="http://www.orbeon.com/download">Orbeon
 		Downloads</a>)
-		<pre>
-		  cp orbeon.war /&lt;PATH TO&gt;/tomcat/webapps/
-		</pre>
-		We are using some extra files, among those is a jsp script for
+<pre>
+  cp orbeon.war /&lt;PATH TO&gt;/tomcat/webapps/
+</pre>
+		<p>We are using some extra files, among those is a jsp script for
 		connecting our form to orbeon. They need to be installed inside
-		the orboen webapp
-		<pre>
-		  cd /home/xml-store/editor
-		  mkdir /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form
-		  cp orbeon/mei_form.jsp /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form/index.jsp
-		</pre>
-		The jsp is dependent on a package called
-		commons-httpclient. We've added it in the distribution. In
-		addition we are dependent on that orbeon forwards the user's
-		credentials to the backend components, notably the
-		<kbd>filter</kbd> web app. This requires setting a config
-		property called
-		<kbd>oxf.xforms.forward-submission-headers</kbd>.
-		You do this by copying 
-		<pre>
-		  cp orbeon/properties-local.xml /&lt;PATH TO&gt;/tomcat/webapps/orbeon/WEB-INF/resources/config/
-		</pre>
-		<strong>NB!</strong> If have other local customizations in
-		that file, you might need to edit it rather than copying our
-		version.
+		the orboen webapp</p>
+<pre>
+  cd /home/xml-store/editor
+  mkdir /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form
+  cp orbeon/mei_form.jsp /&lt;PATH TO&gt;/tomcat/webapps/orbeon/xforms-jsp/mei-form/index.jsp
+</pre>
+
+		<p>The jsp is dependent on a package called
+		commons-httpclient. We've added it in the
+		distribution. In addition we are dependent on that
+		orbeon forwards the user's credentials to the backend
+		components, notably the <kbd>filter</kbd> web
+		app. This requires setting a config property called
+		<kbd>oxf.xforms.forward-submission-headers</kbd>.  You
+		do this by copying </p>
+
+<pre>
+  cp orbeon/properties-local.xml /&lt;PATH TO&gt;/tomcat/webapps/orbeon/WEB-INF/resources/config/
+</pre>
+		
+		<p><strong>NB!</strong> If have other local
+		customizations in that file, you might need to edit it
+		rather than copying our version.</p>
+
 	      </li>
 	      <li>
 		<strong>Install eXist:</strong> We're using version
@@ -193,22 +197,22 @@
 		running the installer
 		<strong>Install eXist:</strong> We're using version 2.2. Prepare
 		the code and build the application by first running the installer
-		<pre>
-		  java -jar eXist-&lt;version number&gt;.jar
-		</pre>
-		This will unpack the distribution into a directory of your
+<pre>
+  java -jar eXist-&lt;version number&gt;.jar
+</pre>
+                <p>This will unpack the distribution into a directory of your
 		choice. Let's call it eXist. In that directory you can repack it
-		as a *.war file which can be installed in you tomcat.
-		<pre>
-		  cd eXist
-		  ./build.sh dist-war
-		</pre>
-		That will create a file called something like
+		as a *.war file which can be installed in you tomcat.</p>
+<pre>
+  cd eXist
+  ./build.sh dist-war
+</pre>
+		<p>That will create a file called something like
 		<kbd>dist/exist-&lt;version number&gt;.war</kbd>.  This file
-		should be installed as <kbd>exist.war</kbd> in you tomcat.
-		<pre>
-		  cp dist/exist-*.war /&lt;PATH TO YOUR&gt;/tomcat/webapps/exist.war
-		</pre>
+		should be installed as <kbd>exist.war</kbd> in you tomcat.</p>
+<pre>
+  cp dist/exist-*.war /&lt;PATH TO YOUR&gt;/tomcat/webapps/exist.war
+</pre>
 	      </li>
 	    </ol>
 	    
@@ -238,14 +242,21 @@
 	  href="https://ant.apache.org/">Apache ANT project</a>.
 	</p>
 
-	<p><strong>Unpack and install the MerMEId:</strong> We suggest that
+	<p><strong>Clone and install the MerMEId:</strong> We suggest that
 	you create a directory called <kbd>/home/xml-store</kbd> and unpack it
-	there. There should then appear the following:</p>
+	there. For example:</p>
+
+<pre>
+git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
+</pre>
+
+	<p>There should then appear a directory called
+	MerMEId/trunk. In it you will find the following:</p>
 
 	<table>
 	  <tr>
-	    <th style="text-align:left;">Directory</th>
-	    <th style="text-align:left;">Content</th>
+	    <th width="15%" style="text-align:left;">File or Directory</th>
+	    <th style="text-align:left;">Description</th>
 	  </tr>
 
 	  <tr>
@@ -274,15 +285,15 @@
 	      projects. We have demo, developement and production versions of
 	      the system. To build you have to choose an instance and a target.
 
-	      <pre>
-		ant -Dwebapp.instance=&lt;instance name&gt; &lt;target name&gt;
-	      </pre>
+<pre>
+  ant -Dwebapp.instance=&lt;instance name&gt; &lt;target name&gt;
+</pre>
 
 	      A usage example could be 
 
-	      <pre>
-		ant -Dwebapp.instance=distro war
-	      </pre>
+<pre>
+  ant -Dwebapp.instance=distro war
+</pre>
 
 	    </td>
 	  </tr>
@@ -299,10 +310,10 @@
 	      <kbd>local_config/http_filter.xml_distro</kbd> (see <a
 	      href="#appendix">Appendix A</a>. When done you must recompile
 	      the package using <kbd>ant</kbd>:</p>
-	      <pre>
-		cd &lt;path to source&gt;
-		ant -Dwebapp.instance=distro war
-	      </pre>
+<pre>
+  cd &lt;path to source&gt;
+  ant -Dwebapp.instance=distro war
+</pre>
 
 	      <p>This will build the <kbd>distro</kbd>-instance of the
 	      application.</p>
@@ -326,33 +337,30 @@
 	    href="../local_config/mermeid_configuration.xml_distro">local_config/mermeid_configuration.xml_distro</a></kbd>
 	    and is copied into <kbd>forms/mermeid_configuration.xml</kbd> upon
 	    building. You build everything in one go
-	    <pre>
-	      ant -Dwebapp.instance=distro war
-	    </pre>
+<pre>
+  ant -Dwebapp.instance=distro war
+</pre>
 	    See above for a description of the <kbd>webapp.instance</kbd>
 	    concept
 	    </td>
 	  </tr>
 	  <tr>
-	    <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">orbeon</td>
+	    <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">orbeon/mei_form.jsp<br/>orbeon/properties-local.xml</td>
 	    
 	    <td>A <a href="orbeon/mei_form.jsp">JSP script</a> which should be
 	    installed as &lt;your
 	    tomcat&gt;/webapps/orbeon/xforms-jsp/mei-form/index.jsp -- this is
-	    basically an xinclude processor</td>
+	    basically an xinclude processor
+	    <a href="#inst_orbeon">More about this above</a>
+	    </td>
 	    
 	  </tr>
-	  <tr>
-	    <td valign="top" 
-		style="text-align:left;font-weight:bold;font-family:courier;">transforms</td>
-	    <td>some transforms used for presentation, filtering and also for
-	    migration of mei2010 to 2012 just copy them on top of the old
-	    ones</td>
-	  </tr>
+	 
 	  <tr>
 	    <td valign="top" style="text-align:left;font-weight:bold;font-family:courier;">xqueries</td>
-	    <td>used for search and navigation</td>
+	    <td>Scripts used for searching and navigating the collection</td>
 	  </tr>
+
 	</table>
 	
 	<p>In addition, there are a number of files. filter.war, editor.war <a
@@ -363,9 +371,9 @@
 	the code code. But if you like to keep it as it is, then it might be
 	easier to deploye it in your tomcat. </p>
 	
-	<pre>
-	  cp editor.war /&lt;PATH TO YOUR&gt;/tomcat6/webapps/editor.war
-	</pre>
+<pre>
+  cp editor.war /&lt;PATH TO YOUR&gt;/tomcat/webapps/editor.war
+</pre>
 	
 	<p>See below how apache is configured in the two cases.</p>
       </div>
@@ -433,43 +441,6 @@
 	      you just created. The admin's credentials should be put into the
 	      <a href="#appendix">configuration files</a> Figure 2 shows the
 	      client after installation and configuration.</li>
-	      
-	      <li><strong>Create a collection called library</strong>. Used to
-	      keep a standard set of bibliographic references that are often
-	      used.</li>
-	      
-	      <li><strong>Load some content:</strong>
-	      <p>After configuring eXist, it is just to populate the database
-	      with some content. The easiest way to do that is to use the
-	      admin client (see above). The fastest way is perhaps the command
-	      line tool, xquery/load_exist.pl</p>
-	      
-	      <pre>
-		cd xquery
-		./load_exist.pl --user admin \
-		--password your_own_very_secret_password \
-		--host-port mei.example.org:8080 \
-		--load dcm \
-		--context /exist/rest/db/dcm \
-		--suffix xml
-	      </pre>
-	      
-	      <p>and</p>
-	      
-	      <pre>
-		cd xquery
-		./load_exist.pl --user admin \
-		--password your_own_very_secret_password \
-		--host-port mei.example.org:8080 \
-		--load library \
-		--context /exist/rest/db/library \
-		--suffix xml
-	      </pre>
-	      
-	      
-	      <p>Please note that we've folded the command line using '\' just
-	      for typographical reasons.</p>
-	      </li>
 
 	      <li>
 		<strong>Configure the <kbd>xqueries</kbd></strong>.  
@@ -477,71 +448,107 @@
 		copying and publishing resources). Those scripts are using
 		login.xqm. You need to copy login.xqm_distro to login.xqm and
 		edit it to provide credentials for these operations.</p>
+
+		<strong>Load the <kbd>xqueries</kbd></strong>.  
+
+		<p>The fastest way to do this, is from the command
+		line. Assuming that you are in the <kbd>xqueries</kbd>
+		in the source tree.  First load the xquery files:</p>
+
+<pre>
+  ./load_exist.pl --user admin \
+  --password your_own_very_secret_password \
+  --host-port mei.example.org:80 \
+  --load . \
+  --context "/exist/rest/db" \
+  --suffix xq
+</pre>
+
+	      <p>Please note that we've folded the command line using
+	      '\' just for typographical reasons.</p>
+
 	      </li>
 
 	      <li>
 
-		<strong>Load the <kbd>xqueries</kbd></strong>.  
+		<strong>Repeat this for the xquery modules:</strong>
+<pre>
+  ./load_exist.pl --user admin \
+  --password your_own_very_secret_password \
+  --host-port mei.example.org:80 \
+  --load . \
+  --context "/exist/rest/db" \
+  --suffix xqm
+</pre>
 
-		<p>You can do this from the command line. First the xquery
-		files:</p>
-
-		<pre>
-		  ./load_exist.pl --user admin \
-		  --password your_own_very_secret_password \
-		  --host-port mei.example.org:80 \
-		  --load . \
-		  --context "/exist/rest/db" \
-		  --suffix xq
-		</pre>
-
-		<p>And then the xquery modules:</p>
-		<pre>
-		  ./load_exist.pl --user admin \
-		  --password your_own_very_secret_password \
-		  --host-port mei.example.org:80 \
-		  --load . \
-		  --context "/exist/rest/db" \
-		  --suffix xqm
-		</pre>
 	      </li>
+
+	      <li>Prepare the <strong>Standard Bibliography</strong>
+	      <p>Make a local copy of the standard bibliography</p>
+<pre>
+  cp local_config/standard_bibliography.xml_distro \
+     xqueries/library/standard_bibliography.xml
+</pre>
+	      </li>
+
+	      <li><strong>Load some content:</strong>
+	      <p>After configuring eXist, it is just to populate the database
+	      with some content.</p>
+	      
+<pre>
+  cd xquery
+  ./load_exist.pl --user admin \
+  --password your_own_very_secret_password \
+  --host-port mei.example.org:8080 \
+  --load . \
+  --context /exist/rest/db/ \
+  --suffix xml
+</pre>
+     
+	      <p> To install everything you need to do this for
+	      --suffix <kbd>xml, xq, xsl, xqm and css</kbd>.</p>
+
+	      </li>
+     
+	     
 	    </ol>
 	  </li>
 	  <li>
 	    <strong>Configure Apache HTTPD </strong>
 	    
-	    <p>If you store the form in Apache, you should enter the following
-	    in the some apache configuration file.</p>
-	    <pre>
+	    <p>How you configure HTTPD depends on how you store and
+	    access the forms, in Apache or in Tomcat. I you do the
+	    former enter the following in the your apache
+	    configuration file.</p>
+<pre>
 	      
-	      # This is how to configure stuff in Apache:
+  # This is how to configure stuff in Apache:
 	      
-	      Alias "/editor" "/home/xml-store/MerMEId/mermeid 
-	      &lt;Location "/editor">
-	      Options None
-	      Order allow,deny
-	      Allow from all
-	      &lt;/Location>
+  Alias "/editor" "/home/xml-store/MerMEId/mermeid 
+  &lt;Location "/editor">
+  Options None
+  Order allow,deny
+  Allow from all
+  &lt;/Location>
 	      
-	      ProxyPass /storage "ajp://mei.example.org:8009/exist/rest/db"
-	      ProxyPass /orbeon  "ajp://mei.example.org:8009/orbeon"
-	      ProxyPass /filter  "ajp://mei.example.org:8009/filter"
+  ProxyPass /storage "ajp://mei.example.org:8009/exist/rest/db"
+  ProxyPass /orbeon  "ajp://mei.example.org:8009/orbeon"
+  ProxyPass /filter  "ajp://mei.example.org:8009/filter"
 	      
-	    </pre>
+</pre>
 	    
 	    <p>On the other hand, if you put them in the application server
 	    through deploying the editor.war. Enter the following in your apache
 	    configuration.</p>
 	    
-	    <pre>
+<pre>
 	      
-	      ProxyPass /editor  "ajp://mei.example.org:8009/editor
-	      ProxyPass /storage "ajp://mei.example.org:8009/exist/rest/db"
-	      ProxyPass /orbeon  "ajp://mei.example.org:8009/orbeon"
-	      ProxyPass /filter  "ajp://mei.example.org:8009/filter"
+  ProxyPass /editor  "ajp://mei.example.org:8009/editor
+  ProxyPass /storage "ajp://mei.example.org:8009/exist/rest/db"
+  ProxyPass /orbeon  "ajp://mei.example.org:8009/orbeon"
+  ProxyPass /filter  "ajp://mei.example.org:8009/filter"
 	      
-	    </pre>
-	    
+</pre>
 	    
 	  </li>
 	</ol>
@@ -597,40 +604,40 @@
 	    Protect both the vulnerable components <kbd>/orbeon</kbd> and
 	    <kbd>/filter</kbd>. Currently we do this using basic
 	    authentication. We put the following in our apache configuration:
-	    <pre>
-	      &lt;LocationMatch ^/+(orbeon|filter)/+.*>
-	      &lt;Limit POST PUT DELETE>
-	      AuthType Basic
-	      AuthName "MerMEId users &amp; developers."
-	      AuthUserFile /home/xml-store/passwordfile
-	      Require valid-user 
-	      &lt;/Limit>
-	      &lt;/LocationMatch>
-	    </pre>
+<pre>
+  &lt;LocationMatch ^/+(orbeon|filter)/+.*>
+   &lt;Limit POST PUT DELETE>
+    AuthType Basic
+    AuthName "MerMEId users &amp; developers."
+    AuthUserFile /home/xml-store/passwordfile
+    Require valid-user 
+   &lt;/Limit>
+  &lt;/LocationMatch>
+</pre>
 	    
 	    <p>Note that you need to set</p>
 	    
-	    <pre>
-	      tomcatAuthentication="false"
-	    </pre>
+<pre>
+  tomcatAuthentication="false"
+</pre>
 	    
 	    <p>On the appropriate entry in <kbd>&lt;your
 	    tomcat&gt;/conf/server.xml</kbd>, i.e. change from</p>
 	    
-	    <pre>
-	      &lt;Connector port="8009" 
-	      protocol="AJP/1.3" 
-	      redirectPort="8443"  /&gt;
-	    </pre>
+<pre>
+  &lt;Connector port="8009" 
+                protocol="AJP/1.3" 
+                redirectPort="8443"  /&gt;
+</pre>
 	    
 	    <p>to</p>
 	    
-	    <pre>
-	      &lt;Connector port="8009" 
-	      protocol="AJP/1.3" 
-	      redirectPort="8443" 
-	      tomcatAuthentication="false" /&gt;
-	    </pre>
+<pre>
+  &lt;Connector port="8009" 
+                protocol="AJP/1.3" 
+	        redirectPort="8443" 
+	        tomcatAuthentication="false" /&gt;
+</pre>
 	    
 	  </li>
 	</ol>
@@ -639,7 +646,9 @@
 	the forms and the filter. You can create the <kbd>passwordfile</kbd>
 	like this:</p>
 	
-	<pre>htpasswd -bc passwordfile trusted_user magic_word</pre>
+<pre>
+  htpasswd -bc passwordfile trusted_user magic_word
+</pre>
 	
 	<p>This will create a new <kbd>passwordfile</kbd> for your
 	<kbd>trusted_user</kbd> containing its very secret
@@ -651,34 +660,37 @@
 	permissions in the eXist database. See Figure 3.</p>
 	
       </div>
-      
+
       <div id="backup_and_restore">
 	
 	<h2>7. Backup &amp; restore</h2>
-	
-      	<div  style="float: right; width:40%; padding:0 20px">
-	  <img src="images/manual/make_backup_of_exist.png"
-	       alt="backing up eXist"
-	       class="illustration"
-	       style="width:95%;"/>
-	  
-	  <div>&#160;</div>
-	  
-	  <img src="images/manual/make_restore_to_exist.png" 
-	       alt="restore files to eXist"
-	       class="illustration"
-	       style="width:95%;"/>
-	  
-	  <p><small>Figure 4. Backup (top) and restore(bottom).</small></p>
-	</div>
-	
+
 	<p>At DCM we have eXist DB and its application server on a Linux machine
 	that are backed-up regularly. In addition we take a backup of the
 	XML-files using the admin client. See Figure 4. It is also possible to
 	add the content of an entire directory to the database through the client.</p>
 	
 	<p>We have some other simple tools:</p>
-	
+     
+	<div  style="float: right; width:40%; padding:0 20px;clear:right;">
+	  <img src="images/manual/make_backup_of_exist.png"
+	       alt="backing up eXist"
+	       class="illustration"
+	       style="width:95%;"/>
+
+	  <p><small>Figure 4a. Backup.</small></p>
+	</div>
+	<div  style="float: right; width:40%; padding:0 20px;clear:right;">
+
+	  
+	  <img src="images/manual/make_restore_to_exist.png" 
+	       alt="restore files to eXist"
+	       class="illustration"
+	       style="width:95%;"/>
+	  
+	  <p><small>Figure 4b. Restore(bottom).</small></p>
+	</div>
+ 
 	<ul>
 	  <li>The load_exist.pl (see above) can be used to retrieve files as well
 	  as storing them</li>
@@ -691,38 +703,38 @@
 	    shell script that uses lwp-mirror to mirror individual files. First
 	    generate the script
 	    
-	    <pre>
-	      xsltproc --stringparam base_uri \
-	      http://mei.example.org/storage/dcm/ \ 
-	      transforms/mei/utils/backup_exist.xsl \ 
-	      http://distest.kb.dk/storage/dcm/  > backup.sh
-	    </pre>
+<pre>
+  xsltproc --stringparam base_uri \
+  http://mei.example.org/storage/dcm/ \ 
+  transforms/mei/utils/backup_exist.xsl \ 
+  http://distest.kb.dk/storage/dcm/  > backup.sh
+</pre>
 	    Then make it executable and run it
 	    
-	    <pre>
-	      chmod a+x backup.sh
-	      ./backup.sh
-	    </pre>
+<pre>
+  chmod a+x backup.sh
+  ./backup.sh
+</pre>
 	    
 	    The script contains code as below.
 	    
-	    <pre>
-	      #!/bin/sh
+<pre>
+  #!/bin/sh
 	      
-	      if ! [ -d ./db/dcm ]; then
-	      mkdir -p ./db/dcm
-	      fi
-	      lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285256669.xml \
-	      ./db/dcm/1285256669.xml
-	      lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285323711.xml \
-	      ./db/dcm/1285323711.xml
-	      lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285750781.xml \
-	      ./db/dcm/1285750781.xml
-	      lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1289382773.xml \
-	      ./db/dcm/1289382773.xml
+  if ! [ -d ./db/dcm ]; then
+    mkdir -p ./db/dcm
+  fi
+  lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285256669.xml \
+     ./db/dcm/1285256669.xml
+  lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285323711.xml \
+     ./db/dcm/1285323711.xml
+  lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1285750781.xml \
+     ./db/dcm/1285750781.xml
+  lwp-mirror http://mei.example.org/storage/dcm/db/dcm/1289382773.xml \
+     ./db/dcm/1289382773.xml
 	      
-	      ...
-	    </pre>
+     ...
+</pre>
 	    The lines have been folded.
 	  </li>
 	  
@@ -730,9 +742,9 @@
 	  
 	</ul>
 	<br clear="all"/>
+
+      
       </div>
-      
-      
       <div id="appendix">
 	<h2>Appendix A. Configuration files</h2>
 
@@ -768,100 +780,100 @@ to
 	</ol>
 	
 	<h3>Filter configuration</h3>
-	<pre>
-	  &lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-	  &lt;properties>
-	  &lt;comment>HTTP Filter parameters&lt;/comment>
+<pre>
+  &lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+  &lt;properties>
+  &lt;comment>HTTP Filter parameters&lt;/comment>
 	  
-	  &lt;!--
-	  The filter is meant to operate on top of an eXist XML database
-	  -->
+  &lt;!--
+  The filter is meant to operate on top of an eXist XML database
+  -->
 	  
-	  &lt;entry key="exist.host">mei.example.org&lt;/entry>
-	  &lt;entry key="exist.port">8080&lt;/entry>
-	  &lt;entry key="exist.realm">exist&lt;/entry>
-	  &lt;entry key="exist.context">/exist/rest/db/dcm&lt;/entry>
-	  &lt;entry key="exist.user">admin&lt;/entry>
-	  &lt;entry key="exist.password">your very secret word&lt;/entry>
+  &lt;entry key="exist.host">mei.example.org&lt;/entry>
+  &lt;entry key="exist.port">8080&lt;/entry>
+  &lt;entry key="exist.realm">exist&lt;/entry>
+  &lt;entry key="exist.context">/exist/rest/db/dcm&lt;/entry>
+  &lt;entry key="exist.user">admin&lt;/entry>
+  &lt;entry key="exist.password">your very secret word&lt;/entry>
 	  
-	  &lt;!--
-	  get is the retrieval filter
-	  -->
+  &lt;!--
+  get is the retrieval filter
+  -->
 	  
-	  &lt;entry key="get.dcm">http://mei.example.org/editor/transforms/mei/filter_get.xsl&lt;/entry>
-	  &lt;entry key="get.dcm.mime">application/xml&lt;/entry>
-	  &lt;entry key="get.dcm.charset">UTF-8&lt;/entry>
+  &lt;entry key="get.dcm">http://mei.example.org/editor/transforms/mei/filter_get.xsl&lt;/entry>
+  &lt;entry key="get.dcm.mime">application/xml&lt;/entry>
+  &lt;entry key="get.dcm.charset">UTF-8&lt;/entry>
 
 
-	  &lt;entry 
+  &lt;entry 
 	  key="get.library">http://mei.example.org/editor/transforms/mei/null_transform.xsl&lt;/entry>
-	  &lt;entry key="get.library.mime">application/xml&lt;/entry>
-	  &lt;entry key="get.library.charset">UTF-8&lt;/entry>
+  &lt;entry key="get.library.mime">application/xml&lt;/entry>
+  &lt;entry key="get.library.charset">UTF-8&lt;/entry>
 	  
-	  &lt;!--
-	  put is for updating
-	  -->
+  &lt;!--
+  put is for updating
+  -->
 	  
-	  &lt;entry 
-	         key="put.dcm">http://mei.example.org/editor/transforms/mei/filter_put.xsl&lt;/entry>
-	  &lt;entry key="put.dcm.mime">application/xml&lt;/entry>
-	  &lt;entry key="put.dcm.charset">UTF-8&lt;/entry>
+  &lt;entry 
+         key="put.dcm">http://mei.example.org/editor/transforms/mei/filter_put.xsl&lt;/entry>
+  &lt;entry key="put.dcm.mime">application/xml&lt;/entry>
+  &lt;entry key="put.dcm.charset">UTF-8&lt;/entry>
 
-	  &lt;entry 
-	         key="put.library">http://mei.example.org/editor/transforms/mei/null_transform.xsl&lt;/entry>
-	  &lt;entry key="put.library.mime">application/xml&lt;/entry>
-	  &lt;entry key="put.library.charset">UTF-8&lt;/entry>
+  &lt;entry 
+         key="put.library">http://mei.example.org/editor/transforms/mei/null_transform.xsl&lt;/entry>
+  &lt;entry key="put.library.mime">application/xml&lt;/entry>
+  &lt;entry key="put.library.charset">UTF-8&lt;/entry>
 
 	  
-	  &lt;!--
-	  del is for removing stuff
-	  -->
+  &lt;!--
+    del is for removing stuff
+  -->
 	  
-	  &lt;entry 
-                 key="del.redirect">http://mei.example.org/storage/list_files.xq&lt;/entry>
+  &lt;entry 
+         key="del.redirect">http://mei.example.org/storage/list_files.xq&lt;/entry>
 	  
-	  &lt;!-- 
-	  Create is for what it seems to be. A URI that is good to use for
-	  creating new documents. We're doing that using uri templates
-	  (RFC6570). The URI should look like
+  &lt;!-- 
+   Create is for what it seems to be. A URI that is good to use for
+   creating new documents. We're doing that using uri templates
+   (RFC6570). The URI should look like
 	  
-	  http://mei.example.org/orbeon/xforms-jsp/mei-form/?uri=http://mei.example.org/form/dcm/&amp;doc=cnw0361.xml
+   http://mei.example.org/orbeon/xforms-jsp/mei-form/?uri=http://mei.example.org/form/dcm/&amp;doc=cnw0361.xml
 	  
-	  when ready
-	  -->
+   when ready
+  -->
 	  
-	  &lt;entry key="create">http://mei.example.org/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}&lt;/entry>
-	  &lt;entry key="create.uri">http://mei.example.org/editor/forms/mei/edit-work-case.xml&lt;/entry>
-	  &lt;entry key="create.dir">http://mei.example.org/filter/&lt;/entry>
+  &lt;entry key="create">http://mei.example.org/orbeon/xforms-jsp/mei-form/{?uri,dir,doc}&lt;/entry>
+  &lt;entry key="create.uri">http://mei.example.org/editor/forms/mei/edit-work-case.xml&lt;/entry>
+  &lt;entry key="create.dir">http://mei.example.org/filter/&lt;/entry>
 	  
-	  &lt;/properties>
+  &lt;/properties>
 	  
-	</pre>
+</pre>
 	<h3>Form configuration</h3>
-	<pre>
-	  &lt;parameters xmlns="http://www.kb.dk/dcm">
-	  &lt;document_root>storage/dcm/&lt;/document_root>
-	  &lt;exist_dir>/storage/&lt;/exist_dir>
-	  &lt;orbeon_dir>http://mei.example.org/orbeon/xforms-jsp/mei-form/&lt;/orbeon_dir>
-	  &lt;form_home>http://mei.example.org/editor/forms/mei/&lt;/form_home>
-	  &lt;crud_home>http://mei.example.org/filter/&lt;/crud_home>
-	  &lt;library_crud_home>http://mei.example.org/filter/library/&lt;/library_crud_home>
-	  &lt;server_name>http://mei.example.org/&lt;/server_name>
-	  &lt;xml_file/>
+<pre>
+  &lt;parameters xmlns="http://www.kb.dk/dcm">
+  &lt;document_root>storage/dcm/&lt;/document_root>
+  &lt;exist_dir>/storage/&lt;/exist_dir>
+  &lt;orbeon_dir>http://mei.example.org/orbeon/xforms-jsp/mei-form/&lt;/orbeon_dir>
+  &lt;form_home>http://mei.example.org/editor/forms/mei/&lt;/form_home>
+  &lt;crud_home>http://mei.example.org/filter/&lt;/crud_home>
+  &lt;library_crud_home>http://mei.example.org/filter/library/&lt;/library_crud_home>
+  &lt;server_name>http://mei.example.org/&lt;/server_name>
+  &lt;xml_file/>
 	  
-	  &lt;!-- default editor settings -->
+  &lt;!-- default editor settings -->
 	  
-	  &lt;!-- Set boolean values to 'true' or nothing  -->
-	  &lt;!-- Enable attribute editor? -->
-	  &lt;attr_editor/>
-	  &lt;!-- Enable xml:id display component? -->
-	  &lt;show_id/>
-	  &lt;!-- Enable xml:id display component? -->
-	  &lt;code_inspector/>
+  &lt;!-- Set boolean values to 'true' or nothing  -->
+  &lt;!-- Enable attribute editor? -->
+  &lt;attr_editor/>
+  &lt;!-- Enable xml:id display component? -->
+  &lt;show_id/>
+  &lt;!-- Enable xml:id display component? -->
+  &lt;code_inspector/>
 	  
-	  &lt;/parameters>
+  &lt;/parameters>
 	  
-	</pre>
+</pre>
 	
       </div>
     </div>
