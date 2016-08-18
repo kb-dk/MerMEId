@@ -93,7 +93,7 @@
 											nodeset="m:title" 
 											index="repeat-version-titles"
 											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
-										<xf:trigger appearance="minimal" class="non-standard_button">
+										<xf:trigger appearance="minimal" class="non-standard_button editmenu">
 											<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete row"/></xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xf:setvalue ref="." value="''"/>
@@ -224,112 +224,10 @@
 						</h:span></h:a></h:span>
 						<dcm:create nodeset="m:incip"
 							label="Add incipits"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip"/>                        
-						<dcm:create ref="m:incip"
-							nodeset="m:graphic"
-							label="Add link to graphics"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>                        
-						<xf:group ref=".[m:incip/m:graphic]">
-							<h:span class="blocklabel">Music incipit graphics (image files)</h:span>
-							<h:span class="blocklabel">URI <h:a class="help">&#160;?<h:span class="comment">Location of a graphics file, e.g.
-								"http://example.com/incipits/lowres/116.png"
-							</h:span></h:a></h:span>
-						</xf:group>
-						<xf:repeat nodeset="m:incip/m:graphic" id="incipit-repeat">
-							<h:div>
-								<xf:input ref="@target" class="maxlong">
-									<xf:label/>
-								</xf:input>
-								<xf:select1 ref="@targettype" class="auto_length">
-									<xf:item>
-										<xf:value>lowres</xf:value>
-										<xf:label>Low resolution</xf:label>
-									</xf:item>
-									<xf:item>
-										<xf:value>hires</xf:value>
-										<xf:label>High resolution</xf:label>
-									</xf:item>
-									<xf:item>
-										<xf:value>print</xf:value>
-										<xf:label>Print quality</xf:label>
-									</xf:item>
-								</xf:select1>
-								<h:a class="help">&#160;?<h:span class="comment">Choose 'Low resolution' for standard web graphics, 'High resolution' for high quality
-									web graphics, or 'Print quality' for print quality graphics.
-									<br/>MerMEId's HTML preview by default only displays 
-									the file specified as the low resolution image, while a high resolution image makes the 
-									low resolution image clickable for enlargment.</h:span></h:a>
-								<dcm:element-buttons
-									triggers="add remove" 
-									nodeset="m:graphic" 
-									index="incipit-repeat"
-									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>
-								<dcm:attribute-editor/>
-							</h:div>
-						</xf:repeat>
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip"/>
 						
-						<h:div>
-							<dcm:create ref="m:incip"
-								nodeset="m:incipCode"
-								label="Add music incipit code"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
-						</h:div>
-						<xf:group ref=".[m:incip/m:incipCode]">
-							<h:span class="blocklabel">Music incipit code <h:a class="help">&#160;?<h:span 
-								class="comment">One-line incipit encoding, using e.g. <em>Plaine &amp; Easie Code</em></h:span></h:a></h:span>
-							<xf:repeat nodeset="m:incip/m:incipCode" id="incipcode-repeat">
-								<h:div>
-									<xf:input ref="@form">
-										<xf:label>Code language <h:a class="help">&#160;?<h:span class="comment">The name of the encoding language used. 
-											The MEI Guidelines suggest values such as 'plaineAndEasie', 'humdrumKern' or 'parsons'.<h:br/>
-											MerMEId also supports 'pae' for Plaine and Easie. <h:br/>
-											Plaine and Easie-encoded incipits are rendered in MerMEId's HTML preview using the Verovio javascript toolkit.
-										</h:span></h:a></xf:label>
-									</xf:input>
-									<xf:input ref="." class="maxlong">
-										<xf:label> Code <h:a class="help">&#160;?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
-									</xf:input>
-									<dcm:element-buttons
-										triggers="add remove" 
-										nodeset="m:incipCode" 
-										index="incipcode-repeat"
-										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
-									<dcm:attribute-editor/>
-								</h:div>
-							</xf:repeat>
-						</xf:group>
-						<h:div>
-							<dcm:create ref="m:incip"
-								nodeset="m:incipText"
-								label="Add text incipit"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>                        
-							<dcm:create ref="m:incip/m:incipText"
-								nodeset="m:p"
-								label="Add text incipit"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
-						</h:div>
-						<xf:group ref=".[m:incip/m:incipText/m:p]">
-							<h:span class="blocklabel">Text incipit
-								<!--<h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/html_markup.gif" alt="HTML markup allowed"/><h:span class="comment">HTML markup and special characters allowed</h:span></h:a>-->
-							</h:span>
-							<xf:repeat nodeset="m:incip/m:incipText/m:p" id="text-incipit-repeat" class="input_group">
-								<xf:input ref="." class="maxlong"><xf:label/></xf:input> 
-								<xf:select1 ref="@xml:lang" xxf:refresh-items="false">
-									<xf:label/>
-									<xf:itemset nodeset="instance('languages')/language">
-										<xf:label><xf:output value="."/></xf:label>
-										<xf:value ref="@xml:id"></xf:value>
-									</xf:itemset>
-								</xf:select1>                                
-								<dcm:element-buttons
-									triggers="add remove" 
-									nodeset="m:p" 
-									index="text-incipit-repeat"
-									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
-								<dcm:attribute-editor/>
-								<h:br/>
-							</xf:repeat>
-						</xf:group>
+						<xi:include href="includes/incipit-input.xml" parse="xml"/>
+						
 					</h:fieldset>
 					
 					<h:fieldset>

@@ -229,20 +229,29 @@
     <xsl:apply-templates mode="mei2html"/>
   </xsl:template>
 
-  <!-- this one must be limited to operate only within blocks of HTML ...
-    <xsl:template match="m:persName|m:corpName|m:name|m:ptr|m:address|m:bibl|m:date|m:geogName|m:title|m:quote" mode="mei2html">
+  <!--  Converting semantic MEI in prose text to HTML span elements. --> 
+  <!--  This must be limited to operate only within blocks of text to be edited with tinyMCE ...-->
+  <!--   <xsl:template match="m:annot//m:persName | m:p//m:persName | m:physMedium//m:persName" mode="mei2html">
+     -->
+  <xsl:template match="*[(self::m:persName or self::m:geogName or self::m:corpName or self::m:title) 
+    and (ancestor::m:annot or ancestor::m:p or ancestor::m:physMedium or ancestor::m:watermark or ancestor::m:condition)]" mode="mei2html">
     <xsl:variable name="atts">
-    <xsl:for-each select="@*">
-    <xsl:value-of select="concat(name(),'(',.,')')"/>
-    </xsl:for-each>
+     <xsl:for-each select="@*">
+      <xsl:value-of select="concat(name(),'(',.,'),')"/>
+     </xsl:for-each>
     </xsl:variable>
-    &lt;span title="mei:<xsl:value-of select="name()"/>" 
-    class="<xsl:value-of select="concat('atts[',string-join($atts,','),']')"/>"
-    style="background-color: #e5e5e5;"&gt;
-    <xsl:apply-templates mode="mei2html"/>
-    &lt;/span&gt;
-    </xsl:template>
-  -->
+    <xsl:variable name="bgColor">
+      <xsl:choose>
+        <xsl:when test="name()='persName'">#dfd</xsl:when>
+        <xsl:when test="name()='geogName'">#ddf</xsl:when>
+        <xsl:when test="name()='corpName'">#fcf4a0</xsl:when>
+        <xsl:when test="name()='title'">#fcf</xsl:when>
+        <xsl:otherwise>#ddd</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>&lt;span title="mei:<xsl:value-of select="name()"/>" 
+    class="mei:atts[<xsl:value-of select="substring($atts,1,string-length($atts)-1)"/>]"
+    style="background-color: <xsl:value-of select="$bgColor"/>;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
+ 
 
   <xsl:template match="m:list" mode="mei2html"><xsl:choose>
     <xsl:when test="@form = 'simple'">&lt;ul&gt;<xsl:for-each select="m:li">&lt;li&gt;<xsl:apply-templates mode="mei2html"/>&lt;/li&gt;</xsl:for-each>&lt;/ul&gt;</xsl:when>

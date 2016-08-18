@@ -135,19 +135,23 @@
       the way MerMEId displays your data, or you can make a copy of it to use for your presentation outside 
       of MerMEId. 
       You may also want to download and/or alter the
-      corresponding CSS style sheet, mei_to_html.css, found in the same location. 
+      corresponding CSS style sheet, mei_to_html.css, found in the same location.<br/>
+      If you want to switch between different transformations, you can place custom XSL style sheets 
+      in the eXist database (in db/style/) and tell MerMEId which transformation to use by adding a parameter
+      ?xsl=[your xsl file name] to the preview URL, like: 
+      http://www.example.com/storage/present.xq?xsl=your_style_sheet.xsl<br/>            
       Even though MerMEId can produce HTML to display your data (either by clicking a work's title
       in the file list or by clicking the 'View as HTML' icon in the editor), MerMEId does not tell
       you how to present your data to the public or in any other context. The built-in HTML preview
       is meant for reviewing your data for convenient proofreading etc. <br/>
       You are welcome to re-use or
-      alter the XSL style sheet used to create the preview for your presentation, but more likely
+      alter the XSL style sheet used to create the preview for your public presentation, but more likely
       you will want to define your own. There is no forced connection between the way MerMEIds
       displays your data and the way your final presentation does. In the public version of the <a
         href="http://www.kb.dk/dcm/cnw.html" target="_blank">Catalogue of Carl Nielsen's Works
         (CNW)</a>, we are using a slightly modified version of MerMEId's HTML preview XSL style sheet 
       to do the basic formatting; we have basically just filtered out
-      certain information and libked to a different CSS style sheet.</p>
+      certain information and linked to a different CSS style sheet.</p>
     <h3>MerMEId does not show some information I have entered. Why?<a name="information_not_shown"
       ></a>
     </h3>
@@ -155,11 +159,7 @@
       editor, with a few exceptions. Some information is very complex to handle; for instance, only
       some of the possible relations between sources, versions etc. are pre-defined to have a
       visible effect in the HTML preview. If you want other relations to have a an effect, you will
-      have to define it in your presentation. Another example is a person name's reference to an
-      authority file. This information is usually not intended for displaying directly; instead,
-      projects may use it for linking to other resources. There is no obvious way of displaying it
-      (other than a link to the file, which would be useful only for verifying that the reference is
-      indeed correct; we might consider implementing that in the preview). Finally, there is
+      have to define it in your presentation. Finally, there is
       definitely a chance that we have simply forgotten to implement a certain feature in the HTML
       preview because we haven't used it yet. Please let us know if something is missing. </p>
     <h2>Using the editor </h2>

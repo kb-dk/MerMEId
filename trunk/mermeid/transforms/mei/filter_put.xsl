@@ -164,6 +164,8 @@
   <xsl:template match="m:eventList[not(*)]"/>
   <xsl:template match="m:incipCode[not(text())]"/>
   <xsl:template match="m:notesStmt[not(*)]"/>
+  <xsl:template match="m:rend[not(* or //text())]"/>
+  <xsl:template match="m:mei/m:meiHead//m:score[not(*)]"/>
   <xsl:template match="m:titlePage[not(*)]"/>
   
   <!-- Delete duplicate language definitions (fixes an xforms problem) -->
@@ -422,10 +424,11 @@
       <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
+  
   <xsl:template match="h:span">
     <xsl:choose>
-      <!-- <span title="mei:persName" class="mei:atts[authority(GND),authURI(http://example.com)]">Gade</span> -->
       <xsl:when test="contains(@title,'mei:')">
+        <!-- <span title="mei:persName" class="mei:atts[authURI(http://www.viaf.org),dbkey(12345))]">Gade</span> -->
         <xsl:variable name="tagName" select="substring-after(@title,'mei:')"/>
         <xsl:variable name="atts">
           <xsl:call-template name="tokenize">
@@ -440,9 +443,7 @@
             <xsl:attribute name="{$attName}">
               <xsl:value-of select="substring-before(substring-after(.,'('),')')"/>
             </xsl:attribute>
-          </xsl:for-each>
-          <xsl:apply-templates select="node()"/>
-        </xsl:element>
+          </xsl:for-each><xsl:apply-templates select="node()"/></xsl:element>
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
@@ -474,6 +475,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="h:a">
     <xsl:choose>
       <xsl:when test="@href">

@@ -25,6 +25,8 @@
 	<xsl:output method="xml" encoding="UTF-8" cdata-section-elements="" omit-xml-declaration="yes"
 		indent="no" xml:space="default"/>
 
+	<xsl:strip-space elements="*"/>
+
 	<xsl:param name="doc"/>
 	<xsl:param name="hostname"/>
 
@@ -85,7 +87,7 @@
 		
 		<!-- Include the Verovio toolkit for displaying incipits if needed -->
 		<!--<script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js">-->
-		<xsl:if test="//m:incip/m:score/* or //m:incipCode[@form='pae' or @form='PAE' or @form='plaineAndEasie']/text()">
+		<xsl:if test="//m:incip/m:score/* or normalize-space(//m:incipCode[@form='pae' or @form='PAE' or @form='plaineAndEasie'])">
 			<script src="http://www.verovio.org/javascript/latest/verovio-toolkit-light.js" type="text/javascript">
 		    	<xsl:text>
 	    		</xsl:text>
@@ -415,6 +417,12 @@
 						</xsl:for-each>
 					</div>
 				</xsl:if>
+			</xsl:for-each>
+			<!-- finally, list names without roles -->
+			<xsl:for-each select="m:persName[text() and (not(@role) or @role='')]">
+				<div class="list_block">
+					<xsl:apply-templates select="."/>
+				</div>
 			</xsl:for-each>
 		</p>
 	</xsl:template>
@@ -936,6 +944,7 @@
 							<xsl:variable name="id" select="concat('incip_pae_',generate-id())"/>
 							<xsl:element name="div">
 								<xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
+								<xsl:text> </xsl:text>
 							</xsl:element>
 							<!-- use Verovio for rendering PAE incipits -->
 							<script type="text/javascript">
@@ -977,6 +986,7 @@
 		<xsl:variable name="xml_id" select="concat($id,'_xml')"/>
 		<xsl:element name="div">
 			<xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
+            <xsl:text> </xsl:text>
 		</xsl:element>
 		
 		<!-- put the MEI incipit XML into the document here -->
@@ -1279,12 +1289,25 @@
 		<xsl:if test="m:instrumentation[* and //text()]">
 			<div class="perfmedium list_block">
 				<xsl:for-each select="m:instrumentation[*]">
+					<!-- Overall intrumentation is assumed to be defined at top expression level, not work level -->
+					<xsl:variable name="topLevelInstrumentation" 
+						select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:instrumentation"/>
+					<xsl:variable name="SortingValues">
+						<xsl:call-template name="makeSortList">
+							<xsl:with-param name="nodeset" select="$topLevelInstrumentation"/>
+						</xsl:call-template>
+					</xsl:variable>				
 					<div class="relation_list">
 						<xsl:if test="position()=1 and $full">
 							<span class="p_heading relation_list_label">Instrumentation: </span>
 						</xsl:if>
-						<xsl:apply-templates select="m:instrVoiceGrp[*//text()]"/>
-						<xsl:apply-templates select="m:instrVoice[not(@solo='true')][text()]"/>
+						<xsl:apply-templates select="m:instrVoiceGrp[*//text()]">
+							<xsl:with-param name="SortList" select="$SortingValues"/>
+						</xsl:apply-templates>
+						<xsl:apply-templates select="m:instrVoice[not(@solo='true')][text()]">
+							<!-- Sort instruments according to top-level list -->
+							<xsl:sort data-type="number" select="string-length(substring-before($SortingValues,concat(',',@n,',')))"/>
+						</xsl:apply-templates>
 						<xsl:if test="count(m:instrVoice[@solo='true'])&gt;0">
 							<xsl:if test="count(m:instrVoice[not(@solo='true')])&gt;0">
 								<br/>
@@ -1303,6 +1326,7 @@
 	</xsl:template>
 
 	<xsl:template match="m:instrVoiceGrp[*//text()]">
+		<xsl:param name="SortList"/>
 		<div>
 		<xsl:if test="m:head[text()]">
 			<xsl:value-of select="m:head"/>
@@ -1312,6 +1336,7 @@
 			<xsl:text> </xsl:text>
 		</xsl:if>
 		<xsl:for-each select="m:instrVoice[text()]">
+			<xsl:sort data-type="number" select="string-length(substring-before($SortList,concat(',',@n,',')))"/>			
 			<xsl:apply-templates select="."/>
 			<xsl:if test="position()&lt;last()">
 				<xsl:text>, </xsl:text>
@@ -1335,7 +1360,6 @@
 	<xsl:template match="m:castList">
 		<xsl:param name="full" select="true()"/>
 		<div class="perfmedium list_block">
-
 			<div class="relation_list">
 				<xsl:if test="$full">
 					<span class="p_heading relation_list_label">Roles: </span>
@@ -1367,7 +1391,17 @@
 	<xsl:template match="m:castList" mode="castlist">
 		<xsl:param name="lang" select="'en'"/>
 		<xsl:param name="full" select="true()"/>
+		<!-- Overall cast list is assumed to be defined at top expression level, not work level -->
+		<xsl:variable name="topLevelCastList" 
+			select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:castList"/>
+		<xsl:variable name="SortingValues">
+			<xsl:call-template name="makeSortList">
+				<xsl:with-param name="nodeset" select="$topLevelCastList"/>
+			</xsl:call-template>
+		</xsl:variable>				
 		<xsl:for-each select="m:castItem/m:role/m:name[@xml:lang=$lang]">
+			<!-- Sort cast list according to top-level list -->
+			<xsl:sort data-type="number" select="string-length(substring-before($SortingValues,concat(',',../../@n,',')))"/>			
 			<xsl:apply-templates select="."/>
 			<xsl:if test="$full">
 				<xsl:apply-templates select="../../m:roleDesc[@xml:lang=$lang]"/>
@@ -1389,6 +1423,17 @@
 			<xsl:with-param name="full" select="false()"/>
 		</xsl:apply-templates>
 	</xsl:template>
+	
+	<xsl:template name="makeSortList">
+		<xsl:param name="nodeset"/>
+		<!-- make a list of @n values to use as a sort list for sub-level instrumentations and cast lists -->
+		<xsl:text>',</xsl:text>
+		<xsl:for-each select="$nodeset//*">
+			<xsl:value-of select="@xml:id"/><xsl:text>,</xsl:text>
+		</xsl:for-each>
+		<xsl:text>'</xsl:text>
+	</xsl:template>
+		
 	<!-- end perfMedium -->
 
 	<!-- history -->
@@ -1500,9 +1545,7 @@
 
 				<xsl:variable name="sorted_sources">
 					<!-- loop through the selected sources; skip reproductions at this point -->
-					<xsl:for-each
-						select="$source_nodeset/m:source
-		      [not(m:relationList/m:relation[@rel='isReproductionOf']/@target)]">
+					<xsl:for-each select="$source_nodeset/m:source[not(m:relationList/m:relation[@rel='isReproductionOf']/@target)]">
 						<xsl:copy-of select="."/>
 					</xsl:for-each>
 				</xsl:variable>
@@ -2095,9 +2138,7 @@
 	</xsl:template>
 
 	<xsl:template match="m:watermark[text()]">
-		<div>
-			<xsl:apply-templates/>
-		</div>
+		<div>Watermark: <xsl:apply-templates/></div>
 	</xsl:template>
 
 	<xsl:template match="m:condition[text()]">
@@ -3281,8 +3322,9 @@
 	</xsl:template>
 
 	<!-- General abbreviations in text blocks and identifier labels. -->
-	<xsl:template match="text()[name(..)!='p' and name(..)!='persName' and name(..)!='ptr' and name(..)!='ref'] 
+	<xsl:template match="text()[parent::node() and name(..)!='p' and name(..)!='persName' and name(..)!='ptr' and name(..)!='ref'] 
 		| m:identifier/@label">
+		<!-- The parent::node() check above is necessary to avoid infinite looping -->
 		<xsl:variable name="string" select="concat(' ',.,' ')"/>
 		<xsl:variable name="abbr"
 			select="$abbreviations_file/m:p/m:choice/m:abbr[contains(translate($string,';:[]()/','       '),concat(' ',.,' '))]"/>
@@ -3293,33 +3335,33 @@
 				<xsl:variable name="pos1" select="string-length(substring-before($string,$abbr))"/>
 				<xsl:apply-templates select="exsl:node-set(substring(.,1,number($pos1)-1))"/>
 				<a href="javascript:void(0);" class="abbr"><xsl:value-of select="$abbr"/><span class="expan">
-						<xsl:choose>
-							<!-- if the expansion is a nodeset, a <bibl> element for example, process it -->
-							<xsl:when test="$expan/*">
-								<xsl:apply-templates select="$expan"/>
-							</xsl:when>
-							<!-- otherwise just plain text; no further processing -->
-							<xsl:otherwise>
-								<xsl:value-of select="$expan"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</span></a>
-				<!--<xsl:apply-templates select="exsl:node-set(substring-after($string,$abbr))"/>-->
+					<xsl:choose>
+						<!-- if the expansion is a nodeset, a <bibl> element for example, process it -->
+						<xsl:when test="$expan/*">
+							<xsl:apply-templates select="$expan"/>
+						</xsl:when>
+						<!-- otherwise just plain text; no further processing -->
+						<xsl:otherwise>
+							<xsl:value-of select="$expan"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</span></a>
 				<xsl:variable name="pos2" select="number($pos1)+string-length($abbr)"/>
 				<xsl:apply-templates select="exsl:node-set(substring(.,$pos2))"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select="."/>
+				<!-- <apply-templates/> would cause infinite loop -->
+				<xsl:apply-templates select="exsl:node-set(string(.))"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 	<!-- End look up abbreviations -->
-
+	
 	<!-- formatted text -->
 	<xsl:template match="m:lb">
 		<br/>
 	</xsl:template>
-	<xsl:template match="m:p[//text()]">
+	<xsl:template match="m:p[normalize-space(.)]">
 		<p>
 			<xsl:apply-templates/>
 		</p>
@@ -3327,37 +3369,37 @@
 	<xsl:template match="m:p[not(child::text()) and not(child::node())]">
 		<!-- ignore -->
 	</xsl:template> 
-	<xsl:template match="m:rend[@fontweight = 'bold'][text()]">
+	<xsl:template match="m:rend[@fontweight = 'bold'][normalize-space(.)]">
 		<b>
 			<xsl:apply-templates/>
 		</b>
 	</xsl:template>
-	<xsl:template match="m:rend[@fontstyle = 'italic'][text()]">
+	<xsl:template match="m:rend[@fontstyle = 'italic'][normalize-space(.)]">
 		<i>
 			<xsl:apply-templates/>
 		</i>
 	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'underline'][text()]">
+	<xsl:template match="m:rend[@rend = 'underline'][normalize-space(.)]">
 		<u>
 			<xsl:apply-templates/>
 		</u>
 	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'line-through'][text()]">
+	<xsl:template match="m:rend[@rend = 'line-through'][normalize-space(.)]">
 		<span style="text-decoration: line-through;">
 			<xsl:apply-templates/>
 		</span>
 	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'sub'][text()]">
+	<xsl:template match="m:rend[@rend = 'sub'][normalize-space(.)]">
 		<sub>
 			<xsl:apply-templates/>
 		</sub>
 	</xsl:template>
-	<xsl:template match="m:rend[@rend = 'sup'][text()]">
+	<xsl:template match="m:rend[@rend = 'sup'][normalize-space(.)]">
 		<sup>
 			<xsl:apply-templates/>
 		</sup>
 	</xsl:template>
-	<xsl:template match="m:rend[@fontfam or @fontsize or @color][text()]">
+	<xsl:template match="m:rend[@fontfam or @fontsize or @color][normalize-space(.)]">
 		<xsl:variable name="atts">
 			<xsl:if test="@fontfam">
 				<xsl:value-of select="concat('font-family:',@fontfam,';')"/>
@@ -3376,13 +3418,17 @@
 			<xsl:apply-templates/>
 		</xsl:element>
 	</xsl:template>
-	<xsl:template match="m:ref[@target][text()]">
+	<xsl:template match="m:ref[@target][normalize-space(.)]">
 		<xsl:element name="a">
 			<xsl:attribute name="href">
 				<xsl:value-of select="@target"/>
 			</xsl:attribute>
 			<xsl:attribute name="target">
-				<xsl:value-of select="@xl:show"/>
+				<xsl:choose>
+					<xsl:when test="@xl:show='new'">_blank</xsl:when>
+					<xsl:when test="@xl:show='replace'">_self</xsl:when>
+					<xsl:otherwise><xsl:value-of select="@xl:show"/></xsl:otherwise>
+				</xsl:choose>
 			</xsl:attribute>
 			<xsl:attribute name="title">
 				<xsl:value-of select="@xl:title"/>
@@ -3390,7 +3436,7 @@
 			<xsl:apply-templates/>
 		</xsl:element>
 	</xsl:template>
-	<xsl:template match="m:rend[@halign][text()]">
+	<xsl:template match="m:rend[@halign][normalize-space(.)]">
 		<xsl:element name="div">
 			<xsl:attribute name="style">text-align:<xsl:value-of select="@halign"/>;</xsl:attribute>
 			<xsl:apply-templates/>

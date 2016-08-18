@@ -61,8 +61,35 @@
         parse="xml">
         <xi:include href="mermeid_configuration.xml"/> 
     </xf:instance>
-    
    
+    <!-- Upload -->
+    <xf:instance id="upload-instance" >
+        <files>
+            <file filename="" mediatype="" size=""/>
+        </files>
+    </xf:instance>
+    <xf:bind nodeset="instance('upload-instance')/file" 
+        type="xs:anyURI"
+        constraint=". = ''"
+    />
+    
+    <xf:instance id="uploadedFile">
+        <mei xmlns="http://www.music-encoding.org/ns/mei"/>
+    </xf:instance>
+    
+    <xf:submission id="load-uploaded-file"
+        xxf:username=""
+        xxf:password=""
+        xxf:show-progress="false"
+        method="get" 
+        serialization="none" 
+        validate="false"
+        resource="{instance('temp')/target_uri}"
+        replace="instance" 
+        instance="uploadedFile">
+    </xf:submission>
+    <!-- end upload -->    
+    
     <xf:instance id="temp">
         <temp>
             <id/>

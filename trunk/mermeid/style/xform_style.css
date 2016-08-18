@@ -126,6 +126,12 @@ div.inputdiv {
     margin-top:0px;
 }
 
+div.inputbox {
+    margin: 5px 0px;
+    padding: 4px;
+    border: 1px solid #aaa;
+}
+
 .orbeon fieldset {
     padding: 0px 3px 5px 5px;
     margin: 18px 0px 5px 0px;
@@ -264,6 +270,40 @@ div.horiz_spacer {
     white-space:nowrap;
 }
 
+.orbeon input[type="file"] {
+    width: 200px;
+    font-size: 11px;
+} 
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+
+.fileUpload input.xforms-upload-select {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.fileUpload.btn {
+    font-size: 11px;
+    padding: 1px 4px;
+    margin-top: 1px;
+    margin-left: 2px;
+}
+
+.fileUpload span img {
+    vertical-align: middle;
+    padding: 0px 2px;
+}
+
 button.create_button {
     width: 15em;
     text-align: left;
@@ -312,6 +352,10 @@ img.button_patch {
 
 a.element-button {
     margin-left: -8px;
+}
+
+table div.xbl-dcm-element-buttons {
+    margin: 0 0 0 0;
 }
 
 legend .xforms-trigger img,

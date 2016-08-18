@@ -1,5 +1,3 @@
-<?oxygen SCHSchema="file:/P:/MEI/schema/MEI2013_v2.1.0/schemata/mei-all.rng"?>
-<?oxygen RNGSchema="file:/P:/MEI/schema/MEI2013_v2.1.0/schemata/mei-all.rng" type="xml"?>
 <mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="2013" xml:id="mei_95N20005">
     <meiHead>
         <fileDesc>
@@ -14,7 +12,7 @@
                         <expan>Danish Centre for Music Editing</expan>
                         <address>
                             <addrLine>
-                                <ptr label="" target="http://www.kb.dk/dcm/"/>
+                                <ptr label="" target="http://www.kb.dk/dcm/" xml:id="ptr_N2026A"/>
                             </addrLine>
                         </address>
                     </corpName>
@@ -37,7 +35,7 @@
                 </application>
             </appInfo>
             <projectDesc xml:id="projectDesc_id39e1bb63">
-                <p xml:id="p_314N20039">Created using MerMEId</p>
+                <p>Created using MerMEId</p>
             </projectDesc>
         </encodingDesc>
         <workDesc>
@@ -58,10 +56,13 @@
                 <notesStmt xml:id="notesStmt_471582e5">
                     <annot label="" type="links" xml:id="annot_f463a756"/>
                     <annot label="" type="general_description" xml:id="annot_4b3f6f65">
-                        <p xml:id="p_314N20060">This file illustrates various ways of including incipits. Incipits are defined at the editor's 'Music' tab.</p>
-                        <p xml:id="p_314N20064">Incipits encoded in MEI or Plaine And Easie Code are rendered in MerMEId's HTML preview with <ref target="http://verovio.org" xl:show="new" xl:title="Verovio">Verovio</ref>. 
-                            Please note that Internet Explorer requires version 10 or newer for this to work.</p>
-                        <p xml:id="p_314N2006E">The incipits in this sample file show the beginning of Carl Nielsen's <ref target="http://www.kb.dk/dcm/cnw/document.xq?doc=cnw0060.xml" xl:show="new" xl:title="Romance CNW 60">Romance for Violin and Piano, CNW 60</ref>.</p>
+                        <p>This file illustrates various ways of including incipits. Incipits are defined at the editor's 'Music' tab.</p>
+                        <p>Incipits encoded in MEI or Plaine And Easie Code are rendered in MerMEId with <ref target="http://verovio.org" xl:show="new" xl:title="Verovio">Verovio</ref>
+  
+  . Please note that Internet Explorer requires version 10 or newer for this to work.</p>
+                        <p>The incipits in this sample file show the beginning of Carl Nielsen's <ref target="http://www.kb.dk/dcm/cnw/document.xq?doc=cnw0060.xml" xl:show="new" xl:title="Romance CNW 60">Romance for Violin and Piano, CNW 60</ref>
+  
+   .</p>
                     </annot>
                 </notesStmt>
                 <classification xml:id="classification_8c2dad93">
@@ -75,10 +76,10 @@
                 <expressionList xml:id="expressionList_389a76cf">
                     <expression analog="frbr:expression" xml:id="expression_23d59f2a">
                         <titleStmt xml:id="titleStmt_c0b207d8">
-                            <title xml:id="title_74168954" xml:lang="en">1. Incipit encoded in MEI (not editable in the MerMEId editor):</title>
+                            <title xml:id="title_74168954" xml:lang="en">1. Incipit encoded in MEI:</title>
                         </titleStmt>
                         <incip xml:id="incip_35852e2f">
-                            <score>
+                            <score xml:id="score_b4c043fc">
                                 <scoreDef key.sig.showchange="true" meter.count="4" meter.sym="common" meter.unit="4">
                                     <staffGrp>
                                         <staffDef clef.line="2" clef.shape="G" key.mode="major" key.sig="1s" label="" lines="5" n="1" xml:id="sd1"/>
@@ -361,8 +362,12 @@
                         </incip>
                         <history xml:id="history_5b845292">
                             <creation xml:id="creation_a9b88e21"/>
-                            <p xml:id="p_314N203A0">MerMEId can render MEI-encoded incipits in the HTML preview using the <ref target="http://verovio.org" xl:show="new" xl:title="Verovio">Verovio</ref> 
-                        toolkit. The MEI encoding is neither editable nor visible in the MerMEId editor, so you will need some other XML editing tool to add and edit them.</p>
+                            <ref target="http://verovio.org" xl:show="new" xl:title="Verovio">Verovio</ref>
+                            <lb/>
+                            <incip xmlns="http://www.w3.org/1999/xhtml"/>
+                            <lb/>
+                            <xi:include xmlns:xi="http://www.w3.org/1999/xhtml" href="http://your.server/your_incipit.mei"/>
+                            <p>As MerMEId does not include a music notation editor, incipits encoded in MEI cannot be entered or edited directly in MerMEId. You can add MEI incipits, however, by uploading MEI files containing the encodings. When uploading an MEI file, MerMEId makes a copy of the first &amp;lt;score&amp;gt; element it encounters (whether in the file's header or in the &amp;lt;music&amp;gt; section) and inserts it as an incipit. If you need to make changes to the incipit, edit your MEI file and upload it again using MerMEId's 'Replace' button.</p>
                         </history>
                         <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_5d276875"/>
                         <classification xml:id="classification_58460514">
@@ -382,9 +387,9 @@
                         </incip>
                         <history xml:id="history_74021b98">
                             <creation xml:id="creation_86ec1071"/>
-                            <p xml:id="p_314N203CE">
+                            <p>
                                 <ref target="http://www.iaml.info/plaine-easie-code" xl:show="new" xl:title="IAML Plaine and Easie Code reference">Plaine and Easie Code</ref>
-   can be entered directly at the 'Music' tab for rendering with Verovio in the HTML preview. If single-staff, single-voice incipits without any slurs, dynamics or articulation is all you need, this is probably the most efficient way of adding incipits. Enter 'plaineAndEasie' or simply 'pae' in the code language field to have MerMEId/Verovio recognize the code correctly.</p>
+   can be entered directly at the 'Music' tab for rendering with Verovio in the HTML preview. If single-staff, single-voice incipits without any slurs, dynamics, articulation or lyrics is all you need, this is probably the most efficient way of adding incipits. Enter 'plaineAndEasie' or simply 'pae' in the code language field to have MerMEId/Verovio recognize the code correctly.</p>
                         </history>
                         <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_7ec2e148"/>
                         <classification xml:id="classification_f3c02a4f">
@@ -405,7 +410,7 @@
                         </incip>
                         <history xml:id="history_d5b9f7ec">
                             <creation xml:id="creation_f065cb92"/>
-                            <p xml:id="p_314N20401">You can create graphic files (png, jpg or other) using your favorite music editing software and use MerMEId to create a link to the files. Just remember that the images must be accessible on the Internet in order to be visible for others (that is, they must be placed on a publicly accessible web server). If images are provided in both low and high resolutions, MerMEId will make the low resolution image clickable and display the high resolution image in a pop-up window.</p>
+                            <p>You can create graphic files (png, jpg or other) using your favorite music editing software and use MerMEId to create a link to the files. Just remember that the images must be accessible on the Internet in order to be visible for others (that is, they must be placed on a publicly accessible web server). If images are provided in both low and high resolutions, MerMEId will make the low resolution image clickable and display the high resolution image in a pop-up window.</p>
                         </history>
                         <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_ed99f4fe"/>
                         <classification xml:id="classification_667ab942">
@@ -443,6 +448,11 @@
             <change isodate="2016-03-31" resp="MerMEId" xml:id="change_311d1e330">
                 <changeDesc>
                     <p>Batch transformation putting misplaced text back in place</p>
+                </changeDesc>
+            </change>
+            <change isodate="2016-06-29" resp="atge" xml:id="change_311N1040C">
+                <changeDesc>
+                    <p/>
                 </changeDesc>
             </change>
         </revisionDesc>

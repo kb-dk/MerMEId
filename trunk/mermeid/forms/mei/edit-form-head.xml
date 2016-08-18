@@ -10,7 +10,6 @@
   xmlns:xl="http://www.w3.org/1999/xlink"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" 
   xmlns:m="http://www.music-encoding.org/ns/mei"
-  xmlns:t="http://www.tei-c.org/ns/1.0" 
   xmlns:dcm="http://www.kb.dk/dcm">
   
   
@@ -98,7 +97,35 @@
       xmlns="http://www.kb.dk/dcm">
       <fileList/>
     </xf:instance>
+
+    <!-- Upload -->
+    <xf:instance id="upload-instance" >
+      <files>
+        <file filename="" mediatype="" size=""/>
+      </files>
+    </xf:instance>
+    <xf:bind nodeset="instance('upload-instance')/file" 
+      type="xs:anyURI"
+      constraint=". = ''"
+    />
     
+    <xf:instance id="uploadedFile">
+      <mei xmlns="http://www.music-encoding.org/ns/mei"/>
+    </xf:instance>
+    
+    <xf:submission id="load-uploaded-file"
+      xxf:username=""
+      xxf:password=""
+      xxf:show-progress="false"
+      method="get" 
+      serialization="none" 
+      validate="false"
+      resource="{instance('temp')/target_uri}"
+      replace="instance" 
+      instance="uploadedFile">
+    </xf:submission>
+    <!-- end upload -->    
+
     <xf:instance id="parameters" 
       xmlns="http://www.kb.dk/dcm"
       src="/editor/forms/mei/mermeid_configuration.xml"/>
@@ -118,6 +145,7 @@
         <value/>
         <nodeset/>
         <instrumentation/>
+        <file filename="" mediatype="" size=""/>
       </temp-values>
     </xf:instance>
     
@@ -294,6 +322,7 @@
         </xf:action>
       </xf:action>
     </xf:action>
+    
     
     <xf:bind nodeset="instance('data-instance')//m:instrVoice/@solo" type="xs:boolean"/>
     <xf:bind nodeset="instance('temp')">
