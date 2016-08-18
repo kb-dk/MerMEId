@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xf:group ref="m:incip" 
+    xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
+    xmlns:dcm="http://www.kb.dk/dcm">			
+    
+    <h:div class="inputbox">
+        <xf:var name="incip_node" select="."/>
+        <h:div class="blocklabel">MEI-encoded incipit 
+            <h:a class="help">&#160;?<h:span class="comment">Incipits encoded in MEI may be added by inserting an uploaded MEI file. 
+                MerMEId takes the first &lt;score&gt; element found in the uploaded file and copies it into the file being edited as an incipit.<h:br/> 
+                MEI incipits are not directly editable in MerMEId but can be viewed by clicking the 'View incipit' icon.
+                To make changes to an MEI incipit, use the 'Replace' button to upload a new version.</h:span></h:a></h:div>
+        <!-- list existing MEI scores -->
+        <h:table cellpadding="0" cellspacing="0" border="0">
+            <xf:repeat id="repeat-score" nodeset="m:score">
+                <xf:var name="old_id" select="@xml:id"/>
+                <h:tr>
+                    <h:td>
+                        &lt;score&gt; <xf:group ref=".[$old_id]">(id: <xf:output value="$old_id"/>)</xf:group>
+                        <xf:group ref=".[not(*)]">(empty) </xf:group>
+                    </h:td>
+                    <h:td>
+                        <h:span class="fileUpload btn">
+                            <h:span><h:img src="{instance('parameters')/dcm:server_name}/editor/images/update.png" border="0" alt="Replace" title="Replace incipit (upload from file)"/> Replace</h:span>
+                            <xf:upload ref="instance('upload-instance')/file[1]">
+                                <xf:filename ref="@filename"/>
+                                <xf:mediatype ref="@mediatype"/>
+                                <xxf:size ref="@size"/>
+                                <!-- 'Upload' event handling -->
+                                <xf:action ev:event="xxforms-upload-done">
+                                    <!-- read the uploaded file and put the contents into the upload instance -->
+                                    <xf:setvalue ref="instance('temp')/target_uri" 
+                                        value="instance('upload-instance')/file[1]"/>
+                                    <xf:send submission="load-uploaded-file"/>
+                                    
+                                    <xf:action if="not(instance('uploadedFile')//m:score/*)">
+                                        <xxf:script>
+                                            turnOffLoadingIndicator('File contains no score. No changes made');
+                                        </xxf:script>
+                                    </xf:action>    
+                                    
+                                    <xf:action if="instance('uploadedFile')//m:score/*">
+                                        <!-- keep the old @xml:id if present -->
+                                        <xf:action if="$old_id">
+                                            <xf:insert 
+                                                context="instance('uploadedFile')//m:score[1]"
+                                                origin="xxf:attribute('xml:id',$old_id)"/>
+                                        </xf:action>                                        
+                                        <!-- generate a new xml:id to the score element if missing entirely -->
+                                        <xf:action if="not(instance('uploadedFile')//m:score[1]/@xml:id or $old_id)">
+                                            <xf:var name="generated_id" select="concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+                                            <xf:var name="new_id" select="if(count(instance('data-instance')//*[@xml:id=$generated_id])=0) then $generated_id else concat($generated_id,count(instance('data-instance')//*[@xml:id=$generated_id]))"/>
+                                            <xf:insert 
+                                                context="instance('uploadedFile')//m:score[1]"
+                                                origin="xxf:attribute('xml:id',$new_id)"/>
+                                        </xf:action>
+                                        <!-- extract the first score element and put it in place in the data instance -->
+                                        <xf:var name="uploaded_score" as="node()?" 
+                                            select="instance('uploadedFile')//m:score[1]"/>
+                                        <xf:action if="$uploaded_score/node()">
+                                            <xf:insert context="$incip_node" origin="$uploaded_score" nodeset="m:score" at="index('repeat-score')"/>
+                                            <xf:delete context="$incip_node" nodeset="m:score" at="index('repeat-score')-1"/>
+                                        </xf:action>
+                                        <xf:action>
+                                            <xxf:script>
+                                                turnOffLoadingIndicator('Incipit replaced');
+                                            </xxf:script>
+                                        </xf:action>	
+                                    </xf:action>
+                                    
+                                    <!-- reset the upload instance -->
+                                    <xf:delete nodeset="instance('upload-instance')/file"/>
+                                    <xf:insert context="instance('upload-instance')" origin="instance('temp')/file"/>
+                                    
+                                </xf:action>
+                                
+                                <xf:action ev:event="xxforms-upload-error">
+                                    <!-- reset the upload instance -->
+                                    <xf:delete nodeset="instance('upload-instance')/file"/>
+                                    <xf:insert context="instance('upload-instance')" origin="instance('temp')/file"/>
+                                    <xf:action>
+                                        <xxf:script>
+                                            turnOffLoadingIndicator('Upload error');
+                                        </xxf:script>
+                                    </xf:action>	
+                                </xf:action>
+                                
+                            </xf:upload>
+                        </h:span>
+                    </h:td>
+                    <h:td>
+                        &#160;&#160;
+                        <xf:group ref=".[*]">
+                                <h:a 
+                                    href="javascript:void(0);"
+                                    onclick="window.open('{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}view_score.xq?doc={instance('parameters')/dcm:xml_file}&amp;score_id={@xml:id}',
+                                    '_blank', 'height=360,width=1090,location=no,status=no,menubar=no,toolbar=no');return false;"
+                                    ><h:img src="{instance('parameters')/dcm:server_name}/editor/images/score.png" alt="Score" title="View incipit" 
+                                        border="0" style="vertical-align:middle;"/></h:a>
+                        </xf:group>
+                        <dcm:element-buttons
+                            triggers="remove up down" 
+                            nodeset="m:score" 
+                            index="repeat-score"
+                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work//m:score[1]"/>
+                        <dcm:id/>
+                        <dcm:attribute-editor/>
+                        <xf:group ref=".[not(*)]"> 
+                            <h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/warning.png" alt="Warning" 
+                                border="0" style="vertical-align:text-top;"/><h:span class="comment">This &lt;score&gt;
+                                    element is empty. Please remove it or replace with a non-empty score.</h:span></h:a>
+                        </xf:group>
+                    </h:td>	
+                </h:tr>
+            </xf:repeat>
+        </h:table>
+        
+        <h:div class="vertical_spacer"><!-- spacer --></h:div>
+        
+        <!-- add new MEI score -->
+        <h:div>
+            <h:span class="fileUpload btn">
+                <h:span><h:img src="{instance('parameters')/dcm:server_name}/editor/images/upload.png" border="0" alt="Upload"/> Insert incipit from MEI file</h:span>
+                <xf:upload ref="instance('upload-instance')/file[1]">
+                    <xf:filename ref="@filename"/>
+                    <xf:mediatype ref="@mediatype"/>
+                    <xxf:size ref="@size"/>
+                    <!-- 'Upload' event handling -->
+                    <xf:action ev:event="xxforms-upload-done">
+                        <!-- read the uploaded file and put the contents into the upload instance -->
+                        <xf:setvalue ref="instance('temp')/target_uri" 
+                            value="instance('upload-instance')/file[1]"/>
+                        <xf:send submission="load-uploaded-file"/>
+                        
+                        <xf:action if="not(instance('uploadedFile')//m:score/*)">
+                            <xxf:script>
+                                turnOffLoadingIndicator('File contains no score. No changes made');
+                            </xxf:script>
+                            <!-- reset the upload instance -->
+                            <xf:delete nodeset="instance('upload-instance')/file"/>
+                            <xf:insert context="instance('upload-instance')" origin="instance('temp')/file"/>
+                        </xf:action>    
+                        
+                        <xf:action if="instance('uploadedFile')//m:score/*">
+                            <!-- make sure the score element has an xml:id -->
+                            <xf:action if="not(instance('uploadedFile')//m:score[1]/@xml:id)">
+                                <xf:insert 
+                                    context="instance('uploadedFile')//m:score[1]"
+                                    origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
+                            </xf:action>
+                            <!-- extract the first score element and put it in place in the data instance -->
+                            <xf:var name="uploaded_score" as="node()?" 
+                                select="instance('uploadedFile')//m:score[1]"/>
+                            <xf:action if="$uploaded_score/node()">
+                                <xf:insert context="$incip_node" origin="$uploaded_score" nodeset="m:score" at="last()"/>
+                            </xf:action>
+                            <!-- reset the upload instance -->
+                            <xf:delete nodeset="instance('upload-instance')/file"/>
+                            <xf:insert context="instance('upload-instance')" origin="instance('temp')/file"/>
+                            <xf:action>
+                                <xxf:script>
+                                    turnOffLoadingIndicator('Incipit copied from file');
+                                </xxf:script>
+                            </xf:action>	
+                        </xf:action>
+                    </xf:action>
+                    
+                    <xf:action ev:event="xxforms-upload-error">
+                        <!-- reset the upload instance -->
+                        <xf:delete nodeset="instance('upload-instance')/file"/>
+                        <xf:insert context="instance('upload-instance')" origin="instance('temp')/file"/>
+                        <xf:action>
+                            <xxf:script>
+                                turnOffLoadingIndicator('Upload error');
+                            </xxf:script>
+                        </xf:action>	
+                    </xf:action>
+                    
+                </xf:upload>
+            </h:span>
+            <h:a class="help">&#160;?<h:span class="comment">The file uploaded must contain at least one MEI &lt;score&gt; element.<h:br/>
+                MerMEId takes the first &lt;score&gt; element found in the uploaded file and copies it into the file being edited as an incipit.</h:span></h:a>									
+        </h:div>
+    </h:div>
+    
+    
+    <h:div class="inputbox">
+        <h:div class="blocklabel">Single-line code incipit <h:a class="help">&#160;?<h:span 
+            class="comment">Simple one-line incipit encoding, using <em>Plaine &amp; Easie Code</em> or similar</h:span></h:a></h:div>
+        <dcm:create nodeset="m:incipCode"
+            label="Add music incipit code"
+            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
+        <xf:group ref=".[m:incipCode]">
+            <xf:repeat nodeset="m:incipCode" id="incipcode-repeat">
+                <h:div>
+                    <xf:input ref="@form">
+                        <xf:label>Code language <h:a class="help">&#160;?<h:span class="comment">The name of the encoding language used. 
+                            The MEI Guidelines suggest values such as 'plaineAndEasie', 'humdrumKern' or 'parsons'.<h:br/>
+                            MerMEId also supports 'pae' for Plaine and Easie.
+                        </h:span></h:a></xf:label>
+                    </xf:input>
+                    <xf:input ref="." class="maxlong">
+                        <xf:label> Code <h:a class="help">&#160;?<h:span class="comment">The incipit as expressed in the indicated encoding language</h:span></h:a></xf:label>
+                    </xf:input>
+                    <xf:group ref=".[text()]">
+                        <h:a 
+                            href="javascript:void(0);"
+                            onclick="window.open('{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}view_score.xq?doc={instance('parameters')/dcm:xml_file}&amp;mode=pae&amp;score_id={@xml:id}',
+                            '_blank', 'height=200,width=1000,location=no,status=no,menubar=no,toolbar=no');return false;"
+                            ><h:img src="{instance('parameters')/dcm:server_name}/editor/images/score.png" alt="Score" title="View incipit" 
+                                border="0" style="vertical-align:middle;"/></h:a>
+                    </xf:group>
+                    <dcm:element-buttons
+                        triggers="add remove" 
+                        nodeset="m:incipCode" 
+                        index="incipcode-repeat"
+                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
+                    <dcm:id/>
+                    <dcm:attribute-editor/>
+                </h:div>
+            </xf:repeat>
+        </xf:group>
+    </h:div>							
+    
+    
+    <h:div class="inputbox">
+        <h:div class="blocklabel">Graphics file(s)</h:div>
+        <dcm:create nodeset="m:graphic" 
+            label="Add link to graphics"
+            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>                        
+        <xf:group ref=".[m:incip/m:graphic]">
+            <h:span class="blocklabel">Music incipit graphics (image files)</h:span>
+            <h:span class="blocklabel">URI <h:a class="help">&#160;?<h:span class="comment">Location of a graphics file, e.g.
+                "http://example.com/incipits/lowres/116.png"
+            </h:span></h:a></h:span>
+        </xf:group>
+        <xf:repeat nodeset="m:graphic" id="incipit-repeat">
+            <h:div>
+                <xf:input ref="@target" class="maxlong">
+                    <xf:label/>
+                </xf:input>
+                <xf:select1 ref="@targettype" class="auto_length">
+                    <xf:item>
+                        <xf:value>lowres</xf:value>
+                        <xf:label>Low resolution</xf:label>
+                    </xf:item>
+                    <xf:item>
+                        <xf:value>hires</xf:value>
+                        <xf:label>High resolution</xf:label>
+                    </xf:item>
+                    <xf:item>
+                        <xf:value>print</xf:value>
+                        <xf:label>Print quality</xf:label>
+                    </xf:item>
+                </xf:select1>
+                <h:a class="help">&#160;?<h:span class="comment">Choose 'Low resolution' for standard web graphics, 'High resolution' for high quality
+                    web graphics, or 'Print quality' for print quality graphics.
+                    <br/>MerMEId's HTML preview by default only displays 
+                    the file specified as the low resolution image, while a high resolution image makes the 
+                    low resolution image clickable for enlargment.</h:span></h:a>
+                <dcm:element-buttons
+                    triggers="add remove" 
+                    nodeset="m:graphic" 
+                    index="incipit-repeat"
+                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>
+                <dcm:attribute-editor/>
+            </h:div>
+        </xf:repeat>
+    </h:div>
+    
+    <h:div class="vertical_spacer"><!-- spacer --></h:div>
+    
+    <h:div class="inputbox">
+        <h:div class="blocklabel">Text incipit</h:div>
+        <h:div>
+            <dcm:create nodeset="m:incipText"
+                label="Add text incipit"
+                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>                        
+            <dcm:create ref="m:incipText"
+                nodeset="m:p"
+                label="Add text incipit"
+                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
+        </h:div>
+        <xf:group ref=".[m:incipText/m:p]">
+            <xf:repeat nodeset="m:incipText/m:p" id="text-incipit-repeat" class="input_group">
+                <xf:input ref="." class="maxlong"><xf:label/></xf:input> 
+                <xf:select1 ref="@xml:lang" xxf:refresh-items="false">
+                    <xf:label/>
+                    <xf:itemset nodeset="instance('languages')/language">
+                        <xf:label><xf:output value="."/></xf:label>
+                        <xf:value ref="@xml:id"></xf:value>
+                    </xf:itemset>
+                </xf:select1>                                
+                <dcm:element-buttons
+                    triggers="add remove" 
+                    nodeset="m:p" 
+                    index="text-incipit-repeat"
+                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
+                <dcm:attribute-editor/>
+                <h:br/>
+            </xf:repeat>
+        </xf:group>
+    </h:div>
+    
+</xf:group>
+
