@@ -1,0 +1,58 @@
+<!DOCTYPE html SYSTEM "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title id="pageTitle">Set MEI attribute values</title>
+    </head>
+    <body>
+        <script type="text/javascript" src="tiny_mce_popup.js"></script>
+        <div><!--title generated here--></div>
+        <div id="inputs">
+            <!-- input controls generated here -->            
+        </div>
+        <div style="height:10px;"><!-- spacer --></div>
+        <input type="submit" id="submit-attributes" value="Ok" />
+        <span id="remove-button"><!-- 'remove' button generated here if relevant --></span>
+        <input type="submit" id="cancel-set-attributes" value="Cancel" onclick="javascript:tinyMCEPopup.close(); return false;"/>
+        
+        <script type="text/javascript">
+            var parentWin = tinyMCEPopup.getWin();
+            // local copy of parent window's global variables
+            var meiAtts = parentWin.meiAtts;
+            var meiElementName = parentWin.meiElementName;
+            var newElm = tinyMCEPopup.getWindowArg('newElm',false);
+
+            //set the page title
+            document.getElementById('pageTitle').innerHTML = 'Set &lt;' + meiElementName + '&gt; attributes'
+            
+            // add a 'remove' button if relevant
+            if(!newElm) {
+                document.getElementById('remove-button').innerHTML = '<input type="submit" id="delete-markup" value="Remove markup"/>';
+                document.getElementById( 'delete-markup' ).onclick = function(){
+                    tinyMCEPopup.execCommand('mceRemoveMeiElement'); //Call callback function 
+                    tinyMCEPopup.close();
+                };            
+            }
+            
+            // generate the input controls
+            var inputs = "<table border='0' cellspacing='0' cellpadding='2'>";
+            for (var key in meiAtts) {
+                value = meiAtts[key];
+                inputs += "<tr><td><label for='" + key + "'>" + key + "</label></td>";          
+                inputs += "<td><input type='text' style='width:300px;' name='" + key + "' id='" + key + "' value='" + value + "'/></td></tr>";          
+            }
+            inputs += "</table>";
+            document.getElementById('inputs').innerHTML = inputs;
+            
+            
+            document.getElementById( 'submit-attributes' ).onclick = function(){
+                for (var key in meiAtts) {
+                    parentWin.meiAtts[key] = document.getElementById(key).value;
+                }
+                tinyMCEPopup.execCommand('mceInsertMeiElement'); //Call callback function 
+                tinyMCEPopup.close();
+            };
+
+        </script>
+        
+    </body>
+</html>
