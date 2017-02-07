@@ -154,11 +154,11 @@ declare function loop:sort-key (
 	else
 	  "0000"
     else if($key eq "work_number") then
-      (: make the number a 5 character long string padded with zeros :)
+      (: make the number a 15 character long string padded with zeros :)
       let $num:=$doc//m:workDesc/m:work/m:identifier[@label=$collection][1]/string()
-      let $padded_number:=concat("000000",normalize-space($num))
-      let $len:=string-length($padded_number)-4
-	return substring($padded_number,$len,5)
+      let $padded_number:=concat("0000000000000000",normalize-space($num))
+      let $len:=string-length($padded_number)-14
+	return substring($padded_number,$len,15)
     else 
       ""
 

@@ -8,8 +8,8 @@
         <xf:output value="if (m:head!='') then m:head else '[Ensemble]'"/> &#160;
         <dcm:element-buttons 
             triggers="up down" 
-            nodeset="m:instrVoiceGrp" 
-            origin="instance('instrumentation')/m:instrVoiceGrp[1]"
+            nodeset="m:perfResList" 
+            origin="instance('instrumentation')/m:perfResList[1]"
             index="repeat-ensemble"/><xf:trigger 
                 appearance="minimal" class="non-standard_button">
                 <xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
@@ -32,7 +32,7 @@
         <dcm:create 
             nodeset="m:head"
             label="Add ensemble heading"
-            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoiceGrp/m:head"/>
+            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfResList/m:head"/>
         <xf:input ref="m:head" class="long">
             <xf:label class="fixed_width">Heading <h:a class="help">&#160;?<h:span 
                 class="comment">An optional heading or name wich may be used with or 
@@ -45,22 +45,22 @@
                 a standard ensemble code in the last field.
             </h:span></h:a></xf:label>
         </xf:input>
-        <xf:select1 ref="@code">
+        <xf:select1 ref="@codedval">
             <xf:label>Standard code <h:a class="help">&#160;?<h:span 
                 class="comment">Choosing a standard MARC code optimizes data  
                 compatibility and interchangeability with other systems. <h:br/>
                 A code should be supplied also when you do not want the ensemble 
                 to have a heading (name).
             </h:span></h:a></xf:label>
-            <xf:itemset nodeset="instance('ensembles')/m:instrVoiceGrp">
-                <xf:label><xf:output value="if (@code!='') then concat(@code, ' (',m:head,')') else '- Please select -'"/></xf:label>
-                <xf:value ref="@code"/>
+            <xf:itemset nodeset="instance('ensembles')/m:perfResList">
+                <xf:label><xf:output value="if (@codedval!='') then concat(@codedval, ' (',m:head,')') else '- Please select -'"/></xf:label>
+                <xf:value ref="@codedval"/>
             </xf:itemset>
             <xf:action ev:event="xforms-value-changed">
                 <xf:var name="ensemble" select="."></xf:var>
                 <xf:action if="../m:head=''">
                     <!-- set ensemble name if empty -->
-                    <xf:setvalue ref="../m:head" value="instance('ensembles')/m:instrVoiceGrp[@code=$ensemble]"/>
+                    <xf:setvalue ref="../m:head" value="instance('ensembles')/m:perfResList[@codedval=$ensemble]"/>
                 </xf:action>
             </xf:action>
         </xf:select1>

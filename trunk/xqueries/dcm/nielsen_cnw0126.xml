@@ -1,4 +1,4 @@
-<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="2013" xml:id="mei_d1e1">
+<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="3.0.0" xml:id="mei_d1e1">
     <meiHead>
         <fileDesc>
             <titleStmt>
@@ -35,7 +35,6 @@
                 </respStmt>
                 <date isodate="2014">2014</date>
                 <availability>
-                    <acqSource/>
                     <accessRestrict/>
                     <useRestrict>Use for demonstration purposes only</useRestrict>
                 </availability>
@@ -57,12 +56,12 @@
                     </titleStmt>
                     <classification>
                         <termList>
-                            <term classcode="DcmContentClass">notated music</term>
-                            <term classcode="DcmPresentationClass">manuscript</term>
-                            <term classcode="DcmAuthorityClass">autograph</term>
-                            <term classcode="DcmScoringClass">score</term>
-                            <term classcode="DcmStateClass">draft</term>
-                            <term classcode="DcmCompletenessClass">complete</term>
+                            <term classcode="#DcmContentClass">notated music</term>
+                            <term classcode="#DcmPresentationClass">manuscript</term>
+                            <term classcode="#DcmAuthorityClass">autograph</term>
+                            <term classcode="#DcmScoringClass">score</term>
+                            <term classcode="#DcmStateClass">draft</term>
+                            <term classcode="#DcmCompletenessClass">complete</term>
                         </termList>
                     </classification>
                     <itemList>
@@ -104,12 +103,12 @@
                     </physDesc>
                     <classification>
                         <termList>
-                            <term classcode="DcmContentClass">notated music</term>
-                            <term classcode="DcmPresentationClass">print</term>
-                            <term classcode="DcmAuthorityClass"/>
-                            <term classcode="DcmScoringClass">score</term>
-                            <term classcode="DcmStateClass">later edition</term>
-                            <term classcode="DcmCompletenessClass">complete</term>
+                            <term classcode="#DcmContentClass">notated music</term>
+                            <term classcode="#DcmPresentationClass">print</term>
+                            <term classcode="#DcmAuthorityClass"/>
+                            <term classcode="#DcmScoringClass">score</term>
+                            <term classcode="#DcmStateClass">later edition</term>
+                            <term classcode="#DcmCompletenessClass">complete</term>
                         </termList>
                     </classification>
                     <relationList>
@@ -143,14 +142,14 @@
                     <title type="alternative" xml:id="title_7a43adb3" xml:lang="da">Du fine, hvide Æbleblomst!</title>
                     <title type="alternative" xml:id="title_416f96ec" xml:lang="en">You apple blossom fine and white</title>
                     <respStmt>
-                        <persName role="composer" xml:id="persName_8e458238">Carl Nielsen</persName>
-                        <persName role="author" xml:id="persName_90a2cc50">Ludvig Holstein</persName>
+                        <persName authURI="http://www.viaf.org" authority="VIAF" codedval="197250" role="composer" xml:id="persName_8e458238">Carl Nielsen</persName>
+                        <persName authURI="http://www.viaf.org" authority="VIAF" codedval="66792857" role="author" xml:id="persName_90a2cc50">Ludvig Holstein</persName>
                     </respStmt>
                 </titleStmt>
+                <creation xml:id="creation_02d4fc8f">
+                    <date notafter="1896" notbefore="1895">Between 1895 and 1896</date>
+                </creation>
                 <history xml:id="history_312394f5">
-                    <creation xml:id="creation_02d4fc8f">
-                        <date notafter="1896" notbefore="1895">Between 1895 and 1896</date>
-                    </creation>
                     <eventList type="performances" xml:id="eventList_19e98d9e">
                         <event xml:id="event_e67f7f59">
                             <date isodate="1898-02-03">1898-02-03</date>
@@ -158,7 +157,7 @@
                             <geogName role="place" xml:id="geogName_4ad281db">Copenhagen</geogName>
                             <corpName role="ensemble" xml:id="corpName_455266be"/>
                             <persName role="conductor" xml:id="persName_edf3d726"/>
-                            <p>First performance.</p>
+                            <desc>First performance.</desc>
                         </event>
                     </eventList>
                 </history>
@@ -400,16 +399,11 @@
                             </incipText>
                             <graphic label="" target="http://www.kb.dk/da/nb/dcm/udgivelser/cnw/incipits/lowres/cnw_126.png" targettype="lowres" xml:id="graphic_16e71767"/>
                             <graphic label="" target="http://www.kb.dk/da/nb/dcm/udgivelser/cnw/incipits/hires/cnw_126.png" targettype="hires" xml:id="graphic_ea5599cb"/>
-                            <score xml:id="score_23fc6d69"/>
                         </incip>
                         <key mode="major" pname="e"/>
                         <tempo>Poco allegretto</tempo>
                         <meter count="2" unit="4"/>
                         <history xml:id="history_5a7e7c12">
-                            <creation xml:id="creation_77c1ff4b">
-                                <date/>
-                                <geogName xml:id="geogName_0e962d9a"/>
-                            </creation>
                             <eventList type="performances" xml:id="eventList_d651f222">
                                 <event xml:id="event_d1e734717">
                                     <date/>
@@ -421,10 +415,10 @@
                             <p/>
                         </history>
                         <perfMedium analog="marc:048" xml:id="perfMedium_2993276b">
-                            <instrumentation>
-                                <instrVoice code="vn" count="1" solo="false" xml:id="instrVoice_f4fafedd">voice</instrVoice>
-                                <instrVoice code="ka" count="1" solo="false" xml:id="instrVoice_733b7015">pf.</instrVoice>
-                            </instrumentation>
+                            <perfResList xml:id="perfResList_466N20303">
+                                <perfRes codedval="vn" count="1" solo="false" xml:id="perfRes_f4fafedd">voice</perfRes>
+                                <perfRes codedval="ka" count="1" solo="false" xml:id="perfRes_733b7015">pf.</perfRes>
+                            </perfResList>
                         </perfMedium>
                     </expression>
                 </expressionList>
@@ -434,147 +428,251 @@
             </work>
         </workDesc>
         <revisionDesc>
-            <change isodate="2011-11-03" resp="ebp" xml:id="change_d1e790773">
+            <change isodate="2011-11-03" xml:id="change_d1e790773">
+                <respStmt>
+                    <resp>ebp</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2013-09-03" resp="MerMEId" xml:id="change_317d1e382">
+            <change isodate="2013-09-03" xml:id="change_317d1e382">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Automated conversion from MEI 2012 to MEI 2013</p>
                 </changeDesc>
             </change>
-            <change isodate="2013-12-05" resp="ph" xml:id="change_b661262b">
+            <change isodate="2013-12-05" xml:id="change_b661262b">
+                <respStmt>
+                    <resp>ph</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-01-16" resp="kaen" xml:id="change_408N2038D">
+            <change isodate="2014-01-16" xml:id="change_408N2038D">
+                <respStmt>
+                    <resp>kaen</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-01-16" resp="ninh" xml:id="change_c0ddd494">
+            <change isodate="2014-01-16" xml:id="change_c0ddd494">
+                <respStmt>
+                    <resp>ninh</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-01-30" resp="ph" xml:id="change_415N2039A">
+            <change isodate="2014-01-30" xml:id="change_415N2039A">
+                <respStmt>
+                    <resp>ph</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-02-13" resp="kaen" xml:id="change_aa1c78a7">
+            <change isodate="2014-02-13" xml:id="change_aa1c78a7">
+                <respStmt>
+                    <resp>kaen</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-02-26" resp="ph" xml:id="change_c15b6371">
+            <change isodate="2014-02-26" xml:id="change_c15b6371">
+                <respStmt>
+                    <resp>ph</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-03-12" resp="ph" xml:id="change_415N203A1">
+            <change isodate="2014-03-12" xml:id="change_415N203A1">
+                <respStmt>
+                    <resp>ph</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-03-25" resp="ph" xml:id="change_418N203A7">
+            <change isodate="2014-03-25" xml:id="change_418N203A7">
+                <respStmt>
+                    <resp>ph</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-04-10" resp="kaen" xml:id="change_22d0cca7">
+            <change isodate="2014-04-10" xml:id="change_22d0cca7">
+                <respStmt>
+                    <resp>kaen</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-05-19" resp="bmoe" xml:id="change_429N203DB">
+            <change isodate="2014-05-19" xml:id="change_429N203DB">
+                <respStmt>
+                    <resp>bmoe</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-05-20" resp="kaen" xml:id="change_8c48e782">
+            <change isodate="2014-05-20" xml:id="change_8c48e782">
+                <respStmt>
+                    <resp>kaen</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-05-30" resp="kaen" xml:id="change_b26a1767">
+            <change isodate="2014-05-30" xml:id="change_b26a1767">
+                <respStmt>
+                    <resp>kaen</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-08-05" resp="kaen" xml:id="change_7d85f47a">
+            <change isodate="2014-08-05" xml:id="change_7d85f47a">
+                <respStmt>
+                    <resp>kaen</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-08-19" resp="kaen" xml:id="change_446N2040A">
+            <change isodate="2014-08-19" xml:id="change_446N2040A">
+                <respStmt>
+                    <resp>kaen</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-09-01" resp="atge" xml:id="change_447N2040D">
+            <change isodate="2014-09-01" xml:id="change_447N2040D">
+                <respStmt>
+                    <resp>atge</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-09-29" resp="kaen" xml:id="change_440N203FA">
+            <change isodate="2014-09-29" xml:id="change_440N203FA">
+                <respStmt>
+                    <resp>kaen</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-10-21" resp="kaen" xml:id="change_443N20400">
+            <change isodate="2014-10-21" xml:id="change_443N20400">
+                <respStmt>
+                    <resp>kaen</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2014-11-04" resp="MerMEId" xml:id="change_403d1e452">
+            <change isodate="2014-11-04" xml:id="change_403d1e452">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation moving identifier/@type data to @label</p>
                 </changeDesc>
             </change>
-            <change isodate="2014-11-04" resp="MerMEId" xml:id="change_406d1e452">
+            <change isodate="2014-11-04" xml:id="change_406d1e452">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation ensuring correct order of elements in source, work and biblList</p>
                 </changeDesc>
             </change>
-            <change isodate="2014-11-04" resp="MerMEId" xml:id="change_409d1e452">
+            <change isodate="2014-11-04" xml:id="change_409d1e452">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation removing duplicate IDs and fixing other issues</p>
                 </changeDesc>
             </change>
-            <change isodate="2015-08-04" resp="MerMEId" xml:id="change_376d1e452">
+            <change isodate="2015-08-04" xml:id="change_376d1e452">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation moving identifier/@type data to @label</p>
                 </changeDesc>
             </change>
-            <change isodate="2015-08-04" resp="MerMEId" xml:id="change_379d1e452">
+            <change isodate="2015-08-04" xml:id="change_379d1e452">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation ensuring correct order of elements in source, work and biblList</p>
                 </changeDesc>
             </change>
-            <change isodate="2015-08-04" resp="MerMEId" xml:id="change_382d1e452">
+            <change isodate="2015-08-04" xml:id="change_382d1e452">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation removing duplicate IDs and fixing other issues</p>
                 </changeDesc>
             </change>
-            <change isodate="2015-12-01" resp="MerMEId" xml:id="change_385d1e896">
+            <change isodate="2015-12-01" xml:id="change_385d1e896">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation migrating metadata to MerMEId rev. 948+</p>
                 </changeDesc>
             </change>
-            <change isodate="2016-03-02" resp="atge" xml:id="change_390N103B2">
+            <change isodate="2016-03-02" xml:id="change_390N103B2">
+                <respStmt>
+                    <resp>atge</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2016-03-31" resp="MerMEId" xml:id="change_392d1e453">
+            <change isodate="2016-03-31" xml:id="change_392d1e453">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation putting misplaced text back in place</p>
                 </changeDesc>
             </change>
-            <change isodate="2016-04-27" resp="atge" xml:id="change_396N103C2">
+            <change isodate="2016-04-27" xml:id="change_396N103C2">
+                <respStmt>
+                    <resp>atge</resp>
+                </respStmt>
+                <changeDesc>
+                    <p/>
+                </changeDesc>
+            </change>
+            <change isodate="2017-02-06" n="30">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
+                <changeDesc>
+                    <p>Converted to version 3.0.0 using mei21To30.xsl, version
+                  1.0 beta for MerMEId</p>
+                </changeDesc>
+            </change>
+            <change isodate="2017-02-06" xml:id="change_460N10405">
+                <respStmt>
+                    <resp>atge</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>

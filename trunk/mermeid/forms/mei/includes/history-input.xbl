@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml"
-    xmlns:xf="http://www.w3.org/2002/xforms"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
-    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
-    xmlns:exforms="http://www.exforms.org/exf/1-0"
-    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-    xmlns:saxon="http://saxon.sf.net/"
-    xmlns:xbl="http://www.w3.org/ns/xbl"
-    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms" xmlns:exforms="http://www.exforms.org/exf/1-0"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner" xmlns:saxon="http://saxon.sf.net/"
+    xmlns:xbl="http://www.w3.org/ns/xbl" xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
     xmlns:dcm="http://www.kb.dk/dcm">
-    
+
     <!--
         Component to edit work- or expression-level history information.
         Danish Centre for Music Editing (DCM) 
         Axel Teich Geertinger, 2014
         atge@kb.dk
     -->
-    
+
     <xbl:binding id="dcm-history-input-binding" element="dcm|history-input">
-        
+
         <!-- Orbeon Form Builder Component Metadata -->
         <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
             <display-name lang="en">History input</display-name>
@@ -35,153 +29,162 @@
                 </dcm:history-input>
             </template>
         </metadata>
-        
+
         <xbl:resources>
-            <xbl:style>
-            </xbl:style>
+            <xbl:style> </xbl:style>
         </xbl:resources>
 
         <xbl:implementation>
             <xf:model id="history_model">
 
-                <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
-                    id="empty-instance"
+                <xf:instance xmlns="http://www.music-encoding.org/ns/mei" id="empty-instance"
                     xxf:readonly="true">
-                  <xi:include href="../model/empty_doc.xml"  />
-		        </xf:instance>
+                    <xi:include href="../model/empty_doc.xml"/>
+                </xf:instance>
 
             </xf:model>
         </xbl:implementation>
-                                
+
         <xbl:template>
 
             <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
 
-                <xbl:content includes="xf|label,xf|help,xf|hint,xf|alert"/>                
-                
-             
+                <xbl:content includes="xf|label,xf|help,xf|hint,xf|alert"/>
+
+
                 <!-- Inner group -->
-                <xf:group appearance="xxf:internal" xxbl:scope="inner" id="history_input_inner_grp">                    
+                <xf:group appearance="xxf:internal" xxbl:scope="inner" id="history_input_inner_grp">
                     <!-- Variables pointing to external single-node bindings -->
                     <xf:var name="binding" as="node()?">
                         <xxf:value select="." xxbl:scope="outer"/>
                     </xf:var>
-                    
+
                     <xf:group ref="$binding">
-                        
+
                         <h:fieldset>
+                            <!-- Lots of '..' to move out of history where <creation> is no longer placed in 3.0.0 -->
                             <h:legend>Creation</h:legend>
                             <h:div class="vertical_spacer"/>
-                            <dcm:create 
-                                nodeset="m:creation"
-                                label="Add creation notes"
-                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:creation"/>
-                            <dcm:create ref="m:creation"
-                                nodeset="m:date"
+
+                            <dcm:create nodeset="../m:creation" label="Add creation notes"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:creation"/>
+
+                            <dcm:create ref="../m:creation" nodeset="m:date"
                                 label="Add creation date"
-                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:creation/m:date"/>
-                            <xf:repeat nodeset="m:creation/m:date" id="repeat-creation-date">
-                                <h:span class="fixed_width_mediumlong">Date of composition <h:a class="help">&#160;?<h:span class="comment">Date or time span 
-                                    of composition</h:span></h:a></h:span><dcm:date-editor style="display:inline;"/>
-                                    
-                                
-                                <dcm:element-buttons 
-                                    triggers="remove" 
-                                    nodeset="m:date" 
-                                    index="repeat-creation-date" 
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:creation/m:date"/>
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:creation/m:date"/>
+                            <xf:repeat nodeset="../m:creation/m:date" id="repeat-creation-date">
+                                <h:span class="fixed_width_mediumlong">Date of composition <h:a
+                                        class="help">&#160;?<h:span class="comment">Date or time
+                                            span of composition</h:span></h:a></h:span>
+                                <dcm:date-editor style="display:inline;"/>
+
+
+                                <dcm:element-buttons triggers="remove" nodeset="m:date"
+                                    index="repeat-creation-date"
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:creation/m:date"
+                                />
                             </xf:repeat>
-                            <h:div>				
-                                <dcm:create ref="m:creation"
-                                    nodeset="m:geogName"
+                            <h:div>
+                                <dcm:create ref="../m:creation" nodeset="m:geogName"
                                     label="Add place"
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:creation/m:geogName"/>
-                                <xf:repeat nodeset="m:creation/m:geogName" id="repeat-creation-geogname">
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:creation/m:geogName"/>
+                                <xf:repeat nodeset="../m:creation/m:geogName"
+                                    id="repeat-creation-geogname">
                                     <xf:input ref="." class="long">
-                                        <xf:label class="fixed_width_mediumlong">Place of composition </xf:label>
+                                        <xf:label class="fixed_width_mediumlong">Place of
+                                            composition </xf:label>
                                     </xf:input>
                                     <dcm:attribute-editor/>
-                                    <dcm:element-buttons 
-                                        triggers="remove" 
-                                        nodeset="m:geogName" 
-                                        index="repeat-creation-geogname" 
-                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:creation/m:geogName"/>
+                                    <dcm:element-buttons triggers="remove" nodeset="m:geogName"
+                                        index="repeat-creation-geogname"
+                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:creation/m:geogName"
+                                    />
                                 </xf:repeat>
                             </h:div>
                         </h:fieldset>
-                        
+
                         <h:fieldset>
-                            <h:legend>History note <h:a class="help">&#160;?<h:span class="comment">Text
-                                explaining details and circumstances concerning the work's genesis and history</h:span></h:a>&#160;
-                            </h:legend>
-                            <dcm:create
-                                nodeset="m:p"
-                                label="Add history note"
+                            <h:legend>History note <h:a class="help">&#160;?<h:span class="comment"
+                                        >Text explaining details and circumstances concerning the
+                                        work's genesis and history</h:span></h:a>&#160; </h:legend>
+                            <dcm:create nodeset="m:p" label="Add history note"
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:p"/>
                             <xf:repeat nodeset="m:p" id="repeat-history-p">
                                 <fr:tinymce ref="."/>
-                                <dcm:element-buttons 
-                                    triggers="remove" 
-                                    nodeset="m:p" 
-                                    index="repeat-history-p" 
-                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:p"/>					
+                                <dcm:element-buttons triggers="remove" nodeset="m:p"
+                                    index="repeat-history-p"
+                                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:p"
+                                />
                             </xf:repeat>
                         </h:fieldset>
-                        
+
                         <h:fieldset>
-                            <h:legend>Time line <h:a class="help">&#160;?<h:span class="comment">A list of events related to the work. The list
-                                may contain all kinds of events, whether related to the compositional process, 
-                                the work's transmission, its reception or other aspects of its history</h:span></h:a>
+                            <h:legend>Time line <h:a class="help">&#160;?<h:span class="comment">A
+                                        list of events related to the work. The list may contain all
+                                        kinds of events, whether related to the compositional
+                                        process, the work's transmission, its reception or other
+                                        aspects of its history</h:span></h:a>
                                 <dcm:attribute-editor ref="m:eventList[@type='history']"/>
                             </h:legend>
-                            <dcm:create 
-                                nodeset="m:eventList[@type='history']"
-                                label="Add time line"
+                            <dcm:create nodeset="m:eventList[@type='history']" label="Add time line"
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']"/>
-                            <dcm:create ref="m:eventList[@type='history']" 
-                                nodeset="m:event"
+                            <dcm:create ref="m:eventList[@type='history']" nodeset="m:event"
                                 label="Add event"
                                 origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event"/>
-                            <xf:repeat nodeset="m:eventList[@type='history']/m:event" id="repeat-work-history">
+                            <xf:repeat nodeset="m:eventList[@type='history']/m:event"
+                                id="repeat-work-history">
                                 <h:fieldset>
-                                    <h:legend>Event 
-                                        <dcm:element-buttons 
-                                        triggers="up down copy add del-parent-with-last" 
-                                        nodeset="m:event" 
-                                        index="repeat-work-history"
-                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event"/>
+                                    <h:legend>Event <dcm:element-buttons
+                                            triggers="up down copy add del-parent-with-last"
+                                            nodeset="m:event" index="repeat-work-history"
+                                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event"/>
                                         <dcm:id/>
                                         <dcm:attribute-editor/>
                                         <h:br clear="all"/>
                                     </h:legend>
-                                    <dcm:create  
-                                        nodeset="m:date"
-                                        label="Add date"
+                                    <dcm:create nodeset="m:date" label="Add date"
                                         origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:date"/>
                                     <h:div>
                                         <xf:group ref="m:date">
-                                            <h:span class="fixed_width">Date <h:a class="help">&#160;?<h:span class="comment">Date 
-                                                or date span of the event</h:span></h:a></h:span>
+                                            <h:span class="fixed_width">Date <h:a class="help"
+                                                  >&#160;?<h:span class="comment">Date or date span
+                                                  of the event</h:span></h:a></h:span>
                                             <dcm:date-editor/>
                                         </xf:group>
                                     </h:div>
                                     <dcm:create  
-                                        nodeset="m:p"
+                                        nodeset="m:desc"
                                         label="Add description"
-                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:p"/>
-                                    <fr:tinymce ref="m:p">
+                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:desc"/>
+                                    <fr:tinymce ref="m:desc">
                                         <xf:label class="fixed_width">Description <h:a class="help">&#160;?<h:span class="comment">A description of the 
                                             event, e.g. "Third movement finished" or "Arranged for piano by NN"</h:span></h:a></xf:label>
                                     </fr:tinymce>
-                                    <dcm:attribute-editor ref="m:p"/>
+                                    <dcm:attribute-editor ref="m:desc"/>
+                                    <!--
+                                    <h:div>
+                                        <dcm:create nodeset="m:desc" label="Add description"
+                                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:desc"/>
+                                        <xf:repeat nodeset="m:desc" id="repeat-event-desc">
+                                            <fr:tinymce ref=".">
+                                            </fr:tinymce>
+                                            <dcm:element-buttons triggers="remove" nodeset="m:desc"
+                                                index="repeat-event-desc"
+                                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:desc"
+                                            />
+                                            <dcm:id/>
+                                            <dcm:attribute-editor/>
+                                        </xf:repeat>
+                                    </h:div>
+                                    -->
                                     <!-- end change -->
-                                </h:fieldset>					
+                                </h:fieldset>
                             </xf:repeat>
                         </h:fieldset>
-                        
+
                     </xf:group>
-                    
-                </xf:group>                            
+
+                </xf:group>
             </xf:group>
         </xbl:template>
     </xbl:binding>

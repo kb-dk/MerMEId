@@ -52,15 +52,15 @@ declare function local:format-reference(
 	"even"
 
       let $date_output :=
-	if($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore!='' or $doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter!=''
-	  or $doc//m:workDesc/m:work/m:history/m:creation/m:date/@startdate!='' or $doc//m:workDesc/m:work/m:history/m:creation/m:date/@enddate!='') then
-	  concat(substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notbefore,1,4),
-	  substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@startdate,1,4),
+	if($doc//m:workDesc/m:work/m:creation/m:date/@notbefore!='' or $doc//m:workDesc/m:work/m:creation/m:date/@notafter!=''
+	  or $doc//m:workDesc/m:work/m:creation/m:date/@startdate!='' or $doc//m:workDesc/m:work/m:creation/m:date/@enddate!='') then
+	  concat(substring($doc//m:workDesc/m:work/m:creation/m:date/@notbefore,1,4),
+	  substring($doc//m:workDesc/m:work/m:creation/m:date/@startdate,1,4),
 	  '-',
-	  substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@enddate,1,4),
-	  substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@notafter,1,4))
+	  substring($doc//m:workDesc/m:work/m:creation/m:date/@enddate,1,4),
+	  substring($doc//m:workDesc/m:work/m:creation/m:date/@notafter,1,4))
         else
-          substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/@isodate,1,4)
+          substring($doc//m:workDesc/m:work/m:creation/m:date/@isodate,1,4)
 
 
 	let $ref   := 

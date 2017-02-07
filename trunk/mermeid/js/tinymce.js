@@ -44,7 +44,7 @@ tinymce.PluginManager.add('meiElement', function(editor) {
                 return false;
             } else {
                 // OK. Read the class attribute and decode the MEI attributes 
-        		// Assumed a string like mei:atts[role(arranger),auth(VIAF),authURI(http://www.viaf.org),dbkey(123)]
+        		// Assumed a string like mei:atts[role(arranger),auth(VIAF),authURI(http://www.viaf.org),codedval(123)]
         		classAttr = dom.getAttrib(anchorElm,"class");
         		valStr = classAttr.slice(classAttr.indexOf("[")+1, classAttr.indexOf("]"));
         		attrArray = valStr.split(",");
@@ -179,7 +179,7 @@ tinymce.PluginManager.add('persName', function(editor) {
     function insertPersName() {
         var selection = editor.selection, dom = editor.dom, selectedElm, anchorElm;
         meiElementName = 'persName';
-        defaultMeiAtts = {role: "", auth: "VIAF", authURI: "http://www.viaf.org", dbkey: ""};
+        defaultMeiAtts = {role: "", auth: "VIAF", authURI: "http://www.viaf.org", codedval: ""};
         editor.execCommand('mceEditMeiAttributes', false);
     }
 
@@ -200,7 +200,7 @@ tinymce.PluginManager.add('geogName', function(editor) {
     function insertGeogName() {
         var selection = editor.selection, dom = editor.dom, selectedElm, anchorElm;
         meiElementName = 'geogName';
-        defaultMeiAtts = {role: "", auth: "VIAF", authURI: "http://www.viaf.org", dbkey: ""};
+        defaultMeiAtts = {role: "", auth: "VIAF", authURI: "http://www.viaf.org", codedval: ""};
         editor.execCommand('mceEditMeiAttributes', false);
     }
 
@@ -222,7 +222,7 @@ tinymce.PluginManager.add('corpName', function(editor) {
     function insertCorpName() {
         var selection = editor.selection, dom = editor.dom, selectedElm, anchorElm;
         meiElementName = 'corpName';
-        defaultMeiAtts = {role: "", auth: "VIAF", authURI: "http://www.viaf.org", dbkey: ""};
+        defaultMeiAtts = {role: "", auth: "VIAF", authURI: "http://www.viaf.org", codedval: ""};
         editor.execCommand('mceEditMeiAttributes', false);
     }
 
@@ -244,7 +244,7 @@ tinymce.PluginManager.add('title', function(editor) {
     function insertTitle() {
         var selection = editor.selection, dom = editor.dom, selectedElm, anchorElm;
         meiElementName = 'title';
-        defaultMeiAtts = {type: "", auth: "VIAF", authURI: "http://www.viaf.org", dbkey: ""};
+        defaultMeiAtts = {type: "", auth: "VIAF", authURI: "http://www.viaf.org", codedval: ""};
         editor.execCommand('mceEditMeiAttributes', false);
     }
 

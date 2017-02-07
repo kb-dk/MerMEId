@@ -22,9 +22,9 @@
   <xsl:param name="target" select="''"/>
 
   <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes" indent="yes"/>
-  
-  <xsl:key name="ids" match="*[@xml:id]" use="@xml:id"/> 
-  
+
+  <xsl:key name="ids" match="*[@xml:id]" use="@xml:id"/>
+
   <xsl:strip-space elements="*"/>
   <xsl:strip-space elements="node"/>
 
@@ -73,7 +73,7 @@
 
   <!-- Change duplicate IDs -->
   <xsl:template match="*[@xml:id and count(key('ids', @xml:id)) &gt; 1]">
-    <xsl:variable name="duplicateID" select="@xml:id"/>        
+    <xsl:variable name="duplicateID" select="@xml:id"/>
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
       <!-- Append a number to the ID according to its number of occurrence -->
@@ -93,23 +93,24 @@
       </xsl:attribute>
       <!-- To log changes: -->
       <!--<xsl:comment>Duplicate ID (<xsl:value-of select="$duplicateID"/>) changed</xsl:comment>-->
-      <xsl:apply-templates select="node()"/>        
+      <xsl:apply-templates select="node()"/>
     </xsl:element>
-  </xsl:template>    
-  
+  </xsl:template>
+
   <!-- Add xml:id to certain elements if missing -->
-  <xsl:template match="m:expression | m:item | m:bibl | m:instrVoice | m:instrVoiceGrp | m:castItem">
+  <xsl:template match="m:expression | m:item | m:bibl | m:perfRes | m:perfResList | m:castItem">
+    <!-- Test if perfResList is like old instrumentation -->
     <xsl:element name="{name()}" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
       <xsl:call-template name="make_id_if_absent"/>
       <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
-  
+
 
   <!-- Remove empty attributes -->
   <xsl:template
-    match="@accid|@authority|@authURI|@code|@count|@dbkey|@enddate|@evidence|
+    match="@accid|@authority|@authURI|@codedval|@count|@enddate|@evidence|
     @isodate|@mode|@n|@notafter|@notbefore|@pname|@reg|@resp|
     @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang">
     <xsl:if test="normalize-space(.)">
@@ -139,24 +140,24 @@
   <!--<xsl:template match="text()[contains(.,'&amp;nbsp;')]">
     <xsl:apply-templates select="substring-before(.,'&amp;nbsp;')"/>&#160;<xsl:apply-templates select="substring-after(.,'&amp;nbsp;')"/>
     </xsl:template>-->
-  
+
   <xsl:template match="text()[contains(.,'&amp;nbsp;')]">
     <xsl:call-template name="cleanup_nbsp">
       <xsl:with-param name="string" select="."/>
     </xsl:call-template>
-  </xsl:template>  
+  </xsl:template>
 
   <xsl:template name="cleanup_nbsp">
     <xsl:param name="string"/>
     <xsl:variable name="remainder" select="substring-after($string,'&amp;nbsp;')"/>
     <xsl:value-of select="substring-before($string,'&amp;nbsp;')"/>&#160;<xsl:choose>
       <xsl:when test="contains($remainder,'&amp;nbsp;')"><xsl:call-template name="cleanup_nbsp">
-        <xsl:with-param name="string" select="$remainder"/></xsl:call-template>
+          <xsl:with-param name="string" select="$remainder"/></xsl:call-template>
       </xsl:when>
       <xsl:otherwise><xsl:value-of select="$remainder"/></xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
 
   <!-- Remove empty elements -->
   <xsl:template match="m:castItem[not(//text())]"/>
@@ -167,7 +168,7 @@
   <xsl:template match="m:rend[not(* or //text())]"/>
   <xsl:template match="m:mei/m:meiHead//m:score[not(*)]"/>
   <xsl:template match="m:titlePage[not(*)]"/>
-  
+
   <!-- Delete duplicate language definitions (fixes an xforms problem) -->
   <xsl:template
     match="m:mei/m:meiHead/m:workDesc/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
@@ -188,8 +189,8 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
-  
+
+
   <!-- Ensure correct order of elements -->
 
   <xsl:template match="m:biblList">
@@ -234,6 +235,7 @@
       <xsl:apply-templates select="m:mensuration"/>
       <xsl:apply-templates select="m:meter"/>
       <xsl:apply-templates select="m:otherChar"/>
+      <xsl:apply-templates select="m:creation"/>
       <xsl:apply-templates select="m:history"/>
       <xsl:apply-templates select="m:langUsage"/>
       <xsl:apply-templates select="m:perfMedium"/>
@@ -354,24 +356,26 @@
       </xsl:if>
     </xsl:if>
   </xsl:template>
-  
+
   <!-- End entity conversion -->
 
   <!-- HTML -> MEI -->
-  
+
   <!-- Strip off any temporary <p> wrappers for TinyMCE -->
   <xsl:template match="m:p[@n='MerMEId_temporary_wrapper']">
-      <xsl:apply-templates select="node()"/>
+    <xsl:apply-templates select="node()"/>
   </xsl:template>
 
   <xsl:template match="h:p">
     <xsl:choose>
       <!-- Some text-containing elements don't allow <p>; convert any <p> elements created by tinyMCE 
            to line breaks where necessary -->
-      <xsl:when test="
+      <xsl:when
+        test="
         name(..)='physMedium' or
         name(..)='watermark' or
-        name(..)='condition'
+        name(..)='condition' or
+        name(..)='desc'
         ">
         <xsl:apply-templates select="node()"/>
         <xsl:if test="normalize-space(following-sibling::*//text())">
@@ -391,7 +395,7 @@
   <xsl:template match="h:br">
     <!-- For some reason, the RTE editor sometimes adds a line break at the end of the edited contents. Removing it here -->
     <xsl:if test="following-sibling::node() or normalize-space(following-sibling::text())">
-      <xsl:element name="lb" namespace="http://www.music-encoding.org/ns/mei"/>      
+      <xsl:element name="lb" namespace="http://www.music-encoding.org/ns/mei"/>
     </xsl:if>
   </xsl:template>
   <xsl:template match="h:b|h:strong">
@@ -424,11 +428,11 @@
       <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
-  
+
   <xsl:template match="h:span">
     <xsl:choose>
       <xsl:when test="contains(@title,'mei:')">
-        <!-- <span title="mei:persName" class="mei:atts[authURI(http://www.viaf.org),dbkey(12345))]">Gade</span> -->
+        <!-- <span title="mei:persName" class="mei:atts[authURI(http://www.viaf.org),codedval(12345))]">Gade</span> -->
         <xsl:variable name="tagName" select="substring-after(@title,'mei:')"/>
         <xsl:variable name="atts">
           <xsl:call-template name="tokenize">
@@ -443,7 +447,9 @@
             <xsl:attribute name="{$attName}">
               <xsl:value-of select="substring-before(substring-after(.,'('),')')"/>
             </xsl:attribute>
-          </xsl:for-each><xsl:apply-templates select="node()"/></xsl:element>
+          </xsl:for-each>
+          <xsl:apply-templates select="node()"/>
+        </xsl:element>
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
@@ -488,7 +494,9 @@
               <xsl:choose>
                 <xsl:when test="@target='_blank'">new</xsl:when>
                 <xsl:when test="@target='_self'">replace</xsl:when>
-                <xsl:otherwise><xsl:value-of select="@target"/></xsl:otherwise>
+                <xsl:otherwise>
+                  <xsl:value-of select="@target"/>
+                </xsl:otherwise>
               </xsl:choose>
             </xsl:attribute>
           </xsl:if>
@@ -520,11 +528,10 @@
     <xsl:element name="list" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="form">simple</xsl:attribute>
       <xsl:for-each select="h:li">
-        <xsl:element name="li"
-		     namespace="http://www.music-encoding.org/ns/mei">
-	  <xsl:apply-templates select="node()"/>
-	  <xsl:call-template name="make_id_if_absent"/>
-	  <xsl:apply-templates select="@*"/>
+        <xsl:element name="li" namespace="http://www.music-encoding.org/ns/mei">
+          <xsl:apply-templates select="node()"/>
+          <xsl:call-template name="make_id_if_absent"/>
+          <xsl:apply-templates select="@*"/>
         </xsl:element>
       </xsl:for-each>
     </xsl:element>
@@ -534,9 +541,9 @@
       <xsl:attribute name="form">ordered</xsl:attribute>
       <xsl:for-each select="h:li">
         <xsl:element name="li" namespace="http://www.music-encoding.org/ns/mei">
-	  <xsl:apply-templates select="node()"/>
-	  <xsl:call-template name="make_id_if_absent"/>
-	  <xsl:apply-templates select="@*"/>
+          <xsl:apply-templates select="node()"/>
+          <xsl:call-template name="make_id_if_absent"/>
+          <xsl:apply-templates select="@*"/>
         </xsl:element>
       </xsl:for-each>
     </xsl:element>
@@ -596,25 +603,27 @@
                 <xsl:if
                   test="m:changeDesc//text() 
                   or $prevChange/@isodate!=$today 
-                  or $prevChange/@resp!=$user 
+                  or $prevChange/m:respStmt/m:resp/text() != $user 
                   or count(../m:change)=1
                   or (not(m:changeDesc//text()) and $prevChange/m:changeDesc!='')">
                   <change>
                     <xsl:copy-of select="@*"/>
-		    <xsl:call-template name="make_id_if_absent"/>
+                    <xsl:call-template name="make_id_if_absent"/>
                     <xsl:attribute name="isodate">
                       <xsl:value-of select="@isodate"/>
                     </xsl:attribute>
-                    <xsl:attribute name="resp">
-                      <xsl:choose>
-                        <xsl:when test="normalize-space(@resp)">
-                          <xsl:value-of select="@resp"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <xsl:value-of select="$user"/>
-                        </xsl:otherwise>
-                      </xsl:choose>
-                    </xsl:attribute>
+                    <respStmt>
+                      <resp>
+                        <xsl:choose>
+                          <xsl:when test="normalize-space(m:respStmt/m:resp)">
+                            <xsl:value-of select="m:respStmt/m:resp"/>
+                          </xsl:when>
+                          <xsl:otherwise>
+                            <xsl:value-of select="$user"/>
+                          </xsl:otherwise>
+                        </xsl:choose>
+                      </resp>
+                    </respStmt>
                     <changeDesc>
                       <p>
                         <xsl:value-of select="m:changeDesc/m:p"/>

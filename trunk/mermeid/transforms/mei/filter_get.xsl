@@ -156,8 +156,8 @@
         <castList/>
       </xsl:if>
       <xsl:apply-templates select="*"/>
-      <xsl:if test="not(m:instrumentation)">
-        <instrumentation/>
+      <xsl:if test="not(m:perfResList)">
+        <perfResList/>
       </xsl:if>
     </perfMedium>
   </xsl:template>

@@ -52,7 +52,7 @@
    <condition analog="" label="" n="" xml:base=""   xml:lang=""/>
    <contentItem analog="" label="" n="" xml:base=""  />
    <contents actuate="" analog="" label="" n="" role="" show="" target="" targettype="" title="" xml:base=""  />
-   <corpName analog="" authority="" authURI="" cert="" dbkey="" enddate="" evidence="" facs="" label="" n="" notafter="" notbefore="" nymref="" resp="" role="" source="" startdate="" subtype="" type="" xml:base=""   xml:lang=""/>
+   <corpName analog="" authority="" authURI="" cert="" codedval="" enddate="" evidence="" facs="" label="" n="" notafter="" notbefore="" nymref="" resp="" role="" source="" startdate="" subtype="" type="" xml:base=""   xml:lang=""/>
    <corr cert="" evidence="" hand="" label="" n="" resp="" seq="" source="" xml:base=""  />
    <correction analog="" corrlevel="" data="" label="" method="" n="" xml:base=""   xml:lang=""/>
    <creation analog="" label="" n="" xml:base=""   xml:lang=""/>
@@ -93,7 +93,7 @@
    <fTrem copyof="" corresp="" facs="" form="" label="" layer="" n="" next="" prev="" sameas="" slash="" staff="" synch="" tstamp="" tstamp.ges="" tstamp.real="" when="" xml:base=""  />
    <fw facs="" label="" n="" subtype="" type="" xml:base=""   xml:lang=""/>
    <gap cert="" evidence="" extent="" hand="" label="" n="" reason="" resp="" source="" unit="" xml:base=""  />
-   <geogName analog="" authority="" authURI="" cert="" dbkey="" evidence="" facs="" label="" n="" nymref="" resp="" role="" source="" subtype="" type="" xml:base=""   xml:lang=""/>
+   <geogName analog="" authority="" authURI="" cert="" codedval="" evidence="" facs="" label="" n="" nymref="" resp="" role="" source="" subtype="" type="" xml:base=""   xml:lang=""/>
    <gliss color="" copyof="" corresp="" endho="" endid="" endto="" endvo="" evaluate="" facs="" ho="" label="" layer="" n="" next="" plist="" prev="" rend="" sameas="" staff="" startho="" startid="" startto="" startvo="" synch="" text="" to="" tstamp="" tstamp.ges="" tstamp.real="" vo="" when="" x="" x2="" xml:base=""   y="" y2=""/>
    <graphic actuate="" decls="" facs="" height="" label="" mimetype="" n="" role="" show="" subtype="" target="" targettype="" title="" type="" unit="" width="" xml:base=""  />
    <group decls="" label="" n="" xml:base=""  />
@@ -155,7 +155,7 @@
    <multiRest altsym="" block="" copyof="" corresp="" dur.ges="" facs="" instr="" label="" layer="" n="" next="" num="" prev="" sameas="" staff="" synch="" tstamp="" tstamp.ges="" tstamp.real="" when="" xml:base=""  />
    <multiRpt altsym="" copyof="" corresp="" expand="" facs="" label="" layer="" n="" next="" num="" prev="" sameas="" staff="" synch="" tstamp="" tstamp.ges="" tstamp.real="" when="" xml:base=""  />
    <music decls="" label="" meiversion="" n="" xml:base=""  />
-   <name analog="" authority="" authURI="" dbkey="" facs="" label="" n="" nymref="" role="" subtype="" type="" xml:base=""   xml:lang=""/>
+   <name analog="" authority="" authURI="" codedval="" facs="" label="" n="" nymref="" role="" subtype="" type="" xml:base=""   xml:lang=""/>
    <normalization analog="" data="" label="" method="" n="" xml:base=""   xml:lang=""/>
    <note accid="" accid.ges="" altsym="" artic="" artic.ges="" beam="" breaksec="" color="" colored="" copyof="" corresp="" dots="" dur="" dur.ges="" enclose="" facs="" fermata="" gliss="" grace="" grace.time="" headshape="" hfunc="" ho="" instr="" inth="" intm="" label="" layer="" lig="" lv="" mfunc="" n="" next="" num="" numbase="" oct="" oct.ges="" pclass="" pname="" pname.ges="" pnum="" prev="" psolfa="" sameas="" size="" slur="" staff="" stem.dir="" stem.len="" stem.mod="" stem.pos="" stem.with="" stem.x="" stem.y="" syl="" synch="" tab.fret="" tab.string="" tie="" to="" tstamp="" tstamp.ges="" tstamp.real="" tuplet="" visible="" when="" x="" xml:base=""   y=""/>
    <noteOff copyof="" corresp="" label="" layer="" n="" next="" num="" prev="" sameas="" staff="" synch="" tstamp="" when="" xml:base=""  />
@@ -174,8 +174,8 @@
    <perfMedium analog="" authority="" authURI="" label="" n="" xml:base=""  />
    <performance decls="" label="" n="" xml:base=""  />
    <performer analog="" label="" n="" xml:base=""  />
-   <periodName analog="" authority="" authURI="" cert="" dbkey="" enddate="" evidence="" facs="" label="" n="" notafter="" notbefore="" nymref="" resp="" role="" source="" startdate="" subtype="" type="" xml:base=""   xml:lang=""/>
-   <persName analog="" authority="" authURI="" cert="" dbkey="" enddate="" evidence="" facs="" label="" n="" notafter="" notbefore="" nymref="" resp="" role="" source="" startdate="" subtype="" type="" xml:base=""   xml:lang=""/>
+   <periodName analog="" authority="" authURI="" cert="" codedval="" enddate="" evidence="" facs="" label="" n="" notafter="" notbefore="" nymref="" resp="" role="" source="" startdate="" subtype="" type="" xml:base=""   xml:lang=""/>
+   <persName analog="" authority="" authURI="" cert="" codedval="" enddate="" evidence="" facs="" label="" n="" notafter="" notbefore="" nymref="" resp="" role="" source="" startdate="" subtype="" type="" xml:base=""   xml:lang=""/>
    <pgDesc label="" n="" xml:base=""   xml:lang=""/>
    <pgFoot facs="" label="" n="" xml:base=""   xml:lang=""/>
    <pgFoot2 facs="" label="" n="" xml:base=""   xml:lang=""/>
@@ -203,7 +203,7 @@
    <relation actuate="" cert="" evidence="" label="" n="" rel="" resp="" role="" show="" source="" target="" targettype="" title="" xml:base=""  />
    <relationList label="" n="" xml:base=""  />
    <rend altrend="" color="" fontfam="" fontname="" fontsize="" fontstyle="" fontweight="" halign="" label="" n="" rend="" rotation="" valign="" xml:base=""   xml:lang=""/>
-   <repository analog="" authority="" authURI="" dbkey="" facs="" label="" n="" nymref="" role="" subtype="" type="" xml:base=""   xml:lang=""/>
+   <repository analog="" authority="" authURI="" codedval="" facs="" label="" n="" nymref="" role="" subtype="" type="" xml:base=""   xml:lang=""/>
    <resp authority="" authURI=""/>
    <respStmt analog="" label="" n="" xml:base=""  />
    <rest altsym="" beam="" color="" copyof="" corresp="" dots="" dur="" dur.ges="" facs="" fermata="" ho="" instr="" label="" layer="" line="" n="" next="" num="" numbase="" prev="" sameas="" size="" spaces="" staff="" synch="" to="" tstamp="" tstamp.ges="" tstamp.real="" tuplet="" vo="" when="" x="" xml:base=""   y=""/>
@@ -229,7 +229,7 @@
    <staffDef beam.group="" beam.rend="" beam.rests="" beam.slope="" clef.color="" clef.dis="" clef.dis.place="" clef.line="" clef.shape="" clef.visible="" decls="" dur.default="" dynam.dist="" grid.show="" harm.dist="" instr="" key.accid="" key.mode="" key.pname="" key.sig="" key.sig.mixed="" key.sig.show="" key.sig.showchange="" label="" label.abbr="" layerscheme="" lines="" lines.color="" lines.visible="" lyric.align="" lyric.fam="" lyric.name="" lyric.size="" lyric.style="" lyric.weight="" mensur.dot="" mensur.form="" mensur.loc="" mensur.orient="" mensur.sign="" mensur.size="" mensur.slash="" meter.count="" meter.rend="" meter.showchange="" meter.sym="" meter.unit="" modusmaior="" modusminor="" multi.number="" n="" num="" numbase="" octave.default="" ontheline="" pedal.style="" ppq="" prolatio="" proport.num="" proport.numbase="" reh.enclose="" scale="" slur.rend="" spacing="" tab.strings="" tempus="" text.dist="" text.fam="" text.name="" text.size="" text.style="" text.weight="" tie.rend="" trans.diat="" trans.semi="" visible="" xml:base=""  />
    <staffGrp barthru="" decls="" facs="" instr="" label="" label.abbr="" n="" symbol="" visible="" xml:base=""  />
    <stdVals analog="" data="" label="" n="" xml:base=""   xml:lang=""/>
-   <styleName analog="" authority="" authURI="" cert="" dbkey="" evidence="" facs="" label="" n="" nymref="" resp="" role="" source="" subtype="" type="" xml:base=""   xml:lang=""/>
+   <styleName analog="" authority="" authURI="" cert="" codedval="" evidence="" facs="" label="" n="" nymref="" resp="" role="" source="" subtype="" type="" xml:base=""   xml:lang=""/>
    <subst cert="" evidence="" hand="" label="" n="" resp="" seq="" source="" xml:base=""  />
    <supplied agent="" cert="" evidence="" facs="" label="" n="" reason="" resp="" source="" xml:base=""  />
    <surface data="" decls="" label="" lrx="" lry="" n="" startid="" ulx="" uly="" xml:base=""  />
@@ -247,7 +247,7 @@
    <th colspan="" facs="" label="" n="" rowspan="" x="" xml:base=""   xml:lang="" y=""/>
    <tie bezier="" bulge="" color="" copyof="" corresp="" curvedir="" dur="" endho="" endid="" endto="" endvo="" evaluate="" facs="" ho="" label="" layer="" n="" next="" plist="" prev="" rend="" sameas="" staff="" startho="" startid="" startto="" startvo="" subtype="" synch="" to="" tstamp="" tstamp.ges="" tstamp.real="" type="" vo="" when="" x="" x2="" xml:base=""   y="" y2=""/>
    <timeline avref="" label="" n="" origin="" xml:base=""  />
-   <title authority="" authURI="" dbkey="" facs="" label="" level="" n="" nymref="" role="" subtype="" type="" xml:base=""   xml:lang=""/>
+   <title authority="" authURI="" codedval="" facs="" label="" level="" n="" nymref="" role="" subtype="" type="" xml:base=""   xml:lang=""/>
    <titlePage facs="" label="" n="" xml:base=""   xml:lang=""/>
    <titleStmt analog="" label="" n="" xml:base=""  />
    <tr facs="" label="" n="" x="" xml:base=""   xml:lang="" y=""/>

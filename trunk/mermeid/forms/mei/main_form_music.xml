@@ -360,29 +360,29 @@
 						<xf:group ref="m:perfMedium">
 							
 							<dcm:create
-								nodeset="m:instrumentation"
+								nodeset="m:perfResList"
 								label="Add instrumentation"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium/m:instrumentation"/>
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium/m:perfResList"/>
 							
 							
 							<!-- dialog for adding ensembles -->
 							<xxf:dialog id="ensemble-menu" appearance="full" level="modal"
 								close="true" draggable="true" visible="false">
 								<xf:label>Ensembles</xf:label>
-								<xf:repeat nodeset="instance('instrument-groups')/m:instrVoiceGrp[@code]" id="ensemble-menu-repeat">
+								<xf:repeat nodeset="instance('instrument-groups')/m:perfResList[@codedval]" id="ensemble-menu-repeat">
 									<xf:trigger submission="replace-form-with" appearance="minimal">
 										<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/>
 											<xf:output ref="if (m:head!='') then m:head else '[empty ensemble]'"/>
 										</xf:label>
 										<xf:action ev:event="DOMActivate">
-											<xf:insert context="$binding/m:perfMedium/m:instrumentation" 
-												nodeset="m:instrVoiceGrp"
+											<xf:insert context="$binding/m:perfMedium/m:perfResList" 
+												nodeset="m:perfResList"
 												at="index('repeat-ensemble')"
 												position="after" 
-												origin="instance('instrument-groups')/m:instrVoiceGrp[@code][index('ensemble-menu-repeat')]"/>
+												origin="instance('instrument-groups')/m:perfResList[@codedval][index('ensemble-menu-repeat')]"/>
 											<!-- generate IDs for added performers -->
 											<xf:insert xxf:iterate="//*[not(@xml:id)]"
-												context="$binding/m:perfMedium/m:instrumentation"
+												context="$binding/m:perfMedium/m:perfResList"
 												origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
 											<xxf:hide dialog="ensemble-menu"/>
 										</xf:action>
@@ -391,22 +391,22 @@
 								</xf:repeat>
 							</xxf:dialog>			
 							
-							<xf:group ref="m:instrumentation">
+							<xf:group ref="m:perfResList">
 								<h:div class="blocklabel strong">Ensembles </h:div>
-								<xf:trigger ref=".[count(m:instrVoiceGrp)=0]" class="create_button">
+								<xf:trigger ref=".[count(m:perfResList)=0]" class="create_button">
 									<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
 									<xf:action ev:event="DOMActivate">
 										<xxf:show dialog="ensemble-menu"/>
 									</xf:action>
 								</xf:trigger>
-								<xf:repeat nodeset="m:instrVoiceGrp" id="repeat-ensemble">
+								<xf:repeat nodeset="m:perfResList" id="repeat-ensemble">
 									<h:fieldset>
 										<h:legend>
 											<xf:output value="if (m:head!='') then m:head else '[Ensemble]'"/> &#160;
 											<dcm:element-buttons 
 												triggers="up down" 
-												nodeset="m:instrVoiceGrp" 
-												origin="instance('instrument-groups')/m:instrVoiceGrp[1]"
+												nodeset="m:perfResList" 
+												origin="instance('instrument-groups')/m:perfResList[1]"
 												index="repeat-ensemble"/>
 											<xf:trigger style="margin:0 -7px 0 -6px;"
 												appearance="minimal" class="non-standard_button">
@@ -419,7 +419,7 @@
 												<xxf:dialog id="delete-ensemble-dialog" appearance="full">
 													<xf:label>There are references to this ensemble</xf:label>
 													<xf:var name="thisid" select="@xml:id"/>
-													<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoiceGrp[@n=$thisid])"/> 
+													<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfResList[@n=$thisid])"/> 
 														music component(s) (movements or sections defined below) refer to this
 														ensemble.<h:br/>
 														Do you want to delete all occurrences in components also?
@@ -437,7 +437,7 @@
 														<xf:label>Yes, delete all occurrences</xf:label>
 														<xf:action ev:event="DOMActivate">
 															<xf:delete nodeset="."/>
-															<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoiceGrp[@n=$thisid]">
+															<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfResList[@n=$thisid]">
 																<xf:delete nodeset="."/>
 															</xf:action>
 															<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
@@ -456,7 +456,7 @@
 													<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xf:var name="id" select="@xml:id"/>
-														<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoiceGrp[@n=$id])"/>
+														<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfResList[@n=$id])"/>
 														<xf:action if="$no = 0">
 															<xf:delete nodeset="."/>
 															<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
@@ -477,7 +477,7 @@
 											<dcm:create 
 												nodeset="m:head"
 												label="Add ensemble heading"
-												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoiceGrp/m:head"/>
+												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfResList/m:head"/>
 											<xf:input ref="m:head" class="long">
 												<xf:label class="fixed_width">Heading <h:a class="help">&#160;?<h:span 
 													class="comment">An optional heading or name wich may be used with or 
@@ -490,22 +490,21 @@
 													a standard ensemble code in the last field.
 												</h:span></h:a></xf:label>
 											</xf:input>
-											<xf:select1 ref="@code">
+											<xf:select1 ref="@codedval">
 												<xf:label>Standard code <h:a class="help">&#160;?<h:span 
 													class="comment">Choosing a standard MARC code improves data  
 													compatibility and interchangeability with other systems. <h:br/>
 													A code should be supplied also when you do not want the ensemble 
 													to have a heading (name).
 												</h:span></h:a></xf:label>
-												<xf:itemset nodeset="instance('ensembles')/m:instrVoiceGrp">
-													<xf:label><xf:output value="if (@code!='') then concat(@code, ' (',m:head,')') else '- Please select -'"/></xf:label>
-													<xf:value ref="@code"/>
+												<xf:itemset nodeset="instance('ensembles')/m:perfResList">
+													<xf:label><xf:output value="if (@codedval!='') then concat(@codedval, ' (',m:head,')') else '- Please select -'"/></xf:label>
+													<xf:value ref="@codedval"/>
 												</xf:itemset>
 												<xf:action ev:event="xforms-value-changed">
-													<xf:var name="ensemble" select="."/>
 													<xf:action if="../m:head=''">
 														<!-- set ensemble name if empty -->
-														<xf:setvalue ref="../m:head" value="normalize-space(instance('ensembles')/m:instrVoiceGrp[@code=$ensemble])"/>
+														<xf:setvalue ref="../m:head" value="normalize-space(instance('ensembles')/m:perfResList[@codedval=$ensemble])"/>
 													</xf:action>
 												</xf:action>
 											</xf:select1>
@@ -519,20 +518,20 @@
 										<xxf:dialog id="ensemble-performer-menu" appearance="full" level="modal"
 											close="true" draggable="true" visible="false">
 											<xf:label>Instrument groups</xf:label>
-											<xf:repeat nodeset="instance('instrument-groups')/m:instrVoiceGrp[m:instrVoice]" id="ensemble-performer-menu-repeat">
+											<xf:repeat nodeset="instance('instrument-groups')/m:perfResList[m:perfRes]" id="ensemble-performer-menu-repeat">
 												<xf:trigger submission="replace-form-with" appearance="minimal">
 													<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/>
 														<xf:output ref="if (m:head!='') then m:head else '[single performer]'"/>
 													</xf:label>
 													<xf:action ev:event="DOMActivate">
-														<xf:insert context="$binding/m:perfMedium/m:instrumentation/m:instrVoiceGrp[index('repeat-ensemble')]" 
-															nodeset="m:instrVoice"
+														<xf:insert context="$binding/m:perfMedium/m:perfResList/m:perfResList[index('repeat-ensemble')]" 
+															nodeset="m:perfRes"
 															at="index('repeat-ensemble-performer')"
 															position="after" 
-															origin="instance('instrument-groups')/m:instrVoiceGrp[m:instrVoice][index('ensemble-performer-menu-repeat')]/m:instrVoice"/>
+															origin="instance('instrument-groups')/m:perfResList[m:perfRes][index('ensemble-performer-menu-repeat')]/m:perfRes"/>
 														<!-- generate IDs for added performers -->
 														<xf:insert xxf:iterate="//*[not(@xml:id)]"
-															context="$binding/m:perfMedium/m:instrumentation"
+															context="$binding/m:perfMedium/m:perfResList"
 															origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
 														<xxf:hide dialog="ensemble-performer-menu"/>
 													</xf:action>
@@ -545,13 +544,13 @@
 											<h:a class="help">&#160;?<h:span class="comment">Optional. An ensemble may be specified by name (above), 
 												by a list of performers, or both.</h:span></h:a></h:span>
 										</h:div>
-										<xf:trigger ref=".[count(m:instrVoice)=0]" style="margin-left: 8px;" class="create_button">
+										<xf:trigger ref=".[count(m:perfRes)=0]" style="margin-left: 8px;" class="create_button">
 											<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add from list</xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xxf:show dialog="ensemble-performer-menu"/>
 											</xf:action>
 										</xf:trigger>
-										<xf:group ref=".[count(m:instrVoice)&gt;0]">
+										<xf:group ref=".[count(m:perfRes)&gt;0]">
 											<h:div class="vertical_spacer"/> 
 											<h:span class="fixed_width_mediumlong">No. &amp; name <h:a class="help">&#160;?<h:span 
 												class="comment">Enter the number of players in the 
@@ -567,10 +566,10 @@
 												instrument's name in the 'name' field if no name has been entered yet.
 											</h:span></h:a></h:span>
 											<h:br/>
-											<xf:repeat nodeset="m:instrVoice" id="repeat-ensemble-performer">
+											<xf:repeat nodeset="m:perfRes" id="repeat-ensemble-performer">
 												<xi:include href="includes/instrvoice-input.xml" parse="xml"/>
 												<xf:trigger>
-													<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add" title="Add from list"/> Add from list</xf:label>
+													<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add" title=""/> Add from list</xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xxf:show dialog="ensemble-performer-menu"/>
 													</xf:action>
@@ -579,14 +578,14 @@
 												<dcm:attribute-editor/>
 												<dcm:element-buttons
 													triggers="up down add" 
-													nodeset="m:instrVoice" 
-													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
+													nodeset="m:perfRes" 
+													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"
 													index="repeat-ensemble-performer"/>
 												<h:span class="editmenu">
 													<xxf:dialog id="delete-ensemble-performer-dialog" appearance="full">
 														<xf:label>There are references to this performer</xf:label>
 														<xf:var name="thisid" select="@xml:id"/>
-														<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$thisid])"/> 
+														<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$thisid])"/> 
 															music component(s) (movements or sections defined below) refer to this
 															performer.<h:br/>
 															Do you want to delete all occurrences in components also?
@@ -604,7 +603,7 @@
 															<xf:label>Yes, delete all occurrences</xf:label>
 															<xf:action ev:event="DOMActivate">
 																<xf:delete nodeset="."/>
-																<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$thisid]">
+																<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$thisid]">
 																	<xf:delete nodeset="."/>
 																</xf:action>
 																<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
@@ -623,7 +622,7 @@
 														<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 														<xf:action ev:event="DOMActivate">
 															<xf:var name="id" select="@xml:id"/>
-															<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$id])"/>
+															<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$id])"/>
 															<xf:action if="$no = 0">
 																<xf:delete nodeset="."/>
 																<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
@@ -650,10 +649,10 @@
 									</h:span></h:a>
 								</h:div>
 								<dcm:create
-									nodeset="m:instrVoice"
+									nodeset="m:perfRes"
 									label="Add performer"
-									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"/>
-								<xf:group ref=".[m:instrVoice]">
+									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"/>
+								<xf:group ref=".[m:perfRes]">
 									<h:div class="vertical_spacer"/> 
 									<h:span class="fixed_width_mediumlong">No. &amp; name <h:a class="help">&#160;?<h:span 
 										class="comment">Enter the number of players in the 
@@ -674,21 +673,21 @@
 										'Solo' should usually not be used with chamber music or 
 										music for one instrument.</h:span></h:a></h:span>
 									<h:br/>
-									<xf:repeat nodeset="m:instrVoice" id="repeat-performer">
+									<xf:repeat nodeset="m:perfRes" id="repeat-performer">
 										<xi:include href="includes/instrvoice-input.xml" parse="xml"/>
 										<h:span class="fixed_width_short"  style="text-align:center;">
 											<xf:input ref="@solo"><xf:label> </xf:label></xf:input>
 										</h:span>
 										<dcm:element-buttons
 											triggers="add up down copy" 
-											nodeset="m:instrVoice" 
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
+											nodeset="m:perfRes" 
+											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"
 											index="repeat-performer"/>
 										<h:span class="editmenu">
 											<xxf:dialog id="delete-performer-dialog" appearance="full">
 												<xf:label>There are references to this performer</xf:label>
 												<xf:var name="thisid" select="@xml:id"/>
-												<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$thisid])"/> 
+												<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$thisid])"/> 
 													music component(s) (movements or sections defined below) refer to this
 													performer.<h:br/>
 													Do you want to delete all occurrences in components also?
@@ -706,7 +705,7 @@
 													<xf:label>Yes, delete all occurrences</xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xf:delete nodeset="."/>
-														<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$thisid]">
+														<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$thisid]">
 															<xf:delete nodeset="."/>
 														</xf:action>
 														<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
@@ -725,7 +724,7 @@
 												<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 												<xf:action ev:event="DOMActivate">
 													<xf:var name="id" select="@xml:id"/>
-													<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$id])"/>
+													<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$id])"/>
 													<xf:action if="$no = 0">
 														<xf:delete nodeset="."/>
 														<xf:setvalue ref="instance('temp')/changed" value="'true'"/>
@@ -781,7 +780,7 @@
 												<xxf:dialog id="delete-cast-dialog" appearance="full">
 													<xf:label>There are references to this performer</xf:label>
 													<xf:var name="thisid" select="@xml:id"/>
-													<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:instrVoice[@n=$thisid])"/> 
+													<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$thisid])"/> 
 														music component(s) (movements or sections defined below) refer to this
 														performer.<h:br/>
 														Do you want to delete all occurrences in components also?
@@ -919,12 +918,12 @@
 										
 										<!-- role performer(s) -->
 										<dcm:create
-											nodeset="m:instrVoice"
+											nodeset="m:perfRes"
 											label="Add performer"
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem/m:instrVoice[1]"/>
-										<xf:group ref=".[m:instrVoice]">
+											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem/m:perfRes[1]"/>
+										<xf:group ref=".[m:perfRes]">
 											<h:div class="vertical_spacer"/> 
-											<xf:repeat nodeset="m:instrVoice" id="repeat-role-performer">
+											<xf:repeat nodeset="m:perfRes" id="repeat-role-performer">
 												<xf:input ref="." class="mediumshort">
 													<xf:label>Voice <h:a class="help">&#160;?<h:span 
 														class="comment">Indicates the type of vocalist(s) 
@@ -934,7 +933,7 @@
 														choosing a standard code in the last field.
 													</h:span></h:a></xf:label>
 												</xf:input>
-												<xf:select1 ref="@code" class="long">
+												<xf:select1 ref="@codedval" class="long">
 													<xf:label> Standard code <h:a class="help">&#160;?<h:span 
 														class="comment">Choosing a standard MARC code optimizes data  
 														compatibility and interchangeability with other systems.<h:br/>
@@ -945,19 +944,19 @@
 														<xf:label>- Please select -</xf:label>
 														<xf:value/>
 													</xf:item>
-													<xf:itemset nodeset="instance('instruments')/m:instrVoice[substring(@code,1,1)='v']">
-														<xf:label><xf:output value="concat(@code, ' (',@label,')')"/></xf:label>
-														<xf:value ref="@code"/>
+													<xf:itemset nodeset="instance('instruments')/m:perfRes[substring(@codedval,1,1)='v']">
+														<xf:label><xf:output value="concat(@codedval, ' (',@label,')')"/></xf:label>
+														<xf:value ref="@codedval"/>
 													</xf:itemset>
-													<xf:itemset nodeset="instance('ensembles')/m:instrVoiceGrp[substring(@code,1,1)='c']">
-														<xf:label><xf:output value="concat(@code, ' (',m:head,')')"/></xf:label>
-														<xf:value ref="@code"/>
+													<xf:itemset nodeset="instance('ensembles')/m:perfResList[substring(@codedval,1,1)='c']">
+														<xf:label><xf:output value="concat(@codedval, ' (',m:head,')')"/></xf:label>
+														<xf:value ref="@codedval"/>
 													</xf:itemset>
 													<xf:action ev:event="xforms-value-changed">
 														<!-- insert voice name (display name) if empty -->
 														<xf:var name="instrument" select="."></xf:var>
 														<xf:action if="..=''">
-															<xf:setvalue ref=".." value="instance('instruments')/m:instrVoice[@code=$instrument]"/>
+															<xf:setvalue ref=".." value="instance('instruments')/m:perfRes[@codedval=$instrument]"/>
 														</xf:action>
 													</xf:action>
 												</xf:select1>
@@ -968,8 +967,8 @@
 													songs.</h:span></h:a></xf:label></xf:input>
 												<dcm:element-buttons
 													triggers="add up down copy remove" 
-													nodeset="m:instrVoice" 
-													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:instrumentation/m:instrVoice[1]"
+													nodeset="m:perfRes" 
+													origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"
 													index="repeat-performer"/>
 												<dcm:id/>
 												<dcm:attribute-editor/>

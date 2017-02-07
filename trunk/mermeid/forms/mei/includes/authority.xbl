@@ -45,7 +45,7 @@
           <xf:var name="nodename" value="if (xxf:instance('authority-instance')/*[name()=name($binding)]) then name($binding) else 'persName'"/>
 
           <!-- no authority-related attributes yet? -->
-          <xf:group ref="$binding[not(@authority and @authURI and @dbkey)]">
+          <xf:group ref="$binding[not(@authority and @authURI and @codedval)]">
             <xf:trigger appearance="minimal">
               <xf:label><h:img style="vertical-align: middle;"
                   src="{xxf:instance('parameters')/dcm:server_name}/editor/images/authority.png"
@@ -57,8 +57,8 @@
                 <xf:action if="not(@authURI)">
                   <xf:insert nodeset="@*" context="." origin="xxf:attribute('authURI','')"/>
                 </xf:action>
-                <xf:action if="not(@dbkey)">
-                  <xf:insert nodeset="@*" context="." origin="xxf:attribute('dbkey','')"/>
+                <xf:action if="not(@codedval)">
+                  <xf:insert nodeset="@*" context="." origin="xxf:attribute('codedval','')"/>
                 </xf:action>
                 <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
                 <xf:dispatch name="id-update" target="form-group"/>
@@ -84,7 +84,7 @@
               <xf:setvalue ref="$binding/@authURI" value="xxf:instance('authority-instance')/*[name()=$nodename][@authority=$authority]/@authURI"/>
             </xf:action>
           </xf:select1>
-          <xf:input ref="$binding/@dbkey" class="mediumlong">
+          <xf:input ref="$binding/@codedval" class="mediumlong">
             <xf:label>ID <h:a class="help">?<h:span class="comment">The corresponding number or unique
                   identifier in the selected authority file</h:span></h:a></xf:label>
           </xf:input>

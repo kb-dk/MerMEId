@@ -11,11 +11,11 @@
     <list xmlns="http://www.music-encoding.org/ns/mei">
       <head>RISM country codes</head>
       <xsl:for-each select="//m:li">
-	<xsl:sort data-type="text" select="m:geogName/@dbkey"/>
+	<xsl:sort data-type="text" select="m:geogName/@codedval"/>
 	<li>
 	  <xsl:element name="geogName">
-	    <xsl:attribute name="dbkey">
-	      <xsl:value-of select="m:geogName/@dbkey"/>
+	    <xsl:attribute name="codedval">
+	      <xsl:value-of select="m:geogName/@codedval"/>
 	    </xsl:attribute>
 	    <xsl:apply-templates select="m:geogName"/>
 	  </xsl:element>

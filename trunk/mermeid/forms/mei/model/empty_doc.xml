@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mei meiversion="2013" 
+<?xml-model href="../../../../Skema/MEI%203.0.0/mei-all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<mei meiversion="3.0.0" 
   xmlns="http://www.music-encoding.org/ns/mei" 
  >
   <!-- 
@@ -32,7 +33,6 @@
         </respStmt>
         <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
         <availability>
-          <acqSource/>
           <accessRestrict/> 
           <useRestrict/>
         </availability>
@@ -76,12 +76,12 @@
           </notesStmt>
           <classification>
             <termList>
-              <term classcode="DcmContentClass"/>
-              <term classcode="DcmPresentationClass"/>
-              <term classcode="DcmAuthorityClass"/>
-              <term classcode="DcmScoringClass"/>
-              <term classcode="DcmStateClass"/>
-              <term classcode="DcmCompletenessClass"/>
+              <term classcode="#DcmContentClass"/>
+              <term classcode="#DcmPresentationClass"/>
+              <term classcode="#DcmAuthorityClass"/>
+              <term classcode="#DcmScoringClass"/>
+              <term classcode="#DcmStateClass"/>
+              <term classcode="#DcmCompletenessClass"/>
               <term/>
             </termList>
           </classification>
@@ -93,17 +93,6 @@
                 <titlePage label="">
                   <p n="MerMEId_temporary_wrapper"/>
                 </titlePage>
-                <provenance>
-                  <eventList>
-                    <event   evidence="">
-                      <p/>
-                      <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-                      <geogName role=""/>
-                      <corpName role=""/>
-                      <persName role=""/>
-                    </event>
-                  </eventList>
-                </provenance>
                 <extent unit=""/>
                 <dimensions unit=""/>
                 <handList>
@@ -121,6 +110,17 @@
                   <ptr target="" mimetype="" label=""/>
                 </repository>
                 <identifier/>
+                <provenance>
+                  <eventList>
+                    <event   evidence="">
+                      <desc/>
+                      <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+                      <geogName role=""/>
+                      <corpName role=""/>
+                      <persName role=""/>
+                    </event>
+                  </eventList>
+                </provenance>
               </physLoc>
               <notesStmt>
                 <annot type="source_description"/>
@@ -192,17 +192,17 @@
           <respStmt>
             <persName role="composer"/>
           </respStmt>
-        </titleStmt>        
+        </titleStmt>
+        <creation>
+          <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+          <geogName/>            
+        </creation>        
         <history>
-          <creation>
-            <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-            <geogName/>            
-          </creation>
           <p n="MerMEId_temporary_wrapper"/>
           <eventList type="history">
             <event evidence="">
+              <desc/>
               <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-              <p/>
             </event>
           </eventList>
           <eventList type="performances">
@@ -212,7 +212,7 @@
               <geogName role="place"/>
               <corpName role="ensemble"/>
               <persName role="conductor"/>
-              <p n="MerMEId_temporary_wrapper"/>
+              <desc/>
               <biblList>
                 <head>Reviews</head>
                 <bibl label="">
@@ -324,16 +324,16 @@
             <key pname="" accid="" mode=""/>
             <tempo/>
             <meter count="" unit="" sym=""/>
+            <creation>
+              <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+              <geogName/>            
+            </creation>
             <history>
-              <creation>
-                <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-                <geogName/>            
-              </creation>
               <p n="MerMEId_temporary_wrapper"/>
               <eventList type="history">
                 <event>
                   <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-                  <p/>
+                  <desc/>
                 </event>
               </eventList>
               <eventList type="performances">
@@ -343,7 +343,7 @@
                   <geogName role="place"/>
                   <corpName role="ensemble"/>
                   <persName role="conductor"/>
-                  <p n="MerMEId_temporary_wrapper"/>
+                  <desc/>
                   <biblList>
                     <head>Reviews</head>
                     <bibl   label="">
@@ -371,20 +371,20 @@
             <perfMedium analog="marc:048" authority="marcmusperf">
               <castList>
                 <castItem   n="">
-                  <instrVoice count="" solo="" code="" n=""/> 
+                  <perfRes count="" solo="" codedval="" n=""/> 
                   <role>
                     <name  xml:lang="en"/>
                   </role>
                   <roleDesc xml:lang="en"/>
                 </castItem>
               </castList>
-              <instrumentation>
-                <instrVoiceGrp code="" n="">
+              <perfResList>
+                <PerfResList codedval="" n="">
                   <head/>
-                  <instrVoice code="" count="1" solo="false" n=""/>
-                </instrVoiceGrp>
-                <instrVoice code="" count="1" solo="false" n=""/>
-              </instrumentation>
+                  <perfRes codedval="" count="1" solo="false" n=""/>
+                </PerfResList>
+                <perfRes codedval="" count="1" solo="false" n=""/>
+              </perfResList>
             </perfMedium>
             <extent unit=""/>
             <notesStmt>
@@ -420,7 +420,7 @@
                   <castList>
                     <castItem/>
                   </castList>
-                  <instrumentation/>
+                  <perfResList/>
                 </perfMedium>
                 <extent unit=""/>
                 <notesStmt>
@@ -446,7 +446,10 @@
     </workDesc>
     
     <revisionDesc>
-      <change   isodate="" resp="">
+      <change   isodate="">
+        <respStmt>
+          <resp/>
+        </respStmt>
         <changeDesc>
           <p/>
         </changeDesc>

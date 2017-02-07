@@ -1,4 +1,4 @@
-<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="2013" xml:id="mei_d1e1">
+<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="3.0.0" xml:id="mei_d1e1">
     <meiHead>
         <fileDesc>
             <titleStmt>
@@ -350,12 +350,12 @@
                     </notesStmt>
                     <classification>
                         <termList>
-                            <term classcode="DcmContentClass">text</term>
-                            <term classcode="DcmPresentationClass">print</term>
-                            <term classcode="DcmAuthorityClass"/>
-                            <term classcode="DcmScoringClass"/>
-                            <term classcode="DcmStateClass"/>
-                            <term classcode="DcmCompletenessClass"/>
+                            <term classcode="#DcmContentClass">text</term>
+                            <term classcode="#DcmPresentationClass">print</term>
+                            <term classcode="#DcmAuthorityClass"/>
+                            <term classcode="#DcmScoringClass"/>
+                            <term classcode="#DcmStateClass"/>
+                            <term classcode="#DcmCompletenessClass"/>
                         </termList>
                     </classification>
                     <itemList/>
@@ -385,15 +385,14 @@
                     <title type="alternative" xml:id="title_330N201C7" xml:lang="da">Underlige Aftenlufte!</title>
                     <title type="alternative" xml:id="title_330N201CC" xml:lang="en">Odd and unknown evening breezes!</title>
                     <respStmt>
-                        <persName role="composer" xml:id="persName_330N201D2">Carl Nielsen</persName>
-                        <persName role="author" xml:id="persName_330N201D6">Adam Oehlenschläger</persName>
+                        <persName authURI="http://www.viaf.org" authority="VIAF" codedval="197250" role="composer" xml:id="persName_330N201D2">Carl Nielsen</persName>
+                        <persName authURI="http://www.viaf.org" authority="VIAF" codedval="27105324" role="author" xml:id="persName_330N201D6">Adam Oehlenschläger</persName>
                     </respStmt>
                 </titleStmt>
-                <history xml:id="history_330N201D9">
-                    <creation xml:id="creation_330N201DB">
-                        <date notafter="1915" notbefore="1914">1914-1915</date>
-                    </creation>
-                </history>
+                <creation xml:id="creation_330N201DB">
+                    <date notafter="1915" notbefore="1914">1914-1915</date>
+                </creation>
+                <history xml:id="history_330N201D9"/>
                 <langUsage>
                     <language xml:id="da">Danish</language>
                     <language xml:id="en">English</language>
@@ -549,16 +548,13 @@
                             </incipText>
                         </incip>
                         <history xml:id="history_330N20230">
-                            <creation xml:id="creation_330N20232">
-                                <geogName xml:id="geogName_330N2023A"/>
-                            </creation>
                             <p/>
                         </history>
                         <perfMedium analog="marc:048" xml:id="perfMedium_330N20261">
-                            <instrumentation>
-                                <instrVoice code="vn" count="1" solo="false" xml:id="instrVoice_330N20269">voice</instrVoice>
-                                <instrVoice code="ka" count="1" solo="false" xml:id="instrVoice_330N20270">pno.</instrVoice>
-                            </instrumentation>
+                            <perfResList xml:id="perfResList_508N203DB">
+                                <perfRes codedval="vn" count="1" solo="false" xml:id="perfRes_330N20269">voice</perfRes>
+                                <perfRes codedval="ka" count="1" solo="false" xml:id="perfRes_330N20270">pno.</perfRes>
+                            </perfResList>
                         </perfMedium>
                         <relationList/>
                     </expression>
@@ -576,15 +572,12 @@
                             </incipText>
                         </incip>
                         <history xml:id="history_27d2f7ea">
-                            <creation xml:id="creation_cad6f5ef">
-                                <geogName xml:id="geogName_b3e3883b"/>
-                            </creation>
                             <p/>
                         </history>
                         <perfMedium analog="marc:048" xml:id="perfMedium_47caf3ad">
-                            <instrumentation>
-                                <instrVoice code="ka" count="1" solo="false" xml:id="instrVoice_a5b4df43">pno.</instrVoice>
-                            </instrumentation>
+                            <perfResList xml:id="perfResList_508N20413">
+                                <perfRes codedval="ka" count="1" solo="false" xml:id="perfRes_a5b4df43">pno.</perfRes>
+                            </perfResList>
                         </perfMedium>
                         <relationList/>
                     </expression>
@@ -603,17 +596,14 @@
                             </incipText>
                         </incip>
                         <history xml:id="history_e3f59793">
-                            <creation xml:id="creation_405559a2">
-                                <geogName xml:id="geogName_ab8b5b6b"/>
-                            </creation>
                             <p/>
                         </history>
                         <perfMedium analog="marc:048" xml:id="perfMedium_1f15616d">
-                            <instrumentation>
-                                <instrVoiceGrp code="ca" xml:id="instrVoiceGrp_bef3effb">
+                            <perfResList xml:id="perfResList_508N20446">
+                                <perfResList codedval="ca" xml:id="perfResList_bef3effb">
                                     <head>Choir SATB</head>
-                                </instrVoiceGrp>
-                            </instrumentation>
+                                </perfResList>
+                            </perfResList>
                         </perfMedium>
                         <relationList/>
                     </expression>
@@ -631,17 +621,14 @@
                             </incipText>
                         </incip>
                         <history xml:id="history_0616417b">
-                            <creation xml:id="creation_08c21eec">
-                                <geogName xml:id="geogName_27919414"/>
-                            </creation>
                             <p/>
                         </history>
                         <perfMedium analog="marc:048" xml:id="perfMedium_37959e12">
-                            <instrumentation>
-                                <instrVoiceGrp code="cb" xml:id="instrVoiceGrp_3730fad4">
+                            <perfResList xml:id="perfResList_508N20475">
+                                <perfResList codedval="cb" xml:id="perfResList_3730fad4">
                                     <head>Choir SSA</head>
-                                </instrVoiceGrp>
-                            </instrumentation>
+                                </perfResList>
+                            </perfResList>
                         </perfMedium>
                         <relationList/>
                     </expression>
@@ -649,42 +636,83 @@
             </work>
         </workDesc>
         <revisionDesc>
-            <change isodate="2013-01-23" resp="axel" xml:id="change_225N2020E">
+            <change isodate="2013-01-23" xml:id="change_225N2020E">
+                <respStmt>
+                    <resp>axel</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2013-08-29" resp="MerMEId" xml:id="change_651N20627">
+            <change isodate="2013-08-29" xml:id="change_651N20627">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Automated conversion from MEI 2012 to MEI 2013</p>
                 </changeDesc>
             </change>
-            <change isodate="2015-09-05" resp="MerMEId" xml:id="change_651d1e794">
+            <change isodate="2015-09-05" xml:id="change_651d1e794">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation moving identifier/@type data to @label</p>
                 </changeDesc>
             </change>
-            <change isodate="2015-09-05" resp="MerMEId" xml:id="change_468d1e606">
+            <change isodate="2015-09-05" xml:id="change_468d1e606">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation ensuring correct order of elements in source, work and biblList</p>
                 </changeDesc>
             </change>
-            <change isodate="2015-12-01" resp="MerMEId" xml:id="change_471d1e1274">
+            <change isodate="2015-12-01" xml:id="change_471d1e1274">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation migrating metadata to MerMEId rev. 948+</p>
                 </changeDesc>
             </change>
-            <change isodate="2016-03-02" resp="atge" xml:id="change_464N1047A">
+            <change isodate="2016-03-02" xml:id="change_464N1047A">
+                <respStmt>
+                    <resp>atge</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2016-03-31" resp="MerMEId" xml:id="change_473d1e602">
+            <change isodate="2016-03-31" xml:id="change_473d1e602">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
                 <changeDesc>
                     <p>Batch transformation putting misplaced text back in place</p>
                 </changeDesc>
             </change>
-            <change isodate="2016-04-27" resp="atge" xml:id="change_471N10488">
+            <change isodate="2016-04-27" xml:id="change_471N10488">
+                <respStmt>
+                    <resp>atge</resp>
+                </respStmt>
+                <changeDesc>
+                    <p/>
+                </changeDesc>
+            </change>
+            <change isodate="2017-02-06" n="9">
+                <respStmt>
+                    <resp>MerMEId</resp>
+                </respStmt>
+                <changeDesc>
+                    <p>Converted to version 3.0.0 using mei21To30.xsl, version
+                  1.0 beta for MerMEId</p>
+                </changeDesc>
+            </change>
+            <change isodate="2017-02-06" xml:id="change_489N1049B">
+                <respStmt>
+                    <resp>atge</resp>
+                </respStmt>
                 <changeDesc>
                     <p/>
                 </changeDesc>

@@ -102,7 +102,7 @@
                 <xf:group ref=".[matches($binding,'^[A-Z]+-[A-Z]+[a-z]*$')]">
                   <xf:var name="country" select="substring-before($binding,'-')"/>
                   <xf:var name="archive" select="substring-after($binding,'-')"/>
-                  <xf:group ref=".[not(instance('rism-country-instance')/m:li/m:geogName[@dbkey=$country])]">
+                  <xf:group ref=".[not(instance('rism-country-instance')/m:li/m:geogName[@codedval=$country])]">
                     <!-- country not found -->
                     <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning.png" style="vertical-align:middle;"
                       title="MerMEId does not recognize the country code &apos;{$country}&apos;. Please make sure you have entered a valid country code (all upper case)."/>
@@ -142,8 +142,8 @@
                     <xf:value/>
                   </xf:item>
                   <xf:itemset nodeset="instance('rism-country-instance')/m:li">
-                    <xf:label><xf:output value="concat(m:geogName/@dbkey,': ',m:geogName)"/></xf:label>
-                    <xf:value ref="m:geogName/@dbkey"></xf:value>
+                    <xf:label><xf:output value="concat(m:geogName/@codedval,': ',m:geogName)"/></xf:label>
+                    <xf:value ref="m:geogName/@codedval"></xf:value>
                   </xf:itemset>
                 </xf:select1>      
                 <h:br/>

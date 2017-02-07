@@ -80,7 +80,7 @@
 	</xsl:template>
 	
 	<!-- Filter away all links to reproductions such as CNU -->
-	<xsl:template match="m:work/m:relationList | m:expression/m:relationList">
+	<!--<xsl:template match="m:work/m:relationList | m:expression/m:relationList">
 		<xsl:variable name="relationList">
 			<relationList xmlns="http://www.music-encoding.org/ns/mei">
 				<xsl:for-each select="m:relation[@rel!='hasReproduction']">
@@ -88,9 +88,8 @@
 				</xsl:for-each>
 			</relationList>
 		</xsl:variable>
-		<!-- make the list a nodeset -->
 		<xsl:variable name="relationList_nodeset" select="exsl:node-set($relationList)"/>
 		<xsl:apply-templates select="$relationList_nodeset/m:relationList" mode="relation_list"/>
-	</xsl:template>
+	</xsl:template>-->
 	
 </xsl:stylesheet>

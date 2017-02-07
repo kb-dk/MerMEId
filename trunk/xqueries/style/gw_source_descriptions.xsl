@@ -8,7 +8,7 @@
 	Axel Teich Geertinger & Sigfrid Lundberg
 	Danish Centre for Music Publication
 	The Royal Library, Copenhagen
-	2014
+	2014-2017
 	
 -->
 
@@ -265,18 +265,18 @@
 		<xsl:variable name="sources_sorted">
 			<xsl:for-each select="$source_nodeset/m:source">
 				<!-- process all sources, sorted according to classification -->
-				<xsl:sort select="m:classification/m:termList/m:term[@classcode='DcmContentClass']"/>
+				<xsl:sort select="m:classification/m:termList/m:term[@classcode='#DcmContentClass']"/>
 				<xsl:sort
-					select="m:classification/m:termList/m:term[@classcode='DcmPresentationClass']"/>
+					select="m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']"/>
 				<!-- adding 100 ensures that combinations of 1- and 2-digit numbers are sorted correctly -->
 				<xsl:sort
-					select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmAuthorityClass'],';'))))"/>
+					select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='#DcmAuthorityClass'],';'))))"/>
 				<xsl:sort
-					select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
+					select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;#DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
 				<xsl:sort
-					select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='DcmScoringClass'],';'))))"/>
+					select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='#DcmScoringClass'],';'))))"/>
 				<xsl:sort
-					select="m:classification/m:termList/m:term[@classcode='DcmCompletenessClass']"/>
+					select="m:classification/m:termList/m:term[@classcode='#DcmCompletenessClass']"/>
 				<xsl:copy-of select="."/>
 			</xsl:for-each>
 		</xsl:variable>
@@ -285,22 +285,22 @@
 		<xsl:for-each select="$source_nodeset_sorted/m:source">
 			<xsl:choose>
 				<xsl:when
-					test="m:classification/m:termList/m:term[@classcode='DcmPresentationClass']='manuscript'
-						and count(preceding-sibling::m:source[m:classification/m:termList/m:term[@classcode='DcmPresentationClass']='manuscript'])=0">
+					test="m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']='manuscript'
+						and count(preceding-sibling::m:source[m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']='manuscript'])=0">
 					<p>
 						<b>Manuscript</b>
 					</p>
 				</xsl:when>
 				<xsl:when
-					test="contains(m:classification/m:termList/m:term[@classcode='DcmPresentationClass'],'print')
-						and count(preceding-sibling::m:source[contains(m:classification/m:termList/m:term[@classcode='DcmPresentationClass'],'print')])=0">
+					test="contains(m:classification/m:termList/m:term[@classcode='#DcmPresentationClass'],'print')
+						and count(preceding-sibling::m:source[contains(m:classification/m:termList/m:term[@classcode='#DcmPresentationClass'],'print')])=0">
 					<p>
 						<b>Printed</b>
 					</p>
 				</xsl:when>
 				<xsl:when
-					test="m:classification/m:termList/m:term[@classcode='DcmContentClass']='text'
-						and count(preceding-sibling::m:source[m:classification/m:termList/m:term[@classcode='DcmContentClass']='text'])=0">
+					test="m:classification/m:termList/m:term[@classcode='#DcmContentClass']='text'
+						and count(preceding-sibling::m:source[m:classification/m:termList/m:term[@classcode='#DcmContentClass']='text'])=0">
 					<p>
 						<b>Text</b>
 					</p>
@@ -420,9 +420,16 @@
 	<xsl:template match="m:source[*[name()!='classification']//text()]|m:item[*//text()]">
 		<xsl:param name="mode" select="''"/>
 		<xsl:variable name="source_id" select="@xml:id"/>
-		<xsl:if test="name()='item'"><br/></xsl:if>
+		<!--<xsl:if test="name()='item'"><br/></xsl:if>-->
 		<span class="{name()}">
-			<!-- source title -->
+			<!-- source label and title -->
+			<xsl:if test="local-name()='source' and (normalize-space(@label) or normalize-space(m:identifier))">
+				<!-- either @label or <identifier> may be used for GW source sigla (but not both please!) -->
+				<b><xsl:apply-templates select="@label"/><xsl:apply-templates select="m:identifier"/></b>
+				<xsl:if test="m:titleStmt[m:title/text()]">
+					<xsl:text>: </xsl:text>
+				</xsl:if>
+			</xsl:if>
 			<xsl:for-each select="m:titleStmt[m:title/text()]">
 				<!-- should be (the editor is supposed to mention "source" in @type):
 				<xsl:if test="normalize-space(../m:identifier[contains(translate(@type,'S','s'),'source')])">
@@ -430,10 +437,10 @@
 					/></b>:<xsl:text> </xsl:text>
 				</xsl:if>
 				-->
-				<xsl:if test="normalize-space(../m:identifier)">
+				<!--<xsl:if test="normalize-space(../m:identifier)">
 					<b><xsl:apply-templates select="../m:identifier"
 					/></b>:<xsl:text> </xsl:text>
-				</xsl:if>
+					</xsl:if>-->
 				<xsl:apply-templates select="m:title" mode="source_title"/>
 			</xsl:for-each>
 			<!-- item label -->
@@ -459,7 +466,7 @@
 
 			<xsl:for-each select="m:notesStmt">
 				<xsl:for-each select="m:annot[text() or *//text()]">
-					<br/><xsl:apply-templates select="."/>
+					<xsl:apply-templates select="."/>
 				</xsl:for-each>
 				<!--<xsl:for-each select="m:annot[@type='links'][m:ptr[normalize-space(@target)]]">
 					<xsl:for-each select="m:ptr[normalize-space(@target)]">
@@ -500,10 +507,10 @@
 				<br/>Pl. no. <xsl:apply-templates/>.
 			</xsl:for-each>
 
-			<xsl:for-each select="m:physDesc/m:provenance[normalize-space(*//text())]">
+			<xsl:for-each select="m:physLoc/m:provenance[normalize-space(*//text())]">
 					<br/><xsl:text>Provenance: </xsl:text>
 					<xsl:for-each select="m:eventList/m:event[*/text()]">
-						<xsl:for-each select="m:p">
+						<xsl:for-each select="m:desc">
 							<xsl:apply-templates/>
 						</xsl:for-each>
 						<xsl:for-each select="m:date[text()]">
@@ -601,7 +608,7 @@
 			<xsl:when
 				test="count(m:item)&gt;1 or 
 				(m:item/@label and m:item/@label!='' and
-				../m:classification/m:termList/m:term[@classcode='DcmPresentationClass']!='manuscript')">
+				../m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']!='manuscript')">
 				<ul class="item_list">
 					<xsl:for-each select="m:item[*//text()]">
 						<li>
@@ -614,7 +621,7 @@
 			<xsl:when
 				test="(count(m:item)&lt;=1 and
 				m:item/@label and m:item/@label!='' and
-				../m:classification/m:termList/m:term[@classcode='DcmPresentationClass']='manuscript')">
+				../m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']='manuscript')">
 				<div class="ms_item">
 					<xsl:apply-templates select="m:item[*//text()]"/>
 				</div>
@@ -980,7 +987,7 @@
 	
 	
 	<!-- omit pop-up information -->
-	<xsl:template match="m:bibl//m:title | m:identifier[@authority='RISM'] | m:instrVoice/text() | 
+	<xsl:template match="m:bibl//m:title | m:identifier[@authority='RISM'] | m:perfRes/text() | 
 		m:identifier/text() | m:identifier/@type">
 		<xsl:value-of select="."/>
 	</xsl:template>

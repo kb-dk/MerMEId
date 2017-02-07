@@ -275,7 +275,7 @@
       <xf:var name="last_revision" 
         select="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]"/>
       <xf:var name="today" select="substring-before(now(), 'T')"/>
-      <xf:action if="$last_revision/@isodate!=$today or ($last_revision/@isodate=$today and ($last_revision/m:changeDesc/m:p/text() or $last_revision/@resp!=''))">
+      <xf:action if="$last_revision/@isodate!=$today or ($last_revision/@isodate=$today and ($last_revision/m:changeDesc/m:p/text() or $last_revision/m:respStmt/m:resp/text()!=''))">
         <xf:action if="$last_revision/@isodate!=''">
           <xf:insert nodeset="instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
             position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
@@ -324,7 +324,7 @@
     </xf:action>
     
     
-    <xf:bind nodeset="instance('data-instance')//m:instrVoice/@solo" type="xs:boolean"/>
+    <xf:bind nodeset="instance('data-instance')//m:perfRes/@solo" type="xs:boolean"/>
     <xf:bind nodeset="instance('temp')">
       <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
     </xf:bind>            

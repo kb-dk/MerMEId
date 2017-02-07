@@ -31,11 +31,13 @@ declare variable $database := request:get-parameter("db","/db/dcm");
 declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
 
+
+(: Why should style attributes be filtered away? :)
 declare function local:copy($element as element()) {
   element {node-name($element)}
   {
     for $attr in $element/@*
-    where not(contains(node-name($attr),'style'))
+    where not(contains(node-name($attr),'style_THIS_CONDITION_DISABLED'))
      return $attr,
      for $child in $element/node()
      where not(contains(node-name($child),'script'))

@@ -147,14 +147,14 @@
                             <h:div class="blocklabel strong">Description <h:a class="help">&#160;?<h:span class="comment">
                                 An optional description of the event, e.g. "First performance in Denmark".</h:span></h:a></h:div>
                             <dcm:create
-                                nodeset="m:p"
+                                nodeset="m:desc"
                                 label="Add description"
-                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:p"/>
-                            <xf:repeat nodeset="m:p" id="performance-p-repeat">
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:desc"/>
+                            <xf:repeat nodeset="m:desc" id="performance-desc-repeat">
                                 <h:div>
                                     <fr:tinymce ref="."/>	
-                                    <dcm:element-buttons triggers="remove" nodeset="m:p" index="performance-p-repeat"
-                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:p"/>
+                                    <dcm:element-buttons triggers="remove" nodeset="m:desc" index="performance-desc-repeat"
+                                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event/m:desc"/>
                                     <dcm:attribute-editor/>
                                 </h:div>
                             </xf:repeat>

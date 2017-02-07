@@ -1,137 +1,141 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mei meiversion="2013" 
-  xmlns="http://www.music-encoding.org/ns/mei" 
-   >
-  <meiHead>
-    <fileDesc>
-      <titleStmt>
-        <title/>
-      </titleStmt>
-      <pubStmt>
-        <respStmt  >
-          <resp>Publisher</resp>
-          <corpName  >
-            <abbr/>
-            <expan/>
-            <address>
-              <addrLine/>
-              <addrLine><ptr target="" label=""/></addrLine>
-            </address>
-          </corpName>
-          <persName role="editor"  />
-        </respStmt>
-        <date/>
-        <availability>
-          <useRestrict/> 
-        </availability>
-      </pubStmt>      
-      <seriesStmt>
-        <title  />
-        <identifier type="file_collection"  />
-      </seriesStmt>
-      <sourceDesc>
-        <source   analog="frbr:manifestation">
-          <identifier label=""/>
-          <titleStmt>
-            <title  />
-          </titleStmt>
-          <pubStmt>
-            <publisher  />
-            <pubPlace  />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-model href="../../../../Skema/MEI%203.0.0/mei-all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="3.0.0">
+   <meiHead>
+      <fileDesc>
+         <titleStmt>
+            <title/>
+         </titleStmt>
+         <pubStmt>
+            <respStmt>
+               <resp>Publisher</resp>
+               <corpName>
+                  <abbr/>
+                  <expan/>
+                  <address>
+                     <addrLine/>
+                     <addrLine>
+                        <ptr target="" label=""/>
+                     </addrLine>
+                  </address>
+               </corpName>
+               <persName role="editor"/>
+            </respStmt>
             <date/>
-          </pubStmt>
-          <physDesc>
-            <extent unit="pages"/>
-            <dimensions unit="cm"/>
-            <physMedium/>
-          </physDesc>
-          <classification>
-            <termList>
-              <term classcode="DcmContentClass"/>
-              <term classcode="DcmPresentationClass"/>
-              <term classcode="DcmAuthorityClass"/>
-              <term classcode="DcmScoringClass"/>
-              <term classcode="DcmStateClass"/>
-              <term classcode="DcmCompletenessClass"/>
-            </termList>
-          </classification>
-          <itemList/>
-          <componentGrp/>
-          <relationList>
-            <relation rel="isEmbodimentOf" target=""  />
-          </relationList>
-        </source>
-      </sourceDesc>
-    </fileDesc>
-    <encodingDesc>
-      <appInfo>
-        <application version="2013">
-          <name>MerMEId</name>
-        </application>
-      </appInfo>
-      <projectDesc  >
-        <p>Created using MerMEId</p>
-      </projectDesc>
-    </encodingDesc>
-    <workDesc>
-      <work   analog="frbr:work">
-        <identifier label=""/>
-        <titleStmt>
-          <title xml:lang="en"  />
-          <respStmt>
-            <persName role="composer"  />
-          </respStmt>
-        </titleStmt>        
-        <history  >
-          <creation  >
-            <date/>
-            <geogName  />            
-          </creation>
-          <p/>
-        </history>
-        <langUsage>
-          <language xml:id="en">English</language>
-        </langUsage>
-        <classification>
-          <classCode xml:id="DcmContentClass"/>
-          <classCode xml:id="DcmPresentationClass"/>
-          <classCode xml:id="DcmAuthorityClass"/>
-          <classCode xml:id="DcmScoringClass"/>
-          <classCode xml:id="DcmStateClass"/>
-          <classCode xml:id="DcmCompletenessClass"/>
-        </classification>
-        <expressionList>
-          <expression   analog="frbr:expression" n="">
+            <availability>
+               <useRestrict/>
+            </availability>
+         </pubStmt>
+         <seriesStmt>
+            <title/>
+            <identifier type="file_collection"/>
+         </seriesStmt>
+         <sourceDesc>
+            <source>
+               <identifier label=""/>
+               <titleStmt>
+                  <title/>
+               </titleStmt>
+               <pubStmt>
+                  <publisher/>
+                  <pubPlace/>
+                  <date/>
+               </pubStmt>
+               <physDesc>
+                  <extent unit="pages"/>
+                  <dimensions unit="cm"/>
+                  <physMedium/>
+               </physDesc>
+               <classification>
+                  <termList>
+                     <term classcode="#DcmContentClass"/>
+                     <term classcode="#DcmPresentationClass"/>
+                     <term classcode="#DcmAuthorityClass"/>
+                     <term classcode="#DcmScoringClass"/>
+                     <term classcode="#DcmStateClass"/>
+                     <term classcode="#DcmCompletenessClass"/>
+                  </termList>
+               </classification>
+               <itemList/>
+               <componentGrp/>
+               <relationList>
+                  <relation rel="isEmbodimentOf" target=""/>
+               </relationList>
+            </source>
+         </sourceDesc>
+      </fileDesc>
+      <encodingDesc>
+         <appInfo>
+            <application version="2013">
+               <name>MerMEId</name>
+            </application>
+         </appInfo>
+         <projectDesc>
+            <p>Created using MerMEId</p>
+         </projectDesc>
+      </encodingDesc>
+      <workDesc>
+         <work analog="frbr:work">
+            <identifier label=""/>
             <titleStmt>
-              <title xml:lang="en"  />
+               <title xml:lang="en"/>
+               <respStmt>
+                  <persName role="composer"/>
+               </respStmt>
             </titleStmt>
-            <incip  />
-            <history  >
-              <creation  >
-                <date/>
-                <geogName  />            
-              </creation>
-              <p/>
+            <creation>
+               <date/>
+               <geogName/>
+            </creation>
+            <history>
+               <p/>
             </history>
-            <perfMedium analog="marc:048" authority="marcmusperf"  />
+            <langUsage>
+               <language xml:id="en">English</language>
+            </langUsage>
             <classification>
-              <termList>
-                <term/>
-              </termList>
+               <classCode xml:id="DcmContentClass"/>
+               <classCode xml:id="DcmPresentationClass"/>
+               <classCode xml:id="DcmAuthorityClass"/>
+               <classCode xml:id="DcmScoringClass"/>
+               <classCode xml:id="DcmStateClass"/>
+               <classCode xml:id="DcmCompletenessClass"/>
             </classification>
-            <componentGrp/>
-            <relationList/>
-          </expression>
-        </expressionList>
-      </work>
-    </workDesc>
-    <revisionDesc>
-      <change   isodate="" resp="">
-        <changeDesc>
-          <p/>
-        </changeDesc>
-      </change>
-    </revisionDesc>
-  </meiHead>
-  <music/>
+            <expressionList>
+               <expression analog="frbr:expression" n="">
+                  <titleStmt>
+                     <title xml:lang="en"/>
+                  </titleStmt>
+                  <incip/>
+                  <creation>
+                     <date/>
+                     <geogName/>
+                  </creation>
+                  <history>
+                     <p/>
+                  </history>
+                  <perfMedium analog="marc:048" authority="marcmusperf"/>
+                  <classification>
+                     <termList>
+                        <term/>
+                     </termList>
+                  </classification>
+                  <componentGrp/>
+                  <relationList/>
+               </expression>
+            </expressionList>
+         </work>
+      </workDesc>
+      <revisionDesc>
+         <change isodate="">
+            <respStmt>
+               <resp/>
+            </respStmt>
+            <changeDesc>
+               <p/>
+            </changeDesc>
+         </change>
+      </revisionDesc>
+   </meiHead>
+   <music/>
 </mei>
