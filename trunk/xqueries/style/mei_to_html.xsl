@@ -2883,7 +2883,7 @@
 				<xsl:text>&#160;</xsl:text>
 			</td>
 			<td>
-				<!-- make sure cell are not empty -->
+				<!-- make sure cells are not empty -->
 				<xsl:choose>
 					<xsl:when test="m:changeDesc//text()">
 						<xsl:apply-templates select="m:changeDesc/m:p"/>
@@ -3123,7 +3123,7 @@
 			<h3 class="section_heading" id="p{$id}">
 				<span onclick="toggle('{$id}')" title="Click to show or hide">
 					<img class="noprint" id="img{$id}" border="0" src="/editor/images/plus.png"
-						alt="-"/>
+						alt="+"/>
 					<xsl:value-of select="concat(' ',$heading)"/>
 				</span>
 			</h3>
@@ -3148,33 +3148,7 @@
 		<xsl:call-template name="maybe_print_br"/>
 	</xsl:template>
 
-	<!-- Automatic cross references? 
-       
-       ... need to somehow get the name of the file to link to before this works ...
-       ... probably better to wait until links can actually be entered and edited in MerMEId ...
-       
-       <xsl:template match="text()[contains(.,concat(/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection'],' '))]">
-       <xsl:variable name="search_for" select="concat(/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection'],' ')"/>
-       <xsl:variable name="remainder" select="substring-after(.,$search_for)"/>
-       <xsl:variable name="end_char" select="substring(translate($remainder,'0123456789',''),1,1)"/>
-       <xsl:variable name="number" select="substring-before($remainder,$end_char)"/>
-       <xsl:apply-templates select="exsl:node-set(substring-before(.,$search_for))"/>
-       <xsl:choose>
-       <xsl:when test="$number">
-       <a title="" 
-       href="http://dcm-udv-01.kb.dk/storage/cnw/document.xq?doc=cnw0132.xml" 
-       class="work_number_reference"><xsl:value-of select="concat($search_for,$number)"/></a>
-       <xsl:apply-templates select="exsl:node-set(substring-after($remainder,$number))"/>
-       </xsl:when>
-       <xsl:otherwise>
-       <xsl:value-of select="$search_for"/>
-       <xsl:apply-templates select="exsl:node-set($remainder)"/>
-       </xsl:otherwise>
-       </xsl:choose>
-       </xsl:template>
-  -->
-
-	<xsl:template name="key_accidental">
+<xsl:template name="key_accidental">
 		<xsl:param name="attr"/>
 		<span class="accidental">
 			<xsl:choose>
