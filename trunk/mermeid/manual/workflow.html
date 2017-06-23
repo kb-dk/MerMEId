@@ -1,0 +1,133 @@
+<!DOCTYPE html SYSTEM "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Recommended workflow</title>
+        
+        <link rel="stylesheet" type="text/css" href="../style/tab_style.css"/>
+        <link rel="stylesheet" type="text/css" href="../style/list_style.css"/>
+        <link rel="stylesheet" type="text/css" href="../style/front_page.css"/>
+        <link rel="stylesheet" type="text/css" href="../style/manual.css"/>
+        <style type="text/css">
+            .heading {
+                display: inline-block;
+                padding: 1px 4px 1px 0;
+                font-weight: bold;
+            }
+            p {
+                margin: 5px 0 10px 0;
+                line-height: 1.4em;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="main">
+            <div class="manual_header">
+                
+                <div class="close_div">
+                    <a href="javascript:window.close();" class="trigger"><img alt="Close" title="Close" src="../images/close.gif" height="12" width="12"/></a>
+                </div>
+                <img alt="MerMEId" src="../images/mermeid_30px.png" height="23" width="130"/>
+            </div>
+            <h1>Recommended workflow</h1>
+            
+            <p>This page described a workflow intended to make working with MerMEId as efficient as possible.</p>
+            
+            <p>MerMEId is designed for editing and storing metadata in MEI files; usually each file describes one musical work. 
+                The list shown when <a href="../list_files.xq" title="MerMEId file list">entering
+            MerMEId</a> is basically a list of the MEI files stored in the database at any time.</p>
+            <p>Assuming that you want to create a number of files all belonging to the same project or catalogue, 
+                we recommend the following workflow for creating the files and entering the data.</p>
+
+            <h2>Creating a template file</h2>
+                <p>Usually all of the files in a catalogue will have a certain amount of information in common,
+                    namely the <a href="document_structure.html#tech_adm_metadata" title="More about technical/administrative metadata">technical and
+                    administrative information</a> and the name of the project/catalogue they belong to (see below). To avoid having to enter this 
+                    information every time you create a new file, we recommend that you create a file containing only the shared information and make 
+                    a copy when starting a new file instead of starting with an empty file.</p>
+                    <ul>
+                        <li>To create a template file, create a new, empty file (see <a href="../manual/basics.html">MerMEId basics</a>).<br/> 
+                            At the <span class="work tab">Work</span> tab, enter a name for your template in the main title field. 
+                            This is the title that will appear in the list of files.<br/>
+                            If you are creating a catalogue of works of a single composer, you may also want to add the composer's name in the
+                            'Persons' section.<br/>
+                            Save the file <img alt="Save" src="../images/save.gif" />.<br/>
+                            <img class="illustration" alt="Template title" src="../images/manual/workflow_template_title.png"/>
+                        </li>
+                        <li>
+                            Switch to the <span class="file tab">File</span> tab and enter the name of the catalogue (or project) in the 'Series title' field.<br/>
+                            If you want MerMEId to be able to organize your files according to catalogue and to recognize certain identifiers as 
+                            catalogue works numbers (just like 'BWV 1063' and 'KV 626' are identifiers for works in the Bach and Mozart catalogues, respectively),
+                            add the desired prefix of your work numbers (equivalent to 'BWV' or 'KV') in the 'File collection' field.<br/>
+                            <img class="illustration" alt="File collection name" src="../images/manual/workflow_file_collection.png"/>
+                        </li>
+                        <li>
+                            Add any other shared information as appropriate, such as the name and address of your institution, use restrictions, and 
+                            project description. Save your work and return to the file list <img alt="Home"
+                                src="../images/home.gif" />. You will notice that the collection name now appears
+                            in the drop-down list of available collections.<br/>
+                            <img class="illustration" alt="Collection list" src="../images/manual/workflow_file_list.png"/>
+                        </li>
+                    </ul>
+            <h2>Starting a new file from template</h2>
+            <ul>
+                <li>Clone the template:            
+                    <ol>
+                        <li>Make a copy of your template file by clicking the copy button <img alt="Copy" src="../images/copy.gif" />.<br/>
+                        </li>
+                        <li>Open the file for editing by clicking the edit button <img alt="Edit" src="../images/edit.gif" />.<br/>
+                            <img class="illustration" alt="Copy template" src="../images/manual/workflow_copy_template.png"/>
+                        </li>
+                    </ol>
+                </li>
+                <li>
+                    Change the main title. 
+                </li>
+                <li>
+                    If your catalogue/project uses work numbers, add the catalogue prefix (that is, the name of the MerMEId file collection) as the
+                   list name in the 'Identification' section. Add the work number in the 'No.' field. You can add any other identifying numbers also, 
+                   such as opus numbers or corresponding work numbers in other catalogues. <br/>
+                    <img class="illustration" alt="Add work number" src="../images/manual/workflow_add_work_no.png"/><br/>
+                    If the list name matches the file collection name given at the <span class="file tab">File</span> tab, MerMEId will treat the number 
+                    as the work number (relevant when sorting files by work number, for instance).<br/>
+                    <img class="illustration" alt="List work numbers" src="../images/manual/workflow_list_work_no.png"/>
+                </li>
+            </ul>
+            <h2>Content editing</h2>
+            <ul>
+                <li>Add any data you want to the file (see <a href="../manual/">tutorials and other help pages</a>
+                    on how to use the editor and how to enter certain types of information).</li>
+                <li>To verify or proofread your data, use the HTML preview by clicking the document button <img alt="HTML preview" 
+                    src="../images/html.gif" /> to generate a human-readable HTML page from the file.</li>
+            </ul>
+            <h2>Publishing to an online catalogue</h2>
+            <p>If you are creating a public online catalogue you will want to publish your data a some point. In MerMEId's list view, 
+                files can be marked for publishing and 'published' (the meaning of the check box colours is explained as part of the 
+                <a href="../manual/basics.html" title="MerMEId basics">MerMEId basics</a>.
+            </p>
+            <p>This process allows you to keep your files private until you consider them ready for publication or re-publication. 
+                MerMEId also lets you 'unpublish' (withdraw) published files from the public catalogue without deleting them from your
+            database.</p>
+            <img class="illustration" alt="Publish" src="../images/manual/workflow_publish.png"/>
+            <p>The actual effect  &ndash; if any &ndash; of publishing your files depends on the setup of your system as explained in the
+                <a href="../manual/basics.html" title="MerMEId basics">MerMEId basics</a> and the 
+                <a href="../manual/faq.html" title="MerMEId FAQ">Frequently Asked Questions</a>.
+            </p>
+            <h2>Creating a printed catalogue</h2>
+            <p>If you want to create a printed catalogue from your data, MerMEId can assist you some of the way. There is a tool 
+            for outputting all files of a file collection (or portions of a collection; or all files in the database) as a single,
+            potentially very large, HTML document.</p>
+            <p>The use of the tool is explained in the manual's section on <a title="Displaying multiple records" 
+                href="../manual/merge.html">Displaying or printing multiple (or all) records</a>.</p>
+            <p>By default, MerMEId will output the almost the same way as in the HTML preview only improved for printing 
+            (by unfolding all hidden sections, for instance), but you can specify another XSL transformation to customize the 
+            results for your needs. </p>
+            <p>The remaining steps to prepare a print catalogue are up to you. For the <a title="Printed CNW" target="_blank" 
+                href="https://www.mtp.dk/langset.asp?sitelan=e&amp;url=https://www.mtp.dk/details.asp?eln=203742">printed 
+                catalogue of Carl Nielsen's works</a>,
+            we chose a quick but dirty approach: we simply copied the resulting HTML into a Word document which was imported 
+            into InDesign for the final layout. A more elegant way would be to write a transformation from MEI to 
+                <a href="https://www.latex-project.org/" title="LaTeX" target="_blank">LaTeX</a>, for instance.</p>
+        </div>
+    </body>
+</html>
