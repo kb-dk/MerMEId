@@ -717,7 +717,7 @@
 		<xsl:if test="m:meter[normalize-space(concat(@count,@unit,@sym))]">
 			<xsl:apply-templates select="m:meter"/>
 		</xsl:if>
-		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
+		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode,string(.)))]"/>
 		<xsl:apply-templates select="m:extent"/>
 		<xsl:apply-templates select="m:incip"/>
 		<!-- external relation links -->
@@ -833,7 +833,7 @@
 		<xsl:if test="m:meter[normalize-space(concat(@count,@unit,@sym))]">
 			<xsl:apply-templates select="m:meter"/>
 		</xsl:if>
-		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode))]"/>
+		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode,string(.)))]"/>
 		<xsl:apply-templates select="m:extent"/>
 		<xsl:apply-templates select="m:incip"/>
 		<xsl:apply-templates select="m:titleStmt/m:respStmt[m:persName]"/>
@@ -1107,7 +1107,7 @@
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template match="m:key[@pname or @accid or @mode]">
+	<xsl:template match="m:key[@pname or @accid or @mode or text()]">
 		<p>
 			<span class="label">Key: </span>
 			<xsl:value-of select="translate(@pname,'abcdefgh','ABCDEFGH')"/>
@@ -1118,6 +1118,8 @@
 			</xsl:if>
 			<xsl:text> </xsl:text>
 			<xsl:value-of select="@mode"/>
+			<xsl:text> </xsl:text>
+			<xsl:value-of select="."/>
 		</p>
 	</xsl:template>
 
