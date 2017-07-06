@@ -506,36 +506,38 @@
 						<td
 							style="vertical-align:top;border-bottom: 1px solid #999; margin:0; padding:5px;">
 							<!-- level 2 keywords -->
-							<xf:repeat nodeset="following-sibling::m:termList[1]/m:term"
-								id="level2_keywords-repeat">
-								<xf:trigger submission="replace-form-with" appearance="minimal">
-									<xf:label>
-										<h:img
-											src="{instance('parameters')/dcm:server_name}/editor/images/add.gif"
-											alt="Add"/>
-										<xf:output ref="."/>
-									</xf:label>
-									<xf:action ev:event="DOMActivate">
-										<xf:dispatch name="check-for-termlist"
-											target="keywords_menu"/>
-										<xf:action
-											ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
-											<xf:insert
-												context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList"
-												nodeset="m:term" at="last()" position="after"
-												origin="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/following-sibling::m:termList[1]/m:term[index('level2_keywords-repeat')]"
-											/>
+							<xf:group ref=".[following-sibling::m:termList[1]/@label='level2']">
+								<xf:repeat nodeset="following-sibling::m:termList[1]/m:term"
+									id="level2_keywords-repeat">
+									<xf:trigger submission="replace-form-with" appearance="minimal">
+										<xf:label>
+											<h:img
+												src="{instance('parameters')/dcm:server_name}/editor/images/add.gif"
+												alt="Add"/>
+											<xf:output ref="."/>
+										</xf:label>
+										<xf:action ev:event="DOMActivate">
+											<xf:dispatch name="check-for-termlist"
+												target="keywords_menu"/>
+											<xf:action
+												ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
+												<xf:insert
+													context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList"
+													nodeset="m:term" at="last()" position="after"
+													origin="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/following-sibling::m:termList[1]/m:term[index('level2_keywords-repeat')]"
+												/>
+											</xf:action>
+											<xf:action
+												ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.='']">
+												<xf:setvalue ref="."
+													value="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/following-sibling::m:termList[1]/m:term[index('level2_keywords-repeat')]"
+												/>
+											</xf:action>
 										</xf:action>
-										<xf:action
-											ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.='']">
-											<xf:setvalue ref="."
-												value="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/following-sibling::m:termList[1]/m:term[index('level2_keywords-repeat')]"
-											/>
-										</xf:action>
-									</xf:action>
-								</xf:trigger>
-								<h:br clear="all"/>
-							</xf:repeat>
+									</xf:trigger>
+									<h:br clear="all"/>
+								</xf:repeat>
+							</xf:group>
 						</td>
 					</tr>
 				</xf:repeat>
@@ -548,7 +550,7 @@
 						<xf:repeat
 							nodeset="instance('keywords-instance')/m:termList[@label='keywords']/m:term"
 							id="additional_keywords-repeat">
-							<span style="float:left; width: 120px;">
+							<h:div>
 								<xf:trigger submission="replace-form-with" appearance="minimal">
 									<xf:label>
 										<h:img
@@ -575,7 +577,7 @@
 										</xf:action>
 									</xf:action>
 								</xf:trigger>
-							</span>
+							</h:div>
 						</xf:repeat>
 					</h:td>
 				</h:tr>
