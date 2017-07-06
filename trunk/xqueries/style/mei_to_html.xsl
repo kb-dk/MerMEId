@@ -216,7 +216,7 @@
 			</xsl:apply-templates>
 			<!-- work-level performances  -->
 			<xsl:apply-templates
-				select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']//text()]"
+				select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']/m:event/*/text()]"
 				mode="performances"/>
 		</xsl:if>
 
@@ -231,11 +231,11 @@
 				select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"/>
 			<!-- work-level performances -->
 			<xsl:apply-templates
-				select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']//text()]"
+				select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']/m:event/*/text()]"
 				mode="performances"/>
 			<!-- Performances entered at expression level displayed at work level if only one expression -->
 			<xsl:apply-templates
-				select="m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history[m:eventList[@type='performances']//text()]"
+				select="m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history[m:eventList[@type='performances']/m:event/*/text()]"
 				mode="performances"/>
 		</xsl:if>
 
@@ -796,7 +796,7 @@
 		</xsl:if>
 		<!-- version performances -->
 		<xsl:if test="count(../m:expression)&gt;1">
-			<xsl:apply-templates select="m:history[m:eventList[@type='performances']//text()]"
+			<xsl:apply-templates select="m:history[m:eventList[@type='performances']/m:event/*/text()]"
 				mode="performances"/>
 		</xsl:if>
 	</xsl:template>
@@ -1478,7 +1478,7 @@
 
 	<!-- performances -->
 	<xsl:template match="m:history" mode="performances">
-		<xsl:if test="m:eventList[@type='performances']//text()">
+		<xsl:if test="m:eventList[@type='performances']/m:event/*/text()">
 			<xsl:apply-templates select="." mode="fold_section">
 				<xsl:with-param name="id" select="concat('history',generate-id(.),position())"/>
 				<xsl:with-param name="heading">Performances</xsl:with-param>
