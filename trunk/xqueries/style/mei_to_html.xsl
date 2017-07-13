@@ -334,15 +334,25 @@
 				</xsl:for-each>
 			</xsl:for-each>
 		</xsl:if>
-		<!-- don't forget alternative titles in other languages than the main title(s) -->
+		<!-- don't forget subtitles/alternative titles in other languages than the main title(s) -->
+		<xsl:for-each select="m:title[@type='subordinate' and text()]">
+			<xsl:variable name="lang" select="@xml:lang"/>
+			<xsl:if	test="not(../m:title[(@type='main' or not(@type)) and text() and @xml:lang=$lang])">
+				<h2 class="subtitle">
+					<span class="alternative_language">
+						<xsl:apply-templates select="."/>
+					</span>
+				</h2>
+			</xsl:if>
+		</xsl:for-each>		
 		<xsl:for-each select="m:title[@type='alternative' and text()]">
 			<xsl:variable name="lang" select="@xml:lang"/>
 			<xsl:if
 				test="not(../m:title[(@type='main' or not(@type)) and text() and @xml:lang=$lang])">
 				<xsl:element name="h2">
 					<xsl:element name="span">
-						<xsl:call-template name="maybe_print_lang"/>([<xsl:value-of
-							select="$lang"/>]: <xsl:apply-templates select="."/>)</xsl:element>
+						<xsl:call-template name="maybe_print_lang"/>(<!--[--><xsl:value-of
+							select="$lang"/><!--]: --><xsl:apply-templates select="."/>)</xsl:element>
 					<xsl:call-template name="maybe_print_br"/>
 				</xsl:element>
 			</xsl:if>
@@ -572,7 +582,6 @@
 		<!--<a href="{$href}" title="{$label}"><xsl:value-of select="$label"/></a>-->&#160;<xsl:if
 			test="$mermeid_crossref='true'">
 			<!-- get collection name and number from linked files -->
-			<!-- was: <xsl:variable name="fileName"	select="concat('http://',$hostname,'/storage/dcm/',@target)"/> -->
 			<xsl:variable name="fileName"
 				select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,@target)"/>
 			<xsl:variable name="linkedDoc" select="document($fileName)"/>
@@ -1900,7 +1909,7 @@
 
 			<!-- source location and identifiers -->
 			<xsl:for-each
-				select="m:physLoc[m:repository//text() or m:identifier/text() or m:ptr/@target]">
+				select="m:physLoc[m:repository//text() or m:identifier/text() or m:provenance//text() or m:ptr/@target]">
 				<div>
 					<xsl:apply-templates select="."/>
 				</div>
@@ -2795,7 +2804,7 @@
 	<xsl:template match="m:biblScope[@unit='page' and text()]" mode="pp">
 		<xsl:choose>
 			<!-- look for separators between page numbers -->
-			<xsl:when test="contains(translate(.,' ,;-–/','¤'),'¤¤¤¤¤¤')">pp.</xsl:when>
+			<xsl:when test="contains(translate(normalize-space(.),' ,;-–/','¤¤¤¤¤¤'),'¤')">pp.</xsl:when>
 			<xsl:otherwise>p.</xsl:otherwise>
 		</xsl:choose>
 		<xsl:text> </xsl:text>
@@ -2937,7 +2946,7 @@
 			</xsl:if>
 			<xsl:if test="position()&gt;1 or $preferred_found&gt;0">
 				<br/>
-				<span class="alternative_language">[<xsl:value-of select="@xml:lang"/>:]
+				<span class="alternative_language"><!--[--><xsl:value-of select="@xml:lang"/><!--:]-->
 						<xsl:apply-templates select="."/></span>
 			</xsl:if>
 		</xsl:if>
