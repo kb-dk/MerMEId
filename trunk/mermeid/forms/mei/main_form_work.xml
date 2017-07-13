@@ -246,7 +246,8 @@
 						<h:div class="blocklabel">Links <h:a class="help">&#160;?<h:span
 									class="comment">Links to external resources (web pages, PDF
 									files etc.) related to the work in general - not about a
-									particular source</h:span></h:a></h:div>
+									particular source.									
+						</h:span></h:a></h:div>
 						<dcm:create nodeset="m:annot[@type='links']" label="Add link"
 							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']"/>
 						<dcm:create ref="m:annot[@type='links']" nodeset="m:ptr" label="Add link"
@@ -257,14 +258,19 @@
 									<xf:input ref="@target" class="long">
 										<xf:label>URI <h:a class="help">&#160;?<h:span
 												class="comment">Link to the resource, e.g.
-												"http://example.com/preface.pdf"</h:span></h:a>
+												'http://example.com/preface.pdf'<br/>
+												MerMEId interprets references without the 'http://' protocol as links to other MEI files
+												in the same database as this one; for instance, 'sonata.xml' will be resolved as a link to 
+												a file of that name in the same folder in the database, 
+												whereas 'http://example.com/sonata.xml' generates a
+												link to an external web resource.
+										</h:span></h:a>
 										</xf:label>
 									</xf:input>
 									<xf:input ref="@label">
 										<xf:label>Label <h:a class="help">&#160;?<h:span
 												class="comment">A short, descriptive text which
-												may serve as the link text, e.g. "CNU
-												preface"</h:span></h:a></xf:label>
+												may serve as the link text, e.g. 'Printed edition's preface'</h:span></h:a></xf:label>
 									</xf:input>
 									<dcm:element-buttons triggers="up down copy add remove"
 										nodeset="m:ptr" index="general-notesstmt-annot-repeat-ptr"
