@@ -1833,7 +1833,7 @@
 			<xsl:variable name="label">
 				<xsl:choose>
 					<xsl:when test="name(..)='componentGrp'"/>
-					<xsl:otherwise><xsl:value-of select="@label"/>
+					<xsl:otherwise><xsl:apply-templates select="@label"/>
 						<xsl:if test="@label!='' and m:titleStmt/m:title/text()">
 							<xsl:text>: </xsl:text>
 						</xsl:if>
@@ -1846,7 +1846,7 @@
 						test="local-name()='item' and normalize-space(@label) and name(..)!='componentGrp'">
 						<!-- item label -->
 						<xsl:element name="{$heading_element}">
-							<xsl:value-of select="@label"/>
+							<xsl:apply-templates select="@label"/>
 						</xsl:element>
 					</xsl:when>
 					<xsl:otherwise>
@@ -2046,7 +2046,7 @@
 								<td class="label_cell">
 									<xsl:if test="@label!=''">
 										<p>
-											<xsl:value-of select="@label"/>
+											<xsl:apply-templates select="@label"/>
 											<xsl:text> </xsl:text>
 										</p>
 									</xsl:if>
@@ -3181,69 +3181,69 @@
 
 	
 	<!-- entity replacements -->
-	<xsl:template match="text()">
+	<xsl:template match="text() | @*">
 		<xsl:apply-templates select="." mode="entities"/>
 	</xsl:template>	
 	
-	<xsl:template match="text()[contains(.,'&amp;nbsp;')]" mode="entities">
+	<xsl:template match="text()[contains(.,'&amp;nbsp;')] | @*[contains(.,'&amp;nbsp;')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'&amp;nbsp;'))" mode="entities"/>&#160;<xsl:apply-templates select="exsl:node-set(substring-after(.,'&amp;nbsp;'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'&amp;lt;')]" mode="entities">
+	<xsl:template match="text()[contains(.,'&amp;lt;')] | @*[contains(.,'&amp;lt;')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'&amp;lt;'))" mode="entities"/>&#60;<xsl:apply-templates select="exsl:node-set(substring-after(.,'&amp;lt;'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'&amp;gt;')]" mode="entities">
+	<xsl:template match="text()[contains(.,'&amp;gt;')] | @*[contains(.,'&amp;gt;')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'&amp;gt;'))" mode="entities"/>&#62;<xsl:apply-templates select="exsl:node-set(substring-after(.,'&amp;gt;'))" mode="entities"/>
 	</xsl:template>
 
 	<!-- ad hoc code replacements -->
-	<xsl:template match="text()[contains(.,'[flat]')]" mode="entities">
+	<xsl:template match="text()[contains(.,'[flat]')] | @*[contains(.,'[flat]')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[flat]'))" mode="entities"/>
 		<span class="music_symbols">&#x266d;</span>
 		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[flat]'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'[natural]')]" mode="entities">
+	<xsl:template match="text()[contains(.,'[natural]')] | @*[contains(.,'[natural]')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[natural]'))" mode="entities"/>
 		<span class="music_symbols">&#x266e;</span>
 		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[natural]'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'[sharp]')]" mode="entities">
+	<xsl:template match="text()[contains(.,'[sharp]')] | @*[contains(.,'[sharp]')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[sharp]'))" mode="entities"/>
 		<span class="music_symbols">&#x266f;</span>
 		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[sharp]'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'[dblflat]')]" mode="entities">
+	<xsl:template match="text()[contains(.,'[dblflat]')] | @*[contains(.,'[dblflat]')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[dblflat]'))" mode="entities"/>
 		<span class="music_symbols">&#x1d12b;</span>
 		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[dblflat]'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'[dblsharp]')]" mode="entities">
+	<xsl:template match="text()[contains(.,'[dblsharp]')] | @*[contains(.,'[dblsharp]')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[dblsharp]'))" mode="entities"/>
 		<span class="music_symbols">&#x1d12a;</span>
 		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[dblsharp]'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'[common]')]" mode="entities">
+	<xsl:template match="text()[contains(.,'[common]')] | @*[contains(.,'[common]')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[common]'))" mode="entities"/>
 		<span class="music_symbols time_signature">&#x1d134;</span>
 		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[common]'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'[cut]')]" mode="entities">
+	<xsl:template match="text()[contains(.,'[cut]')] | @*[contains(.,'[cut]')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[cut]'))" mode="entities"/>
 		<span class="music_symbols time_signature">&#x1d135;</span>
 		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[cut]'))" mode="entities"/>
 	</xsl:template>
 
 	<!-- music character wrapping -->
-	<xsl:template match="text()[contains(.,'♭')]" mode="entities">
+	<xsl:template match="text()[contains(.,'♭')] | @*[contains(.,'♭')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'♭'))" mode="entities"/>
 		<span class="music_symbols">♭</span>
 		<xsl:apply-templates select="exsl:node-set(substring-after(.,'♭'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'♮')]" mode="entities">
+	<xsl:template match="text()[contains(.,'♮')] | @*[contains(.,'♮')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'♮'))" mode="entities"/>
 		<span class="music_symbols">♮</span>
 		<xsl:apply-templates select="exsl:node-set(substring-after(.,'♮'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'♯')]" mode="entities">
+	<xsl:template match="text()[contains(.,'♯')] | @*[contains(.,'♯')]" mode="entities">
 		<xsl:apply-templates select="exsl:node-set(substring-before(.,'♯'))" mode="entities"/>
 		<span class="music_symbols">♯</span>
 		<xsl:apply-templates select="exsl:node-set(substring-after(.,'♯'))" mode="entities"/>
