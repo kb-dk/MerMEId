@@ -25,14 +25,7 @@ declare function functx:copy-attributes
 
 
 
-let $return_to := concat(
-  "http://",request:get-header('HOST'),"/storage/list_files.xq?",
-  "sortby=",             fn:escape-uri(request:get-parameter("sortby",""),true()),
-  "&amp;published_only=",fn:escape-uri(request:get-parameter("published_only",""),true()),
-  "&amp;c=",             fn:escape-uri(request:get-parameter("c",""),true()),
-  "&amp;query=",         fn:escape-uri(request:get-parameter("query",""),true()),
-  "&amp;page=",          fn:escape-uri(request:get-parameter("page",""),true()),
-  "&amp;itemsPerPage=",  fn:escape-uri(request:get-parameter("itemsPerPage",""),true()))
+let $return_to := concat("http://",request:get-header('HOST'),"/storage/list_files.xq?")
 
 
 let $log-in := login:function()
