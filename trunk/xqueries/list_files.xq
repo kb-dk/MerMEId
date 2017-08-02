@@ -17,16 +17,29 @@ declare namespace m="http://www.music-encoding.org/ns/mei";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 
-declare variable $genre  := request:get-parameter("genre","") cast as xs:string;
-declare variable $coll   := request:get-parameter("c",    "") cast as xs:string;
-declare variable $query  := request:get-parameter("query","") cast as xs:string;
-declare variable $page   := request:get-parameter("page", "1") cast as xs:integer;
-declare variable $number := request:get-parameter("itemsPerPage","20") cast as xs:integer;
+(: get parameters, either from querystring or fall back to session attributes :)
+declare variable $coll              := request:get-parameter("c", session:get-attribute("coll"));
+declare variable $query             := request:get-parameter("query", session:get-attribute("query"));
+declare variable $published_only    := request:get-parameter("published_only", session:get-attribute("published_only"));
+declare variable $page              := xs:integer(request:get-parameter("page", session:get-attribute("page")));
+declare variable $number            := xs:integer(request:get-parameter("itemsPerPage", session:get-attribute("number")));
+declare variable $sortby            := request:get-parameter("sortby", session:get-attribute("sortby"));
+
+declare variable $session := session:create();
+
+(: save parameters as session attributes; set to default values if not defined :)
+declare variable $session-coll      := session:set-attribute("coll", if ($coll!="") then $coll else "");
+declare variable $session-query     := session:set-attribute("query", if ($query!="") then $query else "");
+declare variable $session-published := session:set-attribute("published_only", if (not($published_only) or $published_only!="") then $published_only else "");
+declare variable $session-page      := session:set-attribute("page", if ($page>0) then $page else "1");
+declare variable $session-number    := session:set-attribute("number", if ($number>0) then $number else "20");
+declare variable $session-sortby    := session:set-attribute("sortby", if ($sortby!="") then $sortby else "person,title");
+
 
 declare variable $database := "/db/dcm";
 
-declare variable $from     := ($page - 1) * $number + 1;
-declare variable $to       :=  $from      + $number - 1;
+declare variable $from     := (xs:integer(session:get-attribute("page")) - 1) * xs:integer(session:get-attribute("number")) + 1;
+declare variable $to       :=  $from      + xs:integer(session:get-attribute("number")) - 1;
 
 declare variable $sort-options :=
 (<option value="person,title">Composer,Title</option>,
@@ -37,9 +50,6 @@ declare variable $sort-options :=
 <option value="null,work_number">Work number</option>
 );
 
-
-declare variable $published_only := 
-request:get-parameter("published_only","") cast as xs:string;
 
 declare function local:format-reference(
   $doc as node(),
@@ -89,6 +99,9 @@ declare function local:format-reference(
 	return $ref
   };
 
+
+	  
+	  
       <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 	  <title>
@@ -134,6 +147,7 @@ declare function local:format-reference(
             title="MerMEId - Metadata Editor and Repository for MEI Data" 
 	    alt="MerMEId Logo"/>
 	  </div>
+
 	  <div class="filter_bar">
 	    <table class="filter_block">
 	      <tr>
@@ -145,12 +159,13 @@ declare function local:format-reference(
 	      <tr>
 		<td>&#160;</td>
 		<td>
-		  <form method="get" id="status-selection" action="/storage/list_files.xq" >
+		  <form action="" method="get" id="status-selection">
+		    <input name="page" value="1" type="hidden"/>
 		    <select name="published_only" onchange="this.form.submit();">
 		      {
   			for $alt in app:options()
 			  let $option :=
-			    if( $alt/@value eq $published_only ) then
+			    if( $alt/@value eq session:get-attribute("published_only") ) then
 		               <option value="{$alt/@value/text()}" 
 			       selected="selected">
 				 {$alt/text()}
@@ -160,60 +175,29 @@ declare function local:format-reference(
 			  return $option
 		      }
 		      </select> 
-		      {app:pass-as-hidden-except("published_only")}
 		    </form>
 		</td>
 		<td>
-		
-		  <select onchange="location.href=this.value; return false;">
-		    {
-            	      for $c in distinct-values(
-            		collection("/db/dcm")//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0]/string())
-            		let $querystring  := 
-            		  if($query) then
-            		    fn:string-join(
-            		      ("c=",$c,
-            		      "&amp;published_only=",$published_only,
-            		      "&amp;itemsPerPage=",$number cast as xs:string,	
-            		      "&amp;query=",
-            		      fn:escape-uri($query,true())),
-            		      ""
-            		       )
-            		  else
-            		    concat("c=",$c,
-            		    "&amp;published_only=",$published_only,
-            		    "&amp;itemsPerPage="  ,$number cast as xs:string)
-			       
-            		    return
-            		      if(not($coll=$c)) then 
-            		      <option value="?{$querystring}">{$c}</option>
-            	              else
-            		      <option value="?{$querystring}" selected="selected">{$c}</option>
-                     }
-                     {
-            
-		       let $get-uri := 
-            		 if($query) then
-            		   fn:string-join(("?published_only=",$published_only,"&amp;query=",fn:escape-uri($query,true())),"")
-            		 else
-            		   concat("?c=&amp;published_only=",$published_only)
-            
-            	       let $link := 
-            		 if($coll) then 
-            		 <option value="{$get-uri}">All collections</option>
-            	         else
-            		 <option value="{$get-uri}" selected="selected">All collections</option>
-            	       return $link
-		     }
-		  </select>
-                    
+		  <form action="" method="get" id="collection-selection">
+		      <input name="page" value="1" type="hidden"/>
+    		  <select name="c" onchange="this.form.submit();">
+    		    <option value="">All collections</option>
+    		    {
+               	      for $c in distinct-values(collection("/db/dcm")//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0]/string())
+                        let $option :=
+                		      if(not(session:get-attribute("coll")=$c)) then 
+                		      <option value="{$c}">{$c}</option>
+                	              else
+                		      <option value="{$c}" selected="selected">{$c}</option>
+                	   return $option
+    		     }
+    		  </select>
+            </form>
           </td>
           <td>
-            <form action="/storage/list_files.xq" method="get" class="search">
-              <input name="query"  value='{request:get-parameter("query","")}'/>
-              <input name="c"      value='{request:get-parameter("c","")}'    type='hidden' />
-              <input name="published_only" value='{request:get-parameter("published_only","")}' type='hidden' />
-              <input name="itemsPerPage"  value='{$number}' type='hidden' />
+            <form action="" method="get" class="search">
+			  <input name="page" value="1" type="hidden"/>
+              <input name="query"  value='{session:get-attribute("query")}'/>
               <input type="submit" value="Search"               />
               <input type="submit" value="Clear" onclick="this.form.query.value='';this.form.submit();return true;"/>
               <a class="help">?<span class="comment">Search terms may be combined using boolean operators. Wildcards allowed. 
@@ -251,7 +235,7 @@ declare function local:format-reference(
       </table>
     </div>
     {
-      let $list := loop:getlist($database,$published_only,$coll,$genre,$query)
+      let $list := loop:getlist($database)
       return
       <div class="files_list">
         <div class="nav_bar">
@@ -299,8 +283,6 @@ declare function local:format-reference(
                	         type="hidden"
                          value="publish" 
                          id="publishingaction" />
-                  {app:pass-as-hidden()}
-                               
                   <hr/>
                                
                   <button type="button"
@@ -331,12 +313,13 @@ declare function local:format-reference(
       </div>
     }
     <div class="footer">
-      <a href="http://www.kb.dk/dcm" title="DCM" 
+      <a href="http://www.kb.dk/en/nb/dcm" title="DCM" 
       style="text-decoration:none;"><img 
            style="border: 0px; vertical-align:middle;" 
            alt="DCM Logo" 
            src="/editor/images/dcm_logo_small_white.png"/></a>
-           Danish Centre for Music Editing | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/dcm">www.kb.dk/dcm</a>
+           Danish Centre for Music Editing | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/en/nb/dcm">www.kb.dk/en/nb/dcm</a>
     </div>
   </body>
 </html>
+
