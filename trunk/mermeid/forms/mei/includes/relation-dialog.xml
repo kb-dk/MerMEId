@@ -73,6 +73,7 @@
 				'filter/filtered_scripts/cross-link.xq?get=works&amp;query=',instance('temp')/query,
 				'&amp;subject=',instance('temp')/series,
 				'&amp;page=',instance('temp')/page)"/>
+		<!--<xf:message>URI: <xf:output value="instance('temp')/target_uri"/></xf:message>-->
 			<xf:send submission="load-fileList"/>
 		</xf:action>
 	</xf:trigger>

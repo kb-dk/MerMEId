@@ -2,8 +2,7 @@ xquery version "1.0" encoding "UTF-8";
 
 (: Search the mei document store and return the data as an atom feed :)
 
-import module namespace source_list="http://kb.dk/this/getlist-sources" at
-"../main_loop_sources.xqm";
+import module namespace source_list="http://kb.dk/this/getlist-sources" at "../main_loop_sources.xqm";
 import module namespace loop="http://kb.dk/this/getlist" at "../main_loop.xqm";
 
 declare default element namespace "http://www.kb.dk/dcm";
@@ -35,6 +34,46 @@ declare variable $target   :=
 
 declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
+
+
+
+declare function app:getlist ($database as xs:string, $coll as xs:string, $query as xs:string) as node()* 
+  {
+    let $sortby         := session:get-attribute("sortby")
+    let $sort0          := substring-before($sortby,",")
+    let $sort1          := substring-after($sortby,",")
+
+    let $list   := 
+        if($coll) then 
+        	if($query) then
+                  for $doc in collection($database)/m:mei[
+        	    ft:query(.,$query)
+        	    and m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[.=$coll]
+        	    ] 
+        	  order by loop:sort-key ($coll,$doc,$sort0),loop:sort-key($coll,$doc,$sort1)
+        	  return $doc 
+        	else
+        	  for $doc in collection($database)/m:mei[
+        	    m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[.=$coll]
+        	    ]
+        	  order by loop:sort-key ($coll,$doc,$sort0),loop:sort-key($coll,$doc,$sort1)
+        	  return $doc 
+         else
+           if($query) then
+             for $doc in collection($database)/m:mei[
+    	   ft:query(.,$query)
+    	   ]
+    	   order by loop:sort-key ("",$doc,$sort0),loop:sort-key("",$doc,$sort1)
+    	 return $doc
+           else
+             for $doc in collection($database)/m:mei
+    	 order by loop:sort-key ("",$doc,$sort0),loop:sort-key("",$doc,$sort1)
+	 return $doc
+	      
+	 return $list
+
+};
+
 
 declare function app:format-doc($doc  as node()) as node() {
 
@@ -77,7 +116,7 @@ declare function app:opensearch-header($total as xs:integer,
 {
   let $list := 
 	if($works) then
-          loop:getlist("/db/dcm","",$coll,"",$query)
+          app:getlist("/db/dcm",$coll,$query)
         else
 	  if($target) then
 	     source_list:get-reverse-links($target)
