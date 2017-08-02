@@ -269,7 +269,7 @@
       <!-- automatically add change entry in revisionDesc -->
       <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc)=0">
         <xf:insert context="instance('data-instance')/m:meiHead" 
-          nodeset="m:revisionDesc" 
+          nodeset="*"
           origin="instance('empty-instance')/m:meiHead/m:revisionDesc"/>
       </xf:action>
       <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc/m:change)=0">
