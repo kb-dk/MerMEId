@@ -180,11 +180,7 @@
 
 		<!-- persons -->
 		<xsl:apply-templates
-			select="m:meiHead/
-		m:workDesc/
-		m:work/
-		m:titleStmt/
-		m:respStmt[m:persName[text()]]">
+			select="m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt[m:persName[text()]]">
 			<xsl:with-param name="exclude">composer</xsl:with-param>
 		</xsl:apply-templates>
 
@@ -395,7 +391,13 @@
 		<!-- certain roles may be excluded from the list -->
 		<xsl:param name="exclude"/>		
 		<!-- list persons grouped by role -->
-		<p>
+		<p>	
+		<xsl:apply-templates select="." mode="list_persons_by_role">
+			<xsl:with-param name="exclude" select="$exclude"/>
+			<xsl:with-param name="label_class" select="'p_heading'"/>
+			<xsl:with-param name="capitalize" select="'yes'"/>
+		</xsl:apply-templates>
+		<!--
 			<xsl:for-each select="m:persName[text() and not(contains($exclude,@role))]">
 				<xsl:variable name="role" select="@role"/>
 				<xsl:variable name="displayed_role">
@@ -412,7 +414,7 @@
 					</xsl:if>
 				</xsl:variable>
 				<xsl:if test="count(preceding-sibling::*[@role=$role])=0">
-					<!-- one <div> per role -->
+					<xsl:comment> one <div> per role </csl:comment>
 					<div class="list_block">
 						<span class="p_heading">
 							<xsl:value-of select="$displayed_role"/>
@@ -426,7 +428,8 @@
 						</xsl:for-each>
 					</div>
 				</xsl:if>
-			</xsl:for-each>
+			</xsl:for-each>-->
+		
 			<!-- finally, list names without roles -->
 			<xsl:for-each select="m:persName[text() and (not(@role) or @role='')]">
 				<div class="list_block">
@@ -1239,7 +1242,9 @@
 					<p>
 						<xsl:apply-templates
 							select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt[m:persName[text()]]"
-							mode="list_persons_by_role"/>
+							mode="list_persons_by_role">
+							<xsl:with-param name="capitalize" select="'yes'"/>
+						</xsl:apply-templates>
 					</p>
 				</xsl:if>
 
@@ -1567,44 +1572,15 @@
 						test="position()=last() and count(../m:corpName[text()]|../m:persName[text()])=0"
 						>. </xsl:if>
 				</xsl:for-each>
-				<xsl:for-each select="m:corpName[text()]|
-			      m:persName[text()]">
-					<xsl:if test="position()=1"> (</xsl:if>
-					<xsl:choose>
-						<xsl:when test="@role!=preceding-sibling::*[name()='persName' or name()='corpName'][1]/@role or position()=1">
-							<xsl:choose>
-								<xsl:when test="@role=following-sibling::*[name()='persName' or name()='corpName'][1]/@role">
-									<xsl:if test="name()='persName' and normalize-space(@role)">
-										<xsl:value-of select="concat(@role,'s')"
-										/><xsl:text>: </xsl:text>
-									</xsl:if>
-									<xsl:apply-templates select="."/>; </xsl:when>
-								<xsl:otherwise>
-									<xsl:if test="name()='persName' and normalize-space(@role)">
-										<xsl:value-of select="@role"/>
-										<xsl:text>: </xsl:text>
-									</xsl:if>
-									<xsl:apply-templates select="."/>
-									<xsl:if test="following-sibling::m:persName/text()">; </xsl:if>
-								</xsl:otherwise>
-							</xsl:choose>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:choose>
-								<xsl:when test="@role=following-sibling::*[name()='persName' or name()='corpName'][1]/@role">
-									<xsl:apply-templates select="."/>; </xsl:when>
-								<xsl:when test="not(following-sibling::*[name()='persName' or name()='corpName'][1]/@role)">
-									<xsl:apply-templates select="."/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:apply-templates select="."/>; </xsl:otherwise>
-							</xsl:choose>
-						</xsl:otherwise>
-					</xsl:choose>
-					<xsl:if test="position() = last()">
-						<xsl:text>). </xsl:text>
-					</xsl:if>
-				</xsl:for-each>
+				
+				
+				<xsl:if test="m:corpName[text()] | m:persName[text()]">
+					<xsl:text> (</xsl:text>
+					<xsl:apply-templates select="." mode="list_persons_by_role">
+						<xsl:with-param name="style" select="'inline'"/>
+					</xsl:apply-templates>
+					<xsl:text>)</xsl:text>
+				</xsl:if>				
 
 				<xsl:for-each select="m:desc[text()]">
 					<xsl:apply-templates/>
@@ -1650,56 +1626,8 @@
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template name="list_agents">
-		<xsl:if test="m:respStmt/m:persName[text()] |
-		  m:respStmt/m:corpName[text()]">
-			<xsl:for-each
-				select="m:respStmt/m:persName[text()] |
-			    m:respStmt/m:corpName[text()]">
-				<xsl:choose>
-					<xsl:when test="@role!=preceding-sibling::*[1]/@role or position()=1">
-						<xsl:choose>
-							<xsl:when test="@role=following-sibling::*[1]/@role">
-								<xsl:if test="name()='persName' and normalize-space(@role)">
-									<xsl:call-template name="capitalize">
-										<xsl:with-param name="str" select="concat(@role,'s')"/>
-									</xsl:call-template><xsl:text>: </xsl:text>
-								</xsl:if>
-								<xsl:apply-templates select="."/>, </xsl:when>
-							<xsl:otherwise>
-								<xsl:if test="name()='persName' and normalize-space(@role)">
-									<xsl:call-template name="capitalize">
-										<xsl:with-param name="str" select="@role"/>
-									</xsl:call-template>
-									<xsl:text>: </xsl:text>
-								</xsl:if>
-								<xsl:apply-templates select="."/>
-								<xsl:if test="following-sibling::m:persName/text()">; </xsl:if>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:choose>
-							<xsl:when test="@role=following-sibling::*[1]/@role">
-								<xsl:apply-templates select="."/>, </xsl:when>
-							<xsl:when test="not(following-sibling::*[1]/@role)">
-								<xsl:apply-templates select="."/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:apply-templates select="."/>; </xsl:otherwise>
-						</xsl:choose>
-					</xsl:otherwise>
-				</xsl:choose>
-				<xsl:if test="position() = last()">
-					<xsl:text>. </xsl:text>
-				</xsl:if>
-			</xsl:for-each>
-
-
-			<xsl:for-each
-				select="m:geogName[text()] | 
-		  m:date[text()] |
-		  m:identifier[text()]">
+	<xsl:template name="list_places_dates_identifiers">
+			<xsl:for-each select="m:geogName[text()] | m:date[text()] | m:identifier[text()]">
 				<xsl:if test="string-length(@label) &gt; 0">
 					<xsl:apply-templates select="@label"/>
 					<xsl:text>: </xsl:text>
@@ -1716,78 +1644,110 @@
 			</xsl:for-each>
 			<xsl:text>
       </xsl:text>
-		</xsl:if>
 	</xsl:template>
 
+	<!-- List persons and corporate names grouped by role -->
 	<xsl:template match="*" mode="list_persons_by_role">
-		<xsl:if test="count(m:persName[text()] | m:corpName[text()])>0">
-			<xsl:for-each select="m:corpName[text()]|m:persName[text()]">
-				<xsl:variable name="role_str">
-					<!-- look up the role description (or use the attribute value unchanged if not found) -->
-					<xsl:choose>
-						<xsl:when test="$l/*[name()=@role]"><xsl:value-of select="$l/*[name()=@role]"/></xsl:when>
-						<xsl:otherwise><xsl:value-of select="@role"/></xsl:otherwise>
-					</xsl:choose>
-				</xsl:variable>
-				<xsl:variable name="role">
-					<xsl:call-template name="capitalize">
-						<xsl:with-param name="str" select="$role_str"/>
-					</xsl:call-template>
-				</xsl:variable>
-				
+		<!-- Roles to omit from the list -->
+		<xsl:param name="exclude"/>
+		<!-- CSS class to be assigned to role labels -->
+		<xsl:param name="label_class"/>
+		<!-- List style: 'inline' or nothing (inserts a line break after each role empty) -->
+		<xsl:param name="style"/>
+		<!-- Capitalize roles? 'yes' or nothing for no -->
+		<xsl:param name="capitalize"/>
+		<!-- Separator between names with the same role -->
+		<xsl:param name="separator" select="';'"/>
+		<xsl:for-each select="m:corpName[text() and not(@role=$exclude)] | m:persName[text() and not(@role=$exclude)]">
+			<xsl:variable name="role_str">
+				<!-- look up the role description text (or use the attribute value unchanged if not found) -->
+				<xsl:variable name="role_attr"><xsl:value-of select="@role"/></xsl:variable>
 				<xsl:choose>
-					<xsl:when test="@role!=preceding-sibling::*[1]/@role or position()=1">
-						<xsl:choose>
-							<xsl:when test="@role=following-sibling::*[1]/@role">
-								<xsl:if test="name()='persName' and normalize-space(@role)">
-									<xsl:variable name="label">
-										<xsl:choose>
-											<xsl:when test="$language='en'">
-												<!-- if English: make it plural... -->
-												<xsl:choose>
-													<xsl:when test="substring(@role,string-length(@role),1)='y'">
-														<xsl:value-of select="concat(substring($role,1,string-length($role)-1),'ies')" />
-													</xsl:when>
-													<xsl:otherwise><xsl:value-of select="concat($role,'s')"/></xsl:otherwise>
-												</xsl:choose>
-											</xsl:when>
-											<xsl:otherwise>
-												<xsl:value-of select="$role"/>
-											</xsl:otherwise>
-										</xsl:choose>
-									</xsl:variable>
-									<xsl:value-of select="$label"/><xsl:text>: </xsl:text>
-								</xsl:if>
-								<xsl:apply-templates select="."/><xsl:text>, </xsl:text>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:if test="name()='persName' and normalize-space(@role)">
-									<xsl:value-of select="$role"/>
-									<xsl:text>: </xsl:text>
-								</xsl:if>
-								<xsl:apply-templates select="."/>
-								<xsl:if test="following-sibling::m:persName/text()">
-									<br/>
-								</xsl:if>
-							</xsl:otherwise>
-						</xsl:choose>
+					<xsl:when test="$l/*[name()=$role_attr]"><xsl:value-of select="$l/*[name()=$role_attr]"/></xsl:when>
+					<xsl:otherwise><xsl:value-of select="@role"/></xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:variable name="role">
+				<xsl:choose>
+					<xsl:when test="$capitalize='yes'">
+						<xsl:call-template name="capitalize">
+							<xsl:with-param name="str" select="$role_str"/>
+						</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:choose>
-							<xsl:when test="@role=following-sibling::*[1]/@role">
-								<xsl:apply-templates select="."/>, </xsl:when>
-							<xsl:when test="not(following-sibling::*[1]/@role)">
-								<xsl:apply-templates select="."/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:apply-templates select="."/>
-								<br/>
-							</xsl:otherwise>
-						</xsl:choose>
+						<xsl:value-of select="$role_str"/>
 					</xsl:otherwise>
 				</xsl:choose>
-			</xsl:for-each>
-		</xsl:if>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="@role!=preceding-sibling::*[1]/@role or position()=1">
+					<xsl:choose>
+						<xsl:when test="@role=following-sibling::*[1]/@role">
+							<xsl:if test="name()='persName' and normalize-space(@role)">
+								<xsl:variable name="label">
+									<xsl:choose>
+										<xsl:when test="$language='en' or $language=''">
+											<!-- if English: make it plural... -->
+											<xsl:choose>
+												<xsl:when test="substring(@role,string-length(@role),1)='y'">
+													<xsl:value-of select="concat(substring($role,1,string-length($role)-1),'ies')" />
+												</xsl:when>
+												<xsl:otherwise><xsl:value-of select="concat($role,'s')"/></xsl:otherwise>
+											</xsl:choose>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:value-of select="$role"/>
+										</xsl:otherwise>
+									</xsl:choose>
+								</xsl:variable>
+								<xsl:element name="span">
+									<xsl:attribute name="class"><xsl:value-of select="$label_class"/></xsl:attribute>
+									<xsl:value-of select="$label"/>
+								</xsl:element>
+								<xsl:text>: </xsl:text>
+							</xsl:if>
+							<xsl:apply-templates select="."/><xsl:value-of select="$separator"/><xsl:text> </xsl:text>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:if test="name()='persName' and normalize-space(@role)">
+								<xsl:element name="span">
+									<xsl:attribute name="class"><xsl:value-of select="$label_class"/></xsl:attribute>
+									<xsl:value-of select="$role"/>
+								</xsl:element>
+								<xsl:text>: </xsl:text>
+							</xsl:if>
+							<xsl:apply-templates select="."/>
+							<xsl:if test="following-sibling::m:persName/text()">
+								<xsl:choose>
+									<xsl:when test="$style='inline'">
+										<xsl:text>; </xsl:text>
+									</xsl:when>
+									<xsl:otherwise><br/></xsl:otherwise>
+								</xsl:choose>
+							</xsl:if>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<xsl:when test="@role=following-sibling::*[1]/@role">
+							<xsl:apply-templates select="."/>, </xsl:when>
+						<xsl:when test="not(following-sibling::*[1]/@role)">
+							<xsl:apply-templates select="."/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:apply-templates select="."/>
+							<xsl:choose>
+								<xsl:when test="$style='inline'">
+									<xsl:text>; </xsl:text>
+								</xsl:when>
+								<xsl:otherwise><br/></xsl:otherwise>
+							</xsl:choose>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!-- source-related templates -->
@@ -1853,10 +1813,14 @@
 				</xsl:choose>
 			</xsl:if>
 			
-			<xsl:if test="m:respStmt/m:persName[text()] |
-		    m:respStmt/m:corpName[text()]">
+			<xsl:if test="m:respStmt/m:persName[text()] | m:respStmt/m:corpName[text()]">
 				<p>
-					<xsl:call-template name="list_agents"/>
+					<xsl:for-each select="m:respStmt">
+						<xsl:apply-templates select="." mode="list_persons_by_role">
+							<xsl:with-param name="capitalize" select="'yes'"/>
+						</xsl:apply-templates>
+					</xsl:for-each>
+					<xsl:call-template name="list_places_dates_identifiers"/>
 				</p>
 			</xsl:if>
 
@@ -1865,7 +1829,12 @@
 			<xsl:for-each select="m:titleStmt[m:respStmt/m:persName/text()]">
 				<xsl:comment> contributors </xsl:comment>
 				<p>
-					<xsl:call-template name="list_agents"/>
+					<xsl:for-each select="m:respStmt">
+						<xsl:apply-templates select="." mode="list_persons_by_role">
+							<xsl:with-param name="capitalize" select="'yes'"/>
+						</xsl:apply-templates>
+					</xsl:for-each>
+					<xsl:call-template name="list_places_dates_identifiers"/>
 				</p>
 			</xsl:for-each>
 
@@ -1885,7 +1854,6 @@
 						<xsl:apply-templates select="m:date"/>
 					</xsl:if>
 					<xsl:text>.</xsl:text>
-					<!--<xsl:call-template name="list_agents"/>-->
 				</div>
 			</xsl:for-each>
 
