@@ -70,11 +70,15 @@ declare function loop:sort-key (
 	else
 	  "0000"
     else if($key eq "work_number") then
+      let $identifier:=$doc//m:workDesc/m:work/m:identifier[@label=$collection][1]/string()
+      (: extract any trailing number :)
+      let $number:= replace($identifier,'^.*?(\d*)$','$1')
+      (: and anything that might be before the number :)
+      let $prefix:= replace($identifier,'^(.*?)\d*$','$1')
       (: make the number a 15 character long string padded with zeros :)
-      let $num:=$doc//m:workDesc/m:work/m:identifier[@label=$collection][1]/string()
-      let $padded_number:=concat("0000000000000000",normalize-space($num))
+      let $padded_number:=concat("0000000000000000",normalize-space($number))
       let $len:=string-length($padded_number)-14
-	return substring($padded_number,$len,15)
+	return concat($prefix,substring($padded_number,$len,15))
     else 
       ""
 
