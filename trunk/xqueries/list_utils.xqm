@@ -96,7 +96,7 @@ let $options:=
       <a  target="_blank"
       title="View" 
       href="/storage/present.xq?doc={util:document-name($doc)}">
-	{$doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()}
+	{$doc//m:workDesc/m:work/m:titleStmt[1]/m:title[1]/string()}
       </a>
       return $ref
     };
