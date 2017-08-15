@@ -12,6 +12,7 @@ declare namespace ft="http://exist-db.org/xquery/lucene";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 declare variable $document := request:get-parameter("doc", "");
+declare variable $language := request:get-parameter("language", "");
 declare variable $xsl := request:get-parameter("xsl", "mei_to_html.xsl");
 
 
@@ -24,6 +25,7 @@ let $params :=
 <parameters>
    <param name="hostname" value="{request:get-header('HOST')}"/>
    <param name="doc" value="{$document}"/>
+   <param name="language" value="{$language}"/>
 </parameters>
 
 for $doc in $list
