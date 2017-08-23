@@ -30,12 +30,18 @@
 	<xsl:param name="doc"/>
 	<xsl:param name="hostname"/>
 	<xsl:param name="language"/>
-
+	<xsl:param name="score"/>
+	
 
 	<!-- GLOBAL VARIABLES -->
-
-	<!-- Default language to use for labels etc. Default is overridden if the calling script provides a langauge parameter -->
+	
+	<!-- Default values -->
+	<!-- Language to use for labels etc. Default is overridden if the calling script provides a language parameter -->
 	<xsl:variable name="default_language">en</xsl:variable>
+	<!-- Render scores in <music> also? -->
+	<xsl:variable name="render_score">true</xsl:variable>
+	
+	<!-- Other variables - do not edit -->
 	
 	<!-- preferred language in titles and other multilingual fields -->
 	<xsl:variable name="preferred_language">none</xsl:variable>
@@ -61,6 +67,13 @@
 		</xsl:choose>
 	</xsl:variable>
 	<xsl:variable name="l" select="document($language_pack_file_name)/language"/>
+
+	<xsl:variable name="view_score">
+		<xsl:choose>
+			<xsl:when test="$score!=''"><xsl:value-of select="$score"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="$render_score"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
 	
 	
 	
@@ -96,10 +109,10 @@
     	  </xsl:text>
 		</script>
 		
-		<!-- Include the Verovio toolkit for displaying incipits if needed -->
+		<!-- Include the Verovio toolkit for displaying incipits or score if needed -->
 		<!--<script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js">-->
-		<xsl:if test="//m:incip/m:score/* or normalize-space(//m:incipCode[@form='pae' or @form='PAE' or @form='plaineAndEasie'])">
-			<script src="http://www.verovio.org/javascript/latest/verovio-toolkit-light.js" type="text/javascript">
+		<xsl:if test="m:meiHead/m:workDesc/m:work//m:incip/m:score/* or m:music//m:score/* or normalize-space(//m:incipCode[@form='pae' or @form='PAE' or @form='plaineAndEasie'])">
+			<script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript">
 		    	<xsl:text>
 	    		</xsl:text>
 			</script>
@@ -255,6 +268,9 @@
 
 		<!-- bibliography -->
 		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:biblList[m:bibl/*[text()]]"/>
+		
+		<!-- score -->
+		<xsl:apply-templates select="m:music[//m:score]"/>
 
 		<xsl:apply-templates select="." mode="colophon"/>
 
@@ -358,8 +374,8 @@
 				test="not(../m:title[(@type='main' or not(@type)) and text() and @xml:lang=$lang])">
 				<xsl:element name="h2">
 					<xsl:element name="span">
-						<xsl:call-template name="maybe_print_lang"/>(<!--[--><xsl:value-of
-							select="$lang"/><!--]: --><xsl:apply-templates select="."/>)</xsl:element>
+						<xsl:call-template name="maybe_print_lang"/>(<!--[<xsl:value-of
+							select="$lang"/>]: --><xsl:apply-templates select="."/>)</xsl:element>
 					<xsl:call-template name="maybe_print_br"/>
 				</xsl:element>
 			</xsl:if>
@@ -921,44 +937,42 @@
 
 	<xsl:template match="m:incip">
 		<xsl:for-each select="m:incipCode[text()]">
-			<p>
-					<xsl:choose>
-						
-						<xsl:when test="@form='plaineAndEasie' or @form='PAE' or @form='pae'">
-							<xsl:variable name="id" select="concat('incip_pae_',generate-id())"/>
-							<xsl:element name="div">
-								<xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
-								<xsl:text> </xsl:text>
-							</xsl:element>
-							<!-- use Verovio for rendering PAE incipits -->
-							<script type="text/javascript">
-							  /* The Plain and Easy code to be rendered */
-							  var data = "@data:<xsl:value-of select="."/>";
+			<xsl:choose>
+				
+				<xsl:when test="@form='plaineAndEasie' or @form='PAE' or @form='pae'">
+					<xsl:variable name="id" select="concat('incip_pae_',generate-id())"/>
+					<xsl:element name="div">
+						<xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
+						<xsl:text> </xsl:text>
+					</xsl:element>
+					<!-- use Verovio for rendering PAE incipits -->
+					<script type="text/javascript">
+					  /* The Plain and Easy code to be rendered */
+					  var data = "@data:<xsl:value-of select="."/>";
 
-							  /* Render the data and insert it as content of the target div */
-							  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData( 
-							      data, 
-							      JSON.stringify({ 
-							      	inputFormat: 'pae',
-							      	pageWidth: 3000,
-							      	pageHeight: 400,
-    								border: 0,
-    								scale: 30,
-    								adjustPageHeight: 1,
-    								ignoreLayout: 1
-							      	}) 
-							  );
-							</script>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:choose>
-								<xsl:when test="normalize-space(@form)"><xsl:value-of select="@form"/>: </xsl:when>
-								<xsl:otherwise><span class="label"><xsl:value-of select="$l/music_incipit"/>: </span></xsl:otherwise>
-							</xsl:choose>
-							<xsl:apply-templates select="."/>
-						</xsl:otherwise>
+					  /* Render the data and insert it as content of the target div */
+					  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData( 
+					      data, 
+					      JSON.stringify({ 
+					      	inputFormat: 'pae',
+					      	pageWidth: 3000,
+					      	pageHeight: 400,
+    						border: 0,
+    						scale: 30,
+    						adjustPageHeight: 1,
+    						ignoreLayout: 1
+					      	}) 
+					  );
+					</script>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<xsl:when test="normalize-space(@form)"><xsl:value-of select="@form"/>: </xsl:when>
+						<xsl:otherwise><p><span class="label"><xsl:value-of select="$l/music_incipit"/>: </span></p></xsl:otherwise>
 					</xsl:choose>
-			</p>
+					<xsl:apply-templates select="."/>
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:for-each>
 		<xsl:apply-templates select="m:incipText[//text()]"/>
 		<xsl:apply-templates select="." mode="graphic"/>
@@ -3477,4 +3491,52 @@
 	</xsl:template>
 	<!-- END TEXT HANDLING -->
 
+
+	<!-- Display score -->
+	<xsl:template match="m:music[//m:score]">
+		<xsl:if test="$view_score='true'">
+			<xsl:for-each select=".//m:score">
+					<xsl:variable name="id" select="concat('score_',generate-id())"/>
+					<xsl:variable name="xml_id" select="concat($id,'_xml')"/>
+					<xsl:element name="div">
+						<xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
+						<xsl:text> </xsl:text>
+					</xsl:element>
+					
+					<!-- put the MEI XML into the document here -->
+					<xsl:element name="script">
+						<xsl:attribute name="id"><xsl:value-of select="$xml_id"/></xsl:attribute>
+						<xsl:attribute name="type">text/xmldata</xsl:attribute>
+						<mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="2013">
+							<music>
+								<body>
+									<mdiv>
+										<xsl:copy-of select="."/>
+									</mdiv>
+								</body>
+							</music>
+						</mei>
+					</xsl:element>
+					<!-- use Verovio for rendering MEI -->
+					<script type="text/javascript">
+				  /* The MEI encoding to be rendered */
+				  var data = document.getElementById('<xsl:value-of select="$xml_id"/>').innerHTML;
+				  /* Render the data and insert it as content of the target div */
+				  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData( 
+				      data, 
+				      JSON.stringify({ 
+				      	inputFormat: 'mei',
+				      	pageWidth: 2100,
+		    			border: 0,
+		    			scale: 40,
+		    			adjustPageHeight: 1,
+		    			ignoreLayout: 1
+				      	}) 
+				  );
+				</script>
+			</xsl:for-each>
+		</xsl:if>
+	</xsl:template>
+	
+	
 </xsl:stylesheet>
