@@ -18,7 +18,7 @@
 		Authors: 
 		Axel Teich Geertinger & Sigfrid Lundberg
 		Danish Centre for Music Editing
-		The Royal Library, Copenhagen
+		The Royal Danish Library, Copenhagen
 		2010-2017	
 	-->
 	
@@ -29,10 +29,20 @@
 
 	<xsl:param name="doc"/>
 	<xsl:param name="hostname"/>
-
+	<xsl:param name="language"/>
+	<xsl:param name="score"/>
+	
 
 	<!-- GLOBAL VARIABLES -->
-
+	
+	<!-- Default values -->
+	<!-- Language to use for labels etc. Default is overridden if the calling script provides a language parameter -->
+	<xsl:variable name="default_language">en</xsl:variable>
+	<!-- Render scores in <music> also? -->
+	<xsl:variable name="render_score">true</xsl:variable>
+	
+	<!-- Other variables - do not edit -->
+	
 	<!-- preferred language in titles and other multilingual fields -->
 	<xsl:variable name="preferred_language">none</xsl:variable>
 	<!-- general MerMEId settings -->
@@ -40,9 +50,7 @@
 		select="document(concat('http://',$hostname,'/editor/forms/mei/mermeid_configuration.xml'))"/>
 	<!-- file context - i.e. collection identifier like 'CNW' -->
 	<xsl:variable name="file_context">
-		<xsl:value-of
-			select="/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection'][1]"
-		/>
+		<xsl:value-of select="/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection'][1]"/>
 	</xsl:variable>
 	<!-- files containing look-up information -->
 	<xsl:variable name="bibl_file_name"
@@ -51,7 +59,23 @@
 	<xsl:variable name="abbreviations_file_name"
 		select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'library/abbreviations.xml'))"/>
 	<xsl:variable name="abbreviations_file" select="document($abbreviations_file_name)"/>
+	
+	<xsl:variable name="language_pack_file_name">
+		<xsl:choose>
+			<xsl:when test="$language!=''"><xsl:value-of select="string(concat('language/',$language,'.xml'))"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="string(concat('language/',$default_language,'.xml'))"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable name="l" select="document($language_pack_file_name)/language"/>
 
+	<xsl:variable name="view_score">
+		<xsl:choose>
+			<xsl:when test="$score!=''"><xsl:value-of select="$score"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="$render_score"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	
+	
 	
 	<!-- CREATE HTML DOCUMENT -->
 
@@ -85,10 +109,10 @@
     	  </xsl:text>
 		</script>
 		
-		<!-- Include the Verovio toolkit for displaying incipits if needed -->
+		<!-- Include the Verovio toolkit for displaying incipits or score if needed -->
 		<!--<script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js">-->
-		<xsl:if test="//m:incip/m:score/* or normalize-space(//m:incipCode[@form='pae' or @form='PAE' or @form='plaineAndEasie'])">
-			<script src="http://www.verovio.org/javascript/latest/verovio-toolkit-light.js" type="text/javascript">
+		<xsl:if test="m:meiHead/m:workDesc/m:work//m:incip/m:score/* or m:music//m:score/* or normalize-space(//m:incipCode[@form='pae' or @form='PAE' or @form='plaineAndEasie'])">
+			<script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript">
 		    	<xsl:text>
 	    		</xsl:text>
 			</script>
@@ -132,9 +156,9 @@
 		<xsl:call-template name="body_main_content"/>
 
 		<xsl:for-each
-			select="m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes' and text()]">
+			select="m:meiHead/m:fileDesc/m:notesStmt/m:annot[@type='private_notes' and m:p/text()]">
 			<div class="private">
-				<div class="private_heading">[Private notes]</div>
+				<div class="private_heading"><xsl:value-of select="$l/private_notes"/></div>
 				<div class="private_content">
 					<xsl:apply-templates select="."/>
 				</div>
@@ -169,11 +193,7 @@
 
 		<!-- persons -->
 		<xsl:apply-templates
-			select="m:meiHead/
-		m:workDesc/
-		m:work/
-		m:titleStmt/
-		m:respStmt[m:persName[text()]]">
+			select="m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt[m:persName[text()]]">
 			<xsl:with-param name="exclude">composer</xsl:with-param>
 		</xsl:apply-templates>
 
@@ -182,7 +202,7 @@
 			select="m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source'][text()]">
 			<div>
 				<xsl:if test="position()=1">
-					<span class="p_heading">Text source: </span>
+					<span class="p_heading"><xsl:value-of select="$l/text_source"/>: </span>
 				</xsl:if>
 				<xsl:element name="span">
 					<xsl:call-template name="maybe_print_lang"/>
@@ -248,6 +268,9 @@
 
 		<!-- bibliography -->
 		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:biblList[m:bibl/*[text()]]"/>
+		
+		<!-- score -->
+		<xsl:apply-templates select="m:music[//m:score]"/>
 
 		<xsl:apply-templates select="." mode="colophon"/>
 
@@ -284,10 +307,10 @@
 		<div class="settings colophon noprint">
 			<a
 				href="javascript:loadcssfile('/editor/style/html_hide_languages.css'); hide('load_alt_lang_css'); show('remove_alt_lang_css')"
-				id="load_alt_lang_css" class="noprint">Hide alternative languages</a>
+				id="load_alt_lang_css" class="noprint"><xsl:value-of select="$l/hide_alt_lang"/></a>
 			<a style="display:none"
 				href="javascript:removecssfile('/editor/style/html_hide_languages.css'); hide('remove_alt_lang_css'); show('load_alt_lang_css')"
-				id="remove_alt_lang_css" class="noprint">Show alternative languages</a>
+				id="remove_alt_lang_css" class="noprint"><xsl:value-of select="$l/show_alt_lang"/></a>
 		</div>
 	</xsl:template>
 	
@@ -351,8 +374,8 @@
 				test="not(../m:title[(@type='main' or not(@type)) and text() and @xml:lang=$lang])">
 				<xsl:element name="h2">
 					<xsl:element name="span">
-						<xsl:call-template name="maybe_print_lang"/>(<!--[--><xsl:value-of
-							select="$lang"/><!--]: --><xsl:apply-templates select="."/>)</xsl:element>
+						<xsl:call-template name="maybe_print_lang"/>(<!--[<xsl:value-of
+							select="$lang"/>]: --><xsl:apply-templates select="."/>)</xsl:element>
 					<xsl:call-template name="maybe_print_br"/>
 				</xsl:element>
 			</xsl:if>
@@ -371,7 +394,7 @@
 					</xsl:for-each>-->
 				<xsl:for-each select="m:title[@type='original'][text()]">
 					<xsl:element name="span">
-						<xsl:call-template name="maybe_print_lang"/> Original title:
+						<xsl:call-template name="maybe_print_lang"/> <xsl:value-of select="$l/original_title"/>:
 						<xsl:apply-templates select="."/>
 					</xsl:element>
 					<xsl:call-template name="maybe_print_br"/>
@@ -384,24 +407,30 @@
 		<!-- certain roles may be excluded from the list -->
 		<xsl:param name="exclude"/>		
 		<!-- list persons grouped by role -->
-		<p>
+		<p>	
+		<xsl:apply-templates select="." mode="list_persons_by_role">
+			<xsl:with-param name="exclude" select="$exclude"/>
+			<xsl:with-param name="label_class" select="'p_heading'"/>
+			<xsl:with-param name="capitalize" select="'yes'"/>
+		</xsl:apply-templates>
+		<!--
 			<xsl:for-each select="m:persName[text() and not(contains($exclude,@role))]">
 				<xsl:variable name="role" select="@role"/>
 				<xsl:variable name="displayed_role">
 					<xsl:choose>
-						<xsl:when test="@role='author'">Text author</xsl:when>
+						<xsl:when test="@role='author'"><xsl:value-of select="$l/text_author"/></xsl:when>
 						<xsl:otherwise>
 							<xsl:call-template name="capitalize">
 								<xsl:with-param name="str" select="@role"/>
 							</xsl:call-template>
 						</xsl:otherwise>
 					</xsl:choose>
-					<xsl:if test="count(../m:persName[text() and @role=$role]) > 1">
+					<xsl:if test="count(../m:persName[text() and @role=$role]) > 1 and $language='en'">
 						<xsl:text>s</xsl:text>
 					</xsl:if>
 				</xsl:variable>
 				<xsl:if test="count(preceding-sibling::*[@role=$role])=0">
-					<!-- one <div> per role -->
+					<xsl:comment> one <div> per role </csl:comment>
 					<div class="list_block">
 						<span class="p_heading">
 							<xsl:value-of select="$displayed_role"/>
@@ -415,7 +444,8 @@
 						</xsl:for-each>
 					</div>
 				</xsl:if>
-			</xsl:for-each>
+			</xsl:for-each>-->
+		
 			<!-- finally, list names without roles -->
 			<xsl:for-each select="m:persName[text() and (not(@role) or @role='')]">
 				<div class="list_block">
@@ -631,49 +661,21 @@
 		<xsl:param name="rel"/>
 		<xsl:param name="label"/>
 		<xsl:choose>
-			<xsl:when test="$rel='hasAbridgement'">Abridged version:</xsl:when>
-			<xsl:when test="$rel='isAbridgementOf'">Abridged version of:</xsl:when>
-			<xsl:when test="$rel='hasAdaptation'">Adaptation:</xsl:when>
-			<xsl:when test="$rel='isAdaptationOf'">Adaptation of:</xsl:when>
-			<xsl:when test="$rel='hasAlternate'">Alternate:</xsl:when>
-			<xsl:when test="$rel='isAlternateOf'">Alternate of:</xsl:when>
-			<xsl:when test="$rel='hasArrangement'">Arrangement:</xsl:when>
-			<xsl:when test="$rel='isArrangementOf'">Arrangement of:</xsl:when>
-			<xsl:when test="$rel='hasComplement'">Complement:</xsl:when>
-			<xsl:when test="$rel='isComplementOf'">Complement to:</xsl:when>
-			<xsl:when test="$rel='hasEmbodiment'">Embodiment:</xsl:when>
-			<xsl:when test="$rel='isEmbodimentOf'">Embodiment of:</xsl:when>
-			<xsl:when test="$rel='hasExemplar'">Exemplar:</xsl:when>
-			<xsl:when test="$rel='isExemplarOf'">Exemplar of:</xsl:when>
-			<xsl:when test="$rel='hasImitation'">Imitation:</xsl:when>
-			<xsl:when test="$rel='isImitationOf'">Imitation of:</xsl:when>
-			<xsl:when test="$rel='hasPart'">Includes:</xsl:when>
-			<xsl:when test="$rel='isPartOf'">Contained in:</xsl:when>
-			<xsl:when test="$rel='hasRealization'">Realization:</xsl:when>
-			<xsl:when test="$rel='isRealizationOf'">Realization of:</xsl:when>
-			<xsl:when test="$rel='hasReconfiguration'">Reconfiguration:</xsl:when>
-			<xsl:when test="$rel='isReconfigurationOf'">Reconfigurationof:</xsl:when>
 			<xsl:when test="$rel='hasReproduction'">
 				<xsl:choose>
-					<xsl:when test="contains($label,'Edition')">Edition:</xsl:when>
-					<xsl:otherwise>Reproduction (edition or facsimile):</xsl:otherwise>
+					<xsl:when test="contains($label,'Edition')"><xsl:value-of select="$l/edition"/>:</xsl:when>
+					<xsl:otherwise><xsl:value-of select="$l/hasReproduction"/>:</xsl:otherwise>
 				</xsl:choose>
 			</xsl:when>
-			<xsl:when test="$rel='isReproductionOf'">Reproduction of:</xsl:when>
-			<xsl:when test="$rel='hasRevision'">Revised version:</xsl:when>
-			<xsl:when test="$rel='isRevisionOf'">Revised version of:</xsl:when>
-			<xsl:when test="$rel='hasSuccessor'">Succeeded by:</xsl:when>
-			<xsl:when test="$rel='isSuccessorOf'">Succeeds:</xsl:when>
-			<xsl:when test="$rel='hasSupplement'">Supplement:</xsl:when>
-			<xsl:when test="$rel='isSummarizationOf'">Summarizes:</xsl:when>
-			<xsl:when test="$rel='hasSummarization'">Summarization:</xsl:when>
-			<xsl:when test="$rel='isSupplementOf'">Supplement to:</xsl:when>
-			<xsl:when test="$rel='hasTransformation'">Transformation:</xsl:when>
-			<xsl:when test="$rel='isTransformationOf'">Transformation of:</xsl:when>
-			<xsl:when test="$rel='hasTranslation'">Translated version:</xsl:when>
-			<xsl:when test="$rel='isTranslationOf'">Translation of:</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select="$rel"/>
+				<xsl:choose>
+					<xsl:when test="$l/*[name()=$rel]">
+						<xsl:value-of select="$l/*[name()=$rel][1]"/>:
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="$rel"/>:
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:otherwise>
 		</xsl:choose>
 
@@ -736,7 +738,7 @@
 			select="m:componentGrp[normalize-space(*//text()[1]) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">
 			<xsl:apply-templates select="." mode="fold_section">
 				<xsl:with-param name="id" select="concat('movements',generate-id(),position())"/>
-				<xsl:with-param name="heading">Music</xsl:with-param>
+				<xsl:with-param name="heading"><xsl:value-of select="$l/music"/></xsl:with-param>
 				<xsl:with-param name="content">
 					<xsl:apply-templates select="m:expression"/>
 				</xsl:with-param>
@@ -765,7 +767,7 @@
 				<xsl:apply-templates select="." mode="fold_section">
 					<xsl:with-param name="id"
 						select="concat('version_source',generate-id(.),$expression_id)"/>
-					<xsl:with-param name="heading">Sources</xsl:with-param>
+					<xsl:with-param name="heading"><xsl:value-of select="$l/sources"/></xsl:with-param>
 					<xsl:with-param name="content">
 						<!-- collect all external source data first to create a complete list of sources -->
 						<xsl:variable name="sources">
@@ -906,7 +908,7 @@
 				<xsl:apply-templates select="." mode="fold_section">
 					<xsl:with-param name="id"
 						select="concat('subsection',../../@xml:id,generate-id(),position())"/>
-					<xsl:with-param name="heading">Sections</xsl:with-param>
+					<xsl:with-param name="heading"><xsl:value-of select="$l/sections"/></xsl:with-param>
 					<xsl:with-param name="content">
 						<xsl:element name="ul">
 							<xsl:attribute name="class">movement_list</xsl:attribute>
@@ -935,44 +937,42 @@
 
 	<xsl:template match="m:incip">
 		<xsl:for-each select="m:incipCode[text()]">
-			<p>
-					<xsl:choose>
-						
-						<xsl:when test="@form='plaineAndEasie' or @form='PAE' or @form='pae'">
-							<xsl:variable name="id" select="concat('incip_pae_',generate-id())"/>
-							<xsl:element name="div">
-								<xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
-								<xsl:text> </xsl:text>
-							</xsl:element>
-							<!-- use Verovio for rendering PAE incipits -->
-							<script type="text/javascript">
-							  /* The Plain and Easy code to be rendered */
-							  var data = "@data:<xsl:value-of select="."/>";
+			<xsl:choose>
+				
+				<xsl:when test="@form='plaineAndEasie' or @form='PAE' or @form='pae'">
+					<xsl:variable name="id" select="concat('incip_pae_',generate-id())"/>
+					<xsl:element name="div">
+						<xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
+						<xsl:text> </xsl:text>
+					</xsl:element>
+					<!-- use Verovio for rendering PAE incipits -->
+					<script type="text/javascript">
+					  /* The Plain and Easy code to be rendered */
+					  var data = "@data:<xsl:value-of select="."/>";
 
-							  /* Render the data and insert it as content of the target div */
-							  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData( 
-							      data, 
-							      JSON.stringify({ 
-							      	inputFormat: 'pae',
-							      	pageWidth: 3000,
-							      	pageHeight: 400,
-    								border: 0,
-    								scale: 30,
-    								adjustPageHeight: 1,
-    								ignoreLayout: 1
-							      	}) 
-							  );
-							</script>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:choose>
-								<xsl:when test="normalize-space(@form)"><xsl:value-of select="@form"/>: </xsl:when>
-								<xsl:otherwise><span class="label">Music incipit: </span></xsl:otherwise>
-							</xsl:choose>
-							<xsl:apply-templates select="."/>
-						</xsl:otherwise>
+					  /* Render the data and insert it as content of the target div */
+					  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData( 
+					      data, 
+					      JSON.stringify({ 
+					      	inputFormat: 'pae',
+					      	pageWidth: 3000,
+					      	pageHeight: 400,
+    						border: 0,
+    						scale: 30,
+    						adjustPageHeight: 1,
+    						ignoreLayout: 1
+					      	}) 
+					  );
+					</script>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<xsl:when test="normalize-space(@form)"><xsl:value-of select="@form"/>: </xsl:when>
+						<xsl:otherwise><p><span class="label"><xsl:value-of select="$l/music_incipit"/>: </span></p></xsl:otherwise>
 					</xsl:choose>
-			</p>
+					<xsl:apply-templates select="."/>
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:for-each>
 		<xsl:apply-templates select="m:incipText[//text()]"/>
 		<xsl:apply-templates select="." mode="graphic"/>
@@ -1024,7 +1024,7 @@
 		<xsl:if test="m:p/text()">
 			<div class="list_block">
 				<div class="relation_list">
-					<span class="p_heading relation_list_label">Text incipit: </span>
+					<span class="p_heading relation_list_label"><xsl:value-of select="$l/text_incipit"/>: </span>
 					<span class="relations">
 						<xsl:for-each select="m:p[text()]">
 							<xsl:element name="span">
@@ -1088,7 +1088,7 @@
 
 	<xsl:template match="m:meter">
 		<xsl:if test="position() = 1">
-			<span class="label">Metre: </span>
+			<span class="label"><xsl:value-of select="$l/metre"/>: </span>
 		</xsl:if>
 		<xsl:choose>
 			<xsl:when test="@count!='' and @unit!=''">
@@ -1118,7 +1118,7 @@
 
 	<xsl:template match="m:key[@pname or @accid or @mode or text()]">
 		<p>
-			<span class="label">Key: </span>
+			<span class="label"><xsl:value-of select="$l/key"/>: </span>
 			<xsl:value-of select="translate(@pname,'abcdefgh','ABCDEFGH')"/>
 			<xsl:if test="@accid and @accid!='n'">
 				<xsl:call-template name="key_accidental">
@@ -1147,7 +1147,7 @@
 		<xsl:choose>
 			<xsl:when test="../@n!='' or ../m:titleStmt/m:title!=''">
 				<p>
-					<span class="label">Tempo: </span>
+					<span class="label"><xsl:value-of select="$l/tempo"/>: </span>
 					<xsl:apply-templates/>
 				</p>
 			</xsl:when>
@@ -1163,7 +1163,7 @@
 
 
 	<xsl:template match="m:expression/m:extent[text()]">
-		<p>Extent: <xsl:apply-templates/>&#160;<xsl:apply-templates select="@unit"/></p>
+		<p><xsl:value-of select="$l/extent"/>: <xsl:apply-templates/>&#160;<xsl:apply-templates select="@unit"/></p>
 	</xsl:template>
 
 
@@ -1173,13 +1173,13 @@
 			<br/>
 			<div class="hr">&#160;</div>
 			<xsl:if test="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()]">
-				<p class="colophon_heading">File title:</p>
+				<p class="colophon_heading"><xsl:value-of select="$l/file_title"/>:</p>
 				<p>
 					<xsl:value-of select="m:meiHead/m:fileDesc/m:titleStmt/m:title[text()][1]"/>
 				</p>
 			</xsl:if>
 			<xsl:if test="m:meiHead/m:fileDesc/m:seriesStmt/m:title/text()">
-				<p class="colophon_heading">Series:</p>
+				<p class="colophon_heading"><xsl:value-of select="$l/series"/>:</p>
 				<xsl:for-each select="m:meiHead/m:fileDesc/m:seriesStmt/m:title//text()">
 					<p>
 						<xsl:value-of select="."/>
@@ -1197,7 +1197,7 @@
 				</xsl:for-each>
 			</xsl:if>
 			<xsl:if test="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/*[name()!='resp']//text()">
-				<p class="colophon_heading">File publication:</p>
+				<p class="colophon_heading"><xsl:value-of select="$l/file_publication"/>:</p>
 				<xsl:for-each
 					select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt/m:corpName[//text()]">
 					<p>
@@ -1256,7 +1256,9 @@
 					<p>
 						<xsl:apply-templates
 							select="m:meiHead/m:fileDesc/m:pubStmt/m:respStmt[m:persName[text()]]"
-							mode="list_persons_by_role"/>
+							mode="list_persons_by_role">
+							<xsl:with-param name="capitalize" select="'yes'"/>
+						</xsl:apply-templates>
 					</p>
 				</xsl:if>
 
@@ -1303,7 +1305,7 @@
 					</xsl:variable>		
 					<div class="relation_list">
 						<xsl:if test="position()=1 and $full">
-							<span class="p_heading relation_list_label">Instrumentation: </span>
+							<span class="p_heading relation_list_label"><xsl:value-of select="$l/instrumentation"/>: </span>
 						</xsl:if>
 						<xsl:apply-templates select="m:perfResList[*//text()]">
 							<xsl:with-param name="SortList" select="$SortingValues"/>
@@ -1318,8 +1320,8 @@
 							<xsl:if test="count(m:perfRes[not(@solo='true')])&gt;0">
 								<br/>
 							</xsl:if>
-							<span class="p_heading:">Soloist<xsl:if
-									test="count(m:perfRes[@solo='true'])&gt;1">s</xsl:if>:</span>
+							<span class="p_heading:"><xsl:value-of select="$l/soloist"/><xsl:if
+									test="count(m:perfRes[@solo='true'])&gt;1 and $language='en'">s</xsl:if>:</span>
 							<xsl:apply-templates select="m:perfRes[@solo='true'][text()]"/>
 						</xsl:if>
 					</div>
@@ -1368,7 +1370,7 @@
 		<div class="perfmedium list_block">
 			<div class="relation_list">
 				<xsl:if test="$full">
-					<span class="p_heading relation_list_label">Roles: </span>
+					<span class="p_heading relation_list_label"><xsl:value-of select="$l/roles"/>: </span>
 				</xsl:if>
 				<xsl:element name="span">
 					<xsl:if test="$full">
@@ -1450,14 +1452,14 @@
 				<xsl:choose>
 					<xsl:when
 						test="name(..)='work' or count(/m:meiHead/m:work/m:expressionList/m:expression[//text()])=1"
-						>Composition</xsl:when>
+						><xsl:value-of select="$l/composition"/></xsl:when>
 					<xsl:otherwise>
 						<xsl:choose>
 							<xsl:when
 								test="m:date[text()] and m:geogName[text()]"
-								>Date and place</xsl:when>
-							<xsl:when test="m:geogName[text()]">Place</xsl:when>
-							<xsl:otherwise>Date</xsl:otherwise>
+								><xsl:value-of select="$l/date_and_place"/></xsl:when>
+							<xsl:when test="m:geogName[text()]"><xsl:value-of select="$l/place"/></xsl:when>
+							<xsl:otherwise><xsl:value-of select="$l/date"/></xsl:otherwise>
 						</xsl:choose>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -1490,7 +1492,7 @@
 		<xsl:if test="m:eventList[@type='performances']/m:event/*/text()">
 			<xsl:apply-templates select="." mode="fold_section">
 				<xsl:with-param name="id" select="concat('history',generate-id(.),position())"/>
-				<xsl:with-param name="heading">Performances</xsl:with-param>
+				<xsl:with-param name="heading"><xsl:value-of select="$l/performances"/></xsl:with-param>
 				<xsl:with-param name="content">
 					<div>
 						<table>
@@ -1521,7 +1523,7 @@
 
 		<xsl:apply-templates select="." mode="fold_section">
 			<xsl:with-param name="id" select="concat('source',generate-id(.),position())"/>
-			<xsl:with-param name="heading">Sources</xsl:with-param>
+			<xsl:with-param name="heading"><xsl:value-of select="$l/sources"/></xsl:with-param>
 			<xsl:with-param name="content">
 				<!-- collect all external source data first to create a complete list of sources -->
 				<xsl:variable name="sources">
@@ -1584,44 +1586,15 @@
 						test="position()=last() and count(../m:corpName[text()]|../m:persName[text()])=0"
 						>. </xsl:if>
 				</xsl:for-each>
-				<xsl:for-each select="m:corpName[text()]|
-			      m:persName[text()]">
-					<xsl:if test="position()=1"> (</xsl:if>
-					<xsl:choose>
-						<xsl:when test="@role!=preceding-sibling::*[name()='persName' or name()='corpName'][1]/@role or position()=1">
-							<xsl:choose>
-								<xsl:when test="@role=following-sibling::*[name()='persName' or name()='corpName'][1]/@role">
-									<xsl:if test="name()='persName' and normalize-space(@role)">
-										<xsl:value-of select="concat(@role,'s')"
-										/><xsl:text>: </xsl:text>
-									</xsl:if>
-									<xsl:apply-templates select="."/>; </xsl:when>
-								<xsl:otherwise>
-									<xsl:if test="name()='persName' and normalize-space(@role)">
-										<xsl:value-of select="@role"/>
-										<xsl:text>: </xsl:text>
-									</xsl:if>
-									<xsl:apply-templates select="."/>
-									<xsl:if test="following-sibling::m:persName/text()">; </xsl:if>
-								</xsl:otherwise>
-							</xsl:choose>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:choose>
-								<xsl:when test="@role=following-sibling::*[name()='persName' or name()='corpName'][1]/@role">
-									<xsl:apply-templates select="."/>; </xsl:when>
-								<xsl:when test="not(following-sibling::*[name()='persName' or name()='corpName'][1]/@role)">
-									<xsl:apply-templates select="."/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:apply-templates select="."/>; </xsl:otherwise>
-							</xsl:choose>
-						</xsl:otherwise>
-					</xsl:choose>
-					<xsl:if test="position() = last()">
-						<xsl:text>). </xsl:text>
-					</xsl:if>
-				</xsl:for-each>
+				
+				
+				<xsl:if test="m:corpName[text()] | m:persName[text()]">
+					<xsl:text> (</xsl:text>
+					<xsl:apply-templates select="." mode="list_persons_by_role">
+						<xsl:with-param name="style" select="'inline'"/>
+					</xsl:apply-templates>
+					<xsl:text>)</xsl:text>
+				</xsl:if>				
 
 				<xsl:for-each select="m:desc[text()]">
 					<xsl:apply-templates/>
@@ -1629,7 +1602,7 @@
 				</xsl:for-each>
 
 				<xsl:if test="@evidence!=''">
-					<xsl:variable name="evidence" select="@evidence"/> [Evidence:
+					<xsl:variable name="evidence" select="@evidence"/> [<xsl:value-of select="$l/evidence"/>:
 						<xsl:apply-templates select="/m:mei/m:meiHead//*[@xml:id=$evidence]"/>] </xsl:if>
 
 				<xsl:for-each select="m:biblList">
@@ -1637,7 +1610,7 @@
 					<xsl:if test="$no_of_refs &gt; 0">
 						<xsl:choose>
 							<xsl:when test="m:head='Reviews' and $no_of_refs = 1">
-								<br/>Review: </xsl:when>
+								<br/><xsl:value-of select="$l/review"/>: </xsl:when>
 							<xsl:otherwise>
 								<br/><xsl:value-of select="m:head"/>: </xsl:otherwise>
 						</xsl:choose>
@@ -1657,8 +1630,8 @@
 		<xsl:variable name="no_of_soloists" select="count(m:persName[@type='soloist'])"/>
 		<xsl:if test="$no_of_soloists &gt; 0">
 			<xsl:choose>
-				<xsl:when test="$no_of_soloists = 1"> soloist: </xsl:when>
-				<xsl:otherwise> soloists: </xsl:otherwise>
+				<xsl:when test="$no_of_soloists = 1 or $language!='en'"> <xsl:value-of select="$l/soloist"/>: </xsl:when>
+				<xsl:otherwise> <xsl:value-of select="$l/soloist"/>s: </xsl:otherwise>
 			</xsl:choose>
 			<xsl:for-each select="m:persName[@type='soloist']">
 				<xsl:if test="position() &gt; 1">, </xsl:if>
@@ -1667,56 +1640,8 @@
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template name="list_agents">
-		<xsl:if test="m:respStmt/m:persName[text()] |
-		  m:respStmt/m:corpName[text()]">
-			<xsl:for-each
-				select="m:respStmt/m:persName[text()] |
-			    m:respStmt/m:corpName[text()]">
-				<xsl:choose>
-					<xsl:when test="@role!=preceding-sibling::*[1]/@role or position()=1">
-						<xsl:choose>
-							<xsl:when test="@role=following-sibling::*[1]/@role">
-								<xsl:if test="name()='persName' and normalize-space(@role)">
-									<xsl:call-template name="capitalize">
-										<xsl:with-param name="str" select="concat(@role,'s')"/>
-									</xsl:call-template><xsl:text>: </xsl:text>
-								</xsl:if>
-								<xsl:apply-templates select="."/>, </xsl:when>
-							<xsl:otherwise>
-								<xsl:if test="name()='persName' and normalize-space(@role)">
-									<xsl:call-template name="capitalize">
-										<xsl:with-param name="str" select="@role"/>
-									</xsl:call-template>
-									<xsl:text>: </xsl:text>
-								</xsl:if>
-								<xsl:apply-templates select="."/>
-								<xsl:if test="following-sibling::m:persName/text()">; </xsl:if>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:choose>
-							<xsl:when test="@role=following-sibling::*[1]/@role">
-								<xsl:apply-templates select="."/>, </xsl:when>
-							<xsl:when test="not(following-sibling::*[1]/@role)">
-								<xsl:apply-templates select="."/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:apply-templates select="."/>; </xsl:otherwise>
-						</xsl:choose>
-					</xsl:otherwise>
-				</xsl:choose>
-				<xsl:if test="position() = last()">
-					<xsl:text>. </xsl:text>
-				</xsl:if>
-			</xsl:for-each>
-
-
-			<xsl:for-each
-				select="m:geogName[text()] | 
-		  m:date[text()] |
-		  m:identifier[text()]">
+	<xsl:template name="list_places_dates_identifiers">
+			<xsl:for-each select="m:geogName[text()] | m:date[text()] | m:identifier[text()]">
 				<xsl:if test="string-length(@label) &gt; 0">
 					<xsl:apply-templates select="@label"/>
 					<xsl:text>: </xsl:text>
@@ -1733,66 +1658,110 @@
 			</xsl:for-each>
 			<xsl:text>
       </xsl:text>
-		</xsl:if>
 	</xsl:template>
 
+	<!-- List persons and corporate names grouped by role -->
 	<xsl:template match="*" mode="list_persons_by_role">
-		<xsl:if test="count(m:persName[text()] | m:corpName[text()])>0">
-			<xsl:for-each select="m:corpName[text()]|m:persName[text()]">
-				<xsl:variable name="role">
-					<xsl:call-template name="capitalize">
-						<xsl:with-param name="str" select="@role"/>
-					</xsl:call-template>
-				</xsl:variable>
+		<!-- Roles to omit from the list -->
+		<xsl:param name="exclude"/>
+		<!-- CSS class to be assigned to role labels -->
+		<xsl:param name="label_class"/>
+		<!-- List style: 'inline' or nothing (inserts a line break after each role empty) -->
+		<xsl:param name="style"/>
+		<!-- Capitalize roles? 'yes' or nothing for no -->
+		<xsl:param name="capitalize"/>
+		<!-- Separator between names with the same role -->
+		<xsl:param name="separator" select="';'"/>
+		<xsl:for-each select="m:corpName[text() and not(@role=$exclude)] | m:persName[text() and not(@role=$exclude)]">
+			<xsl:variable name="role_str">
+				<!-- look up the role description text (or use the attribute value unchanged if not found) -->
+				<xsl:variable name="role_attr"><xsl:value-of select="@role"/></xsl:variable>
 				<xsl:choose>
-					<xsl:when test="@role!=preceding-sibling::*[1]/@role or position()=1">
-						<xsl:choose>
-							<xsl:when test="@role=following-sibling::*[1]/@role">
-								<xsl:if test="name()='persName' and normalize-space(@role)">
-									<!-- make it plural... -->
-									<xsl:variable name="label">
-										<xsl:choose>
-											<xsl:when
-												test="substring(@role,string-length(@role),1)='y'">
-												<xsl:value-of
-												select="concat(substring($role,1,string-length($role)-1),'ies')"
-												/>
-											</xsl:when>
-											<xsl:otherwise><xsl:value-of select="concat($role,'s')"
-												/></xsl:otherwise>
-										</xsl:choose>
-									</xsl:variable>
-									<xsl:value-of select="$label"/><xsl:text>: </xsl:text>
-								</xsl:if>
-								<xsl:apply-templates select="."/>, </xsl:when>
-							<xsl:otherwise>
-								<xsl:if test="name()='persName' and normalize-space(@role)">
-									<xsl:value-of select="$role"/>
-									<xsl:text>: </xsl:text>
-								</xsl:if>
-								<xsl:apply-templates select="."/>
-								<xsl:if test="following-sibling::m:persName/text()">
-									<br/>
-								</xsl:if>
-							</xsl:otherwise>
-						</xsl:choose>
+					<xsl:when test="$l/*[name()=$role_attr]"><xsl:value-of select="$l/*[name()=$role_attr]"/></xsl:when>
+					<xsl:otherwise><xsl:value-of select="@role"/></xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:variable name="role">
+				<xsl:choose>
+					<xsl:when test="$capitalize='yes'">
+						<xsl:call-template name="capitalize">
+							<xsl:with-param name="str" select="$role_str"/>
+						</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:choose>
-							<xsl:when test="@role=following-sibling::*[1]/@role">
-								<xsl:apply-templates select="."/>, </xsl:when>
-							<xsl:when test="not(following-sibling::*[1]/@role)">
-								<xsl:apply-templates select="."/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:apply-templates select="."/>
-								<br/>
-							</xsl:otherwise>
-						</xsl:choose>
+						<xsl:value-of select="$role_str"/>
 					</xsl:otherwise>
 				</xsl:choose>
-			</xsl:for-each>
-		</xsl:if>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="@role!=preceding-sibling::*[1]/@role or position()=1">
+					<xsl:choose>
+						<xsl:when test="@role=following-sibling::*[1]/@role">
+							<xsl:if test="name()='persName' and normalize-space(@role)">
+								<xsl:variable name="label">
+									<xsl:choose>
+										<xsl:when test="$language='en' or $language=''">
+											<!-- if English: make it plural... -->
+											<xsl:choose>
+												<xsl:when test="substring(@role,string-length(@role),1)='y'">
+													<xsl:value-of select="concat(substring($role,1,string-length($role)-1),'ies')" />
+												</xsl:when>
+												<xsl:otherwise><xsl:value-of select="concat($role,'s')"/></xsl:otherwise>
+											</xsl:choose>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:value-of select="$role"/>
+										</xsl:otherwise>
+									</xsl:choose>
+								</xsl:variable>
+								<xsl:element name="span">
+									<xsl:attribute name="class"><xsl:value-of select="$label_class"/></xsl:attribute>
+									<xsl:value-of select="$label"/>
+								</xsl:element>
+								<xsl:text>: </xsl:text>
+							</xsl:if>
+							<xsl:apply-templates select="."/><xsl:value-of select="$separator"/><xsl:text> </xsl:text>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:if test="name()='persName' and normalize-space(@role)">
+								<xsl:element name="span">
+									<xsl:attribute name="class"><xsl:value-of select="$label_class"/></xsl:attribute>
+									<xsl:value-of select="$role"/>
+								</xsl:element>
+								<xsl:text>: </xsl:text>
+							</xsl:if>
+							<xsl:apply-templates select="."/>
+							<xsl:if test="following-sibling::m:persName/text()">
+								<xsl:choose>
+									<xsl:when test="$style='inline'">
+										<xsl:text>; </xsl:text>
+									</xsl:when>
+									<xsl:otherwise><br/></xsl:otherwise>
+								</xsl:choose>
+							</xsl:if>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<xsl:when test="@role=following-sibling::*[1]/@role">
+							<xsl:apply-templates select="."/>, </xsl:when>
+						<xsl:when test="not(following-sibling::*[1]/@role)">
+							<xsl:apply-templates select="."/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:apply-templates select="."/>
+							<xsl:choose>
+								<xsl:when test="$style='inline'">
+									<xsl:text>; </xsl:text>
+								</xsl:when>
+								<xsl:otherwise><br/></xsl:otherwise>
+							</xsl:choose>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!-- source-related templates -->
@@ -1858,10 +1827,14 @@
 				</xsl:choose>
 			</xsl:if>
 			
-			<xsl:if test="m:respStmt/m:persName[text()] |
-		    m:respStmt/m:corpName[text()]">
+			<xsl:if test="m:respStmt/m:persName[text()] | m:respStmt/m:corpName[text()]">
 				<p>
-					<xsl:call-template name="list_agents"/>
+					<xsl:for-each select="m:respStmt">
+						<xsl:apply-templates select="." mode="list_persons_by_role">
+							<xsl:with-param name="capitalize" select="'yes'"/>
+						</xsl:apply-templates>
+					</xsl:for-each>
+					<xsl:call-template name="list_places_dates_identifiers"/>
 				</p>
 			</xsl:if>
 
@@ -1870,7 +1843,12 @@
 			<xsl:for-each select="m:titleStmt[m:respStmt/m:persName/text()]">
 				<xsl:comment> contributors </xsl:comment>
 				<p>
-					<xsl:call-template name="list_agents"/>
+					<xsl:for-each select="m:respStmt">
+						<xsl:apply-templates select="." mode="list_persons_by_role">
+							<xsl:with-param name="capitalize" select="'yes'"/>
+						</xsl:apply-templates>
+					</xsl:for-each>
+					<xsl:call-template name="list_places_dates_identifiers"/>
 				</p>
 			</xsl:for-each>
 
@@ -1890,7 +1868,6 @@
 						<xsl:apply-templates select="m:date"/>
 					</xsl:if>
 					<xsl:text>.</xsl:text>
-					<!--<xsl:call-template name="list_agents"/>-->
 				</div>
 			</xsl:for-each>
 
@@ -1958,10 +1935,10 @@
 							<br/>
 							<xsl:choose>
 								<xsl:when test="$count > 1">
-									<p class="p_heading">Reprints:</p>
+									<p class="p_heading"><xsl:value-of select="$l/reprints"/>:</p>
 								</xsl:when>
 								<xsl:otherwise>
-									<p class="p_heading">Reprint:</p>
+									<p class="p_heading"><xsl:value-of select="$l/reprint"/>:</p>
 								</xsl:otherwise>
 							</xsl:choose>
 						</xsl:if>
@@ -1981,7 +1958,7 @@
 				select="'DcmContentClass,DcmPresentationClass,DcmAuthorityClass,DcmScoringClass,DcmStateClass,DcmCompletenessClass'"/>
 			<xsl:for-each select="m:term[text()]">
 				<xsl:sort select="string-length(substring-before($sort_order,@classcode))"/>
-				<xsl:if test="position()=1">[Classification: </xsl:if>
+				<xsl:if test="position()=1">[<xsl:value-of select="$l/classification"/>: </xsl:if>
 				<xsl:value-of select="."/>
 				<xsl:choose>
 					<xsl:when test="position()=last()">]</xsl:when>
@@ -2092,7 +2069,7 @@
 		<xsl:apply-templates select="m:titlePage[m:p//text()]"/>
 
 		<xsl:for-each select="m:plateNum[text()]">
-			<p>Pl. no. <xsl:apply-templates/>.</p>
+			<p><xsl:value-of select="$l/plate_number"/> <xsl:apply-templates/>.</p>
 		</xsl:for-each>
 		<xsl:apply-templates select="m:handList[m:hand/@medium!='' or m:hand/text()]"/>
 		<xsl:apply-templates select="m:physMedium"/>
@@ -2102,7 +2079,7 @@
 
 	<xsl:template match="m:titlePage">
 		<div>
-			<xsl:if test="not(@label) or @label=''">Title page</xsl:if>
+			<xsl:if test="not(@label) or @label=''"><xsl:value-of select="$l/title_page"/></xsl:if>
 			<xsl:value-of select="@label"/>
 			<xsl:text>: </xsl:text>
 			<xsl:for-each select="m:p[//text()]">
@@ -2120,11 +2097,11 @@
 	</xsl:template>
 
 	<xsl:template match="m:watermark[text()]">
-		<div>Watermark: <xsl:apply-templates/></div>
+		<div><xsl:value-of select="$l/watermark"/>: <xsl:apply-templates/></div>
 	</xsl:template>
 
 	<xsl:template match="m:condition[text()]">
-		<div>Condition: <xsl:apply-templates/></div>
+		<div><xsl:value-of select="$l/condition"/>: <xsl:apply-templates/></div>
 	</xsl:template>
 
 	<xsl:template match="m:physLoc">
@@ -2173,7 +2150,7 @@
 		
 		<xsl:for-each select="m:provenance[*//text()]">
 			<div>
-				<xsl:text>Provenance: </xsl:text>
+				<xsl:value-of select="$l/provenance"/><xsl:text>: </xsl:text>
 				<xsl:for-each select="m:eventList/m:event[*/text()]">
 					<xsl:for-each select="m:desc">
 						<xsl:apply-templates/>
@@ -2199,19 +2176,19 @@
 	<!-- list scribes -->
 	<xsl:template match="m:handList">
 		<xsl:if test="count(m:hand[@initial='true' and (@medium!='' or text())]) &gt; 0">
-			<xsl:text>Written in </xsl:text>
+			<xsl:value-of select="$l/written_in"/><xsl:text> </xsl:text>
 			<xsl:for-each select="m:hand[@initial='true' and (@medium!='' or text())]">
 				<xsl:if test="position()&gt;1 and position()&lt;last()">, </xsl:if>
 				<xsl:if test="position()=last() and position()&gt;1">
-					<xsl:text> and </xsl:text>
+					<xsl:text> </xsl:text><xsl:value-of select="$l/and"/><xsl:text> </xsl:text>
 				</xsl:if>
 				<xsl:apply-templates select="." mode="scribe"/></xsl:for-each>. </xsl:if>
 		<xsl:if test="count(m:hand[@initial='false' and (@medium!='' or text())]) &gt; 0">
-			<xsl:text>Additions in </xsl:text>
+			<xsl:value-of select="$l/additions_in"/><xsl:text> </xsl:text>
 			<xsl:for-each select="m:hand[@initial='false']">
 				<xsl:if test="position()&gt;1 and position()&lt;last()">, </xsl:if>
 				<xsl:if test="position()=last() and position()&gt;1">
-					<xsl:text> and </xsl:text>
+					<xsl:text> </xsl:text><xsl:value-of select="$l/and"/><xsl:text> </xsl:text>
 				</xsl:if>
 				<xsl:apply-templates select="." mode="scribe"/></xsl:for-each>. </xsl:if>
 	</xsl:template>
@@ -2225,7 +2202,7 @@
 				<xsl:when test="m:head!=''">
 					<xsl:value-of select="m:head"/>
 				</xsl:when>
-				<xsl:otherwise> Bibliography </xsl:otherwise>
+				<xsl:otherwise> <xsl:value-of select="$l/bibliography"/> </xsl:otherwise>
 			</xsl:choose>
 		</span>
 	</xsl:template>
@@ -2248,7 +2225,7 @@
 	<xsl:template match="m:biblList" mode="bibl_paragraph">
 		<!-- Letters and diary entries are listed first under separate headings -->
 		<xsl:if test="count(m:bibl[m:genre='letter' and *[local-name()!='genre']//text()]) &gt; 0">
-			<p class="p_subheading">Letters:</p>
+			<p class="p_subheading"><xsl:value-of select="$l/letters"/>:</p>
 			<table class="letters">
 				<xsl:for-each select="m:bibl[m:genre='letter' and *[local-name()!='genre']//text()]">
 					<xsl:apply-templates select="."/>
@@ -2257,7 +2234,7 @@
 		</xsl:if>
 		<xsl:if
 			test="count(m:bibl[m:genre='diary entry' and *[local-name()!='genre']//text()]) &gt; 0">
-			<p class="p_subheading">Diary entries:</p>
+			<p class="p_subheading"><xsl:value-of select="$l/diary_entries"/>:</p>
 			<table class="letters">
 				<xsl:for-each
 					select="m:bibl[m:genre='diary entry' and *[local-name()!='genre']//text()]">
@@ -2267,7 +2244,7 @@
 		</xsl:if>
 		<xsl:if
 			test="count(m:bibl[m:genre='manuscript' and *[local-name()!='genre']//text()]) &gt; 0">
-			<p class="p_subheading">Manuscripts:</p>
+			<p class="p_subheading"><xsl:value-of select="$l/manuscripts"/>:</p>
 			<xsl:for-each select="m:bibl[m:genre='manuscript' and *[local-name()!='genre']//text()]">
 				<p class="bibl_record">
 					<xsl:apply-templates select="."/>
@@ -2277,7 +2254,7 @@
 		<xsl:if
 			test="count(m:bibl[(m:genre='letter' or m:genre='diary entry' or m:genre='manuscript') and *[local-name()!='genre']//text()])&gt;0 and 
 	      count(m:bibl[m:genre!='letter' and m:genre!='diary entry'  and m:genre!='manuscript' and *[local-name()!='genre']//text()])&gt;0">
-			<p class="p_heading">Other:</p>
+			<p class="p_heading"><xsl:value-of select="$l/other"/>:</p>
 		</xsl:if>
 		<xsl:for-each
 			select="m:bibl[m:genre!='letter' and m:genre!='diary entry' and m:genre!='manuscript' and *[local-name()!='genre']//text()]">
@@ -2307,10 +2284,14 @@
 						<xsl:with-param name="quotes" select="'false'"/>
 						<xsl:with-param name="italic" select="'true'"/>
 					</xsl:apply-templates>
-					<xsl:if test="m:title[@level='s']/text()"> (= <xsl:apply-templates
-							select="m:title[@level='s']"/>
-						<xsl:if test="m:biblScope[@unit='vol']/text()">, vol. <xsl:apply-templates
-								select="m:biblScope[@unit='vol']"/>
+					<xsl:if test="m:title[@level='s']/text()">
+						<xsl:text> (= </xsl:text>
+						<xsl:apply-templates select="m:title[@level='s']"/>
+						<xsl:if test="m:biblScope[@unit='vol']/text()">
+							<xsl:text>, </xsl:text>
+							<xsl:value-of select="$l/vol"/>
+							<xsl:text> </xsl:text>
+							<xsl:apply-templates select="m:biblScope[@unit='vol']"/>
 						</xsl:if>)</xsl:if>
 					<xsl:apply-templates select="m:imprint">
 						<xsl:with-param name="append_to_text">true</xsl:with-param>
@@ -2341,8 +2322,11 @@
 						<xsl:with-param name="italic" select="'false'"/>
 					</xsl:apply-templates>
 					<xsl:choose>
-						<xsl:when test="m:title[@level='m']/text()">, in: <xsl:if
-								test="m:editor/text()">
+						<xsl:when test="m:title[@level='m']/text()">
+							<xsl:text>, </xsl:text>
+							<xsl:value-of select="$l/in"/>
+							<xsl:text>: </xsl:text>
+							<xsl:if test="m:editor/text()">
 								<xsl:call-template name="list_editors"/>
 							</xsl:if>
 							<xsl:apply-templates select="m:title[@level='m']" mode="bibl_title">
@@ -2352,25 +2336,32 @@
 							<xsl:choose>
 								<xsl:when test="m:title[@level='s']/text()">(= <xsl:apply-templates
 										select="m:title[@level='s']/text()"/>
-									<xsl:if test="m:biblScope[@unit='vol']/text()">, vol.
-											<xsl:value-of select="m:biblScope[@unit='vol']/text()"/>
+									<xsl:if test="m:biblScope[@unit='vol']/text()">
+										<xsl:text>, </xsl:text>
+										<xsl:value-of select="$l/vol"/>
+										<xsl:text> </xsl:text>
+										<xsl:value-of select="m:biblScope[@unit='vol']/text()"/>
 									</xsl:if>) </xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="m:biblScope[@unit='vol']/text()">, vol.
-											<xsl:value-of
-											select="normalize-space(m:biblScope[@unit='vol'])"
-										/></xsl:if>
+									<xsl:if test="m:biblScope[@unit='vol']/text()">, <xsl:value-of select="$l/vol"/>
+											<xsl:value-of select="normalize-space(m:biblScope[@unit='vol'])"/>
+									</xsl:if>
 								</xsl:otherwise>
 							</xsl:choose>
 						</xsl:when>
 						<xsl:otherwise>
 							<xsl:choose>
-								<xsl:when test="normalize-space(m:title[@level='s'])!=''">, in:
-										<xsl:apply-templates select="m:title[@level='s' and text()]"/>
-									<xsl:if test="normalize-space(m:biblScope[@unit='vol'])!=''">,
-										vol. <xsl:value-of
-											select="normalize-space(m:biblScope[@unit='vol'])"
-										/></xsl:if>
+								<xsl:when test="normalize-space(m:title[@level='s'])!=''">
+									<xsl:text>, </xsl:text>
+									<xsl:value-of select="$l/in"/>
+									<xsl:text>: </xsl:text>
+									<xsl:apply-templates select="m:title[@level='s' and text()]"/>
+									<xsl:if test="normalize-space(m:biblScope[@unit='vol'])!=''">
+										<xsl:text>, </xsl:text>
+										<xsl:value-of select="$l/in"/>
+										<xsl:text> </xsl:text>
+										<xsl:value-of select="normalize-space(m:biblScope[@unit='vol'])" />
+									</xsl:if>
 								</xsl:when>
 							</xsl:choose>
 						</xsl:otherwise>
@@ -2468,16 +2459,37 @@
 					<td>
 						<xsl:if test="m:author/text()">
 							<xsl:choose>
-								<xsl:when test="m:creation/m:date/text()"> from </xsl:when>
-								<xsl:otherwise>From </xsl:otherwise>
+								<xsl:when test="m:creation/m:date/text()">
+									<xsl:text> </xsl:text>
+									<xsl:value-of select="$l/from"/>
+									<xsl:text> </xsl:text></xsl:when>
+								<xsl:otherwise>
+									<xsl:variable name="from">
+										<xsl:call-template name="capitalize">
+											<xsl:with-param name="str" select="$l/from"/>
+										</xsl:call-template>
+									</xsl:variable>
+									<xsl:value-of select="$from"/><xsl:text> </xsl:text>
+								</xsl:otherwise>
 							</xsl:choose>
 							<!--<xsl:value-of select="m:author"/>-->
 							<xsl:call-template name="list_authors"/>
 						</xsl:if>
 						<xsl:if test="m:recipient/text()">
 							<xsl:choose>
-								<xsl:when test="m:author/text()"> to </xsl:when>
-								<xsl:otherwise>To </xsl:otherwise>
+								<xsl:when test="m:author/text()"> 
+									<xsl:text> </xsl:text>
+									<xsl:value-of select="$l/to"/>
+									<xsl:text> </xsl:text>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:variable name="to">
+										<xsl:call-template name="capitalize">
+											<xsl:with-param name="str" select="$l/to"/>
+										</xsl:call-template>
+									</xsl:variable>
+									<xsl:value-of select="$to"/><xsl:text> </xsl:text>
+								</xsl:otherwise>
 							</xsl:choose>
 							<xsl:value-of select="m:recipient"/>
 						</xsl:if>
@@ -2567,13 +2579,17 @@
 				<xsl:if test="m:title//text()">
 					<em><xsl:apply-templates select="m:title"/></em>
 				</xsl:if>
-				<xsl:if test="m:biblScope[@unit='vol']//text()">, vol. <xsl:value-of
-						select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>.
+				<xsl:if test="m:biblScope[@unit='vol']//text()">
+					<xsl:text>, </xsl:text>
+					<xsl:value-of select="$l/vol"/>
+					<xsl:text> </xsl:text>
+					<xsl:value-of select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>.
 					<xsl:apply-templates select="m:imprint"/>
 				<xsl:if test="m:creation/m:date//text()">
 					<xsl:apply-templates select="m:creation/m:date"/></xsl:if>
-				<xsl:if test="m:biblScope[@unit='page']//text()">, <xsl:apply-templates
-					select="m:biblScope[@unit='page']" mode="pp"/></xsl:if>
+				<xsl:if test="m:biblScope[@unit='page']//text()">
+					<xsl:text>, </xsl:text>
+					<xsl:apply-templates select="m:biblScope[@unit='page']" mode="pp"/></xsl:if>
 				<xsl:apply-templates select="m:biblScope[not(@unit) or @unit='']" mode="volumes_pages"/>.* </xsl:otherwise>
 		</xsl:choose>
 
@@ -2685,7 +2701,7 @@
 					<xsl:text>, </xsl:text>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:text> and </xsl:text>
+					<xsl:text> </xsl:text><xsl:value-of select="$l/and"/><xsl:text> </xsl:text>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:if>
@@ -2713,7 +2729,7 @@
 				<!-- Format: (ed. Anders And) -->
 				<xsl:text> (</xsl:text>
 				<xsl:if test="position()=1">
-					<xsl:text>ed. </xsl:text>
+					<xsl:value-of select="$l/edited_by"/><xsl:text> </xsl:text>
 				</xsl:if>
 				<xsl:for-each select="m:editor[text()]">
 					<xsl:call-template name="list_seperator"/>
@@ -2729,10 +2745,10 @@
 					<xsl:if test="position()=last()">
 						<xsl:choose>
 							<xsl:when test="position() &gt;1">
-								<xsl:text> (eds.): </xsl:text>
+								<xsl:text> (</xsl:text><xsl:value-of select="$l/edited_by_plural"/><xsl:text>): </xsl:text>
 							</xsl:when>
 							<xsl:otherwise>
-								<xsl:text> (ed.): </xsl:text>
+								<xsl:text> (</xsl:text><xsl:value-of select="$l/edited_by"/><xsl:text>): </xsl:text>
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:if>
@@ -2746,14 +2762,16 @@
 	<xsl:template mode="volumes_pages" match="m:bibl">
 		<xsl:variable name="number_of_volumes" select="count(m:biblScope[@unit='vol' and text()])"/>
 		<xsl:choose>
-			<xsl:when test="$number_of_volumes &gt; 0">: <xsl:for-each
-					select="m:biblScope[@unit='vol' and text()]">
-					<xsl:if test="position()&gt;1">; </xsl:if> vol. <xsl:value-of select="."/>
+			<xsl:when test="$number_of_volumes &gt; 0">
+				<xsl:text>: </xsl:text>
+				<xsl:for-each select="m:biblScope[@unit='vol' and text()]">
+					<xsl:if test="position()&gt;1"><xsl:text>; </xsl:text></xsl:if>
+					<xsl:value-of select="$l/vol"/> <xsl:value-of select="."/>
 					<xsl:if test="../m:biblScope[@unit='issue'][position()]/text()">/<xsl:value-of
 							select="../m:biblScope[@unit='issue'][position()]"/></xsl:if>
-					<xsl:if test="../m:biblScope[@unit='page'][position()]/text()">,
-							<xsl:apply-templates select="../m:biblScope[@unit='page'][position()]"
-							mode="pp"/>
+					<xsl:if test="../m:biblScope[@unit='page'][position()]/text()">
+						<xsl:text>, </xsl:text>
+						<xsl:apply-templates select="../m:biblScope[@unit='page'][position()]" mode="pp"/>
 					</xsl:if>
 				</xsl:for-each>
 			</xsl:when>
@@ -2763,7 +2781,7 @@
 				<xsl:choose>
 					<xsl:when test="$number_of_issues &gt; 0">
 						<xsl:for-each select="m:biblScope[@unit='issue' and text()]">
-							<xsl:if test="position()&gt;1">; </xsl:if>
+							<xsl:if test="position()&gt;1"><xsl:text>; </xsl:text></xsl:if>
 							<xsl:value-of select="."/>
 							<xsl:if test="../m:biblScope[@unit='page'][position()]/text()">,
 									<xsl:apply-templates
@@ -2785,7 +2803,7 @@
 			select="m:biblScope[string-length(@unit)>0 and (@unit!='vol' and @unit!='issue' and @unit!='page')]">
 			<xsl:text> </xsl:text>
 			<xsl:choose>
-				<xsl:when test="@unit='no'">no.</xsl:when>
+				<xsl:when test="@unit='no'"><xsl:value-of select="$l/number"/></xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="@unit"/>
 				</xsl:otherwise>
@@ -2804,8 +2822,8 @@
 	<xsl:template match="m:biblScope[@unit='page' and text()]" mode="pp">
 		<xsl:choose>
 			<!-- look for separators between page numbers -->
-			<xsl:when test="contains(translate(normalize-space(.),' ,;-–/','¤¤¤¤¤¤'),'¤')">pp.</xsl:when>
-			<xsl:otherwise>p.</xsl:otherwise>
+			<xsl:when test="contains(translate(normalize-space(.),' ,;-–/','¤¤¤¤¤¤'),'¤')"><xsl:value-of select="$l/pages"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="$l/page"/></xsl:otherwise>
 		</xsl:choose>
 		<xsl:text> </xsl:text>
 		<xsl:value-of select="."/>
@@ -2865,13 +2883,13 @@
 			<div class="revision_history">
 				<xsl:apply-templates select="." mode="fold_section">
 					<xsl:with-param name="id" select="'revisionhistory'"/>
-					<xsl:with-param name="heading">Revision history</xsl:with-param>
+					<xsl:with-param name="heading"><xsl:value-of select="$l/revision_history"/></xsl:with-param>
 					<xsl:with-param name="content">
 						<table>
 							<tr>
-								<th>Date </th>
-								<th>Responsible </th>
-								<th>Description</th>
+								<th><xsl:value-of select="$l/date"/> </th>
+								<th><xsl:value-of select="$l/responsible"/> </th>
+								<th><xsl:value-of select="$l/description"/></th>
 							</tr>
 							<xsl:apply-templates
 								select="m:change[*//text() or @isodate!='' or @resp!='']" mode="all"
@@ -2908,8 +2926,11 @@
 	</xsl:template>
 
 	<xsl:template match="m:revisionDesc/m:change" mode="last">
-		<br/>Last changed <xsl:value-of select="@isodate"/>
-		<xsl:if test="normalize-space(m:respStmt/m:resp)"> by <i><xsl:value-of select="m:respStmt/m:resp[1]"/></i></xsl:if>
+		<br/><xsl:value-of select="$l/last_changed"/>
+		<xsl:text> </xsl:text><xsl:value-of select="@isodate"/><xsl:text> </xsl:text>
+		<xsl:if test="normalize-space(m:respStmt/m:resp)">
+			<xsl:text> </xsl:text><xsl:value-of select="$l/by"/><xsl:text> </xsl:text><i><xsl:value-of select="m:respStmt/m:resp[1]"/></i>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template match="@type">
@@ -3086,18 +3107,18 @@
 		<xsl:param name="monthstring"/>
 		<xsl:variable name="number" select="number($monthstring)"/>
 		<xsl:choose>
-			<xsl:when test="$number=1">Jan.</xsl:when>
-			<xsl:when test="$number=2">Feb.</xsl:when>
-			<xsl:when test="$number=3">Mar.</xsl:when>
-			<xsl:when test="$number=4">Apr.</xsl:when>
-			<xsl:when test="$number=5">May</xsl:when>
-			<xsl:when test="$number=6">June</xsl:when>
-			<xsl:when test="$number=7">July</xsl:when>
-			<xsl:when test="$number=8">Aug.</xsl:when>
-			<xsl:when test="$number=9">Sept.</xsl:when>
-			<xsl:when test="$number=10">Oct.</xsl:when>
-			<xsl:when test="$number=11">Nov.</xsl:when>
-			<xsl:when test="$number=12">Dec.</xsl:when>
+			<xsl:when test="$number=1"><xsl:value-of select="$l/january"/></xsl:when>
+			<xsl:when test="$number=2"><xsl:value-of select="$l/february"/></xsl:when>
+			<xsl:when test="$number=3"><xsl:value-of select="$l/march"/></xsl:when>
+			<xsl:when test="$number=4"><xsl:value-of select="$l/april"/></xsl:when>
+			<xsl:when test="$number=5"><xsl:value-of select="$l/may"/></xsl:when>
+			<xsl:when test="$number=6"><xsl:value-of select="$l/june"/></xsl:when>
+			<xsl:when test="$number=7"><xsl:value-of select="$l/july"/></xsl:when>
+			<xsl:when test="$number=8"><xsl:value-of select="$l/august"/></xsl:when>
+			<xsl:when test="$number=9"><xsl:value-of select="$l/september"/></xsl:when>
+			<xsl:when test="$number=10"><xsl:value-of select="$l/october"/></xsl:when>
+			<xsl:when test="$number=11"><xsl:value-of select="$l/november"/></xsl:when>
+			<xsl:when test="$number=12"><xsl:value-of select="$l/december"/></xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$monthstring"/>
 			</xsl:otherwise>
@@ -3470,4 +3491,52 @@
 	</xsl:template>
 	<!-- END TEXT HANDLING -->
 
+
+	<!-- Display score -->
+	<xsl:template match="m:music[//m:score]">
+		<xsl:if test="$view_score='true'">
+			<xsl:for-each select=".//m:score">
+					<xsl:variable name="id" select="concat('score_',generate-id())"/>
+					<xsl:variable name="xml_id" select="concat($id,'_xml')"/>
+					<xsl:element name="div">
+						<xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
+						<xsl:text> </xsl:text>
+					</xsl:element>
+					
+					<!-- put the MEI XML into the document here -->
+					<xsl:element name="script">
+						<xsl:attribute name="id"><xsl:value-of select="$xml_id"/></xsl:attribute>
+						<xsl:attribute name="type">text/xmldata</xsl:attribute>
+						<mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="2013">
+							<music>
+								<body>
+									<mdiv>
+										<xsl:copy-of select="."/>
+									</mdiv>
+								</body>
+							</music>
+						</mei>
+					</xsl:element>
+					<!-- use Verovio for rendering MEI -->
+					<script type="text/javascript">
+				  /* The MEI encoding to be rendered */
+				  var data = document.getElementById('<xsl:value-of select="$xml_id"/>').innerHTML;
+				  /* Render the data and insert it as content of the target div */
+				  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData( 
+				      data, 
+				      JSON.stringify({ 
+				      	inputFormat: 'mei',
+				      	pageWidth: 2100,
+		    			border: 0,
+		    			scale: 40,
+		    			adjustPageHeight: 1,
+		    			ignoreLayout: 1
+				      	}) 
+				  );
+				</script>
+			</xsl:for-each>
+		</xsl:if>
+	</xsl:template>
+	
+	
 </xsl:stylesheet>
