@@ -1,4 +1,5 @@
-<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="3.0.0" xml:id="mei_95N20005">
+<?xml version="1.0" encoding="UTF-8"?>
+<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" xml:id="mei_95N20005" meiversion="3.0.0">
     <meiHead>
         <fileDesc>
             <titleStmt>
@@ -44,7 +45,7 @@
                 <titleStmt xml:id="titleStmt_2d08d145">
                     <title xml:id="title_id61c00f52" xml:lang="en">Incipit Demo</title>
                     <respStmt xml:id="respStmt_b66bc145">
-                        <persName authURI="http://www.viaf.org" authority="VIAF" codedval="197250" role="composer" xml:id="persName_bc290e57">[Carl Nielsen]</persName>
+                        <persName role="composer" xml:id="persName_bc290e57">[Carl Nielsen]</persName>
                     </respStmt>
                 </titleStmt>
                 <creation xml:id="creation_id6ab651d4"/>
@@ -56,9 +57,12 @@
                     <annot label="" type="links" xml:id="annot_f463a756"/>
                     <annot label="" type="general_description" xml:id="annot_4b3f6f65">
                         <p>This file illustrates various ways of including incipits. Incipits are defined at the editor's 'Music' tab.</p>
-                        <p>Incipits encoded in MEI or Plaine And Easie Code are rendered in MerMEId with <ref target="http://verovio.org/" xl:show="new" xl:title="Verovio">Verovio</ref>. Please note that Internet Explorer requires version 10 or newer for this to work.</p>
-                        <p>The incipits in this sample file show the beginning of <persName auth="VIAF" authURI="http://www.viaf.org" codedval="197250" role="composer">Carl Nielsen's </persName>
-                            <ref target="http://www.kb.dk/dcm/cnw/document.xq?doc=cnw0060.xml" xl:show="new" xl:title="CNW 60">Romance for Violin and Piano, CNW 60</ref> .</p>
+                        <p>Incipits encoded in MEI or Plaine And Easie Code are rendered in MerMEId with <ref target="http://verovio.org" xl:show="new" xl:title="Verovio">Verovio</ref>
+  
+  . Please note that Internet Explorer requires version 10 or newer for this to work.</p>
+                        <p>The incipits in this sample file show the beginning of Carl Nielsen's <ref target="http://www.kb.dk/dcm/cnw/document.xq?doc=cnw0060.xml" xl:show="new" xl:title="Romance CNW 60">Romance for Violin and Piano, CNW 60</ref>
+  
+   .</p>
                     </annot>
                 </notesStmt>
                 <classification xml:id="classification_8c2dad93">
@@ -136,6 +140,7 @@
                                         <dynam staff="2" tstamp="2">p</dynam>
                                         <tie curvedir="below" endid="#p1cgd2n0v2b2s3" startid="#p1cgd2n768v1b1s3"/>
                                         <tempo staff="1" tstamp="1">Andante con moto</tempo>
+                              <!-- vertical offset (@vo) not supprted by Verovio yet -->
                                     </measure>
                                     <measure n="2">
                                         <staff n="1">
@@ -202,10 +207,11 @@
                                         <staff n="2">
                                             <layer n="1">
                                                 <rest dur="4" xml:id="p1r0v1b3s2"/>
-                                                <chord artic="acc" dur="2" xml:id="c256v1b3s2">
+                                                <chord dur="2" xml:id="c256v1b3s2">
                                                     <note dur="2" oct="4" pname="d" xml:id="p1cdd4n256v1b3s2"/>
                                                     <note dur="2" oct="4" pname="g" xml:id="p2cgd4n256v1b3s2"/>
                                                     <note dur="2" oct="4" pname="b" xml:id="p3cbd4n256v1b3s2"/>
+                                                    <artic artic="acc" place="below"/>
                                                 </chord>
                                                 <chord dur="4" xml:id="c768v1b3s2">
                                                     <note dur="4" oct="4" pname="c" xml:id="p1ccd4n768v1b3s2">
@@ -273,8 +279,12 @@
                                     <measure n="5">
                                         <staff n="1">
                                             <layer n="1">
-                                                <note artic="acc" dur="2" oct="5" pname="g" xml:id="p1cgd5n0v1b5s1"/>
-                                                <note artic="acc" dur="2" oct="5" pname="g" xml:id="p1cgd5n512v1b5s1"/>
+                                                <note dur="2" oct="5" pname="g" xml:id="p1cgd5n0v1b5s1">
+                                                    <artic artic="acc" place="below"/>
+                                                </note>
+                                                <note artic="acc" dur="2" oct="5" pname="g" xml:id="p1cgd5n512v1b5s1">
+                                                    <artic artic="acc" place="below"/>
+                                                </note>
                                             </layer>
                                         </staff>
                                         <staff n="2">
@@ -305,6 +315,7 @@
                                             </layer>
                                         </staff>
                                         <hairpin form="cres" staff="1" startid="#p2ced3n512v1b5s3" tstamp2="1m+5"/>
+                              <!-- vertical offset (@vo) not supprted by Verovio yet -->
                                     </measure>
                                     <measure n="6">
                                         <staff n="1">
@@ -316,7 +327,8 @@
                                                     <note dur="8" oct="5" pname="e" xml:id="p1ced5n384v1b6s1"/>
                                                 </beam>
                                                 <note dur="4" oct="5" pname="g" xml:id="p1cgd5n512v1b6s1"/>
-                                                <note artic="ten" dur="4" oct="5" pname="b" xml:id="p1cbd5n768v1b6s1">
+                                                <note dur="4" oct="5" pname="b" xml:id="p1cbd5n768v1b6s1">
+                                                    <artic artic="ten" place="above"/>
                                                     <accid accid="f"/>
                                                 </note>
                                             </layer>
@@ -353,13 +365,14 @@
                                             </layer>
                                         </staff>
                                         <slur endid="#p1ced5n384v1b6s1" layer="1" staff="1" startid="#p1cgd5n0v1b6s1"/>
-                                        <dir place="below" staff="3" tstamp="3">
+                                        <dir staff="3" place="below" tstamp="3">
                                             <rend fontstyle="normal">80 bars</rend>
                                         </dir>
                                     </measure>
                                 </section>
                             </score>
                         </incip>
+                        <creation xml:id="creation_a9b88e21"/>
                         <history xml:id="history_5b845292">
                             <p>As MerMEId does not include a music notation editor, incipits encoded in MEI cannot be entered or edited directly in MerMEId. You can add MEI incipits, however, by uploading MEI files containing the encodings. When uploading an MEI file, MerMEId makes a copy of the first &amp;lt;score&amp;gt; element it encounters (whether in the file's header or in the &amp;lt;music&amp;gt; section) and inserts it as an incipit. If you need to make changes to the incipit, edit your MEI file and upload it again using MerMEId's 'Replace' button.</p>
                         </history>
@@ -379,12 +392,10 @@
                         <incip xml:id="incip_dab5ceb7">
                             <incipCode form="pae" xml:id="incipCode_a6c01738">%G-2 $xF @c  '2BB/{x8GA''C'B}4A/nGB''4E{8DxC}/4E2D{8EF}/2GG/{''8GABE}4GbB</incipCode>
                         </incip>
+                        <creation xml:id="creation_86ec1071"/>
                         <history xml:id="history_74021b98">
                             <p>
-                                <ref target="http://www.iaml.info/plaine-easie-code" xl:show="new" xl:title="">Plaine and Easie Code</ref>
-  
-  
-  
+                                <ref target="http://www.iaml.info/plaine-easie-code" xl:show="new" xl:title="IAML Plaine and Easie Code reference">Plaine and Easie Code</ref>
    can be entered directly at the 'Music' tab for rendering with Verovio in the HTML preview. If single-staff, single-voice incipits without any slurs, dynamics, articulation or lyrics is all you need, this is probably the most efficient way of adding incipits. Enter 'plaineAndEasie' or simply 'pae' in the code language field to have MerMEId/Verovio recognize the code correctly.</p>
                         </history>
                         <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_7ec2e148"/>
@@ -404,6 +415,7 @@
                             <graphic label="" target="http://www.kb.dk/export/sites/kb_dk/da/nb/dcm/udgivelser/cnw/incipits/lowres/cnw_060.png" targettype="lowres" xml:id="graphic_9e3cf184"/>
                             <graphic label="" target="http://www.kb.dk/export/sites/kb_dk/da/nb/dcm/udgivelser/cnw/incipits/hires/cnw_060.png" targettype="hires" xml:id="graphic_05e03b6d"/>
                         </incip>
+                        <creation xml:id="creation_f065cb92"/>
                         <history xml:id="history_d5b9f7ec">
                             <p>You can create graphic files (png, jpg or other) using your favorite music editing software and use MerMEId to create a link to the files. Just remember that the images must be accessible on the Internet in order to be visible for others (that is, they must be placed on a publicly accessible web server). If images are provided in both low and high resolutions, MerMEId will make the low resolution image clickable and display the high resolution image in a pop-up window.</p>
                         </history>
@@ -468,7 +480,7 @@
                     <p/>
                 </changeDesc>
             </change>
-            <change isodate="2017-02-06" n="7">
+            <change isodate="2017-04-04" n="7">
                 <respStmt>
                     <resp>MerMEId</resp>
                 </respStmt>
@@ -477,12 +489,12 @@
                   1.0 beta for MerMEId</p>
                 </changeDesc>
             </change>
-            <change isodate="2017-02-06" xml:id="change_333N10430">
+            <change isodate="2017-08-24" xml:id="change_311N1044A">
                 <respStmt>
                     <resp>atge</resp>
                 </respStmt>
                 <changeDesc>
-                    <p/>
+                    <p>@startid/@endid values corrected</p>
                 </changeDesc>
             </change>
         </revisionDesc>
