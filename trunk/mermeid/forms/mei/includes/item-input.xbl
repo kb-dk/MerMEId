@@ -347,11 +347,7 @@
                         <xf:label>Value <h:a class="help">&#160;?<h:span class="comment">The number of pages or folios, e.g. "48", "XII + 36" or
                         "VIII"</h:span></h:a></xf:label>
                       </xf:input>
-                      <xf:input ref="@unit">
-                        <xf:label>Unit <h:a class="help">&#160;?<h:span class="comment">Usually "pages" or "folios"
-                        <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
-                        Please use underscore _ instead.</h:span></h:a></xf:label>
-                      </xf:input>
+                      <xi:include href="unit-select.xml" parse="xml"/>
                       <dcm:attribute-editor/>                                                    
                       <dcm:element-buttons  
                           triggers="add remove" 
@@ -373,11 +369,7 @@
                         <xf:label>Value <h:a class="help">&#160;?<h:span class="comment">Numbers describing the physical dimensions 
                         of the source, usually given as height x width, e.g. "23.5x34"</h:span></h:a></xf:label>
                       </xf:input>
-                      <xf:input ref="@unit">
-                        <xf:label>Unit <h:a class="help">&#160;?<h:span class="comment">Unit of measurement, usually "cm" or "inches"
-                        <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
-                        Please use underscore _ instead.</h:span></h:a></xf:label>
-                      </xf:input>
+                      <xi:include href="unit-select.xml" parse="xml"/>
                       <dcm:attribute-editor ref="."/>                                                    
                       <dcm:element-buttons  
                           triggers="add remove" 
