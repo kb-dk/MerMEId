@@ -118,6 +118,19 @@
     </xsl:if>
   </xsl:template>
 
+
+  <!-- Remove empty elements -->
+  <xsl:template match="m:castItem[not(//text())]"/>
+  <xsl:template match="m:castList[not(*)]"/>
+  <xsl:template match="m:eventList[not(*)]"/>
+  <xsl:template match="m:incipCode[not(text())]"/>
+  <xsl:template match="m:notesStmt[not(*)]"/>
+  <xsl:template match="m:provenance[not(* or //text())]"/>
+  <xsl:template match="m:rend[not(* or //text())]"/>
+  <xsl:template match="m:mei/m:meiHead//m:score[not(*)]"/>
+  <xsl:template match="m:titlePage[not(*)]"/>
+  
+  
   <!-- Clean up double-escaped ampersands (&amp;amp;) -->
   <xsl:template match="text()[contains(.,'&amp;amp;')]">
     <xsl:call-template name="cleanup_amp">
@@ -158,16 +171,6 @@
     </xsl:choose>
   </xsl:template>
 
-
-  <!-- Remove empty elements -->
-  <xsl:template match="m:castItem[not(//text())]"/>
-  <xsl:template match="m:castList[not(* or //text())]"/>
-  <xsl:template match="m:eventList[not(*)]"/>
-  <xsl:template match="m:incipCode[not(text())]"/>
-  <xsl:template match="m:notesStmt[not(*)]"/>
-  <xsl:template match="m:rend[not(* or //text())]"/>
-  <xsl:template match="m:mei/m:meiHead//m:score[not(*)]"/>
-  <xsl:template match="m:titlePage[not(*)]"/>
 
   <!-- Delete duplicate language definitions (fixes an xforms problem) -->
   <xsl:template
