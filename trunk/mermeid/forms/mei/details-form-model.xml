@@ -16,9 +16,8 @@
     </xf:instance>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
-        id="languages" 
-        xxf:readonly="true">
-        <xi:include href="./model/languages.xml"/> 
+        id="languages">
+        <mei/>
     </xf:instance>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
@@ -47,6 +46,21 @@
         <mei/>
     </xf:instance>
     
+    <xf:instance xmlns="http://www.kb.dk/dcm"
+        id="relators-instance">
+        <relators/>
+    </xf:instance>
+    
+    <xf:instance xmlns="http://www.kb.dk/dcm"
+        id="resolutions-instance">
+        <resolutions/>
+    </xf:instance>
+    
+    <xf:instance xmlns="http://www.kb.dk/dcm"
+        id="classification-instance">
+        <classification/>
+    </xf:instance>
+        
     <xf:instance id="XMLfiles" 
         xmlns="http://www.kb.dk/dcm">
         <fileList/>
@@ -175,6 +189,35 @@
         xxf:show-progress="true"
         instance="instruments"/>
     
+    <xf:submission id="load-languages"
+        method="get" 
+        serialization="none" 
+        resource="{instance('parameters')/dcm:library_crud_home}/languages.xml"
+        replace="instance" 
+        instance="languages"/>
+    
+    <xf:submission id="load-relators"
+        method="get" 
+        serialization="none" 
+        resource="{instance('parameters')/dcm:library_crud_home}/relators.xml"
+        replace="instance" 
+        instance="relators-instance"/>
+    
+    <xf:submission id="load-resolutions"
+        method="get" 
+        serialization="none" 
+        resource="{instance('parameters')/dcm:library_crud_home}/resolutions.xml"
+        replace="instance" 
+        instance="resolutions-instance"/>
+    
+    <xf:submission id="load-classification"
+        method="get" 
+        serialization="none" 
+        resource="{instance('parameters')/dcm:library_crud_home}/classification.xml"
+        replace="instance" 
+        instance="classification-instance"/>
+    
+
     <xf:submission id="save-to-file"
         ref="instance('data-instance')"
         validate="true"
@@ -197,10 +240,14 @@
             instance('parameters')/dcm:orbeon_dir,'?uri=',xxf:get-request-parameter('uri'),
             '&amp;doc=',instance('parameters')/dcm:xml_file)"/>
         <!-- load reference data from library -->
-        <xf:send submission="load-bibliography"/>
         <xf:send submission="load-authorities"/>
+        <xf:send submission="load-classification"/>
+        <xf:send submission="load-bibliography"/>
         <xf:send submission="load-ensembles"/>
         <xf:send submission="load-instruments"/>
+        <xf:send submission="load-languages"/>      
+        <xf:send submission="load-relators"/>      
+        <xf:send submission="load-resolutions"/>      
         <!-- load XML data -->
         <xf:send submission="load-data-submission"/>
         <!-- load empty model XML data -->
