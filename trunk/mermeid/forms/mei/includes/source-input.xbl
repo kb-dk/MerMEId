@@ -148,26 +148,12 @@
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:item>
-                                            <xf:value>notated music</xf:value>
-                                            <xf:label>Notated music</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>text</xf:value>
-                                            <xf:label>Text</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>sound recording</xf:value>
-                                            <xf:label>Sound recording</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>videorecording</xf:value>
-                                            <xf:label>Video recording</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>motion picture</xf:value>
-                                            <xf:label>Motion picture</xf:label>
-                                        </xf:item>
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmContentClass']/item">
+                                            <xf:label>
+                                                <xf:output value="label"/>
+                                            </xf:label>
+                                            <xf:value ref="value"/>
+                                        </xf:itemset>
                                     </xf:select1>
                                     <dcm:attribute-editor ref="m:term[@classcode='#DcmContentClass']"/>
                                     <h:br clear="both"/>
@@ -182,26 +168,12 @@
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:item>
-                                            <xf:value>manuscript</xf:value>
-                                            <xf:label>Manuscript</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>print</xf:value>
-                                            <xf:label>Print</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>audio storage medium</xf:value>
-                                            <xf:label>Audio storage medium</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>video storage medium</xf:value>
-                                            <xf:label>Video storage medium</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>electronic resource</xf:value>
-                                            <xf:label>Electronic resource</xf:label>
-                                        </xf:item>
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmPresentationClass']/item">
+                                            <xf:label>
+                                                <xf:output value="label"/>
+                                            </xf:label>
+                                            <xf:value ref="value"/>
+                                        </xf:itemset>
                                     </xf:select1>
                                     <dcm:attribute-editor
                                         ref="m:term[@classcode='#DcmPresentationClass']"/>
@@ -220,22 +192,12 @@
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:item>
-                                            <xf:value>autograph</xf:value>
-                                            <xf:label>Autograph</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>doubtful autograph</xf:value>
-                                            <xf:label>Doubtful autograph</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>partly autograph</xf:value>
-                                            <xf:label>Partly autograph</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>copy</xf:value>
-                                            <xf:label>Copy</xf:label>
-                                        </xf:item>
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmAuthorityClass']/item">
+                                            <xf:label>
+                                                <xf:output value="label"/>
+                                            </xf:label>
+                                            <xf:value ref="value"/>
+                                        </xf:itemset>
                                     </xf:select1>
                                     <dcm:attribute-editor
                                         ref="m:term[@classcode='#DcmAuthorityClass']"/>
@@ -247,34 +209,12 @@
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:item>
-                                            <xf:value>score</xf:value>
-                                            <xf:label>Score</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>short score</xf:value>
-                                            <xf:label>Short score</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>vocal score</xf:value>
-                                            <xf:label>Vocal score</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>choral score</xf:value>
-                                            <xf:label>Choral score</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>piano score</xf:value>
-                                            <xf:label>Piano score</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>parts</xf:value>
-                                            <xf:label>Parts</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>score and parts</xf:value>
-                                            <xf:label>Score and parts</xf:label>
-                                        </xf:item>
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmScoringClass']/item">
+                                            <xf:label>
+                                                <xf:output value="label"/>
+                                            </xf:label>
+                                            <xf:value ref="value"/>
+                                        </xf:itemset>
                                     </xf:select1>
                                     <dcm:attribute-editor ref="m:term[@classcode='#DcmScoringClass']"/>
                                     <h:br clear="both"/>
@@ -285,34 +225,12 @@
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:item>
-                                            <xf:value>sketch</xf:value>
-                                            <xf:label>Sketch</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>draft</xf:value>
-                                            <xf:label>Draft</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>fair copy</xf:value>
-                                            <xf:label>Fair copy</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>engraver's copy</xf:value>
-                                            <xf:label>Engraver's copy</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>printer's copy</xf:value>
-                                            <xf:label>Printer's copy</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>first edition</xf:value>
-                                            <xf:label>First edition</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>later edition</xf:value>
-                                            <xf:label>Later edition</xf:label>
-                                        </xf:item>
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmStateClass']/item">
+                                            <xf:label>
+                                                <xf:output value="label"/>
+                                            </xf:label>
+                                            <xf:value ref="value"/>
+                                        </xf:itemset>
                                     </xf:select1>
                                     <dcm:attribute-editor ref="m:term[@classcode='#DcmStateClass']"/>
                                     <h:br clear="both"/>
@@ -338,22 +256,12 @@
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:item>
-                                            <xf:value>complete</xf:value>
-                                            <xf:label>Complete</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>incomplete</xf:value>
-                                            <xf:label>Incomplete</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>excerpt</xf:value>
-                                            <xf:label>Excerpt</xf:label>
-                                        </xf:item>
-                                        <xf:item>
-                                            <xf:value>fragment</xf:value>
-                                            <xf:label>Fragment(s)</xf:label>
-                                        </xf:item>
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmCompletenessClass']/item">
+                                            <xf:label>
+                                                <xf:output value="label"/>
+                                            </xf:label>
+                                            <xf:value ref="value"/>
+                                        </xf:itemset>
                                     </xf:select1>
                                     <dcm:attribute-editor
                                         ref="m:term[@classcode='#DcmCompletenessClass']"/>

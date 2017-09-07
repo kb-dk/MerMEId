@@ -1,1 +1,1 @@
-This directory is for standard references used in the editor
+This directory is for standard references and customizable lists used in the editor

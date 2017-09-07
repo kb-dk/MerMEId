@@ -13,7 +13,7 @@
       <xf:label>- Select language -</xf:label>
       <xf:value/>
     </xf:item>
-    <xf:itemset nodeset="instance('languages')/language">
+    <xf:itemset nodeset="xxf:instance('languages')/language">
       <xf:label><xf:output value="."/></xf:label>
       <xf:value ref="@xml:id"></xf:value>
     </xf:itemset>
