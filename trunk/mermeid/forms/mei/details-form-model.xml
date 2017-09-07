@@ -60,7 +60,12 @@
         id="classification-instance">
         <classification/>
     </xf:instance>
-        
+
+    <xf:instance xmlns="http://www.kb.dk/dcm"
+        id="writing-medium-instance">
+        <writingMedium/>
+    </xf:instance>
+    
     <xf:instance id="XMLfiles" 
         xmlns="http://www.kb.dk/dcm">
         <fileList/>
@@ -217,7 +222,13 @@
         replace="instance" 
         instance="classification-instance"/>
     
-
+    <xf:submission id="load-medium"
+        method="get" 
+        serialization="none" 
+        resource="{instance('parameters')/dcm:library_crud_home}/writing-medium.xml"
+        replace="instance" 
+        instance="writing-medium-instance"/>
+    
     <xf:submission id="save-to-file"
         ref="instance('data-instance')"
         validate="true"
@@ -246,6 +257,7 @@
         <xf:send submission="load-ensembles"/>
         <xf:send submission="load-instruments"/>
         <xf:send submission="load-languages"/>      
+        <xf:send submission="load-medium"/>      
         <xf:send submission="load-relators"/>      
         <xf:send submission="load-resolutions"/>      
         <!-- load XML data -->

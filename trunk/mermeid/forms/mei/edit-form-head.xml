@@ -102,6 +102,11 @@
       id="resolutions-instance">
       <resolutions/>
     </xf:instance>
+
+    <xf:instance xmlns="http://www.kb.dk/dcm"
+      id="classification-instance">
+      <classification/>
+    </xf:instance>
     
     <xf:instance id="XMLfiles" xmlns="http://www.kb.dk/dcm">
       <fileList/>
@@ -259,6 +264,14 @@
       replace="instance" 
       instance="resolutions-instance"/>
     
+    <xf:submission id="load-classification"
+      method="get" 
+      serialization="none" 
+      resource="{instance('parameters')/dcm:library_crud_home}/classification.xml"
+      replace="instance" 
+      instance="classification-instance"/>
+    
+    
 
     <!-- "onload" xforms actions -->
     <xf:action ev:event="xforms-model-construct-done">
@@ -275,6 +288,7 @@
         '&amp;doc=',instance('parameters')/dcm:xml_file)"/>
       <!-- load reference data from library -->
       <xf:send submission="load-authorities"/>
+      <xf:send submission="load-classification"/>
       <xf:send submission="load-bibliography"/>
       <xf:send submission="load-ensembles"/>
       <xf:send submission="load-instruments"/>
