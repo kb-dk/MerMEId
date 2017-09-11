@@ -729,6 +729,7 @@
 			<xsl:apply-templates select="m:meter"/>
 		</xsl:if>
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode,string(.)))]"/>
+		<xsl:apply-templates select="m:perfDuration"/>
 		<xsl:apply-templates select="m:extent"/>
 		<xsl:apply-templates select="m:incip"/>
 		<!-- external relation links -->
@@ -845,6 +846,7 @@
 			<xsl:apply-templates select="m:meter"/>
 		</xsl:if>
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode,string(.)))]"/>
+		<xsl:apply-templates select="m:perfDuration"/>
 		<xsl:apply-templates select="m:extent"/>
 		<xsl:apply-templates select="m:incip"/>
 		<xsl:apply-templates select="m:titleStmt/m:respStmt[m:persName]"/>
@@ -1162,6 +1164,11 @@
 	</xsl:template>
 
 
+	<xsl:template match="m:expression/m:perfDuration[text()]">
+		<p>Duration: <xsl:apply-templates/></p>
+	</xsl:template>
+	
+	
 	<xsl:template match="m:expression/m:extent[text()]">
 		<p><xsl:value-of select="$l/extent"/>: <xsl:apply-templates/>&#160;<xsl:apply-templates select="@unit"/></p>
 	</xsl:template>
