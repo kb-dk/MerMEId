@@ -445,16 +445,18 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
 	      <a href="#appendix">configuration files</a> Figure 2 shows the
 	      client after installation and configuration.</li>
 
-	      <li>
-		<strong>Install the <kbd>xqueries</kbd></strong>.
-
-		<p>Some xqueries need more privileges than the rest (for
+	      <li><strong>Customize login.xqm</strong><p>Some xqueries need more privileges than the rest (for
 		copying and publishing resources). Those scripts are using
 		login.xqm. You need to copy <kbd>local_config/login.xqm_distro</kbd> to <kbd>xqueries/login.xqm</kbd> and
 		edit it to provide credentials for these operations. Replace "secret password" in the line</p>
 <pre>
   let $lgin := xdb:login("/db", "user", "secret password")
 </pre>
+             </li>
+	      <li>
+		<strong>Install the <kbd>xqueries</kbd></strong>.
+
+	
 		<p><strong>Load the <kbd>xqueries</kbd>, libraries, stylesheets etc</strong> into eXist DB.</p>
 
 		<p>The fastest way to do this, is from the command
