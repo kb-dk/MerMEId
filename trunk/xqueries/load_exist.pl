@@ -50,103 +50,109 @@ my %suffixes = ('xml' => 'text/xml',
 
 exit() unless $source;
 
-my $files  = "/usr/bin/find $source -name '*$suffix' -print |";
+my @suffixlist = split(/,/,$suffix);
 
-if(open FIND,$files) {
-    
-    my $ua = LWP::UserAgent->new;
-    $ua->agent("crud-client/0.1 ");
-    $ua->credentials($host_port, "exist" , $user, $password );
+foreach my $suf (@suffixlist)  {
 
-    while(my $file = <FIND>) {
+    my $files  = "/usr/bin/find $source -name '*$suf' -print |";
 
-	chomp $file;
-	print STDERR "$file\n";
+    if(open FIND,$files) {
+	
+	my $ua = LWP::UserAgent->new;
+	$ua->agent("crud-client/0.1 ");
+	$ua->credentials($host_port, "exist" , $user, $password );
 
-	my $content = "";
-	if (open CONTENT,"<$file") {
-	    while(my $line = <CONTENT>) {
-		$content .= $line;
+	while(my $file = <FIND>) {
+
+	    chomp $file;
+	    print STDERR "$file\n";
+
+	    my $content = "";
+	    if (open CONTENT,"<$file") {
+		while(my $line = <CONTENT>) {
+		    $content .= $line;
+		}
+		close CONTENT;
 	    }
-	    close CONTENT;
-	}
 
-	my $localcopy = $file;
-	$file =~ s/$source/$target/;
-	my $req_uri = $scheme . $host_port . $context . $file;
-	print STDERR $req_uri . "\n";
+	    my $localcopy = $file;
+	    $file =~ s/$source/$target/;
+	    my $req_uri = $scheme . $host_port . $context . $file;
+	    print STDERR $req_uri . "\n";
 
 # Create a request
 
-	my $req = new HTTP::Request();
-	$req->uri($req_uri);
-	if($load) {
-	    $req->method("PUT");
-	    $req->content($content);
-	} elsif($delete) {
-	    $req->method("DELETE");
-	} else {
-	    $req->method("GET");
-	}
-	$req->header( "Content-Type" => $suffixes{$suffix} );
+	    my $req = new HTTP::Request();
+	    $req->uri($req_uri);
+	    if($load) {
+		$req->method("PUT");
+		$req->content($content);
+	    } elsif($delete) {
+		$req->method("DELETE");
+	    } else {
+		$req->method("GET");
+	    }
+	    $req->header( "Content-Type" => $suffixes{$suf} );
 
 # Pass request to the user agent and get a response back
-	my $res = $ua->request($req);
+	    my $res = $ua->request($req);
 
 ## Check the outcome of the response
-	if ($res->is_success) {
-	    print STDERR "Success ", $res->status_line, "\n";
-	    if($get) {
-		if (open CONTENT,">$localcopy") {
-		    print CONTENT $res->content();
+	    if ($res->is_success) {
+		print STDERR "Success ", $res->status_line, "\n";
+		if($get) {
+		    if (open CONTENT,">$localcopy") {
+			print CONTENT $res->content();
+		    }
 		}
+	    } else {
+		print STDERR "Failure ", $res->status_line, "\n";
 	    }
-	} else {
-	    print STDERR "Failure ", $res->status_line, "\n";
-	}
 
+	}
     }
+
 }
 
 sub usage {
 
     print <<"END";
-Correct usage:
-$0 <options>
-where options are
-   --load <directory> 
+    Correct usage:
+    $0 <options>
+	where options are
+	--load <directory> 
         from where to read files for loading
-   --get <directory>
+	--get <directory>
         where to write retrieved files
-   --delete <directory with a backup>
+	--delete <directory with a backup>
         the files in that are found in the directory will be deleted from the
         database if there exist files with the same name
 
-    --suffix <suffix> 
-        file suffix to look for in directory. for example xml
+	--suffix <suffix> 
+        file suffixes to look for in <directory>. Supports a comma-seperated list (without spaces). Example xml,xq,css
 
-    --target <target name>
+	--target <target name>
         Basically database name. Default is $target
 
-    --context <context>
+	--context <context>
         Root for the rest services. Default is $context
 
-    --user <user name>
-    --password <password of user>
-    --host-port <host and port for server>
+	--user <user name>
+	--password <password of user>
+	--host-port <host and port for server>
         Default is localhost:8080
 
-For example
+	For example
 
-$0 \
-      --host-port kb-cop.kb.dk:8080  \\
-      --suffix xml \\
-      --load ../../mei_editor_test/data/ \\
-      --context $context \\
-      --target $target
+	$0 \
+	--host-port kb-cop.kb.dk:8080  \\
+	--suffix xml \\
+	--load ../../mei_editor_test/data/ \\
+	--context $context \\
+	--target $target
 
-will load the xml-files in directory ../../mei_editor_test/data/ into a
-database with base URI
+	will load the xml-files in directory ../../mei_editor_test/data/ into a
+	database with base URI
 
 http://kb-cop.kb.dk:8080/exist/rest/db/dcm-catalog/
 
