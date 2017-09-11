@@ -129,7 +129,8 @@ sub usage {
         database if there exist files with the same name
 
 	--suffix <suffix> 
-        file suffixes to look for in <directory>. Supports a comma-seperated list (without spaces). Example xml,xq,css
+        file suffixes to look for in <directory>. Supports a comma-seperated 
+	list (without spaces) --suffix xml,xq,xsl,xqm,css
 
 	--target <target name>
         Basically database name. Default is $target
