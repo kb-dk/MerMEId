@@ -446,23 +446,27 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
 	      client after installation and configuration.</li>
 
 	      <li>
-		<strong>Configure the <kbd>xqueries</kbd></strong>.  
+		<strong>Install the <kbd>xqueries</kbd></strong>.
+
 		<p>Some xqueries need more privileges than the rest (for
 		copying and publishing resources). Those scripts are using
-		login.xqm. You need to copy login.xqm_distro to login.xqm and
-		edit it to provide credentials for these operations.</p>
-
-		<strong>Load the <kbd>xqueries</kbd>, libraries, stylesheets etc</strong>.  
+		login.xqm. You need to copy <kbd>local_config/login.xqm_distro</kbd> to <kbd>xqueries/login.xqm</kbd> and
+		edit it to provide credentials for these operations. Replace "secret password" in the line</p>
+<pre>
+  let $lgin := xdb:login("/db", "user", "secret password")
+</pre>
+		<p><strong>Load the <kbd>xqueries</kbd>, libraries, stylesheets etc</strong> into eXist DB.</p>
 
 		<p>The fastest way to do this, is from the command
 		line. Assuming that you are in the <kbd>xqueries</kbd>
 		in the source tree.  First load the xquery files:</p>
 
 <pre>
+  cd xqueries
   ./load_exist.pl --user admin \
   --password your_own_very_secret_password \
   --host-port mei.example.org:80 \
-  --load . \
+  --load .  \
   --context "/exist/rest/db" \
   --suffix xml,xsl,xq,xqm,css
 </pre>
@@ -473,7 +477,7 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
 	      </li>
 	      <li>
 
-	      <p>All the <kbd>*.xq</kbd> files should have execute permissions, that is the following</p>
+	      <p>All the <kbd>*.xq</kbd> files should have execute permissions inside eXist DB, i.e., the following files</p>
 
 	      <ul>
 		<li>copy-file.xq</li>
