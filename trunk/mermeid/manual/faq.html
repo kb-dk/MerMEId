@@ -43,7 +43,8 @@
     <ul>
       <li><a href="#changing_presentation">Can I change the way MerMEId displays my data?</a></li>
       <li><a href="#information_not_shown">I have entered information, but MerMEId does not show
-          everything. Why?</a></li>
+      everything. Why?</a></li>
+      <li><a href="#render_score">Will MerMEId render any music encoded in my files?</a></li>
     </ul> Using the editor<br />
     <ul>
       <li><a href="#start_a_collection">How do I start a new file collection or catalogue?</a></li>
@@ -162,6 +163,19 @@
       have to define it in your presentation. Finally, there is
       definitely a chance that we have simply forgotten to implement a certain feature in the HTML
       preview because we haven't used it yet. Please let us know if something is missing. </p>
+    <h3>Will MerMEId render any music encoded in my files?<a name="render_score"></a></h3>
+    <p>Encoded music may appear in two different places in your MEI files: Incipits encoded in the header, 
+    and any music (score) encoded in the MEI file's main music section (the &lt;music&gt; element).</p> 
+      <p>MerMEId comes with a <a href="http://labs.kb.dk/storage/present.xq?doc=incipit_demo.xml">demo file</a> 
+        to illustrate different ways of including incipits. Encoded incipits are rendered using the <a href="verovio.org"
+      target="_blank">Verovio</a> MEI renderer.</p>
+      <p>By default, MerMEId also renders any music encoded in the main music part of the 
+        document – or at least the beginning of it. This rendering also uses <a href="verovio.org"
+          target="_blank">Verovio</a>.
+        You may deactivate it temporarily by adding '&amp;score=false' to the URL of  
+      MerMEId's HTML presentation. To turn it off permanently, change the value of the variable 'view_score'
+      to 'false' in the the MEI-to-HTML transformation (the file mei_to_html.xsl). This reverses the 
+      behaviour: you may then activate rendering temporarily by adding the parameter '&amp;score=true' to the URL.</p>
     <h2>Using the editor </h2>
     <h3>How do I start a new file collection or catalogue?<a name="start_a_collection"></a>
     </h3>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language name="da">
+    <!-- Danish language module for MerMEId's HTML preview -->
+
+    <!-- Field labels -->
+    <additions_in>Tilføjelser med</additions_in>   <!-- refers to writing medium (e.g., "Additions in pencil") -->
+    <bibliography>Bibliografi</bibliography>
+    <classification>Klassifikation</classification>
+    <composition>Komposition</composition>
+    <condition>Tilstand</condition>
+    <date>Dato</date>
+    <date_and_place>Dato og sted</date_and_place>
+    <description>Beskrivelse</description>      <!-- Used for description of file revisions (change log) -->
+    <diary_entries>Dagbogsnotater</diary_entries>
+    <duration>Varighed</duration>
+    <edition>Udgave</edition>
+    <evidence>Dokumentation</evidence>
+    <extent>Omfang</extent>
+    <file_publication>Fil udgivet af</file_publication>
+    <file_title>Filtitel</file_title>
+    <instrumentation>Instrumentation</instrumentation>
+    <key>Toneart</key>
+    <last_changed>Sidst ændret</last_changed>
+    <letters>Breve</letters>
+    <manuscripts>Manuskripter</manuscripts>
+    <metre>Taktart</metre>
+    <music>Musik</music>
+    <music_incipit>Incipit</music_incipit>
+    <original_title>Originaltitel</original_title>
+    <other>Andet</other>    <!-- refers to other bibliographical material / documents -->
+    <performances>Opførelser</performances>
+    <place>Sted</place>
+    <plate_number>Pladenr.</plate_number>
+    <private_notes>Interne notater</private_notes>
+    <provenance>Proveniens</provenance>
+    <reprint>Reprint</reprint>
+    <reprints>Reprint</reprints>
+    <responsible>Person</responsible>
+    <review>Anmeldelse</review>
+    <revision_history>Ændringshistorik</revision_history>
+    <roles>Roller</roles>
+    <sections>Satser</sections>
+    <series>Serie</series>
+    <sources>Kilder</sources>
+    <tempo>Tempo</tempo>
+    <title_page>Titelblad</title_page>
+    <text_author>Tekstforfatter</text_author>
+    <text_incipit>Tekstincipit</text_incipit>
+    <text_source>Tekstkilde</text_source>
+    <watermark>Vandmærke</watermark>
+    <written_in>Skrevet med</written_in> <!-- refers to writing medium (e.g., "Written in pencil") -->
+
+
+    <!-- Conjunctions and other bits (lowercase) -->
+    <and>og</and>
+    <by>af</by>
+    <edited_by>red.</edited_by>
+    <edited_by_plural>red.</edited_by_plural>
+    <from>fra</from>
+    <in>i</in>
+    <number>nr.</number>
+    <page>s.</page>
+    <pages>s.</pages>
+    <to>til</to>
+    <vol>bd.</vol>
+    
+    
+    <!-- Months -->
+    <january>Jan.</january>
+    <february>Feb.</february>
+    <march>Mar.</march>
+    <april>Apr.</april>
+    <may>Maj</may>
+    <june>Juni</june>
+    <july>Juli</july>
+    <august>Aug.</august>
+    <september>Sept.</september>
+    <october>Okt.</october>
+    <november>Nov.</november>
+    <december>Dec.</december>
+    
+    
+    <!-- User interface texts -->
+    <hide_alt_lang>Skjul andre sprog</hide_alt_lang>
+    <show_alt_lang>Vis andre sprog</show_alt_lang>
+    
+    
+    <!-- FRBR relation labels -->    
+    <hasAbridgement>Forkortet version</hasAbridgement>
+    <isAbridgementOf>Forkortet version af</isAbridgementOf>
+    <hasAdaptation>Tilpasning</hasAdaptation>
+    <isAdaptationOf>Tilpasning af</isAdaptationOf>
+    <hasAlternate>Alternativ</hasAlternate>
+    <isAlternateOf>Alternativ til</isAlternateOf>
+    <hasArrangement>Arrangement</hasArrangement>
+    <isArrangementOf>Arrangement af</isArrangementOf>
+    <hasComplement>Modstykke</hasComplement>
+    <isComplementOf>Modstykke til</isComplementOf>
+    <hasEmbodiment>Repræsenterer</hasEmbodiment>
+    <isEmbodimentOf>Repræsentation af</isEmbodimentOf>
+    <hasExemplar>Eksemplar</hasExemplar>
+    <isExemplarOf>Eksemplar af</isExemplarOf>
+    <hasImitation>Imitation</hasImitation>
+    <isImitationOf>Imitation af</isImitationOf>
+    <hasPart>Indeholder</hasPart>
+    <isPartOf>Indeholdt i</isPartOf>
+    <hasRealization>Realisering</hasRealization>
+    <isRealizationOf>Realisering af</isRealizationOf>
+    <hasReconfiguration>Omarrangement</hasReconfiguration>
+    <isReconfigurationOf>Omarrangement af</isReconfigurationOf>
+    <hasReproduction>Gengivelse (udgave eller faksimile)</hasReproduction>
+    <isReproductionOf>Gengivelse af</isReproductionOf>
+    <hasRevision>Revideret version</hasRevision>
+    <isRevisionOf>Revideret version af</isRevisionOf>
+    <hasSuccessor>Efterfølges af</hasSuccessor>
+    <isSuccessorOf>Efterfølger</isSuccessorOf>
+    <hasSummarization>Sammenfatning</hasSummarization>
+    <isSummarizationOf>Sammenfatning af</isSummarizationOf>
+    <hasSupplement>Supplement</hasSupplement>
+    <isSupplementOf>Supplement til</isSupplementOf>
+    <hasTransformation>Transformation</hasTransformation>
+    <isTransformationOf>Transformation af</isTransformationOf>
+    <hasTranslation>Oversættelse</hasTranslation>
+    <isTranslationOf>Oversættelse af</isTranslationOf>
+    
+    
+    <!-- Non-MARC relators -->
+    <!-- Relators are capitalized automatically as needed -->
+    <donee>donationsmodtager</donee>
+    <soloist>solist</soloist>
+
+    <!-- MARC relators -->
+    <actor>skuespiller</actor>
+    <adapter>arrangør</adapter>
+    <analyst>analytiker</analyst>
+    <annotator>annotator</annotator>
+    <arranger>arrangør</arranger>
+    <artist>kunstner</artist>
+    <artistic_director>kunstnerisk leder</artistic_director>
+    <assignee>assignee</assignee>
+    <associated_name>associeret navn</associated_name>
+    <attributed_name>tilskrevet</attributed_name>
+    <auctioneer>auktionarius</auctioneer>
+    <author>forfatter</author>
+    <author_in_quotations_or_text_extracts>forfatter til citater eller tekstdele</author_in_quotations_or_text_extracts>
+    <author_of_afterword_colophon_etc>forfatter til efterord, kolofon el. lign.</author_of_afterword_colophon_etc>
+    <author_of_dialog>dialogforfatter</author_of_dialog>
+    <author_of_introduction_etc>forfatter til indledning el. lign.</author_of_introduction_etc>
+    <author_of_screenplay_etc>forfatter til drejebog el. lign.</author_of_screenplay_etc>
+    <binder>bogbinder</binder>
+    <binding_designer>omslagsdesigner</binding_designer>
+    <blurb_writer>forfatter til omslagstekst</blurb_writer>
+    <book_designer>bogdesigner</book_designer>
+    <book_producer>bogproducent</book_producer>
+    <bookjacket_designer>Designer af smudsomslag</bookjacket_designer>
+    <bookplate_designer>Designer af exlibris</bookplate_designer>
+    <bookseller>boghandler</bookseller>
+    <calligrapher>kalligraf</calligrapher>
+    <censor>censor</censor>
+    <choreographer>koreograf</choreographer>
+    <collaborator>samarbejdspartner</collaborator>
+    <collector>samler</collector>
+    <commentator>kommentator</commentator>
+    <compiler>sammenstiller</compiler>
+    <composer>komponist</composer>
+    <conceptor>idé</conceptor>
+    <conductor>dirigent</conductor>
+    <conservator>konservator</conservator>
+    <consultant>konsulent</consultant>
+    <contractor>leverandør</contractor>
+    <contributor>bidragyder</contributor>
+    <copyright_claimant>påberåber af ophavsret</copyright_claimant>
+    <copyright_holder>indehaver af ophavsret</copyright_holder>
+    <corrector>korrektor</corrector>
+    <correspondent>korrespondencepartner</correspondent>
+    <costume_designer>kostumedesigner</costume_designer>
+    <cover_designer>omslagsdesigner</cover_designer>
+    <creator>ophav</creator>
+    <curator>kurator</curator>
+    <dancer>danser</dancer>
+    <data_contributor>data-bidragyder</data_contributor>
+    <data_manager>data manager</data_manager>
+    <dedicatee>tilegnet</dedicatee>
+    <dedicator>dedikatør</dedicator>
+    <depositor>depotindehaver</depositor>
+    <designer>designer</designer>
+    <director>direktør</director>
+    <distributor>distributør</distributor>
+    <donor>donor</donor>
+    <draftsman>ophav til udkast</draftsman>
+    <dubious_author>tvivlsom ophavsmand</dubious_author>
+    <editor>redaktør</editor>
+    <electrotyper>elektrotypograf</electrotyper>
+    <engineer>ingeniør</engineer>
+    <engraver>stikker</engraver>
+    <etcher>gravør</etcher>
+    <expert>ekspert</expert>
+    <facsimilist>faksimilist</facsimilist>
+    <forger>falskner</forger>
+    <former_owner>tidligere ejer</former_owner>
+    <funder>finansieret af</funder>
+    <illuminator>illuminatør</illuminator>
+    <illustrator>illustrator</illustrator>
+    <inscriber>inskribent</inscriber>
+    <instrumentalist>instrumentalist</instrumentalist>
+    <interviewee>interviewet</interviewee>
+    <interviewer>interviewer</interviewer>
+    <lead>leder</lead>
+    <lender>låner</lender>
+    <librettist>librettist</librettist>
+    <licensee>licenstager</licensee>
+    <licensor>licensgiver</licensor>
+    <lighting_designer>lysdesigner</lighting_designer>
+    <lithographer>lithograf</lithographer>
+    <lyricist>tekstforfatter</lyricist>
+    <manufacturer>produceret af</manufacturer>
+    <marbler>marmoratør</marbler>
+    <markup_editor>markup-redaktør</markup_editor>
+    <metadata_contact>metadata-kontakt</metadata_contact>
+    <metal-engraver>metalstikker</metal-engraver>
+    <moderator>moderator</moderator>
+    <monitor>monitor</monitor>
+    <music_copyist>nodekopist</music_copyist>
+    <musical_director>musikalsk leder</musical_director>
+    <musician>musiker</musician>
+    <narrator>fortæller</narrator>
+    <originator>ophav</originator>
+    <other>andet</other>
+    <owner>ejer</owner>
+    <papermaker>papirfremstiller</papermaker>
+    <patron>mæcen</patron>
+    <performer>udøvende</performer>
+    <permitting_agency>tilladende myndighed</permitting_agency>
+    <photographer>fotograf</photographer>
+    <platemaker>pladestikker</platemaker>
+    <printer>trykker</printer>
+    <printer_of_plates>pladetrykker</printer_of_plates>
+    <printmaker>trykker</printmaker>
+    <producer>producer</producer>
+    <production_manager>production manager</production_manager>
+    <production_personnel>productionspersonale</production_personnel>
+    <programmer>programmør</programmer>
+    <project_director>projectleder</project_director>
+    <proofreader>korrekturlæser</proofreader>
+    <publisher>forlægger</publisher>
+    <publishing_director>forlagsdirektør</publishing_director>
+    <puppeteer>dukkefører</puppeteer>
+    <recipient>modtager</recipient>
+    <recording_engineer>optagelsestekniker</recording_engineer>
+    <redactor>overordnet redaktør</redactor>
+    <reporter>journalist</reporter>
+    <research_team_head>leder af forskningsteam</research_team_head>
+    <research_team_member>medlem af forskningsteam</research_team_member>
+    <researcher>forsker</researcher>
+    <responsible_party>ansvarlig part</responsible_party>
+    <reviewer>anmelder</reviewer>
+    <rubricator>overskriftforfatter</rubricator>
+    <scenarist>drejebogsforfatter</scenarist>
+    <scribe>skriver</scribe>
+    <sculptor>skulptør</sculptor>
+    <secretary>sekretær</secretary>
+    <set_designer>scenograf</set_designer>
+    <signer>underskriver</signer>
+    <singer>sanger</singer>
+    <sound_designer>lyddesigner</sound_designer>
+    <speaker>speaker</speaker>
+    <sponsor>sponsor</sponsor>
+    <stage_manager>stage manager</stage_manager>
+    <stereotyper>stereotypist</stereotyper>
+    <storyteller>historiefortæller</storyteller>
+    <surveyor>taksator</surveyor>
+    <teacher>lærer</teacher>
+    <transcriber>transkribent</transcriber>
+    <translator>oversætter</translator>
+    <type_designer>typedesigner</type_designer>
+    <typographer>typograf</typographer>
+    <videographer>videograf</videographer>
+    <vocalist>vokalist</vocalist>
+    <witness>vidne</witness>
+    <woodcutter>træskærer</woodcutter>
+    <wood-engraver>træsnit</wood-engraver>
+    <writer_of_accompanying_material>forfatter til ledsagende materiale</writer_of_accompanying_material>
+
+
+</language>

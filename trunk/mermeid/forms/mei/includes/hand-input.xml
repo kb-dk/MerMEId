@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <h:span xmlns:h="http://www.w3.org/1999/xhtml" 
     xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
     xmlns:dcm="http://www.kb.dk/dcm">
     <xf:input ref=".">
         <xf:label>Name <h:a class="help">&#160;?<h:span class="comment">The scribe's name, e.g. "Carl Nielsen"; 
@@ -13,66 +15,60 @@
                 Select from list or enter a custom text.</h:span></h:a></xf:label>
         </xf:input>
         <!-- set tabindex to 1000 to skip the select on tabbing -->
-        <xf:select1 ref="@medium" tabindex="1000">
+        <!--<xf:select1 ref="@medium" tabindex="1000">
             <xf:item>
                 <xf:label></xf:label>
                 <xf:value/>
             </xf:item>
-            <xf:item>
-                <xf:label>ink</xf:label>
-                <xf:value>ink</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>black ink</xf:label>
-                <xf:value>black ink</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>brown ink</xf:label>
-                <xf:value>brown ink</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>blue ink</xf:label>
-                <xf:value>blue ink</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>purple ink</xf:label>
-                <xf:value>purple ink</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>red ink</xf:label>
-                <xf:value>red ink</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>pencil</xf:label>
-                <xf:value>pencil</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>red crayon</xf:label>
-                <xf:value>red crayon</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>blue crayon</xf:label>
-                <xf:value>blue crayon</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>ball pen</xf:label>
-                <xf:value>ball pen</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>black pen</xf:label>
-                <xf:value>black pen</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>blue pen</xf:label>
-                <xf:value>blue pen</xf:value>
-            </xf:item>
-            <xf:item>
-                <xf:label>red pen</xf:label>
-                <xf:value>red pen</xf:value>
-            </xf:item>
-        </xf:select1>
+            <xf:itemset nodeset="xxf:instance('writing-medium-instance')/item">
+                <xf:label>
+                    <xf:output value="label"/>
+                </xf:label>
+                <xf:value ref="value"/>
+            </xf:itemset>
+            </xf:select1>-->
+        
+        <xf:trigger>
+            <xf:label><h:img
+                src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png"
+                alt="Select"/> Select from list</xf:label>
+            <xxf:show dialog="medium_menu" ev:event="DOMActivate"/>
+        </xf:trigger>
+        
+        
     </h:span>
     <!-- end selection="open" -->
+    
+    
+    
+    <!-- pre-defined values menu -->
+    <xxf:dialog id="medium_menu" appearance="full" level="modeless" close="true" draggable="true" visible="false">
+        <xf:label>Medium</xf:label>
+        <h:p>Select writing medium</h:p>
+        <xf:var name="medium" select="."/>
+        <h:div style="height:100%">
+            <xf:repeat nodeset="xxf:instance('writing-medium-instance')/value" id="medium-repeat">
+                <h:div>
+                    <xf:trigger submission="replace-form-with" appearance="minimal">
+                        <xf:label>
+                            <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/>
+                            <xf:output ref="."/>
+                        </xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:action>
+                                <xf:setvalue ref="$medium/@medium" value="xxf:instance('writing-medium-instance')/value[index('medium-repeat')]" />
+                                <xxf:hide dialog="medium_menu"/>
+                            </xf:action>
+                        </xf:action>
+                    </xf:trigger>
+                </h:div>
+            </xf:repeat>
+        </h:div>
+    </xxf:dialog>
+    
+    
+    
+    
     <xf:select1 ref="@initial" class="auto_length">
         <xf:label> Represents: <h:a class="help">&#160;?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
             set to "additions" otherwise. For manuscript annotations in printed sources use "additions"</h:span></h:a></xf:label>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language name="de">
+    <!-- German language module for MerMEId's HTML preview -->    
+    
+    <!-- Field labels -->
+    <additions_in>Ergänzungen mit</additions_in>   <!-- refers to writing medium (e.g., "Additions in pencil") -->
+    <bibliography>Bibliographie</bibliography>
+    <classification>Klassifikation/Kategorisierung</classification> <!-- noch unklar -->
+    <composition>Komposition</composition>
+    <condition>Beschaffenheit</condition>
+    <date>Datum</date>
+    <date_and_place>Datum und Ort</date_and_place> 
+    <description>Vermerk, Bemerkung</description>      <!-- Used for description of file revisions (change log), wenn nur dort verwendet -->
+    <diary_entries>Tagebucheinträge</diary_entries>      
+    <duration>Dauer</duration>
+    <edition>Edition</edition>
+    <evidence>Nachweis/Beleg</evidence> 
+    <extent>Umfang</extent>
+    <file_publication>Digitale Veröffentlichung</file_publication> 
+    <file_title>Dateiname</file_title>
+    <instrumentation>Besetzung</instrumentation>
+    <key>Tonart</key>
+    <last_changed>Zuletzt geändert am</last_changed>
+    <letters>Briefe</letters> 
+    <manuscripts>Manuskript(e)</manuscripts>
+    <metre>Metrum</metre>
+    <music>Musik</music>
+    <music_incipit>Noten-Incipit</music_incipit>
+    <original_title>Originaltitel</original_title>
+    <other>Weitere/Sonstige</other>    <!-- refers to other bibliographical material / documents ; bin mir nicht ganz sicher was damit ausgesagt werden soll -->
+    <performances>Aufführungen</performances>
+    <place>Ort</place>
+    <plate_number>Pl.-Nr.</plate_number>
+    <private_notes>Sonstige Anmerkungen</private_notes>
+    <provenance>Provenienz</provenance>
+    <reprint>Neuauflage/Nachdruck</reprint> 
+    <reprints>Neuauflagen/Nachdrucke</reprints>
+    <responsible>Verantwortlicher/Verantwortliche</responsible>
+    <review>Überprüfung</review>
+    <revision_history>Revisionsgeschichte</revision_history>
+    <roles>Rolle/Figur</roles> <!-- unklar -->
+    <sections>Abschnitt/Abteilung</sections>
+    <series>Reihe</series>
+    <sources>Quellen</sources>
+    <tempo>Tempo</tempo>
+    <title_page>Titelseite</title_page>
+    <text_author>Dichter, Textautor, Librettist</text_author> <!-- unklar -->
+    <text_incipit>Text-Incipit</text_incipit>
+    <text_source>Textquelle</text_source>
+    <watermark>Wasserzeichen</watermark>
+    <written_in>geschrieben in</written_in> <!-- refers to writing medium (e.g., "Written in pencil"), groß oder Kleinschreibung hängt von Position ab -->
+
+
+    <!-- Conjunctions and other bits (lowercase) -->
+    <and>und</and>
+    <by>von</by>
+    <edited_by>hrsg. v.</edited_by>
+    <edited_by_plural>hrsg. v.</edited_by_plural>
+    <from>von</from>
+    <in>in</in>
+    <number>Nr.</number>
+    <page>S.</page>
+    <pages>S.</pages>
+    <to>an</to> <!-- as in "letter from xxx to yyy" -->
+    <vol>Bd.</vol>
+    
+    
+    <!-- Months -->
+    <january>Jan.</january>
+    <february>Feb.</february>
+    <march>März</march>
+    <april>Apr.</april>
+    <may>Mai</may>
+    <june>Juni</june>
+    <july>Juli</july>
+    <august>Aug.</august>
+    <september>Sept.</september>
+    <october>Okt.</october>
+    <november>Nov.</november>
+    <december>Dez.</december>
+    
+    
+    <!-- User interface texts --> 
+    <hide_alt_lang>Verberge alternative Ausgabesprache(n)</hide_alt_lang>
+    <show_alt_lang>Zeige alternative Ausgabesprache(n)</show_alt_lang>
+    
+    <!-- FRBR relation labels -->    
+    <hasAbridgement>wurde verkürzt in</hasAbridgement>
+    <isAbridgementOf>Auszug oder Kurzfassung von</isAbridgementOf>
+    <hasAdaptation>wurde adaptiert in</hasAdaptation>
+    <isAdaptationOf>ist eine Bearbeitung/Adaption von</isAdaptationOf>
+    <hasAlternate>Alternate</hasAlternate> <!-- -->
+    <isAlternateOf>ist die Alternative von</isAlternateOf>
+    <hasArrangement>wurde arrangiert in</hasArrangement>
+    <isArrangementOf>ist das Arrangement von</isArrangementOf>
+    <hasComplement>wurde vervollständigt/ergänzt durch</hasComplement>
+    <isComplementOf>ist die Vervollständigung, Ergänzung oder das Gegenstück zu</isComplementOf>
+    <hasEmbodiment>wurde ausgestaltet in</hasEmbodiment>
+    <isEmbodimentOf>ist die Ausgestaltung von</isEmbodimentOf>
+    <hasExemplar>Exemplar</hasExemplar> <!-- -->
+    <isExemplarOf>ist ein Exemplar von</isExemplarOf>
+    <hasImitation>wurde nachgeahmt/imitiert in</hasImitation>
+    <isImitationOf>ist ein/e Nachahmung/Imitat von</isImitationOf> <!-- im Gegensatz zu Reproduction --> 
+    <hasPart>beinhaltet</hasPart>
+    <isPartOf>ist enthalten in</isPartOf>
+    <hasRealization>wird umgesetzt/verwirklicht in</hasRealization>
+    <isRealizationOf>ist die Umsetzung/Verwirklichung von</isRealizationOf>
+    <hasReconfiguration>wurde erneut bearbeitet in</hasReconfiguration>
+    <isReconfigurationOf>ist Wiederbearbeitung von</isReconfigurationOf>
+    <hasReproduction>wird reproduziert/kopiert in (Edition oder Faksimile)</hasReproduction>
+    <isReproductionOf>ist eine Reproduktion von</isReproductionOf>
+    <hasRevision>wurde überarbeitet/neugefassst in</hasRevision>
+    <isRevisionOf>ist überarbeitete Fassung/Neufassung von</isRevisionOf>
+    <hasSuccessor>wird gefolgt von</hasSuccessor> 
+    <isSuccessorOf>ist Nachfolge von</isSuccessorOf>
+    <hasSupplement>wird ergänzt durch</hasSupplement>
+    <isSupplementOf>ist Ergänzung/Nachtrag zu</isSupplementOf>
+    <hasSummarization>wird zusammengefasst in</hasSummarization>
+    <isSummarizationOf>ist die Zusammenfassung von</isSummarizationOf>
+    <hasTransformation>wurde umgewandelt in</hasTransformation>
+    <isTransformationOf>ist die Umwandlung von</isTransformationOf>
+    <hasTranslation>wurde übersetzt in</hasTranslation>
+    <isTranslationOf>ist Übersetzung von</isTranslationOf>
+    
+    
+    <!-- Non-MARC relators -->
+    <!-- Relators are capitalized automatically as needed -->
+    <donee>Beschenkte/-r</donee>
+    <soloist>Solist</soloist>
+
+    <!-- MARC relators -->
+    <actor code="act">Schauspieler/-in</actor>
+    <adapter code="adp">Bearbeiter/-in</adapter>
+    <analyst code="anl">Analytiker/-in</analyst>
+    <annotator code="ann">Kommentator/-in</annotator>
+    <arranger code="arr">Arrangeur/-in</arranger>
+    <artist code="art">Künstler/-in</artist>
+    <artistic_director code="ard">künstlerische Leitung</artistic_director>
+    <assignee code="asg">Rechtsnachfolger/-in</assignee>
+    <associated_name code="asn">zugehöriger Name</associated_name>
+    <attributed_name code="att">zugeschriebener Name</attributed_name>
+    <auctioneer code="auc">Auktionator/-in</auctioneer>
+    <author code="aut">Autor/-in, Verfasser/-in</author>
+    <author_in_quotations_or_text_extracts code="aqt">Verfasser/-in von Zitaten oder Textabschnitten</author_in_quotations_or_text_extracts>
+    <author_of_afterword_colophon_etc code="aft">Verfasser/-in eines Nachworts</author_of_afterword_colophon_etc>
+    <author_of_dialog code="aud">Verfasser/-in des Dialogs</author_of_dialog>
+    <author_of_introduction_etc code="aui">Verfasser/-in eines Geleitwortes</author_of_introduction_etc>
+    <author_of_screenplay_etc code="aus">Drehbuchautor/-in</author_of_screenplay_etc>
+    <binder code="bnd">Buchbinder/-in</binder>
+    <binding_designer code="bdd">Bindungsgestalter/-in</binding_designer>
+    <blurb_writer code="blw">Autor/-in des Klappentextes</blurb_writer>
+    <book_designer code="bkd">Buchgestalter/-in</book_designer>
+    <book_producer code="bkp">Buchhersteller/-in</book_producer>
+    <bookjacket_designer code="bjd">Einbandgestalter/-in</bookjacket_designer>
+    <bookplate_designer code="bpd">Gestalter/-in des Exlibris</bookplate_designer>
+    <bookseller code="bsl">Buchhändler/-in</bookseller>
+    <calligrapher code="cll">Kalligraf/-in</calligrapher>
+    <censor code="cns">Zensor/-in</censor>
+    <choreographer code="chr">Choreograf/-in</choreographer>
+    <collaborator code="clb">Mitarbeiter/-in</collaborator>
+    <collector code="col">Sammler/-in</collector>
+    <commentator code="cmm">Kommentator/-in</commentator>
+    <compiler code="com">Zusammenstellende/-r</compiler>
+    <composer code="cmp">Komponist/-in</composer>
+    <conceptor code="ccp">konzeptionelle Leitung</conceptor>
+    <conductor code="cnd">Dirigent/-in</conductor>
+    <conservator code="con">Konservator/-in</conservator>
+    <consultant code="csl">Berater/-in</consultant>
+    <contractor code="ctr">Vertragspartner/-in</contractor>
+    <contributor code="ctb">Mitwirkende/-r</contributor>
+    <copyright_claimant code="cpc">Beansprucher/-in des Urheberrechts</copyright_claimant>
+    <copyright_holder code="cph">Inhaber/-in des Urheberrechts</copyright_holder>
+    <corrector code="crr">Korrektor/-in</corrector>
+    <correspondent code="crp">Korrespondent/-in</correspondent>
+    <costume_designer code="cst">Kostümbildner/-in</costume_designer>
+    <cover_designer code="cov">Umschlaggestalter/-in</cover_designer>
+    <creator code="cre">Geistige/-r Schöpfer/-in</creator>
+    <curator code="cur">Kurator/-in</curator>
+    <dancer code="dnc">Tänzer/-in</dancer>
+    <data_contributor code="dtc">Bereitsteller/-in von Daten</data_contributor>
+    <data_manager code="dtm">Datenmanager/-in</data_manager>
+    <dedicatee code="dte">Widmungsempfänger/-in</dedicatee>
+    <dedicator code="dto">Widmende/-r</dedicator>
+    <depositor code="dpt">Anleger/-in</depositor>
+    <designer code="dsr">Designer/-in</designer>
+    <director code="drt">Regisseur/-in</director>
+    <distributor code="dst">Vertrieb</distributor>
+    <donor code="dnr">Geldgeber/-in, Schenkende/-r</donor> 
+    <draftsman code="drm">Technische/-r Zeichner/-in</draftsman>
+    <dubious_author code="dub">zweifelhafte/-r Autor/-in</dubious_author>
+    <editor code="edt">Herausgeber/-in</editor>
+    <electrotyper code="elt">Galvanisierer/-in</electrotyper>
+    <engineer code="eng">Ingenieur/-in</engineer>
+    <engraver code="egr">Stecher/-in</engraver>
+    <etcher code="etr">Radierer/-in</etcher>
+    <expert code="exp">Experte/-in</expert>
+    <facsimilist code="fac">Faksimilist/-in</facsimilist> <!-- unsicher ob es das überhaupt gibt -->
+    <forger code="frg">Fälscher/-in</forger>
+    <former_owner code="fmo">frühere/-r Besitzer/-in</former_owner>
+    <funder code="fnd">Gründer/-in</funder>
+    <illuminator code="ilu">Buchmaler/-in</illuminator> 
+    <illustrator code="ill">Illustrator/-in</illustrator>
+    <inscriber code="ins">Inserierende/-r</inscriber>
+    <instrumentalist code="itr">Instrumentalmusiker/-in</instrumentalist>
+    <interviewee code="ive">Interviewte/-r</interviewee>
+    <interviewer code="ivr">Interviewer/-in</interviewer>
+    <lead code="led">Führung</lead>
+    <lender code="len">Verleiher/-in, Leihgeber/-in</lender>
+    <librettist code="lbt">Librettist/-in</librettist>
+    <licensee code="lse">Lizenznehmer/-in</licensee>
+    <licensor code="lso">Lizenzgeber/-in</licensor>
+    <lighting_designer code="lgd">Lichtgestalter/-in</lighting_designer>
+    <lithographer code="ltg">Lithograph/-in</lithographer>
+    <lyricist code="lyr">Textdichter/-in</lyricist>
+    <manufacturer code="mfr">Hersteller/-in</manufacturer>
+    <marbler code="mrb">Marmorierer/-in</marbler>
+    <markup_editor code="mrk">Markup-Editor/-in</markup_editor>
+    <metadata_contact code="mdc">Metadatenkontakt</metadata_contact>
+    <metal-engraver code="mte">Metall-Graveur/-in</metal-engraver>
+    <moderator code="mod">Moderator/-in</moderator>
+    <monitor code="mon">Beobachter/-in</monitor>
+    <music_copyist code="mcp">Notenschreiber/-in</music_copyist>
+    <musical_director code="msd">Musikalische/-r Leiter/-in</musical_director>
+    <musician code="mus">Musiker/-in</musician>
+    <narrator code="nrt">Erzähler/-in</narrator>
+    <originator code="org">Urheber/-in</originator>
+    <other code="oth">Sonstige</other>
+    <owner code="own">Besitzer/-in</owner>
+    <papermaker code="ppm">Papiermacher/-in</papermaker>
+    <patron code="pat">Schirmherr/-in</patron>
+    <performer code="prf">Ausführende/-r</performer>
+    <permitting_agency code="pma">Genehmigungsstelle</permitting_agency>
+    <photographer code="pht">Fotograf/-in</photographer>
+    <platemaker code="plt">Druckplattenhersteller/-in</platemaker>
+    <printer code="prt">Drucker/-in</printer>
+    <printer_of_plates code="pop">Plattendrucker/-in</printer_of_plates>
+    <printmaker code="prm">Druckgrafiker/-in</printmaker>
+    <producer code="pro">Produzent/-in</producer>
+    <production_manager code="pmn">Produktionsmanager/-in</production_manager>
+    <production_personnel code="prd">Produktionspersonal</production_personnel>
+    <programmer code="prg">Programmierer/-in</programmer>
+    <project_director code="pdr">Projektleitung</project_director>
+    <proofreader code="pfr">Korrektor/-in</proofreader>
+    <publisher code="pbl">Verlag</publisher>
+    <publishing_director code="pbd">Verlagsleitung</publishing_director>
+    <puppeteer code="ppt">Puppenspieler/-in</puppeteer>
+    <recipient code="rcp">Adressat/-in</recipient>
+    <recording_engineer code="rce">Toningenieur/-in</recording_engineer>
+    <redactor code="red">Redakteur/-in</redactor>
+    <reporter code="rpt">Reporter/-in</reporter>
+    <research_team_head code="rth">Leitung des Forschungsteams</research_team_head>
+    <research_team_member code="rtm">Mitglied des Forschungsteams</research_team_member>
+    <researcher code="res">Forscher/-in</researcher>
+    <responsible_party code="rpy">Verantwortliche/-r</responsible_party>
+    <reviewer code="rev">Rezensent/-in, Gutachter/-in</reviewer> 
+    <rubricator code="rbr">Rubrikator/-in</rubricator>
+    <scenarist code="sce">Drehbuchautor/-in</scenarist>
+    <scribe code="scr">Schreiber/-in</scribe>
+    <sculptor code="scl">Bildhauer/-in</sculptor>
+    <secretary code="sec">Sekretär/-in</secretary>
+    <set_designer code="std">Bühnenbildner/-in</set_designer>
+    <signer code="sgn">Unterzeichner/-in</signer>
+    <singer code="sng">Sänger/-in</singer>
+    <sound_designer code="sds">Tongestalter/-in</sound_designer>
+    <speaker code="spk">Sprecher/-in</speaker>
+    <sponsor code="spn">Sponsor/-in</sponsor>
+    <stage_manager code="stm">Inszenator/-in</stage_manager>
+    <stereotyper code="str">Stereotypeur/-in</stereotyper>
+    <storyteller code="stl">GeschichtenerzählerIn</storyteller>
+    <surveyor code="srv">Landvermesser/-in</surveyor>
+    <teacher code="tch">Lehrer/-in</teacher>
+    <transcriber code="trc">Transkribierer/-in</transcriber>
+    <translator code="trl">Übersetzer/-in</translator>
+    <type_designer code="tyd">Schriftdesigner/-in</type_designer>
+    <typographer code="tyg">Schriftsetzer/-in</typographer>
+    <videographer code="vdg">Bildregisseur/-in</videographer>
+    <vocalist code="voc">Vokalist/-in</vocalist>
+    <witness code="wit">Zeuge/-in</witness>
+    <woodcutter code="wdc">Holzschneider/-in</woodcutter>
+    <wood-engraver code="wde">Holzschnitzer/-in</wood-engraver>
+    <writer_of_accompanying_material code="wam">Verfasser/-in des Begleitmaterials</writer_of_accompanying_material>
+
+
+</language>

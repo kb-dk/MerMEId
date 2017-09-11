@@ -257,11 +257,7 @@
                                     The unit of measurement (measures, pages, minutes, etc.) may be specified in the  
                                     optional "unit" field.</h:span></h:a></xf:label>
                             </xf:input>
-                            <xf:input ref="@unit">
-                                <xf:label>Unit <h:a class="help">&#160;?<h:span class="comment">Optional indication of the measurement unit, e.g. "min."
-                                    <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
-                                    Please use underscore _ instead.</h:span></h:a></xf:label>
-                            </xf:input>
+                            <xi:include href="includes/unit-select.xml" parse="xml"/>
                             <!-- to make <extent> repeatable, add 'add' to triggers -->
                             <dcm:element-buttons
                                 triggers="remove" 
