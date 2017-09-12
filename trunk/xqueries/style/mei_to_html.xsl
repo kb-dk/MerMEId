@@ -18,8 +18,8 @@
 		Authors: 
 		Axel Teich Geertinger & Sigfrid Lundberg
 		Danish Centre for Music Editing
-		The Royal Danish Library, Copenhagen
-		2010-2017	
+		Royal Danish Library, Copenhagen
+		2010-2017
 	-->
 	
 	<xsl:output method="xml" encoding="UTF-8" cdata-section-elements="" omit-xml-declaration="yes"
