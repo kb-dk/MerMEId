@@ -224,21 +224,6 @@
                     </xf:group>
                     
                     <h:br clear="all"/>
-                    <dcm:create 
-                        nodeset="m:key"
-                        label="Add main key"
-                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:key"/>
-                    <xf:group ref="m:key">
-                        <xi:include href="includes/key_select.xml" parse="xml"/>
-                        <xf:trigger appearance="minimal">
-                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:delete nodeset="."/>
-                            </xf:action>
-                        </xf:trigger>
-                        <dcm:attribute-editor/>
-                    </xf:group>
-                    <h:br clear="all"/>
                     <h:br clear="all"/>
                     <dcm:create
                         nodeset="m:perfDuration"
@@ -259,7 +244,6 @@
                             <dcm:attribute-editor/>
                         </xf:repeat>
                     </h:div>
-                    
                     <dcm:create 
                         nodeset="m:extent"
                         label="Add extent"
