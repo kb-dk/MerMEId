@@ -1,0 +1,54 @@
+FROM openjdk:8-jre
+
+MAINTAINER Sigfrid Lundberg (slu@kb.dk)
+
+# Environment
+
+ENV TOMCAT_RELEASE=7 \
+    TOMCAT_VERSION=7.0.69 \
+    JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
+    CATALINA_HOME=/usr/local/tomcat \
+    PATH=$CATALINA_HOME/bin:$PATH \
+    CLASSPATH=/usr/share/java \
+    HOME=/root \
+    WORKDIR=$HOME/build \
+    SYS=demo \
+    JAVA_OPTS="-Xmx4096m" 
+
+# Install Java 8 JDK, utilities and Tomcat
+
+RUN apt-get remove --purge -y openjdk-8-jre-headless \
+    && apt-get clean \
+    && apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y openjdk-8-jdk-headless tar wget apache2 sudo unzip vim git maven ant tzdata libwww-perl authbind libapache2-mod-jk  \
+    && apt-get clean
+
+RUN cd /usr/local \
+    && wget http://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_RELEASE}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz \
+    && tar -xzvf apache-tomcat-${TOMCAT_VERSION}.tar.gz \
+    && rm -rf apache-tomcat-${TOMCAT_VERSION}.tar.gz \
+    && mv apache-tomcat-${TOMCAT_VERSION} tomcat
+
+# First you need to build MerMEId using ant, then this will work
+
+COPY xqueries ${WORKDIR}
+COPY filter/filter.war mermeid/editor.war ${CATALINA_HOME}/webapps/
+
+# You have to build eXist DB yourself.
+
+COPY exist/exist.war ${CATALINA_HOME}/webapps/
+
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+
+RUN ls -l ${CATALINA_HOME}/webapps/
+RUN ls -l ${WORKDIR}/
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+EXPOSE 8080
+
+
+
+
