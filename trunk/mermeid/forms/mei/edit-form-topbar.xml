@@ -321,19 +321,6 @@
       </xf:case>
     </xf:switch>
 
-
-
-    <!-- to be implemented     
-      <xf:trigger appearance="minimal">
-      <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/expand.png" title="Edit"/> Edit standard instrumentations <h:a class="help">&#160;?<h:span 
-      class="comment">Edit the standard ensembles and instrument groups available when adding new instruments 
-      at the "Music" tab.</h:span></h:a></xf:label>
-      <xf:action ev:event="DOMActivate">
-      <xf:insert context="." origin="xxf:set-session-attribute('return_url',instance('parameters')/dcm:this_page)"/>
-      <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-instrumentations.xml"></xf:load>
-      </xf:action>
-      </xf:trigger>-->
-
     <h:div>&#160;</h:div>
 
     <xf:group ref=".[contains(instance('parameters')/dcm:id_main_switch,'true')]">
@@ -392,6 +379,8 @@
           be displayed at the bottom of the page. </h:span></h:a>
     </xf:group>
     <!-- end code inspector -->
+
+
   </xxf:dialog>
   
   
