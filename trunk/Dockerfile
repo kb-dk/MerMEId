@@ -18,14 +18,19 @@ ENV TOMCAT_RELEASE=7  \
 # Install runit 
 
 RUN touch /etc/inittab
-RUN apt-get update 
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y -q runit
+RUN apt-get update \
+    && apt-get clean \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y runit \
+    && mkdir -p /etc/service/tomcat 
+
+COPY tomcat-run /etc/service/tomcat/run
+RUN  chmod +x /etc/service/tomcat/run
 
 # Install Java 8 JDK, utilities and Tomcat
 
 RUN apt-get remove --purge -y openjdk-8-jre-headless \
-    && apt-get clean \
     && apt-get update \
+    && apt-get clean \
     && apt-get upgrade -y \
     && apt-get install -y openjdk-8-jdk-headless tar wget apache2 sudo unzip vim git ant tzdata perl libwww-perl authbind libapache2-mod-jk \
     && apt-get clean
@@ -48,7 +53,7 @@ COPY filter/filter.war mermeid/editor.war ${CATALINA_HOME}/webapps/
 
 # You have to build eXist DB yourself.
 
-COPY exist/exist.war ${CATALINA_HOME}/webapps/
+COPY other-wars/exist.war  other-wars/orbeon.war ${CATALINA_HOME}/webapps/
 
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
