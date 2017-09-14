@@ -2904,7 +2904,7 @@
 	<xsl:template match="m:revisionDesc/m:change" mode="all">
 		<tr>
 			<td>
-				<xsl:value-of select="@isodate"/>
+				<xsl:value-of select="translate(@isodate,'TZ','  ')"/>
 				<xsl:text>&#160;</xsl:text>
 			</td>
 			<td>
@@ -2927,7 +2927,7 @@
 
 	<xsl:template match="m:revisionDesc/m:change" mode="last">
 		<br/><xsl:value-of select="$l/last_changed"/>
-		<xsl:text> </xsl:text><xsl:value-of select="@isodate"/><xsl:text> </xsl:text>
+		<xsl:text> </xsl:text><xsl:value-of select="translate(@isodate,'TZ','  ')"/><xsl:text> </xsl:text>
 		<xsl:if test="normalize-space(m:respStmt/m:resp)">
 			<xsl:text> </xsl:text><xsl:value-of select="$l/by"/><xsl:text> </xsl:text><i><xsl:value-of select="m:respStmt/m:resp[1]"/></i>
 		</xsl:if>
