@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:div xmlns:xf="http://www.w3.org/2002/xforms" 
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
+    style="float:right">
+<!-- save buttons for detail editor pages -->
+    <xf:trigger>
+        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/save_small.png" alt="Save"/> Save</xf:label>
+        <xf:action ev:event="DOMActivate">
+            <xf:action if="instance('parameters')/dcm:automatic_log_main_switch='true'">
+                <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate" value="now()"/>
+            </xf:action>
+            <xf:send submission="save-to-file"/>
+            <!-- for some reason, an xforms-value-changed event is dipatched after the submission, causing the 'changed' flag to be raised again -->
+        </xf:action>
+    </xf:trigger>
+    <xf:trigger>
+        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
+        <xf:action ev:event="DOMActivate">
+            <xf:action if="instance('parameters')/dcm:automatic_log_main_switch='true'">
+                <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate" value="now()"/>
+            </xf:action>
+            <xf:send submission="save-to-file"/>
+            <xf:load resource="{$uri}" show="replace"/>
+        </xf:action>
+    </xf:trigger>
+    <xf:trigger>
+        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
+        <xf:action ev:event="DOMActivate">
+            <xf:load resource="{$uri}" show="replace"/>
+        </xf:action>
+    </xf:trigger>
+    <!-- end save buttons -->    
+</h:div>

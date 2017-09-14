@@ -286,6 +286,14 @@
       <xf:setvalue ref="instance('parameters')/dcm:this_page" value="concat(
         instance('parameters')/dcm:orbeon_dir,'?uri=',xxf:get-request-parameter('uri'),
         '&amp;doc=',instance('parameters')/dcm:xml_file)"/>
+
+      <!-- load XML data -->
+      <xf:send submission="load-data-submission"/>
+      
+      <!-- add revisionDesc entry (if activated in configuration) -->
+      <xi:include href="includes/revision-log.xml" parse="xml"/>
+      
+
       <!-- load reference data from library -->
       <xf:send submission="load-authorities"/>
       <xf:send submission="load-classification"/>
@@ -297,39 +305,7 @@
       <xf:send submission="load-languages"/>      
       <xf:send submission="load-relators"/>      
       <xf:send submission="load-resolutions"/>      
-      <!-- load XML data -->
-      <xf:send submission="load-data-submission"/>
-      
-      <!-- automatically add change entry in revisionDesc -->
-      <xf:action if="contains(instance('parameters')/dcm:automatic_log_main_switch,'true')">
-        <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc)=0">
-          <xf:insert context="instance('data-instance')/m:meiHead" 
-            nodeset="*"
-            origin="instance('empty-instance')/m:meiHead/m:revisionDesc"/>
-        </xf:action>
-        <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc/m:change)=0">
-          <xf:insert context="instance('data-instance')/m:meiHead/m:revisionDesc" 
-            nodeset="m:change" 
-            origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
-        </xf:action>
-        <xf:var name="last_revision" 
-          select="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]"/>
-        <xf:var name="today" select="substring-before(now(), 'T')"/>
-        <xf:action if="$last_revision/@isodate!=$today or ($last_revision/@isodate=$today and ($last_revision/m:changeDesc/m:p/text() or $last_revision/m:respStmt/m:resp/text()!=''))">
-          <xf:action if="$last_revision/@isodate!=''">
-            <xf:insert nodeset="instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
-              position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
-            <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
-              value="$today"/>
-          </xf:action>
-          <xf:action if="$last_revision/@isodate=''">
-            <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
-              value="$today"/>
-          </xf:action>
-        </xf:action>
-      </xf:action>
-      <!-- end revisionDesc entry -->
-      
+
       <!-- check list of language declarations -->
       <xf:dispatch name="language-update" target="form-group"/>
       
@@ -340,8 +316,8 @@
     
     <xf:action ev:event="xforms-submit-done">
       <!-- set instance state to unchanged on saving -->
-      <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
       <xf:setvalue ref="instance('temp')/file_exists" value="'true'"/>
+      <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
     </xf:action>
     
     <xf:action ev:event="xforms-submit-error"  ev:propagate="stop">
@@ -369,6 +345,7 @@
     <xf:bind nodeset="instance('temp')">
       <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
     </xf:bind>            
+    <!--<xf:bind nodeset="instance('data-instance')//m:revisionDesc/m:change/@isodate" type="xs:dateTime"/>-->
     
   </xf:model>
   

@@ -151,6 +151,7 @@
       <xf:label><h:img id="save-and-proceed-image" src="{instance('parameters')/dcm:server_name}/editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
       <xf:action ev:event="DOMActivate">
         <xf:dispatch name="language-update" target="form-group"/>
+        <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate" value="now()"/>
         <xf:send submission="save-to-file"/>
         <xf:load resource="{instance('temp')/target_uri}" show="replace"/>
         <xxf:hide dialog="exit-warning-dialog"/>
@@ -172,8 +173,12 @@
       <xf:label><h:img id="save-button-image" 
       src="{instance('parameters')/dcm:server_name}editor/images/save.gif" alt="Save" title="Save file"/></xf:label>
       <xf:action ev:event="DOMActivate save">
-        <xf:send submission="save-to-file"/>
+        <!-- setting the timestamp to now() on saving seems to dispatch an xforms-value-changed event _after_ submitting the form. Disabled for now...  -->
+        <!--<xf:action if="instance('parameters')/dcm:automatic_log_main_switch='true'">
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate" value="now()"/>
+        </xf:action>-->
         <xf:dispatch name="language-update" target="form-group"/>
+        <xf:send submission="save-to-file"/>
       </xf:action>
     </xf:trigger><h:a 
       href="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}present.xq?doc={instance('parameters')/dcm:xml_file}"
