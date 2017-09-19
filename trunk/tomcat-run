@@ -1,16 +1,10 @@
 #!/bin/sh
 
-source /etc/envvars
+# exec 2>&1
+exec "$CATALINA_HOME/bin/startup.sh"
 
-ls -l $CATALINA_HOME/bin/
-exec $CATALINA_HOME/bin/catalina.sh start
-export ME=`hostname`
-echo hostname = ${ME}
-echo `host ${ME}`
-ping localhost -c 3
-ping ${ME} -c 3
-cat /usr/local/tomcat/conf/server.xml
+# sleep 10
+# tail  /usr/local/tomcat/logs/catalina.out
 
-lwp-request -m GET http://${ME}:8080/
-cd $WORKDIR
-./load_exist.pl --user admin  --host-port localhost:8080 --load . --context /exist/rest/db/dcm --suffix xml,xq,xqm,css,xsl
+# cd $WORKDIR
+# ./load_exist.pl --user admin  --host-port localhost:8080 --load . --context /exist/rest/db/dcm --suffix xml,xq,xqm,css,xsl
