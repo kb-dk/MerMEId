@@ -10,13 +10,18 @@
   <exist_dir>storage/</exist_dir>
   <document_root>storage/dcm/</document_root>
   
-  <!-- Default editor settings - (set boolean values to 'true' or nothing)  -->
+  <!-- Default editor settings - (boolean; set to 'true' or nothing)  -->
+  <!-- Enable automatic revisionDesc (change log) entries? -->
+  <automatic_log_main_switch>true</automatic_log_main_switch>
+  
+  <!-- The following settings add options to the editor's settings menu -->
   <!-- Enable attribute editor? -->
   <attr_editor_main_switch>true</attr_editor_main_switch>
   <!-- Enable xml:id display component? -->
   <id_main_switch>true</id_main_switch>
   <!-- Enable code inspector component? -->
   <code_inspector_main_switch>true</code_inspector_main_switch>
+
   
   <!-- Some elements used internally by XForms - not for user configuration -->
   <xml_file/>

@@ -17,7 +17,8 @@
     <!--
         Expression component (e.g. movement) data editor 
         Danish Centre for Music Editing (DCM) 
-        Axel Teich Geertinger, 2012–2016
+        Royal Danish Library
+        Axel Teich Geertinger, 2012–2017
         atge@kb.dk
     -->
     
@@ -70,23 +71,7 @@
                 
                 <h:div class="details_form_header">
                     
-                    <h:div style="float:right">
-                        <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/save_small.png" alt="Save"/> Save</xf:label>
-                        </xf:submit>
-                        <xf:submit submission="save-to-file">
-                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/save_and_close.png" alt="Save and close"/> Save &amp; close</xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:load resource="{$uri}" show="replace"/>
-                            </xf:action>
-                        </xf:submit>
-                        <xf:trigger>
-                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/discard.png" alt="discard" title="Discard changes and close"/> Discard changes</xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:load resource="{$uri}" show="replace"/>
-                            </xf:action>
-                        </xf:trigger>
-                    </h:div>
+                    <xi:include href="includes/save-buttons.xml" parse="xml"/>                                    
                     
                     <xf:group ref="instance('data-instance')//m:expression[@xml:id=instance('temp')/id]">
                         <h:h3>
@@ -143,7 +128,7 @@
                                 <xf:output value="'[this component]'"/> 
                             </xf:group> 
                             <!-- end path -->
-                            <xf:output value="if(instance('temp')[changed='true']) then '*' else''" id="work_identifier"/>
+                            <xf:output value="instance('temp')[changed='true']/change_marker"/>
                             <dcm:id ref="."/>
                         </h:h3> 
                     </xf:group>
@@ -221,7 +206,28 @@
                         </xf:trigger>
                         <dcm:attribute-editor/>
                     </xf:group>
+                    
                     <h:br clear="all"/>
+                    <h:br clear="all"/>
+                    <dcm:create
+                        nodeset="m:perfDuration"
+                        label="Add duration"
+                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfDuration"/>
+                    <h:div>
+                        <xf:repeat nodeset="m:perfDuration" id="details-expression-duration-repeat">
+                            <xf:input ref=".">
+                                <xf:label class="fixed_width">Duration <h:a class="help">&#160;?<h:span 
+                                    class="comment">Duration can be indicated in any form, such as "01:23:00", "4&apos;33&apos;&apos;" or "approx. 10 minutes". 
+                                </h:span></h:a></xf:label>
+                            </xf:input>
+                            <dcm:element-buttons
+                                triggers="remove"
+                                nodeset="m:perfDuration"
+                                index="details-expression-duration-repeat"
+                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfDuration"/>
+                            <dcm:attribute-editor/>
+                        </xf:repeat>
+                    </h:div>
                     <dcm:create 
                         nodeset="m:extent"
                         label="Add extent"
@@ -229,8 +235,8 @@
                     <xf:repeat nodeset="m:extent" id="details-expression-extent-repeat">
                         <h:div>
                             <xf:input ref=".">
-                                <xf:label class="fixed_width_long">Extent (duration) <h:a class="help">&#160;?<h:span 
-                                    class="comment">Extent in any medium: number of measures, pages, or the approximate duration, for instance. <br/>
+                                <xf:label class="fixed_width">Extent <h:a class="help">&#160;?<h:span 
+                                    class="comment">Extent in any medium other than time: number of measures or pages, for instance. <br/>
                                     Duration can be indicated in any form, such as "01:23:00", "25'30''" or "approx. 10'". 
                                     The unit of measurement (measures, pages, minutes, etc.) may be specified in the  
                                     optional "unit" field.</h:span></h:a></xf:label>

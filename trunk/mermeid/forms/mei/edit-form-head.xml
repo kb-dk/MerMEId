@@ -49,11 +49,6 @@
       src="/editor/forms/mei/model/new_file.xml" 
       xxf:readonly="true"/>
     
-    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
-      id="languages" 
-      src="/editor/forms/mei/model/languages.xml" 
-      xxf:readonly="true"/>
-    
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
       id="bibl-type-instance" 
       src="/editor/forms/mei/model/bibl_reference_types.xml" 
@@ -92,9 +87,28 @@
       id="authority-instance">
       <mei/>
     </xf:instance>
+
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+      id="languages">
+      <mei/>
+    </xf:instance>
+
+    <xf:instance xmlns="http://www.kb.dk/dcm"
+      id="relators-instance">
+      <relators/>
+    </xf:instance>
+
+    <xf:instance xmlns="http://www.kb.dk/dcm"
+      id="resolutions-instance">
+      <resolutions/>
+    </xf:instance>
+
+    <xf:instance xmlns="http://www.kb.dk/dcm"
+      id="classification-instance">
+      <classification/>
+    </xf:instance>
     
-    <xf:instance id="XMLfiles" 
-      xmlns="http://www.kb.dk/dcm">
+    <xf:instance id="XMLfiles" xmlns="http://www.kb.dk/dcm">
       <fileList/>
     </xf:instance>
 
@@ -183,66 +197,82 @@
     <xf:submission id="load-fileList"
       method="get" 
       serialization="none" 
-      validate="false"
       resource="{instance('temp')/target_uri}"
       replace="instance" 
-      xxf:show-progress="true"
       instance="XMLfiles"/> 
 
     <xf:submission id="load-keywords"
       method="get" 
       serialization="none" 
-      validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/keywords.xml"
       replace="instance" 
-      xxf:show-progress="true"
       instance="keywords-instance"/>
     
     <xf:submission id="load-ensembles"
       method="get" 
       serialization="none" 
-      validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/ensembles.xml"
       replace="instance" 
-      xxf:show-progress="true"
       instance="ensembles"/>
     
     <xf:submission id="load-instruments"
       method="get" 
       serialization="none" 
-      validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/instruments.xml"
       replace="instance" 
-      xxf:show-progress="true"
       instance="instruments"/>
 
     <xf:submission id="load-instrument-groups"
       method="get" 
       serialization="none" 
-      validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/instrument_groups.xml"
       replace="instance" 
-      xxf:show-progress="true"
       instance="instrument-groups"/>
     
     <xf:submission id="load-bibliography"
       method="get" 
       serialization="none" 
-      validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/standard_bibliography.xml"
       replace="instance" 
-      xxf:show-progress="true"
       instance="bibliography-instance"/>
 
     <xf:submission id="load-authorities"
       method="get" 
       serialization="none" 
-      validate="false"
       resource="{instance('parameters')/dcm:library_crud_home}/authority_files.xml"
       replace="instance" 
-      xxf:show-progress="true"
       instance="authority-instance"/>
+
+    <xf:submission id="load-languages"
+      method="get" 
+      serialization="none" 
+      resource="{instance('parameters')/dcm:library_crud_home}/languages.xml"
+      replace="instance" 
+      instance="languages"/>
+
+    <xf:submission id="load-relators"
+      method="get" 
+      serialization="none" 
+      resource="{instance('parameters')/dcm:library_crud_home}/relators.xml"
+      replace="instance" 
+      instance="relators-instance"/>
+
+    <xf:submission id="load-resolutions"
+      method="get" 
+      serialization="none" 
+      resource="{instance('parameters')/dcm:library_crud_home}/resolutions.xml"
+      replace="instance" 
+      instance="resolutions-instance"/>
     
+    <xf:submission id="load-classification"
+      method="get" 
+      serialization="none" 
+      resource="{instance('parameters')/dcm:library_crud_home}/classification.xml"
+      replace="instance" 
+      instance="classification-instance"/>
+    
+    
+
     <!-- "onload" xforms actions -->
     <xf:action ev:event="xforms-model-construct-done">
       <!-- get settings from session variables -->
@@ -256,44 +286,26 @@
       <xf:setvalue ref="instance('parameters')/dcm:this_page" value="concat(
         instance('parameters')/dcm:orbeon_dir,'?uri=',xxf:get-request-parameter('uri'),
         '&amp;doc=',instance('parameters')/dcm:xml_file)"/>
-      <!-- load reference data from library -->
-      <xf:send submission="load-bibliography"/>
-      <xf:send submission="load-authorities"/>
-      <xf:send submission="load-keywords"/>
-      <xf:send submission="load-ensembles"/>
-      <xf:send submission="load-instruments"/>
-      <xf:send submission="load-instrument-groups"/>
+
       <!-- load XML data -->
       <xf:send submission="load-data-submission"/>
       
-      <!-- automatically add change entry in revisionDesc -->
-      <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc)=0">
-        <xf:insert context="instance('data-instance')/m:meiHead" 
-          nodeset="*"
-          origin="instance('empty-instance')/m:meiHead/m:revisionDesc"/>
-      </xf:action>
-      <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc/m:change)=0">
-        <xf:insert context="instance('data-instance')/m:meiHead/m:revisionDesc" 
-          nodeset="m:change" 
-          origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
-      </xf:action>
-      <xf:var name="last_revision" 
-        select="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]"/>
-      <xf:var name="today" select="substring-before(now(), 'T')"/>
-      <xf:action if="$last_revision/@isodate!=$today or ($last_revision/@isodate=$today and ($last_revision/m:changeDesc/m:p/text() or $last_revision/m:respStmt/m:resp/text()!=''))">
-        <xf:action if="$last_revision/@isodate!=''">
-          <xf:insert nodeset="instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
-            position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
-          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
-            value="$today"/>
-        </xf:action>
-        <xf:action if="$last_revision/@isodate=''">
-          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
-            value="$today"/>
-        </xf:action>
-      </xf:action>
-      <!-- end revisionDesc entry -->
+      <!-- add revisionDesc entry (if activated in configuration) -->
+      <xi:include href="includes/revision-log.xml" parse="xml"/>
       
+
+      <!-- load reference data from library -->
+      <xf:send submission="load-authorities"/>
+      <xf:send submission="load-classification"/>
+      <xf:send submission="load-bibliography"/>
+      <xf:send submission="load-ensembles"/>
+      <xf:send submission="load-instruments"/>
+      <xf:send submission="load-instrument-groups"/>
+      <xf:send submission="load-keywords"/>
+      <xf:send submission="load-languages"/>      
+      <xf:send submission="load-relators"/>      
+      <xf:send submission="load-resolutions"/>      
+
       <!-- check list of language declarations -->
       <xf:dispatch name="language-update" target="form-group"/>
       
@@ -304,8 +316,8 @@
     
     <xf:action ev:event="xforms-submit-done">
       <!-- set instance state to unchanged on saving -->
-      <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
       <xf:setvalue ref="instance('temp')/file_exists" value="'true'"/>
+      <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
     </xf:action>
     
     <xf:action ev:event="xforms-submit-error"  ev:propagate="stop">
@@ -333,6 +345,7 @@
     <xf:bind nodeset="instance('temp')">
       <xf:bind id="counter-bind" nodeset="counter" type="xf:integer" name="counter"/>
     </xf:bind>            
+    <!--<xf:bind nodeset="instance('data-instance')//m:revisionDesc/m:change/@isodate" type="xs:dateTime"/>-->
     
   </xf:model>
   

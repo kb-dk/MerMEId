@@ -28,6 +28,10 @@
   <xsl:strip-space elements="*"/>
   <xsl:strip-space elements="node"/>
 
+
+  <xsl:variable name="settings" select="document('/editor/forms/mei/mermeid_configuration.xml')"/>
+ 
+
   <xsl:template match="/">
     <xsl:variable name="new_doc">
       <xsl:apply-templates select="*" mode="convertEntities"/>
@@ -626,52 +630,66 @@
 
   <xsl:template match="m:revisionDesc" mode="convertEntities">
     <xsl:element name="revisionDesc">
+      <xsl:variable name="penultimate" select="count(m:change)-1"/>
+      <xsl:variable name="penultimateChange" select="m:change[$penultimate]"/>
+      <xsl:variable name="penultimateDay" select="concat($penultimateChange/@isodate[not(contains(.,'T'))],substring-before($penultimateChange/@isodate,'T'))"/>
+      <xsl:variable name="today" select="concat(m:change[last()]/@isodate[not(contains(.,'T'))],substring-before(m:change[last()]/@isodate,'T'))"/>
       <xsl:choose>
         <xsl:when test="$user">
-          <xsl:for-each select="m:change">
             <xsl:choose>
-              <xsl:when test="position()&lt;last()">
-                <xsl:apply-templates select="."/>
+              <xsl:when test="$settings/dcm:parameters/dcm:automatic_log_main_switch='true'
+                and $penultimate &gt; 0
+                and not(m:change[$penultimate]/m:changeDesc//text())
+                and not(m:change[last()]//text())
+                and $penultimateDay=$today
+                and $penultimateChange/m:respStmt/m:resp=$user
+                and (m:change[last()]/m:respStmt/m:resp=$user or m:change[last()]/m:respStmt/m:resp='')
+                ">
+                <!-- last entry is just a new save from the same user with no change description - just update the last timestamp -->
+                <xsl:for-each select="m:change">
+                  <xsl:choose>
+                    <xsl:when test="position() &lt; $penultimate">
+                      <xsl:apply-templates select="."/>
+                    </xsl:when>
+                    <xsl:when test="position() = $penultimate">
+                      <change>
+                        <xsl:copy-of select="@*"/>
+                        <xsl:attribute name="isodate">
+                          <xsl:value-of select="../m:change[last()]/@isodate"/>
+                        </xsl:attribute>
+                        <xsl:apply-templates select="*"/>
+                      </change>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <!-- skip the last row -->
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:for-each>  
               </xsl:when>
               <xsl:otherwise>
-                <xsl:variable name="today" select="@isodate"/>
-                <xsl:variable name="prevChange" select="preceding-sibling::node()[1]"/>
-                <xsl:if
-                  test="m:changeDesc//text() 
-                  or $prevChange/@isodate!=$today 
-                  or $prevChange/m:respStmt/m:resp/text() != $user 
-                  or count(../m:change)=1
-                  or (not(m:changeDesc//text()) and $prevChange/m:changeDesc!='')">
-                  <change>
-                    <xsl:copy-of select="@*"/>
-                    <xsl:call-template name="make_id_if_absent"/>
-                    <xsl:attribute name="isodate">
-                      <xsl:value-of select="@isodate"/>
-                    </xsl:attribute>
-                    <respStmt>
-                      <resp>
-                        <xsl:choose>
-                          <xsl:when test="normalize-space(m:respStmt/m:resp)">
-                            <xsl:value-of select="m:respStmt/m:resp"/>
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:value-of select="$user"/>
-                          </xsl:otherwise>
-                        </xsl:choose>
-                      </resp>
-                    </respStmt>
-                    <changeDesc>
-                      <p>
-                        <xsl:value-of select="m:changeDesc/m:p"/>
-                      </p>
-                    </changeDesc>
-                  </change>
-                </xsl:if>
+                <!-- just make sure to add the user name to the last entry if missing -->
+                <xsl:for-each select="m:change">
+                  <xsl:choose>
+                    <xsl:when test="position()=last() and not(normalize-space(m:respStmt/m:resp))">
+                      <change>
+                        <xsl:copy-of select="@*"/>
+                        <xsl:call-template name="make_id_if_absent"/>
+                        <respStmt>
+                          <resp><xsl:value-of select="$user"/></resp>
+                        </respStmt>
+                        <xsl:apply-templates select="m:changeDesc"/>
+                      </change>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:apply-templates select="."/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:for-each>
               </xsl:otherwise>
             </xsl:choose>
-          </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
+          <!-- user unknown, just copy the change log unchanged -->
           <xsl:for-each select="m:change">
             <xsl:apply-templates select="."/>
           </xsl:for-each>

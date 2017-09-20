@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Source classification terms -->
+<!-- Items may be added/deleted/changed/translated, but do not change the class codes -->  
+<classification>
+
+    <!-- Main type of content -->
+    <select classcode="DcmContentClass">
+        <item>
+            <value>notated music</value>
+            <label>Notated music</label>
+        </item>
+        <item>
+            <value>text</value>
+            <label>Text</label>
+        </item>
+        <item>
+            <value>sound recording</value>
+            <label>Sound recording</label>
+        </item>
+        <item>
+            <value>videorecording</value>
+            <label>Video recording</label>
+        </item>
+        <item>
+            <value>motion picture</value>
+            <label>Motion picture</label>
+        </item>
+    </select>
+    
+    <!-- Presentation – describes the source's basic mode of production or carrier
+         (e.g., manuscript, print, sound storage medium, electronic resource). -->
+    <select classcode="DcmPresentationClass">
+        <item>
+            <value>manuscript</value>
+            <label>Manuscript</label>
+        </item>
+        <item>
+            <value>print</value>
+            <label>Print</label>
+        </item>
+        <item>
+            <value>audio storage medium</value>
+            <label>Audio storage medium</label>
+        </item>
+        <item>
+            <value>video storage medium</value>
+            <label>Video storage medium</label>
+        </item>
+        <item>
+            <value>electronic resource</value>
+            <label>Electronic resource</label>
+        </item>
+    </select>
+
+    <!-- Authority. For use with manuscript sources. Describes the composer's
+        degree of involvement in the production of the source. 
+        Thus, an arranger's own manuscript would *not* be classified an
+        autograph. -->
+    <select classcode="DcmAuthorityClass">
+        <item>
+            <value>autograph</value>
+            <label>Autograph</label>
+        </item>
+        <item>
+            <value>doubtful autograph</value>
+            <label>Doubtful autograph</label>
+        </item>
+        <item>
+            <value>partly autograph</value>
+            <label>Partly autograph</label>
+        </item>
+        <item>
+            <value>copy</value>
+            <label>Copy</label>
+        </item>
+    </select>
+    
+    <!-- Scoring -->
+    <select classcode="DcmScoringClass">
+        <item>
+            <value>score</value>
+            <label>Score</label>
+        </item>
+        <item>
+            <value>short score</value>
+            <label>Short score</label>
+        </item>
+        <item>
+            <value>vocal score</value>
+            <label>Vocal score</label>
+        </item>
+        <item>
+            <value>choral score</value>
+            <label>Choral score</label>
+        </item>
+        <item>
+            <value>piano score</value>
+            <label>Piano score</label>
+        </item>
+        <item>
+            <value>parts</value>
+            <label>Parts</label>
+        </item>
+        <item>
+            <value>score and parts</value>
+            <label>Score and parts</label>
+        </item>
+    </select>
+
+    <!-- State – the source's place in the process of creation or production -->
+    <select classcode="DcmStateClass">
+        <item>
+            <value>sketch</value>
+            <label>Sketch</label>
+        </item>
+        <item>
+            <value>draft</value>
+            <label>Draft</label>
+        </item>
+        <item>
+            <value>fair copy</value>
+            <label>Fair copy</label>
+        </item>
+        <item>
+            <value>engraver's copy</value>
+            <label>Engraver's copy</label>
+        </item>
+        <item>
+            <value>printer's copy</value>
+            <label>Printer's copy</label>
+        </item>
+        <item>
+            <value>first edition</value>
+            <label>First edition</label>
+        </item>
+        <item>
+            <value>later edition</value>
+            <label>Later edition</label>
+        </item>
+    </select>
+    
+    <!-- Completeness. Describes the completeness of the source: 
+        "Complete" indicates that this source is complete (this would also be
+        true with a single solo violin part from an orchestral work, if it is not the remainder of an
+        originally larger set of parts).
+        "Incomplete" indicates that one or more parts are missing from
+        a set of parts.
+        "Excerpt" designates a section of a work, published or copied for
+        stand-alone performance.
+        "Fragment(s)" indicates that portions of the music are missing,
+        e.g. a fragmentary sketch or a source from which pages are lost.  -->
+    <select classcode="DcmCompletenessClass">
+        <item>
+            <value>complete</value>
+            <label>Complete</label>
+        </item>
+        <item>
+            <value>incomplete</value>
+            <label>Incomplete</label>
+        </item>
+        <item>
+            <value>excerpt</value>
+            <label>Excerpt</label>
+        </item>
+        <item>
+            <value>fragment</value>
+            <label>Fragment(s)</label>
+        </item>
+    </select>
+
+</classification>
+
+

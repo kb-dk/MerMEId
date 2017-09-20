@@ -22,15 +22,18 @@
     
     Axel Teich Geertinger
     Danish Centre for Music Editing
-    The Royal Library, Copenhagen 2014
+    Royal Danish Library, Copenhagen 2014-2017
     -->
     
     <xf:action if="$origin">
         <xf:insert context="." origin="$origin" nodeset="xxf:evaluate($nodeset)"/>
     </xf:action>
     <xf:action if="not($origin)">
-        <!-- if no model is pointed to, just create an empty element of the name indicated -->
-        <xf:insert context="." origin="xf:element($nodeset)"/>
+        <!-- if no model is pointed to, just create an empty element of the name indicated. -->
+        <!-- Still some issues here. The element is created with m: prefix and namespace declaration. 
+            And using resolve-QName doesn't seem to work:
+            <xf:insert context="." origin="xxf:element(resolve-QName($nodeset,.))"/>    -->
+        <xf:insert context="." origin="xxf:element($nodeset)"/>
     </xf:action>
     
     

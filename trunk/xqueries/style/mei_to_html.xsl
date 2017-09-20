@@ -18,8 +18,8 @@
 		Authors: 
 		Axel Teich Geertinger & Sigfrid Lundberg
 		Danish Centre for Music Editing
-		The Royal Danish Library, Copenhagen
-		2010-2017	
+		Royal Danish Library, Copenhagen
+		2010-2017
 	-->
 	
 	<xsl:output method="xml" encoding="UTF-8" cdata-section-elements="" omit-xml-declaration="yes"
@@ -2904,7 +2904,7 @@
 	<xsl:template match="m:revisionDesc/m:change" mode="all">
 		<tr>
 			<td>
-				<xsl:value-of select="@isodate"/>
+				<xsl:apply-templates select="@isodate" mode="dateTime"/>
 				<xsl:text>&#160;</xsl:text>
 			</td>
 			<td>
@@ -2927,11 +2927,18 @@
 
 	<xsl:template match="m:revisionDesc/m:change" mode="last">
 		<br/><xsl:value-of select="$l/last_changed"/>
-		<xsl:text> </xsl:text><xsl:value-of select="@isodate"/><xsl:text> </xsl:text>
+		<xsl:text> </xsl:text><xsl:apply-templates select="@isodate" mode="dateTime"/><xsl:text> </xsl:text>
 		<xsl:if test="normalize-space(m:respStmt/m:resp)">
 			<xsl:text> </xsl:text><xsl:value-of select="$l/by"/><xsl:text> </xsl:text><i><xsl:value-of select="m:respStmt/m:resp[1]"/></i>
 		</xsl:if>
 	</xsl:template>
+	
+	<xsl:template match="@isodate" mode="dateTime">
+		<xsl:variable name="date" select="substring(.,1,10)"/>
+		<xsl:variable name="time" select="substring(.,12,5)"></xsl:variable>
+		<xsl:value-of select="$date"/><xsl:text> </xsl:text><xsl:value-of select="$time"/>
+	</xsl:template>	
+	
 
 	<xsl:template match="@type">
 		<xsl:value-of select="translate(.,'_',' ')"/>
