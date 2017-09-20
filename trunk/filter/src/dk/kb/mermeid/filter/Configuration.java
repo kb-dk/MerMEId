@@ -9,7 +9,7 @@ public class Configuration {
      private static org.apache.log4j.Logger logger = 
 	 org.apache.log4j.Logger.getLogger(Configuration.class);
 
-    private java.util.Properties props = null;
+    private java.util.Properties props = (java.util.Properties)null;
 
     /*
      * We instantiate ourselves as a static Configuration

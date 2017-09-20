@@ -445,71 +445,55 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
 	      <a href="#appendix">configuration files</a> Figure 2 shows the
 	      client after installation and configuration.</li>
 
-	      <li>
-		<strong>Configure the <kbd>xqueries</kbd></strong>.  
-		<p>Some xqueries need more privileges than the rest (for
+	      <li><strong>Customize login.xqm</strong><p>Some xqueries need more privileges than the rest (for
 		copying and publishing resources). Those scripts are using
-		login.xqm. You need to copy login.xqm_distro to login.xqm and
-		edit it to provide credentials for these operations.</p>
+		login.xqm. You need to copy <kbd>local_config/login.xqm_distro</kbd> to <kbd>xqueries/login.xqm</kbd> and
+		edit it to provide credentials for these operations. Replace "secret password" in the line</p>
+<pre>
+  let $lgin := xdb:login("/db", "user", "secret password")
+</pre>
+             </li>
+	      <li>
+		<strong>Install the <kbd>xqueries</kbd></strong>.
 
-		<strong>Load the <kbd>xqueries</kbd></strong>.  
+	
+		<p><strong>Load the <kbd>xqueries</kbd>, libraries, stylesheets etc</strong> into eXist DB.</p>
 
 		<p>The fastest way to do this, is from the command
 		line. Assuming that you are in the <kbd>xqueries</kbd>
 		in the source tree.  First load the xquery files:</p>
 
 <pre>
+  cd xqueries
   ./load_exist.pl --user admin \
   --password your_own_very_secret_password \
   --host-port mei.example.org:80 \
-  --load . \
+  --load .  \
   --context "/exist/rest/db" \
-  --suffix xq
+  --suffix xml,xsl,xq,xqm,css
 </pre>
 
 	      <p>Please note that we've folded the command line using
 	      '\' just for typographical reasons.</p>
 
 	      </li>
-
 	      <li>
 
-		<strong>Repeat this for the xquery modules:</strong>
-<pre>
-  ./load_exist.pl --user admin \
-  --password your_own_very_secret_password \
-  --host-port mei.example.org:80 \
-  --load . \
-  --context "/exist/rest/db" \
-  --suffix xqm
-</pre>
+	      <p>All the <kbd>*.xq</kbd> files should have execute permissions inside eXist DB, i.e., the following files</p>
 
-	      </li>
+	      <ul>
+		<li>copy-file.xq</li>
+		<li>document.xq</li>
+		<li>present.xq</li>
+		<li>count.xq</li>
+		<li>list_files.xq</li>
+		<li>publish.xq</li>
+		<li>document-info.xq</li>
+		<li>merge_docs.xq</li> 
+		<li>view_score.xq</li>
+	      </ul>
 
-	      <li>Prepare the <strong>Standard Bibliography</strong>
-	      <p>Make a local copy of the standard bibliography</p>
-<pre>
-  cp local_config/standard_bibliography.xml_distro \
-     xqueries/library/standard_bibliography.xml
-</pre>
-	      </li>
-
-	      <li><strong>Load some content:</strong>
-	      <p>After configuring eXist, it is just to populate the database
-	      with some content.</p>
-	      
-<pre>
-  cd xquery
-  ./load_exist.pl --user admin \
-  --password your_own_very_secret_password \
-  --host-port mei.example.org:8080 \
-  --load . \
-  --context /exist/rest/db/ \
-  --suffix xml
-</pre>
-     
-	      <p> To install everything you need to do this for
-	      --suffix <kbd>xml, xq, xsl, xqm and css</kbd>.</p>
+	      <p>How this is done is shown in <a href="#exist_permissions">see Figure 3</a>.</p>
 
 	      </li>
      
@@ -582,7 +566,7 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
       <div id="security">
 	<h2>6. Authentication &amp; Security</h2>
 	
-      	<div style="width:50%; float: right; padding:0 20px;">
+      	<div id="exist_permissions" style="width:50%; float: right; padding:0 20px;">
 	  
 	  <img src="images/manual/setting_exist_permissions.png" 
 	       alt="setting permission"

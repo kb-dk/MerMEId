@@ -243,18 +243,12 @@
                     <xf:label/>
                 </xf:input>
                 <xf:select1 ref="@targettype" class="auto_length">
-                    <xf:item>
-                        <xf:value>lowres</xf:value>
-                        <xf:label>Low resolution</xf:label>
-                    </xf:item>
-                    <xf:item>
-                        <xf:value>hires</xf:value>
-                        <xf:label>High resolution</xf:label>
-                    </xf:item>
-                    <xf:item>
-                        <xf:value>print</xf:value>
-                        <xf:label>Print quality</xf:label>
-                    </xf:item>
+                    <xf:itemset nodeset="instance('resolutions-instance')/item">
+                        <xf:label>
+                            <xf:output value="label"/>
+                        </xf:label>
+                        <xf:value ref="value"/>
+                    </xf:itemset>
                 </xf:select1>
                 <h:a class="help">&#160;?<h:span class="comment">Choose 'Low resolution' for standard web graphics, 'High resolution' for high quality
                     web graphics, or 'Print quality' for print quality graphics.
