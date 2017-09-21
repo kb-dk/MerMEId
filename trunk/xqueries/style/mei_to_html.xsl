@@ -1818,12 +1818,12 @@
 							<xsl:apply-templates select="@label"/>
 						</xsl:element>
 					</xsl:when>
-					<xsl:otherwise>
+					<xsl:when test="normalize-space($label) or m:titleStmt/m:title//text()">
 							<xsl:element name="{$heading_element}">
 								<xsl:value-of select="$label"/>
 								<xsl:apply-templates select="m:titleStmt/m:title"/>
 							</xsl:element>
-					</xsl:otherwise>
+					</xsl:when>
 				</xsl:choose>
 			</xsl:if>
 			
