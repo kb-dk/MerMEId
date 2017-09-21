@@ -362,7 +362,7 @@
 								origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
 							<xf:setvalue
 								ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
-								value="substring-before(now(), 'T')"/>
+								value="now()"/>
 						</xf:action>
 					</xf:trigger>
 				</h:div>
