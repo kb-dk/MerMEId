@@ -14,12 +14,7 @@ declare variable $action  :=
 request:get-parameter("publishing_action","publish") cast as xs:string;
 
 let $return_to := concat(
-  "http://",request:get-header('HOST'),"/storage/list_files.xq?",
-  "published_only=",   fn:escape-uri(request:get-parameter("published_only",""),true()),
-  "&amp;c=",           fn:escape-uri(request:get-parameter("c",""),true()),
-  "&amp;query=",       fn:escape-uri(request:get-parameter("query",""),true()),
-  "&amp;page=",        fn:escape-uri(request:get-parameter("page",""),true()),
-  "&amp;itemsPerPage=",fn:escape-uri(request:get-parameter("itemsPerPage",""),true()))
+  "http://",request:get-header('HOST'),"/storage/list_files.xq")
 
 let $res := response:redirect-to($return_to cast as xs:anyURI) 
 let $log-in := login:function()

@@ -27,15 +27,6 @@
       </template>
     </metadata>
 
-    <xbl:implementation>
-      <!-- Local model -->
-      <xf:model id="relator-model">
-        <!-- Read list of relations from external file -->
-        <xf:instance id="relators-instance" xmlns="" xxf:readonly="true">
-          <xi:include href="../model/relators.xml" parse="xml"/>
-        </xf:instance>
-      </xf:model>
-    </xbl:implementation>
 
     <xbl:template>
       <!-- Local controls -->
@@ -60,7 +51,7 @@
           <xf:var name="role" select="$binding/@role"/>
 
           <!-- display a warning if role is not on standard relators list -->
-          <xf:group ref=".[$role and not(instance('relators-instance')/role[.=$role])]">
+          <xf:group ref=".[$role and not(xxf:instance('relators-instance')/role[.=$role])]">
             <xf:output value="$binding/@role"/>
             <h:a class="help_plain">
               <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning.png"
@@ -72,7 +63,7 @@
           </xf:group>
 
           <xf:select1 ref="$binding/@role" class="mediumlong">
-            <xf:itemset nodeset="instance('relators-instance')/role">
+            <xf:itemset nodeset="xxf:instance('relators-instance')/role">
               <xf:label>
                 <xf:output value="."/>
               </xf:label>
