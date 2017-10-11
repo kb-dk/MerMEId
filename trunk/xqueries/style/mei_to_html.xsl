@@ -1818,12 +1818,12 @@
 							<xsl:apply-templates select="@label"/>
 						</xsl:element>
 					</xsl:when>
-					<xsl:otherwise>
+					<xsl:when test="normalize-space($label) or m:titleStmt/m:title//text()">
 							<xsl:element name="{$heading_element}">
 								<xsl:value-of select="$label"/>
 								<xsl:apply-templates select="m:titleStmt/m:title"/>
 							</xsl:element>
-					</xsl:otherwise>
+					</xsl:when>
 				</xsl:choose>
 			</xsl:if>
 			
@@ -2048,7 +2048,9 @@
 			<p>
 				<xsl:for-each select="m:dimensions[text()] | m:extent[text()]">
 					<xsl:value-of select="."/>
-					<xsl:text> </xsl:text>
+					<xsl:if test="normalize-space(@unit)">
+						<xsl:text> </xsl:text>	
+					</xsl:if>
 					<xsl:call-template name="remove_">
 						<xsl:with-param name="str" select="@unit"/>
 					</xsl:call-template>

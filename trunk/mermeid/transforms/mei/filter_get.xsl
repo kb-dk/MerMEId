@@ -283,7 +283,9 @@
   <xsl:template match="m:extent[@unit] | m:dimensions[@unit]" mode="mei2html">
     <!-- append non-valid @unit values to the element content and omit the unit attribute -->
     <xsl:choose>
-      <xsl:when test="@unit!='byte' 
+      <xsl:when test="@unit 
+        and @unit!=''
+        and @unit!='byte' 
         and @unit!='char' 
         and @unit!='cm' 
         and @unit!='in' 
