@@ -1117,6 +1117,7 @@
 	</xsl:template>
 
 	<xsl:template match="m:key[@pname or @accid or @mode or text()]">
+		<xsl:variable name="mode" select="@mode"/>
 		<p>
 			<span class="label"><xsl:value-of select="$l/key"/>: </span>
 			<xsl:value-of select="translate(@pname,'abcdefgh','ABCDEFGH')"/>
@@ -1125,8 +1126,8 @@
 					<xsl:with-param name="attr" select="@accid"/>
 				</xsl:call-template>
 			</xsl:if>
-			<xsl:text> </xsl:text>
-			<xsl:value-of select="@mode"/>
+			<xsl:if test="substring($l/*[name()=$mode],1,1)!='-'"><xsl:text> </xsl:text></xsl:if>
+			<xsl:value-of select="$l/*[name()=$mode]"/>
 			<xsl:text> </xsl:text>
 			<xsl:value-of select="."/>
 		</p>
