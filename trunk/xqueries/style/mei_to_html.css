@@ -243,30 +243,6 @@ ul.single_movement {
     margin: 0;
 }
 
-.meter {
-    font-family: 'times new roman', times, serif; 
-    line-height: 1em;
-    font-weight: bold;
-    vertical-align: middle;
-    display: inline-block;
-    text-align: center;
-    width: auto;
-}
-
-.meter_count, .meter_unit {
-    display: inline-block;
-    padding: 0;
-    margin: 0;
-}
-
-.meter_count {
-    text-decoration: underline;
-}
-
-.meter_unit {
-    vertical-align: top;
-}
-
 .alternative_language, .classification, .colophon {
     font-size : .9em;
     color: #666;
@@ -437,11 +413,41 @@ table.source_component_list td.label_cell {
     font-size: 1.2em;
 }
 
+.meter {
+    font-family: 'times new roman', times, serif; 
+    line-height: 1em;
+    font-weight: bold;
+    vertical-align: middle;
+    display: inline-block;
+    text-align: center;
+    width: auto;
+}
+
+.meter_count, .meter_unit {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.meter_count {
+    text-decoration: underline;
+}
+
+.meter_unit {
+    vertical-align: top;
+}
+
+.meter_number {
+    font-size: 1.3em;
+}
+
+
 .time_signature {
     position:relative;
-    top: -.18em;
+    top: -.1em;
     font-size: 2em;
 }
+
 
 /* css for help pop-ups */
 a.help {
