@@ -8,20 +8,19 @@
     nodeset="m:meter"
     label="Add metre"
     origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:meter"/>
+<xf:group ref="m:meter">
+    <h:span class="fixed_width">Metre <h:a class="help">&#160;?<h:span class="comment">Either metre symbol (cut or common time) or a fractional metre may be entered.
+        To create a mixed metre you may need to add another metre.
+    </h:span></h:a></h:span>
+</xf:group>
 <xf:repeat nodeset="m:meter" id="repeat-meter">
     <xf:var name="pos" select="position()"/> 
     <xf:group ref=".[$pos!=1]">
         <h:br/>
+        <h:span class="fixed_width">&#160;</h:span>
     </xf:group>
-    <xf:input ref="@count" class="minimal_length">
-        <xf:label class="fixed_width">
-            <xf:output value="if ($pos=1) then 'Metre' else ''"/>
-            <h:a class="help">&#160;?<h:span class="comment">Either a fractional metre or a metre symbol (cut or common time) may be entered.
-                To create a mixed metre, add another metre.
-            </h:span></h:a>
-        </xf:label>
-    </xf:input>/<xf:input ref="@unit" class="minimal_length"/> or symbol: 
     <xf:select1	ref="@sym" class="auto_length">
+        <xf:label>Symbol: </xf:label>
         <xf:item>
             <xf:label> </xf:label>
             <xf:value/>
@@ -35,6 +34,16 @@
             <xf:value>cut</xf:value>
         </xf:item>
     </xf:select1>
+    or fractional metre: 
+    <xf:input ref="@count" class="minimal_length"/>
+    /<xf:input ref="@unit" class="minimal_length"/>  
+    
+    &#160;
+    <xf:input ref=".">
+        <xf:label><h:a class="help">?<h:span class="comment">If the pre-defined metres are not sufficient, any other text describing the 
+            metre be entered here. MerMEId renders the metre text using a SMuFL font, so musical symbols such as notes or special time signatures 
+        may be pasted into this field.</h:span></h:a></xf:label>
+    </xf:input>
     <dcm:element-buttons
         triggers="add remove" 
         nodeset="m:meter" 
