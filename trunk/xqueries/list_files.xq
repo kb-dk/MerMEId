@@ -95,6 +95,7 @@ declare function local:format-reference(
 	  <td class="tools">{app:copy-document-reference($doc)}</td>
 	  <td class="tools">{app:get-publication-reference($doc)}</td>
 	  <td class="tools">{app:delete-document-reference($doc)}</td>
+	  <td nowrap="nowrap">{app:view-document-notes($doc)}</td>
 	</tr>
 	return $ref
   };
@@ -304,6 +305,7 @@ declare function local:format-reference(
            	   
             </th>
             <th class="tools">Delete</th>
+            <th>Notes</th>
           </tr>
           {
             for $doc at $count in $list[position() = ($from to $to)]

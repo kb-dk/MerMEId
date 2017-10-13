@@ -1163,7 +1163,8 @@
 
 
 	<xsl:template match="m:expression/m:extent[text()]">
-		<p><xsl:value-of select="$l/extent"/>: <xsl:apply-templates/>&#160;<xsl:apply-templates select="@unit"/></p>
+		<p><xsl:value-of select="$l/extent"/>: <xsl:apply-templates/><xsl:if 
+			test="normalize-space(@unit)">&#160;<xsl:apply-templates select="@unit"/></xsl:if>.</p>
 	</xsl:template>
 
 
@@ -1818,12 +1819,12 @@
 							<xsl:apply-templates select="@label"/>
 						</xsl:element>
 					</xsl:when>
-					<xsl:otherwise>
+					<xsl:when test="normalize-space($label) or m:titleStmt/m:title//text()">
 							<xsl:element name="{$heading_element}">
 								<xsl:value-of select="$label"/>
 								<xsl:apply-templates select="m:titleStmt/m:title"/>
 							</xsl:element>
-					</xsl:otherwise>
+					</xsl:when>
 				</xsl:choose>
 			</xsl:if>
 			
@@ -2042,16 +2043,20 @@
 		</xsl:choose>
 	</xsl:template>
 
+	<xsl:template match="m:extent/@unit | m:dimensions/@unit">
+		<xsl:variable name="elementName" select="concat('unit_',.)"/>
+		<xsl:value-of select="$l/*[name()=$elementName]"/>
+	</xsl:template>
 
 	<xsl:template match="m:physDesc">
 		<xsl:if test="m:dimensions[text()] | m:extent[text()]">
 			<p>
 				<xsl:for-each select="m:dimensions[text()] | m:extent[text()]">
 					<xsl:value-of select="."/>
-					<xsl:text> </xsl:text>
-					<xsl:call-template name="remove_">
-						<xsl:with-param name="str" select="@unit"/>
-					</xsl:call-template>
+					<xsl:if test="normalize-space(@unit)">
+						<xsl:text> </xsl:text>	
+						<xsl:apply-templates select="@unit"/>
+					</xsl:if>
 					<xsl:choose>
 						<xsl:when test="position()&lt;last()">
 							<xsl:text>; </xsl:text>
