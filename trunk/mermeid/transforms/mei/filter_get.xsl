@@ -278,6 +278,42 @@
     title="<xsl:value-of select="m:graphic/@label"/>"/&gt;</xsl:template> 
   <!-- END MEI -> HTML -->
   
+  
+  <!-- Clean up past issues -->
+  <xsl:template match="m:extent[@unit] | m:dimensions[@unit]" mode="mei2html">
+    <!-- append non-valid @unit values to the element content and omit the unit attribute -->
+    <xsl:choose>
+      <xsl:when test="@unit 
+        and @unit!=''
+        and @unit!='byte' 
+        and @unit!='char' 
+        and @unit!='cm' 
+        and @unit!='in' 
+        and @unit!='issue' 
+        and @unit!='mm' 
+        and @unit!='page' 
+        and @unit!='pc' 
+        and @unit!='pt' 
+        and @unit!='px' 
+        and @unit!='record' 
+        and @unit!='vol' 
+        and @unit!='vu'">
+        <xsl:element name="{name(.)}">
+          <xsl:apply-templates select="@*[name()!='unit']"/>
+          <xsl:attribute name="unit"/>
+          <xsl:apply-templates select="*|text()"/><xsl:value-of select="concat(' ',@unit)"/></xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:element name="{name(.)}">
+          <xsl:apply-templates select="@*|*|text()"/>
+        </xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <!--  -->
+  
+  
   <xsl:template match="@*|node()" mode="mei2html">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" mode="mei2html"/>
