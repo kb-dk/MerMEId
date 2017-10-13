@@ -101,6 +101,16 @@ let $options:=
       return $ref
     };
 
+    declare function app:view-document-notes($doc as node()) as node() {
+      let $note := $doc//m:fileDesc/m:notesStmt/m:annot[@type='private_notes']/string()
+      let $n :=  
+        if (string-length($note)>20) then 
+            <a class="help_plain" style="font-size: inherit; width: auto;">{concat(substring($note,1,20), substring-before(substring($note,21),' '))}...<span 
+            class="comment" style="font-size: .9em; line-height: 1.2em; margin-top: 0; margin-left: -150px;">{$note}</span></a>
+        else
+            <span>{$note}</span>
+      return $n
+    };
 
     
     declare function app:edit-form-reference($doc as node()) as node() 

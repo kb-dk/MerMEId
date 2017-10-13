@@ -406,13 +406,46 @@
 	<xsl:template match="m:titleStmt/m:respStmt[m:persName[text()]]">
 		<!-- certain roles may be excluded from the list -->
 		<xsl:param name="exclude"/>		
+		<!-- list persons grouped by role -->
 		<p>	
-			<!-- list persons grouped by role -->
-			<xsl:apply-templates select="." mode="list_persons_by_role">
-				<xsl:with-param name="exclude" select="$exclude"/>
-				<xsl:with-param name="label_class" select="'p_heading'"/>
-				<xsl:with-param name="capitalize" select="'yes'"/>
-			</xsl:apply-templates>
+		<xsl:apply-templates select="." mode="list_persons_by_role">
+			<xsl:with-param name="exclude" select="$exclude"/>
+			<xsl:with-param name="label_class" select="'p_heading'"/>
+			<xsl:with-param name="capitalize" select="'yes'"/>
+		</xsl:apply-templates>
+		<!--
+			<xsl:for-each select="m:persName[text() and not(contains($exclude,@role))]">
+				<xsl:variable name="role" select="@role"/>
+				<xsl:variable name="displayed_role">
+					<xsl:choose>
+						<xsl:when test="@role='author'"><xsl:value-of select="$l/text_author"/></xsl:when>
+						<xsl:otherwise>
+							<xsl:call-template name="capitalize">
+								<xsl:with-param name="str" select="@role"/>
+							</xsl:call-template>
+						</xsl:otherwise>
+					</xsl:choose>
+					<xsl:if test="count(../m:persName[text() and @role=$role]) > 1 and $language='en'">
+						<xsl:text>s</xsl:text>
+					</xsl:if>
+				</xsl:variable>
+				<xsl:if test="count(preceding-sibling::*[@role=$role])=0">
+					<xsl:comment> one <div> per role </csl:comment>
+					<div class="list_block">
+						<span class="p_heading">
+							<xsl:value-of select="$displayed_role"/>
+							<xsl:text>: </xsl:text>
+						</span>
+						<xsl:for-each select="../m:persName[text() and @role=$role]">
+							<xsl:apply-templates select="."/>
+							<xsl:if test="count(following-sibling::*[@role=$role])>0">
+								<xsl:text>, </xsl:text>
+							</xsl:if>
+						</xsl:for-each>
+					</div>
+				</xsl:if>
+			</xsl:for-each>-->
+		
 			<!-- finally, list names without roles -->
 			<xsl:for-each select="m:persName[text() and (not(@role) or @role='')]">
 				<div class="list_block">
@@ -1084,6 +1117,7 @@
 	</xsl:template>
 
 	<xsl:template match="m:key[@pname or @accid or @mode or text()]">
+		<xsl:variable name="mode" select="@mode"/>
 		<p>
 			<span class="label"><xsl:value-of select="$l/key"/>: </span>
 			<xsl:value-of select="translate(@pname,'abcdefgh','ABCDEFGH')"/>
@@ -1092,8 +1126,8 @@
 					<xsl:with-param name="attr" select="@accid"/>
 				</xsl:call-template>
 			</xsl:if>
-			<xsl:text> </xsl:text>
-			<xsl:value-of select="@mode"/>
+			<xsl:if test="substring($l/*[name()=$mode],1,1)!='-'"><xsl:text> </xsl:text></xsl:if>
+			<xsl:value-of select="$l/*[name()=$mode]"/>
 			<xsl:text> </xsl:text>
 			<xsl:value-of select="."/>
 		</p>
@@ -1130,7 +1164,8 @@
 
 
 	<xsl:template match="m:expression/m:extent[text()]">
-		<p><xsl:value-of select="$l/extent"/>: <xsl:apply-templates/>&#160;<xsl:apply-templates select="@unit"/></p>
+		<p><xsl:value-of select="$l/extent"/>: <xsl:apply-templates/><xsl:if 
+			test="normalize-space(@unit)">&#160;<xsl:apply-templates select="@unit"/></xsl:if>.</p>
 	</xsl:template>
 
 
@@ -1287,10 +1322,8 @@
 							<xsl:if test="count(m:perfRes[not(@solo='true')])&gt;0">
 								<br/>
 							</xsl:if>
-							<span class="p_heading:"><xsl:call-template name="capitalize">
-									<xsl:with-param name="str"><xsl:value-of select="$l/soloist"/></xsl:with-param>
-								</xsl:call-template>
-								<xsl:if test="count(m:perfRes[@solo='true'])&gt;1 and ($language='en' or ($language='' and $default_language='en'))">s</xsl:if>:</span>
+							<span class="p_heading:"><xsl:value-of select="$l/soloist"/><xsl:if
+									test="count(m:perfRes[@solo='true'])&gt;1 and $language='en'">s</xsl:if>:</span>
 							<xsl:apply-templates select="m:perfRes[@solo='true'][text()]"/>
 						</xsl:if>
 					</div>
@@ -1566,7 +1599,6 @@
 				</xsl:if>				
 
 				<xsl:for-each select="m:desc[text()]">
-					<xsl:if test="../m:geogName[text()] or ../m:corpName[text()]  or ../m:persName[text()]"><xsl:text>. </xsl:text></xsl:if>
 					<xsl:apply-templates/>
 					<xsl:text> </xsl:text>
 				</xsl:for-each>
@@ -1670,7 +1702,7 @@
 							<xsl:if test="name()='persName' and normalize-space(@role)">
 								<xsl:variable name="label">
 									<xsl:choose>
-										<xsl:when test="$language='en' or ($language='' and $default_language='en')">
+										<xsl:when test="$language='en' or $language=''">
 											<!-- if English: make it plural... -->
 											<xsl:choose>
 												<xsl:when test="substring(@role,string-length(@role),1)='y'">
@@ -2012,6 +2044,10 @@
 		</xsl:choose>
 	</xsl:template>
 
+	<xsl:template match="m:extent/@unit | m:dimensions/@unit">
+		<xsl:variable name="elementName" select="concat('unit_',.)"/>
+		<xsl:value-of select="$l/*[name()=$elementName]"/>
+	</xsl:template>
 
 	<xsl:template match="m:physDesc">
 		<xsl:if test="m:dimensions[text()] | m:extent[text()]">
@@ -2020,10 +2056,8 @@
 					<xsl:value-of select="."/>
 					<xsl:if test="normalize-space(@unit)">
 						<xsl:text> </xsl:text>	
+						<xsl:apply-templates select="@unit"/>
 					</xsl:if>
-					<xsl:call-template name="remove_">
-						<xsl:with-param name="str" select="@unit"/>
-					</xsl:call-template>
 					<xsl:choose>
 						<xsl:when test="position()&lt;last()">
 							<xsl:text>; </xsl:text>
