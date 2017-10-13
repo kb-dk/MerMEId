@@ -1090,27 +1090,37 @@
 		<xsl:if test="position() = 1">
 			<span class="label"><xsl:value-of select="$l/metre"/>: </span>
 		</xsl:if>
-		<xsl:choose>
-			<xsl:when test="@count!='' and @unit!=''">
-				<span class="meter">
-					<span class="meter_count">
-						<xsl:value-of select="@count"/>
+		<xsl:if test="@sym!=''">
+			<span class="music_symbols time_signature">
+				<xsl:choose>
+					<xsl:when test="@sym='common'">&#x1d134;</xsl:when>
+					<xsl:when test="@sym='cut'">&#x1d135;</xsl:when>
+				</xsl:choose>
+			</span>
+		</xsl:if>
+		<xsl:if test="@count!=''">
+			<xsl:choose>
+				<xsl:when test="@unit!=''">
+					<span class="meter">
+						<span class="meter_count">
+							<xsl:value-of select="@count"/>
+						</span>
+						<br/>
+						<span class="meter_unit">
+							<xsl:value-of select="@unit"/>
+						</span>
 					</span>
-					<br/>
-					<span class="meter_unit">
-						<xsl:value-of select="@unit"/>
-					</span>
-				</span>
-			</xsl:when>
-			<xsl:otherwise>
-				<span class="music_symbols time_signature">
-					<xsl:choose>
-						<xsl:when test="@sym='common'">&#x1d134;</xsl:when>
-						<xsl:when test="@sym='cut'">&#x1d135;</xsl:when>
-					</xsl:choose>
-				</span>
-			</xsl:otherwise>
-		</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<span class="meter meter_number"><xsl:value-of select="@count"/></span>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:if>
+		<xsl:if test=".!=''">
+			<span class="music_symbols">
+				<xsl:value-of select="."/>
+			</span>
+		</xsl:if>
 		<xsl:if test="position()=last()">
 			<br/>
 		</xsl:if>
@@ -1164,7 +1174,7 @@
 
 
 	<xsl:template match="m:expression/m:extent[text()]">
-		<p><xsl:value-of select="$l/extent"/>: <xsl:apply-templates/><xsl:if 
+		<p><span class="label"><xsl:value-of select="$l/extent"/>: </span> <xsl:apply-templates/><xsl:if 
 			test="normalize-space(@unit)">&#160;<xsl:apply-templates select="@unit"/></xsl:if>.</p>
 	</xsl:template>
 
