@@ -491,6 +491,12 @@
           <xsl:apply-templates select="node()"/>
         </xsl:element>
       </xsl:when>
+      <xsl:when test="contains(@class,'dblunderline')">
+        <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
+          <xsl:attribute name="rend">underline(2)</xsl:attribute>
+          <xsl:apply-templates select="node()"/>
+        </xsl:element>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
           <xsl:if test="contains(@style, 'font-family')">
