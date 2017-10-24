@@ -301,9 +301,7 @@
         <xsl:element name="{name(.)}">
           <xsl:apply-templates select="@*[name()!='unit']"/>
           <xsl:attribute name="unit"/>
-          <xsl:apply-templates select="*|text()"/>
-          <xsl:value-of select="concat(' ',@unit)"/>
-        </xsl:element>
+          <xsl:apply-templates select="*|text()"/><xsl:value-of select="concat(' ',@unit)"/></xsl:element>
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="{name(.)}">

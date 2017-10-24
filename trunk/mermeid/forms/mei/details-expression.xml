@@ -236,10 +236,9 @@
                         <h:div>
                             <xf:input ref=".">
                                 <xf:label class="fixed_width">Extent <h:a class="help">&#160;?<h:span 
-                                    class="comment">Extent in any medium other than time: number of measures or pages, for instance. <br/>
-                                    Duration can be indicated in any form, such as "01:23:00", "25'30''" or "approx. 10'". 
-                                    The unit of measurement (measures, pages, minutes, etc.) may be specified in the  
-                                    optional "unit" field.</h:span></h:a></xf:label>
+                                    class="comment">Extent in any medium other than time: number of measures or pages, for instance.
+                                    Non-standard units of measurement can be included in the text field.
+                                </h:span></h:a></xf:label>
                             </xf:input>
                             <xi:include href="includes/unit-select.xml" parse="xml"/>
                             <!-- to make <extent> repeatable, add 'add' to triggers -->
