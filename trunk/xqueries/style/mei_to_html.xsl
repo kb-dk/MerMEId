@@ -1643,7 +1643,6 @@
 				</xsl:if>				
 
 				<xsl:for-each select="m:desc[text()]">
-					<xsl:if test="../m:geogName[text()] or ../m:corpName[text()]  or ../m:persName[text()]"><xsl:text>. </xsl:text></xsl:if>
 					<xsl:apply-templates/>
 					<xsl:text> </xsl:text>
 				</xsl:for-each>
