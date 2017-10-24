@@ -1364,8 +1364,10 @@
 							<xsl:if test="count(m:perfRes[not(@solo='true')])&gt;0">
 								<br/>
 							</xsl:if>
-							<span class="p_heading:"><xsl:value-of select="$l/soloist"/><xsl:if
-									test="count(m:perfRes[@solo='true'])&gt;1 and $language='en'">s</xsl:if>:</span>
+							<span class="p_heading:"><xsl:call-template name="capitalize">
+								<xsl:with-param name="str"><xsl:value-of select="$l/soloist"/></xsl:with-param>
+							</xsl:call-template>
+								<xsl:if test="count(m:perfRes[@solo='true'])&gt;1 and ($language='en' or ($language='' and $default_language='en'))">s</xsl:if>:</span>
 							<xsl:apply-templates select="m:perfRes[@solo='true'][text()]"/>
 						</xsl:if>
 					</div>
@@ -1641,6 +1643,7 @@
 				</xsl:if>				
 
 				<xsl:for-each select="m:desc[text()]">
+					<xsl:if test="../m:geogName[text()] or ../m:corpName[text()]  or ../m:persName[text()]"><xsl:text>. </xsl:text></xsl:if>
 					<xsl:apply-templates/>
 					<xsl:text> </xsl:text>
 				</xsl:for-each>
@@ -1744,7 +1747,7 @@
 							<xsl:if test="name()='persName' and normalize-space(@role)">
 								<xsl:variable name="label">
 									<xsl:choose>
-										<xsl:when test="$language='en' or $language=''">
+										<xsl:when test="$language='en' or ($language='' and $default_language='en')">
 											<!-- if English: make it plural... -->
 											<xsl:choose>
 												<xsl:when test="substring(@role,string-length(@role),1)='y'">
