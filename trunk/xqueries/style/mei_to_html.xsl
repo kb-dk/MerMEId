@@ -677,6 +677,7 @@
 		</xsl:if>
 	</xsl:template>
 	
+	
 	<xsl:template match="*" mode="relation_reference">
 		<xsl:param name="href"/>
 		<xsl:param name="title"/>
