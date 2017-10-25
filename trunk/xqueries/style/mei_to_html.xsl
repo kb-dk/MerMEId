@@ -692,7 +692,7 @@
 			<xsl:choose>
 				<xsl:when test="$rel='hasReproduction'">
 					<xsl:choose>
-						<xsl:when test="contains($label,'Edition')"><xsl:value-of select="$l/edition"/>:</xsl:when>
+						<xsl:when test="contains($label,'Edition')"><xsl:value-of select="$l/edition"/></xsl:when>
 						<xsl:otherwise><xsl:value-of select="$l/hasReproduction"/></xsl:otherwise>
 					</xsl:choose>
 				</xsl:when>
