@@ -1639,7 +1639,7 @@
 					<xsl:apply-templates select="." mode="list_persons_by_role">
 						<xsl:with-param name="style" select="'inline'"/>
 					</xsl:apply-templates>
-					<xsl:text>)</xsl:text>
+					<xsl:text>). </xsl:text>
 				</xsl:if>				
 
 				<xsl:for-each select="m:desc[text()]">
@@ -1709,7 +1709,7 @@
 	<!-- List persons and corporate names grouped by role -->
 	<xsl:template match="*" mode="list_persons_by_role">
 		<!-- Roles to omit from the list -->
-		<xsl:param name="exclude"/>
+		<xsl:param name="exclude" select="'none'"/>
 		<!-- CSS class to be assigned to role labels -->
 		<xsl:param name="label_class"/>
 		<!-- List style: 'inline' or nothing (inserts a line break after each role empty) -->
@@ -3471,6 +3471,11 @@
 		<u>
 			<xsl:apply-templates/>
 		</u>
+	</xsl:template>
+	<xsl:template match="m:rend[@rend = 'underline(2)'][normalize-space(.)]">
+		<span style="border-bottom: 3px double;">
+			<xsl:apply-templates/>
+		</span>
 	</xsl:template>
 	<xsl:template match="m:rend[@rend = 'line-through'][normalize-space(.)]">
 		<span style="text-decoration: line-through;">
