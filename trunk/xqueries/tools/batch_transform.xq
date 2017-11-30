@@ -55,15 +55,26 @@ declare function local:get-work-number($doc as node() ) as xs:string* {
 };
 
 
-declare function local:transformed($doc as node() ) as xs:string {
+declare function local:transformed($doc as node() ) as node() {
     let $params := 
     <parameters>
        <param name="any_parameter" value=""/>
     </parameters>
+    
     let $orig       := $doc//m:meiHead
     let $trans      := transform:transform($doc,$xsl,$params)//m:meiHead
-    let $u          := update replace $orig with $trans
-    return "processed"
+    let $u :=  
+      if(not(deep-equal($orig,$trans))) then
+        update replace $orig with $trans
+      else
+        ""
+    let $status :=
+      if($u = "") then 
+        <span>unchanged</span>
+      else 
+        <span style="color: red">transformed</span>
+        
+    return $status
 };
 
 
@@ -83,20 +94,23 @@ return
     <div id="main">
         <h1>Batch transform XML files in the database</h1> 
         <table cellpadding="2" cellspacing="0" border="0" style="width: auto;">
-            <tr><th>Work no.&#160;</th><th>Title&#160;</th><th>File</th></tr>
+            <tr><th>Work no.&#160;</th><th>Title&#160;</th><th>File</th><th>Status</th></tr>
             {
               for $doc in $list
               let $html := 
               <tr>
                  <td>{local:get-work-number($doc)} &#160;</td>
-                 <td>{$doc/m:meiHead/m:fileDesc/m:titleStmt/m:title[1]/string()} &#160;</td>
+                 <td><a href="{concat("http://",request:get-header('HOST'),"/storage/present.xq?doc=",substring-after(document-uri(root($doc)),$database))}" 
+                    target="_blank" title="HTML preview">{$doc/m:meiHead/m:fileDesc/m:titleStmt/m:title[1]/string()}</a> &#160;</td>
+                 <td><a href="{concat("http://",request:get-header('HOST'),replace(document-uri(root($doc)),'/db/','/storage/'))}" 
+                    target="_blank" title="XML">{substring-after(document-uri(root($doc)),$database)}</a></td>
                  <td>{local:transformed($doc)}</td>
               </tr>
               return $html
             }   
         </table>
         <p>&#160;</p>
-        <p>{count($list)} file(s) transformed. </p>
+        <p>{count($list)} file(s) processed. </p>
     </div>
   </div>
 </body>

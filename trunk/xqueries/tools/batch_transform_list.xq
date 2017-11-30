@@ -135,8 +135,10 @@ return
                               let $html := 
                               <tr>
                                  <td>{local:get-work-number($doc)} &#160;</td>
-                                 <td>{$doc/m:meiHead/m:fileDesc/m:titleStmt/m:title[1]/string()} &#160;</td>
-                                 <td>{document-uri(root($doc))}</td>
+                                 <td><a href="{concat("http://",request:get-header('HOST'),"/storage/present.xq?doc=",substring-after(document-uri(root($doc)),$database))}" 
+                                    target="_blank" title="HTML preview">{$doc/m:meiHead/m:fileDesc/m:titleStmt/m:title[1]/string()}</a> &#160;</td>
+                                 <td><a href="{concat("http://",request:get-header('HOST'),replace(document-uri(root($doc)),'/db/','/storage/'))}" 
+                                    target="_blank" title="XML">{substring-after(document-uri(root($doc)),$database)}</a></td>
                               </tr>
                               
                               return $html
