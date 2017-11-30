@@ -692,7 +692,7 @@
 			<xsl:choose>
 				<xsl:when test="$rel='hasReproduction'">
 					<xsl:choose>
-						<xsl:when test="contains($label,'Edition')"><xsl:value-of select="$l/edition"/>:</xsl:when>
+						<xsl:when test="contains($label,'Edition')"><xsl:value-of select="$l/edition"/></xsl:when>
 						<xsl:otherwise><xsl:value-of select="$l/hasReproduction"/></xsl:otherwise>
 					</xsl:choose>
 				</xsl:when>
@@ -2473,9 +2473,10 @@
 							</xsl:call-template>
 						</xsl:if>
 					</xsl:if>
-					<xsl:if test="normalize-space(m:biblScope[@unit='vol'])!=''">, <xsl:value-of
+					<xsl:if test="normalize-space(concat(m:biblScope[@unit='vol'],m:biblScope[@unit='issue']))!=''">, <xsl:value-of
 							select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>
-					<xsl:if test="normalize-space(m:biblScope[@unit='issue'])!=''">/<xsl:value-of
+					<xsl:if test="normalize-space(m:biblScope[@unit='issue'])!=''"><xsl:if 
+						test="normalize-space(m:biblScope[@unit='vol'])!=''">/</xsl:if><xsl:value-of
 							select="normalize-space(m:biblScope[@unit='issue'])"/></xsl:if>
 					<xsl:if test="normalize-space(m:imprint/m:date)!=''">, <xsl:apply-templates
 							select="m:imprint/m:date"/></xsl:if>
@@ -3435,7 +3436,11 @@
 					</xsl:choose>
 				</span></a>
 				<xsl:variable name="pos2" select="number($pos1)+string-length($abbr)"/>
-				<xsl:apply-templates select="exsl:node-set(substring(.,$pos2))"/>
+				<!-- wrap the remainder in a dummy element to make it match this template for recursive processing -->
+				<xsl:variable name="str2">
+					<dummy><xsl:value-of select="substring(.,$pos2)"/></dummy>
+				</xsl:variable>
+				<xsl:apply-templates select="exsl:node-set($str2)"/>
 			</xsl:when>
 			<xsl:otherwise>
 				<!-- <apply-templates/> would cause infinite loop -->
