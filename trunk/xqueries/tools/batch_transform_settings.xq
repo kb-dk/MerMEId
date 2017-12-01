@@ -39,15 +39,15 @@ let $formpage :=
 	      The eXist database collection /db/dcm/ is where MerMEId stores your files by default. /db/public/ contains the files you have published with MerMEId.<br/>
 	      <input type="text" value="{$database}" name="db" style="width: 30em;"/><br/>&#160; 
 	      </p>
-	      <p><strong>Order list by</strong>
+          <p>Hitting the 'Search files' button below will generate a list of files to be transformed (no transformation yet).</p>  
+	      <p>Order list by
 	          <select name="sortby">
      		    <option value="null,work_number">Work number</option>
     		    <option value="null,title">Title</option>
-    	      </select><br/>&#160;
-    	      The sort order has no impact on the transformation. It affects only the list of files shown for your convenience. 
+    	      </select>
+    	      <br/>The sort order has no impact on the transformation. It affects only the list of files shown for your convenience. 
 	      </p>
-
-	      <p><input type="submit" value="Generate" /></p>
+	      <p><input type="submit" value="Search files" /></p>
 	    </form>
       </div>
     </div>
