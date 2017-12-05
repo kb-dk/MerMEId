@@ -18,10 +18,43 @@ tinymce.PluginManager.add('musicalsymbols', function(editor, url) {
 	editor.addButton('musicalsymbols', {
 		title       : 'Musical symbols',
         image       : '/../editor/images/warning.png',
-		cmd: 'mceShowMusSymb'
+		cmd         : 'mceShowMusSymb'
 	});
 
 });
+
+
+// Add double underline plugin
+(function() {
+   tinymce.create('tinymce.plugins.DblUnderline', {  
+   init : function(editor) {   
+
+      editor.addCommand('dblunderline', function(ui, v) {
+        editor.formatter.toggle("dblunderline");
+      });
+
+      editor.addButton("dblunderlinebtn", {
+        title : 'Double underline', 
+        cmd : 'dblunderline',
+        image: '/../editor/images/dblunderline.png',
+      });
+
+      editor.onNodeChange.add(function(editor, cm, n) {
+        active = editor.formatter.match('dblunderline');
+        control = editor.controlManager.get('dblunderlinebtn').setActive(active);
+      });
+
+      editor.onInit.add(function(editor, e) {
+        editor.formatter.register('dblunderline', 
+           {inline : 'span', classes : ['dblunderline'], styles : {'borderBottom' : '3px double'} } );
+      });
+  }
+  });
+
+  // Register plugin
+  tinymce.PluginManager.add('DblUnderline', tinymce.plugins.DblUnderline);
+})();
+
 
 
 // Plugins and buttons for adding MEI elements encoded as HTML span elements
@@ -272,14 +305,14 @@ tinymce.PluginManager.add('title', function(editor) {
     mode:                                   "exact",
     language:                               "en",
     skin:                                   "thebigreason",
-    plugins:                                "inlinepopups,spellchecker,style,table,save,iespell,paste,visualchars,nonbreaking,xhtmlxtras,template,fullscreen,meiElement,persName,geogName,corpName,title",
+    plugins:                                "inlinepopups,spellchecker,style,table,save,iespell,paste,visualchars,nonbreaking,xhtmlxtras,template,fullscreen,meiElement,persName,geogName,corpName,title,DblUnderline",
     gecko_spellcheck:                       true,
     encoding:                               "xml",
     entity_encoding:                        "raw",
     forced_root_block:                      "p",
     remove_redundant_brs:                   true,
     verify_html:                            true,
-    theme_advanced_buttons1:                "bold,italic,underline,strikethrough,|,sup,sub,|,forecolor,fontselect,fontsizeselect,charmap,|,undo,redo,removeformat,|,link,unlink,|,fullscreen,code,|,persName,corpName,geogName,title",
+    theme_advanced_buttons1:                "bold,italic,underline,dblunderlinebtn,strikethrough,|,sup,sub,|,forecolor,fontselect,fontsizeselect,charmap,|,undo,redo,removeformat,|,link,unlink,|,fullscreen,|,persName,corpName,geogName,title",
     theme_advanced_buttons2:                "",
     theme_advanced_buttons3:                "",
     theme_advanced_buttons4:                "",

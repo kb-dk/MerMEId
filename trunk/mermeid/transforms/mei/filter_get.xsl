@@ -208,6 +208,7 @@
   <xsl:template match="m:rend[@fontweight = 'bold']" mode="mei2html">&lt;b&gt;<xsl:apply-templates mode="mei2html"/>&lt;/b&gt;</xsl:template>
   <xsl:template match="m:rend[@fontstyle = 'italic']" mode="mei2html">&lt;i&gt;<xsl:apply-templates mode="mei2html"/>&lt;/i&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'underline']" mode="mei2html">&lt;span style="text-decoration: underline;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
+  <xsl:template match="m:rend[@rend = 'underline(2)']" mode="mei2html">&lt;span style="border-bottom: 3px double" class="dblunderline"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'line-through']" mode="mei2html">&lt;span style="text-decoration: line-through;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sub']" mode="mei2html">&lt;sub&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sub&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sup']" mode="mei2html">&lt;sup&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sup&gt;</xsl:template>
@@ -283,7 +284,9 @@
   <xsl:template match="m:extent[@unit] | m:dimensions[@unit]" mode="mei2html">
     <!-- append non-valid @unit values to the element content and omit the unit attribute -->
     <xsl:choose>
-      <xsl:when test="@unit!='byte' 
+      <xsl:when test="@unit 
+        and @unit!=''
+        and @unit!='byte' 
         and @unit!='char' 
         and @unit!='cm' 
         and @unit!='in' 
@@ -299,9 +302,7 @@
         <xsl:element name="{name(.)}">
           <xsl:apply-templates select="@*[name()!='unit']"/>
           <xsl:attribute name="unit"/>
-          <xsl:apply-templates select="*|text()"/>
-          <xsl:value-of select="concat(' ',@unit)"/>
-        </xsl:element>
+          <xsl:apply-templates select="*|text()"/><xsl:value-of select="concat(' ',@unit)"/></xsl:element>
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="{name(.)}">
