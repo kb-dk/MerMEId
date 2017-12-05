@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <title>MerMEId manual - Batch transforming documents</title>
+
+        <link href="../style/tab_style.css" rel="stylesheet" type="text/css" />
+        <link href="../style/list_style.css" rel="stylesheet" type="text/css" />
+        <link href="../style/front_page.css" rel="stylesheet" type="text/css" />
+        <link href="../style/manual.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="main">
+            <div class="manual_header">
+                <div class="close_div">
+                    <a href="javascript:window.close();" class="trigger"><img alt="Close"
+                            title="Close" src="../images/close.gif" height="12" width="12"
+                     /></a></div>
+                <img alt="MerMEId" src="../images/mermeid_30px.png" height="23" width="130" />
+            </div>
+            <div class="toclink"><a href="index.html">Back to table of contents</a></div>
+            <h2>Batch transforming XML files in the database</h2>
+            <p>Sometimes you need to make the same changes to many or all of your MEI documents.
+                Typical changes are text replacements (if, for instance, your project changes its name or address), 
+                but also more complex, structural changes are possible.
+                Using an XSL transformation for such tasks often is more efficient than editing all the documents 
+                by hand. Instead of downloading all of your files, transforming them locally on your computer, 
+                and upload them back to the server, MerMEId offers a script to do such a transformation directly 
+                on the server. </p>
+            <ul class="important">
+                <li>Warning! Transforming your documents directly on the server is an irreversible process.<br/>
+                    If your transformation does not work as expected, your data may be completely and permanently damaged.
+                    Make sure to test your transformation thoroughly and to save a backup copy of your data somewhere else before running the transformation. <br/>
+                    For safety reasons, only database administrators have access to using the transformation service.
+                   
+                </li>
+            </ul>
+            <p>Prior to using the script, an XSLT style sheet making the desired changes must be placed somewhere where 
+            your server has access to it.</p>
+            <p>The script is located in the 'tools' folder in your eXist database: <a
+                    href="/storage/tools/batch_transform_settings.xq" target="_blank"
+                    >batch_transform_settings.xq</a>. </p>
+            <p>The server may prompt you for an administrator password in order to give you access to the script. 
+                You should see the following form. It includes basic instructions and
+                suggests default settings in some of the fields:</p>
+            <p><img src="../images/manual/batch_transform.png" class="illustration"/></p>
+            <p>Fill in the form to define which files to select. Type the XSLT style sheet's URI (the location http://[your-server]/storage/ 
+                is configured in MerMEId to be equivalent to the eXist database's root collection /db/; but your style sheet may also be 
+               located outside of the database or on some other server). Click the 'Search files' button
+            to get a list of files matching the search criteria. Possibly not all files will be changed &mdash; that depends on your 
+            XSL transformation. The list only indicates the files that the script will attempt to transform.</p>
+            <p>Hit the 'Transform' button to run the transformation.</p>
+            <ul class="important">
+                <li>If you are transforming many files, the connection may time out before the process is completed.
+                    This does not necessarily mean that the process stopped; it may continue to run in the background on your 
+                    server. Therefore, you may experience the server being irresponsive for some time after a timeout.<br/>
+                    Changing your browser's HTTP timeout settings may help avoiding a connection timeout.
+                </li>
+            </ul>
+            <p>After the transformation process &mdash; if the connection did not time out &mdash; a result page will list the files changed 
+                and those that were unaffected by the transformation.</p>
+            
+        </div>
+        <p class="footer"><a href="http://www.kb.dk/en/nb/dcm" title="DCM"><img
+                    style="border: 0px none ; vertical-align: middle;" alt="DCM Logo"
+                    src="../images/dcm_logo_small_white.png" /></a> 2017 Danish Centre for Music
+            Editing | Royal Danish Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
+                href="http://www.kb.dk/en/nb/dcm">www.kb.dk/en/nb/dcm</a></p>
+    </body>
+</html>
