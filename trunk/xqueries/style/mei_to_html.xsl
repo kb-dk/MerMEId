@@ -573,6 +573,34 @@
 		</xsl:if>
 	</xsl:template>
 	
+	<xsl:template match="m:relationList" mode="plain_relation_list">
+		<!-- Compact list of relations for use at sub-levels such as source relations -->
+		<xsl:for-each select="m:relation">
+			<xsl:choose>
+				<xsl:when test="contains(@label,':')">
+					<xsl:value-of select="@label"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:call-template name="translate_relation">
+						<xsl:with-param name="label" select="@label"/>
+						<xsl:with-param name="rel" select="@rel"/>
+					</xsl:call-template>
+					<xsl:choose>
+						<xsl:when test="@label!=''">
+							<xsl:value-of select="@label"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="@target"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:text>.</xsl:text>
+			<xsl:if test="position()!=last()"><br/></xsl:if>
+		</xsl:for-each>
+		
+	</xsl:template>
+	
 	<xsl:template match="m:relation" mode="relation_link">
 		<!-- internal cross references between works in the catalogue are treated in a special way -->
 		<xsl:variable name="mermeid_crossref">
@@ -660,25 +688,29 @@
 	<xsl:template name="translate_relation">
 		<xsl:param name="rel"/>
 		<xsl:param name="label"/>
-		<xsl:choose>
-			<xsl:when test="$rel='hasReproduction'">
-				<xsl:choose>
-					<xsl:when test="contains($label,'Edition')"><xsl:value-of select="$l/edition"/>:</xsl:when>
-					<xsl:otherwise><xsl:value-of select="$l/hasReproduction"/>:</xsl:otherwise>
-				</xsl:choose>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:choose>
-					<xsl:when test="$l/*[name()=$rel]">
-						<xsl:value-of select="$l/*[name()=$rel][1]"/>:
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="$rel"/>:
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:otherwise>
-		</xsl:choose>
-
+		<xsl:variable name="display_label">
+			<xsl:choose>
+				<xsl:when test="$rel='hasReproduction'">
+					<xsl:choose>
+						<xsl:when test="contains($label,'Edition')"><xsl:value-of select="$l/edition"/></xsl:when>
+						<xsl:otherwise><xsl:value-of select="$l/hasReproduction"/></xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<xsl:when test="$l/*[name()=$rel]">
+							<xsl:value-of select="$l/*[name()=$rel][1]"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$rel"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:call-template name="capitalize">
+			<xsl:with-param name="str" select="concat($display_label,': ')"></xsl:with-param>
+		</xsl:call-template>
 	</xsl:template>
 
 	<xsl:template match="m:expression" mode="top_level">
@@ -1332,8 +1364,10 @@
 							<xsl:if test="count(m:perfRes[not(@solo='true')])&gt;0">
 								<br/>
 							</xsl:if>
-							<span class="p_heading:"><xsl:value-of select="$l/soloist"/><xsl:if
-									test="count(m:perfRes[@solo='true'])&gt;1 and $language='en'">s</xsl:if>:</span>
+							<span class="p_heading:"><xsl:call-template name="capitalize">
+								<xsl:with-param name="str"><xsl:value-of select="$l/soloist"/></xsl:with-param>
+							</xsl:call-template>
+								<xsl:if test="count(m:perfRes[@solo='true'])&gt;1 and ($language='en' or ($language='' and $default_language='en'))">s</xsl:if>:</span>
 							<xsl:apply-templates select="m:perfRes[@solo='true'][text()]"/>
 						</xsl:if>
 					</div>
@@ -1605,7 +1639,7 @@
 					<xsl:apply-templates select="." mode="list_persons_by_role">
 						<xsl:with-param name="style" select="'inline'"/>
 					</xsl:apply-templates>
-					<xsl:text>)</xsl:text>
+					<xsl:text>). </xsl:text>
 				</xsl:if>				
 
 				<xsl:for-each select="m:desc[text()]">
@@ -1675,7 +1709,7 @@
 	<!-- List persons and corporate names grouped by role -->
 	<xsl:template match="*" mode="list_persons_by_role">
 		<!-- Roles to omit from the list -->
-		<xsl:param name="exclude"/>
+		<xsl:param name="exclude" select="'none'"/>
 		<!-- CSS class to be assigned to role labels -->
 		<xsl:param name="label_class"/>
 		<!-- List style: 'inline' or nothing (inserts a line break after each role empty) -->
@@ -1712,7 +1746,7 @@
 							<xsl:if test="name()='persName' and normalize-space(@role)">
 								<xsl:variable name="label">
 									<xsl:choose>
-										<xsl:when test="$language='en' or $language=''">
+										<xsl:when test="$language='en' or ($language='' and $default_language='en')">
 											<!-- if English: make it plural... -->
 											<xsl:choose>
 												<xsl:when test="substring(@role,string-length(@role),1)='y'">
@@ -1917,6 +1951,19 @@
 					</xsl:choose>
 				</div>
 			</xsl:for-each>
+			
+			
+			<!-- List the source's relations except those visualized otherwise: reproductions (=reprint) and the version embodied -->
+			<xsl:variable name="collect_source_relations">
+				<relationList xmlns="http://www.music-encoding.org/ns/mei">
+					<xsl:for-each select="m:relationList/m:relation[@rel!='isEmbodimentOf' and @rel!='isReproductionOf' and @target!='']">
+						<xsl:copy-of select="."/>
+					</xsl:for-each>
+				</relationList>
+			</xsl:variable>
+			<xsl:variable name="source_relations" select="exsl:node-set($collect_source_relations)"/>
+			<xsl:apply-templates select="$source_relations" mode="plain_relation_list"/>
+			
 
 			<!-- List exemplars (items) last if there is more than one or if it does have a heading of its own. 
 	   Otherwise, this is assumed to be a manuscript with some information given at item level, 
@@ -2426,9 +2473,10 @@
 							</xsl:call-template>
 						</xsl:if>
 					</xsl:if>
-					<xsl:if test="normalize-space(m:biblScope[@unit='vol'])!=''">, <xsl:value-of
+					<xsl:if test="normalize-space(concat(m:biblScope[@unit='vol'],m:biblScope[@unit='issue']))!=''">, <xsl:value-of
 							select="normalize-space(m:biblScope[@unit='vol'])"/></xsl:if>
-					<xsl:if test="normalize-space(m:biblScope[@unit='issue'])!=''">/<xsl:value-of
+					<xsl:if test="normalize-space(m:biblScope[@unit='issue'])!=''"><xsl:if 
+						test="normalize-space(m:biblScope[@unit='vol'])!=''">/</xsl:if><xsl:value-of
 							select="normalize-space(m:biblScope[@unit='issue'])"/></xsl:if>
 					<xsl:if test="normalize-space(m:imprint/m:date)!=''">, <xsl:apply-templates
 							select="m:imprint/m:date"/></xsl:if>
@@ -3388,7 +3436,11 @@
 					</xsl:choose>
 				</span></a>
 				<xsl:variable name="pos2" select="number($pos1)+string-length($abbr)"/>
-				<xsl:apply-templates select="exsl:node-set(substring(.,$pos2))"/>
+				<!-- wrap the remainder in a dummy element to make it match this template for recursive processing -->
+				<xsl:variable name="str2">
+					<dummy><xsl:value-of select="substring(.,$pos2)"/></dummy>
+				</xsl:variable>
+				<xsl:apply-templates select="exsl:node-set($str2)"/>
 			</xsl:when>
 			<xsl:otherwise>
 				<!-- <apply-templates/> would cause infinite loop -->
@@ -3424,6 +3476,11 @@
 		<u>
 			<xsl:apply-templates/>
 		</u>
+	</xsl:template>
+	<xsl:template match="m:rend[@rend = 'underline(2)'][normalize-space(.)]">
+		<span style="border-bottom: 3px double;">
+			<xsl:apply-templates/>
+		</span>
 	</xsl:template>
 	<xsl:template match="m:rend[@rend = 'line-through'][normalize-space(.)]">
 		<span style="text-decoration: line-through;">
