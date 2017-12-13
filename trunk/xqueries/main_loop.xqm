@@ -46,7 +46,7 @@ declare function loop:sort-key (
   $key as xs:string) as xs:string
 {
 
-  (: We don't want to waste time on looking up $collection if that parameters
+  (: We don't want to waste time on looking up $collection if that parameter
   is fixed in the query :)
 
   let $collection:=
@@ -60,15 +60,20 @@ declare function loop:sort-key (
       replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
     else if($key eq "title") then
       replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
-    else if($key eq "date") then
+    else if($key eq "date") then    
       let $dates := 
+        if($doc//m:workDesc/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)) then
           for $date in $doc//m:workDesc/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)
-	    return substring($date,1,4)
+	      return substring($date,1,4)
+	    else 
+	      (: if the composition does not have an overall dating, look for version datings instead and use the first dated version :)
+          for $date in $doc//m:workDesc/m:work/m:expressionList/m:expression/m:creation/m:date[@notafter|@isodate|@notbefore|@startdate|@enddate][1]/(@notafter|@isodate|@notbefore|@startdate|@enddate)
+	      return substring($date,1,4)
       return 
-	if(count($dates)>=1) then
-	  max($dates)
-	else
-	  "0000"
+      if(count($dates)>=1) then
+        max($dates)
+      else
+        "0000"
     else if($key eq "work_number") then
       let $identifier:=$doc//m:workDesc/m:work/m:identifier[@label=$collection][1]/string()
       (: extract any trailing number :)
