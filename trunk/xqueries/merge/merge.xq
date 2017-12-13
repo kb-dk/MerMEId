@@ -20,6 +20,8 @@ declare option exist:serialize "method=xml media-type=text/html";
 declare variable $genre  := request:get-parameter("genre","") cast as xs:string;
 declare variable $coll   := request:get-parameter("c",    "") cast as xs:string;
 declare variable $query  := request:get-parameter("query","") cast as xs:string;
+declare variable $language := request:get-parameter("language", "");
+declare variable $score := request:get-parameter("score", "");
 declare variable $page   := request:get-parameter("page", "1") cast as xs:integer;
 declare variable $number := request:get-parameter("itemsPerPage","20") cast as xs:integer;
 declare variable $publ   := request:get-parameter("published_only","");
@@ -53,6 +55,8 @@ declare function local:copy($element as element()) {
 let $params := 
 <parameters>
    <param name="hostname" value="{request:get-header('HOST')}"/>
+   <param name="language" value="{$language}"/>
+   <param name="score" value="{$score}"/>
 </parameters>
 
 let $list := loop:getlist($database,$coll,$genre,$query)
