@@ -62,8 +62,8 @@
 	
 	<xsl:variable name="language_pack_file_name">
 		<xsl:choose>
-			<xsl:when test="$language!=''"><xsl:value-of select="string(concat('language/',$language,'.xml'))"/></xsl:when>
-			<xsl:otherwise><xsl:value-of select="string(concat('language/',$default_language,'.xml'))"/></xsl:otherwise>
+			<xsl:when test="$language!=''"><xsl:value-of select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'style/language/',$language,'.xml'))"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'style/language/',$default_language,'.xml'))"/></xsl:otherwise>
 		</xsl:choose>
 	</xsl:variable>
 	<xsl:variable name="l" select="document($language_pack_file_name)/language"/>
