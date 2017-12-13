@@ -157,15 +157,17 @@
                         <h:legend>Relations <h:a class="help">&#160;?<h:span class="comment">Defines
                                     relations between this source and other sources, versions (FRBR:
                                     "expressions") of this work, other works etc.<h:br/> Currently
-                                    only two relations have a visible effect in MerMEId: the
+                                    two relations are handled in a special way in MerMEId's HTML preview: the
                                     relation "is reproduction of" pointing to another source marks
                                     this source as being a reprint of the other source; the "is
                                     embodiment of" relation pointing to an expression (version) of
                                     the works is used to specify which particular version of the
                                     work is embodied by this source.<h:br/>
+                                    All other relations will be displayed as [relation]: [label]. 
+                                    If no label is specified, MerMEId displays the xml:id of the target instead. 
                                     <h:br/>Depending on the encoding pratice of your project,
                                     relations may or may not be defined mutually, i.e. the opposite
-                                    relation may be defined on the target.<h:br/> The list is based
+                                    relation may be defined on the target.<h:br/> The list of relations is based
                                     on FRBR relations (see
                                     http://www.ifla.org/files/cataloguing/frbr/frbr_2008.pdf).
                                 </h:span></h:a></h:legend>
@@ -189,20 +191,29 @@
                                             <xf:itemset
                                                 nodeset="instance('data-instance')//m:source/@xml:id[.!=$this_id] | instance('data-instance')//m:expression/@xml:id">
                                                 <xf:label>
-                                                  <xf:output
-                                                  value="concat(../m:titleStmt/m:title[1],' (',.,')')"
-                                                  />
+                                                  <xf:output value="concat(../m:titleStmt/m:title[1],' (',.,')')"/>
                                                 </xf:label>
                                                 <xf:value ref="concat('#',.)"/>
                                             </xf:itemset>
+                                            <xf:action ev:event="xforms-value-changed">
+                                                <!-- insert target label if empty -->
+                                                <xf:action if="../@label=''">
+                                                    <xf:var name="target" select="translate(../@target,'#','')"/>
+                                                    <xf:setvalue ref="../@label" value="instance('data-instance')//*[@xml:id=$target]/m:titleStmt/m:title[1]"/>
+                                                </xf:action>
+                                            </xf:action>
                                         </xf:select1>
                                     </h:td>
-                                    <!--<h:td>
+                                    <h:td>
                                             <xf:input ref="@label" class="long">
-                                            <xf:label> Link label <h:a class="help">&#160;?<h:span class="comment">The text to be 
-                                            displayed as the link text</h:span></h:a></xf:label>
+                                            <xf:label> Target label <h:a class="help">&#160;?<h:span class="comment">The text to be 
+                                              displayed as the target of the relation (for instance, the title or label of the source referred to).<h:br/>
+                                              By default, MerMEId inserts the title of the element referred to (if any), but any text may be entered.<h:br/>
+                                              Please note that MerMEId displays labels containing a colon (:) in a special way: In
+                                              that case, the text before the colon is displayed as the relation label instead of the
+                                              standard description af the relation.</h:span></h:a></xf:label>
                                             </xf:input>
-                                            </h:td>-->
+                                            </h:td>
                                     <h:td style="vertical-align:top; white-space:nowrap;">
                                         <h:span class="editmenu">
                                             <dcm:element-buttons

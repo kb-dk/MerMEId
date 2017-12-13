@@ -208,6 +208,7 @@
   <xsl:template match="m:rend[@fontweight = 'bold']" mode="mei2html">&lt;b&gt;<xsl:apply-templates mode="mei2html"/>&lt;/b&gt;</xsl:template>
   <xsl:template match="m:rend[@fontstyle = 'italic']" mode="mei2html">&lt;i&gt;<xsl:apply-templates mode="mei2html"/>&lt;/i&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'underline']" mode="mei2html">&lt;span style="text-decoration: underline;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
+  <xsl:template match="m:rend[@rend = 'underline(2)']" mode="mei2html">&lt;span style="border-bottom: 3px double" class="dblunderline"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'line-through']" mode="mei2html">&lt;span style="text-decoration: line-through;"&gt;<xsl:apply-templates mode="mei2html"/>&lt;/span&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sub']" mode="mei2html">&lt;sub&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sub&gt;</xsl:template>
   <xsl:template match="m:rend[@rend = 'sup']" mode="mei2html">&lt;sup&gt;<xsl:apply-templates mode="mei2html"/>&lt;/sup&gt;</xsl:template>
