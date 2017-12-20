@@ -100,6 +100,7 @@ declare function local:format-reference(
 	  </td>
 	  <td class="tools">{app:edit-form-reference($doc)}</td>
 	  <td class="tools">{app:copy-document-reference($doc)}</td>
+	  <td class="tools">{app:rename-document-reference($doc)}</td>
 	  <td class="tools">{app:get-publication-reference($doc)}</td>
 	  <td class="tools">{app:delete-document-reference($doc)}</td>
 	  <td nowrap="nowrap">{app:view-document-notes($doc)}</td>
@@ -259,6 +260,7 @@ declare function local:format-reference(
             <th class="tools" >XML</th>
             <th class="tools">Edit</th>
             <th class="tools">Copy</th>
+            <th class="tools">Rename</th>
             <th class="tools">	   
               <form method="get" id="publish_form" action="/storage/publish.xq" >
                 <div id="publish">
