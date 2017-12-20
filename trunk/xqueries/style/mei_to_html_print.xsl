@@ -59,8 +59,7 @@
 	<xsl:template match="m:ptr | m:repository/m:ptr | m:annot[@type='links']"/>
 	
 	<!-- omit pop-up information -->
-	<xsl:template match="m:bibl//m:title | m:identifier[@authority='RISM'] | m:instrVoice/text() | 
-		m:identifier/text() | m:identifier/@label">
+	<xsl:template match="m:bibl//m:title | m:perfRes/text() | m:identifier/text() | m:identifier/@label">
 		<xsl:value-of select="."/>
 	</xsl:template>
 	
