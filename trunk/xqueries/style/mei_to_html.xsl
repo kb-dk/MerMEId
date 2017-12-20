@@ -62,8 +62,8 @@
 	
 	<xsl:variable name="language_pack_file_name">
 		<xsl:choose>
-			<xsl:when test="$language!=''"><xsl:value-of select="string(concat('language/',$language,'.xml'))"/></xsl:when>
-			<xsl:otherwise><xsl:value-of select="string(concat('language/',$default_language,'.xml'))"/></xsl:otherwise>
+			<xsl:when test="$language!=''"><xsl:value-of select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'style/language/',$language,'.xml'))"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'style/language/',$default_language,'.xml'))"/></xsl:otherwise>
 		</xsl:choose>
 	</xsl:variable>
 	<xsl:variable name="l" select="document($language_pack_file_name)/language"/>
@@ -2103,7 +2103,10 @@
 
 	<xsl:template match="m:extent/@unit | m:dimensions/@unit">
 		<xsl:variable name="elementName" select="concat('unit_',.)"/>
-		<xsl:value-of select="$l/*[name()=$elementName]"/>
+		<xsl:choose>
+			<xsl:when test="$l/*[name()=$elementName]!=''"><xsl:value-of select="$l/*[name()=$elementName]"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template match="m:physDesc">
