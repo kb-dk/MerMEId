@@ -58,12 +58,12 @@
 	<xsl:variable name="bibl_file" select="document($bibl_file_name)"/>
 	<xsl:variable name="abbreviations_file_name"
 		select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'library/abbreviations.xml'))"/>
-	<xsl:variable name="abbreviations_file" select="document($abbreviations_file_name)"/>
+	<xsl:variable name="abbreviations" select="document($abbreviations_file_name)/m:p/*"/>
 	
 	<xsl:variable name="language_pack_file_name">
 		<xsl:choose>
-			<xsl:when test="$language!=''"><xsl:value-of select="string(concat('language/',$language,'.xml'))"/></xsl:when>
-			<xsl:otherwise><xsl:value-of select="string(concat('language/',$default_language,'.xml'))"/></xsl:otherwise>
+			<xsl:when test="$language!=''"><xsl:value-of select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'style/language/',$language,'.xml'))"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'style/language/',$default_language,'.xml'))"/></xsl:otherwise>
 		</xsl:choose>
 	</xsl:variable>
 	<xsl:variable name="l" select="document($language_pack_file_name)/language"/>
@@ -1399,18 +1399,6 @@
 		</div>
 	</xsl:template>
 
-	<xsl:template match="m:perfRes">
-		<xsl:if test="@count &gt; 1">
-			<xsl:apply-templates select="@count"/>
-		</xsl:if>
-		<xsl:text> </xsl:text>
-		<xsl:apply-templates/>
-		<xsl:if test="position()&lt;last()">
-			<xsl:text>, 
-      </xsl:text>
-		</xsl:if>
-	</xsl:template>
-
 	<xsl:template match="m:castList">
 		<xsl:param name="full" select="true()"/>
 		<div class="perfmedium list_block">
@@ -1459,8 +1447,7 @@
 			<xsl:apply-templates select="."/>
 			<xsl:if test="$full">
 				<xsl:apply-templates select="../../m:roleDesc[@xml:lang=$lang]"/>
-				<xsl:for-each select="../../m:perfRes[text()]"> (<xsl:value-of select="."
-					/>)</xsl:for-each>
+				<xsl:for-each select="../../m:perfRes[text()]"> (<xsl:apply-templates select="."/>)</xsl:for-each>
 			</xsl:if>
 			<xsl:if test="position() &lt; last()">
 				<xsl:text>; </xsl:text>
@@ -2103,7 +2090,10 @@
 
 	<xsl:template match="m:extent/@unit | m:dimensions/@unit">
 		<xsl:variable name="elementName" select="concat('unit_',.)"/>
-		<xsl:value-of select="$l/*[name()=$elementName]"/>
+		<xsl:choose>
+			<xsl:when test="$l/*[name()=$elementName]!=''"><xsl:value-of select="$l/*[name()=$elementName]"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template match="m:physDesc">
@@ -3410,20 +3400,51 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<!-- General abbreviations in text blocks and identifier labels. -->
-	<xsl:template match="text()[parent::node() and name(..)!='p' and name(..)!='persName' and name(..)!='ptr' and name(..)!='ref'] 
-		| m:identifier/@label">
-		<!-- The parent::node() check above is necessary to avoid infinite looping -->
-		<xsl:variable name="string" select="concat(' ',.,' ')"/>
-		<xsl:variable name="abbr"
-			select="$abbreviations_file/m:p/m:choice/m:abbr[contains(translate($string,';:[]()/','       '),concat(' ',.,' '))]"/>
+	<!-- General abbreviations in instrument names, identifiers etc. -->
+	
+	<!-- Abbreviations allowed to appear in the middle of a string -->
+	<xsl:template match="m:perfRes/text() | m:identifier/text()" name="multiReplace">
+		<xsl:param name="pText" select="."/>
+		<xsl:param name="pPatterns" select="$abbreviations"/>
+		<xsl:if test="string-length($pText) >0">
+			<xsl:variable name="vPat" select="$abbreviations[starts-with($pText, m:abbr)][1]"/>        
+			<xsl:choose>
+				<xsl:when test="not($vPat)">
+					<xsl:copy-of select="substring($pText,1,1)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:variable name="expan" select="$vPat/m:expan/node()"/>
+					<a href="javascript:void(0);" class="abbr"><xsl:value-of select="$vPat/m:abbr"/><span class="expan">
+						<xsl:choose>
+							<!-- if the expansion is a nodeset, a <bibl> element for example, process it -->
+							<xsl:when test="$vPat/m:expan/*">
+								<xsl:apply-templates select="$vPat/m:expan"/>
+							</xsl:when>
+							<!-- otherwise just plain text; no further processing -->
+							<xsl:otherwise>
+								<xsl:value-of select="$vPat/m:expan"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</span></a>
+				</xsl:otherwise>
+			</xsl:choose>            
+			<xsl:call-template name="multiReplace">
+				<xsl:with-param name="pText" select="substring($pText, 1 + not($vPat) + string-length($vPat/m:abbr/node()))"/>
+			</xsl:call-template>
+		</xsl:if>
+	</xsl:template>
+
+	<!-- Abbreviations that must match the entire string -->
+	<xsl:template match="m:identifier/@label">
+		<xsl:variable name="str" select="."/>
 		<xsl:choose>
-			<xsl:when test="$abbr">
-				<xsl:variable name="expan"
-					select="$abbreviations_file/m:p/m:choice/m:expan[../m:abbr=$abbr]"/>
-				<xsl:variable name="pos1" select="string-length(substring-before($string,$abbr))"/>
-				<xsl:apply-templates select="exsl:node-set(substring(.,1,number($pos1)-1))"/>
-				<a href="javascript:void(0);" class="abbr"><xsl:value-of select="$abbr"/><span class="expan">
+			<xsl:when test="not($abbreviations[m:abbr=$str])">
+				<xsl:value-of select="$str"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:variable name="abbr" select="."/>
+				<xsl:variable name="expan" select="$abbreviations[m:abbr=$str]/m:expan"/>
+				  <a href="javascript:void(0);" class="abbr"><xsl:value-of select="$str"/><span class="expan">
 					<xsl:choose>
 						<!-- if the expansion is a nodeset, a <bibl> element for example, process it -->
 						<xsl:when test="$expan/*">
@@ -3435,22 +3456,13 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</span></a>
-				<xsl:variable name="pos2" select="number($pos1)+string-length($abbr)"/>
-				<!-- wrap the remainder in a dummy element to make it match this template for recursive processing -->
-				<xsl:variable name="str2">
-					<dummy><xsl:value-of select="substring(.,$pos2)"/></dummy>
-				</xsl:variable>
-				<xsl:apply-templates select="exsl:node-set($str2)"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<!-- <apply-templates/> would cause infinite loop -->
-				<xsl:apply-templates select="exsl:node-set(string(.))"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	<!-- End look up abbreviations -->
 	
-	<!-- formatted text -->
+
+
+	<!-- Formatted text -->
 	<xsl:template match="m:lb">
 		<br/>
 	</xsl:template>
