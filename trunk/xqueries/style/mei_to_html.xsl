@@ -1429,6 +1429,18 @@
 			</div>
 		</div>
 	</xsl:template>
+	
+	<xsl:template match="m:perfRes">
+		<xsl:if test="@count &gt; 1">
+			<xsl:apply-templates select="@count"/>
+		</xsl:if>
+		<xsl:text> </xsl:text>
+		<xsl:apply-templates/>
+		<xsl:if test="position()&lt;last()">
+			<xsl:text>, 
+   			</xsl:text>
+		</xsl:if>
+	</xsl:template>
 
 	<xsl:template match="m:castList" mode="castlist">
 		<xsl:param name="lang" select="'en'"/>
