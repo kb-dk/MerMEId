@@ -159,6 +159,22 @@ let $options:=
     };
 
 
+    declare function app:rename-document-reference($doc as node()) as node() 
+    {
+      let $doc-name := util:document-name($doc)
+      let $form-id  := concat("rename",$doc-name)
+      let $uri      := concat("/db/public/",$doc-name)
+      let $form := 
+      <form id="{$form-id}" action="./rename-file.xq" method="get" style="display:inline;">
+    	<input type="hidden" name="doc" value="{$doc-name}" />
+    	<input type="hidden" name="name" value=""/>
+    	<img src="/editor/images/rename.png" name="button" value="rename" title="Rename {$doc-name}" alt="Rename" 
+    	  onclick="filename_prompt('{$form-id}','{$doc-name}',{doc-available(concat("public/",$doc-name))}); return false;"/>
+      </form>
+      return  $form
+    };
+
+
 
     declare function app:delete-document-reference($doc as node()) as node() 
     {
