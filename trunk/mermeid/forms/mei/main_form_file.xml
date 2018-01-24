@@ -65,6 +65,7 @@
 									(if any) available on the bibliography tab when adding a reference.
 								</h:span></h:a></xf:label>
 							</xf:input>
+							&#160;
 							<dcm:element-buttons-typed triggers="add remove" 
 								nodeset="m:identifier[@type='file_collection']"
 								index="repeat-collection"
@@ -137,7 +138,7 @@
 										<xf:input ref="." class="maxlong">
 											<xf:label class="fixed_width"><xf:output value="if ($pos=1) then 'Address' else ''"/></xf:label>
 										</xf:input>&#160;
-										<xf:trigger appearance="minimal" class="non-standard_button">
+										<xf:trigger appearance="minimal" class="non-standard_button editmenu">
 											<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xf:insert context="parent::node()" 
@@ -172,7 +173,7 @@
 												<h:a class="help">&#160;?<h:span class="comment">A descriptive label for the link. 
 													Select from list or enter a custom text.</h:span></h:a></xf:label>
 										</xf:input>
-										<xf:trigger appearance="minimal" class="non-standard_button">
+										<xf:trigger appearance="minimal" class="non-standard_button editmenu">
 											<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/></xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xf:insert context="parent::node()" 
