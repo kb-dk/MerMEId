@@ -28,12 +28,12 @@
 				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history"/>
 		</xf:group>
 		
-		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:history">
+		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">
 			
 			<dcm:history-input id="history-input-work"/>
 
 			<!-- List work level performances -->
-			<dcm:performance-list ref=".[m:eventList[@type='performances']//text() or
+			<dcm:performance-list ref="m:history[m:eventList[@type='performances']//text() or
 				(count(../m:expressionList/m:expression)=1 and not(../m:expressionList/m:expression/m:history/m:eventList[@type='performances']//text()))]">
 				<!-- this list is supressed if work level performances are entered at expression level instead -->
 				<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
