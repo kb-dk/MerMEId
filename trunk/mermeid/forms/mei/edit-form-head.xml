@@ -35,13 +35,15 @@
     -->
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+      xxf:exclude-result-prefixes="#all"
       id="data-instance">
       <mei/>
     </xf:instance>
         
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
       id="empty-instance"
-      src="/editor/forms/mei/model/empty_doc.xml" 
+      src="/editor/forms/mei/model/empty_doc.xml"
+      xxf:exclude-result-prefixes="#all"
       xxf:readonly="true"/>
 
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 

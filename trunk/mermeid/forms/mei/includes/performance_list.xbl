@@ -28,13 +28,6 @@
     <xbl:implementation>
       <xf:model>
         
-        <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
-                     id="empty-instance"
-                     xxf:readonly="true">
-          
-          <xi:include href="../model/empty_doc.xml" />
-      	</xf:instance>
-        
         <xf:instance id="local-temp" xmlns="http://www.music-encoding.org/ns/mei">
           <expression>
             <history  >
@@ -83,11 +76,11 @@
               <dcm:create 
                   nodeset="m:eventList[@type='performances']"
                   label="Add performance"
-                  origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']"/>
+                  origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']"/>
               <dcm:create ref="m:eventList[@type='performances']" 
                           nodeset="m:event"
                           label="Add performance"
-                          origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+                          origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
               <xf:group ref="m:eventList[@type='performances']">
                 <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
                   <xf:repeat nodeset="m:event" id="repeat-work-performance">
@@ -126,7 +119,7 @@
                         </xf:group>
                       </h:td>
                       <h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add del-parent-with-last" nodeset="m:event" index="repeat-work-performance" 
-                      origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+                      origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
                         <dcm:id/>
                         <dcm:attribute-editor/>
                       </h:td>    

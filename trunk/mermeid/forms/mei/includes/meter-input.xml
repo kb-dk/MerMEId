@@ -7,7 +7,7 @@
 <dcm:create 
     nodeset="m:meter"
     label="Add metre"
-    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:meter"/>
+    origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:meter"/>
 <xf:group ref="m:meter">
     <h:span class="fixed_width">Metre <h:a class="help">&#160;?<h:span class="comment">Either metre symbol (cut or common time) or a fractional metre may be entered.
         To create a mixed metre you may need to add another metre.
@@ -48,7 +48,7 @@
         triggers="add remove" 
         nodeset="m:meter" 
         index="repeat-meter"
-        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:meter"/>
+        origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:meter"/>
     <dcm:attribute-editor/>
 </xf:repeat>
 
