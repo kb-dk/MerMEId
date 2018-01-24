@@ -104,14 +104,7 @@
             </relationList>
           </temp-values>
         </xf:instance>
-        
-        <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
-                     id="empty-instance"
-                     xxf:readonly="true">
-          <xi:include href="../model/empty_doc.xml" />
-	</xf:instance>
-        
-        
+                
         <xf:action ev:event="xforms-model-construct-done settings-changed">
           <!-- get settings from session variables -->
           <xf:setvalue ref="xxf:instance('parameters')/dcm:show_id" value="xxf:get-session-attribute('show_id')"/>
@@ -696,7 +689,7 @@
                                       <!-- insert an (almost) empty source element with a pointer to the external source -->
                                       <xf:insert context="$binding" 
                                                  nodeset="$nodeset[index('repeat-sources')]"
-                                                 origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[2]"/>
+                                                 origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[2]"/>
                                       <xf:var name="added_nodeset" as="node()?" 
                                                     select="$binding/m:source[(m:relationList/m:relation[@rel='isEmbodimentOf' and (@target=$expression or @target='')])
                                                             or $expression='all' or ($expression='global' and not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!='']))]
