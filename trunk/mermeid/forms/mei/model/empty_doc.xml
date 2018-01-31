@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-model href="../../../../Skema/MEI%203.0.0/mei-all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
-<mei meiversion="3.0.0" 
-  xmlns="http://www.music-encoding.org/ns/mei" 
- >
+<mei meiversion="3.0.0" xmlns="http://www.music-encoding.org/ns/mei">
   <!-- 
     This file serves as a template defining all possible elements and attributes editable in MerMEId. 
     Elements added using the editor interface are copied from this file.
@@ -112,7 +109,7 @@
                 <identifier/>
                 <provenance>
                   <eventList>
-                    <event   evidence="">
+                    <event evidence="">
                       <desc/>
                       <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
                       <geogName role=""/>
@@ -144,18 +141,18 @@
             </source> 
           </componentGrp>
           <relationList>
-            <relation rel="isEmbodimentOf" target=""   label=""/>
+            <relation rel="isEmbodimentOf" target="" label=""/>
           </relationList>
         </source>
         <source label="" target="">
           <relationList>
-            <relation rel="isEmbodimentOf" target=""   label=""/>
+            <relation rel="isEmbodimentOf" target="" label=""/>
           </relationList>
         </source>
         <source>
           <relationList>
-            <relation rel="isEmbodimentOf" target=""   label=""/>
-            <relation rel="hasPart" target=""   label=""/>
+            <relation rel="isEmbodimentOf" target="" label=""/>
+            <relation rel="hasPart" target="" label=""/>
           </relationList>
         </source>
         <source>
@@ -346,7 +343,7 @@
                   <desc/>
                   <biblList>
                     <head>Reviews</head>
-                    <bibl   label="">
+                    <bibl label="">
                       <genre>article</genre>
                       <genre>journal</genre>
                       <author/>
@@ -370,10 +367,10 @@
             </history>
             <perfMedium analog="marc:048" authority="marcmusperf">
               <castList>
-                <castItem   n="">
+                <castItem n="">
                   <perfRes count="" solo="" codedval="" n=""/> 
                   <role>
-                    <name  xml:lang="en"/>
+                    <name xml:lang="en"/>
                   </role>
                   <roleDesc xml:lang="en"/>
                 </castItem>
@@ -399,7 +396,7 @@
             
             <!-- top-level components -->            
             <componentGrp>
-              <expression   n=""> 
+              <expression n=""> 
                 <titleStmt>
                   <title xml:lang="en"/>
                   <respStmt>
@@ -447,7 +444,7 @@
     </workDesc>
     
     <revisionDesc>
-      <change   isodate="">
+      <change isodate="">
         <respStmt>
           <resp/>
         </respStmt>

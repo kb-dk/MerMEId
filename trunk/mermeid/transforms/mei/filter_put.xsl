@@ -4,19 +4,22 @@
   
   Axel Teich Geertinger & Sigfrid Lundberg
   Danish Centre for Music Editing
-  The Royal Library, Copenhagen
+  Royal Danish Library, Copenhagen
   
-  2010-2015
+  2010-2018
   
   HTML to MEI conversion by Johannes Kepper
 
 -->
 
 <xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns="http://www.music-encoding.org/ns/mei" xmlns:m="http://www.music-encoding.org/ns/mei"
-  xmlns:xl="http://www.w3.org/1999/xlink" xmlns:t="http://www.tei-c.org/ns/1.0"
-  xmlns:h="http://www.w3.org/1999/xhtml" xmlns:dcm="http://www.kb.dk/dcm"
-  xmlns:exsl="http://exslt.org/common" exclude-result-prefixes="xsl m t h dcm xl exsl" version="1.0">
+  xmlns="http://www.music-encoding.org/ns/mei" 
+  xmlns:m="http://www.music-encoding.org/ns/mei"
+  xmlns:xl="http://www.w3.org/1999/xlink" 
+  xmlns:h="http://www.w3.org/1999/xhtml" 
+  xmlns:dcm="http://www.kb.dk/dcm"
+  xmlns:exsl="http://exslt.org/common" 
+  exclude-result-prefixes="xsl m h dcm xl exsl" version="1.0">
 
   <xsl:param name="user" select="''"/>
   <xsl:param name="target" select="''"/>

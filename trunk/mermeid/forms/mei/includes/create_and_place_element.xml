@@ -16,7 +16,7 @@
     Use example:
     <xf:action if="not(m:persName)">
       <xf:var name="nodeset">m:persName</xf:var>
-      <xf:var name="origin" select="instance('empty-instance')//m:respStmt[1]/m:persName[1]"/>
+      <xf:var name="origin" select="xxf:instance('empty-instance')//m:respStmt[1]/m:persName[1]"/>
       <xi:include href="includes/create_and_place_element.xml"/>
     </xf:action>
     
@@ -35,11 +35,22 @@
             <xf:insert context="." origin="xxf:element(resolve-QName($nodeset,.))"/>    -->
         <xf:insert context="." origin="xxf:element($nodeset)"/>
     </xf:action>
+
+    <xf:var name="local-name" select="substring-after($nodeset,':')"/>
     
+    <!-- Add xml:id to the new element and its descendants -->
+    <xf:var name="new_id" select="concat($local-name,'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+    <xf:insert context="*[name()=$local-name][not(@xml:id)][1]" origin="xxf:attribute('xml:id',$new_id)"/>
+    <xf:insert xxf:iterate="*[@xml:id=$new_id]//*[not(@xml:id)]" context="."
+        origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
+    <!-- Check for duplicate IDs -->
+    <xf:action while="xxf:instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id]">
+        <xf:setvalue
+            ref="xxf:instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id]/@xml:id"
+            value="concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
+    </xf:action>
     
     <!-- now, move the new element into place according to the empty model if necessary-->
-    <xf:var name="local-name" select="local-name($origin)"/>
-    
     <xf:action if="*[local-name(.)=$local-name]/following-sibling::*[local-name()!=$local-name]">
         <!-- there are _differently_ named siblings after this one -->
         <xf:var name="following-name" select="local-name(*[local-name(.)=$local-name][1]/following-sibling::*[local-name()!=$local-name][1])"/>
@@ -95,21 +106,6 @@
     </xf:action>
     <!-- end moving -->
 
-    <!-- Add xml:id -->    
-    <!--<xf:insert xxf:iterate="descendant-or-self::*[not(@xml:id)]" 
-        context="."
-        origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>-->
-    <xf:insert xxf:iterate="..//*[not(@xml:id)]"
-        context="."
-        origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
-    <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
-    <xf:dispatch name="id-update" target="form-group"/>
-    <!-- Check for duplicate IDs -->
-    <xf:action while="xxf:instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id]">
-        <xf:setvalue
-            ref="xxf:instance('data-instance')//*[@xml:id = preceding-sibling::*/@xml:id]/@xml:id"
-            value="concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))"/>
-    </xf:action>
     <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
     
 </xf:action>

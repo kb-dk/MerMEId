@@ -2,18 +2,34 @@
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:xl="http://www.w3.org/1999/xlink">
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+    xmlns:oxf="http://www.orbeon.com/oxf/processors"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:m="http://www.music-encoding.org/ns/mei"
+    xmlns:dcm="http://www.kb.dk/dcm">
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+        xxf:exclude-result-prefixes="#all"
         id="data-instance">
         <mei/>
     </xf:instance>
 
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
         id="empty-instance" 
+        xxf:exclude-result-prefixes="#all"
         xxf:readonly="true">
         <xi:include href="./model/empty_doc.xml"/> 
     </xf:instance>
+
+<!-- same as:
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+        id="empty-instance"
+        src="/editor/forms/mei/model/empty_doc.xml" 
+        xxf:readonly="true"/>
+-->
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
         id="languages">
