@@ -29,7 +29,6 @@
   <xsl:key name="ids" match="*[@xml:id]" use="@xml:id"/>
 
   <xsl:strip-space elements="*"/>
-  <xsl:strip-space elements="node"/>
 
 
   <xsl:variable name="settings" select="document('/editor/forms/mei/mermeid_configuration.xml')"/>
@@ -117,7 +116,7 @@
 
   <!-- Remove empty attributes -->
   <xsl:template
-    match="@accid|@authority|@authURI|@codedval|@count|@enddate|@evidence|
+    match="@accid|@authority|@authURI|@cert|@codedval|@count|@enddate|@evidence|
     @isodate|@mode|@n|@notafter|@notbefore|@pname|@reg|@resp|
     @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang">
     <xsl:if test="normalize-space(.)">

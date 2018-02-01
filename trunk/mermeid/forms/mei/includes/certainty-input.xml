@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:span xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
+    class="fixed_width">
+    
+    <!-- snippet for editing the @cert attribute -->
+    
+    <!-- no authority-related attributes yet? -->
+    <xf:group ref=".[not(@cert)]">
+        <xf:trigger>
+            <xf:label><h:img style="vertical-align: middle;"
+                src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif"
+                alt="Add " title="Add"/>Certainty</xf:label>
+            <xf:action ev:event="DOMActivate">
+                    <xf:insert nodeset="@*" context="." origin="xxf:attribute('cert','')"/>
+            </xf:action>
+        </xf:trigger>
+    </xf:group>
+    
+    <xf:select1 ref="@cert">
+        <xf:item>
+            <xf:label/>
+            <xf:value/>
+        </xf:item>
+        <xf:item>
+            <xf:label>Low</xf:label>
+            <xf:value>low</xf:value>
+        </xf:item>
+        <xf:item>
+            <xf:label>Medium</xf:label>
+            <xf:value>medium</xf:value>
+        </xf:item>
+        <xf:item>
+            <xf:label>High</xf:label>
+            <xf:value>high</xf:value>
+        </xf:item>
+        <xf:item>
+            <xf:label>Unknown</xf:label>
+            <xf:value>unknown</xf:value>
+        </xf:item>
+    </xf:select1>
+    
+    
+</h:span>

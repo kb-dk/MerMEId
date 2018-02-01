@@ -2,6 +2,7 @@
 <h:div xmlns:h="http://www.w3.org/1999/xhtml" 
     xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xi="http://www.w3.org/2001/XInclude" 
     xmlns:dcm="http://www.kb.dk/dcm">
     
     <!-- Component for lists of persons including role and authority file reference -->
@@ -17,6 +18,9 @@
             <h:span class="fixed_width_mediumlong"> Relation <h:a class="help">&#160;?<h:span class="comment">Specifies the person's relation to the item, e.g. "Composer"
                 or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
             </h:span>
+            <h:span class="fixed_width">
+                Certainty <h:a class="help">&#160;?<h:span class="comment">Indicates he information's degree of certainty</h:span></h:a>
+            </h:span>
             <xf:group ref="..[m:persName[@authority or @authURI or @codedval]]">
                 <h:span class="fixed_width_long"> Authority file <h:a class="help">&#160;?<h:span class="comment">References to
                     authority files are used for disambiguation or for linking resources by means of unique identifiers</h:span></h:a>
@@ -26,6 +30,7 @@
     </xf:group>
     <xf:repeat nodeset="m:persName" id="relators-repeat">
         <dcm:relator/>
+        <xi:include href="certainty-input.xml" parse="xml"/>
         <dcm:authority/>
         <dcm:element-buttons 
             triggers="add remove up down" 

@@ -45,26 +45,28 @@
           <xf:var name="nodename" value="if (xxf:instance('authority-instance')/*[name()=name($binding)]) then name($binding) else 'persName'"/>
 
           <!-- no authority-related attributes yet? -->
-          <xf:group ref="$binding[not(@authority and @authURI and @codedval)]">
-            <xf:trigger appearance="minimal">
-              <xf:label><h:img style="vertical-align: middle;"
-                  src="{xxf:instance('parameters')/dcm:server_name}/editor/images/authority.png"
-                  alt="Add authority file reference" title="Add authority file reference"/></xf:label>
-              <xf:action ev:event="DOMActivate">
-                <xf:action if="not(@authority)">
-                  <xf:insert nodeset="@*" context="." origin="xxf:attribute('authority','')"/>
+            <xf:group ref="$binding[not(@authority and @authURI and @codedval)]">
+              <h:span class="fixed_width">
+                <xf:trigger appearance="minimal">
+                <xf:label><h:img style="vertical-align: middle;"
+                    src="{xxf:instance('parameters')/dcm:server_name}/editor/images/authority.png"
+                    alt="Add authority file reference" title="Add authority file reference"/></xf:label>
+                <xf:action ev:event="DOMActivate">
+                  <xf:action if="not(@authority)">
+                    <xf:insert nodeset="@*" context="." origin="xxf:attribute('authority','')"/>
+                  </xf:action>
+                  <xf:action if="not(@authURI)">
+                    <xf:insert nodeset="@*" context="." origin="xxf:attribute('authURI','')"/>
+                  </xf:action>
+                  <xf:action if="not(@codedval)">
+                    <xf:insert nodeset="@*" context="." origin="xxf:attribute('codedval','')"/>
+                  </xf:action>
+                  <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
+                  <xf:dispatch name="id-update" target="form-group"/>
                 </xf:action>
-                <xf:action if="not(@authURI)">
-                  <xf:insert nodeset="@*" context="." origin="xxf:attribute('authURI','')"/>
-                </xf:action>
-                <xf:action if="not(@codedval)">
-                  <xf:insert nodeset="@*" context="." origin="xxf:attribute('codedval','')"/>
-                </xf:action>
-                <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
-                <xf:dispatch name="id-update" target="form-group"/>
-              </xf:action>
-            </xf:trigger>
-          </xf:group>
+              </xf:trigger>
+              </h:span>
+            </xf:group>
           
           <!-- select authority -->
           <xf:select1 ref="$binding/@authority">
