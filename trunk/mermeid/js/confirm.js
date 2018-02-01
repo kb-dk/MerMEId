@@ -13,8 +13,7 @@ function filename_prompt(formid, text, published)
     if (published) {
         alert("Only unpublished documents can be renamed.\nPlease unpublish the document before renaming it.");
     } else {
-        var name = prompt("IMPORTANT:\nPlease note that any existing references \nto this document will be broken.\n\n" +
-        "Rename '" + text +"' to " );
+        var name = prompt("Rename '" + text +"' to " );
         if (name!=null && name!="") {
         	var form = document.getElementById(formid);
         	form.name.value = name;
