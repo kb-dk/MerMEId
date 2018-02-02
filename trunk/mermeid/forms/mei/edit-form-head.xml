@@ -324,9 +324,6 @@
     
     <xf:action ev:event="xforms-submit-error"  ev:propagate="stop">
       <xf:var name="code" select="event('response-status-code')"/>
-      <!-- This is an odd way of doing it. xforms-submit-error events should
-           not include submissions resulting in 200 OK, and there isn't any
-           200 not OK -->
       <xf:action if="$code!=404 and $code!=200">
         <xf:message>An error occurred (<xf:output value="$code"/>)
           <!--h:br/>File:<xf:output value="instance('temp')/target_uri"/--></xf:message>

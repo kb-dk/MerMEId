@@ -69,7 +69,11 @@
                 
                 <h:div class="details_form_header">
                     
-                    <xi:include href="includes/save-buttons.xml" parse="xml"/>                                    
+                    <xi:include href="includes/exit-warning-dialog.xml" parse="xml"/> 
+                    
+                    <xi:include href="includes/close-details-button.xml" parse="xml"/>
+                    
+                    <xi:include href="includes/topmenu.xml" parse="xml"/>  
                     
                     <xf:group ref="instance('data-instance')//m:event[@xml:id=instance('temp')/id]">
                         <h:h3>
@@ -416,36 +420,6 @@
                         </xf:group>
                     </xxf:dialog>
                     <!-- end menu -->
-                    
-                    
-                    
-                    <xxf:dialog id="exit-warning-dialog" appearance="full">
-                        <!-- The requested URI must be stored in instance('temp')/target_uri prior to opening the dialog -->
-                        <xf:label>Warning</xf:label>
-                        <h:p>You have unsaved changes. 
-                            Do you want to save before proceeding?
-                        </h:p>
-                        <h:p>Changes will be lost if you answer "Discard". <h:br/>
-                            To keep changes, choose "Save".
-                        </h:p>    
-                        <xf:trigger appearance="save_proceed_button">
-                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/save_small.png" alt="Save" title="Save file and proceed"/> Save</xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:dispatch name="language-update" target="form-group"/>
-                                <xf:send submission="save-to-file"/>
-                                <xf:load resource="{instance('temp')/target_uri}" show="replace"/>
-                                <xxf:hide dialog="exit-warning-dialog"/>
-                            </xf:action>
-                        </xf:trigger>
-                        <xf:trigger>
-                            <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/discard.png" alt="Discard" title="Discard changes and proceed"/> Discard</xf:label>
-                            <xf:action ev:event="DOMActivate">
-                                <xf:load resource="{instance('temp')/target_uri}" show="replace"/>
-                                <xxf:hide dialog="exit-warning-dialog"/>
-                            </xf:action>
-                        </xf:trigger>
-                    </xxf:dialog>
-                    
                     
                 </h:fieldset>
                 
