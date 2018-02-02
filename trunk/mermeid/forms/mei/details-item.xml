@@ -66,8 +66,12 @@
                 
                 <h:div class="details_form_header">  
                     
-                    <xi:include href="includes/save-buttons.xml" parse="xml"/>                                    
+                    <xi:include href="includes/exit-warning-dialog.xml" parse="xml"/> 
                     
+                    <xi:include href="includes/close-details-button.xml" parse="xml"/>
+                    
+                    <xi:include href="includes/topmenu.xml" parse="xml"/>  
+                                        
                     <xf:group ref="instance('data-instance')//m:item[@xml:id=instance('temp')/id]">
                         <h:h3 style="display:inline;">
                             <xf:output value="@label"/>
