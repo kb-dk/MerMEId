@@ -1,0 +1,237 @@
+<h:p id="view_menu" xmlns:h="http://www.w3.org/1999/xhtml" 
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+  xmlns:xf="http://www.w3.org/2002/xforms" 
+  xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+  xmlns:oxf="http://www.orbeon.com/oxf/processors"
+  xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+  xmlns:ev="http://www.w3.org/2001/xml-events" 
+  xmlns:xl="http://www.w3.org/1999/xlink"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:m="http://www.music-encoding.org/ns/mei"
+  xmlns:dcm="http://www.kb.dk/dcm"
+  xml:base="http://localhost/editor/forms/mei/">
+  
+     
+    <xf:trigger appearance="minimal" id="save-button">
+      <xf:label><h:img id="save-button-image" 
+      src="{instance('parameters')/dcm:server_name}editor/images/save.gif" alt="Save" title="Save file"/></xf:label>
+      <xf:action ev:event="DOMActivate save">
+        <!-- setting the timestamp to now() on saving seems to dispatch an xforms-value-changed event _after_ submitting the form. Disabled for now...  -->
+        <!--<xf:action if="instance('parameters')/dcm:automatic_log_main_switch='true'">
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate" value="now()"/>
+        </xf:action>-->
+        <xf:dispatch name="language-update" target="form-group"/>
+        <xf:send submission="save-to-file"/>
+        <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
+      </xf:action>
+    </xf:trigger><h:a 
+      href="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}present.xq?doc={instance('parameters')/dcm:xml_file}"
+      class="xforms-trigger" 
+      target="view_{instance('parameters')/dcm:xml_file}"><h:img 
+        src="{instance('parameters')/dcm:server_name}/editor/images/html.gif" alt="HTML" title="View as HTML" border="0"/></h:a><h:a 
+      href="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:document_root}{instance('parameters')/dcm:xml_file}"
+      class="xforms-trigger" 
+      target="xml_{instance('parameters')/dcm:xml_file}"><h:img 
+        src="{instance('parameters')/dcm:server_name}/editor/images/xml.gif" alt="XML" title="View XML data" border="0"/></h:a><xf:trigger appearance="minimal">
+          <xf:label><h:img  id="home-button-image" 
+        src="{instance('parameters')/dcm:server_name}/editor/images/home.gif" alt="File list" 
+        title="Close editor and return to file list" border="0"/></xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xf:action if="instance('temp')/changed='true'">
+          <xf:var name="uri" select="concat(instance('parameters')/dcm:server_name,instance('parameters')/dcm:exist_dir,'list_files.xq')"/>
+          <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+          <xxf:show dialog="exit-warning-dialog"/>
+        </xf:action>	
+        <xf:action if="instance('temp')/changed='false'">
+          <xf:load resource="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}list_files.xq" show="replace"/>
+        </xf:action>
+      </xf:action>
+    </xf:trigger><xf:trigger appearance="minimal">
+      <xf:label><h:img  id="settings-button-image" 
+        src="{instance('parameters')/dcm:server_name}/editor/images/settings.png" alt="Settings" 
+        title="Change settings" border="0"/></xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xxf:show dialog="settings-dialog"/>
+      </xf:action>
+    </xf:trigger><xf:trigger appearance="minimal">
+      <xf:label><h:img  id="help-button-image" 
+        src="{instance('parameters')/dcm:server_name}/editor/images/help.png" alt="Help" 
+        title="Help" border="0"/></xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xf:load resource="{instance('parameters')/dcm:server_name}/editor/manual/index.html" show="new"/>
+      </xf:action>
+    </xf:trigger>
+    
+    <span id="view_menu_right_border"> </span>
+    
+  
+  <!-- Dialog for editing session settings and opening standard (template) data editors -->
+  <xxf:dialog id="settings-dialog" appearance="full" level="modal">
+    <xf:label>MerMEId settings</xf:label>
+
+    <xf:switch>
+      <xf:case id="bibl_menu_hidden">
+        <xf:trigger appearance="minimal">
+          <xf:label><h:img src="{instance('parameters')/dcm:server_name}editor/images/expand.png"
+              title="Open"/> Edit standard bibliographic references <h:a class="help">&#160;?<h:span
+                class="comment" style="top:-25px; left:-210px;">For each file collection (series), a
+                list of frequently used bibliographic references may be available when adding a new
+                reference at the "Bibliography" tab. The lists may be edited using this menu
+                option.</h:span></h:a>
+          </xf:label>
+          <xf:action ev:event="DOMActivate">
+            <xf:toggle case="bibl_menu_visible"/>
+            <xf:insert context="."
+              origin="xxf:set-session-attribute('return_url',instance('parameters')/dcm:this_page)"/>
+            <!--<xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-references.xml"></xf:load>-->
+            <!--<xf:send submission="load-fileList"/>-->
+          </xf:action>
+        </xf:trigger>
+      </xf:case>
+
+      <xf:case id="bibl_menu_visible">
+        <xf:trigger appearance="minimal">
+          <xf:label><h:img src="{instance('parameters')/dcm:server_name}editor/images/collapse.png"
+            title="Open"/> Edit lists of frequently used bibliographic references <h:a class="help">&#160;?<h:span
+                class="comment" style="top:-25px; left:-210px;">For each file collection (series), a
+                list of frequently used bibliographic references may be available when adding a new
+                reference at the "Bibliography" tab. The lists may be edited using this menu
+                option.</h:span></h:a>
+          </xf:label>
+          <xf:action ev:event="DOMActivate">
+            <xf:toggle case="bibl_menu_hidden"/>
+          </xf:action>
+        </xf:trigger>
+        <h:div>
+          <h:div>
+            &#160;&#160;
+            <xf:trigger appearance="minimal">
+              <xf:label><h:img
+                  src="{instance('parameters')/dcm:server_name}editor/images/expand.png"
+                  title="Edit"/> General (available in all collections)</xf:label>
+              <xf:action ev:event="DOMActivate">
+                <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-references.xml"/>
+              </xf:action>
+            </xf:trigger>
+          </h:div>
+          <xf:repeat nodeset="instance('bibliography-instance')/m:biblList[m:head!='']">
+            <h:div>
+              &#160;&#160;
+              <xf:trigger appearance="minimal">
+                <xf:label><h:img
+                  src="{instance('parameters')/dcm:server_name}editor/images/expand.png"
+                  title="Edit"/> <xf:output value="m:head"/>
+                </xf:label>
+                <xf:action ev:event="DOMActivate">
+                  <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-references.xml&amp;id={m:head}"/>
+                </xf:action>
+              </xf:trigger>
+            </h:div>
+          </xf:repeat>
+
+          <h:div>
+            &#160;&#160;
+            <xf:trigger ref=".[not(instance('XMLfiles')/*)]">
+              <xf:label>Search for more collections</xf:label>
+              <xf:action ev:event="DOMActivate">
+                <xf:setvalue ref="instance('temp')/target_uri"
+                  value="concat(instance('parameters')/dcm:server_name,
+                  'filter/filtered_scripts/cross-link.xq?get=works')"/>
+                <xf:send submission="load-fileList"/>
+              </xf:action>
+            </xf:trigger>
+            <xf:group
+              ref=".[instance('XMLfiles')/* and 
+        not(instance('XMLfiles')/dcm:collections/dcm:collection[count(.[.=instance('bibliography-instance')/m:biblList/m:head])=0])]">
+              <h:div>No (other) file collections found.</h:div>
+            </xf:group>
+            <xf:group
+              ref=".[instance('XMLfiles')/dcm:collections/dcm:collection[count(.[.=instance('bibliography-instance')/m:biblList/m:head])=0]]">
+              <xf:repeat
+                nodeset="instance('XMLfiles')/dcm:collections/dcm:collection[count(.[.=instance('bibliography-instance')/m:biblList/m:head])=0]">
+                <h:div>
+                  &#160;&#160;
+                  <xf:trigger appearance="minimal">
+                    <xf:label><h:img
+                      src="{instance('parameters')/dcm:server_name}editor/images/expand.png"
+                      title="Edit"/> <xf:output value="."/>
+                    </xf:label>
+                    <xf:action ev:event="DOMActivate">
+                      <xf:load resource="{instance('parameters')/dcm:orbeon_dir}/?uri={instance('parameters')/dcm:form_home}model-references.xml&amp;id={.}"/>
+                    </xf:action>
+                  </xf:trigger>
+                </h:div>
+              </xf:repeat>
+            </xf:group>
+          </h:div>
+        </h:div>
+
+      </xf:case>
+    </xf:switch>
+
+    <h:div>&#160;</h:div>
+
+    <xf:group ref=".[contains(instance('parameters')/dcm:id_main_switch,'true')]">
+      <xf:select appearance="full" ref="instance('parameters')/dcm:show_id">
+        <xf:action ev:event="xforms-value-changed">
+          <xf:insert context="."
+            origin="xxf:set-session-attribute('show_id',instance('parameters')/dcm:show_id)"/>
+          <xf:dispatch name="settings-changed" targetid="form-group"/>
+        </xf:action>
+        <xf:item>
+          <xf:label>Show xml:id values </xf:label>
+          <xf:value>true</xf:value>
+        </xf:item>
+      </xf:select>
+      <h:a class="help">&#160;?<h:span class="comment" style="top:-25px;left:-100px;">Displays an ID
+          icon next to selected elements. The element's xml:id attribute value is displayed when
+          moving the cursor over the icon. </h:span></h:a>
+    </xf:group>
+    <h:div class="vertical_spacer"/>
+
+    <!-- attribute editor -->
+    <xf:group ref=".[contains(instance('parameters')/dcm:attr_editor_main_switch,'true')]">
+      <xf:select appearance="full" ref="instance('parameters')/dcm:attr_editor">
+        <xf:action ev:event="xforms-value-changed">
+          <xf:insert context="."
+            origin="xxf:set-session-attribute('attr_editor',instance('parameters')/dcm:attr_editor)"/>
+          <xf:dispatch name="settings-changed" target="form-group"/>
+        </xf:action>
+        <xf:item>
+          <xf:label>Enable attribute editor </xf:label>
+          <xf:value>true</xf:value>
+        </xf:item>
+      </xf:select>
+      <h:a class="help">&#160;?<h:span class="comment" style="top:-75px;left:-120px;">The attribute
+          editor enables changing or adding all possible attributes according to the XML schema.
+          Caution: Changing attributes may compromise the validity of your data and affect the way MerMEId
+          handles them. </h:span></h:a>
+    </xf:group>
+
+    <!-- code inspector -->
+    <xf:group ref=".[contains(instance('parameters')/dcm:code_inspector_main_switch,'true')]">
+      <h:div class="vertical_spacer"/>
+      <xf:select appearance="full" ref="instance('parameters')/dcm:code_inspector">
+        <xf:action ev:event="xforms-value-changed">
+          <xf:insert context="."
+            origin="xxf:set-session-attribute('code_inspector',instance('parameters')/dcm:code_inspector)"/>
+          <xf:dispatch name="settings-changed" target="form-group"/>
+        </xf:action>
+        <xf:item>
+          <xf:label>Enable code inspector </xf:label>
+          <xf:value>true</xf:value>
+        </xf:item>
+      </xf:select>
+      <h:a class="help">&#160;?<h:span class="comment" style="top:-100px;left:-100px;">The code
+          inspector allows you to inspect your XML data as you edit.<h:br/> The code inspector will
+          be displayed at the bottom of the page. </h:span></h:a>
+    </xf:group>
+    <!-- end code inspector -->
+
+
+  </xxf:dialog>
+  
+  
+</h:p>
+

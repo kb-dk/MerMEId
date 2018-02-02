@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:span xmlns:xf="http://www.w3.org/2002/xforms" 
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
+    style="float:right">
+<!-- close button for detail editor pages -->
+    <xf:trigger>
+        <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/close.gif" alt="Save"/> Close</xf:label>
+        <xf:action ev:event="DOMActivate">
+            <xf:action if="instance('temp')/changed='true'">
+                <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
+                <xxf:show dialog="exit-warning-dialog"/>
+            </xf:action>
+            <xf:action if="not(instance('temp')/changed='true')">
+                <xf:load resource="{$uri}" show="replace"/>
+            </xf:action>
+        </xf:action>
+    </xf:trigger>
+</h:span>
