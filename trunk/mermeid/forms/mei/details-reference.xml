@@ -65,8 +65,12 @@
 
                 <h:div class="details_form_header">
                     
-                    <xi:include href="includes/save-buttons.xml" parse="xml"/>                                    
+                    <xi:include href="includes/exit-warning-dialog.xml" parse="xml"/> 
                     
+                    <xi:include href="includes/close-details-button.xml" parse="xml"/>
+                    
+                    <xi:include href="includes/topmenu.xml" parse="xml"/>  
+                                        
                     <xf:group id="editing_status" ref="instance('data-instance')//m:bibl[@xml:id=instance('temp')/id]">
                         <h:h3>
                             <xf:repeat nodeset="m:author"><xf:output 
