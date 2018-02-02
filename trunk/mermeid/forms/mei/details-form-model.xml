@@ -247,14 +247,13 @@
     
     <xf:submission id="save-to-file"
         ref="instance('data-instance')"
-        validate="true"
+        validate="false"
         relevant="false"
         xxf:calculate="false"
         resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
         method="put"
         replace="instance"
-        xxf:show-progress="true"/>
-    
+        xxf:show-progress="true"/>    
     
     <!-- "onload" xforms actions -->
     <xf:action ev:event="xforms-model-construct-done">
@@ -294,7 +293,7 @@
         <!-- to do: combine movement numbers, titles, or tempos to identify components -->
         <xf:setvalue ref="instance('temp')/path" 
             value="string-join(instance('data-instance')//m:expression[descendant-or-self::m:expression/@xml:id=instance('temp')/id]//m:title,'/')"/>
-        
+        <xf:setvalue ref="instance('temp')/changed" value="'false'"/>
     </xf:action>
     
     <xf:action ev:event="xforms-submit-done">
