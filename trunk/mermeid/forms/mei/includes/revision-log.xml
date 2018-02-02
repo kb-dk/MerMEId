@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- automatically add change entry in revisionDesc -->
 <xf:action xmlns:xf="http://www.w3.org/2002/xforms" 
-    if="contains(instance('parameters')/dcm:automatic_log_main_switch,'true')">
-    <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc)=0">
+    if="contains(xxf:instance('parameters')/dcm:automatic_log_main_switch,'true')">
+    <xf:action if="count(xxf:instance('data-instance')/m:meiHead/m:revisionDesc)=0">
         <xf:insert context="instance('data-instance')/m:meiHead" 
             nodeset="*"
-            origin="instance('empty-instance')/m:meiHead/m:revisionDesc"/>
+            origin="xxf:instance('empty-instance')/m:meiHead/m:revisionDesc"/>
     </xf:action>
-    <xf:action if="count(instance('data-instance')/m:meiHead/m:revisionDesc/m:change)=0">
-        <xf:insert context="instance('data-instance')/m:meiHead/m:revisionDesc" 
+    <xf:action if="count(xxf:instance('data-instance')/m:meiHead/m:revisionDesc/m:change)=0">
+        <xf:insert context="xxf:instance('data-instance')/m:meiHead/m:revisionDesc" 
             nodeset="m:change" 
-            origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
+            origin="xxf:instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
     </xf:action>
-    <xf:var name="last_revision" select="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]"/>
+    <xf:var name="last_revision" select="xxf:instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]"/>
     <!-- @isodate may contain just the date (older entries) or date and time; compare the date part only -->
     <xf:var name="last_revision_date" select="concat($last_revision/@isodate[not(contains(.,'T'))],substring-before($last_revision/@isodate,'T'))"/>
     <xf:var name="now" select="now()"/>
     <xf:var name="today" select="substring-before($now, 'T')"/>
     
-    <!--<xf:message><xf:output value="concat('last: ',$last_revision_date,'; today: ',$today)"/></xf:message>-->
+    <!-- debug: <xf:message><xf:output value="concat('last: ',$last_revision_date,'; today: ',$today)"/></xf:message>-->
     
     <xf:action if="$last_revision_date!=$today or ($last_revision_date=$today and ($last_revision/m:changeDesc/m:p/text() or $last_revision/m:respStmt/m:resp/text()!=''))">
         <xf:action if="$last_revision_date!=''">
-            <xf:insert nodeset="instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
-                position="after" origin="instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
-            <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
+            <xf:insert nodeset="xxf:instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
+                position="after" origin="xxf:instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>
+            <xf:setvalue ref="xxf:instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
                 value="$now"/>
         </xf:action>
         <xf:action if="$last_revision_date=''">
-            <xf:setvalue ref="instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
+            <xf:setvalue ref="xxf:instance('data-instance')/m:meiHead/m:revisionDesc/m:change[last()]/@isodate"
                 value="$now"/>
         </xf:action>
     </xf:action>

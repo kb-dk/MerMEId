@@ -105,7 +105,7 @@
                             triggers="remove up down" 
                             nodeset="m:score" 
                             index="repeat-score"
-                            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work//m:score[1]"/>
+                            origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work//m:score[1]"/>
                         <dcm:id/>
                         <dcm:attribute-editor/>
                         <xf:group ref=".[not(*)]"> 
@@ -192,7 +192,7 @@
             class="comment">Simple one-line incipit encoding, using <em>Plaine &amp; Easie Code</em> or similar</h:span></h:a></h:div>
         <dcm:create nodeset="m:incipCode"
             label="Add music incipit code"
-            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
+            origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
         <xf:group ref=".[m:incipCode]">
             <xf:repeat nodeset="m:incipCode" id="incipcode-repeat">
                 <h:div>
@@ -217,7 +217,7 @@
                         triggers="add remove" 
                         nodeset="m:incipCode" 
                         index="incipcode-repeat"
-                        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
+                        origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipCode"/>
                     <dcm:id/>
                     <dcm:attribute-editor/>
                 </h:div>
@@ -230,7 +230,7 @@
         <h:div class="blocklabel">Graphics file(s)</h:div>
         <dcm:create nodeset="m:graphic" 
             label="Add link to graphics"
-            origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>                        
+            origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>                        
         <xf:group ref=".[m:incip/m:graphic]">
             <h:span class="blocklabel">Music incipit graphics (image files)</h:span>
             <h:span class="blocklabel">URI <h:a class="help">&#160;?<h:span class="comment">Location of a graphics file, e.g.
@@ -259,7 +259,7 @@
                     triggers="add remove" 
                     nodeset="m:graphic" 
                     index="incipit-repeat"
-                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:graphic[1]"/>
                 <dcm:attribute-editor/>
             </h:div>
         </xf:repeat>
@@ -272,11 +272,11 @@
         <h:div>
             <dcm:create nodeset="m:incipText"
                 label="Add text incipit"
-                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>                        
+                origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText"/>                        
             <dcm:create ref="m:incipText"
                 nodeset="m:p"
                 label="Add text incipit"
-                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
+                origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
         </h:div>
         <xf:group ref=".[m:incipText/m:p]">
             <xf:repeat nodeset="m:incipText/m:p" id="text-incipit-repeat" class="input_group">
@@ -292,7 +292,7 @@
                     triggers="add remove" 
                     nodeset="m:p" 
                     index="text-incipit-repeat"
-                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip/m:incipText/m:p"/>
                 <dcm:attribute-editor/>
                 <h:br/>
             </xf:repeat>
