@@ -9,7 +9,7 @@
     
     <!-- global event handlers -->
     
-    <xf:action ev:event="xforms-value-changed">
+    <xf:action ev:event="xxforms-value-changed" ev:observer="data-instance">
         <xf:setvalue ref="instance('temp')/changed" value="'true'"/>
         <xf:dispatch name="language-update" target="form-group"/>
     </xf:action>
