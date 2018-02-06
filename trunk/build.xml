@@ -1,6 +1,8 @@
 <project name="mermeid" basedir="." default="all">
 
+
   <property name="webapp.instance" value="distro"/>
+  <property name="xconfig" value="system/config/db/dcm/"/>
 
   <target name="clean">
     <subant failonerror="false">
@@ -22,6 +24,18 @@
       <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
       <target name="war"/>
     </subant>
+  </target>
+
+  <target name="upload">
+    <input message="Enter password:" addproperty="server.pass" defaultvalue="">
+      <handler type="secure"/>
+    </input>
+    <exec executable="./xqueries/load_exist.pl">
+      <arg line="--suffix xconf --load ${xconfig_source} --target ${xconfig} --host-port ${hostport} --user admin --password ${server.pass}"/>
+    </exec>
+    <exec executable="./xqueries/load_exist.pl">
+      <arg line="--suffix xml,xq,xqm,xsl,css --load ${service} --target text-retriever --host-port ${hostport} --user admin --password ${server.pass}"/>
+    </exec>
   </target>
 
   <target name="dist" depends="war,clean">
