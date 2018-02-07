@@ -386,17 +386,8 @@
                     <dcm:attribute-editor ref="."/>                                                    
                     </h:span>
                     <xf:repeat nodeset="m:hand" id="repeat-source-physdesc-handlist" class="nowrap">
-                      <h:div>
                         <xi:include href="hand-input.xml" parse="xml"/>
-                        <dcm:element-buttons  
-                            triggers="add up down del-parent-with-last" 
-                            nodeset="m:hand" 
-                            index="repeat-source-physdesc-handlist"
-                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
-                        <dcm:attribute-editor ref="."/>                                                    
-                      </h:div>
                     </xf:repeat>
-                    <h:hr/>
                   </xf:group>
                 </h:div>
                 
