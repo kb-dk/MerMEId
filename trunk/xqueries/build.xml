@@ -1,34 +1,34 @@
 <project name="mermeid" basedir="." default="all">
 
-  <property name="xconfig" value="system/config/db/dcm/"/>
-  <property name="service" value="."/>
+  <property name="xconfig"           value="system/config/db/dcm/"/>
+  <property name="xservice"          value=""/>
+  <property name="service"           value="."/>
 
-  <property name="webapp.instance" value="distro"/>
-  <property name="webapp.config_dir"
-	    value="../local_config/" />
-  <property name="webapp.login"   
-	    value="login.xqm" />
-  <property name="hostport" value="localhost:8080"/>
+  <property name="webapp.instance"   value="distro"/>
+  <property name="webapp.config_dir" value="../local_config/" />
+  <property name="webapp.login"      value="login.xqm" />
+  <property name="hostport"          value="localhost:8080"/>
+  <property name="context"           value="  --context /exist/rest/db/ "/>
 
   <target name="clean">
     <delete file="${webapp.login}" />
   </target>
 
-  <target name="copy_login" depends="clean">
+  <target name="build" depends="clean">
     <copy file="${webapp.config_dir}${webapp.login}_${webapp.instance}"
        tofile="${webapp.login}"/>    
   </target>
 
-  <target name="upload" depends="copy_login">
+  <target name="upload" depends="build">
     <input message="Enter password:" addproperty="server.pass" defaultvalue="">
       <handler type="secure"/>
     </input>
 
     <exec executable="./load_exist.pl">
-      <arg line="--suffix xconf --load ${service} --target ${xconfig} --host-port ${hostport} --user admin --password ${server.pass}"/>
+      <arg line="--suffix xconf --load ${service} ${context} --target ${xconfig} --host-port ${hostport} --user admin --password ${server.pass}"/>
     </exec>
     <exec executable="./load_exist.pl">
-      <arg line="--suffix xml,xq,xqm,xsl,css --load ${service} --host-port ${hostport} --user admin --password ${server.pass}"/>
+      <arg line="--suffix xml,xq,xqm,xsl,css --load ${service} ${context} --host-port ${hostport} --user admin --password ${server.pass}"/>
     </exec>
 
   </target>
