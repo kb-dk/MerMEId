@@ -1,84 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<h:span xmlns:h="http://www.w3.org/1999/xhtml" 
+<h:div xmlns:h="http://www.w3.org/1999/xhtml" 
     xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
+    xmlns:xi="http://www.w3.org/2001/XInclude" 
     xmlns:ev="http://www.w3.org/2001/xml-events" 
     xmlns:dcm="http://www.kb.dk/dcm">
-    <xf:input ref=".">
-        <xf:label>Name <h:a class="help">&#160;?<h:span class="comment">The scribe's name, e.g. "Carl Nielsen"; 
-            leave empty if scribe is unidentified</h:span></h:a></xf:label>
-    </xf:input>
-    <!-- input/select emulating selection="open" behaviour -->
-    <h:span class="selection_open_short">
-        <xf:input ref="@medium">
-            <xf:label>Medium <h:a class="help">&#160;?<h:span class="comment">The medium used for writing. 
-                Select from list or enter a custom text.</h:span></h:a></xf:label>
-        </xf:input>
-        <!-- set tabindex to 1000 to skip the select on tabbing -->
-        <!--<xf:select1 ref="@medium" tabindex="1000">
-            <xf:item>
-                <xf:label></xf:label>
-                <xf:value/>
-            </xf:item>
-            <xf:itemset nodeset="xxf:instance('writing-medium-instance')/item">
-                <xf:label>
-                    <xf:output value="label"/>
-                </xf:label>
-                <xf:value ref="value"/>
-            </xf:itemset>
-            </xf:select1>-->
-        
-        <xf:trigger>
-            <xf:label><h:img
-                src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png"
-                alt="Select"/> Select from list</xf:label>
-            <xxf:show dialog="medium_menu" ev:event="DOMActivate"/>
-        </xf:trigger>
-        
-        
-    </h:span>
-    <!-- end selection="open" -->
     
-    
-    
-    <!-- pre-defined values menu -->
-    <xxf:dialog id="medium_menu" appearance="full" level="modeless" close="true" draggable="true" visible="false">
-        <xf:label>Medium</xf:label>
-        <h:p>Select writing medium</h:p>
-        <xf:var name="medium" select="."/>
-        <h:div style="height:100%">
-            <xf:repeat nodeset="xxf:instance('writing-medium-instance')/value" id="medium-repeat">
-                <h:div>
-                    <xf:trigger submission="replace-form-with" appearance="minimal">
-                        <xf:label>
-                            <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/>
-                            <xf:output ref="."/>
-                        </xf:label>
-                        <xf:action ev:event="DOMActivate">
-                            <xf:action>
-                                <xf:setvalue ref="$medium/@medium" value="xxf:instance('writing-medium-instance')/value[index('medium-repeat')]" />
-                                <xxf:hide dialog="medium_menu"/>
-                            </xf:action>
-                        </xf:action>
+    <h:table>
+
+        <h:tr>
+            <h:td>
+                <xf:label for="hand_desc">Hand: <h:a class="help">&#160;?<h:span class="comment">Identification of the scribe or handwriting style 
+                    such as 'NN' or 'Hand A'. An identified scribe's name should be given below, not in this field.</h:span></h:a></xf:label>
+            </h:td>
+            <h:td><xf:input ref="m:p[@n='MerMEId_temporary_wrapper']" id="hand_desc"/>&#160;
+                
+                <!-- input/select emulating selection="open" behaviour -->
+                <h:span class="selection_open_short">
+                    <xf:input ref="@medium">
+                        <xf:label>Medium <h:a class="help">&#160;?<h:span class="comment">The medium used for writing. 
+                            Select from list or enter a custom text.</h:span></h:a></xf:label>
+                    </xf:input>
+                    <!-- set tabindex to 1000 to skip the select on tabbing -->
+                    <!--<xf:select1 ref="@medium" tabindex="1000">
+                        <xf:item>
+                            <xf:label></xf:label>
+                            <xf:value/>
+                        </xf:item>
+                        <xf:itemset nodeset="xxf:instance('writing-medium-instance')/item">
+                            <xf:label>
+                                <xf:output value="label"/>
+                            </xf:label>
+                            <xf:value ref="value"/>
+                        </xf:itemset>
+                        </xf:select1>-->
+                    
+                    <xf:trigger>
+                        <xf:label><h:img
+                            src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png"
+                            alt="Select"/> Select from list</xf:label>
+                        <xxf:show dialog="medium_menu" ev:event="DOMActivate"/>
                     </xf:trigger>
-                </h:div>
-            </xf:repeat>
-        </h:div>
-    </xxf:dialog>
-    
-    
-    
-    
-    <xf:select1 ref="@initial" class="auto_length">
-        <xf:label> Represents: <h:a class="help">&#160;?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
-            set to "additions" otherwise. For manuscript annotations in printed sources use "additions"</h:span></h:a></xf:label>
-        <xf:item>
-            <xf:label>original contents</xf:label>
-            <xf:value>true</xf:value>
-        </xf:item>
-        <xf:item>
-            <xf:label>additions</xf:label>
-            <xf:value>false</xf:value>
-        </xf:item>
-    </xf:select1>
-</h:span>
+                    
+                </h:span>
+                <!-- end selection="open" -->
+                
+                
+            
+                <!-- pre-defined values menu -->
+                <xxf:dialog id="medium_menu" appearance="full" level="modeless" close="true" draggable="true" visible="false">
+                    <xf:label>Medium</xf:label>
+                    <h:p>Select writing medium</h:p>
+                    <xf:var name="medium" select="."/>
+                    <h:div style="height:100%">
+                        <xf:repeat nodeset="xxf:instance('writing-medium-instance')/value" id="medium-repeat">
+                            <h:div>
+                                <xf:trigger submission="replace-form-with" appearance="minimal">
+                                    <xf:label>
+                                        <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/>
+                                        <xf:output ref="."/>
+                                    </xf:label>
+                                    <xf:action ev:event="DOMActivate">
+                                        <xf:action>
+                                            <xf:setvalue ref="$medium/@medium" value="xxf:instance('writing-medium-instance')/value[index('medium-repeat')]" />
+                                            <xxf:hide dialog="medium_menu"/>
+                                        </xf:action>
+                                    </xf:action>
+                                </xf:trigger>
+                            </h:div>
+                        </xf:repeat>
+                    </h:div>
+                </xxf:dialog>
+                
+                
+                
+                
+                <xf:select1 ref="@initial" class="auto_length">
+                    <xf:label> Represents: <h:a class="help">&#160;?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
+                        set to "additions" otherwise. For manuscript annotations in printed sources use "additions"</h:span></h:a></xf:label>
+                    <xf:item>
+                        <xf:label>original contents</xf:label>
+                        <xf:value>true</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>additions</xf:label>
+                        <xf:value>false</xf:value>
+                    </xf:item>
+                </xf:select1>
+            </h:td>  
+            
+            <h:td>&#160;&#160;
+                <dcm:element-buttons  
+                    triggers="add up down del-parent-with-last" 
+                    nodeset="m:hand" 
+                    index="repeat-source-physdesc-handlist"
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
+                <dcm:attribute-editor ref="."/>                                                    
+            </h:td>
+            
+        </h:tr>
+        
+        <h:tr>
+            <h:td/>
+            <h:td>
+                <xi:include href="person-input.xml"/>
+                <h:div class="vertical_spacer">&#160;</h:div>
+            </h:td>
+            <h:td/>
+        </h:tr>
+        
+        <h:tr>
+            <h:td colspan="3">
+               <h:hr/> 
+            </h:td>
+        </h:tr>
+            
+    </h:table>
+</h:div>

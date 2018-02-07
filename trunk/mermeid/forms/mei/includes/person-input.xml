@@ -3,10 +3,11 @@
     xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
     xmlns:xi="http://www.w3.org/2001/XInclude" 
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
     xmlns:dcm="http://www.kb.dk/dcm">
     
-    <!-- Component for lists of persons including role and authority file reference -->
-    
+    <!-- Component for lists of persons including role and authority file reference    -->
+
     <dcm:create ref=".[not(m:persName)]"
         nodeset="m:persName"
         label="Add person"
@@ -19,7 +20,7 @@
                 or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
             </h:span>
             <h:span class="fixed_width">
-                Certainty <h:a class="help">&#160;?<h:span class="comment">Indicates he degree of certainty of the person's identity</h:span></h:a>
+                Certainty <h:a class="help">&#160;?<h:span class="comment">Indicates the degree of certainty of the person's identity</h:span></h:a>
             </h:span>
             <!--<xf:group ref="..[m:persName[@authority or @authURI or @codedval]]">-->
                 <h:span class="fixed_width_long"> Authority file <h:a class="help">&#160;?<h:span class="comment">References to
@@ -28,15 +29,27 @@
             <!--</xf:group>-->
         </h:div>
     </xf:group>
+    
+
     <xf:repeat nodeset="m:persName" id="relators-repeat">
         <dcm:relator/>
         <xi:include href="certainty-input.xml" parse="xml"/>
         <dcm:authority/>
-        <dcm:element-buttons 
-            triggers="add remove up down" 
-            nodeset="m:persName" 
-            index="relators-repeat"
-            origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
+        <!-- a more generic condition would have been nice but didn't work here -->
+        <xf:group ref=".[name(..)!='hand']">
+            <dcm:element-buttons 
+                triggers="add remove up down" 
+                nodeset="m:persName" 
+                index="relators-repeat"
+                origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
+        </xf:group>
+        <xf:group ref=".[name(..)='hand']">
+            <dcm:element-buttons 
+                triggers="remove" 
+                nodeset="m:persName" 
+                index="relators-repeat"
+                origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
+        </xf:group>
         <dcm:attribute-editor ref="."/>
         <h:br/>
     </xf:repeat>
