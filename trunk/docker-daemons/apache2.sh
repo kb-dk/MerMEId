@@ -1,10 +1,8 @@
 #!/bin/sh
 
 set -e
-# Start up Apache24
+# Start up apache2
 # Since there is no sane way to get the parsed apache2 config in scripts, some
-# settings are defined via environment variables and then used in apache2ctl,
-# /etc/init.d/apache2, /etc/logrotate.d/apache2, etc.
 export APACHE_RUN_USER=www-data
 export APACHE_RUN_GROUP=www-data
 # temporary state file location. This might be changed to /run in Wheezy+1
