@@ -19,12 +19,13 @@ RUN apt-get update \
     && a2enmod proxy_http \
     && a2enmod proxy_ajp
 
+VOLUME ["/usr/local/tomcat/webapps","/home/xml-store/"]
 
 RUN cd /usr/local \
     && wget http://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_RELEASE}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz \
     && tar -xzvf apache-tomcat-${TOMCAT_VERSION}.tar.gz \
-    && rm -rf apache-tomcat-${TOMCAT_VERSION}.tar.gz \
-    && mv apache-tomcat-${TOMCAT_VERSION} tomcat
+    && cp -rf apache-tomcat-${TOMCAT_VERSION}/* tomcat \
+    && rm -rf apache-tomcat-${TOMCAT_VERSION}*
 
 # Enable sshd
 RUN rm -f /etc/service/sshd/down
@@ -33,7 +34,11 @@ RUN cat /tmp/your_key.pub >> /root/.ssh/authorized_keys && rm -f /tmp/your_key.p
 
 # Setting up Apache2 as a daemon
 COPY apache-httpd/conf-devel.conf /etc/apache2/sites-enabled/conf-devel.conf
-RUN mkdir /home/xml-store/ && htpasswd -bc /home/xml-store/passwordfile editor editor
+#
+# note that editor is the one user, and s/he has password editor
+# 
+#RUN mkdir /home/xml-store/ && htpasswd -bc /home/xml-store/passwordfile editor editor
+RUN htpasswd -bc /home/xml-store/passwordfile editor editor
 RUN mkdir /etc/service/apache2
 COPY docker-daemons/apache2.sh /etc/service/apache2/run
 RUN chmod +x /etc/service/apache2/run
