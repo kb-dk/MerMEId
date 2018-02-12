@@ -7,16 +7,18 @@
   <property name="webapp.instance"   value="distro"/>
   <property name="webapp.config_dir" value="../local_config/" />
   <property name="webapp.login"      value="login.xqm" />
+  <property name="webapp.bibl"       value="standard_bibliography.xml" />
   <property name="hostport"          value="172.17.0.2:8080"/>
   <property name="context"           value="  --context /exist/rest/db/ "/>
 
   <target name="clean">
     <delete file="${webapp.login}" />
+    <delete file="library/${webapp.bibl}"/>    
   </target>
 
   <target name="build" depends="clean">
-    <copy file="${webapp.config_dir}${webapp.login}_${webapp.instance}"
-       tofile="${webapp.login}"/>    
+    <copy file="${webapp.config_dir}${webapp.login}_${webapp.instance}" tofile="${webapp.login}"/>    
+    <copy file="${webapp.config_dir}${webapp.bibl}_${webapp.instance}"  tofile="library/${webapp.bibl}"/>    
   </target>
 
   <target name="upload" depends="build">

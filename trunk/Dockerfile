@@ -48,6 +48,16 @@ COPY docker-daemons/tomcat7.sh /etc/service/tomcat/run
 RUN chmod +x /etc/service/tomcat/run
 
 COPY mermeid/editor.war filter/filter.war other-wars/exist.war  other-wars/orbeon.war ${CATALINA_HOME}/webapps/
+RUN mkdir -p ${CATALINA_HOME}/webapps/orbeon/xforms-jsp/mei-form \
+    && (cd ${CATALINA_HOME}/webapps/orbeon/ ; unzip ../orbeon.war)
+
+RUM mkdir -p ${CATALINA_HOME}/webapps/exist/WEB-INF \
+    && (cd ${CATALINA_HOME}/webapps/exist/ ; unzip ../exist.war)
+
+COPY orbeon/mei_form.jsp  ${CATALINA_HOME}/webapps/orbeon/xforms-jsp/mei-form/index.jsp
+COPY orbeon/properties-local.xml ${CATALINA_HOME}/webapps/orbeon/WEB-INF/resources/config/properties-local.xml
+
+COPY other-wars/exist-conf.xml ${CATALINA_HOME}/webapps/exist/WEB-INF/conf.xml
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
