@@ -37,7 +37,7 @@ COPY apache-httpd/conf-devel.conf /etc/apache2/sites-enabled/conf-devel.conf
 #
 # note that editor is the one user, and s/he has password editor
 # 
-#RUN mkdir /home/xml-store/ && htpasswd -bc /home/xml-store/passwordfile editor editor
+
 RUN htpasswd -bc /home/xml-store/passwordfile editor editor
 RUN mkdir /etc/service/apache2
 COPY docker-daemons/apache2.sh /etc/service/apache2/run
@@ -49,10 +49,10 @@ RUN chmod +x /etc/service/tomcat/run
 
 COPY mermeid/editor.war filter/filter.war other-wars/exist.war  other-wars/orbeon.war ${CATALINA_HOME}/webapps/
 RUN mkdir -p ${CATALINA_HOME}/webapps/orbeon/xforms-jsp/mei-form \
-    && (cd ${CATALINA_HOME}/webapps/orbeon/ ; unzip ../orbeon.war)
+    && (cd ${CATALINA_HOME}/webapps/orbeon/ ; jar xf ../orbeon.war)
 
-RUM mkdir -p ${CATALINA_HOME}/webapps/exist/WEB-INF \
-    && (cd ${CATALINA_HOME}/webapps/exist/ ; unzip ../exist.war)
+RUN mkdir -p ${CATALINA_HOME}/webapps/exist/WEB-INF \
+    && (cd ${CATALINA_HOME}/webapps/exist/ ; jar xf ../exist.war)
 
 COPY orbeon/mei_form.jsp  ${CATALINA_HOME}/webapps/orbeon/xforms-jsp/mei-form/index.jsp
 COPY orbeon/properties-local.xml ${CATALINA_HOME}/webapps/orbeon/WEB-INF/resources/config/properties-local.xml
