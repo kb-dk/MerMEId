@@ -8,18 +8,19 @@ ENV TOMCAT_RELEASE=7  \
     CLASSPATH=/usr/share/java \
     HOME=/root \
     WORKDIR=/root/build/ \
+    XML_STORE=/home/xml-store \
     SYS=demo \
     JAVA_OPTS="-Xmx4096m" 
 
 RUN apt-get update \
     && apt-get clean \
     && apt-get upgrade -y \
-    && apt-get install -y openjdk-8-jdk-headless tar wget apache2 sudo unzip vim git ant tzdata perl libwww-perl authbind libapache2-mod-jk \
+    && apt-get install -y openjdk-8-jdk-headless tar wget apache2 sudo zip unzip vim git ant tzdata perl libwww-perl authbind libapache2-mod-jk \
     && apt-get clean \
     && a2enmod proxy_http \
     && a2enmod proxy_ajp
 
-VOLUME ["/usr/local/tomcat/webapps","/home/xml-store/"]
+VOLUME ["${CATALINA_HOME}/webapps","${XML_STORE}"]
 
 RUN cd /usr/local \
     && wget http://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_RELEASE}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz \
@@ -47,18 +48,35 @@ RUN mkdir /etc/service/tomcat
 COPY docker-daemons/tomcat7.sh /etc/service/tomcat/run
 RUN chmod +x /etc/service/tomcat/run
 
-COPY mermeid/editor.war filter/filter.war other-wars/exist.war  other-wars/orbeon.war ${CATALINA_HOME}/webapps/
-RUN mkdir -p ${CATALINA_HOME}/webapps/orbeon/xforms-jsp/mei-form \
-    && (cd ${CATALINA_HOME}/webapps/orbeon/ ; jar xf ../orbeon.war)
+#
+# Installing all of MerMEId
+#
 
-RUN mkdir -p ${CATALINA_HOME}/webapps/exist/WEB-INF \
-    && (cd ${CATALINA_HOME}/webapps/exist/ ; jar xf ../exist.war)
+COPY mermeid/editor.war filter/filter.war ${CATALINA_HOME}/webapps/
+COPY other-wars/exist.war  other-wars/orbeon.war /root/
+COPY orbeon/mei_form.jsp orbeon/properties-local.xml other-wars/exist-conf.xml /root/
 
-COPY orbeon/mei_form.jsp  ${CATALINA_HOME}/webapps/orbeon/xforms-jsp/mei-form/index.jsp
-COPY orbeon/properties-local.xml ${CATALINA_HOME}/webapps/orbeon/WEB-INF/resources/config/properties-local.xml
+RUN touch ${CATALINA_HOME}/webapps/exist.war ${CATALINA_HOME}/webapps/orbeon.war
 
-COPY other-wars/exist-conf.xml ${CATALINA_HOME}/webapps/exist/WEB-INF/conf.xml
+RUN mkdir -p /root/exist \
+    && cd /root/exist \
+    && unzip -o /root/exist.war \
+    && cp -f /root/exist-conf.xml  WEB-INF/conf.xml \
+    && zip -r /root/new-exist.zip . 
+
+RUN cp -f /root/new-exist.zip ${CATALINA_HOME}/webapps/exist.war
+
+RUN mkdir -p /root/orbeon/xforms-jsp/mei-form/ \
+    && mkdir -p /root/orbeon/WEB-INF/resources/config/ \
+    && cd /root/orbeon \
+    && unzip -o /root/orbeon.war \
+    && cp -f /root/mei_form.jsp xforms-jsp/mei-form/index.jsp \
+    && cp -f /root/properties-local.xml WEB-INF/resources/config/ \
+    && zip -r /root/new-orbeon.zip . 
+
+RUN cp -f /root/new-orbeon.zip ${CATALINA_HOME}/webapps/orbeon.war
 
 # Use baseimage-docker's init system.
+
 CMD ["/sbin/my_init"]
 
