@@ -29,10 +29,10 @@ RUN apt-get update \
     && a2enmod proxy_ajp
 
 #
-# wan't these to be persistent
+# want these to be persistent
 #
 
-VOLUME ["${CATALINA_HOME}/webapps","${XML_STORE}"]
+VOLUME ["${CATALINA_HOME}/webapps"]
 
 RUN cd /usr/local \
     && wget http://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_RELEASE}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz \
@@ -58,7 +58,8 @@ COPY apache-httpd/conf-devel.conf /etc/apache2/sites-enabled/conf-devel.conf
 # note that editor is the one user, and s/he has password editor
 # 
 
-RUN htpasswd -bc /home/xml-store/passwordfile editor editor
+RUN mkdir -p ${XML_STORE} \
+    && htpasswd -bc /home/xml-store/passwordfile editor editor
 RUN mkdir /etc/service/apache2
 COPY docker-daemons/apache2.sh /etc/service/apache2/run
 RUN chmod +x /etc/service/apache2/run
