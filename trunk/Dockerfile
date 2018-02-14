@@ -52,29 +52,7 @@ RUN chmod +x /etc/service/tomcat/run
 # Installing all of MerMEId
 #
 
-COPY mermeid/editor.war filter/filter.war ${CATALINA_HOME}/webapps/
-COPY other-wars/exist.war  other-wars/orbeon.war /root/
-COPY orbeon/mei_form.jsp orbeon/properties-local.xml other-wars/exist-conf.xml /root/
-
-RUN touch ${CATALINA_HOME}/webapps/exist.war ${CATALINA_HOME}/webapps/orbeon.war
-
-RUN mkdir -p /root/exist \
-    && cd /root/exist \
-    && unzip -o /root/exist.war \
-    && cp -f /root/exist-conf.xml  WEB-INF/conf.xml \
-    && zip -r /root/new-exist.zip . 
-
-RUN cp -f /root/new-exist.zip ${CATALINA_HOME}/webapps/exist.war
-
-RUN mkdir -p /root/orbeon/xforms-jsp/mei-form/ \
-    && mkdir -p /root/orbeon/WEB-INF/resources/config/ \
-    && cd /root/orbeon \
-    && unzip -o /root/orbeon.war \
-    && cp -f /root/mei_form.jsp xforms-jsp/mei-form/index.jsp \
-    && cp -f /root/properties-local.xml WEB-INF/resources/config/ \
-    && zip -r /root/new-orbeon.zip . 
-
-RUN cp -f /root/new-orbeon.zip ${CATALINA_HOME}/webapps/orbeon.war
+ADD mermeid/editor.war filter/filter.war  build/exist.war  build/orbeon.war  ${CATALINA_HOME}/webapps/
 
 # Use baseimage-docker's init system.
 
