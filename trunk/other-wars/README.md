@@ -5,4 +5,4 @@ In addition in order to build that you need
 exist.war
 orbeon.war
 
-See
+See ../mermeid/INSTALL.html
