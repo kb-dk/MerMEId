@@ -1,4 +1,4 @@
-xml_store & its components
+MerMEId & its components
 ==============================
 
 MerMEId distribution contains the following components.
