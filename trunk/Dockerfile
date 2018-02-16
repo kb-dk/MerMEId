@@ -43,9 +43,9 @@ RUN cd /usr/local \
 # 
 # Enable sshd. Can be nice when debugging
 #
-# RUN rm -f /etc/service/sshd/down
-# COPY id_rsa.pub /tmp/your_key.pub
-# RUN cat /tmp/your_key.pub >> /root/.ssh/authorized_keys && rm -f /tmp/your_key.pub
+RUN rm -f /etc/service/sshd/down
+COPY id_rsa.pub /tmp/your_key.pub
+RUN cat /tmp/your_key.pub >> /root/.ssh/authorized_keys && rm -f /tmp/your_key.pub
 #
 
 #

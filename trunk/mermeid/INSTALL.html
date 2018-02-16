@@ -81,6 +81,7 @@
 	  <li><a href="#sect0.5">Overview</a></li>
 	  <li><a href="#sect1">Requirements</a></li>
 	  <li><a href="#sect2">Building &amp; installing MerMEId</a></li>
+	  <li><a href="#sect0.6">Building a Docker image</a></li>
 	  <li><a href="#sect3">Configuration</a></li>
 	  <li><a href="#testing">Testing and Getting Started</a></li>
 	  <li><a href="#security">Authentication &amp; Security</a></li>
@@ -109,18 +110,19 @@
       
       <div id="sect0.5">
 
-	<h2>1. Overview</h2>
+	<h2>Overview</h2>
 	
 	<img src="images/manual/architecture.svg" alt="architecture" />
 	
 	
       </div>
+
       
       <div id="sect1">
 	
-	<h2>2. Requirements</h2>
+	<h2>Requirements</h2>
 	
-	<h3>2.1. The Server</h3>
+	<h3>The Server</h3>
 
 	<p>This system is lightweight. It is only tested under Apache 
 	HTTPD together with Tomcat servlet container under Red Hat and SUSE
@@ -130,7 +132,7 @@
 	components.</strong>. On the other hand, 80GB of hard-disk
 	would be a lot.</p>
 
-	<h3>2.2. Installing the basic software environment.</h3>
+	<h3>Installing the basic software environment.</h3>
 
 	<p>In addition it requires the following readily available software
 	on the server:</p>
@@ -239,7 +241,7 @@
       </div>
 
       <div id="sect2">
-	<h2>3. Building &amp; installing MerMEId</h2>
+	<h2>Building &amp; installing MerMEId</h2>
 
 	<p>
 	  To compile and build you need ant, which is available as a package
@@ -382,9 +384,100 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
 	
 	<p>See below how apache is configured in the two cases.</p>
       </div>
+
+      <div id="sect0.6">
+
+	<h2>Building a Docker image</h2>
+
+	<p>This is partly an alternative to the rest of this document,
+	in the sense that many steps required to get MerMEId up and
+	running compressed into the <kbd>Dockerfile</kbd> and other scripts.</p>
+
+	<ol>
+	  <li>Ensure that you have <a
+	  href="https://www.docker.com/">docker</a> installed. I use
+	  the installation package that come with my operating
+	  system.</li>
+
+	  <li>To build a Docker image, you still need the MerMEId
+	  source code, i.e. you must clone <a
+	  href="https://github.com/Det-Kongelige-Bibliotek/MerMEId">from
+	  github.com</a>. For instance
+<pre>
+ git clone https://github.com/Det-Kongelige-Bibliotek/MerMEId.git
+</pre>
+or
+<pre>
+ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
+</pre>
+As of writing this, the docker code is in the branch <kbd>phusion-baseimage</kbd>
+<pre>
+ git checkout phusion-baseimage
+</pre>
+         </li>
+          <li>Ensure that you have <a href="#inst_orbeon"><kbd>orbeon.war</kbd> (available directly from the net)</a> and <a href="installexist"><kbd>exist.war</kbd>, we use the very old version 2.2 and you need to build that one according to the recipe)</a>.
+Move them to the the
+<pre>
+ &lt;MerMEId>/trunk/other-wars
+</pre>
+ directory</li>
+         <li>Build the Java components in &lt;MerMEId>/trunk/. Just run
+<pre>
+ ant
+</pre>
+or perhaps
+<pre>
+ ant -Dwebapp.instance=distro
+</pre>
+There are more info on this in <a href="#sect2">Section 2</a></li>
+<li>After that you should be build just about everything in one go by running a shell script
+<pre>
+&lt;MerMEId>/trunk/build-docker-image.sh
+</pre></li>
+         <li>If you're docker behave as mine, it would be possible to run it using
+<pre>
+ docker run &lt;docker image ID>
+</pre>
+
+and get everything will run on a local IP 172.17.0.2. eXist dashboard should be on
+
+<pre>
+ http://172.17.0.2:8080/exist/apps/dashboard/index.html
+</pre>
+
+You need to log in to the eXist DB and set admin's password. On this docker example it has to be <kbd>secretpassword</kbd> (it will be the same for everyone, but it does not matter very much 172.17.0.* is available only on your local machine.
+</li>
+
+<li>
+You should now be able to upload all xquery by running the command
+<pre>
+ ant upload
+</pre>
+in
+<pre>
+ &lt;erMEId>/trunk/xqueries
+</pre>
+See also the  <a href="#load_xqueries">load xqueries section</a>
+</li>
+
+<li>
+Finally you need to make all xqueries executable. In general you can
+do that following <a href="#executable_xq">the configure eXist
+section</a>.  Now done all in one go just by calling a query
+<kbd>xchmod.xq</kbd> which selects all documents that are queries and
+make them executable by retrieving the URI
+<pre>
+ http://172.17.0.2:8080/exist/rest/db/xchmod.xq
+</pre>
+</li>
+	</ol>
+
+      </div>
+
+
       
       <div id="sect3">
-	<h2>4. Configuration</h2>
+	<h2>Configuration</h2>
 	
 	<p>Ensure that Apache HTTPD and Apache Tomcat both starts with the
 	operating system. A requisite for the following is that they are
@@ -455,15 +548,26 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
   let $lgin := xdb:login("/db", "user", "secret password")
 </pre>
              </li>
-	      <li>
+	      <li id="load_xqueries">
 		<strong>Install the <kbd>xqueries</kbd></strong>.
 
 	
-		<p><strong>Load the <kbd>xqueries</kbd>, libraries, stylesheets etc</strong> into eXist DB.</p>
+		<p><strong>Load the <kbd>xqueries</kbd>, libraries,
+		stylesheets etc</strong> into eXist DB. The fastest
+		way to do this, is from the command line. </p>
 
-		<p>The fastest way to do this, is from the command
-		line. Assuming that you are in the <kbd>xqueries</kbd>
-		in the source tree.  First load the xquery files:</p>
+		<p>Assuming that you are in the </p>
+<pre>
+ &lt;erMEId>/trunk/xqueries
+</pre>
+		<p>directory of the source tree.</p>
+<pre>
+ ant -Dwebapp.instance=distro upload
+</pre>
+                <p>uploads everything into eXist. requires libwww-perl
+                and ant java build tool. It actually runs the
+                following command. You can do that as well if you need
+                to customize the process.</p>
 
 <pre>
   cd xqueries
@@ -481,7 +585,10 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
 	      </li>
 	      <li>
 
-	      <p>All the <kbd>*.xq</kbd> files should have execute permissions inside eXist DB, i.e., the following files</p>
+	      <p id="executable_xq">All the <kbd>*.xq</kbd> files should have execute permissions inside eXist DB</p>
+
+
+	      <p>It is the following files</p>
 
 	      <ul>
 		<li>copy-file.xq</li>
@@ -495,8 +602,15 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
 		<li>view_score.xq</li>
 	      </ul>
 
-	      <p>How this is done is shown in <a href="#exist_permissions">see Figure 3</a>.</p>
+	      
 
+	      <p>This is done either by executing xchmod.xq inside
+	      eXist, or using the eXist DB's management tool, <a
+	      href="#exist_permissions">see Figure 3</a>. The former
+	      is done by executing it by fetching the URI</p>
+<pre>
+ http://your-exist-server-host-port/exist/rest/db/xchmod.q
+</pre>
 	      </li>
      
 	     <li>Create the <strong>public</strong> collection. Only
@@ -548,7 +662,7 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
       
       <div id="testing">
 	
-	<h2>5. Testing and Getting Started</h2>
+	<h2>Testing and Getting Started</h2>
 	
 	<p>The main component in the user interface is the
 	<kbd>list_files.xq</kbd> which directs the editorial staff to all the
@@ -566,7 +680,7 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
       
       
       <div id="security">
-	<h2>6. Authentication &amp; Security</h2>
+	<h2>Authentication &amp; Security</h2>
 	
       	<div id="exist_permissions" style="width:50%; float: right; padding:0 20px;">
 	  
@@ -654,7 +768,7 @@ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
 
       <div id="backup_and_restore">
 	
-	<h2>7. Backup &amp; restore</h2>
+	<h2>Backup &amp; restore</h2>
 
 	<p>At DCM we have eXist DB and its application server on a Linux machine
 	that are backed-up regularly. In addition we take a backup of the
