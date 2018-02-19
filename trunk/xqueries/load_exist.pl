@@ -8,6 +8,7 @@
 use strict;
 use LWP::UserAgent;
 use Getopt::Long;
+use URI::Escape;
 
 my $scheme    = "http://";
 my $host_port = "localhost:8080";
@@ -18,6 +19,7 @@ my $password  = "";
 my $load      = '';
 my $delete    = '';
 my $get       = '';
+my $set       = '';
 my $suffix    = '';
 
 # http://kb-cop.kb.dk:8080/exist/index.xml
@@ -26,6 +28,7 @@ my $suffix    = '';
 my $result = GetOptions (
     "load=s"        => \$load,
     "get=s"         => \$get,
+    "set=s"         => \$set,
     "delete=s"      => \$delete,
     "target=s"      => \$target,
     "context=s"     => \$context,
@@ -41,6 +44,8 @@ if($load) {
     $source = $delete;
 } elsif($get) {
     $source = $get;
+} elsif($set) {
+    &set_pwd($user,$password);
 } else {
     &usage();
 }
@@ -110,6 +115,34 @@ foreach my $suf (@suffixlist)  {
 	    }
 
 	}
+    }
+
+}
+
+sub set_pwd {
+    my $user   = shift;
+    my $password = shift;
+
+#
+# this function is not tested with an eXist in docker
+#
+
+    my $xq     = uri_escape('_query=sm:passwd("' . $user . '","' . $password . ')');
+    my $req_uri    = join('',"http://admin:@",$host_port,"/exist/rest/db/?",$xq);
+    print STDERR "$req_uri\n";
+    
+    my $ua = LWP::UserAgent->new;
+    $ua->agent("crud-client/0.1 ");
+
+    my $req = new HTTP::Request();
+    $req->method("GET");
+    $req->uri($req_uri);
+    my $res = $ua->request($req);
+
+    if ($res->is_success) {
+	print STDERR "Success ", $res->status_line, "\n";
+    } else {
+	print STDERR "Failure ", $res->status_line, "\n";
     }
 
 }
