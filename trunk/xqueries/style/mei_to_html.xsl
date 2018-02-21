@@ -2234,22 +2234,25 @@
 	<xsl:template match="m:hand" mode="scribe">
 		<xsl:call-template name="lowercase">
 			<xsl:with-param name="str" select="translate(@medium,'_',' ')"/>
-		</xsl:call-template>
-		<xsl:if test="./text()"> (<xsl:apply-templates select="."/>)</xsl:if>
+			</xsl:call-template>
+		<xsl:if test=".//text()"> (<xsl:apply-templates select="."/>)</xsl:if>
 	</xsl:template>
 
 	<!-- list scribes -->
 	<xsl:template match="m:handList">
-		<xsl:if test="count(m:hand[@initial='true' and (@medium!='' or text())]) &gt; 0">
-			<xsl:value-of select="$l/written_in"/><xsl:text> </xsl:text>
-			<xsl:for-each select="m:hand[@initial='true' and (@medium!='' or text())]">
+		<xsl:if test="count(m:hand[@initial='true' and (@medium!='' or .//text())]) &gt; 0">
+			<xsl:if test="m:hand[@initial='true' and @medium!='']"><xsl:value-of select="$l/written_in"/><xsl:text> </xsl:text></xsl:if>
+			<xsl:for-each select="m:hand[@initial='true' and (@medium!='' or .//text())]">
 				<xsl:if test="position()&gt;1 and position()&lt;last()">, </xsl:if>
 				<xsl:if test="position()=last() and position()&gt;1">
 					<xsl:text> </xsl:text><xsl:value-of select="$l/and"/><xsl:text> </xsl:text>
 				</xsl:if>
 				<xsl:apply-templates select="." mode="scribe"/></xsl:for-each>. </xsl:if>
-		<xsl:if test="count(m:hand[@initial='false' and (@medium!='' or text())]) &gt; 0">
-			<xsl:value-of select="$l/additions_in"/><xsl:text> </xsl:text>
+		<xsl:if test="count(m:hand[@initial='false' and (@medium!='' or .//text())]) &gt; 0">
+			<xsl:choose>
+				<xsl:when test="@medium!=''"><xsl:value-of select="$l/additions_in"/><xsl:text> </xsl:text></xsl:when>
+				<xsl:otherwise><xsl:value-of select="$l/additions"/><xsl:text> </xsl:text></xsl:otherwise>
+			</xsl:choose>
 			<xsl:for-each select="m:hand[@initial='false']">
 				<xsl:if test="position()&gt;1 and position()&lt;last()">, </xsl:if>
 				<xsl:if test="position()=last() and position()&gt;1">

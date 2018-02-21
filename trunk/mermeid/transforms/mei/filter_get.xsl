@@ -15,7 +15,8 @@
     encoding="UTF-8"
     omit-xml-declaration="yes" />
   
-  <xsl:strip-space elements="*" />
+  <xsl:strip-space elements="*"/>
+  
   <xsl:variable name="empty_doc" 
     select="document('/editor/forms/mei/model/empty_doc.xml')" />
   
@@ -162,6 +163,28 @@
     </perfMedium>
   </xsl:template>
   
+  <!-- Handle mixed content -->
+  <!-- The text part of mixed content needs a <p> wrapper when it is to be edited separately (not using tinyMCE)-->
+  
+  <xsl:template match="m:hand" mode="mei2html">
+    <hand>
+      <xsl:apply-templates select="@*"/>
+      <xsl:if test="not(text())">
+        <p n="MerMEId_temporary_wrapper"/>
+      </xsl:if>
+      <xsl:apply-templates select="node()" mode="wrap_text"/>
+    </hand>
+  </xsl:template>
+  
+  <xsl:template match="*" mode="wrap_text">
+    <xsl:apply-templates select="." mode="mei2html"/>    
+  </xsl:template>
+  
+  <xsl:template match="text()" mode="wrap_text">
+    <p n="MerMEId_temporary_wrapper"><xsl:value-of select="."/></p>
+  </xsl:template>
+  
+  
   <!-- MEI -> HTML -->
 
   <!-- tinyMCE-related stuff -->
@@ -176,13 +199,12 @@
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates select="*[name()!='p' and name()!='list' and name()!='biblList']" mode="mei2html"/>
       <xsl:if test="m:p or m:list">
-        <p n="MerMEId_temporary_wrapper">
-          <xsl:apply-templates select="m:p | m:list" mode="mei2html"/>
-        </p>
+        <p n="MerMEId_temporary_wrapper"><xsl:apply-templates select="m:p | m:list" mode="mei2html"/></p>
       </xsl:if>
       <xsl:apply-templates select="m:biblList" mode="mei2html"/>
     </xsl:element>
-  </xsl:template>
+  </xsl:template>  
+  
 
   <!-- Convert <p> and <list> to entities for editing in tinymce (with some exceptions handled with simple input fields). -->
   <!-- An exception is needed for all <p> elements NOT to be edited with tinyMCE. -->
@@ -312,9 +334,7 @@
     </xsl:choose>
   </xsl:template>
   
-  <!--  -->
-  
-  
+    
   <xsl:template match="@*|node()" mode="mei2html">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" mode="mei2html"/>
