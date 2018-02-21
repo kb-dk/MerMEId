@@ -312,9 +312,21 @@
 														<xf:setvalue ref="instance('temp')/nodeset" 
 															value='"instance(&apos;data-instance&apos;)/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[index(&apos;repeat-expression&apos;)]/m:relationList/m:relation[index(&apos;version_relations&apos;)]"'/>
 														<xxf:show dialog="relation_dialog"/>
-														<xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?get=works')"/>
+														<xf:setvalue ref="instance('temp')/target_uri"
+															value="concat(instance('parameters')/dcm:server_name,'filter/filtered_scripts/cross-link.xq?get=works')"/>
+														<!-- load data on open - may be deactivated if performance is an issue -->
 														<xf:send submission="load-fileList"/>
 													</xf:action>
+													
+													<!-- was (which doesn't work any more):  
+													<xf:action ev:event="DOMActivate">
+														<xf:setvalue ref="instance('temp')/nodeset" 
+															value='"instance(&apos;data-instance&apos;)/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[index(&apos;repeat-expression&apos;)]/m:relationList/m:relation[index(&apos;version_relations&apos;)]"'/>
+														<xxf:show dialog="relation_dialog"/>
+														<xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?get=works')"/>
+														<xf:send submission="load-fileList"/>
+													</xf:action>-->
+													
 												</xf:trigger>
 												<xf:trigger appearance="minimal">
 													<xf:label><h:span style="vertical-align:bottom;"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/go_to_link.png" 
