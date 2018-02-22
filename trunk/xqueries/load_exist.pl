@@ -45,7 +45,10 @@ if($load) {
 } elsif($get) {
     $source = $get;
 } elsif($set) {
-    &set_pwd($user,$password);
+    my $u = "";
+    my $p = "";
+    ($u,$p) = split /:/, $set;
+    &set_pwd($u,$p);
 } else {
     &usage();
 }
@@ -120,18 +123,18 @@ foreach my $suf (@suffixlist)  {
 }
 
 sub set_pwd {
-    my $user   = shift;
-    my $password = shift;
+    my $u   = shift;
+    my $p   = shift;
 
 #
 # this function is not tested with an eXist in docker
 #
 
-    my $xq     = uri_escape('_query=sm:passwd("' . $user . '","' . $password . ')');
-    my $req_uri    = join('',"http://admin:@",$host_port,"/exist/rest/db/?",$xq);
+    my $xq     = uri_escape('_query=sm:passwd("' . $u . '","' . $p . ')');
+    my $req_uri    = join('','http://',$host_port,'/exist/rest/db/?',$xq);
     print STDERR "$req_uri\n";
-    
     my $ua = LWP::UserAgent->new;
+    $ua->credentials($host_port, "exist" , $user, $password );
     $ua->agent("crud-client/0.1 ");
 
     my $req = new HTTP::Request();

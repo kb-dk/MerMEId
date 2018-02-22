@@ -14,7 +14,8 @@ ENV TOMCAT_RELEASE=7  \
     WORKDIR=/root/build/ \
     XML_STORE=/home/xml-store \
     SYS=demo \
-    JAVA_OPTS="-Xmx4096m" 
+    JAVA_OPTS="-Xmx4096m" \
+    XQ=/root/build
 
 #
 # suppose I should cut away some unused stuff here
@@ -75,6 +76,7 @@ RUN chmod +x /etc/service/tomcat/run
 # see build-docker-image.sh
 #
 
+COPY xqueries $XQ
 ADD mermeid/editor.war filter/filter.war  build/exist.war  build/orbeon.war  ${CATALINA_HOME}/webapps/
 
 # Use baseimage-docker's init system.
