@@ -449,11 +449,20 @@ You need to log in to the eXist DB and set admin's password. On this docker exam
 </li>
 
 <li>
-You should now be able to upload all xquery by running the command
+You should now be able to upload all xquery. This can be done by running the command
+
+<pre>
+ docker exec &lt;docker container ID> /root/build/dockerized-upload.sh
+</pre>
+
+or by running
+
 <pre>
  ant upload
 </pre>
+
 in
+
 <pre>
  &lt;erMEId>/trunk/xqueries
 </pre>
