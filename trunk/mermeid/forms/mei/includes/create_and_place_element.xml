@@ -36,7 +36,7 @@
         <xf:insert context="." origin="xxf:element($nodeset)"/>
     </xf:action>
 
-    <xf:var name="local-name" select="substring-after($nodeset,':')"/>
+    <xf:var name="local-name" select="if (contains($nodeset,'[')) then substring-before(substring-after($nodeset,':'),'[') else substring-after($nodeset,':')"/>
     
     <!-- now, move the new element into place according to the empty model if necessary-->
     <xf:action if="*[local-name(.)=$local-name]/following-sibling::*[local-name()!=$local-name]">
