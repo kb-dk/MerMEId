@@ -87,7 +87,7 @@
                                 <dcm:linked-sources id="linking_sources"
                                 query="concat(
                                 instance('parameters')/dcm:server_name,
-                                'storage/cross-link.xq?target=',
+                                'filter/filtered_scripts/cross-link.xq?target=',
                                 instance('parameters')/dcm:xml_file,
                                 '%23',
                                 @xml:id)"

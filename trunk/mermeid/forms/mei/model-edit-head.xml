@@ -156,7 +156,7 @@
             <xf:setvalue ref="instance('temp')/target_uri" 
                 value="concat(
                 instance('parameters')/dcm:server_name,
-                'storage/cross-link.xq?query=',instance('temp')/query,
+                'filter/filtered_scripts/cross-link.xq?query=',instance('temp')/query,
                 '&amp;subject=dummy')"/>
             <!-- load standard bibliography -->
             <xf:send submission="load-bibliography"/>
