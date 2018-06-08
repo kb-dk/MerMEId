@@ -16,6 +16,9 @@
     <delete file="library/${webapp.bibl}"/>    
   </target>
 
+  <target name="war">
+  </target>
+
   <target name="build" depends="clean">
     <copy file="${webapp.config_dir}${webapp.login}_${webapp.instance}" tofile="${webapp.login}"/>    
     <copy file="${webapp.config_dir}${webapp.bibl}_${webapp.instance}"  tofile="library/${webapp.bibl}"/>    
