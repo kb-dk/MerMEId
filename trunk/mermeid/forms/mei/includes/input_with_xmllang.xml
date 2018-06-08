@@ -2,6 +2,7 @@
   xmlns:h="http://www.w3.org/1999/xhtml"
   xmlns:xf="http://www.w3.org/2002/xforms"
   xmlns:xxf="http://orbeon.org/oxf/xml/xforms"	
+  xmlns:m="http://www.music-encoding.org/ns/mei"
   xmlns:ev="http://www.w3.org/2001/xml-events"><xf:input 
     class="maxlong" ref="."/>
   <xf:select1 ref="./@xml:lang" xxf:refresh-items="false" class="mediumlong">
@@ -13,7 +14,7 @@
       <xf:label>- Select language -</xf:label>
       <xf:value/>
     </xf:item>
-    <xf:itemset nodeset="xxf:instance('languages')/language">
+    <xf:itemset nodeset="xxf:instance('languages')/m:language">
       <xf:label><xf:output value="."/></xf:label>
       <xf:value ref="@xml:id"></xf:value>
     </xf:itemset>

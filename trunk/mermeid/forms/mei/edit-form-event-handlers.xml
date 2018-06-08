@@ -26,19 +26,20 @@
     
     <xf:action ev:event="language-update">
         <!-- add missing language declarations -->
-        <xf:insert 
-            nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:langUsage/m:language"
-            origin="instance('languages')/language[@xml:id=instance('data-instance')//@xml:lang[not(.=instance('data-instance')//m:langUsage/m:language/@xml:id)]]"/>
+        <action while="xxf:instance('languages')/m:language[@xml:id=xxf:instance('data-instance')//@xml:lang[not(.=xxf:instance('data-instance')//m:langUsage/m:language/@xml:id)]]">
+            <xf:insert 
+                context="xxf:instance('data-instance')/m:meiHead/m:workDesc/m:work/m:langUsage"
+                origin="xxf:instance('languages')/m:language[@xml:id=xxf:instance('data-instance')//@xml:lang[not(.=xxf:instance('data-instance')//m:langUsage/m:language/@xml:id)]][1]"/>
+        </action>
         <!-- delete unused language declarations -->        
-        <xf:action while="instance('data-instance')//m:langUsage/m:language[not(@xml:id=instance('data-instance')//@xml:lang)]">
-            <xf:delete nodeset="instance('data-instance')//m:langUsage/m:language[not(@xml:id=instance('data-instance')//@xml:lang)]"/>
+        <xf:action while="xxf:instance('data-instance')//m:langUsage/m:language[not(@xml:id=xxf:instance('data-instance')//@xml:lang)]">
+            <xf:delete nodeset="xxf:instance('data-instance')//m:langUsage/m:language[not(@xml:id=xxf:instance('data-instance')//@xml:lang)]"/>
         </xf:action>
         <!-- delete duplicate language declarations -->
-        <xf:action while="instance('data-instance')//m:langUsage/m:language[. = preceding-sibling::m:language]">
-            <xf:delete nodeset="instance('data-instance')//m:langUsage/m:language[. = preceding-sibling::m:language]"/>
+        <xf:action while="xxf:instance('data-instance')//m:langUsage/m:language[. = preceding-sibling::m:language]">
+            <xf:delete nodeset="xxf:instance('data-instance')//m:langUsage/m:language[. = preceding-sibling::m:language]"/>
         </xf:action>
-    </xf:action>
-    
+    </xf:action>    
     
     
 </h:span>
