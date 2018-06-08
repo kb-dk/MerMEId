@@ -887,7 +887,7 @@
 													<dcm:attribute-editor ref="../../m:roleDesc[$pos]"/>										
 													<xf:select1 ref="@xml:lang" xxf:refresh-items="false">
 														<xf:label/>
-														<xf:itemset nodeset="instance('languages')/language">
+														<xf:itemset nodeset="instance('languages')/m:language">
 															<xf:label><xf:output value="."/></xf:label>
 															<xf:value ref="@xml:id"></xf:value>
 														</xf:itemset>
