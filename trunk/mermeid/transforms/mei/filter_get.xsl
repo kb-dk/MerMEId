@@ -63,6 +63,28 @@
     </music>
   </xsl:template>
   
+  <!-- add @codedval and @count if missing -->
+  <xsl:template match="m:perfRes[not(@codedval) or not(@count)]" mode="mei2html">
+    <perfRes>
+      <xsl:if test="not(@codedval)">
+        <xsl:attribute name="codedval"/>
+      </xsl:if>
+      <xsl:if test="not(@count)">
+        <xsl:attribute name="count"/>
+      </xsl:if>
+      <xsl:apply-templates select="@* | node()" mode="mei2html"/>
+    </perfRes>
+  </xsl:template>
+  
+  <xsl:template match="m:perfResList[not(@codedval)]" mode="mei2html">
+    <perfResList>
+      <xsl:attribute name="codedval"/>
+      <xsl:apply-templates select="@* | node()" mode="mei2html"/>
+    </perfResList>
+  </xsl:template>
+  
+  
+  
   <!-- copying attributes from the model header to the data header -->
   <xsl:template match="*" mode="header">
     <!-- build an xpath string to locate the corresponding node in the model header -->
