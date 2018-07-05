@@ -19,14 +19,22 @@
     </h:span>
     <!-- MARC/UNIMARC code -->
     <xf:var name="code" select="@codedval"/>
+    <xf:var name="authority_in_use" select="xxf:instance('instruments')//*[@authority][1]/@authority"/>
+    <xf:var name="authority" select="@authority"></xf:var>
     <xf:select1 ref="@codedval" class="long">
         <xf:label/>
         <xf:item>
             <xf:label/>
             <xf:value/>
         </xf:item>
-        <xf:itemset nodeset=".[$code!='' and not(xxf:instance('instruments')//m:perfRes[@codedval=$code])]">
-            <xf:label><xf:output value="concat($code,' [Unknown code]')"/></xf:label>
+        <xf:itemset nodeset=".[not(xxf:instance('instruments')//m:perfRes[@codedval=$code]) and (@authority=$authority_in_use or not($authority))]">
+            <!-- no matching @codedval found -->
+            <xf:label><xf:output value="concat($code,' [unknown code]')"/></xf:label>
+            <xf:value><xf:output value="$code"/></xf:value>
+        </xf:itemset>
+        <xf:itemset nodeset=".[$code and $authority and $authority!=$authority_in_use]">
+            <!-- @authority does not match that of the list in use -->
+            <xf:label><xf:output value="concat($code,' [',$authority,' code]')"/></xf:label>
             <xf:value><xf:output value="$code"/></xf:value>
         </xf:itemset>
         <xf:itemset nodeset="xxf:instance('instruments')/m:perfResList | xxf:instance('instruments')/m:perfResList/m:perfRes">
@@ -35,15 +43,28 @@
         </xf:itemset>
         
         <xf:action ev:event="xforms-value-changed">
+            <xf:var name="instrument_code" select="."></xf:var>
+            <!-- Update or add authority attributes -->
+            <xf:action if="../@authority">
+                <xf:setvalue ref="../@authority" value="xxf:instance('instruments')//m:perfRes[@codedval=$instrument_code]/@authority"/>
+            </xf:action>
+            <xf:action if="not(../@authority)">
+                <xf:insert context=".." origin="xxf:instance('instruments')//m:perfRes[@codedval=$instrument_code]/@authority"/>
+            </xf:action>
+            <xf:action if="../@authURI">
+                <xf:setvalue ref="../@authURI" value="xxf:instance('instruments')//m:perfRes[@codedval=$instrument_code]/@authURI"/>
+            </xf:action>
+            <xf:action if="not(../@authURI)">
+                <xf:insert context=".." origin="xxf:instance('instruments')//m:perfRes[@codedval=$instrument_code]/@authURI"/>
+            </xf:action>
             <!-- insert instrument name (display name) if empty -->
-            <xf:var name="instrument" select="."></xf:var>
             <xf:action if="..=''">
-                <xf:setvalue ref=".." value="xxf:instance('instruments')//m:perfRes[@codedval=$instrument]"/>
+                <xf:setvalue ref=".." value="xxf:instance('instruments')//m:perfRes[@codedval=$instrument_code]"/>
                 <xf:action if="../@xml:lang">
-                    <xf:setvalue ref="../@xml:lang" value="xxf:instance('instruments')//m:perfRes[@codedval=$instrument]/@xml:lang"/>
+                    <xf:setvalue ref="../@xml:lang" value="xxf:instance('instruments')//m:perfRes[@codedval=$instrument_code]/@xml:lang"/>
                 </xf:action>
                 <xf:action if="not(../@xml:lang)">
-                    <xf:insert context=".." origin="xxf:instance('instruments')//m:perfRes[@codedval=$instrument]/@xml:lang"/>
+                    <xf:insert context=".." origin="xxf:instance('instruments')//m:perfRes[@codedval=$instrument_code]/@xml:lang"/>
                 </xf:action>
             </xf:action>
         </xf:action>
