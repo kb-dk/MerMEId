@@ -64,7 +64,9 @@
         <li><a href="#automatic_log">I don't want MerMEId to create change log entries
             automatically. Can I turn it off?</a></li>
         <li><a href="#customize_instruments">Can I change the pre-defined instrument names, roles or
-            other lists?</a></li>
+        other lists?</a></li>
+        <li><a href="#instrument_codes">Which standard should I use for instrument codes and names? MARC or UNIMARC? Do I have to use one?
+        </a></li>
         <li><a href="#add_authorities">The authority file I use is not listed. Can I add
           it?</a></li>
         <li><a href="#add_abbreviations">How do I make MerMEId recognize other
@@ -259,7 +261,7 @@
       <h3>Can I change the pre-defined instrument names and codes?<a name="customize_instruments"></a></h3>
       <p>Yes. If you only want to change the displayed instrument name in a few cases, the simplest way is 
         to manually change the text MerMEId inserts in every instance. 
-        The more efficient way - and the only way, if you also want to change 
+        The more efficient way – and the only way, if you also want to change 
         the available standard code values – is to change the lists of instrument and ensemble names
         kept in the eXist database. They are located in a folder named <a href="/storage/library/"><kbd>library</kbd></a> 
         together with other customizable lists.
@@ -282,27 +284,36 @@
         If you are not familiar with eXist, ask your system administrator about how to access and 
         edit the files. 
       </p>
-      <h3>Which standard should I use for instrument codes and names? MARC or UNIMARC?</h3>
+      <h3>Which standard should I use for instrument codes and names? MARC or UNIMARC? Do I have to use one?
+      <a name="instrument_codes"></a></h3>
       <p>        
-        MerMEId comes with two pre-defined sets lists of instruments and ensembles (see above): 
-        One containing the instruments defined as part of the MARC cataloguing standard (default), 
-        and one containing the much more detailed UNIMARC list of instruments.<br/>
-        Which one to use is up to you. 
         The use pupose of using standard codes for instruments is to optimize machine-readability and 
-        data interchange. In some cases, a very precise coding may be desirable (in that case, use UNIMARC), 
+        data interchange. If you are not concerned about interchangeability, you do not have to use any 
+        instrument codes. In that case, simply do not choose an instrument from the standard code drop-down list 
+        (i.e., leave it blank) and enter the instrument's name in the name field. <br/> 
+        However, we recommend referring to standard codes whenever possible. Which standard to use depends on
+        the nature, purpose and possible uses of your data. 
+        In some cases, a very precise coding may be desirable (in that case, use UNIMARC), 
         in other cases it is sufficient to have codes just describing the instrumentation roughly 
         (in that case, use MARC).<br/>
+        MerMEId comes with two pre-defined sets lists of instruments and ensembles (see above): 
+        One containing the instruments defined as part of the MARC cataloguing standard (default), 
+        and one containing the much more detailed UNIMARC list of instruments. Which one to use is up to you. <br/>
         Please note that the displayed <i>names</i> of the instruments and
         ensembles are independent of the codes used, so you can change the names to whatever you want. 
         For instance, some would prefer using Italian terms for instruments, other would use English terms. 
         Some prefer abbreviations, others prefer full names. <br/>
         This means that your <i>naming</i> of instruments can be as detailed as you like, even if you choose
-        the limited MARC instrument codes. 
-        <i>Example: While an oboe and an oboe d'amore would get two different codes in UNIMARC 
-          (<kbd>wob</kbd> and <kbd>woa</kbd>, respectively),
-        they would both be assigned the code <kbd>wb</kbd> (for oboe) when using MARC; still, they may be named 
-        precisely ("oboe" and "oboe d'amore", respectively) in the instrument name field in both cases.</i>
+        the less detailed MARC instrument codes.
       </p>
+      <ul>
+        <li>Example: While an oboe and an oboe d'amore would get two different codes in UNIMARC 
+          (<kbd>wob</kbd> and <kbd>woa</kbd>, respectively),
+          they would both be assigned the code <kbd>wb</kbd> (for oboe) when using MARC; still, they may be named 
+          precisely ("oboe" and "oboe d'amore", respectively) in the instrument name field in both cases.<br/>
+          The example, by the way, illustrates that mapping UNIMARC codes automatically to MARC it is much easier 
+          than mapping the opposite way. You may want to bear that in mind when choosing your encoding style.</li>
+      </ul>
       <h3>The authority file I use is not listed. Can I add it?<a name="add_authorities"></a></h3>
       <p>Yes. You can edit the list the same way you would <a href="faq.html#customize_instruments"
           >change pre-defined instruments names</a>. Look for the file <kbd>authority_files.xml</kbd> in the 
