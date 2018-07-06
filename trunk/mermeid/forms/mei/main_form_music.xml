@@ -372,7 +372,7 @@
 							as 'stand-alone' performers. A group of performers acting as an ensemble (including choirs)
 							should be defined as such. Each ensemble may or may not have a name (label) for display, 
 							and may or may not list its individual performers.<h:br/>
-							Both ensembles and performers should have a MARC standard code added to improve
+							Both ensembles and performers should have a standard code (MARC, UNIMARC or some other standard) added to improve
 							data compatibility and interchange. Codes are selected from the dropdown menus.							
 						</h:span></h:a>
 							<dcm:id ref="m:perfMedium"/>
@@ -396,17 +396,20 @@
 							<xxf:dialog id="ensemble-menu" appearance="full" level="modal"
 								close="true" draggable="true" visible="false">
 								<xf:label>Ensembles</xf:label>
-								<xf:repeat nodeset="instance('instrument-groups')/m:perfResList[@codedval]" id="ensemble-menu-repeat">
+								<xf:repeat nodeset="xxf:instance('instrument-groups')/m:perfResList[@codedval]" id="ensemble-menu-repeat">
 									<xf:trigger submission="replace-form-with" appearance="minimal">
 										<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/>
-											<xf:output ref="if (m:head!='') then m:head else '[empty ensemble]'"/>
+											<xf:output ref="if (@label!='') then @label else '[empty ensemble]'"/>
 										</xf:label>
 										<xf:action ev:event="DOMActivate">
+											<xf:var name="new_ensemble" select="instance('instrument-groups')/m:perfResList[@codedval][index('ensemble-menu-repeat')]"/>
+											<!-- remove @label from ensemble to be inserted -->
+											<xf:delete ref="$new_ensemble/@label"/>											
 											<xf:insert context="$binding/m:perfMedium/m:perfResList" 
 												nodeset="m:perfResList"
 												at="index('repeat-ensemble')"
 												position="after" 
-												origin="instance('instrument-groups')/m:perfResList[@codedval][index('ensemble-menu-repeat')]"/>
+												origin="$new_ensemble"/>
 											<!-- generate IDs for added performers -->
 											<xf:insert xxf:iterate="//*[not(@xml:id)]"
 												context="$binding/m:perfMedium/m:perfResList"
@@ -419,6 +422,8 @@
 							</xxf:dialog>			
 							
 							<xf:group ref="m:perfResList">
+								<xf:var name="instrument_authority" select="xxf:instance('instruments')//@authority[1]"/>
+								<xf:var name="ensemble_authority" select="xxf:instance('ensembles')//@authority[1]"/>
 								<h:div class="blocklabel strong">Ensembles </h:div>
 								<xf:trigger ref=".[count(m:perfResList)=0]" class="create_button">
 									<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
@@ -517,21 +522,33 @@
 													a standard ensemble code in the last field.
 												</h:span></h:a></xf:label>
 											</xf:input>
+											<xf:var name="ens_code" select="@codedval"/>
 											<xf:select1 ref="@codedval">
-												<xf:label>Standard code <h:a class="help">&#160;?<h:span 
-													class="comment">Choosing a standard MARC code improves data  
+												<xf:label><xf:output value="$ensemble_authority"/> standard code <h:a class="help">&#160;?<h:span 
+													class="comment">Choosing a standard (such as MARC or UNIMARC) code improves data  
 													compatibility and interchangeability with other systems. <h:br/>
 													A code should be supplied also when you do not want the ensemble 
 													to have a heading (name).
 												</h:span></h:a></xf:label>
+												<xf:item>
+													<xf:label/>
+													<xf:value/>
+												</xf:item>
+												<xf:itemset nodeset=".[$ens_code!='' and not(instance('ensembles')/m:perfResList[@codedval=$ens_code])]">
+													<xf:label><xf:output value="concat($ens_code,' [Unknown code]')"/></xf:label>
+													<xf:value><xf:output value="$ens_code"/></xf:value>
+												</xf:itemset>
 												<xf:itemset nodeset="instance('ensembles')/m:perfResList">
-													<xf:label><xf:output value="if (@codedval!='') then concat(@codedval, ' (',m:head,')') else '- Please select -'"/></xf:label>
+													<xf:label>
+														<xf:output value="concat(@codedval, ' (',m:head,')')"/>
+													</xf:label>
 													<xf:value ref="@codedval"/>
 												</xf:itemset>
 												<xf:action ev:event="xforms-value-changed">
+													<xf:var name="ensemble" select="."/>
 													<xf:action if="../m:head=''">
 														<!-- set ensemble name if empty -->
-														<xf:setvalue ref="../m:head" value="normalize-space(instance('ensembles')/m:perfResList[@codedval=$ensemble])"/>
+														<xf:setvalue ref="../m:head" value="instance('ensembles')/m:perfResList[@codedval=$ensemble]/m:head"/>
 													</xf:action>
 												</xf:action>
 											</xf:select1>
@@ -586,8 +603,8 @@
 												If no name is entered, a suggested name is inserted when 
 												choosing a standard instrument code in the last field.
 											</h:span></h:a></h:span>
-											<h:span class="fixed_width_long">Standard code <h:a class="help">&#160;?<h:span 
-												class="comment">Choosing a standard MARC code improves data  
+											<h:span class="fixed_width_long"><xf:output value="$instrument_authority"/> standard code <h:a class="help">&#160;?<h:span 
+												class="comment">Choosing a standard code (e.g., MARC or UNIMARC) improves data  
 												compatibility and interchangeability with other systems.<h:br/>
 												Also, it may be used to automatically insert the 
 												instrument's name in the 'name' field if no name has been entered yet.
@@ -688,8 +705,8 @@
 										If no name is entered, a suggested name is inserted when 
 										choosing a standard instrument code in the last field.
 									</h:span></h:a></h:span>
-									<h:span class="fixed_width_long">Standard code <h:a class="help">&#160;?<h:span 
-										class="comment">Choosing a standard MARC code improves data  
+									<h:span class="fixed_width_long"><xf:output value="$instrument_authority"/> standard code <h:a class="help">&#160;?<h:span 
+										class="comment">Choosing a standard code (e.g., MARC or UNIMARC) improves data  
 										compatibility and interchangeability with other systems.<h:br/>
 										Also, it may be used to automatically insert the 
 										instrument's name in the 'name' field if no name has been entered yet.
@@ -961,8 +978,8 @@
 													</h:span></h:a></xf:label>
 												</xf:input>
 												<xf:select1 ref="@codedval" class="long">
-													<xf:label> Standard code <h:a class="help">&#160;?<h:span 
-														class="comment">Choosing a standard MARC code optimizes data  
+													<xf:label><xf:output value="$instrument_authority"/> standard code <h:a class="help">&#160;?<h:span 
+														class="comment">Choosing a standard code (e.g., MARC or UNIMARC) optimizes data  
 														compatibility and interchangeability with other systems.<h:br/>
 														Also, it may be used to automatically insert the 
 														voice type in the "Voice" field if none has been entered yet.
