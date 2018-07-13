@@ -365,8 +365,9 @@
 						</h:table>
 					</h:fieldset>
 					
+					<!-- Instrumentation -->
 					<h:fieldset>                                                     
-						<h:legend>Instruments, singers and roles <h:a class="help">&#160;?<h:span 
+						<h:legend>Instruments and voices <h:a class="help">&#160;?<h:span 
 							class="comment">Instruments and singers may be grouped into ensembles or specified
 							as 'stand-alone' performers. A group of performers acting as an ensemble (including choirs)
 							should be defined as such. Each ensemble may or may not have a name (heading) for display, 
@@ -376,28 +377,96 @@
 						</h:span></h:a>
 							<dcm:id ref="m:perfMedium"/>
 							<dcm:attribute-editor ref="m:perfMedium"/>
-						</h:legend>						
+						</h:legend>		
+						
 						<dcm:create  
 							nodeset="m:perfMedium"
-							label="Add instruments &amp; roles"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium"/>
+							label="Add instrumentation &amp; voices"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium[m:perfResList]"/>
 						
 						<xf:group ref="m:perfMedium">
-							<dcm:instrumentation/>
+							<dcm:create
+								nodeset="m:perfResList"
+								label="Add instrumentation &amp; voices"
+								origin="xxf:element('perfResList')"/>
+							<dcm:instrumentation ref="m:perfResList[not(@source)]"/>
 							<br/>
-
-							<!-- under construction -->
-							<h:fieldset>
-								<h:legend>Source-specific instrumentations</h:legend>
-								[Under construction]
-							</h:fieldset>
+							<h:div class="vertical_spacer"/>
+							
+							<!-- Source-specific instrumentations - under construction -->
+							<xf:group ref=".[//m:sourceDesc/m:source]">
+								<h:fieldset>
+									<h:legend>Source-specific instrumentations</h:legend>
+									<xf:repeat nodeset="m:perfResList[@source]" id="source-instrumentation-repeat">
+										<h:fieldset>
+											<h:legend>Source(s): <xf:output value="@source"/></h:legend>
+										</h:fieldset>
+									</xf:repeat>
+									
+									<!-- To do: change "add" button to a select box containing the (remaining) source ids -->
+<!--
+									Which event is dispatched on changing the select?
+									<xf:select1 ref="instance('temp')/value">
+										<xf:label>Select source: </xf:label>
+										
+										<xf:action ev:event="DOMActivate DOMSubtreeModified">
+											<xf:insert nodeset="m:perfResList" at="last()" position="after" context="."
+												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
+											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('source')"/>
+											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('codedval')"/>
+											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('xml:id',xxf:attribute('xml:id',concat('perfResList_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))))"/>
+										</xf:action>
+										<xf:item>
+											<xf:label/>
+											<xf:value/>
+										</xf:item>
+										<xf:itemset nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source">
+											<xf:label><xf:output value="@xml:id"/></xf:label>
+											<xf:value><xf:output value="@xml:id"/></xf:value>
+										</xf:itemset>							
+									</xf:select1>
+									
+-->
+									<xf:trigger class="create_button">
+										<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}editor/images/add.gif" alt="+" title="Add instrumentation"/>
+											Add source-specific instrumentation
+										</xf:label>
+										<xf:action ev:event="DOMActivate">
+											<xf:insert nodeset="m:perfResList" at="last()" position="after" context="."
+												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
+											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('source')"/>
+											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('codedval')"/>
+											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('xml:id',xxf:attribute('xml:id',concat('perfResList_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))))"/>
+										</xf:action>
+									</xf:trigger>
+								</h:fieldset>
+							</xf:group>
 							<!-- end construction  -->
 							
-
-							<dcm:castlist/>
 						</xf:group>
 						
+					</h:fieldset>
 
+					<!-- Cast list -->
+					<h:fieldset>                                                     
+						<h:legend>Roles (characters) <h:a class="help">&#160;?<h:span class="comment">A list of named persons (characters) or groups of characters
+							appearing in the piece. Role names may be entered in more than one language.                                        
+						</h:span></h:a>        
+						</h:legend>		
+						
+						<dcm:create  
+							nodeset="m:perfMedium"
+							label="Add roles (characters)"
+							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium[m:castList][1]"/>
+						
+						<xf:group ref="m:perfMedium">
+							<dcm:create nodeset="m:castList"
+								label="Add role (character)"
+								origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium[m:castList][1]/m:castList"/>
+							<dcm:castlist ref="m:castList[not(@source)]"/>
+							
+						</xf:group>
+						
 					</h:fieldset>
 					
 					<!-- Components  -->

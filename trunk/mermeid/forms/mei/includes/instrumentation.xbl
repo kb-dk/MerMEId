@@ -65,12 +65,6 @@
 
 
                         <xf:group ref="$binding">
-                            
-							<dcm:create
-								nodeset="m:perfResList"
-								label="Add instrumentation"
-								origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium/m:perfResList"/>
-							
 							
 							<!-- dialog for adding ensembles -->
 							<xxf:dialog id="ensemble-menu" appearance="full" level="modal"
@@ -82,14 +76,14 @@
 											<xf:output ref="if (m:head!='') then m:head else '[empty ensemble]'"/>
 										</xf:label>
 										<xf:action ev:event="DOMActivate">
-											<xf:insert context="$binding/m:perfResList" 
+											<xf:insert context="$binding" 
 												nodeset="m:perfResList"
 												at="index('repeat-ensemble')"
 												position="after" 
 												origin="xxf:instance('instrument-groups')/m:perfResList[@codedval][index('ensemble-menu-repeat')]"/>
 											<!-- generate IDs for added performers -->
 											<xf:insert xxf:iterate="//*[not(@xml:id)]"
-												context="$binding/m:perfResList"
+												context="$binding"
 												origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
 											<xxf:hide dialog="ensemble-menu"/>
 										</xf:action>
@@ -98,7 +92,7 @@
 								</xf:repeat>
 							</xxf:dialog>			
 							
-							<xf:group ref="m:perfResList">
+							<xf:group ref=".">
 								<h:div class="blocklabel strong">Ensembles </h:div>
 								<xf:trigger ref=".[count(m:perfResList)=0]" class="create_button">
 									<xf:label><img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
@@ -231,14 +225,14 @@
 														<xf:output ref="if (@label!='') then @label else '[single performer]'"/>
 													</xf:label>
 													<xf:action ev:event="DOMActivate">
-														<xf:insert context="$binding/m:perfResList/m:perfResList[index('repeat-ensemble')]" 
+														<xf:insert context="$binding/m:perfResList[index('repeat-ensemble')]" 
 															nodeset="m:perfRes"
 															at="index('repeat-ensemble-performer')"
 															position="after" 
 															origin="xxf:instance('instrument-groups')/m:perfResList[m:perfRes][index('ensemble-performer-menu-repeat')]/m:perfRes"/>
 														<!-- generate IDs for added performers -->
 														<xf:insert xxf:iterate="//*[not(@xml:id)]"
-															context="$binding/m:perfResList"
+															context="$binding"
 															origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
 														<xxf:hide dialog="ensemble-performer-menu"/>
 													</xf:action>

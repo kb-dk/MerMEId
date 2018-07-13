@@ -66,22 +66,8 @@
 
                         <xf:group ref="$binding">
                             
-							
-							<h:div class="blocklabel strong"><br/>
-							    Roles <h:a class="help">&#160;?<h:span class="comment">A list of roles (characters)
-									appearing in the piece. Role names may be entered in more than one language.                                        
-								</h:span></h:a>                                        
-								<xf:group ref="m:castList">
-									<dcm:id/>
-									<dcm:attribute-editor/>
-								</xf:group>
-							</h:div>
-							<dcm:create nodeset="m:castList"
-								label="Add role"
-								origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList"/>
-							<xf:group ref="m:castList">
 								<dcm:create nodeset="m:castItem"
-									label="Add cast list (roles)"
+									label="Add roles (characters)"
 									origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem"/>
 								<xf:repeat nodeset="m:castItem" id="repeat-cast">
 									<dcm:create nodeset="m:role"
@@ -309,8 +295,7 @@
 
                     </xf:group>                            
 
-                
-            </xf:group>
+               
         </xbl:template>
     </xbl:binding>
 </xbl:xbl>
