@@ -393,52 +393,47 @@
 							<br/>
 							<h:div class="vertical_spacer"/>
 							
-							<!-- Source-specific instrumentations - under construction -->
+							<!-- Source-specific instrumentations -->
 							<xf:group ref=".[//m:sourceDesc/m:source]">
 								<h:fieldset>
 									<h:legend>Source-specific instrumentations</h:legend>
 									<xf:repeat nodeset="m:perfResList[@source]" id="source-instrumentation-repeat">
+										<xf:var name="source-id" select="@source"/>
+										<xf:var name="source" select="//m:source[@xml:id=$source-id]"/>
 										<h:fieldset>
-											<h:legend>Source(s): <xf:output value="@source"/></h:legend>
+											<h:legend>Instrumentation for source(s): <xf:output value="concat($source/@label,' ',$source/m:titleStmt/m:title,' (',@source,')')"/>
+												<dcm:element-buttons 
+													triggers="remove" 
+													nodeset="m:perfResList" 
+													index="source-instrumentation-repeat"
+													origin=""/>
+											</h:legend>
+											<dcm:instrumentation/>
 										</h:fieldset>
 									</xf:repeat>
 									
-									<!-- To do: change "add" button to a select box containing the (remaining) source ids -->
-<!--
-									Which event is dispatched on changing the select?
-									<xf:select1 ref="instance('temp')/value">
+									<xf:var name="instrumentation-source-select-binding" select="."/>
+									<!-- change = to contains() somehow -->
+									<xf:select1 ref="instance('temp')/value[instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(@xml:id=//m:perfResList/@source)]]" id="instrumentation-source-select">
 										<xf:label>Select source: </xf:label>
-										
-										<xf:action ev:event="DOMActivate DOMSubtreeModified">
-											<xf:insert nodeset="m:perfResList" at="last()" position="after" context="."
+										<xf:action ev:event="xforms-value-changed" if="instance('temp')/value != ''">
+											<xf:insert nodeset="m:perfResList" at="last()" position="after" context="$instrumentation-source-select-binding"
 												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
-											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('source')"/>
-											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('codedval')"/>
-											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('xml:id',xxf:attribute('xml:id',concat('perfResList_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))))"/>
+											<xf:insert context="$instrumentation-source-select-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('source',instance('temp')/value)"/>
+											<xf:insert context="$instrumentation-source-select-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('codedval')"/>
+											<xf:insert context="$instrumentation-source-select-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('xml:id',xxf:attribute('xml:id',concat('perfResList_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))))"/>
+											<xf:setvalue ref="." value=""/>
 										</xf:action>
 										<xf:item>
 											<xf:label/>
 											<xf:value/>
 										</xf:item>
-										<xf:itemset nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source">
-											<xf:label><xf:output value="@xml:id"/></xf:label>
+										<!-- change = to contains() somehow -->
+										<xf:itemset nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(@xml:id=//m:perfResList/@source)]">
+											<xf:label><xf:output value="concat(@label,' ',m:titleStmt/m:title,' (',@xml:id,')')"/></xf:label>
 											<xf:value><xf:output value="@xml:id"/></xf:value>
 										</xf:itemset>							
 									</xf:select1>
-									
--->
-									<xf:trigger class="create_button">
-										<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}editor/images/add.gif" alt="+" title="Add instrumentation"/>
-											Add source-specific instrumentation
-										</xf:label>
-										<xf:action ev:event="DOMActivate">
-											<xf:insert nodeset="m:perfResList" at="last()" position="after" context="."
-												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
-											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('source')"/>
-											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('codedval')"/>
-											<xf:insert context="m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('xml:id',xxf:attribute('xml:id',concat('perfResList_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))))"/>
-										</xf:action>
-									</xf:trigger>
 								</h:fieldset>
 							</xf:group>
 							<!-- end construction  -->
