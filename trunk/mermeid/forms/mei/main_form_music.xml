@@ -4,6 +4,7 @@
 	xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:xi="http://www.w3.org/2001/XInclude" 
+	xmlns:exsl="http://exslt.org/common"
 	xmlns:dcm="http://www.kb.dk/dcm"
 	xmlns:m="http://www.music-encoding.org/ns/mei" 
 	xmlns:ev="http://www.w3.org/2001/xml-events"
@@ -317,16 +318,6 @@
 													<!-- load data on open - may be deactivated if performance is an issue -->
 													<xf:send submission="load-fileList"/>
 												</xf:action>
-												
-												<!-- was (which doesn't work any more):  
-												<xf:action ev:event="DOMActivate">
-													<xf:setvalue ref="instance('temp')/nodeset" 
-														value='"instance(&apos;data-instance&apos;)/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[index(&apos;repeat-expression&apos;)]/m:relationList/m:relation[index(&apos;version_relations&apos;)]"'/>
-													<xxf:show dialog="relation_dialog"/>
-													<xf:setvalue ref="instance('temp')/target_uri" value="concat(instance('parameters')/dcm:server_name,'storage/cross-link.xq?get=works')"/>
-													<xf:send submission="load-fileList"/>
-												</xf:action>-->
-												
 											</xf:trigger>
 											<xf:trigger appearance="minimal">
 												<xf:label><h:span style="vertical-align:bottom;"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/go_to_link.png" 
@@ -394,48 +385,114 @@
 							<h:div class="vertical_spacer"/>
 							
 							<!-- Source-specific instrumentations -->
-							<xf:group ref=".[//m:sourceDesc/m:source]">
+							<xf:group ref=".[instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source]">
+								<xf:var name="source-instrumentation-ids" select="string-join(m:perfResList[@source]/@source,' ')"/>
+								<xf:var name="all-sources" select="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source"/>
+								<xf:var name="used-sources" select="$all-sources[contains($source-instrumentation-ids, @xml:id)]"/>
+								<xf:var name="unused-sources" select="$all-sources[not(contains($source-instrumentation-ids, @xml:id))]"/>								
+
 								<h:fieldset>
 									<h:legend>Source-specific instrumentations</h:legend>
 									<xf:repeat nodeset="m:perfResList[@source]" id="source-instrumentation-repeat">
+										<xf:var name="perfResList-binding" select="."/>
 										<xf:var name="source-id" select="@source"/>
-										<xf:var name="source" select="//m:source[@xml:id=$source-id]"/>
 										<h:fieldset>
-											<h:legend>Instrumentation for source(s): <xf:output value="concat($source/@label,' ',$source/m:titleStmt/m:title,' (',@source,')')"/>
+											<h:legend>Instrumentation
 												<dcm:element-buttons 
 													triggers="remove" 
 													nodeset="m:perfResList" 
 													index="source-instrumentation-repeat"
 													origin=""/>
 											</h:legend>
-											<dcm:instrumentation/>
+											<h:div style="float:left; width:400px;">
+												<h:b>Applies to source(s):</h:b>
+												<h:ul>
+													<xf:repeat nodeset="$all-sources[contains($source-id,@xml:id)]">
+														<xf:var name="source-title" select="if (string-length(m:titleStmt/m:title) &lt; 35) then 
+															m:titleStmt/m:title else concat(substring(m:titleStmt/m:title,1,30),'...')"/>
+														<h:li>
+															<xf:output value="concat(@label,' ',$source-title,' (',@xml:id,')')"/>
+															<xf:trigger appearance="minimal" ref=".[count(tokenize(normalize-space($source-id),' ')) &gt; 1]">
+																<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/delete.gif" alt="Remove source"/></xf:label>
+																<xf:action ev:event="DOMActivate">
+																	<xf:var name="updated-source-list" select="concat(substring-before($source-id,@xml:id),substring-after($source-id,@xml:id))"/>
+																	<xf:setvalue ref="$perfResList-binding/@source" value="$updated-source-list"/> 
+																</xf:action>
+															</xf:trigger>
+														</h:li>
+													</xf:repeat>
+												</h:ul>
+												<xf:trigger ref=".[$unused-sources]">
+													<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add source"/> Add source</xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xxf:show dialog="instrumentation-add-source-menu"/>
+													</xf:action>
+												</xf:trigger> 
+											</h:div>
+											<h:div style="float:left;">
+												<dcm:instrumentation/>
+											</h:div>
 										</h:fieldset>
+										
+										<!-- dialog for adding source id to existing instrumentation -->
+										<xxf:dialog id="instrumentation-add-source-menu" appearance="full" level="modal"
+											close="true" draggable="true" visible="false">
+											<xf:label>Sources</xf:label>
+											<xf:var name="binding" select="."/>
+											<xf:repeat nodeset="$unused-sources" id="instrumentation-source-menu-repeat">
+												<xf:var name="sourceId" select="@xml:id"/>
+												<xf:trigger submission="replace-form-with">
+													<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add source"/>
+														<xf:output value="concat(@label,' ',m:titleStmt/m:title,' (',@xml:id,')')"/>
+													</xf:label>
+													<xf:action ev:event="DOMActivate">
+														<xf:setvalue ref="$binding/@source" 
+															value="concat(., ' ', $sourceId)"/>
+														<xxf:hide dialog="instrumentation-add-source-menu"/>
+													</xf:action>
+												</xf:trigger>
+												<h:br/>
+											</xf:repeat>
+										</xxf:dialog>			
+										
 									</xf:repeat>
-									
-									<xf:var name="instrumentation-source-select-binding" select="."/>
-									<!-- change = to contains() somehow -->
-									<xf:select1 ref="instance('temp')/value[instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(@xml:id=//m:perfResList/@source)]]" id="instrumentation-source-select">
-										<xf:label>Select source: </xf:label>
-										<xf:action ev:event="xforms-value-changed" if="instance('temp')/value != ''">
-											<xf:insert nodeset="m:perfResList" at="last()" position="after" context="$instrumentation-source-select-binding"
-												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
-											<xf:insert context="$instrumentation-source-select-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('source',instance('temp')/value)"/>
-											<xf:insert context="$instrumentation-source-select-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('codedval')"/>
-											<xf:insert context="$instrumentation-source-select-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('xml:id',xxf:attribute('xml:id',concat('perfResList_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))))"/>
-											<xf:setvalue ref="." value=""/>
+
+									<xf:trigger ref=".[$unused-sources]">
+										<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add source"/> Add source instrumentation</xf:label>
+										<xf:action ev:event="DOMActivate">
+											<xxf:show dialog="instrumentation-add-menu"/>
 										</xf:action>
-										<xf:item>
-											<xf:label/>
-											<xf:value/>
-										</xf:item>
-										<!-- change = to contains() somehow -->
-										<xf:itemset nodeset="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[not(@xml:id=//m:perfResList/@source)]">
-											<xf:label><xf:output value="concat(@label,' ',m:titleStmt/m:title,' (',@xml:id,')')"/></xf:label>
-											<xf:value><xf:output value="@xml:id"/></xf:value>
-										</xf:itemset>							
-									</xf:select1>
+									</xf:trigger> 
+
+									<!-- dialog for adding new source instrumentation -->
+									<xxf:dialog id="instrumentation-add-menu" appearance="full" level="modal"
+										close="true" draggable="true" visible="false">
+										<xf:label>Select source</xf:label>
+										<xf:var name="inst-add-binding" select="."/>
+										<xf:repeat nodeset="$unused-sources" id="instrumentation-add-menu-repeat">
+											<xf:var name="sourceId" select="@xml:id"/>
+											<xf:trigger submission="replace-form-with">
+												<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add source"/>
+													<xf:output value="concat(@label,' ',m:titleStmt/m:title,' (',@xml:id,')')"/>
+												</xf:label>
+												<xf:action ev:event="DOMActivate">
+													<xf:insert context="$inst-add-binding" nodeset="m:perfResList" at="last()" position="after" 
+														origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
+													<xf:insert context="$inst-add-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('source',$sourceId)"/>
+													<xf:insert context="$inst-add-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('codedval')"/>
+													<xf:insert context="$inst-add-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('xml:id',xxf:attribute('xml:id',concat('perfResList_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))))"/>
+													<xxf:hide dialog="instrumentation-add-menu"/>
+												</xf:action>
+											</xf:trigger>
+											<h:br/>
+										</xf:repeat>
+									</xxf:dialog>			
+									
 								</h:fieldset>
+								
 							</xf:group>
+							
+							
 							<!-- end construction  -->
 							
 						</xf:group>
