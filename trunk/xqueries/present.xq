@@ -15,6 +15,7 @@ declare variable $document := request:get-parameter("doc", "");
 declare variable $language := request:get-parameter("language", "");
 declare variable $score := request:get-parameter("score", "");
 declare variable $xsl := request:get-parameter("xsl", "mei_to_html.xsl");
+declare variable $display_authority_links := request:get-parameter("display_authority_links", "");
 
 let $host := request:get-header('HOST')
 let $list := 
@@ -28,6 +29,7 @@ let $params :=
    <param name="doc" value="{$document}"/>
    <param name="language" value="{$language}"/>
    <param name="score" value="{$score}"/>
+   <param name="display_authority_links" value="{$display_authority_links}"/>
 </parameters>
 
 for $doc in $list

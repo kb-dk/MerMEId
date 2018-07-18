@@ -392,7 +392,13 @@
 								<xf:var name="unused-sources" select="$all-sources[not(contains($source-instrumentation-ids, @xml:id))]"/>								
 
 								<h:fieldset>
-									<h:legend>Source-specific instrumentations</h:legend>
+									<h:legend>Source-specific instrumentations 
+										<h:a class="help">?<h:span class="comment">In addition to specifying instrumentation and/or voices at work or version level,
+										source-specific instrumentations may be added. This allows for the recording of, for instance, the instrumentation used in a piano score 
+										for an otherwise orchestral work without adding a piano to the overall instrumentation.<h:br/>
+										Create a new such instrumentation by selecting the desired source. Multiple sources may share the same instrumentation. 
+										</h:span></h:a>
+									</h:legend>
 									<xf:repeat nodeset="m:perfResList[@source]" id="source-instrumentation-repeat">
 										<xf:var name="perfResList-binding" select="."/>
 										<xf:var name="source-id" select="@source"/>
