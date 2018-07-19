@@ -766,7 +766,7 @@
 		<xsl:apply-templates select="m:history[//text()]" mode="history"/>
 		<!-- performers -->
 		<xsl:apply-templates select="m:perfMedium[*//text()]">
-			<xsl:with-param name="full" select="true()"/>
+			<xsl:with-param name="show" select="'full'"/>
 		</xsl:apply-templates>
 		<!-- meter, key, incipit – only relevant at this level in single movement works -->
 		<xsl:apply-templates select="m:tempo[text()]"/>
@@ -1348,36 +1348,34 @@
 
 	<!-- perfMedium templates -->
 	<xsl:template match="m:perfMedium[//text()]">
-		<xsl:param name="full"/>
+		<xsl:param name="show"/>
 		<xsl:if test="m:perfResList[* and //text()][not(@source)]">
 			<div class="perfmedium list_block">
 				<xsl:apply-templates select="m:perfResList[* and //text()][not(@source)]">
-					<xsl:with-param name="full" select="$full"/>
+					<xsl:with-param name="show" select="$show"/>
 				</xsl:apply-templates>
 			</div>			
 		</xsl:if>
 		<xsl:apply-templates select="m:castList[*//text()]">
-			<xsl:with-param name="full" select="$full"/>
+			<xsl:with-param name="show" select="$show"/>
 		</xsl:apply-templates>
 	</xsl:template>
 	
 	<xsl:template match="m:perfResList">
 		<xsl:param name="source-specific"/>
-		<xsl:param name="full"/>
+		<xsl:param name="show"/>
 		<div class="relation_list">
-			<xsl:if test="$full and not(name(parent::*)='perfResList')">
+			<xsl:if test="$show='full' and not(name(parent::*)='perfResList')">
 				<span class="p_heading relation_list_label"><xsl:value-of select="$l/instrumentation"/>: </span>
 			</xsl:if>
-			<xsl:if test="not($full) and not(name(parent::*)='perfResList')">
+			<xsl:if test="$show='label' and not(name(parent::*)='perfResList')">
 				<span class="relations"><xsl:value-of select="$l/instrumentation"/>: </span>
 			</xsl:if>
 			<xsl:apply-templates select="m:perfResList[*//text()]">
 				<xsl:with-param name="source-specific" select="$source-specific"/>
-				<xsl:with-param name="full" select="$full"/>
+				<xsl:with-param name="show" select="$show"/>
 			</xsl:apply-templates>
-			<!-- Ensemble heading (like "Orchestra") is shown in movements and sources only if no individual instruments
-				 are specified. We may want to change this to show heading always. -->
-			<xsl:if test="m:head[text() and ($full or count(following-sibling::m:perfRes)=0)]">
+			<xsl:if test="m:head[text()]">
 				<xsl:value-of select="m:head"/>
 				<xsl:if test="m:perfRes[text()]">
 					<xsl:text>:</xsl:text>
@@ -1421,14 +1419,14 @@
 	</xsl:template>
 	
 	<xsl:template match="m:castList">
-		<xsl:param name="full" select="true()"/>
+		<xsl:param name="show" select="'full'"/>
 		<div class="perfmedium list_block">
 			<div class="relation_list">
-				<xsl:if test="$full">
+				<xsl:if test="$show='full'">
 					<span class="p_heading relation_list_label"><xsl:value-of select="$l/roles"/>: </span>
 				</xsl:if>
 				<xsl:element name="span">
-					<xsl:if test="$full">
+					<xsl:if test="$show='full'">
 						<xsl:attribute name="class">relations</xsl:attribute>
 					</xsl:if>
 					<xsl:for-each
@@ -1439,7 +1437,7 @@
 							<xsl:call-template name="maybe_print_lang"/>
 							<xsl:apply-templates select="../../../../m:castList" mode="castlist">
 								<xsl:with-param name="lang" select="$lang"/>
-								<xsl:with-param name="full" select="$full"/>
+								<xsl:with-param name="show" select="$show"/>
 							</xsl:apply-templates>
 						</xsl:element>
 						<xsl:if test="position()&lt;last()">
@@ -1453,7 +1451,7 @@
 
 	<xsl:template match="m:castList" mode="castlist">
 		<xsl:param name="lang" select="'en'"/>
-		<xsl:param name="full" select="true()"/>
+		<xsl:param name="show" select="'full'"/>
 		<!-- Overall cast list is assumed to be defined at top expression level, not work level -->
 		<xsl:variable name="topLevelCastList" 
 			select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:castList"/>
@@ -1466,7 +1464,7 @@
 			<!-- Sort cast list according to top-level list -->
 			<xsl:sort data-type="number" select="string-length(substring-before($SortingValues,concat(',',../../@n,',')))"/>			
 			<xsl:apply-templates select="."/>
-			<xsl:if test="$full">
+			<xsl:if test="$show='full'">
 				<xsl:apply-templates select="../../m:roleDesc[@xml:lang=$lang]"/>
 				<xsl:for-each select="../../m:perfRes[text()]"> (<xsl:apply-templates select="."/>)</xsl:for-each>
 			</xsl:if>
@@ -1482,7 +1480,7 @@
 
 	<xsl:template match="m:perfMedium" mode="subLevel">
 		<xsl:apply-templates select=".">
-			<xsl:with-param name="full" select="false()"/>
+			<xsl:with-param name="show" select="'short'"/>
 		</xsl:apply-templates>
 	</xsl:template>
 	
@@ -1892,7 +1890,7 @@
 			<!-- source-specific instrumentation -->
 			<xsl:apply-templates select="$document//m:perfResList[contains(@source, $source_id)]">
 				<xsl:with-param name="source-specific" select="true()"/>
-				<xsl:with-param name="full" select="false()"/>
+				<xsl:with-param name="show" select="'label'"/>
 			</xsl:apply-templates>
 			
 			
