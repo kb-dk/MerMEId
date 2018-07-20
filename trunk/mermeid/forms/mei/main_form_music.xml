@@ -386,10 +386,14 @@
 							
 							<!-- Source-specific instrumentations -->
 							<xf:group ref=".[instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source]">
-								<xf:var name="source-instrumentation-ids" select="string-join(m:perfResList[@source]/@source,' ')"/>
+								<xf:var name="thisPerfMedium" select="."/>
+								<xf:var name="source-instrumentation-ids" select="string-join(/*//m:perfResList[@source]/@source,' ')"/>
 								<xf:var name="all-sources" select="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source"/>
 								<xf:var name="used-sources" select="$all-sources[contains($source-instrumentation-ids, @xml:id)]"/>
-								<xf:var name="unused-sources" select="$all-sources[not(contains($source-instrumentation-ids, @xml:id))]"/>								
+								<xf:var name="unused-sources" select="$all-sources[not(contains($source-instrumentation-ids, @xml:id))]"/>
+								<!-- a list of sources associated to this particular expression (version) or none -->
+								<xf:var name="unused-expression-sources" select="$unused-sources[m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$thisPerfMedium/ancestor::m:expression/@xml:id]]
+									| $unused-sources[not(m:relationList/m:relation[@rel='isEmbodimentOf' and @target!=''])]"/>								
 
 								<h:fieldset>
 									<h:legend>Source-specific instrumentations 
@@ -428,8 +432,8 @@
 														</h:li>
 													</xf:repeat>
 												</h:ul>
-												<xf:trigger ref=".[$unused-sources]">
-													<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add source"/> Add source</xf:label>
+												<xf:trigger ref=".[$unused-expression-sources]">
+													<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add source from list"/> Add source</xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xxf:show dialog="instrumentation-add-source-menu"/>
 													</xf:action>
@@ -445,7 +449,7 @@
 											close="true" draggable="true" visible="false">
 											<xf:label>Sources</xf:label>
 											<xf:var name="binding" select="."/>
-											<xf:repeat nodeset="$unused-sources" id="instrumentation-source-menu-repeat">
+											<xf:repeat nodeset="$unused-expression-sources" id="instrumentation-source-menu-repeat">
 												<xf:var name="sourceId" select="@xml:id"/>
 												<xf:trigger submission="replace-form-with">
 													<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add source"/>
@@ -463,8 +467,8 @@
 										
 									</xf:repeat>
 
-									<xf:trigger ref=".[$unused-sources]">
-										<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add source"/> Add source instrumentation</xf:label>
+									<xf:trigger ref=".[$unused-expression-sources]">
+										<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add source from list"/> Add source instrumentation</xf:label>
 										<xf:action ev:event="DOMActivate">
 											<xxf:show dialog="instrumentation-add-menu"/>
 										</xf:action>
@@ -475,7 +479,7 @@
 										close="true" draggable="true" visible="false">
 										<xf:label>Select source</xf:label>
 										<xf:var name="inst-add-binding" select="."/>
-										<xf:repeat nodeset="$unused-sources" id="instrumentation-add-menu-repeat">
+										<xf:repeat nodeset="$unused-expression-sources" id="instrumentation-add-menu-repeat">
 											<xf:var name="sourceId" select="@xml:id"/>
 											<xf:trigger submission="replace-form-with">
 												<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add source"/>
@@ -491,15 +495,14 @@
 												</xf:action>
 											</xf:trigger>
 											<h:br/>
-										</xf:repeat>
+										</xf:repeat>										
+										
 									</xxf:dialog>			
 									
 								</h:fieldset>
 								
 							</xf:group>
-							
-							
-							<!-- end construction  -->
+							<!-- end source-specific instrumentations -->
 							
 						</xf:group>
 						
