@@ -379,7 +379,7 @@
 							<dcm:create
 								nodeset="m:perfResList"
 								label="Add instrumentation &amp; voices"
-								origin="xxf:element('perfResList')"/>
+								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
 							<dcm:instrumentation ref="m:perfResList[not(@source)]"/>
 							<br/>
 							<h:div class="vertical_spacer"/>
