@@ -16,7 +16,7 @@
     <delete file="library/${webapp.bibl}"/>    
   </target>
 
-  <target name="war">
+  <target name="war" depends="build">
   </target>
 
   <target name="build" depends="clean">
