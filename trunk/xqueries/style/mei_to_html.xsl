@@ -31,6 +31,9 @@
 	<xsl:param name="hostname"/>
 	<xsl:param name="language"/>
 	<xsl:param name="score"/>
+	<!-- Display all links to authority files? (string, not boolean) -->
+	<!-- (see remark on the limitations of this feature above the template for *[@authURI etc.]) -->
+	<xsl:param name="display_authority_links" select="'false'"/>
 	
 
 	<!-- GLOBAL VARIABLES -->
@@ -38,7 +41,7 @@
 	<!-- Default values -->
 	<!-- Language to use for labels etc. Default is overridden if the calling script provides a language parameter -->
 	<xsl:variable name="default_language">en</xsl:variable>
-	<!-- Render scores in <music> also? -->
+	<!-- Render scores in <music> also? (string, not boolean) -->
 	<xsl:variable name="render_score">true</xsl:variable>
 	
 	<!-- Other variables - do not edit -->
@@ -75,7 +78,15 @@
 		</xsl:choose>
 	</xsl:variable>
 	
+	<xsl:variable name="topLevelperfResList" 
+		select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:perfResList"/>
+	<xsl:variable name="InstrSortingValues">
+		<xsl:call-template name="makeSortList">
+			<xsl:with-param name="nodeset" select="$topLevelperfResList"/>
+		</xsl:call-template>
+	</xsl:variable>		
 	
+	<xsl:variable name="document" select="/"/>
 	
 	<!-- CREATE HTML DOCUMENT -->
 
@@ -754,7 +765,9 @@
 		<xsl:apply-templates select="m:creation[//text()]"/>
 		<xsl:apply-templates select="m:history[//text()]" mode="history"/>
 		<!-- performers -->
-		<xsl:apply-templates select="m:perfMedium[*//text()]"/>
+		<xsl:apply-templates select="m:perfMedium[*//text()]">
+			<xsl:with-param name="show" select="'full'"/>
+		</xsl:apply-templates>
 		<!-- meter, key, incipit – only relevant at this level in single movement works -->
 		<xsl:apply-templates select="m:tempo[text()]"/>
 		<xsl:if test="m:meter[normalize-space(concat(@count,@unit,@sym))]">
@@ -1334,80 +1347,86 @@
 	<!-- work-related templates -->
 
 	<!-- perfMedium templates -->
-	<xsl:template match="m:perfMedium">
-		<xsl:param name="full" select="true()"/>
-		<xsl:if test="m:perfResList[* and //text()]">
+	<xsl:template match="m:perfMedium[//text()]">
+		<xsl:param name="show"/>
+		<xsl:if test="m:perfResList[* and //text()][not(@source)]">
 			<div class="perfmedium list_block">
-				<xsl:for-each select="m:perfResList[*]">
-					<!-- Overall intrumentation is assumed to be defined at top expression level, not work level -->
-					<xsl:variable name="topLevelperfResList" 
-						select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:perfResList"/>
-					<xsl:variable name="SortingValues">
-						<xsl:call-template name="makeSortList">
-							<xsl:with-param name="nodeset" select="$topLevelperfResList"/>
-						</xsl:call-template>
-					</xsl:variable>		
-					<div class="relation_list">
-						<xsl:if test="position()=1 and $full">
-							<span class="p_heading relation_list_label"><xsl:value-of select="$l/instrumentation"/>: </span>
-						</xsl:if>
-						<xsl:apply-templates select="m:perfResList[*//text()]">
-							<xsl:with-param name="SortList" select="$SortingValues"/>
-							<!-- Sort instrument groups according to top-level list -->
-							<xsl:sort data-type="number" select="string-length(substring-before($SortingValues,concat(',',@n,',')))"/>
-						</xsl:apply-templates>
-						<xsl:apply-templates select="m:perfRes[not(@solo='true')][text()]">
-							<!-- Sort instruments according to top-level list -->
-							<xsl:sort data-type="number" select="string-length(substring-before($SortingValues,concat(',',@n,',')))"/>
-						</xsl:apply-templates>
-						<xsl:if test="count(m:perfRes[@solo='true'])&gt;0">
-							<xsl:if test="count(m:perfRes[not(@solo='true')])&gt;0">
-								<br/>
-							</xsl:if>
-							<span class="p_heading:"><xsl:call-template name="capitalize">
-								<xsl:with-param name="str"><xsl:value-of select="$l/soloist"/></xsl:with-param>
-							</xsl:call-template>
-								<xsl:if test="count(m:perfRes[@solo='true'])&gt;1 and ($language='en' or ($language='' and $default_language='en'))">s</xsl:if>:</span>
-							<xsl:apply-templates select="m:perfRes[@solo='true'][text()]"/>
-						</xsl:if>
-					</div>
-				</xsl:for-each>
-			</div>
+				<xsl:apply-templates select="m:perfResList[* and //text()][not(@source)]">
+					<xsl:with-param name="show" select="$show"/>
+				</xsl:apply-templates>
+			</div>			
 		</xsl:if>
 		<xsl:apply-templates select="m:castList[*//text()]">
-			<xsl:with-param name="full" select="$full"/>
+			<xsl:with-param name="show" select="$show"/>
 		</xsl:apply-templates>
 	</xsl:template>
-
-	<xsl:template match="m:perfResList[*//text()]">
-		<xsl:param name="SortList"/>
-		<div>
-		<xsl:if test="m:head[text()]">
-			<xsl:value-of select="m:head"/>
-			<xsl:if test="m:perfRes[text()]">
-				<xsl:text>:</xsl:text>
+	
+	<xsl:template match="m:perfResList">
+		<xsl:param name="source-specific"/>
+		<xsl:param name="show"/>
+		<div class="relation_list">
+			<xsl:if test="$show='full' and not(name(parent::*)='perfResList')">
+				<span class="p_heading relation_list_label"><xsl:value-of select="$l/instrumentation"/>: </span>
 			</xsl:if>
-			<xsl:text> </xsl:text>
-		</xsl:if>
-		<xsl:for-each select="m:perfRes[text()]">
-			<xsl:sort data-type="number" select="string-length(substring-before($SortList,concat(',',@n,',')))"/>			
-			<xsl:apply-templates select="."/>
-			<xsl:if test="position()&lt;last()">
-				<xsl:text>, </xsl:text>
+			<xsl:if test="$show='label' and not(name(parent::*)='perfResList')">
+				<span class="relations"><xsl:value-of select="$l/instrumentation"/>: </span>
 			</xsl:if>
-		</xsl:for-each>
+			<xsl:apply-templates select="m:perfResList[*//text()]">
+				<xsl:with-param name="source-specific" select="$source-specific"/>
+				<xsl:with-param name="show" select="$show"/>
+			</xsl:apply-templates>
+			<xsl:if test="m:head[text()]">
+				<xsl:value-of select="m:head"/>
+				<xsl:if test="m:perfRes[text()]">
+					<xsl:text>:</xsl:text>
+				</xsl:if>
+				<xsl:text> </xsl:text>
+			</xsl:if>
+			<!-- list performers -->
+			<xsl:if test="m:perfRes[text()][not(@solo='true')]">
+				<xsl:apply-templates select="m:perfRes[text()][not(@solo='true')]">
+					<!-- Sort instruments according to top-level list -->
+					<xsl:sort data-type="number" select="string-length(substring-before($InstrSortingValues,concat(',',@n,',')))"/>			
+				</xsl:apply-templates>
+			</xsl:if>
+			<!-- list soloists -->
+			<xsl:if test="m:perfRes[@solo='true']">
+				<xsl:if test="m:perfRes[not(@solo='true')]">
+					<br/>
+				</xsl:if>
+					<span class="p_heading:"><xsl:call-template name="capitalize">
+							<xsl:with-param name="str"><xsl:value-of select="$l/soloist"/></xsl:with-param>
+						</xsl:call-template>
+						<xsl:if test="count(m:perfRes[@solo='true'])&gt;1 and ($language='en' or ($language='' and $default_language='en'))">s</xsl:if>:
+					</span>
+					<xsl:apply-templates select="m:perfRes[@solo='true'][text()]">
+						<!-- Sort instruments according to top-level list -->
+						<xsl:sort data-type="number" select="string-length(substring-before($InstrSortingValues,concat(',',@n,',')))"/>			
+					</xsl:apply-templates>
+			</xsl:if>
 		</div>
 	</xsl:template>
 
+	<xsl:template match="m:perfRes[text()]">
+		<xsl:if test="@count &gt; 1">
+			<xsl:apply-templates select="@count"/>
+			<xsl:text> </xsl:text>
+		</xsl:if>
+		<xsl:apply-templates/>
+		<xsl:if test="position() != last()">
+			<xsl:text>, </xsl:text>
+		</xsl:if>
+	</xsl:template>
+	
 	<xsl:template match="m:castList">
-		<xsl:param name="full" select="true()"/>
+		<xsl:param name="show" select="'full'"/>
 		<div class="perfmedium list_block">
 			<div class="relation_list">
-				<xsl:if test="$full">
+				<xsl:if test="$show='full'">
 					<span class="p_heading relation_list_label"><xsl:value-of select="$l/roles"/>: </span>
 				</xsl:if>
 				<xsl:element name="span">
-					<xsl:if test="$full">
+					<xsl:if test="$show='full'">
 						<xsl:attribute name="class">relations</xsl:attribute>
 					</xsl:if>
 					<xsl:for-each
@@ -1418,7 +1437,7 @@
 							<xsl:call-template name="maybe_print_lang"/>
 							<xsl:apply-templates select="../../../../m:castList" mode="castlist">
 								<xsl:with-param name="lang" select="$lang"/>
-								<xsl:with-param name="full" select="$full"/>
+								<xsl:with-param name="show" select="$show"/>
 							</xsl:apply-templates>
 						</xsl:element>
 						<xsl:if test="position()&lt;last()">
@@ -1429,22 +1448,10 @@
 			</div>
 		</div>
 	</xsl:template>
-	
-	<xsl:template match="m:perfRes">
-		<xsl:if test="@count &gt; 1">
-			<xsl:apply-templates select="@count"/>
-		</xsl:if>
-		<xsl:text> </xsl:text>
-		<xsl:apply-templates/>
-		<xsl:if test="position()&lt;last()">
-			<xsl:text>, 
-   			</xsl:text>
-		</xsl:if>
-	</xsl:template>
 
 	<xsl:template match="m:castList" mode="castlist">
 		<xsl:param name="lang" select="'en'"/>
-		<xsl:param name="full" select="true()"/>
+		<xsl:param name="show" select="'full'"/>
 		<!-- Overall cast list is assumed to be defined at top expression level, not work level -->
 		<xsl:variable name="topLevelCastList" 
 			select="ancestor-or-self::m:expression[local-name(../..)='work']/m:perfMedium/m:castList"/>
@@ -1457,7 +1464,7 @@
 			<!-- Sort cast list according to top-level list -->
 			<xsl:sort data-type="number" select="string-length(substring-before($SortingValues,concat(',',../../@n,',')))"/>			
 			<xsl:apply-templates select="."/>
-			<xsl:if test="$full">
+			<xsl:if test="$show='full'">
 				<xsl:apply-templates select="../../m:roleDesc[@xml:lang=$lang]"/>
 				<xsl:for-each select="../../m:perfRes[text()]"> (<xsl:apply-templates select="."/>)</xsl:for-each>
 			</xsl:if>
@@ -1473,7 +1480,7 @@
 
 	<xsl:template match="m:perfMedium" mode="subLevel">
 		<xsl:apply-templates select=".">
-			<xsl:with-param name="full" select="false()"/>
+			<xsl:with-param name="show" select="'short'"/>
 		</xsl:apply-templates>
 	</xsl:template>
 	
@@ -1717,7 +1724,15 @@
 		<xsl:param name="capitalize"/>
 		<!-- Separator between names with the same role -->
 		<xsl:param name="separator" select="';'"/>
-		<xsl:for-each select="m:corpName[text() and not(@role=$exclude)] | m:persName[text() and not(@role=$exclude)]">
+		<!-- make a local copy of the elements, making sure that corpNames are processed first -->
+		<xsl:variable name="local-copy-fragment">
+			<xsl:for-each select="m:corpName[text() and not(@role=$exclude)] | m:persName[text() and not(@role=$exclude)]">
+				<xsl:sort select="name()"/>
+				<xsl:copy-of select="."/>			
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="local-copy" select="exsl:node-set($local-copy-fragment)"/>
+		<xsl:for-each select="$local-copy/*">
 			<xsl:variable name="role_str">
 				<!-- look up the role description text (or use the attribute value unchanged if not found) -->
 				<xsl:variable name="role_attr"><xsl:value-of select="@role"/></xsl:variable>
@@ -1790,7 +1805,7 @@
 				<xsl:otherwise>
 					<xsl:choose>
 						<xsl:when test="@role=following-sibling::*[1]/@role">
-							<xsl:apply-templates select="."/>, </xsl:when>
+							<xsl:apply-templates select="."/><xsl:value-of select="$separator"/><xsl:text> </xsl:text></xsl:when>
 						<xsl:when test="not(following-sibling::*[1]/@role)">
 							<xsl:apply-templates select="."/>
 						</xsl:when>
@@ -1871,6 +1886,13 @@
 					</xsl:when>
 				</xsl:choose>
 			</xsl:if>
+
+			<!-- source-specific instrumentation -->
+			<xsl:apply-templates select="$document//m:perfResList[contains(@source, $source_id)]">
+				<xsl:with-param name="source-specific" select="true()"/>
+				<xsl:with-param name="show" select="'label'"/>
+			</xsl:apply-templates>
+			
 			
 			<xsl:if test="m:respStmt/m:persName[text()] | m:respStmt/m:corpName[text()]">
 				<p>
@@ -2935,14 +2957,26 @@
 		</a>
 	</xsl:template>
 	
-	<!-- authority files -->
-	<xsl:template match="*[@authURI!='' and @codedval!='']">
-		<xsl:value-of select="."/>
-		<xsl:element name="a">
-			<xsl:attribute name="href"><xsl:value-of select="concat(@authURI,'/',@codedval)"/></xsl:attribute>
-			<xsl:attribute name="target">_blank</xsl:attribute>
-			<xsl:attribute name="style">text-decoration:none;</xsl:attribute>
-			<img src="/editor/images/external_link.gif" alt="link" title="Link to authority file" border="0"/></xsl:element>
+	<!-- Authority file links -->
+	<!-- Please note: The link is generated by concatenating @authURI and @codedval, which works with some authority files but not all. Change if necessary. -->
+	<xsl:template match="*[@authURI!='' and @codedval!=''][not(name()='perfResList')]">
+		<!-- not applied to perfResList (which used to have @authURI before moving it to the individual <perfRes> elements) -->
+		<xsl:variable name="local-copy">
+			<xsl:copy>
+				<xsl:copy-of select="@*[not(name()='authURI' or name()='codedval')]"/>
+				<xsl:copy-of select="node()"/>
+			</xsl:copy>
+		</xsl:variable>
+		<!-- process the element without @authURI and @codedval -->
+		<xsl:apply-templates select="exsl:node-set($local-copy)"/>
+		<!-- and add a link when done -->
+		<xsl:if test="$display_authority_links = 'true'">
+			<xsl:element name="a">
+				<xsl:attribute name="href"><xsl:value-of select="concat(@authURI,'/',@codedval)"/></xsl:attribute>
+				<xsl:attribute name="target">_blank</xsl:attribute>
+				<xsl:attribute name="style">text-decoration:none;</xsl:attribute>
+				<img src="/editor/images/external_link.gif" alt="link" title="Link to authority file" border="0"/></xsl:element>
+		</xsl:if>
 	</xsl:template>
 	
 	<!-- display change log -->

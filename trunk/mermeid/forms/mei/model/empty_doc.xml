@@ -365,7 +365,8 @@
                 </event>
               </eventList>
             </history>
-            <perfMedium analog="marc:048" authority="marcmusperf">
+            <!-- Two <perfMedium> elements to allow inserting instrumentation and cast list separately  -->
+            <perfMedium>
               <castList>
                 <castItem n="">
                   <perfRes count="" solo="" codedval="" n=""/> 
@@ -375,6 +376,8 @@
                   <roleDesc xml:lang="en"/>
                 </castItem>
               </castList>
+            </perfMedium>
+            <perfMedium>
               <perfResList>
                 <PerfResList codedval="" n="">
                   <head/>
@@ -414,10 +417,7 @@
                 <key pname="" accid="" mode=""/>
                 <tempo/>
                 <meter count="" unit="" sym=""/>
-                <perfMedium analog="marc:048" authority="marcmusperf">
-                  <castList>
-                    <castItem/>
-                  </castList>
+                <perfMedium>
                   <perfResList/>
                 </perfMedium>
                 <extent unit=""/>
