@@ -73,8 +73,8 @@
 							and at version level. 
 							Versions are defined on the Music tab.</h:span></h:a>
 					</h:legend>
+					<dcm:history-input/>
 					<xf:group ref="m:history" id="history-input-expression">
-						<dcm:history-input/>
 						<!-- expression-level performances -->
 						<dcm:performance-list>
 							<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
