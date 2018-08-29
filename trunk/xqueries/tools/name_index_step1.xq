@@ -16,7 +16,7 @@ declare namespace m="http://www.music-encoding.org/ns/mei";
 declare option exist:serialize "method=xml media-type=text/html"; 
 
 declare variable $database := "/db/dcm";
-declare variable $collection := request:get-parameter("c","HartW");
+declare variable $collection := request:get-parameter("c","");
 
 
 declare function loop:clean-names ($key as xs:string) as xs:string
@@ -28,7 +28,18 @@ declare function loop:clean-names ($key as xs:string) as xs:string
 
 declare function loop:invert-names ($key as xs:string) as xs:string
 {
-  (: put last name first :)
+  (: put last name first; invert at last space in name string :)
+  let $txt := 
+  if(contains($key,' ')) then
+    concat(tokenize($key,"\s+")[last()],', ',substring($key,1,string-length($key)-string-length(tokenize($key,"\s+")[last()])))
+  else 
+    $key 
+  return $txt 
+};
+
+declare function loop:invert-namesAtFirstSpace ($key as xs:string) as xs:string
+{
+  (: put last name first; invert at first space in name string :)
   let $txt := 
   
   if(contains($key,' ')) then
@@ -41,6 +52,10 @@ declare function loop:invert-names ($key as xs:string) as xs:string
     <div id="names" xmlns="http://www.music-encoding.org/ns/mei">
  
 		    {
+                  if($collection="") then
+                    <p>Please choose a file collection/catalogue by adding &apos;?c=[your collection name]&apos; 
+                    (for instance, ?c=CNW) to the URL</p>
+                  else 
                     for $c in distinct-values(
             		collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]/
             		(m:fileDesc/m:sourceDesc//m:persName | m:workDesc/m:work//m:persName)
