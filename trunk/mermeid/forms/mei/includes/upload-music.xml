@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:fieldset 
+    xmlns:h="http://www.w3.org/1999/xhtml" 
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events" 
+    xmlns:dcm="http://www.kb.dk/dcm">			
+    
+    <!-- Upload MEI score -->
+    
+        <h:legend>Upload MEI music data to &lt;music&gt; element
+            <h:a class="help">&#160;?<h:span class="comment">When uploading an MEI file, MerMEId takes the first &lt;body&gt; element found in the uploaded file 
+                and copies it into the main &lt;music&gt; element of the file being edited.<h:br/> 
+                This is useful for merging metadata edited with MerMEId and an actual music encoding created with other software into a single file.<h:br/>
+                MEI scores are not editable in MerMEId but are rendered (first page only) in the HTML preview.
+                To make changes in the MEI encoded score, use the 'Replace' button to upload a new version (or edit this file directly using any XML editor).</h:span></h:a>
+        </h:legend>
+               
+        <h:div>
+            <xf:var name="body_exists" select="boolean(//m:body)"/>
+            <xf:group ref=".[$body_exists]">
+                <h:p>
+                    Please note: This file contains encoded music. <h:br/>
+                    Uploading a file with the 'Replace' button below will overwrite the existing encoding, 
+                    replacing it with the /music/body element found (if any) in the file uploaded.
+                </h:p>
+            </xf:group>
+            <h:span class="fileUpload btn">
+                <xf:var name="label" select="if($body_exists) then 'Replace' else 'Upload'"/>
+                <h:span><h:img src="{instance('parameters')/dcm:server_name}/editor/images/upload.png" border="0" alt="Upload"/> <xf:output value="$label"/> MEI-encoded score</h:span>
+                <xf:upload ref="instance('upload-instance')/file[1]">
+                    <xf:filename ref="@filename"/>
+                    <xf:mediatype ref="@mediatype"/>
+                    <xxf:size ref="@size"/>
+                    <!-- 'Upload' event handling -->
+                    <xf:action ev:event="xxforms-upload-done">
+                        <!-- read the uploaded file and put the contents into the upload instance -->
+                        <xf:setvalue ref="instance('temp')/target_uri" 
+                            value="instance('upload-instance')/file[1]"/>
+                        <xf:send submission="load-uploaded-file"/>
+                        
+                        <xf:action if="not(instance('uploadedFile')//m:score/*)">
+                            <xxf:script>
+                                turnOffLoadingIndicator('File contains no score. No changes made');
+                            </xxf:script>
+                            <!-- reset the upload instance -->
+                            <xf:delete nodeset="instance('upload-instance')/file"/>
+                            <xf:insert context="instance('upload-instance')" origin="instance('temp')/file"/>
+                        </xf:action>    
+                        
+                        <xf:action if="instance('uploadedFile')//m:music/m:body/*">
+                            <!-- make sure the music element has an xml:id -->
+                            <xf:action if="not(instance('uploadedFile')//m:music[1]/m:body[1]/@xml:id)">
+                                <xf:insert 
+                                    context="instance('uploadedFile')//m:music[1]/m:body[1]"
+                                    origin="xxf:attribute('xml:id',concat('body_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
+                            </xf:action>
+                            <!-- extract the first body element and put it in place in the data instance -->
+                            <xf:var name="uploaded_score" as="node()?" 
+                                select="instance('uploadedFile')//m:music[1]/m:body[1]"/>
+                            <xf:action if="$uploaded_score/node()">
+                                <xf:delete context="instance('data-instance')//m:music" nodeset="node()"/>
+                                <xf:insert context="instance('data-instance')//m:music" origin="$uploaded_score" nodeset="m:body"/>
+                            </xf:action>
+                            <!-- reset the upload instance -->
+                            <xf:delete nodeset="instance('upload-instance')/file"/>
+                            <xf:insert context="instance('upload-instance')" origin="instance('temp')/file"/>
+                            <xf:action>
+                                <xxf:script>
+                                    turnOffLoadingIndicator('Score copied from file.');
+                                </xxf:script>
+                            </xf:action>	
+                        </xf:action>
+
+
+
+                        <xf:action>
+                            <xxf:script>
+                                turnOffLoadingIndicator('');
+                            </xxf:script>
+                        </xf:action>	
+                    </xf:action>
+                    
+                    <xf:action ev:event="xxforms-upload-error">
+                        <!-- reset the upload instance -->
+                        <xf:delete nodeset="instance('upload-instance')/file"/>
+                        <xf:insert context="instance('upload-instance')" origin="instance('temp')/file"/>
+                        <xf:action>
+                            <xxf:script>
+                                turnOffLoadingIndicator('Upload error');
+                            </xxf:script>
+                        </xf:action>	
+                    </xf:action>
+                    
+                </xf:upload>
+            </h:span>
+            <h:a class="help">&#160;?<h:span class="comment">The file uploaded must contain a non-empty MEI &lt;body&gt; element.<h:br/>
+                MerMEId takes the first &lt;body&gt; element found in the uploaded file and copies it into the file being edited, overwriting any existing music data.</h:span></h:a>									
+        </h:div>
+    
+        
+        
+        
+        <h:div class="vertical_spacer"><!-- spacer --></h:div>
+        
+    
+</h:fieldset>
+

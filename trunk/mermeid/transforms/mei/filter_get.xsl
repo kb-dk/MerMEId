@@ -53,13 +53,21 @@
   </xsl:template>
   
   <xsl:template match="m:music">
+    <!-- to keep data handling manageable, don't pass any encoded music on to Orbeon -->
     <music>
-      <xsl:comment>
-      	Thank you for the music, the songs I'm singing /
-      	Thanks for all the joy they're bringing
-      	
-      	[actual music data will be put back in place on saving]
-      </xsl:comment>
+      <xsl:choose>
+        <xsl:when test="m:body/*">
+          <!-- Keep a body element to let us know that the file contains encoded music -->
+          <body>
+            <xsl:comment>
+              Thank you for the music, the songs I'm singing /
+              Thanks for all the joy they're bringing
+              
+              [actual music data will be put back in place on saving]
+            </xsl:comment>
+          </body>
+        </xsl:when>
+      </xsl:choose>
     </music>
   </xsl:template>
   

@@ -41,19 +41,21 @@
     <xsl:apply-templates select="exsl:node-set($new_doc)" mode="html2mei"/>
   </xsl:template>
 
-
   <xsl:template match="m:music">
     <xsl:element name="music" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:choose>
-        <xsl:when test="string-length($target)&gt;0">
+        <!-- If no new content has been uploaded into <music>, reinstate the original content from the database. -->
+        <xsl:when test="string-length($target)&gt;0 and not(m:body/*)">
           <xsl:apply-templates select="document($target)/m:mei/m:music/*"/>
         </xsl:when>
+        <!-- Otherwise keep the uploaded encoding, overwriting any existing music data. -->
         <xsl:otherwise>
           <xsl:apply-templates/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:element>
   </xsl:template>
+  
 
   <!-- CLEANING UP MEI -->
 
