@@ -17,8 +17,6 @@ declare namespace m="http://www.music-encoding.org/ns/mei";
 declare option exist:serialize "method=xml media-type=text/html"; 
 
 declare variable $database := "/db/dcm";
-declare variable $rism_dir := "/db/rism_sigla";
-declare variable $country_codes := doc(concat($rism_dir,'/RISM_country_codes.xml'));
 declare variable $collection := request:get-parameter("c","");
 
 
@@ -37,44 +35,10 @@ declare function loop:sort-key ($identifier as xs:string) as xs:string
 };
 
 
-declare function loop:lookup ($location as xs:string) as xs:string
-{
-  let $country_code:=substring-before($location,'-')
-  let $filename:=concat($country_code,'.xml')
-  let $txt:=
-    if($country_codes/m:list/m:li/m:geogName[@codedval=$country_code])
-    then
-      concat(loop:lookup-archive($location, $country_code),', ',$country_codes/m:list/m:li/m:geogName[@codedval=$country_code])
-    else 
-      concat($location,', ',$country_codes/m:list/m:li/m:geogName[@codedval=$country_code])
-	return $txt
-};
-
-declare function loop:lookup-archive ($location as xs:string, $country_code as xs:string) as xs:string
-{
-  let $archives:=doc(concat($rism_dir,'/',$country_code,'.xml'))
-  let $archive:=
-    if($archives/marc:collection/marc:record/marc:datafield[@tag='110']/marc:subfield[@code='g' and .=normalize-space($location)])
-    then
-      $archives/marc:collection/marc:record[marc:datafield[@tag='110']/marc:subfield[@code='g' and .=normalize-space($location)]]
-    else 
-      ""
-  let $txt:=
-    if($archive!='')
-    then 
-        concat($archive/marc:datafield[@tag='110']/marc:subfield[@code='a'],', ',$archive/marc:datafield[@tag='110']/marc:subfield[@code='c'])
-    else
-        $location
-  return $txt
-};
-
-
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<body>
 
-
-   <h2>Locations</h2>
+     <h2>Performance Locations</h2>
     <div>
  
 		    {
@@ -84,16 +48,14 @@ declare function loop:lookup-archive ($location as xs:string, $country_code as x
                   else 
                     for $c in distinct-values(
             		collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]/
-            		m:fileDesc/m:sourceDesc/m:source//m:physLoc/m:repository/
-            		(m:identifier[@authority='RISM' and normalize-space(.)] | m:corpName[normalize-space(.)]) )
+            		m:workDesc/m:work//m:eventList[@type='performances']/m:event/m:geogName[@role='place' and normalize-space(.)] )
                     order by normalize-space(string($c))
             	    return
             		  <div>
-            		  {concat(loop:lookup($c),' &#160; ',$collection,' ')} 
+            		  {concat(normalize-space($c),' &#160; ',$collection,' ')} 
             		  {let $numbers :=
             		  for $n in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]
-                         where $n/m:fileDesc/m:sourceDesc/m:source//m:physLoc/m:repository/
-            		      (m:identifier[@authority='RISM' and normalize-space(.)] | m:corpName[normalize-space(.)]) = $c
+                         where $n/m:workDesc/m:work//m:eventList[@type='performances']/m:event/m:geogName[@role='place' and normalize-space(.)] = $c
                          order by loop:sort-key($n/m:workDesc/m:work/m:identifier[@label=$collection]/string()) 
                 	     return $n/m:workDesc/m:work/m:identifier[@label=$collection]/string()
                 	   return string-join($numbers,', ') 
@@ -102,6 +64,7 @@ declare function loop:lookup-archive ($location as xs:string, $country_code as x
 
             }
     </div>
+
 
 
   </body>
