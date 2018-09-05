@@ -17,7 +17,7 @@ MerMEId is used for the creation and maintenance of [Catalogue of Carl Nielsen's
 Read more at the
 [project](http://www.kb.dk/en/nb/dcm/projekter/mermeid.html) and
 [demo](http://labs.kb.dk/editor/) websites.
-[Recent changes](http://www.kb.dk/en/nb/dcm/projekter/mermeid/index.html) are described on DCM's web site.
+[Important changes](https://github.com/Det-Kongelige-Bibliotek/MerMEId/wiki) are described in the Wiki.
 
 This is the source distribution.
 
