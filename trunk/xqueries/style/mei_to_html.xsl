@@ -2038,8 +2038,12 @@
 				select="'DcmContentClass,DcmPresentationClass,DcmAuthorityClass,DcmScoringClass,DcmStateClass,DcmCompletenessClass'"/>
 			<xsl:for-each select="m:term[text()]">
 				<xsl:sort select="string-length(substring-before($sort_order,@classcode))"/>
+				<xsl:variable name="elementName" select="translate(.,' /-,.:()','________')"/>
 				<xsl:if test="position()=1">[<xsl:value-of select="$l/classification"/>: </xsl:if>
-				<xsl:value-of select="."/>
+				<xsl:choose>
+					<xsl:when test="$l/*[name()=$elementName]!=''"><xsl:value-of select="$l/*[name()=$elementName]"/></xsl:when>
+					<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+				</xsl:choose>
 				<xsl:choose>
 					<xsl:when test="position()=last()">]</xsl:when>
 					<xsl:otherwise>
