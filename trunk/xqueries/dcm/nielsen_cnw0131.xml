@@ -11,15 +11,12 @@
                         <abbr>DCM</abbr>
                         <expan>Danish Centre for Music Editing</expan>
                         <address>
-                            <addrLine>The Royal Library</addrLine>
+                            <addrLine>Royal Danish Library</addrLine>
                             <addrLine>Søren Kierkegaards Plads 1</addrLine>
                             <addrLine>P.O. Box 2149</addrLine>
                             <addrLine>DK - 1016 Copenhagen K</addrLine>
                             <addrLine>
-                                <ptr label="WWW" target="http://www.kb.dk/dcm" xml:id="ptr_N2026F"/>
-                            </addrLine>
-                            <addrLine>
-                                <ptr label="E-mail" target="mailto://foa-dcm@kb.dk" xml:id="ptr_N20273"/>
+                                <ptr label="WWW" target="http://www.kb.dk/en/nb/dcm" xml:id="ptr_N2026F"/>
                             </addrLine>
                         </address>
                     </corpName>
@@ -233,6 +230,8 @@
                         <p>
                             <rend fontstyle="italic">This file demonstrates how to use relations to other files (works) to describe a song cycle, collection, or anthology.</rend>
                         </p>
+                        <p>
+                            <rend fontstyle="italic">Please note: The content of this file has been modified for demonstration purposes and does not represent accurate real-world data.</rend></p>
                     </annot>
                 </notesStmt>
                 <classification>
@@ -257,12 +256,11 @@
                                 <p xml:lang="da">Den dovne Fjord som gynger</p>
                                 <p xml:lang="en">You idle bay that stretches</p>
                             </incipText>
-                            <graphic label="" target="http://www.kb.dk/da/nb/dcm/udgivelser/cnw/incipits/lowres/cnw_131.png" targettype="lowres" xml:id="graphic_bdf36adf"/>
-                            <graphic label="" target="http://www.kb.dk/da/nb/dcm/udgivelser/cnw/incipits/hires/cnw_131.png" targettype="hires" xml:id="graphic_a4bc6bcb"/>
-                            <graphic label="" target="http://www.kb.dk/da/nb/dcm/udgivelser/cnw/incipits/print/cnw_131.png" targettype="print" xml:id="graphic_e45b0bde"/>
+                            <graphic label="" target="/editor/images/demo_incipits/lowres/cnw_131.png" targettype="lowres" xml:id="graphic_bdf36adf"/>
+                            <graphic label="" target="/editor/images/demo_incipits/hires/cnw_131.png" targettype="hires" xml:id="graphic_a4bc6bcb"/>
                         </incip>
-                        <key mode="major" pname="d"/>
                         <tempo>Quasi presto (ungdommelig bevæget)</tempo>
+                        <key mode="major" pname="d"/>
                         <meter count="6" unit="8"/>
                         <history xml:id="history_8eae56c0">
                             <eventList type="performances" xml:id="eventList_47a9140b">
@@ -543,6 +541,14 @@
                 </changeDesc>
             </change>
             <change isodate="2017-02-06" xml:id="change_379N1035F">
+                <respStmt>
+                    <resp>atge</resp>
+                </respStmt>
+                <changeDesc>
+                    <p/>
+                </changeDesc>
+            </change>
+            <change isodate="2018-09-06T10:26:06.524Z" xml:id="change_383N10367">
                 <respStmt>
                     <resp>atge</resp>
                 </respStmt>

@@ -3654,6 +3654,7 @@
 					<xsl:variable name="xml_id" select="concat($id,'_xml')"/>
 					<xsl:element name="div">
 						<xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
+						<xsl:attribute name="class">MEI_score</xsl:attribute>
 						<xsl:text> </xsl:text>
 					</xsl:element>
 					

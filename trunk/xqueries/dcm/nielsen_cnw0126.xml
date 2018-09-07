@@ -11,15 +11,12 @@
                         <abbr>DCM</abbr>
                         <expan>Danish Centre for Music Editing</expan>
                         <address>
-                            <addrLine>The Royal Library</addrLine>
+                            <addrLine>Royal Danish Library</addrLine>
                             <addrLine>Søren Kierkegaards Plads 1</addrLine>
                             <addrLine>P.O. Box 2149</addrLine>
                             <addrLine>DK - 1016 Copenhagen K</addrLine>
                             <addrLine>
-                                <ptr label="WWW" target="http://www.kb.dk/dcm" xml:id="ptr_N2026F"/>
-                            </addrLine>
-                            <addrLine>
-                                <ptr label="E-mail" target="mailto://foa-dcm@kb.dk" xml:id="ptr_N20273"/>
+                                <ptr label="WWW" target="http://www.kb.dk/en/nb/dcm" xml:id="ptr_N2026F"/>
                             </addrLine>
                         </address>
                     </corpName>
@@ -371,7 +368,10 @@
                 <notesStmt>
                     <annot label="" type="general_description" xml:id="annot_f864966a">
                         <p>
-                            <rend fontstyle="italic">This file demonstrates how to use relations to other files (works) to describe a song cycle, collection, or anthology.</rend>
+                            <rend fontstyle="italic">This file demonstrates how to use relations to other files (works) to describe a song cycle, collection, or anthology. <lb/>Details about the first source listed ('Score, print') is not contained in this file but is extracted from the containing song collection's list of sources.</rend>
+                        </p>
+                        <p>
+                            <rend fontstyle="italic">Please note: The content of this file has been modified for demonstration purposes and does not represent accurate real-world data.</rend>
                         </p>
                     </annot>
                 </notesStmt>
@@ -397,11 +397,11 @@
                                 <p xml:lang="da">Du fine hvide Æbleblomst!</p>
                                 <p xml:lang="en">You apple blossom fine and white!</p>
                             </incipText>
-                            <graphic label="" target="http://www.kb.dk/da/nb/dcm/udgivelser/cnw/incipits/lowres/cnw_126.png" targettype="lowres" xml:id="graphic_16e71767"/>
-                            <graphic label="" target="http://www.kb.dk/da/nb/dcm/udgivelser/cnw/incipits/hires/cnw_126.png" targettype="hires" xml:id="graphic_ea5599cb"/>
+                            <graphic label="" target="/editor/images/demo_incipits/lowres/cnw_126.png" targettype="lowres" xml:id="graphic_16e71767"/>
+                            <graphic label="" target="/editor/images/demo_incipits/hires/cnw_126.png" targettype="hires" xml:id="graphic_ea5599cb"/>
                         </incip>
-                        <key mode="major" pname="e"/>
                         <tempo>Poco allegretto</tempo>
+                        <key mode="major" pname="e"/>
                         <meter count="2" unit="4"/>
                         <history xml:id="history_5a7e7c12">
                             <eventList type="performances" xml:id="eventList_d651f222">
@@ -588,30 +588,6 @@
                     <p>Batch transformation moving identifier/@type data to @label</p>
                 </changeDesc>
             </change>
-            <change isodate="2014-11-04" xml:id="change_406d1e452">
-                <respStmt>
-                    <resp>MerMEId</resp>
-                </respStmt>
-                <changeDesc>
-                    <p>Batch transformation ensuring correct order of elements in source, work and biblList</p>
-                </changeDesc>
-            </change>
-            <change isodate="2014-11-04" xml:id="change_409d1e452">
-                <respStmt>
-                    <resp>MerMEId</resp>
-                </respStmt>
-                <changeDesc>
-                    <p>Batch transformation removing duplicate IDs and fixing other issues</p>
-                </changeDesc>
-            </change>
-            <change isodate="2015-08-04" xml:id="change_376d1e452">
-                <respStmt>
-                    <resp>MerMEId</resp>
-                </respStmt>
-                <changeDesc>
-                    <p>Batch transformation moving identifier/@type data to @label</p>
-                </changeDesc>
-            </change>
             <change isodate="2015-08-04" xml:id="change_379d1e452">
                 <respStmt>
                     <resp>MerMEId</resp>
@@ -670,6 +646,14 @@
                 </changeDesc>
             </change>
             <change isodate="2017-02-06" xml:id="change_460N10405">
+                <respStmt>
+                    <resp>atge</resp>
+                </respStmt>
+                <changeDesc>
+                    <p/>
+                </changeDesc>
+            </change>
+            <change isodate="2018-09-06T11:06:27.283Z" xml:id="change_464N1040D">
                 <respStmt>
                     <resp>atge</resp>
                 </respStmt>

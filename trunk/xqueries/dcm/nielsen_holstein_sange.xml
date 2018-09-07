@@ -11,13 +11,10 @@
                         <abbr xml:id="abbr_162a2518">DCM</abbr>
                         <expan xml:id="expan_587e1537">Danish Centre for Music Editing</expan>
                         <address xml:id="address_879658f0">
-                            <addrLine xml:id="addrLine_ae67d6f6">The Royal Library</addrLine>
+                            <addrLine xml:id="addrLine_ae67d6f6">Royal Danish Library</addrLine>
                             <addrLine xml:id="addrLine_08b9cd12">Søren Kierkegaards Plads 1</addrLine>
                             <addrLine xml:id="addrLine_913f9af0">
-                                <ptr label="WWW" target="http://www.kb.dk/dcm" xml:id="ptr_N2026A"/>
-                            </addrLine>
-                            <addrLine xml:id="addrLine_36701376">
-                                <ptr label="E-mail" target="mailto://foa-dcm@kb.dk" xml:id="ptr_N2026E"/>
+                                <ptr label="WWW" target="http://www.kb.dk/en/nb/dcm" xml:id="ptr_N2026A"/>
                             </addrLine>
                         </address>
                     </corpName>
@@ -482,10 +479,14 @@
                 <notesStmt xml:id="notesStmt_38058095">
                     <annot label="" type="general_description" xml:id="annot_02b8d778">
                         <p>
-                            <rend fontstyle="italic">This file demonstrates the use of relations to other files (or works) to describe a song cycle, anthology, or collection. Such collections can be modelled in two ways, depending on whether they are reagrded as one work or a collection of individual works. This example shows the cycle as a collection of indivual works, linked together by relations to its constituent parts. A collection or cycle regarded as one single work could be modelled in a single file using the "components" section on the "Music" tab to describe the individual parts, just like movements in a sonata. The "Comala" and "Maskarade" sample files illustrate this approach.</rend>
+                            <rend fontstyle="italic">This file demonstrates the use of relations to other files (or works) to describe a song cycle, anthology, or collection. Such collections can be modelled in two ways, depending on whether they are regarded as one work or a collection of individual works. This example shows the cycle as a collection of indivual works, linked together by relations to its constituent parts. A collection or cycle regarded as one single work could be modelled in a single file using the "components" section on the "Music" tab to describe the individual parts, just like movements in a sonata. The "Comala" and "Maskarade" sample files illustrate this approach.</rend>
                             <lb/>
-                            <rend fontstyle="italic"> Sources common to all pieces in the collection are described in this file. See the individual songs for details and descriptions of sources to each of the songs.</rend>
+                            <rend fontstyle="italic"> Sources common to all pieces in the collection are described in this file rather than with each of the songs. See the individual songs for details and descriptions of sources to each of the songs. </rend>
                         </p>
+                        <p>
+                            <rend fontstyle="italic">Please note: The content of this file has been modified for demonstration purposes and does not represent accurate real-world data.</rend>
+                        </p>
+                        <p>&#160;</p>
                     </annot>
                 </notesStmt>
                 <classification xml:id="classification_876224f0">
@@ -682,30 +683,6 @@
                     <p xml:id="p_6af0f5e9">Batch transformation ensuring correct order of elements in source, work and biblList</p>
                 </changeDesc>
             </change>
-            <change isodate="2014-11-04" xml:id="change_425d1e529">
-                <respStmt xml:id="respStmt_22219bd5">
-                    <resp xml:id="resp_d05caeb2">MerMEId</resp>
-                </respStmt>
-                <changeDesc xml:id="changeDesc_da563c91">
-                    <p xml:id="p_26ebb4e7">Batch transformation removing duplicate IDs and fixing other issues</p>
-                </changeDesc>
-            </change>
-            <change isodate="2015-08-04" xml:id="change_428d1e529">
-                <respStmt xml:id="respStmt_bea7dfd2">
-                    <resp xml:id="resp_8f8c112b">MerMEId</resp>
-                </respStmt>
-                <changeDesc xml:id="changeDesc_b40b2592">
-                    <p xml:id="p_86792eb2">Batch transformation moving identifier/@type data to @label</p>
-                </changeDesc>
-            </change>
-            <change isodate="2015-08-04" xml:id="change_431d1e529">
-                <respStmt xml:id="respStmt_d0e240b0">
-                    <resp xml:id="resp_187a2ab6">MerMEId</resp>
-                </respStmt>
-                <changeDesc xml:id="changeDesc_986788c0">
-                    <p xml:id="p_3474ca70">Batch transformation ensuring correct order of elements in source, work and biblList</p>
-                </changeDesc>
-            </change>
             <change isodate="2015-08-04" xml:id="change_434d1e529">
                 <respStmt xml:id="respStmt_50be9a03">
                     <resp xml:id="resp_a6fc943f">MerMEId</resp>
@@ -756,6 +733,14 @@
                 </changeDesc>
             </change>
             <change isodate="2017-02-06" xml:id="change_ed59d8ae">
+                <respStmt>
+                    <resp>atge</resp>
+                </respStmt>
+                <changeDesc>
+                    <p/>
+                </changeDesc>
+            </change>
+            <change isodate="2018-09-06T10:57:40.954Z" xml:id="change_511N105C9">
                 <respStmt>
                     <resp>atge</resp>
                 </respStmt>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" xml:id="mei_95N20005" meiversion="3.0.0">
+<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink" meiversion="3.0.0" xml:id="mei_95N20005">
     <meiHead>
         <fileDesc>
             <titleStmt>
@@ -13,7 +12,7 @@
                         <expan>Danish Centre for Music Editing</expan>
                         <address>
                             <addrLine>
-                                <ptr label="" target="http://www.kb.dk/dcm/" xml:id="ptr_N2026A"/>
+                                <ptr label="" target="http://www.kb.dk/en/nb/dcm/" xml:id="ptr_N2026A"/>
                             </addrLine>
                         </address>
                     </corpName>
@@ -56,13 +55,12 @@
                 <notesStmt xml:id="notesStmt_471582e5">
                     <annot label="" type="links" xml:id="annot_f463a756"/>
                     <annot label="" type="general_description" xml:id="annot_4b3f6f65">
-                        <p>This file illustrates various ways of including incipits. Incipits are defined at the editor's 'Music' tab.</p>
-                        <p>Incipits encoded in MEI or Plaine And Easie Code are rendered in MerMEId with <ref target="http://verovio.org" xl:show="new" xl:title="Verovio">Verovio</ref>
-  
-  . Please note that Internet Explorer requires version 10 or newer for this to work.</p>
-                        <p>The incipits in this sample file show the beginning of Carl Nielsen's <ref target="http://www.kb.dk/dcm/cnw/document.xq?doc=cnw0060.xml" xl:show="new" xl:title="Romance CNW 60">Romance for Violin and Piano, CNW 60</ref>
-  
+                        <p>This file illustrates various ways of including incipits. Incipits are defined at the editor's 'Music' tab.<lb/>Incipits encoded in MEI or Plaine And Easie Code are rendered in MerMEId with <ref target="http://verovio.org" xl:show="new" xl:title="Verovio">Verovio</ref>
+   . Please note that Internet Explorer requires version 10 or newer for this to work.<lb/>The incipits in this sample file show the beginning of Carl Nielsen's <ref target="http://www.kb.dk/dcm/cnw/document.xq?doc=cnw0060.xml" xl:show="new" xl:title="Romance CNW 60">Romance for Violin and Piano, CNW 60</ref>
    .</p>
+                        <p>
+                            <rend fontstyle="italic">Please note: The content of this file has been modified for demonstration purposes and does not represent accurate real-world data</rend>
+                        </p>
                     </annot>
                 </notesStmt>
                 <classification xml:id="classification_8c2dad93">
@@ -140,7 +138,6 @@
                                         <dynam staff="2" tstamp="2">p</dynam>
                                         <tie curvedir="below" endid="#p1cgd2n0v2b2s3" startid="#p1cgd2n768v1b1s3"/>
                                         <tempo staff="1" tstamp="1">Andante con moto</tempo>
-                              <!-- vertical offset (@vo) not supprted by Verovio yet -->
                                     </measure>
                                     <measure n="2">
                                         <staff n="1">
@@ -311,7 +308,6 @@
                                             </layer>
                                         </staff>
                                         <hairpin form="cres" staff="1" startid="#p2ced3n512v1b5s3" tstamp2="1m+5"/>
-                              <!-- vertical offset (@vo) not supprted by Verovio yet -->
                                     </measure>
                                     <measure n="6">
                                         <staff n="1">
@@ -361,7 +357,7 @@
                                             </layer>
                                         </staff>
                                         <slur endid="#p1ced5n384v1b6s1" layer="1" staff="1" startid="#p1cgd5n0v1b6s1"/>
-                                        <dir staff="3" place="below" tstamp="3">
+                                        <dir place="below" staff="3" tstamp="3">
                                             <rend fontstyle="normal">80 bars</rend>
                                         </dir>
                                     </measure>
@@ -392,6 +388,8 @@
                         <history xml:id="history_74021b98">
                             <p>
                                 <ref target="http://www.iaml.info/plaine-easie-code" xl:show="new" xl:title="IAML Plaine and Easie Code reference">Plaine and Easie Code</ref>
+  
+  
    can be entered directly at the 'Music' tab for rendering with Verovio in the HTML preview. If single-staff, single-voice incipits without any slurs, dynamics, articulation or lyrics is all you need, this is probably the most efficient way of adding incipits. Enter 'plaineAndEasie' or simply 'pae' in the code language field to have MerMEId/Verovio recognize the code correctly.</p>
                         </history>
                         <perfMedium analog="marc:048" authority="marcmusperf" xml:id="perfMedium_7ec2e148"/>
@@ -408,8 +406,8 @@
                             <title xml:id="title_821c4cb0" xml:lang="en">3. Link to an image file:</title>
                         </titleStmt>
                         <incip xml:id="incip_df7f33be">
-                            <graphic label="" target="http://www.kb.dk/export/sites/kb_dk/da/nb/dcm/udgivelser/cnw/incipits/lowres/cnw_060.png" targettype="lowres" xml:id="graphic_9e3cf184"/>
-                            <graphic label="" target="http://www.kb.dk/export/sites/kb_dk/da/nb/dcm/udgivelser/cnw/incipits/hires/cnw_060.png" targettype="hires" xml:id="graphic_05e03b6d"/>
+                            <graphic label="" target="/editor/images/demo_incipits/lowres/cnw_060.png" targettype="lowres" xml:id="graphic_9e3cf184"/>
+                            <graphic label="" target="/editor/images/demo_incipits/hires/cnw_060.png" targettype="hires" xml:id="graphic_05e03b6d"/>
                         </incip>
                         <creation xml:id="creation_f065cb92"/>
                         <history xml:id="history_d5b9f7ec">
@@ -499,6 +497,14 @@
                 </respStmt>
                 <changeDesc>
                     <p>accents in b.5 corrected</p>
+                </changeDesc>
+            </change>
+            <change isodate="2018-09-06T10:22:40.942Z" xml:id="change_348N10449">
+                <respStmt>
+                    <resp>atge</resp>
+                </respStmt>
+                <changeDesc>
+                    <p/>
                 </changeDesc>
             </change>
         </revisionDesc>
