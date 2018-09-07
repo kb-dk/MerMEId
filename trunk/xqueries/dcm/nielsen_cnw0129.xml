@@ -824,8 +824,8 @@
                                 <note xml:id="m-53" dur="4" dur.ges="256p" oct="2" pname="g" pnum="43"/>
                             </layer>
                         </staff>
-                        <dynam xml:id="m-43" ho="0.4375mm" staff="1" tstamp="1" vo="3.5625mm">f</dynam>
-                        <dynam xml:id="m-49" ho="-0.3125mm" staff="2" tstamp="1" vo="-7.375mm">f</dynam>
+                        <dynam xml:id="m-43" staff="1" tstamp="1" place="above">f</dynam>
+                        <dynam xml:id="m-49" staff="2" tstamp="1">f</dynam>
                     </measure>
                     <measure xml:id="m-54" label="1" n="1">
                         <staff xml:id="m-55" n="1">
@@ -958,7 +958,7 @@
                                 <rest xml:id="m-108" dur="4" dur.ges="256p"/>
                             </layer>
                         </staff>
-                        <dynam xml:id="m-87" ho="-0.3125mm" staff="1" tstamp="4" vo="4.0625mm">mp</dynam>
+                        <dynam xml:id="m-87" staff="1" tstamp="4" place="above">mp</dynam>
                     </measure>
                     <measure xml:id="m-109" n="3">
                         <staff xml:id="m-110" n="1">
@@ -1043,7 +1043,7 @@
                             </layer>
                         </staff>
                         <slur xml:id="m-128" layer="2" staff="2" startid="m-132" endid="m-134"/>
-                        <dynam xml:id="m-130" ho="-0.3125mm" staff="2" tstamp="1" vo="-9.625mm">mp</dynam>
+                        <dynam xml:id="m-130" staff="2" tstamp="1">mp</dynam>
                         <slur xml:id="m-135" layer="2" staff="2" startid="m-137" endid="m-138"/>
                         <slur xml:id="m-139" layer="2" staff="2" startid="m-141" endid="m-143"/>
                         <slur xml:id="m-144" layer="2" staff="2" startid="m-146" endid="m-147"/>
@@ -1680,10 +1680,10 @@
                                 </beam>
                             </layer>
                         </staff>
-                        <dynam xml:id="m-446" ho="0.3125mm" staff="1" tstamp="1" vo="3mm">f</dynam>
-                        <hairpin xml:id="m-448" form="dim" layer="1" staff="1" tstamp="1.5" tstamp2="0m+4.9961" vo="3.5mm"/>
+                        <dynam xml:id="m-446" staff="1" tstamp="1" place="above">f</dynam>
+                        <hairpin xml:id="m-448" form="dim" layer="1" staff="1" tstamp="1.5" tstamp2="0m+4.9961" place="above"/>
                         <slur xml:id="m-460" layer="2" staff="2" startid="m-466" endid="m-469"/>
-                        <dynam xml:id="m-462" ho="-0.3125mm" staff="2" tstamp="1" vo="-10.25mm">f</dynam>
+                        <dynam xml:id="m-462" staff="2" tstamp="1">f</dynam>
                         <hairpin xml:id="m-468" form="dim" layer="1" staff="2" tstamp="1.5" tstamp2="0m+4.9961"/>
                         <slur xml:id="m-470" layer="2" staff="2" startid="m-474" endid="m-475"/>
                         <slur xml:id="m-476" layer="2" staff="2" startid="m-478" endid="m-480"/>
@@ -1780,7 +1780,7 @@
                                 </beam>
                             </layer>
                         </staff>
-                        <hairpin xml:id="m-504" form="cres" layer="1" staff="1" tstamp="1" tstamp2="0m+4.9961" vo="3.5mm"/>
+                        <hairpin xml:id="m-504" form="cres" layer="1" staff="1" tstamp="1" tstamp2="0m+4.9961" place="above"/>
                         <hairpin xml:id="m-521" form="cres" layer="1" staff="2" tstamp="1" tstamp2="0m+4.9961"/>
                         <slur xml:id="m-523" layer="2" staff="2" startid="m-525" endid="m-527"/>
                         <slur xml:id="m-528" layer="2" staff="2" startid="m-530" endid="m-531"/>
@@ -1947,7 +1947,7 @@
                             </layer>
                         </staff>
                         <tie xml:id="m-618" endid="#m-627" startid="#m-617"/>
-                        <hairpin xml:id="m-603" form="dim" layer="1" staff="1" tstamp="1" tstamp2="0m+4.9961" vo="3.5mm"/>
+                        <hairpin xml:id="m-603" form="dim" layer="1" staff="1" tstamp="1" tstamp2="0m+4.9961" place="above"/>
                         <slur xml:id="m-604" layer="1" staff="1" startid="m-3" endid="m-"/>
                         <hairpin xml:id="m-614" form="dim" layer="1" staff="2" tstamp="1" tstamp2="0m+4.9961"/>
                         <slur xml:id="m-634" layer="1" staff="3" startid="m-635" endid="m-637"/>
@@ -2013,8 +2013,8 @@
                                 </beam>
                             </layer>
                         </staff>
-                        <dynam xml:id="m-659" ho="-0.3125mm" staff="2" tstamp="1" vo="-5mm"/>
-                        <dynam xml:id="m-660" ho="-0.3125mm" staff="2" tstamp="1" vo="-8mm">mp</dynam>
+                        <dynam xml:id="m-659" staff="2" tstamp="1"/>
+                        <dynam xml:id="m-660" staff="2" tstamp="1">mp</dynam>
                         <hairpin xml:id="m-672" form="cres" layer="1" staff="2" tstamp="4" tstamp2="1m+4"/>
                         <slur xml:id="m-679" layer="1" staff="3" startid="m-680" endid="m-682"/>
                         <slur xml:id="m-683" layer="1" staff="3" startid="m-684" endid="m-685"/>
@@ -2067,7 +2067,7 @@
                                 </beam>
                             </layer>
                         </staff>
-                        <dynam xml:id="m-710" ho="-0.3125mm" staff="2" tstamp="4" vo="-9mm">fz</dynam>
+                        <dynam xml:id="m-710" staff="2" tstamp="4">fz</dynam>
                         <hairpin xml:id="m-715" form="dim" layer="1" staff="2" tstamp="4.5" tstamp2="1m+4.5"/>
                         <slur xml:id="m-718" layer="1" staff="3" startid="m-719" endid="m-721"/>
                         <slur xml:id="m-722" layer="1" staff="3" startid="m-723" endid="m-724"/>
