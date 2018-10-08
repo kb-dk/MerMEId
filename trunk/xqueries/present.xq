@@ -35,8 +35,8 @@ let $params :=
 for $doc in $list
 return 
 if(request:get-parameter("debug","")) then
-(<d>{$params}{doc(concat("/db/style/",$xsl))}</d>)
+(<d>{$params}{doc(concat("/db/mermeid/style/",$xsl))}</d>)
 else
-transform:transform($doc,doc(concat("/db/style/",$xsl)),$params)
+transform:transform($doc,doc(concat("/db/mermeid/style/",$xsl)),$params)
 
  

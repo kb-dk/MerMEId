@@ -9,7 +9,8 @@
   <property name="webapp.login"      value="login.xqm" />
   <property name="webapp.bibl"       value="standard_bibliography.xml" />
   <property name="hostport"          value="172.17.0.2:8080"/>
-  <property name="context"           value="  --context /exist/rest/db/ "/>
+  <property name="home"           value="  --context /exist/rest/db/ "/>
+  <property name="context"           value="  --context /exist/rest/db/mermeid "/>
 
   <target name="clean">
     <delete file="${webapp.login}" />
@@ -30,7 +31,7 @@
     </input>
 
     <exec executable="./load_exist.pl">
-      <arg line="--suffix xconf --load ${service} ${context} --target ${xconfig} --host-port ${hostport} --user admin --password ${server.pass}"/>
+      <arg line="--suffix xconf --load ${service} ${home} --target ${xconfig} --host-port ${hostport} --user admin --password ${server.pass}"/>
     </exec>
     <exec executable="./load_exist.pl">
       <arg line="--suffix xml,xq,xqm,xsl,css --load ${service} ${context} --host-port ${hostport} --user admin --password ${server.pass}"/>

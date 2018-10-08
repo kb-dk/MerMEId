@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" 
+<xsl:stylesheet version="2.0" 
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 	xmlns:m="http://www.music-encoding.org/ns/mei"
@@ -9,8 +9,10 @@
 	xmlns:exsl="http://exslt.org/common"
 	xmlns:java="http://xml.apache.org/xalan/java" 
 	xmlns:zs="http://www.loc.gov/zing/srw/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:marc="http://www.loc.gov/MARC21/slim" extension-element-prefixes="exsl java"
-	exclude-result-prefixes="m xsl exsl foo java">
+	xmlns:local="urn:my-stuff"
+	exclude-result-prefixes="m xsl exsl foo java local">
 
 	<!-- 
 		Conversion of MEI 3.0.0 metadata to HTML using XSLT 1.0
@@ -103,6 +105,15 @@
 		</html>
 	</xsl:template>
 
+	<xsl:function name="local:nodifier" as="text()">
+          <xsl:param name="str" />
+          <xsl:variable name="node">
+            <node>
+              <s><xsl:value-of select="$str"/></s>
+            </node>
+          </xsl:variable>
+          <xsl:value-of select="$node//s/text()"/>
+        </xsl:function>
 
 	<!-- MAIN TEMPLATES -->
 
@@ -259,7 +270,7 @@
 		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2">
 			<!-- sources -->
 			<xsl:apply-templates
-				select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(*//text()) or m:source/@target!='']"/>
+				select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(string-join(*//text(),'')) or m:source/@target!='']"/>
 			<!-- work-level performances -->
 			<xsl:apply-templates
 				select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']/m:event/*/text()]"
@@ -780,7 +791,7 @@
 		<xsl:apply-templates select="m:relationList[m:relation[@target!='']]"/>
 		<!-- components (movements) -->
 		<xsl:for-each
-			select="m:componentGrp[normalize-space(*//text()[1]) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">
+			select="m:componentGrp[normalize-space(string-join(*//text(),'')) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">
 			<xsl:apply-templates select="." mode="fold_section">
 				<xsl:with-param name="id" select="concat('movements',generate-id(),position())"/>
 				<xsl:with-param name="heading"><xsl:value-of select="$l/music"/></xsl:with-param>
@@ -794,7 +805,7 @@
 			<xsl:variable name="expression_id" select="@xml:id"/>
 			<xsl:for-each
 				select="/m:mei/m:meiHead/m:fileDesc/
-		  m:sourceDesc[(normalize-space(*//text()) or m:source/@target!='') 
+		  m:sourceDesc[(normalize-space(string-join(*//text(),'')) or m:source/@target!='') 
 		  and m:source/m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
 
 				<!-- collect all reproductions (reprints) - they will be needed later -->
@@ -807,7 +818,7 @@
 					</sourceDesc>
 				</xsl:variable>
 				<!-- make it a nodeset -->
-				<xsl:variable name="reprints" select="exsl:node-set($collect_reprints)"/>
+				<xsl:variable name="reprints" select="local:nodifier($collect_reprints)"/>
 
 				<xsl:apply-templates select="." mode="fold_section">
 					<xsl:with-param name="id"
@@ -840,7 +851,7 @@
 							</xsl:for-each>
 						</xsl:variable>
 						<!-- make the source list a nodeset -->
-						<xsl:variable name="source_nodeset" select="exsl:node-set($sources)"/>
+						<xsl:variable name="source_nodeset" select="local:nodifier($sources)"/>
 						<xsl:for-each select="$source_nodeset/m:source">
 							<xsl:apply-templates select=".">
 								<xsl:with-param name="reprints" select="$reprints"/>
@@ -1581,7 +1592,7 @@
 			</sourceDesc>
 		</xsl:variable>
 		<!-- make it a nodeset -->
-		<xsl:variable name="reprints" select="exsl:node-set($collect_reprints)"/>
+		<xsl:variable name="reprints" select="local:nodifier($collect_reprints)"/>
 
 		<xsl:apply-templates select="." mode="fold_section">
 			<xsl:with-param name="id" select="concat('source',generate-id(.),position())"/>
@@ -1612,7 +1623,7 @@
 					</xsl:for-each>
 				</xsl:variable>
 				<!-- make the source list a nodeset -->
-				<xsl:variable name="source_nodeset" select="exsl:node-set($sources)"/>
+				<xsl:variable name="source_nodeset" select="local:nodifier($sources)"/>
 
 				<xsl:variable name="sorted_sources">
 					<!-- loop through the selected sources; skip reproductions at this point -->
@@ -1620,7 +1631,7 @@
 						<xsl:copy-of select="."/>
 					</xsl:for-each>
 				</xsl:variable>
-				<xsl:variable name="sorted_sources_nodeset" select="exsl:node-set($sorted_sources)"/>
+				<xsl:variable name="sorted_sources_nodeset" select="local:nodifier($sorted_sources)"/>
 
 				<xsl:apply-templates select="$sorted_sources_nodeset/m:source">
 					<!-- also send the collection of all reprints to the template -->
@@ -1741,7 +1752,7 @@
 				<xsl:copy-of select="."/>			
 			</xsl:for-each>
 		</xsl:variable>
-		<xsl:variable name="local-copy" select="exsl:node-set($local-copy-fragment)"/>
+		<xsl:variable name="local-copy" select="local:nodifier($local-copy-fragment)"/>
 		<xsl:for-each select="$local-copy/*">
 			<xsl:variable name="role_str">
 				<!-- look up the role description text (or use the attribute value unchanged if not found) -->
@@ -1991,7 +2002,7 @@
 					</xsl:for-each>
 				</relationList>
 			</xsl:variable>
-			<xsl:variable name="source_relations" select="exsl:node-set($collect_source_relations)"/>
+			<xsl:variable name="source_relations" select="local:nodifier($collect_source_relations)"/>
 			<xsl:apply-templates select="$source_relations" mode="plain_relation_list"/>
 			
 
@@ -2981,7 +2992,7 @@
 			</xsl:copy>
 		</xsl:variable>
 		<!-- process the element without @authURI and @codedval -->
-		<xsl:apply-templates select="exsl:node-set($local-copy)"/>
+		<xsl:apply-templates select="local:nodifier($local-copy)"/>
 		<!-- and add a link when done -->
 		<xsl:if test="$display_authority_links = 'true'">
 			<xsl:element name="a">
@@ -3322,7 +3333,6 @@
 			</xsl:choose>
 		</span>
 	</xsl:template>
-
 	
 	<!-- entity replacements -->
 	<xsl:template match="text() | @*">
@@ -3330,67 +3340,68 @@
 	</xsl:template>	
 	
 	<xsl:template match="text()[contains(.,'&amp;nbsp;')] | @*[contains(.,'&amp;nbsp;')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'&amp;nbsp;'))" mode="entities"/>&#160;<xsl:apply-templates select="exsl:node-set(substring-after(.,'&amp;nbsp;'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'&amp;nbsp;'))" mode="entities"/>&#160;<xsl:apply-templates select="local:nodifier(substring-after(.,'&amp;nbsp;'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'&amp;lt;')] | @*[contains(.,'&amp;lt;')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'&amp;lt;'))" mode="entities"/>&#60;<xsl:apply-templates select="exsl:node-set(substring-after(.,'&amp;lt;'))" mode="entities"/>
+	<!-- Why these two... lt and gt entities are perfectly normal in xml -->
+	<!-- xsl:template match="text()[contains(.,'&amp;lt;')] | @*[contains(.,'&amp;lt;')]" mode="entities">
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'&amp;lt;'))" mode="entities"/>&#60;<xsl:apply-templates select="local:nodifier(substring-after(.,'&amp;lt;'))" mode="entities"/>
 	</xsl:template>
 	<xsl:template match="text()[contains(.,'&amp;gt;')] | @*[contains(.,'&amp;gt;')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'&amp;gt;'))" mode="entities"/>&#62;<xsl:apply-templates select="exsl:node-set(substring-after(.,'&amp;gt;'))" mode="entities"/>
-	</xsl:template>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'&amp;gt;'))" mode="entities"/>&#62;<xsl:apply-templates select="local:nodifier(substring-after(.,'&amp;gt;'))" mode="entities"/>
+	</xsl:template -->
 
 	<!-- ad hoc code replacements -->
 	<xsl:template match="text()[contains(.,'[flat]')] | @*[contains(.,'[flat]')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[flat]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'[flat]'))" mode="entities"/>
 		<span class="music_symbols">&#x266d;</span>
-		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[flat]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-after(.,'[flat]'))" mode="entities"/>
 	</xsl:template>
 	<xsl:template match="text()[contains(.,'[natural]')] | @*[contains(.,'[natural]')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[natural]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'[natural]'))" mode="entities"/>
 		<span class="music_symbols">&#x266e;</span>
-		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[natural]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-after(.,'[natural]'))" mode="entities"/>
 	</xsl:template>
 	<xsl:template match="text()[contains(.,'[sharp]')] | @*[contains(.,'[sharp]')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[sharp]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'[sharp]'))" mode="entities"/>
 		<span class="music_symbols">&#x266f;</span>
-		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[sharp]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-after(.,'[sharp]'))" mode="entities"/>
 	</xsl:template>
 	<xsl:template match="text()[contains(.,'[dblflat]')] | @*[contains(.,'[dblflat]')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[dblflat]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'[dblflat]'))" mode="entities"/>
 		<span class="music_symbols">&#x1d12b;</span>
-		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[dblflat]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-after(.,'[dblflat]'))" mode="entities"/>
 	</xsl:template>
 	<xsl:template match="text()[contains(.,'[dblsharp]')] | @*[contains(.,'[dblsharp]')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[dblsharp]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'[dblsharp]'))" mode="entities"/>
 		<span class="music_symbols">&#x1d12a;</span>
-		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[dblsharp]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-after(.,'[dblsharp]'))" mode="entities"/>
 	</xsl:template>
 	<xsl:template match="text()[contains(.,'[common]')] | @*[contains(.,'[common]')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[common]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'[common]'))" mode="entities"/>
 		<span class="music_symbols time_signature">&#x1d134;</span>
-		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[common]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-after(.,'[common]'))" mode="entities"/>
 	</xsl:template>
 	<xsl:template match="text()[contains(.,'[cut]')] | @*[contains(.,'[cut]')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'[cut]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'[cut]'))" mode="entities"/>
 		<span class="music_symbols time_signature">&#x1d135;</span>
-		<xsl:apply-templates select="exsl:node-set(substring-after(.,'[cut]'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-after(.,'[cut]'))" mode="entities"/>
 	</xsl:template>
 
 	<!-- music character wrapping -->
 	<xsl:template match="text()[contains(.,'♭')] | @*[contains(.,'♭')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'♭'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'♭'))" mode="entities"/>
 		<span class="music_symbols">♭</span>
-		<xsl:apply-templates select="exsl:node-set(substring-after(.,'♭'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-after(.,'♭'))" mode="entities"/>
 	</xsl:template>
 	<xsl:template match="text()[contains(.,'♮')] | @*[contains(.,'♮')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'♮'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'♮'))" mode="entities"/>
 		<span class="music_symbols">♮</span>
-		<xsl:apply-templates select="exsl:node-set(substring-after(.,'♮'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-after(.,'♮'))" mode="entities"/>
 	</xsl:template>
 	<xsl:template match="text()[contains(.,'♯')] | @*[contains(.,'♯')]" mode="entities">
-		<xsl:apply-templates select="exsl:node-set(substring-before(.,'♯'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'♯'))" mode="entities"/>
 		<span class="music_symbols">♯</span>
-		<xsl:apply-templates select="exsl:node-set(substring-after(.,'♯'))" mode="entities"/>
+		<xsl:apply-templates select="local:nodifier(substring-after(.,'♯'))" mode="entities"/>
 	</xsl:template>
 	
 	
@@ -3491,7 +3502,7 @@
 				</xsl:otherwise>
 			</xsl:choose>            
 			<xsl:call-template name="multiReplace">
-				<xsl:with-param name="pText" select="substring($pText, 1 + not($vPat) + string-length($vPat/m:abbr/node()))"/>
+			  <xsl:with-param name="pText" select="substring($pText, 1 + xs:integer(not($vPat)) + string-length($vPat/m:abbr/node()))"/>
 			</xsl:call-template>
 		</xsl:if>
 	</xsl:template>
