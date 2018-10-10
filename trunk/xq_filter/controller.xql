@@ -24,7 +24,7 @@ let $result := "nothing done"
 
 return if(matches($method,"post","i")) then
 <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-   <forward url="./read_args.xq">
+   <forward url="./update_post.xq">
       <add-parameter name="path" value="{$exist:path}"/>
       <add-parameter name="prefix" value="{$exist:prefix}"/>
       <add-parameter name="controller" value="{$exist:controller}"/>
@@ -37,7 +37,7 @@ return if(matches($method,"post","i")) then
 </dispatch>
 else if(matches($method,"put","i")) then
 <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-   <forward url="./read_args.xq">
+   <forward url="./update_put.xq">
       <add-parameter name="path" value="{$exist:path}"/>
       <add-parameter name="prefix" value="{$exist:prefix}"/>
       <add-parameter name="controller" value="{$exist:controller}"/>
@@ -47,15 +47,18 @@ else if(matches($method,"put","i")) then
       <add-parameter name="result" value="{$result}"/>
    </forward>
 </dispatch>
-else
+else if(matches($method,"get","i")) then
 <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-   <forward url="./read_args.xq">
+   <forward url="./read_get.xq">
       <add-parameter name="path" value="{$exist:path}"/>
       <add-parameter name="prefix" value="{$exist:prefix}"/>
       <add-parameter name="controller" value="{$exist:controller}"/>
    </forward>
 </dispatch>
-
+else
+<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+   <redirect url="./error.html"/>
+</dispatch>
 
     
 
