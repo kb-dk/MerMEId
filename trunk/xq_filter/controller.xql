@@ -52,12 +52,11 @@ else if(matches($method,"get","i")) then
    <forward url="./read_get.xq">
       <add-parameter name="path" value="{$exist:path}"/>
       <add-parameter name="prefix" value="{$exist:prefix}"/>
-      <add-parameter name="controller" value="{$exist:controller}"/>
    </forward>
 </dispatch>
 else
 <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-   <redirect url="./error.html"/>
+   <forward url="./error.html"/>
 </dispatch>
 
     
