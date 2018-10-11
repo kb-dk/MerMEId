@@ -4,12 +4,14 @@
   xmlns:m="http://www.music-encoding.org/ns/mei" 
   xmlns:t="http://www.tei-c.org/ns/1.0"
   xmlns:xl="http://www.w3.org/1999/xlink"
-  xmlns:exsl="http://exslt.org/common"
-  xmlns:dyn="http://exslt.org/dynamic"
-  extension-element-prefixes="dyn exsl"
-  exclude-result-prefixes="xsl m t"
-  version="1.0">
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:local="urn:my-stuff"
+  xmlns:saxon="http://saxon.sf.net/"
+  extension-element-prefixes="local saxon"
+  exclude-result-prefixes="xsl m t local"
+  version="3.0">
 
+  <xsl:param name="base_uri" select="'http://localhost'"/>
   
   <xsl:output method="xml"
     encoding="UTF-8"
@@ -18,27 +20,28 @@
   <xsl:strip-space elements="*"/>
   
   <xsl:variable name="empty_doc" 
-    select="document('/editor/forms/mei/model/empty_doc.xml')" />
+    select="document(concat($base_uri,'/editor/forms/mei/model/empty_doc.xml'))" />
   
   <xsl:template match="m:mei">
+
     <!-- make a copy with an extra header from the empty model document -->
     <xsl:variable name="janus">
       <mei xmlns="http://www.music-encoding.org/ns/mei">
         <xsl:copy-of select="@*"/>
-        <xsl:copy-of select="$empty_doc/m:mei/m:meiHead"/>
         <xsl:copy-of select="@*|*"/>
+        <xsl:copy-of select="$empty_doc/m:mei/m:meiHead"/>
       </mei>
     </xsl:variable>
     <xsl:variable name="second_run">
       <!-- make it a nodeset and start copying all possible attributes from model 
           (because attributes are hard to add by XForms) -->
-      <xsl:apply-templates select="exsl:node-set($janus)" mode="second_run"/>
+      <xsl:apply-templates select="$janus" mode="second_run"/>
     </xsl:variable>
     <!-- output after second run: -->
-    <!-- <xsl:copy-of select="exsl:node-set($second_run)"/> -->
+    <!-- <xsl:copy-of select="local:nodifier($second_run)"/> -->
     
     <!-- final run: convert formatted text to escaped HTML -->
-    <xsl:apply-templates select="exsl:node-set($second_run)" mode="mei2html"/>
+    <xsl:apply-templates select="$second_run" mode="mei2html"/>
   </xsl:template>
   
   <xsl:template match="m:mei" mode="second_run">
@@ -91,21 +94,44 @@
     </perfResList>
   </xsl:template>
   
+  <xsl:function name="local:evaluate" as="node()">
+    <xsl:param name="path"/>
+    <xsl:param name="node"/>
+
+    <xsl:variable name="element_name">
+      <xsl:value-of select="substring-before('/',$path)"/>
+    </xsl:variable>
+
+    <xsl:variable name="next_path">
+      <xsl:value-of select="substring-after(concat($element_name,'/'),$path)"/>
+    </xsl:variable>
+
+    <xsl:variable name="element">
+      <xsl:value-of select="$node//node()[name()=$element_name]"/>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="string-length($path) &gt; 0">
+	<xsl:value-of select="local:evaluate($next_path,$element)"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$element"/>
+      </xsl:otherwise>
+    </xsl:choose>
+
+  </xsl:function>
   
   
   <!-- copying attributes from the model header to the data header -->
   <xsl:template match="*" mode="header">
     <!-- build an xpath string to locate the corresponding node in the model header -->
-    <xsl:variable name="path"><xsl:for-each 
-      select="ancestor-or-self::*">/m:<xsl:value-of 
-            select="name()"/><xsl:if test="local-name()='meiHead'">[1]</xsl:if></xsl:for-each>
-    </xsl:variable>
+    <xsl:variable name="path"><xsl:value-of select="path()"/></xsl:variable>
     <xsl:element name="{name()}" namespace="{namespace-uri()}">
       <xsl:copy-of select="@*"/>
-      <xsl:variable name="model" select="dyn:evaluate($path)"/>
+      <xsl:variable name="model" select="local:evaluate($path,$empty_doc)"/>
       <xsl:variable name="data_node" select="."/>
       <!-- Add all missing empty attributes. Ignores non-empty attributes in the model in order not to inject unwanted data -->
-      <xsl:for-each select="$model/@*[.='']">
+      <xsl:for-each select="$model//@*[.='']">
         <xsl:variable name="this_att" select="local-name()"/>
         <xsl:if test="not($data_node/@*[local-name()=$this_att])"><xsl:attribute name="{name()}"/></xsl:if>
       </xsl:for-each>
@@ -145,18 +171,17 @@
             select="name()"/></xsl:for-each>
     </xsl:variable>
     <!-- always copy from the model's top-level expression -->
-    <xsl:variable 
-      name="path">/m:mei/m:meiHead[1]/m:workDesc/m:work/m:expressionList/m:expression/<xsl:call-template name="substring-after-last">
+    <xsl:variable name="path">/m:mei/m:meiHead[1]/m:workDesc/m:work/m:expressionList/m:expression/<xsl:call-template name="substring-after-last">
         <xsl:with-param name="string" select="$complete_path"/>
         <xsl:with-param name="delimiter" select="'m:expression/'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:element name="{name()}" namespace="{namespace-uri()}">
       <xsl:copy-of select="@*"/>
-      <xsl:variable name="model" select="dyn:evaluate($path)"/>
+      <xsl:variable name="model" select="local:evaluate($path,$empty_doc)"/>
       <xsl:variable name="data_node" select="."/>
       <!-- Add all missing empty attributes.  -->
-      <xsl:for-each select="$model/@*">
+      <xsl:for-each select="$model//@*">
         <xsl:variable name="this_att" select="local-name()"/>
         <xsl:if test="not($data_node/@*[local-name()=$this_att])"><xsl:attribute name="{name()}"/></xsl:if>
       </xsl:for-each>
@@ -376,5 +401,15 @@
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
+
+ <xsl:function name="local:nodifier" as="text()">
+          <xsl:param name="str" />
+          <xsl:variable name="node">
+            <node>
+              <s><xsl:value-of select="$str"/></s>
+            </node>
+          </xsl:variable>
+          <xsl:value-of select="$node//s/text()"/>
+        </xsl:function>
   
 </xsl:transform>
