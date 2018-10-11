@@ -5,14 +5,9 @@ declare namespace xs="http://www.w3.org/2001/XMLSchema";
 declare option exist:serialize "method=xml encoding=UTF-8 media-type=text/html";
 
 let $method:= request:get-method()
-let $data  := if(matches($method,"put","i")) then
-           request:get-data()
-else
-	   request:get-parameter("file","")
+let $data  := request:get-data()
 
 let $log-in := xmldb:login("/db", "admin", "flormelis")
-
-let $method:= request:get-method()
 
 let $exist_path  := request:get-parameter("path","")
 
@@ -20,8 +15,6 @@ let $result := if($exist_path) then
     xmldb:store("/db/garbage",$exist_path , $data)
 else
     ()
-
-
 
 return
 <html>
