@@ -18,8 +18,8 @@
   xmlns:xl="http://www.w3.org/1999/xlink" 
   xmlns:h="http://www.w3.org/1999/xhtml" 
   xmlns:dcm="http://www.kb.dk/dcm"
-  xmlns:exsl="http://exslt.org/common" 
-  exclude-result-prefixes="xsl m h dcm xl exsl" version="1.0">
+  xmlns:local="urn:my-stuff"
+  exclude-result-prefixes="xsl m h dcm xl local" version="3.0">
 
   <xsl:param name="user" select="''"/>
   <xsl:param name="target" select="''"/>
@@ -38,7 +38,7 @@
     <xsl:variable name="new_doc">
       <xsl:apply-templates select="*" mode="convertEntities"/>
     </xsl:variable>
-    <xsl:apply-templates select="exsl:node-set($new_doc)" mode="html2mei"/>
+    <xsl:apply-templates select="$new_doc" mode="html2mei"/>
   </xsl:template>
 
   <xsl:template match="m:music">
@@ -486,7 +486,7 @@
           </xsl:call-template>
         </xsl:variable>
         <xsl:element name="{$tagName}" namespace="http://www.music-encoding.org/ns/mei">
-          <xsl:for-each select="exsl:node-set($atts)/*">
+          <xsl:for-each select="local:nodifier($atts)/*">
             <xsl:variable name="attName" select="substring-before(.,'(')"/>
             <xsl:attribute name="{$attName}">
               <xsl:value-of select="substring-before(substring-after(.,'('),')')"/>
@@ -715,6 +715,16 @@
   <xsl:template match="@*|node()">
     <xsl:copy><xsl:apply-templates select="@*|node()"/></xsl:copy>
   </xsl:template>
+
+ <xsl:function name="local:nodifier" as="text()">
+   <xsl:param name="str" />
+   <xsl:variable name="node">
+     <node>
+       <s><xsl:value-of select="$str"/></s>
+     </node>
+   </xsl:variable>
+   <xsl:value-of select="$node//s/text()"/>
+ </xsl:function>
 
 
 </xsl:transform>
