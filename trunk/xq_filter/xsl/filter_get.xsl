@@ -49,7 +49,7 @@
     <mei xmlns="http://www.music-encoding.org/ns/mei"
       xmlns:xl="http://www.w3.org/1999/xlink">
       <xsl:copy-of select="@*"/>
-      <xsl:apply-templates select="m:meiHead[2]" mode="header"/>
+      <xsl:apply-templates select="m:meiHead[1]" mode="header"/>
       <!-- we remove the music when we deliver to the editor -->
       <xsl:apply-templates select="m:music"/>
     </mei>
