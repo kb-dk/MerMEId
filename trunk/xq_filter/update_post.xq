@@ -10,8 +10,20 @@ let $log-in := xmldb:login("/db", "admin", "flormelis")
 
 let $exist_path  := request:get-parameter("path","")
 
-let $result := if($exist_path) then
-    xmldb:store("/db/garbage",$exist_path , $data)
+
+let $log-in      := xmldb:login("/db", "admin", "flormelis")
+let $exist_path  := request:get-parameter("path","")
+let $transform   := if(true()) then
+    xs:anyURI("/db/apps/filter/xsl/filter_put.xsl")
+else
+    xs:anyURI("/db/apps/filter/xsl/null_transform.xsl")
+let $op          := doc($transform)
+let $params      := <parameters/>
+let $tdoc        := transform:transform($data,$op,$params)
+let $params      := <parameters/>
+
+let $result      := if($exist_path) then
+    xmldb:store("/db/garbage",$exist_path , $tdoc)
 else
     ()
 
