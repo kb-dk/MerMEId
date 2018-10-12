@@ -14,7 +14,7 @@ else
 let $exist_path  := request:get-parameter("path","")
 
 let $op          := doc($transform)
-let $doc         := doc(string-join(("/db/garbage",$exist_path), "/"))
+let $doc         := doc(string-join(("/db/dcm",$exist_path), "/"))
 let $params      := <parameters/>
 
 let $tdoc        := transform:transform($doc,$op,$params)

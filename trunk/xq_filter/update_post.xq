@@ -23,7 +23,7 @@ let $tdoc        := transform:transform($data,$op,$params)
 let $params      := <parameters/>
 
 let $result      := if($exist_path) then
-    xmldb:store("/db/garbage",$exist_path , $tdoc)
+    xmldb:store("/db/dcm",$exist_path , $tdoc)
 else
     ()
 
