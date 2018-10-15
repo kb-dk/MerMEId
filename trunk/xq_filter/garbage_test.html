@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>garbage test</title>
+  </head>
+  <body>
+    <div>
+      <h1>test</h1>
+
+      <p><strong>retrieve a preprocessed version</strong><br/>
+      <a href="http://localhost:8080/exist/apps/filter/nielsen_cnw0129.xml">http://localhost:8080/exist/apps/filter/nielsen_cnw0129.xml</a></p>
+
+      <p><strong>retrieve an normal version</strong><br/>
+      <a href="http://localhost:8080/exist/rest/db/garbage/nielsen_cnw0129.xml">http://localhost:8080/exist/rest/db/garbage/nielsen_cnw0129.xml</a></p>
+
+      <form method="post" action="http://localhost:8080/exist/apps/filter/get-more.xml">
+	<fieldset>
+	  <legend>POST parameter(s)</legend>
+	  <input name="param0" value="default"/>
+	  <input name="submit" type="submit" value="Send"/>
+	</fieldset>
+      </form>
+
+      <form enctype="multipart/form-data" method="post" action="http://localhost:8080/exist/apps/filter/get-more.xml">
+	<fieldset>
+	  <legend>Set parameter(s) and POST Document as multipart/form-data</legend>
+	  <input type="file" name="file"/>
+	  <input type="submit" value="Upload"/>
+	</fieldset>
+      </form>
+
+    </div>
+  </body>
+</html>
