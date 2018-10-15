@@ -22,8 +22,10 @@ let $params      := <parameters/>
 let $tdoc        := transform:transform($data,$op,$params)
 let $params      := <parameters/>
 
-let $result      := if($exist_path) then
-    xmldb:store("/db/dcm",$exist_path , $tdoc)
+
+let $file        := replace($exist_path, "/*","")
+let $result      := if($file and $tdoc) then
+    xmldb:store("/db/dcm",$file , $tdoc)
 else
     ()
 
