@@ -5,7 +5,7 @@ declare namespace xs="http://www.w3.org/2001/XMLSchema";
 declare option exist:serialize "method=xml encoding=UTF-8 media-type=text/html";
 
 let $method      := request:get-method()
-let $data        := util:parse(util:base64-decode(request:get-data()))
+let $data        := request:get-data()
 
 let $log-in      := xmldb:login("/db", "admin", "flormelis")
 let $exist_path  := request:get-parameter("path","")
