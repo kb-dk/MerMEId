@@ -1,12 +1,13 @@
+xquery version "3.1" encoding "UTF-8";
+
 import module namespace login="http://kb.dk/this/login" at "./login.xqm";
 
 declare namespace functx = "http://www.functx.com";
 declare namespace m="http://www.music-encoding.org/ns/mei";
-declare namespace xdb="http://exist-db.org/xquery/xmldb";
+declare namespace xmldb="http://exist-db.org/xquery/xmldb";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
-declare namespace uuid="java:java.util.UUID";
 
 declare option    exist:serialize "method=xml media-type=text/html"; 
 
@@ -22,11 +23,22 @@ let $parameters :=  request:get-parameter-names()
 return
 <p>
   {
-    for $parameter in $parameters 
-    let $resource := concat($dcmroot,$parameter)
-    where request:get-parameter($parameter,"")="delete" and contains($parameter,"xml")
-    return xdb:remove( $dcmroot, $resource)
+    for $resource in $parameters 
+    where request:get-parameter($resource,"")="delete" and contains($resource,"xml")
+    return xmldb:remove(xs:anyURI($dcmroot), $resource)
   }
 </p>
+
+(:
+xquery version "3.1" encoding "UTF-8";
+
+declare namespace xmldb="http://exist-db.org/xquery/xmldb";
+
+let $dcmroot := "/db/dcm/"
+let $resource := "nielsen_cnw0126.xml"
+
+return xmldb:remove(xs:anyURI($dcmroot), $resource)
+:)
+
 
 
