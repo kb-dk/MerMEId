@@ -38,5 +38,4 @@ if(request:get-parameter("debug","")) then
 (<d>{$params}{doc(concat("/db/mermeid/style/",$xsl))}</d>)
 else
 transform:transform($doc,doc(concat("/db/mermeid/style/",$xsl)),$params)
-
  
