@@ -22,18 +22,10 @@ let $parameters :=  request:get-parameter-names()
 return
 <p>
   {
-
-et $log-in := login:function()
-let $res := response:redirect-to($return_to cast as xs:anyURI) 
-let $parameters :=  request:get-parameter-names()
-
-return
-<table>
-  {
     for $parameter in $parameters 
     let $resource := concat($dcmroot,$parameter)
     where request:get-parameter($parameter,"")="delete" and contains($parameter,"xml")
-    return xdb:remove( $dcmroot, $resource as xs:string) as item()
+    return xdb:remove( $dcmroot, $resource)
   }
 </p>
 

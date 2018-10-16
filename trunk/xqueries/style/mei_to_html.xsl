@@ -15,17 +15,20 @@
 	exclude-result-prefixes="m xsl exsl foo java local">
 
 	<!-- 
-		Conversion of MEI 3.0.0 metadata to HTML using XSLT 1.0
+		Conversion of MEI 3.0.0 metadata to HTML using XSLT 2.0
 		
 		Authors: 
 		Axel Teich Geertinger & Sigfrid Lundberg
 		Danish Centre for Music Editing
 		Royal Danish Library, Copenhagen
-		2010-2017
+		2010-2018
 	-->
 	
-	<xsl:output method="xml" encoding="UTF-8" cdata-section-elements="" omit-xml-declaration="yes"
-		indent="no" xml:space="default"/>
+	<xsl:output method="xml" 
+		    encoding="UTF-8" 
+		    cdata-section-elements="" 
+		    omit-xml-declaration="yes"
+		    indent="no" xml:space="default"/>
 
 	<xsl:strip-space elements="*"/>
 
@@ -2710,7 +2713,7 @@
 
 		<!-- links to full text (exception: letters and diary entries handled elsewhere) -->
 		<xsl:if
-			test="not(m:genre='diary entry' or m:genre='letter' or (contains(m:genre,'concert') and contains(m:genre,'program')))">
+		    test="not(m:genre='diary entry' or m:genre='letter' or (contains(string-join(m:genre,''),'concert') and contains(string-join(m:genre,''),'program')))">
 			<xsl:apply-templates select="m:annot">
 				<xsl:with-param name="compact" select="'true'"/>
 			</xsl:apply-templates>
