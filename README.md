@@ -11,13 +11,14 @@ the production of thematic catalogues of works and for organizing source- and
 work-related information during the preparation of scholarly editions of
 music.
 
-MerMEId is used for the creation and maintenance of [Catalogue of Carl Nielsen's Works, CNW](http://www.kb.dk/dcm/cnw.html),
-[Johann Adolph Scheibe. A Catalogue of His Works](http://www.kb.dk/dcm/schw.html), and
-[J.P.E. Hartmann. A Thematic-Bibliographic Catalogue of His Works](http://www.kb.dk/dcm/hartw.html)
-Read more at the
-[project](http://www.kb.dk/en/nb/dcm/projekter/mermeid.html) and
-[demo](http://labs.kb.dk/editor/) websites.
-[Important changes](https://github.com/Det-Kongelige-Bibliotek/MerMEId/wiki) are described in the Wiki.
+MerMEId is used for the creation and maintenance of 
 
-This is the source distribution.
+* [Catalogue of Carl Nielsen's Works, CNW](http://www.kb.dk/dcm/cnw.html),
+* [Johann Adolph Scheibe. A Catalogue of His Works](http://www.kb.dk/dcm/schw.html), and
+* [J.P.E. Hartmann. A Thematic-Bibliographic Catalogue of His Works](http://www.kb.dk/dcm/hartw.html)
+
+The services mentioned are delivered using [DCM Catalog UI](https://github.com/Det-Kongelige-Bibliotek/dcm_catalog_ui)
+
+Read more at the [project](http://www.kb.dk/en/nb/dcm/projekter/mermeid.html) and [demo](http://labs.kb.dk/editor/) websites. [Important changes](https://github.com/Det-Kongelige-Bibliotek/MerMEId/wiki) are described in the Wiki.
+
 

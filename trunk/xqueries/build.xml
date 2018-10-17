@@ -1,4 +1,4 @@
-<project name="mermeid" basedir="." default="all">
+<project name="xqueries" basedir="." default="all">
 
   <property name="xconfig"           value="system/config/db/dcm/"/>
   <property name="xservice"          value=""/>
@@ -8,17 +8,16 @@
   <property name="webapp.config_dir" value="../local_config/" />
   <property name="webapp.login"      value="login.xqm" />
   <property name="webapp.bibl"       value="standard_bibliography.xml" />
-  <property name="hostport"          value="172.17.0.2:8080"/>
-  <property name="home"           value="  --context /exist/rest/db/ "/>
-  <property name="context"           value="  --context /exist/rest/db/mermeid "/>
+  <property name="hostport"          value="localhost:8080"/>
+  <property name="home"              value="/exist/rest/db/"/>
+  <property name="context"           value="/exist/rest/db/mermeid"/>
 
   <target name="clean">
     <delete file="${webapp.login}" />
     <delete file="library/${webapp.bibl}"/>    
   </target>
 
-  <target name="war" depends="build">
-  </target>
+  <target name="war"></target>
 
   <target name="build" depends="clean">
     <copy file="${webapp.config_dir}${webapp.login}_${webapp.instance}" tofile="${webapp.login}"/>    
@@ -31,11 +30,19 @@
     </input>
 
     <exec executable="./load_exist.pl">
-      <arg line="--suffix xconf --load ${service} ${home} --target ${xconfig} --host-port ${hostport} --user admin --password ${server.pass}"/>
+      <arg line="--suffix xconf --load ${service}  --context ${home} --target ${xconfig} --host-port ${hostport} --user admin --password ${server.pass}"/>
     </exec>
     <exec executable="./load_exist.pl">
-      <arg line="--suffix xml,xq,xqm,xsl,css --load ${service} ${context} --host-port ${hostport} --user admin --password ${server.pass}"/>
+      <arg line="--suffix xml,xq,xqm,xsl,css --load ${service}  --context ${context} --host-port ${hostport} --user admin --password ${server.pass}"/>
     </exec>
+    <delete file="${webapp.login}" />
+    <delete file="library/${webapp.bibl}"/>    
+
+
+      <echo>
+Remember to make all scripts executable by retrieving:
+http://${hostport}${context}/xchmod.xq
+      </echo>
 
   </target>
 
