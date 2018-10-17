@@ -2,6 +2,8 @@
 
 
   <property name="webapp.instance" value="distro"/>
+  <property name="hostport" value="localhost:8080"/>
+
 
   <target name="clean">
     <subant failonerror="false">
@@ -22,6 +24,13 @@
     <subant failonerror="true">
       <fileset dir="." includes="**/build.xml" excludes="build.xml ATTIC/filter/build.xml"/>
       <target name="war"/>
+    </subant>
+  </target>
+
+  <target name="upload">
+    <subant failonerror="true">
+      <fileset dir="." includes="**/build.xml" excludes="build.xml ATTIC/filter/build.xml"/>
+      <target name="upload"/>
     </subant>
   </target>
 

@@ -62,7 +62,7 @@ my @suffixlist = split(/,/,$suffix);
 
 foreach my $suf (@suffixlist)  {
 
-    my $files  = "/usr/bin/find $source -name '*$suf' -print |";
+    my $files  = "/usr/bin/find $source -type f -name '*$suf' -print |";
 
     if(open FIND,$files) {
 	
