@@ -141,7 +141,7 @@ declare function local:format-reference(
 	  <div class="list_header">
 	    <div style="float:right;">
 	      <a title="Add new file" href="#" class="addLink" 
-	      onclick="location.href='/filter/new/dcm/'; return false;"><img 
+	      onclick="location.href='./create-file.xq'; return false;"><img 
 	      src="/editor/images/new.gif" alt="New file" border="0" /></a>
 	      &#160;
 	      <a href="/editor/manual/" 
