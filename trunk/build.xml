@@ -20,7 +20,7 @@
 
   <target name="war">
     <subant failonerror="true">
-      <fileset dir="." includes="**/build.xml" excludes="build.xml"/>
+      <fileset dir="." includes="**/build.xml" excludes="build.xml ATTIC/filter/build.xml"/>
       <target name="war"/>
     </subant>
   </target>

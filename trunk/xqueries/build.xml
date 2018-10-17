@@ -1,4 +1,4 @@
-<project name="mermeid" basedir="." default="all">
+<project name="xqueries" basedir="." default="all">
 
   <property name="xconfig"           value="system/config/db/dcm/"/>
   <property name="xservice"          value=""/>
@@ -9,7 +9,7 @@
   <property name="webapp.login"      value="login.xqm" />
   <property name="webapp.bibl"       value="standard_bibliography.xml" />
   <property name="hostport"          value="172.17.0.2:8080"/>
-  <property name="home"           value="  --context /exist/rest/db/ "/>
+  <property name="home"              value="  --context /exist/rest/db/ "/>
   <property name="context"           value="  --context /exist/rest/db/mermeid "/>
 
   <target name="clean">
@@ -17,8 +17,7 @@
     <delete file="library/${webapp.bibl}"/>    
   </target>
 
-  <target name="war" depends="build">
-  </target>
+  <target name="war"></target>
 
   <target name="build" depends="clean">
     <copy file="${webapp.config_dir}${webapp.login}_${webapp.instance}" tofile="${webapp.login}"/>    
@@ -36,7 +35,8 @@
     <exec executable="./load_exist.pl">
       <arg line="--suffix xml,xq,xqm,xsl,css --load ${service} ${context} --host-port ${hostport} --user admin --password ${server.pass}"/>
     </exec>
-
+    <delete file="${webapp.login}" />
+    <delete file="library/${webapp.bibl}"/>    
   </target>
 
 </project>
