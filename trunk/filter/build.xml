@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="all" name="filter">
+
+    <property file="build.properties"/>
+
+    <property name="build" value="build"/>
+    <property name="service.src" value="."/>
+    <property name="install" value="css,db,eot,gif,html,js,otf,png,svg,ttf,woff,xml,xq,xqm,xsl"/>
+    <property name="hostport" value="localhost:8080"/>
+
+    <property name="target" value="filter"/>
+    <property name="service" value="${build}/${target}"/>
+
+    <target name="all" depends="service"/>
+    <target name="rebuild" depends="clean,all"/>
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="service" depends="clean">
+      <mkdir dir="${build}"/>
+      <mkdir dir="${service}"/>
+      <mkdir dir="${service}/${target}"/>
+
+      <copy todir="${service}">
+	<fileset dir="${service.src}"/>
+      </copy>
+    </target>
+
+    <target name="upload">
+      <input message="Enter password:" addproperty="server.pass" defaultvalue="">
+	<handler type="secure"/>
+      </input>
+      <exec executable="./utilities/load_exist.pl">
+	<arg line="--suffix ${install} --load build  --target / --host-port ${hostport} --user admin --password ${server.pass}"/>
+      </exec>
+    </target>
+
+</project>
