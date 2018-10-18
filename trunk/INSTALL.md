@@ -8,8 +8,8 @@ products, MerMEId should be portable. However, we have never installed
 it on anything but Linux systems and all scripts used to maintain it
 depend on having /bin/sh and /usr/bin/perl etc. Sorry if you don't
 
-* Installing dependencies
-* Configure MerMEId Form
+* [Installing dependencies](#installing-dependencies)
+* [Configure MerMEId Form](#configure-mermeid-form)
 * Configure Database and Queries
 * Building 
 * Installing MerMEId
