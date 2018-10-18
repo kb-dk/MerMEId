@@ -20,9 +20,28 @@ is about to be deprecated
 
 ## Installing dependencies
 
+MerMEId consists of software components residing in an Apache
+Tomcat. The components are working intimately together, in an URI
+space orchestrated by Apache HTTPD. These are the easy ones (you
+should be able to use what comes with your operating system)
 
+* Java 8
+* Apache Tomcat 8
+* A modern Apache HTTPD (like 2.4 or better)
+* Java build tool ant
+* PERL scripting language 
+
+There are non-standard components. The shopping list is as follows:
+
+* A recent stable release of [eXist DB](http://exist-db.org/) xml database, [we are currently using 4.4.0 or better](https://bintray.com/existdb/releases/exist/4.4.0/view)
+* [Orbeon FORMS Community Edition (CE)](https://www.orbeon.com/download). We are still using the fairly old version 4.9.
+
+You should be able to get an orbeon.war ready to install in the tomcat. I install the standard eXist and then build an exist.war. These are basically copied to the tomcat webapps directory.
 
 ## Configure MerMEId Form
+
+
+
 ## Configure Database and Queries
 ## Building 
 ## Installing MerMEId

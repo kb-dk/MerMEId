@@ -140,11 +140,9 @@ declare function local:format-reference(
 	<body class="list_files">
 	  <div class="list_header">
 	    <div style="float:right;">
-	      <a title="Add new file" href="#" class="addLink" 
-	      onclick="location.href='./create-file.xq'; return false;"><img 
-	      src="/editor/images/new.gif" alt="New file" border="0" /></a>
-	      &#160;
-	      <a href="/editor/manual/" 
+	      <form id="create-file" action="./create-file.xq" method="post" class="addLink"  style="display:inline;">
+    	      <input type="image" src="/editor/images/new.gif" name="button" value="new" title="Add new file"/>
+	      </form>&#160;<a href="/editor/manual/" 
 	      class="addLink"
 	      target="_blank"><img 
 	      src="/editor/images/help_light.png" 
