@@ -163,9 +163,10 @@ You will find a file in [local_config](./local_config/), named
 ```
 
 The MerMEId form and Orbeon need to know where to find different
-stuff. Your tasks is to copy that file to a name given by your local
-configuration. Like mymermeid. And replace example.org with the name
-of your server.
+stuff. Your tasks is to copy that file to a name suitable for your
+local configuration. Like mymermeid. Then edit the file and replace
+example.org with the name of your server. That is, if you don't try to
+do something really complicated.
 
 ### Check
 
@@ -176,7 +177,7 @@ When you are done there should be a file called mermeid_configuration.xml_mymerm
 You will find a file in [local_config](./local_config/), named
 [login.xqm_distro](./local_config/login.xqm_distro) which contains
 code used for logging in before doing sensitive operations in the
-database. The function looks like
+database. Inside it, there is a function looking like
 
 ```
 declare function login:function() as xs:boolean
@@ -184,12 +185,16 @@ declare function login:function() as xs:boolean
   let $lgin := xdb:login("/db", "user", "secretpassword")
   return $lgin
 };
+
 ```
-The database needs to know the user's ID (which is admin) and the
-"secretpassword" Your tasks is to copy the login.xqm_distro to
-login.xqm_mymermeid and replace "user" with "admin" and secretpassword
-with whatever you chose when you installed eXist DB ([see
-above](#3-install-exist-db))
+
+The database needs to know the userid (which in this case is "admin") and the
+"secretpassword" 
+
+Your tasks is to copy the login.xqm_distro to login.xqm_mymermeid and
+replace "user" with "admin" and secretpassword with whatever you chose
+when you installed eXist DB ([see above](#3-install-exist-db))
+
 
 ### Check
 
@@ -219,6 +224,11 @@ cp [./mermeid/editor.war](./orbeon/mei_form.jsp) <YOUR WEBAPPS directory>/
 ### Check
 
 * Your http://example.org/editor/ whould return a page just like http://labs.kb.dk/editor/
+
+
+After you've done, you can do ant clean to make sure you leave the
+source tree in pristine conditions. Note that you must build before
+you install the database.
 
 
 ## 8. Install database
