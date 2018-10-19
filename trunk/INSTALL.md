@@ -42,12 +42,17 @@ versions. Configure HTTPD and Tomcat the standard ways, the former
 should run on port 80, and the latter on 8080. In the following I will
 refer to your server as example.org. 
 
-
-
 ### Check
 
 * http://example.org:80 should tell you something about httpd
 * http://example.org:8080 should tell you something about tomcat
+
+Complete this by copying the file
+[apache-httpd/conf-devel.conf]/(apache-httpd/conf-devel.conf) to where
+your httpd has its virtual host configurations and restart HTTPD.
+
+(On Ubuntu this is /etc/apache2/sites-enabled/, on Red Hat/Cent OS it is
+/etc/httpd/conf.d/)
 
 ## 3. Install eXist DB
 
@@ -83,7 +88,7 @@ Copy orbeon.war to the tomcat webapps directory.
 ## 5. Configure MerMEId Form
 
 You will find a file in [local_config](./local_config/), named
-```mermeid_configuration.xml_distro``` which looks somewhat like
+[mermeid_configuration.xml_distro](./local_config/mermeid_configuration.xml_distro), the beginning of which looks somewhat like
 
 ```
   <document_root>storage/dcm/</document_root>
@@ -96,16 +101,42 @@ You will find a file in [local_config](./local_config/), named
   <server_name>http://example.org/</server_name>
 ```
 
-The MerMEId form (and Orbeon) needs to know where to find different
+The MerMEId form and Orbeon need to know where to find different
 stuff. Your tasks is to copy that file to a name given by your local
-configuration. Like my_mermeid. And replace example.org with the name
+configuration. Like mymermeid. And replace example.org with the name
 of your server.
+
+When you are done there should be a file called mermeid_configuration.xml_mymermeid in local_config
 
 ## 6. Configure database
 
+You will find a file in [local_config](./local_config/), named
+[login.xqm_distro](./local_config/login.xqm_distro) which contains
+code used for logging in before doing sensitive operations in the
+database. The function looks like
+
+```
+declare function login:function() as xs:boolean
+{
+  let $lgin := xdb:login("/db", "user", "secretpassword")
+  return $lgin
+};
+```
+
+The database needs to know the user's ID (which is admin) and the "secretpassword"
+Your tasks is to copy the login.xqm_distro to login.xqm_mymermeid and replace "user" with "admin" and secretpassword with whatever you chose when you installed eXist DB ([see above](#3-install-exist-db))
+
+When you are done there should be a file called login.xqm_mymermeid in local_config
+
+
 ## 7. Build MerMEId
 
+
+
+
 ## 8. Install database
+
+* http://example.org:8080/exist/rest/db/mermeid/ should (thanks to the configuration of HTTPD above) give the same content as http://example.org/storage/
 
 ## 9. Install form in Orbeon
 
