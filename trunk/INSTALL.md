@@ -66,18 +66,24 @@ Copy orbeon.war to the tomcat webapps directory.
 
 ## 5. Configure MerMEId Form
 
-You will find a file in 
+You will find a file in [local_config](./local_config/), named
+```mermeid_configuration.xml_distro``` which looks somewhat like
 
 ```
   <document_root>storage/dcm/</document_root>
   <exist_dir>storage/</exist_dir>
-  <orbeon_dir>http://localhost/orbeon/xforms-jsp/mei-form/</orbeon_dir>
-  <form_home>http://localhost/editor/forms/mei/</form_home>
+  <orbeon_dir>http://example.org/orbeon/xforms-jsp/mei-form/</orbeon_dir>
+  <form_home>http://example.org/editor/forms/mei/</form_home>
   <crud_home>http://localhost/filter/dcm/</crud_home>
-  <server_name>http://localhost/</server_name>
-  <exist_dir>storage/</exist_dir>
-  <document_root>storage/dcm/</document_root>
+  <library_crud_home>http://example.org/filter/library/</library_crud_home>
+  <rism_crud_home>http://example.org/filter/rism_sigla/</rism_crud_home>
+  <server_name>http://example.org/</server_name>
 ```
+
+The MerMEId form (and Orbeon) needs to know where to find different
+stuff. Your tasks is to copy that file to a name given by your local
+configuration. Like my_mermeid. And replace example.org with the name
+of your server.
 
 ## 6. Configure database
 
