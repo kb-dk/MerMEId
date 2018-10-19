@@ -2,7 +2,7 @@
 [MerMEId](../README.md) | [Source code](./README.md) | [Installation overview ](INSTALL.md)
 
 MerMEId & its components
-==============================
+========================
 
 MerMEId distribution contains the following components.
 

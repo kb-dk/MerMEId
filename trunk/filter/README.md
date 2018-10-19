@@ -3,7 +3,8 @@
 
 This filter replaces the legacy one written in java and it does not
 try to be a general tool for transforming content upon GET and PUT
-http requests.
+http requests. This is for pre- and postprocessing of text blocks for
+[wysiwyg](https://en.wikipedia.org/wiki/WYSIWYG) editing.
 
 It still transforms XML content upon 
 
