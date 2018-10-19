@@ -233,7 +233,7 @@ you install the database.
 
 ## 8. Install database
 
-Now you only need to install the database. Ant is doing that for you using
+When you've build MerMEId, you must install the database. Ant is doing that for you using ant command
 
 ```
 ant upload -Dwebapp.instance=mymermeid -Dhostport=localhost:8080
