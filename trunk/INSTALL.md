@@ -72,18 +72,54 @@ Copy the exist.war to the tomcat webapps directory
 
 * http://example.org:8080/exist/ should give you eXist DB Dashboard.
 
+### eXist DB password
+
 While you're at it, remember to set password for eXist DB admin
-user. If you don't do it someone out there will use it for purposes
-you don't like. **OK?**
+user. Do it under security in eXist DB Dashboard. 
+
+If you don't do this someone out there will use your database for
+purposes you may not like. **OK?**
 
 ## 4. Install Orbeon
 
 [Orbeon FORMS Community Edition
 (CE)](https://www.orbeon.com/download). We are still using the fairly
-old version 4.9, but you should be able to get an orbeon.war ready to
-install in the tomcat.
+old version 4.9, but you should still be able to get an orbeon.war for
+version 4.9 which ready to install in the tomcat.
 
-Copy orbeon.war to the tomcat webapps directory.
+Copy orbeon.war to the tomcat webapps directory. Tomcat opens war
+files in its webapps area. You should by now have one directory there
+called exist and another called orbeon.
+
+In the [orbeon/](./orbeon) you will find a small java program called
+[mei_form.jsp](./orbeon/mei_form.jsp). You need to install that in your orbeon.
+
+Make sure that there is a directory called 
+
+```
+ <YOUR WEBAPPS directory>/orbeon/xforms-jsp/
+
+```
+Then make a directory called mei-form in there
+
+``` 
+mkdir  <YOUR WEBAPPS directory>/orbeon/xforms-jsp/mei-form
+
+```
+
+and then copy 
+
+```
+
+cp [./orbeon/mei_form.jsp](./orbeon/mei_form.jsp) <YOUR WEBAPPS directory>/orbeon/xforms-jsp/mei-form/index.jsp
+
+```
+
+that is, it should get a new name while copying.
+
+### Check
+
+* http://example.org:8080/orbeon/ should give you an orbeon start page.
 
 ## 5. Configure MerMEId Form
 
@@ -106,6 +142,8 @@ stuff. Your tasks is to copy that file to a name given by your local
 configuration. Like mymermeid. And replace example.org with the name
 of your server.
 
+### Check
+
 When you are done there should be a file called mermeid_configuration.xml_mymermeid in local_config
 
 ## 6. Configure database
@@ -126,12 +164,13 @@ declare function login:function() as xs:boolean
 The database needs to know the user's ID (which is admin) and the "secretpassword"
 Your tasks is to copy the login.xqm_distro to login.xqm_mymermeid and replace "user" with "admin" and secretpassword with whatever you chose when you installed eXist DB ([see above](#3-install-exist-db))
 
-When you are done there should be a file called login.xqm_mymermeid in local_config
+### Check
 
+When you are done there should be a file called login.xqm_mymermeid in local_config
 
 ## 7. Build MerMEId
 
-
+You have already done everything. 
 
 
 ## 8. Install database
