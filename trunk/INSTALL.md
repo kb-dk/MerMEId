@@ -39,12 +39,20 @@ should be able to use what comes with your operating system)
 Install these using you yum or apt-get or whatever. If your Linux is
 recent, that will do. You shouldn't need to look at my proposed
 versions. Configure HTTPD and Tomcat the standard ways, the former
-should run on port 80, and the latter on 8080.
+should run on port 80, and the latter on 8080. In the following I will
+refer to your server as example.org. 
+
+
+
+### Check
+
+* http://example.org:80 should tell you something about httpd
+* http://example.org:8080 should tell you something about tomcat
+
+## 3. Install eXist DB
 
 There are two components that less likely to come with your OS, Orbeon
 and eXist DB.
-
-## 3. Install eXist DB
 
 Use a recent stable release of [eXist DB](http://exist-db.org/) xml
 database, e.g., use [4.4.0](https://bintray.com/existdb/releases/exist/4.4.0/view) or
@@ -54,6 +62,14 @@ We install the standard eXist and then build an
 [exist.war](https://exist-db.org/exist/apps/doc/exist-building).
 
 Copy the exist.war to the tomcat webapps directory
+
+### Check
+
+* http://example.org:8080/exist/ should give you eXist DB Dashboard.
+
+While you're at it, remember to set password for eXist DB admin
+user. If you don't do it someone out there will use it for purposes
+you don't like. **OK?**
 
 ## 4. Install Orbeon
 
