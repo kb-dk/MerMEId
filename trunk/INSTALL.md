@@ -16,7 +16,6 @@ depend on having /bin/sh and /usr/bin/perl etc.
 6. [Configure database](#6-configure-database)
 7. [Build MerMEId](#7-build-mermeid)
 8. [Install database](#8-install-database)
-9. [Install form in Orbeon](#9-install-form-in-orbeon)
 
 The old manual
 [mermeid/INSTALL.html](https://rawgit.com/Det-Kongelige-Bibliotek/MerMEId/master/trunk/mermeid/INSTALL.html)
@@ -110,7 +109,6 @@ mkdir  <YOUR WEBAPPS directory>/orbeon/xforms-jsp/mei-form
 and then copy 
 
 ```
-
 cp [./orbeon/mei_form.jsp](./orbeon/mei_form.jsp) <YOUR WEBAPPS directory>/orbeon/xforms-jsp/mei-form/index.jsp
 
 ```
@@ -160,22 +158,54 @@ declare function login:function() as xs:boolean
   return $lgin
 };
 ```
-
-The database needs to know the user's ID (which is admin) and the "secretpassword"
-Your tasks is to copy the login.xqm_distro to login.xqm_mymermeid and replace "user" with "admin" and secretpassword with whatever you chose when you installed eXist DB ([see above](#3-install-exist-db))
+The database needs to know the user's ID (which is admin) and the
+"secretpassword" Your tasks is to copy the login.xqm_distro to
+login.xqm_mymermeid and replace "user" with "admin" and secretpassword
+with whatever you chose when you installed eXist DB ([see
+above](#3-install-exist-db))
 
 ### Check
 
-When you are done there should be a file called login.xqm_mymermeid in local_config
+When you are done, there should be a file called login.xqm_mymermeid
+in local_config. Keep that private, and don't share it. **OK?**
 
 ## 7. Build MerMEId
 
-You have already done everything. 
+Actually, you have now already done all the hard work, and now it
+remains to run a build using ant.
+
+
+```
+ant  -Dwebapp.instance=mymermeid
+
+```
+
+What ant does here isn't really a compilation, but rather it copies a
+lot of files to the places they need to be for running MerMEId. Also
+it creates an editor.war in the [./mermeid](./mermeid) directory.
+
+```
+cp [./mermeid/editor.war](./orbeon/mei_form.jsp) <YOUR WEBAPPS directory>/
+
+```
+
+### Check
+
+* Your http://example.org/editor/ whould return a page just like http://labs.kb.dk/editor/
 
 
 ## 8. Install database
 
-* http://example.org:8080/exist/rest/db/mermeid/ should (thanks to the configuration of HTTPD above) give the same content as http://example.org/storage/
+Now you only need to install the database. Ant is doing that for you using
 
-## 9. Install form in Orbeon
+```
+ant upload -Dwebapp.instance=mymermeid -Dhostport=localhost:8080
+
+```
+
+### Check
+
+* http://example.org:8080/exist/rest/db/mermeid/ should (thanks to the configuration of HTTPD above) give the same content as http://example.org/storage/
+* http://example.org/storage/list_files.xq should return a list of records in the database, just like the one here http://labs.kb.dk/storage/list_files.xq
+
 
