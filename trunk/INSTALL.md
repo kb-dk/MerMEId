@@ -115,8 +115,10 @@ Copy orbeon.war to the tomcat webapps directory. Tomcat opens war
 files in its webapps area. You should by now have one directory there
 called exist and another called orbeon.
 
-In the [orbeon/](./orbeon) you will find a small java program called
-[mei_form.jsp](./orbeon/mei_form.jsp). You need to install that in your orbeon.
+In the source code [orbeon/](./orbeon) directory you will find a small
+java (actually, it is a Java Server Pages file) program called
+[mei_form.jsp](./orbeon/mei_form.jsp). You need to install that in
+your orbeon.
 
 Make sure that there is a directory called 
 
