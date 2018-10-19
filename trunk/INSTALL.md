@@ -4,9 +4,10 @@
 # Eight steps towards a MerMEId of you own
 
 Since everything is running inside portable standard server software
-products, MerMEId should be portable. However, we have never installed
-it on anything but Linux systems and all scripts used to maintain it
-depend on having /bin/sh and /usr/bin/perl etc.
+products, MerMEId itself should be portable. However, we have never
+installed it on anything but Linux systems. Most scripts used to
+install and maintain it depend on having ant, /bin/sh and /usr/bin/perl
+etc that are common in that environment.
 
 1. [Install Apache HTTPD](#1-install-apache-httpd)
 2. [Install Apache Tomcat](#2-install-apache-tomcat)
