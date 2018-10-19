@@ -17,7 +17,7 @@ etc that are common in that environment.
 6. [Configure database](#6-configure-database)
 7. [Build MerMEId](#7-build-mermeid)
 8. [Install database](#8-install-database)
-[Final checks](#final-checks)
+9. [Final checks](#final-checks)
 
 The old manual
 [mermeid/INSTALL.html](https://rawgit.com/Det-Kongelige-Bibliotek/MerMEId/master/trunk/mermeid/INSTALL.html)
