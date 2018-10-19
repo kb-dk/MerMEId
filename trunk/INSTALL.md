@@ -66,6 +66,19 @@ Copy orbeon.war to the tomcat webapps directory.
 
 ## 5. Configure MerMEId Form
 
+You will find a file in 
+
+```
+  <document_root>storage/dcm/</document_root>
+  <exist_dir>storage/</exist_dir>
+  <orbeon_dir>http://localhost/orbeon/xforms-jsp/mei-form/</orbeon_dir>
+  <form_home>http://localhost/editor/forms/mei/</form_home>
+  <crud_home>http://localhost/filter/dcm/</crud_home>
+  <server_name>http://localhost/</server_name>
+  <exist_dir>storage/</exist_dir>
+  <document_root>storage/dcm/</document_root>
+```
+
 ## 6. Configure database
 
 ## 7. Build MerMEId
