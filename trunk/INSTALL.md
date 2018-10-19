@@ -1,7 +1,7 @@
 
 [MerMEId](../README.md) | [Source code](./README.md) | [Installation overview ](INSTALL.md)
 
-# Nine steps towards a MerMEId of you own
+# Eight steps towards a MerMEId of you own
 
 Since everything is running inside portable standard server software
 products, MerMEId should be portable. However, we have never installed
@@ -16,6 +16,7 @@ depend on having /bin/sh and /usr/bin/perl etc.
 6. [Configure database](#6-configure-database)
 7. [Build MerMEId](#7-build-mermeid)
 8. [Install database](#8-install-database)
+[Final checks](#final-checks)
 
 The old manual
 [mermeid/INSTALL.html](https://rawgit.com/Det-Kongelige-Bibliotek/MerMEId/master/trunk/mermeid/INSTALL.html)
@@ -46,12 +47,35 @@ refer to your server as example.org.
 * http://example.org:80 should tell you something about httpd
 * http://example.org:8080 should tell you something about tomcat
 
-Complete this by copying the file
+Then copy the file
 [apache-httpd/conf-devel.conf]/(apache-httpd/conf-devel.conf) to where
 your httpd has its virtual host configurations and restart HTTPD.
 
 (On Ubuntu this is /etc/apache2/sites-enabled/, on Red Hat/Cent OS it is
 /etc/httpd/conf.d/)
+
+Complete this by creating a /home/xml-store directory and a
+passwordfile there. This will protect the database. You can create
+the passwordfile like this:
+
+```
+  mkdir /home/xml-store
+  cd /home/xml-store
+  htpasswd -bc passwordfile first_trusted_user magic_word
+  htpasswd -b passwordfile second_trusted_user another_magic_word
+  htpasswd -b passwordfile third_trusted_user yet_another_magic_word
+
+```
+
+### Check				
+
+There should be a file
+
+```
+/home/xml-store/passwordfile
+
+```
+and it should be readable to the user running your Apache HTTPD
 
 ## 3. Install eXist DB
 
@@ -203,9 +227,9 @@ ant upload -Dwebapp.instance=mymermeid -Dhostport=localhost:8080
 
 ```
 
-### Check
+## Final Checks
 
 * http://example.org:8080/exist/rest/db/mermeid/ should (thanks to the configuration of HTTPD above) give the same content as http://example.org/storage/
-* http://example.org/storage/list_files.xq should return a list of records in the database, just like the one here http://labs.kb.dk/storage/list_files.xq
-
+* The database scripts should work. For instance http://example.org/storage/list_files.xq should return a list of records in the database, just like the one here http://labs.kb.dk/storage/list_files.xq
+* If you try to delete, copy or create new files you should be forced to authenticate (for example) as first_trusted_user using his or her magic_word
 
