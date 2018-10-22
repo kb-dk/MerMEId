@@ -4,7 +4,7 @@ FROM phusion/baseimage:0.10.0
 # best run using build-docker-image.sh
 #
 
-ENV TOMCAT_RELEASE=7  \
+ENV TOMCAT_RELEASE=8  \
     TOMCAT_VERSION=7.0.69 \
     JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
     CATALINA_HOME=/usr/local/tomcat \
@@ -71,13 +71,13 @@ RUN chmod +x /etc/service/tomcat/run
 
 #
 # Installing all of MerMEId.
-# Note that you have to build editor.war and filter.war yourself,
+# Note that you have to build editor.war yourself,
 # and that orbeon and exist has to be hacked a bit before we run this.
 # see build-docker-image.sh
 #
 
 COPY xqueries $XQ
-ADD mermeid/editor.war filter/filter.war  build/exist.war  build/orbeon.war  ${CATALINA_HOME}/webapps/
+ADD mermeid/editor.war build/exist.war  build/orbeon.war  ${CATALINA_HOME}/webapps/
 
 # Use baseimage-docker's init system.
 
