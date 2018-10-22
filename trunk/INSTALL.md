@@ -267,4 +267,5 @@ You have to do that, because that give MerMEId database execute permissions with
 * http://example.org:8080/exist/rest/db/mermeid/ should (thanks to the configuration of HTTPD above) give the same content as http://example.org/storage/
 * The database scripts should work. For instance http://example.org/storage/list_files.xq should return a list of records in the database, just like the one here http://labs.kb.dk/storage/list_files.xq. If it doesn't you forgot to [set execute permissions](#setting-execute-permissions-for-database).
 * If you try to delete, copy or create new files you should be forced to authenticate (for example) as first_trusted_user using his or her magic_word
+* The same should happen if you load the editor, and try to change a text or something.
 
