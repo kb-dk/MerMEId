@@ -5,7 +5,7 @@ FROM phusion/baseimage:0.10.0
 #
 
 ENV TOMCAT_RELEASE=8  \
-    TOMCAT_VERSION=7.0.69 \
+    TOMCAT_VERSION=8.0.49 \
     JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
     CATALINA_HOME=/usr/local/tomcat \
     PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:$CATALINA_HOME/bin:$PATH \
