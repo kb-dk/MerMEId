@@ -76,7 +76,6 @@ RUN chmod +x /etc/service/tomcat/run
 # see build-docker-image.sh
 #
 
-COPY xqueries $XQ
 ADD mermeid/editor.war build/exist.war  build/orbeon.war  ${CATALINA_HOME}/webapps/
 
 # Use baseimage-docker's init system.
