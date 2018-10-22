@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.11
+FROM phusion/baseimage:0.10.0
 
 #
 # best run using build-docker-image.sh
@@ -76,7 +76,8 @@ RUN chmod +x /etc/service/tomcat/run
 # see build-docker-image.sh
 #
 
-ADD mermeid/editor.war build/exist.war  build/orbeon.war  ${CATALINA_HOME}/webapps/
+
+ADD mermeid/editor.war other-wars/exist.war  build/orbeon.war  ${CATALINA_HOME}/webapps/
 
 # Use baseimage-docker's init system.
 
