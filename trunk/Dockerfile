@@ -66,7 +66,7 @@ COPY docker-daemons/apache2.sh /etc/service/apache2/run
 RUN chmod +x /etc/service/apache2/run
 
 RUN mkdir /etc/service/tomcat
-COPY docker-daemons/tomcat7.sh /etc/service/tomcat/run
+COPY docker-daemons/tomcat.sh /etc/service/tomcat/run
 RUN chmod +x /etc/service/tomcat/run
 
 #
