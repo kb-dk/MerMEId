@@ -217,7 +217,7 @@ lot of files to the places they need to be for running MerMEId. Also
 it creates an editor.war in the [./mermeid](./mermeid) directory.
 
 ```
-cp [./mermeid/editor.war](./orbeon/mei_form.jsp) <YOUR WEBAPPS directory>/
+cp ./mermeid/editor.war <YOUR WEBAPPS directory>/
 
 ```
 
@@ -240,9 +240,31 @@ ant upload -Dwebapp.instance=mymermeid -Dhostport=localhost:8080
 
 ```
 
+It will ask you for the admin password of eXist, the one you set when installing [eXist DB](#exist-db-password).
+
+### Setting execute permissions for database
+
+Note also the text appearing after each set of files having been install:
+
+```
+     [echo] Remember to make all scripts executable by retrieving:
+     [echo] http://example.org:8080/exist/rest/db//apps/filter/xchmod.xq
+```
+
+and
+
+
+```
+     [echo] Remember to make all scripts executable by retrieving:
+     [echo] http://example.org:8080/exist/rest/db/mermeid/xchmod.xq
+```
+
+You have to do that, because that give MerMEId database execute permissions withing eXist DB
+
+
 ## Final Checks
 
 * http://example.org:8080/exist/rest/db/mermeid/ should (thanks to the configuration of HTTPD above) give the same content as http://example.org/storage/
-* The database scripts should work. For instance http://example.org/storage/list_files.xq should return a list of records in the database, just like the one here http://labs.kb.dk/storage/list_files.xq
+* The database scripts should work. For instance http://example.org/storage/list_files.xq should return a list of records in the database, just like the one here http://labs.kb.dk/storage/list_files.xq. If it doesn't you forgot to [set execute permissions](#setting-execute-permissions-for-database).
 * If you try to delete, copy or create new files you should be forced to authenticate (for example) as first_trusted_user using his or her magic_word
 
