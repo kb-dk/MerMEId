@@ -36,6 +36,10 @@
       <arg line="--suffix xml,xq,xqm,xsl,css --load ${service}  --context ${context} --host-port ${hostport} --user admin --password ${server.pass}"/>
     </exec>
 
+    <exec executable="./load_exist.pl">
+      <arg line="--suffix xml --load ${service}/dcm  --context ${home}/dcm --host-port ${hostport} --user admin --password ${server.pass}"/>
+    </exec>
+
     <echo>
 Remember to make all scripts executable by retrieving:
 http://${hostport}${context}/xchmod.xq

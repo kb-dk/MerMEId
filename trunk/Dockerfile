@@ -5,7 +5,7 @@ FROM phusion/baseimage:0.10.0
 #
 
 ENV TOMCAT_RELEASE=8  \
-    TOMCAT_VERSION=8.0.49 \
+    TOMCAT_VERSION=8.0.32 \
     JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
     CATALINA_HOME=/usr/local/tomcat \
     PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:$CATALINA_HOME/bin:$PATH \
@@ -46,9 +46,9 @@ RUN cd /usr/local \
 # 
 # Enable sshd. Can be nice when debugging
 #
-#RUN rm -f /etc/service/sshd/down
-#COPY id_rsa.pub /tmp/your_key.pub
-#RUN cat /tmp/your_key.pub >> /root/.ssh/authorized_keys && rm -f /tmp/your_key.pub
+RUN rm -f /etc/service/sshd/down
+COPY id_rsa.pub /tmp/your_key.pub
+RUN cat /tmp/your_key.pub >> /root/.ssh/authorized_keys && rm -f /tmp/your_key.pub
 #
 
 #
