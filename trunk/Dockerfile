@@ -15,7 +15,7 @@ ENV TOMCAT_RELEASE=8  \
     XML_STORE=/home/xml-store \
     SYS=demo \
     JAVA_OPTS="-Xmx4096m" \
-    XQ=/root/build
+    XQ=/root/build/
 
 #
 # suppose I should cut away some unused stuff here
@@ -27,7 +27,9 @@ RUN apt-get update \
     && apt-get install -y openjdk-8-jdk-headless tar wget apache2 sudo zip unzip vim git ant tzdata perl libwww-perl authbind libapache2-mod-jk \
     && apt-get clean \
     && a2enmod proxy_http \
-    && a2enmod proxy_ajp
+    && a2enmod proxy_ajp \
+    && a2enmod headers
+
 
 #
 # want these to be persistent
@@ -53,6 +55,7 @@ RUN cd /usr/local \
 # Setting up Apache2 as a daemon
 #
 
+RUN mkdir -p /etc/apache2/sites-enabled/
 COPY apache-httpd/conf-devel.conf /etc/apache2/sites-enabled/conf-devel.conf
 
 #
@@ -61,7 +64,7 @@ COPY apache-httpd/conf-devel.conf /etc/apache2/sites-enabled/conf-devel.conf
 
 RUN mkdir -p ${XML_STORE} \
     && htpasswd -bc /home/xml-store/passwordfile editor editor
-RUN mkdir /etc/service/apache2
+RUN mkdir -p /etc/service/apache2
 COPY docker-daemons/apache2.sh /etc/service/apache2/run
 RUN chmod +x /etc/service/apache2/run
 
@@ -76,6 +79,8 @@ RUN chmod +x /etc/service/tomcat/run
 # see build-docker-image.sh
 #
 
+RUN mkdir -p $XQ
+COPY build.xml filter xqueries $XQ
 
 ADD mermeid/editor.war other-wars/exist.war  build/orbeon.war  ${CATALINA_HOME}/webapps/
 
