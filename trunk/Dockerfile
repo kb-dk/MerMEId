@@ -14,8 +14,7 @@ ENV TOMCAT_RELEASE=8  \
     WORKDIR=/root/build/ \
     XML_STORE=/home/xml-store \
     SYS=demo \
-    JAVA_OPTS="-Xmx4096m" \
-    XQ=/root/build/
+    JAVA_OPTS="-Xmx4096m"
 
 #
 # suppose I should cut away some unused stuff here
@@ -78,9 +77,6 @@ RUN chmod +x /etc/service/tomcat/run
 # and that orbeon and exist has to be hacked a bit before we run this.
 # see build-docker-image.sh
 #
-
-RUN mkdir -p $XQ
-COPY build.xml filter xqueries $XQ
 
 ADD mermeid/editor.war other-wars/exist.war  build/orbeon.war  ${CATALINA_HOME}/webapps/
 
