@@ -6,39 +6,43 @@
 
 This is only partly an alternative to the usual [installation](INSTALL.md) procedure.
 
+## Ensure that you have eXist DB and Orbeon FORMS
 
-    Ensure that you have orbeon.war (available directly from the net) and exist.war. We use the very old eXist version 2.2 and you need to build that one according to the recipe). Move them to the
+* [orbeon.war see INSTALL.md](INSTALL.md#4-install-orbeon)
+* [exist.war see INSTALL.md](INSTALL.md#3-install-exist-db)
 
-     <MerMEId>/trunk/other-wars
+They should be put into [./trunk/other-wars](./trunk/other-wars)
+
+## Configure Form and Database
+
+* [Configure MerMEId Form](INSTALL.md#5-configure-mermeid-form)
+* [Configure eXist database](INSTALL.md#6-configure-database)
+
+Here you have to decide about the password of the eXist DB, which you will need later.
+
+## Build MerMEId
+
+For example
+
+ant -Dwebapp.instance=docker
     						
+## Make docker image
+ 
+Now you should be able to everything in one go by running the shell script
 
-    directory.
-    Build the Java components in <MerMEId>/trunk/. Just run
-
-     ant
+[./trunk/build-docker-image.sh](./trunk/build-docker-image.sh)
     						
+If your docker behaves like mine, it would be possible to run it using
 
-    or perhaps
+```
+     docker run --name mermeid   <docker image ID>
 
-     ant -Dwebapp.instance=distro
-    						
+```    						
 
-    There is more information on this in Section 2
-    After that you should be able to build just about everything in one go by running a shell script
+and everything will run on a local IP 172.17.0.2. The eXist dashboard should be on
 
-    <MerMEId>/trunk/build-docker-image.sh
-    						
+http://172.17.0.2:8080/exist/apps/dashboard/index.html
 
-    If your docker behaves like mine, it would be possible to run it using
-
-     docker run <docker image ID>
-    						
-
-    and everything will run on a local IP 172.17.0.2. The eXist dashboard should be on
-
-     http://172.17.0.2:8080/exist/apps/dashboard/index.html
-    						
-
-
-
-
+Here you should set the password for the admin user of the
+database.[You have already decided that. See
+above](#configure-form-and-database). There is a paragraph on this in the [INSTALL.md](INSTALL.md#exist-db-password)
