@@ -30,7 +30,7 @@ ant -Dwebapp.instance=docker
  
 Now you should be able to everything in one go by running the shell script
 
-[./trunk/build-docker-image.sh](./trunk/build-docker-image.sh)
+[./build-docker-image.sh](./trunk/build-docker-image.sh)
     						
 If your docker behaves like mine, it would be possible to run it using
 
