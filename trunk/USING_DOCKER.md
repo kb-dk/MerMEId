@@ -30,7 +30,10 @@ Here you have to decide about the password of the eXist DB, which you will need 
 
 For example
 
-ant -Dwebapp.instance=docker
+```
+ ant -Dwebapp.instance=docker
+
+```
     						
 ## 4. Make docker image
  
@@ -41,7 +44,7 @@ Now you should be able to everything in one go by running the shell script
 If your docker behaves like mine, it would be possible to run it using
 
 ```
-     docker run --name mermeid   <docker image ID>
+ docker run --name mermeid   <docker image ID>
 
 ```    						
 
@@ -55,4 +58,9 @@ above](#configure-form-and-database). There is a paragraph on this in the [INSTA
 
 ## 5. Install database
 
-See [Install database](INSTALL.md#8-install-database)
+```
+ ant upload -Dwebapp.instance=docker -Dhostport=172.17.0.2:8080
+
+```
+
+See also [Install database](INSTALL.md#8-install-database)
