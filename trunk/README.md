@@ -1,12 +1,13 @@
 
-[MerMEId](../README.md) | [Source code](./README.md) | [Installation overview ](INSTALL.md)
+[MerMEId](../README.md) | [Source code](./README.md) | [Install](INSTALL.md) | [Using Docker](USING_DOCKER.md)
 
 MerMEId & its components
 ========================
 
 MerMEId distribution contains the following components.
 
-* [INSTALL](INSTALL.md)   
+* [Install](INSTALL.md)
+* [Using Docker](USING_DOCKER.md)
 * [filter](./filter/README.md) filter scripts
   - [filter/src/xsl](filter/src/xsl/) xsl for filtering 
 * [MerMEId XQuery](./xqueries/README.md)
