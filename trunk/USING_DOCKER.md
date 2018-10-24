@@ -1,6 +1,6 @@
 
 
-[MerMEId](../README.md) | [Source code](./README.md) | [Install](INSTALL.md)
+[MerMEId](../README.md) | [Source code](./README.md) | [Install](INSTALL.md) | [Using Docker](USING_DOCKER.md)
 
 # Or five steps towards a MerMEId of you own using Docker 
 
