@@ -11,7 +11,7 @@ This is only partly an alternative to the usual [installation](INSTALL.md) proce
 * [orbeon.war see INSTALL.md](INSTALL.md#4-install-orbeon)
 * [exist.war see INSTALL.md](INSTALL.md#3-install-exist-db)
 
-They should be put into [./trunk/other-wars](./trunk/other-wars)
+They should be put into [./trunk/other-wars](./other-wars)
 
 ## Configure Form and Database
 
