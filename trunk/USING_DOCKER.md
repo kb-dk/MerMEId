@@ -3,30 +3,31 @@
 [MerMEId](../README.md) | [Source code](./README.md) | [Install](INSTALL.md)
 
 # Using MerMEId in Docker 
+# Or five steps towards a MerMEId of you own
 
 This is only partly an alternative to the usual [installation](INSTALL.md) procedure.
 
-## Ensure that you have eXist DB and Orbeon FORMS
+## 1. Ensure that you have eXist DB and Orbeon FORMS
 
 * [orbeon.war see INSTALL.md](INSTALL.md#4-install-orbeon)
 * [exist.war see INSTALL.md](INSTALL.md#3-install-exist-db)
 
 They should be put into [./trunk/other-wars](./other-wars)
 
-## Configure Form and Database
+## 2. Configure Form and Database
 
 * [Configure MerMEId Form](INSTALL.md#5-configure-mermeid-form)
 * [Configure eXist database](INSTALL.md#6-configure-database)
 
 Here you have to decide about the password of the eXist DB, which you will need later.
 
-## Build MerMEId
+## 3. Build MerMEId
 
 For example
 
 ant -Dwebapp.instance=docker
     						
-## Make docker image
+## 4. Make docker image
  
 Now you should be able to everything in one go by running the shell script
 
@@ -46,3 +47,7 @@ http://172.17.0.2:8080/exist/apps/dashboard/index.html
 Here you should set the password for the admin user of the
 database.[You have already decided that. See
 above](#configure-form-and-database). There is a paragraph on this in the [INSTALL.md](INSTALL.md#exist-db-password)
+
+## 5. Install database
+
+See [Install database](INSTALL.md#8-install-database)
