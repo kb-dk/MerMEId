@@ -2,10 +2,15 @@
 
 [MerMEId](../README.md) | [Source code](./README.md) | [Install](INSTALL.md)
 
-# Using MerMEId in Docker 
-# Or five steps towards a MerMEId of you own
+# Or five steps towards a MerMEId of you own using Docker 
 
 This is only partly an alternative to the usual [installation](INSTALL.md) procedure.
+
+1. [Ensure that you have eXist DB and Orbeon FORMS](#1-ensure-that-you-have-exist-db-and-orbeon-forms)
+2. [Configure Form and Database](#2-configure-form-and-database)
+3. [Build MerMEId](#3-build-mermeid)
+4. [Make docker image](#4-make-docker-image)
+5. [Install database](#5-install-database)
 
 ## 1. Ensure that you have eXist DB and Orbeon FORMS
 
