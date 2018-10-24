@@ -1,5 +1,5 @@
 
-[MerMEId](README.md) | [Source code](trunk/README.md) | [Installation overview](trunk/INSTALL.md)
+[MerMEId](README.md) | [Source code](trunk/README.md) | [Install](trunk/INSTALL.md) | [Using Docker](trunk/USING_DOCKER.md)
 
 MerMEId
 =======

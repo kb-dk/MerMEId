@@ -9,6 +9,22 @@ installed it on anything but Linux systems. Most scripts used to
 install and maintain it depend on having ant, /bin/sh and /usr/bin/perl
 etc that are common in that environment.
 
+
+## First get the code
+
+```
+ git clone https://github.com/Det-Kongelige-Bibliotek/MerMEId.git
+
+```
+or
+
+```
+ git clone git@github.com:Det-Kongelige-Bibliotek/MerMEId.git
+
+```
+
+## Then do the following:
+
 1. [Install Apache HTTPD](#1-install-apache-httpd)
 2. [Install Apache Tomcat](#2-install-apache-tomcat)
 3. [Install eXist DB](#3-install-exist-db)
@@ -17,11 +33,7 @@ etc that are common in that environment.
 6. [Configure database](#6-configure-database)
 7. [Build MerMEId](#7-build-mermeid)
 8. [Install database](#8-install-database)
-9. [Final checks](#final-checks)
-
-The old manual
-[mermeid/INSTALL.html](https://rawgit.com/Det-Kongelige-Bibliotek/MerMEId/master/trunk/mermeid/INSTALL.html)
-is about to be deprecated
+9. [Make the final checks](#final-checks)
 
 ## 1. Install Apache HTTPD
 ## 2. Install Apache Tomcat
@@ -132,7 +144,6 @@ Then make a directory called mei-form in there
 mkdir  <YOUR WEBAPPS directory>/orbeon/xforms-jsp/mei-form
 
 ```
-
 and then copy 
 
 ```
