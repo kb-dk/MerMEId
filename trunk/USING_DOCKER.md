@@ -9,9 +9,11 @@ This is only partly an alternative to the usual [installation](INSTALL.md) proce
 1. [Ensure that you have eXist DB and Orbeon FORMS](#1-ensure-that-you-have-exist-db-and-orbeon-forms)
 2. [Configure Form and Database](#2-configure-form-and-database)
 3. [Build MerMEId](#3-build-mermeid)
-4. [Make docker image](#4-make-docker-image)
-5. [Configure Apache](#5-configure-apache)
+4. [Configure Apache](#4-configure-apache)
+5. [Make docker image](#5-make-docker-image)
 6. [Install database](#6-install-database)
+
+Then you can [make the final checks](INSTALL.md#final-checks)
 
 ## 1. Ensure that you have eXist DB and Orbeon FORMS
 
@@ -25,7 +27,8 @@ They should be put into [./trunk/other-wars](./other-wars)
 * [Configure MerMEId Form](INSTALL.md#5-configure-mermeid-form)
 * [Configure eXist database](INSTALL.md#6-configure-database)
 
-Here you have to decide about the password of the eXist DB, which you will need later.
+Here you have to choose the password of the eXist DB. You will need
+that later.
 
 ## 3. Build MerMEId
 
@@ -35,8 +38,16 @@ For example
  ant -Dwebapp.instance=docker
 
 ```
+## 4. Configure Apache
+
+Please note the sections "Setting up Apache2 as a daemon" and "note
+that editor is the one only Apache2 user"
+
+It isn't necessary to modify the code there, but you must do so if you
+want to have more than one editor user, or change the security
+settings. [See INSTALL.md](./INSTALL.md#more-httpd).
     						
-## 4. Make docker image
+## 5. Make docker image
  
 Now you should be able to everything in one go by running the shell
 script. It does a little more than just running a docker build.
@@ -57,15 +68,6 @@ http://172.17.0.2:8080/exist/apps/dashboard/index.html
 Here you should set the password for the admin user of the
 database.[You have already decided that. See
 above](#configure-form-and-database). There is a paragraph on this in the [INSTALL.md](INSTALL.md#exist-db-password)
-
-## 5. Configure Apache
-
-Please note the sections "Setting up Apache2 as a daemon" and "note
-that editor is the one only Apache2 user"
-
-It isn't necessary to modify the code there, but you must do so if you
-want to have more than one editor user, or change the security
-settings. [See INSTALL.md](./INSTALL.md#more-httpd).
 
 ## 6. Install database
 

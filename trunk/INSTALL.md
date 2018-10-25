@@ -94,7 +94,7 @@ and it should be readable to the user running your Apache HTTPD
 
 ## 3. Install eXist DB
 
-There are two components that less likely to come with your OS, Orbeon
+There are two components that are less likely to come with your OS, Orbeon
 and eXist DB.
 
 Use a recent stable release of [eXist DB](http://exist-db.org/) xml
@@ -108,22 +108,22 @@ Copy the exist.war to the tomcat webapps directory
 
 ### Check
 
-* http://example.org:8080/exist/ should give you eXist DB Dashboard.
+* http://example.org:8080/exist/ should redirect you to the eXist DB Dashboard.
 
 ### eXist DB password
 
-While you're at it, remember to set password for eXist DB admin
-user. Do it under security in eXist DB Dashboard. 
+While you're at it, remember to set password for the eXist DB admin
+user. Do it under User Manager in eXist DB Dashboard. 
 
-If you don't do this someone out there will use your database for
-purposes you may not like. **OK?**
+If you fail to do this someone out there will use your database for
+purposes you may not like. **OK?** I've told you.
 
 ## 4. Install Orbeon
 
 [Orbeon FORMS Community Edition
 (CE)](https://www.orbeon.com/download). We are still using the fairly
-old version 4.9, but you should still be able to get an orbeon.war for
-version 4.9 which ready to install in the tomcat.
+old version 4.9. You should still be able to get an orbeon.war for it
+ready to install in the tomcat.
 
 Copy orbeon.war to the tomcat webapps directory. Tomcat opens war
 files in its webapps area. You should by now have one directory there
@@ -131,7 +131,7 @@ called exist and another called orbeon.
 
 In the source code [orbeon/](./orbeon) directory you will find a small
 java (actually, it is a Java Server Pages file) program called
-[mei_form.jsp](./orbeon/mei_form.jsp). You need to install that in
+[mei_form.jsp](./orbeon/mei_form.jsp). You need to install that inside
 your orbeon.
 
 Make sure that there is a directory called 
@@ -153,7 +153,7 @@ cp [./orbeon/mei_form.jsp](./orbeon/mei_form.jsp) <YOUR WEBAPPS directory>/orbeo
 
 ```
 
-that is, it should get a new name while copying.
+that is, it should get a new name index.jsp while copying.
 
 ### Check
 
@@ -173,6 +173,7 @@ You will find a file in [local_config](./local_config/), named
   <library_crud_home>http://example.org/filter/library/</library_crud_home>
   <rism_crud_home>http://example.org/filter/rism_sigla/</rism_crud_home>
   <server_name>http://example.org/</server_name>
+
 ```
 
 The MerMEId form and Orbeon need to know where to find different
@@ -183,7 +184,8 @@ do something really complicated.
 
 ### Check
 
-When you are done there should be a file called mermeid_configuration.xml_mymermeid in local_config
+When you are done there should be a file called (something like)
+mermeid_configuration.xml_mymermeid in local_config
 
 ## 6. Configure database
 
@@ -201,18 +203,19 @@ declare function login:function() as xs:boolean
 
 ```
 
-The database needs to know the userid (which in this case is "admin") and the
-"secretpassword" 
+This is for the script to authenticate to the database (as, in this
+case, "user") and "secretpassword"
 
 Your tasks is to copy the login.xqm_distro to login.xqm_mymermeid and
 replace "user" with "admin" and secretpassword with whatever you chose
 when you installed eXist DB ([see above](#3-install-exist-db))
 
-
 ### Check
 
 When you are done, there should be a file called login.xqm_mymermeid
-in local_config. Keep that private, and don't share it. **OK?**
+in local_config. It should contain the password for a user called
+"admin". Keep that snippet of code private, and don't share
+it. **OK?** I haven't been able to figure out anything better.
 
 ## 7. Build MerMEId
 
@@ -225,12 +228,23 @@ ant  -Dwebapp.instance=mymermeid
 
 ```
 
-What ant does here isn't really a compilation, but rather it copies a
-lot of files to the places they need to be for running MerMEId. Also
-it creates an editor.war in the [./mermeid](./mermeid) directory.
+Before you do that you may do
 
 ```
-cp ./mermeid/editor.war <YOUR WEBAPPS directory>/
+ant clean 
+
+```
+to make sure you start with the source tree in pristine conditions.
+
+What ant does here isn't really a compilation; rather it prepares the
+source tree for installation by copying files to the places they need
+to be for running MerMEId.
+
+Also it creates an editor.war in the [./mermeid](./mermeid)
+directory. Install it:
+
+```
+cp ./mermeid/editor.war <YOUR TOMCAT WEBAPPS directory>/
 
 ```
 
@@ -238,11 +252,8 @@ cp ./mermeid/editor.war <YOUR WEBAPPS directory>/
 
 * Your http://example.org/editor/ whould return a page just like http://labs.kb.dk/editor/
 
-
-After you've done, you can do ant clean to make sure you leave the
-source tree in pristine conditions. Note that you must build before
-you install the database.
-
+Note that you must do the build before you procede to install the
+database.
 
 ## 8. Install database
 
@@ -253,7 +264,16 @@ ant upload -Dwebapp.instance=mymermeid -Dhostport=localhost:8080
 
 ```
 
-It will ask you for the admin password of eXist, the one you set when installing [eXist DB](#exist-db-password).
+It will ask you for the admin password of eXist, the one you set when
+installing [eXist DB](#exist-db-password).
+
+After all this do
+
+```
+ant clean 
+
+```
+to make sure you leave the source tree in pristine conditions.
 
 ### Setting execute permissions for database
 
