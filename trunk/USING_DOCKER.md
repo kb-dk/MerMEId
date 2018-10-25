@@ -102,6 +102,26 @@ on your server. Inside there will be very long directory names (64
 bytes long). **If you ensure that Docker's volumes directory is under backup,
 you should be safe.**
 
+### Check
+
+List directory of the docker volumes
+
+```
+ls -l /var/lib/docker/volumes/*/_data/ 
+
+```
+
+should give something like
+
+```
+drwxr-xr-x 12 root root      4096 okt 24 11:38 editor
+-rw-rw-r--  1 root root  15763888 okt 24 11:36 editor.war
+drwxr-xr-x  7 root root      4096 okt 24 11:38 exist
+-rw-r--r--  1 root root 132149935 okt 22 11:06 exist.war
+drwxr-xr-x  5 root root      4096 okt 24 11:39 orbeon
+-rw-r--r--  1 root root  63168129 okt 24 11:37 orbeon.war
+
+```
 
 ## 6. Install database
 
