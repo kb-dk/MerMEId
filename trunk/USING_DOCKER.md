@@ -10,7 +10,8 @@ This is only partly an alternative to the usual [installation](INSTALL.md) proce
 2. [Configure Form and Database](#2-configure-form-and-database)
 3. [Build MerMEId](#3-build-mermeid)
 4. [Make docker image](#4-make-docker-image)
-5. [Install database](#5-install-database)
+5. [Configure Apache](#5-configure-apache)
+6. [Install database](#6-install-database)
 
 ## 1. Ensure that you have eXist DB and Orbeon FORMS
 
@@ -37,7 +38,8 @@ For example
     						
 ## 4. Make docker image
  
-Now you should be able to everything in one go by running the shell script
+Now you should be able to everything in one go by running the shell
+script. It does a little more than just running a docker build.
 
 [./build-docker-image.sh](./trunk/build-docker-image.sh)
     						
@@ -56,7 +58,15 @@ Here you should set the password for the admin user of the
 database.[You have already decided that. See
 above](#configure-form-and-database). There is a paragraph on this in the [INSTALL.md](INSTALL.md#exist-db-password)
 
-## 5. Install database
+## 5. Configure Apache
+
+Please note the sections "Setting up Apache2 as a daemon" and "note
+that editor is the one only Apache2 user"
+
+It isn't necessary to modify the code there, you must do so if you
+want to have more than one editor user.
+
+## 6. Install database
 
 ```
  ant upload -Dwebapp.instance=docker -Dhostport=172.17.0.2:8080

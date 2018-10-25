@@ -58,7 +58,7 @@ RUN mkdir -p /etc/apache2/sites-enabled/
 COPY apache-httpd/conf-devel.conf /etc/apache2/sites-enabled/conf-devel.conf
 
 #
-# note that editor is the one user, and s/he has password editor
+# note that editor is the one only Apache2 user, and s/he has password editor
 # 
 
 RUN mkdir -p ${XML_STORE} \
@@ -66,6 +66,10 @@ RUN mkdir -p ${XML_STORE} \
 RUN mkdir -p /etc/service/apache2
 COPY docker-daemons/apache2.sh /etc/service/apache2/run
 RUN chmod +x /etc/service/apache2/run
+
+#
+# Preparing tomcat
+# 
 
 RUN mkdir /etc/service/tomcat
 COPY docker-daemons/tomcat.sh /etc/service/tomcat/run

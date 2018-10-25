@@ -60,6 +60,8 @@ refer to your server as example.org.
 * http://example.org:80 should tell you something about httpd
 * http://example.org:8080 should tell you something about tomcat
 
+### More HTTPD
+
 Then copy the file
 [apache-httpd/conf-devel.conf]/(apache-httpd/conf-devel.conf) to where
 your httpd has its virtual host configurations and restart HTTPD.
