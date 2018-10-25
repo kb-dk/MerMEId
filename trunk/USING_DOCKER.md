@@ -41,14 +41,19 @@ For example
 ## 4. Configure Apache
 
 Please note the sections "Setting up Apache2 as a daemon" and "note
-that editor is the one only Apache2 user"
+that editor is the one only Apache2 user" in the [Dockerfile](./Dockerfile)
 
-It isn't necessary to modify the code there, but you must do so if you
-want to have more than one editor user, or change the security
-settings. [See INSTALL.md](./INSTALL.md#more-httpd).
+It isn't necessary to modify the code there to run MerMEId, but you
+must do so if you want to have more than one editor user, or if you
+want change the security settings. [See INSTALL.md](./INSTALL.md#more-httpd).
     						
 ## 5. Make docker image
- 
+
+If you are a seasoned Docker user you might want to review the
+[Dockerfile](./Dockerfile) before building. One thing you might want
+to uncomment the section about sshd. It can be nice to be able to log
+on to the container.
+
 Now you should be able to everything in one go by running the shell
 script. It does a little more than just running a docker build.
 
@@ -68,6 +73,28 @@ http://172.17.0.2:8080/exist/apps/dashboard/index.html
 Here you should set the password for the admin user of the
 database.[You have already decided that. See
 above](#configure-form-and-database). There is a paragraph on this in the [INSTALL.md](INSTALL.md#exist-db-password)
+
+
+There is one area of the container's file system which is persistent,
+namely the Tomcat webapps area. Note
+
+```
+VOLUME ["${CATALINA_HOME}/webapps"]
+
+```
+
+Inside Docker, this evaluates to /usr/local/tomcat/webapps. The way
+Docker works by default, the volumes used will be found in
+
+```
+/var/lib/docker/volumes/
+
+``` 
+
+on your server. Inside there will be very long directory names (64
+bytes long). **If you ensure that Docker's volumes directory is under backup,
+you should be safe.**
+
 
 ## 6. Install database
 
