@@ -12,8 +12,7 @@ This is only partly an alternative to the usual [installation](INSTALL.md) proce
 4. [Configure Apache](#4-configure-apache)
 5. [Make docker image](#5-make-docker-image)
 6. [Install database](#6-install-database)
-
-Then you can [make the final checks](INSTALL.md#final-checks)
+7. [Final checks](#7-final-checks)
 
 ## 1. Ensure that you have eXist DB and Orbeon FORMS
 
@@ -131,3 +130,7 @@ drwxr-xr-x  5 root root      4096 okt 24 11:39 orbeon
 ```
 
 See also [Install database](INSTALL.md#8-install-database)
+
+## 7. Final check
+
+Follow the [final checks in INSTALL.md](INSTALL.md#final-checks)
