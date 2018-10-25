@@ -6,13 +6,11 @@
 	xmlns:dcm="http://www.kb.dk/dcm" 
 	xmlns:xl="http://www.w3.org/1999/xlink"
 	xmlns:foo="http://www.kb.dk/foo" 
-	xmlns:exsl="http://exslt.org/common"
-	xmlns:java="http://xml.apache.org/xalan/java" 
 	xmlns:zs="http://www.loc.gov/zing/srw/"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:marc="http://www.loc.gov/MARC21/slim" extension-element-prefixes="exsl java"
+	xmlns:marc="http://www.loc.gov/MARC21/slim"
 	xmlns:local="urn:my-stuff"
-	exclude-result-prefixes="m xsl exsl foo java local">
+	exclude-result-prefixes="m xsl foo local">
 
 	<!-- 
 		Conversion of MEI 3.0.0 metadata to HTML using XSLT 2.0
