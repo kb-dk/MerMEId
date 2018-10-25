@@ -43,7 +43,7 @@ RUN cd /usr/local \
     && rm -rf apache-tomcat-${TOMCAT_VERSION}*
 
 # 
-# Enable sshd. Can be nice when debugging
+# Enable sshd by uncommenting the following. Can be nice for debugging and maintenance.
 #
 # RUN rm -f /etc/service/sshd/down
 # COPY id_rsa.pub /tmp/your_key.pub
