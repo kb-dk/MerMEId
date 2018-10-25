@@ -2,7 +2,7 @@
 
 [MerMEId](../README.md) | [Source code](./README.md) | [Install](INSTALL.md) | [Using Docker](USING_DOCKER.md)
 
-# Or five steps towards a MerMEId of you own using Docker 
+# Or six steps towards a MerMEId of you own using Docker 
 
 This is only partly an alternative to the usual [installation](INSTALL.md) procedure.
 
