@@ -79,7 +79,7 @@ http://172.17.0.2:8080/exist/apps/dashboard/index.html
 
 Here you should set the password for the admin user of the
 database.[You have already decided that. See
-above](#configure-form-and-database). There is a paragraph on this in the [INSTALL.md](INSTALL.md#exist-db-password)
+above](#2-configure-form-and-database). There is a paragraph on this in the [INSTALL.md](INSTALL.md#exist-db-password)
 
 
 There is one area of the container's file system which is persistent,
