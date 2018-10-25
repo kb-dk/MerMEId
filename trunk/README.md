@@ -5,9 +5,9 @@
 
 MerMEId distribution contains the following components.
 
-## Installation manual
+## Installation manuals
 
-* [Install](INSTALL.md)
+* Traditional [install](INSTALL.md)
 * [Using Docker](USING_DOCKER.md)
 
 ## Software components
