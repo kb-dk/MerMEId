@@ -17,10 +17,13 @@ Then you can [make the final checks](INSTALL.md#final-checks)
 
 ## 1. Ensure that you have eXist DB and Orbeon FORMS
 
-* [orbeon.war see INSTALL.md](INSTALL.md#4-install-orbeon)
-* [exist.war see INSTALL.md](INSTALL.md#3-install-exist-db)
+* orbeon.war [see INSTALL.md](INSTALL.md#4-install-orbeon)
+* exist.war [see INSTALL.md](INSTALL.md#3-install-exist-db)
 
-They should be put into [./trunk/other-wars](./other-wars)
+During traditional installation they should go to your application
+server/servlet container. Using Docker, you just put them into
+[./trunk/other-wars](./other-wars) and the rest is catered for by the
+scripting.
 
 ## 2. Configure Form and Database
 
@@ -28,7 +31,7 @@ They should be put into [./trunk/other-wars](./other-wars)
 * [Configure eXist database](INSTALL.md#6-configure-database)
 
 Here you have to choose the password of the eXist DB. You will need
-that later.
+that later. The configuration is identical. 
 
 ## 3. Build MerMEId
 
@@ -40,8 +43,12 @@ For example
 ```
 ## 4. Configure Apache
 
-Please note the sections "Setting up Apache2 as a daemon" and "note
-that editor is the one only Apache2 user" in the [Dockerfile](./Dockerfile)
+Please take a look at the sections 
+
+* "Setting up Apache2 as a daemon" and 
+* "note that editor is the one only Apache2 user"
+
+in the [Dockerfile](./Dockerfile)
 
 It isn't necessary to modify the code there to run MerMEId, but you
 must do so if you want to have more than one editor user, or if you
