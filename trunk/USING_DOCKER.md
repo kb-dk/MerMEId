@@ -63,8 +63,9 @@ above](#configure-form-and-database). There is a paragraph on this in the [INSTA
 Please note the sections "Setting up Apache2 as a daemon" and "note
 that editor is the one only Apache2 user"
 
-It isn't necessary to modify the code there, you must do so if you
-want to have more than one editor user.
+It isn't necessary to modify the code there, but you must do so if you
+want to have more than one editor user, or change the security
+settings. [See INSTALL.md](./INSTALL.md#more-httpd).
 
 ## 6. Install database
 
