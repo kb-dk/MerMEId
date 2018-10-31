@@ -1,4 +1,4 @@
-xquery version "3.0";
+xquery version "3.1";
 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace login="http://kb.dk/this/login" at "./login.xqm";
@@ -17,7 +17,6 @@ else
 let $op          := doc($transform)
 let $params      := <parameters/>
 let $tdoc        := transform:transform($data,$op,$params)
-let $params      := <parameters/>
 
 let $file        := replace($exist_path, "/*","")
 let $result      := if($file and $tdoc) then

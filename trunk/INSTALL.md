@@ -44,7 +44,7 @@ space orchestrated by Apache HTTPD. These are the easy ones (you
 should be able to use what comes with your operating system)
 
 * Java 8
-* Apache Tomcat 8
+* Apache Tomcat 8 (like 8.0.32 but not too much better)
 * A modern Apache HTTPD (like 2.4 or better)
 * Java build tool Apache Ant (something like version 1.10.*)
 * PERL scripting language (v5.26.*)
