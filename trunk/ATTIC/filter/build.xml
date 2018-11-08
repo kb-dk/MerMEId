@@ -1,0 +1,81 @@
+<project name="filter" basedir="." default="all">
+   
+    <property name="webapp.path"    
+	      value="public_html"/>
+
+    <property name="webapp.instance" value="distro"/>
+
+    <property name="config" 
+	      value="http_filter.xml"/>
+
+    <property name="webapp.config"   
+	      value="../local_config/http_filter.xml"/>
+
+    <property name="build.dir" value="out"/>
+    <property name="bin.dir"   value="bin"/>
+    <property name="jar.dir"   value="lib"/>
+    <property name="src.dir"   value="src"/>
+
+    <path id="classpath">
+      <fileset dir="${jar.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target   name="clean" description="Clean the project">
+      <delete dir="${webapp.path}"/>
+      <delete dir="${class.dir}"/>
+      <delete dir="${build.dir}"/>
+      <delete dir="${bin.dir}"  />
+    </target>
+
+    <target   name="realclean" 
+	      depends="clean"
+	      description="Clean the project really well">
+      <delete file="filter.war"/>
+    </target>
+
+    <target   name="compile" 
+	      description="Compiles the whole bundle">
+      <mkdir  dir="${webapp.path}"/>
+      <mkdir  dir="${build.dir}"/>
+      <mkdir  dir="${bin.dir}"  />
+      <javac  srcdir="${src.dir}" 
+	      encoding="UTF-8" 
+	      includeAntRuntime="false"
+	      destdir="${build.dir}" 
+	      classpathref="classpath">
+        <compilerarg value="-g:source,lines,vars"/>
+        <compilerarg value="-Xlint:unchecked"/>
+      </javac>
+    </target>
+
+    <target   name="war" depends="jar">
+      <copy   file="${webapp.config}_${webapp.instance}"
+	      tofile="conf/${config}"/>
+      <war    destfile="filter.war" webxml="web.xml">
+	<zipfileset dir="${webapp.path}" />
+	<classes dir="conf" />
+      	<lib  dir="${bin.dir}"/>
+      	<lib  dir="${jar.dir}"/>
+      </war>
+      <delete file="conf/${config}"/>
+    </target>
+
+    <target   name="jar" description="Jar the project" depends="compile"> 
+      <mkdir  dir="${bin.dir}"/>
+      <jar    destfile="${bin.dir}/${ant.project.name}.jar" 
+	      basedir="${build.dir}">
+        <manifest>
+          <!-- don't write anything in MANIFEST.MF -->
+        </manifest>
+        
+      </jar>
+    </target>
+
+    <target name="dist" 
+	    depends="war" 
+	    description="pack stuff"/>
+  
+    <target name="all" 
+	    depends="war" />
+
+</project>

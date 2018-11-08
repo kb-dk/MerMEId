@@ -51,29 +51,12 @@
       </war>
       <delete file="forms/mei/mermeid_configuration.xml" />
     </target>
-  
-    <target name="orbeon_war">
-      <copy file="${webapp.config}_${webapp.instance}"
-	    tofile="forms/mei/mermeid_configuration.xml"/>
-      <war destfile="${ant.project.name}.war" webxml="orbeon_web.xml">
-	<mkdir  dir="${bin.dir}"/>
-	<zipfileset dir="${webapp.path}"
-		    prefix="${webapp.path}"/>
-  	<zipfileset dir="images" prefix="images" />
-	<zipfileset dir="js" prefix="js"/>
-	<zipfileset dir="manual" prefix="style"/>
-	<zipfileset dir="forms" prefix="forms" />
-	<zipfileset dir="jquery" prefix="jquery" />
-	<zipfileset dir="lib" prefix="lib"/>
-	<zipfileset dir="transforms" prefix="transforms"/>
-      	<lib dir="${jar.dir}"/>
-      	<lib dir="${bin.dir}"/>
-      	<lib dir="${jar.dir}"/>
-      	<lib dir="${orbeon-jar.dir}"/>
-	<metainf file="./context.xml"/>
-      </war>
-      <delete file="forms/mei/mermeid_configuration.xml" />
-    </target>
+
+    <!-- empty targets not used in this part of the project -->
+ 
+    <target name="build"></target>
+    <target name="upload"></target>
+    <target name="service"></target>
 
     <target name="dist" 
 	    depends="war" 

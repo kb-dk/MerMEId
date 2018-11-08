@@ -151,7 +151,7 @@ let $options:=
       let $form-id := util:document-name($doc)
       let $uri     := concat("/db/public/",util:document-name($doc))
       let $form := 
-      <form id="copy{$form-id}" action="./copy-file.xq" method="get" style="display:inline;">
+      <form id="copy{$form-id}" action="./copy-file.xq" method="post" style="display:inline;">
     	<input type="hidden" value="copy" name="{util:document-name($doc)}" />
     	<input type="image" src="/editor/images/copy.gif" name="button" value="copy" title="Copy"/>
       </form>
@@ -165,7 +165,7 @@ let $options:=
       let $form-id  := concat("rename",$doc-name)
       let $uri      := concat("/db/public/",$doc-name)
       let $form := 
-      <form id="{$form-id}" action="./rename-file.xq" method="get" style="display:inline;">
+      <form id="{$form-id}" action="./rename-file.xq" method="post" style="display:inline;">
     	<input type="hidden" name="doc" value="{$doc-name}" />
     	<input type="hidden" name="name" value=""/>
     	<img src="/editor/images/rename.png" name="button" value="rename" title="Rename {$doc-name}" alt="Rename" 
@@ -182,19 +182,14 @@ let $options:=
       let $uri     := concat("/db/public/",util:document-name($doc))
       let $form := 
     	if(doc-available($uri)) then
-        	<span>
-        	  <img src="/editor/images/remove_disabled.gif" alt="Remove (disabled)" title="Only unpublished files may be deleted"/>
-        	</span>
+        <span>
+        <img src="/editor/images/remove_disabled.gif" alt="Remove (disabled)" title="Only unpublished files may be deleted"/>
+        </span>
         else
-          <form id="del{$form-id}" 
-          action="http://{request:get-header('HOST')}/filter/delete/dcm/{util:document-name($doc)}"
-          method="post" 
-          style="display:inline;">
-        	<input type="hidden" name="file" value="{request:get-header('HOST')}/storage/dcm/{util:document-name($doc)}" title="file name"/>
-        	<input 
-        	    onclick="{string-join(('show_confirm(&quot;del',$form-id,'&quot;,&quot;',$doc//m:workDesc/m:work/m:titleStmt/m:title[string()][1]/string(),'&quot;);return false;'),'')}" 
-    	        type="image" src="/editor/images/remove.gif" name="button" value="delete" title="Delete"/>
-        </form>
+	<form id="del{$form-id}" action="./delete-file.xq" method="post" style="display:inline;">
+    	<input type="hidden" value="delete" name="{util:document-name($doc)}" />
+    	<input type="image" src="/editor/images/remove.gif" name="button" value="remove" title="Remove"/>
+	</form>
       return  $form
     };
 

@@ -2,11 +2,12 @@ import module namespace login="http://kb.dk/this/login" at "./login.xqm";
 
 declare namespace functx = "http://www.functx.com";
 declare namespace m="http://www.music-encoding.org/ns/mei";
-declare namespace xdb="http://exist-db.org/xquery/xmldb";
+declare namespace xmldb="http://exist-db.org/xquery/xmldb";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
-declare namespace uuid="java:java.util.UUID";
+declare namespace util="http://exist-db.org/xquery/util";
+
 
 declare option    exist:serialize "method=xml media-type=text/html"; 
 
@@ -36,12 +37,12 @@ return
 <table>
   {
     for $parameter in $parameters 
-    let $new_file := concat($dcmroot,uuid:to-string(uuid:random-UUID()),".xml")
+    let $new_file := concat($dcmroot,util:uuid(),".xml")
     let $old_file := concat($dcmroot,$parameter)
     where request:get-parameter($parameter,"")="copy" and contains($parameter,"xml")
     return
     let $odoc    := doc($old_file)
-    let $stored  := xdb:store($dcmroot,$new_file, $odoc )
+    let $stored  := xmldb:store($dcmroot,$new_file, $odoc )
     let $new_doc := doc($new_file)
     for $title in $new_doc//m:workDesc/m:work[1]/m:titleStmt[1]/m:title[string()][1]
     let $new_title_text := concat($title//string()," (copy) ")

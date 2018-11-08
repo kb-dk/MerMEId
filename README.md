@@ -1,7 +1,10 @@
+
+[MerMEId](README.md) | [Source code](trunk/README.md) | [Install](trunk/INSTALL.md) | [Using Docker](trunk/USING_DOCKER.md)
+
 MerMEId
 =======
 
-MerMEId is a system for the editing, handling, and (pre-)viewing of music
+[MerMEId is a system](trunk/README.md) for the editing, handling, and (pre-)viewing of music
 metadata, based on the the [Music Encoding
 Initiative](http://www.music-encoding.org/) (MEI)  XML schema. 
 As of April 2017 MerMEId supports MEI 3.0.0.
