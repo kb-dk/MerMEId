@@ -10,8 +10,6 @@ declare variable $exist:controller external;
 declare variable $exist:prefix external;
 declare variable $exist:root external;
 
-let $log-in := xmldb:login("/db", "admin", "flormelis")
-
 let $method:= request:get-method()
 
 return if(matches($method,"post","i")) then
