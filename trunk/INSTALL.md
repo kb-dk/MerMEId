@@ -36,6 +36,15 @@ or
 9. [Make the final checks](#final-checks)
 
 ## 1. Install Apache HTTPD
+
+The one coming with your operating system should be good enough, but you need to enable a number of modules:
+
+* mod_proxy
+* mod_proxy_ajp
+* mod_proxy_http
+* mod_headers
+
+
 ## 2. Install Apache Tomcat
 
 MerMEId consists of software components residing in an Apache
