@@ -337,18 +337,13 @@
     </xf:action>
     
     <xf:action ev:event="xforms-submit-error"  ev:propagate="stop">
-      <!-- debug -->
-      <xf:message>Submission response status: <xf:output value="event('response-status-code')"/> 
+      <xf:var name="code" select="event('response-status-code')"/>
+      <xf:action if="$code!=200">
+	<xf:message>Submission response status: <xf:output value="event('response-status-code')"/> 
         Error type: <xf:output value="event('error-type')"/> 
         URI: <xf:output value="event('resource-uri')"/> 
         Headers: <xf:output value="event('response-headers')"/> 
       </xf:message>
-      <!-- end debug -->          
-      <xf:var name="code" select="event('response-status-code')"/>
-      <xf:action if="$code!=404 and $code!=200">
-        <xf:message>An error occurred (<xf:output value="$code"/>)
-          <h:br/>File:<xf:output value="instance('temp')/target_uri"/>
-        </xf:message>
       </xf:action>
     </xf:action>
     
