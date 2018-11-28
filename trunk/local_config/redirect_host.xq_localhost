@@ -1,0 +1,9 @@
+xquery version "1.0" encoding "UTF-8";
+
+module namespace rd="http://kb.dk/this/redirect";
+
+declare function rd:host() as xs:string
+{
+	let $host := request:get-header('HOST')	
+	return concat("http://",$host,"/storage/list_files.xq")
+};
