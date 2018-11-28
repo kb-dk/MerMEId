@@ -1,4 +1,5 @@
 import module namespace login="http://kb.dk/this/login" at "./login.xqm";
+import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
 
 declare namespace functx = "http://www.functx.com";
 declare namespace m="http://www.music-encoding.org/ns/mei";
@@ -13,6 +14,8 @@ declare option    exist:serialize "method=xml media-type=text/html";
 
 declare variable $dcmroot := "/db/dcm/";
 
+declare variable $host    := rd:host();
+
 declare function functx:copy-attributes
   ( $copyTo as element() ,
     $copyFrom as element() )  as element() {
@@ -26,7 +29,7 @@ declare function functx:copy-attributes
 
 
 
-let $return_to := concat("http://",request:get-header('HOST'),"/storage/list_files.xq?")
+let $return_to := concat("http://",$host,"/storage/list_files.xq?")
 
 
 let $log-in := login:function()

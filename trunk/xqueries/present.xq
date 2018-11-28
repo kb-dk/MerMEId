@@ -1,5 +1,7 @@
 xquery version "1.0" encoding "UTF-8";
 
+import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
+
 declare namespace transform="http://exist-db.org/xquery/transform";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
@@ -17,7 +19,7 @@ declare variable $score := request:get-parameter("score", "");
 declare variable $xsl := request:get-parameter("xsl", "mei_to_html.xsl");
 declare variable $display_authority_links := request:get-parameter("display_authority_links", "");
 
-let $host := request:get-header('HOST')
+let $host := rd:host()
 let $list := 
 for $doc in collection("/db/dcm")
 where util:document-name($doc)=$document

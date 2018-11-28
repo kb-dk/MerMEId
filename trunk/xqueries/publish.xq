@@ -1,4 +1,5 @@
 import module namespace login="http://kb.dk/this/login" at "./login.xqm";
+import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
 
 declare namespace xdb="http://exist-db.org/xquery/xmldb";
 declare namespace request="http://exist-db.org/xquery/request";
@@ -13,8 +14,7 @@ declare variable $pubroot := "xmldb:exist:///db/public/";
 declare variable $action  := 
 request:get-parameter("publishing_action","publish") cast as xs:string;
 
-let $return_to := concat(
-  "http://",request:get-header('HOST'),"/storage/list_files.xq")
+let $return_to := concat("http://",rd:host(),"/storage/list_files.xq")
 
 let $res := response:redirect-to($return_to cast as xs:anyURI) 
 let $log-in := login:function()

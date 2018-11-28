@@ -1,6 +1,8 @@
 xquery version "3.0";
 
 import module namespace login="http://kb.dk/this/login" at "./login.xqm";
+import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
+
 declare namespace xs="http://www.w3.org/2001/XMLSchema";
 
 declare namespace request="http://exist-db.org/xquery/request";
@@ -10,7 +12,7 @@ declare option exist:serialize "method=xml encoding=UTF-8 media-type=text/html";
 let $log-in     := login:function()
 let $exist_path := request:get-parameter("path","")
 let $new_doc    := doc("./new_file.xml")
-let $host       := request:get-header('HOST')
+let $host       := rd:host()
 
 let $uri  := concat("uri=","http://",$host,"/editor/forms/mei/edit-work-case.xml")
 let $dir  := concat("dir=","http://",$host,"/filter/")

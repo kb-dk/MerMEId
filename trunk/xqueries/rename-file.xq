@@ -1,4 +1,5 @@
 import module namespace login="http://kb.dk/this/login" at "./login.xqm";
+import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
 
 declare namespace m="http://www.music-encoding.org/ns/mei";
 declare namespace xdb="http://exist-db.org/xquery/xmldb";
@@ -12,7 +13,7 @@ declare option    exist:serialize "method=xml media-type=text/html";
 declare variable $dcmroot      := "/db/dcm/";
 declare variable $old_name     := request:get-parameter("doc", "");
 declare variable $name         := request:get-parameter("name", "");
-declare variable $doc_path     := concat("http://",request:get-header('HOST'),"/storage/dcm/");
+declare variable $doc_path     := concat("http://",rd:host(),"/storage/dcm/");
 declare variable $old_name_abs := concat($doc_path,$old_name);
 declare variable $now          := fn:current-dateTime() cast as xs:string;
 declare variable $isodate      := concat(substring($now,1,23),"Z");
@@ -92,7 +93,7 @@ let $list   :=
 let $change := local:add_revision(fn:doc(concat($dcmroot,$new_name))/m:mei, "MerMEId user", concat("file renamed from ",$old_name," to ",$new_name)) 
 
 
-let $return_to := concat("http://",request:get-header('HOST'),"/storage/list_files.xq")
+let $return_to := concat("http://",rd:host(),"/storage/list_files.xq")
 let $res := response:redirect-to($return_to cast as xs:anyURI)   
 
 return $change
