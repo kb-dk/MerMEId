@@ -1,6 +1,7 @@
 xquery version "1.0" encoding "UTF-8";
 
 module namespace  app="http://kb.dk/this/listapp";
+import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
 
 declare namespace file="http://exist-db.org/xquery/file";
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
@@ -131,7 +132,7 @@ let $options:=
 
 	<input type="hidden"
         name="uri"
-	value="http://{request:get-header('HOST')}/editor/forms/mei/edit-work-case.xml" />
+	value="http://{rd:host()}/editor/forms/mei/edit-work-case.xml" />
 	<input type="hidden"
  	name="doc"
 	value="{util:document-name($doc)}" />
