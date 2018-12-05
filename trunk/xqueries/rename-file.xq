@@ -21,7 +21,7 @@ declare variable $isodate      := concat(substring($now,1,23),"Z");
 
 declare function local:id($element_name) {
     (: generate an ID :)
-    let $id := concat($element_name,"_",substring(util:uuid()),1,13))
+    let $id := concat($element_name,"_",substring(util:uuid()),1,13)
     return $id
 };
 
