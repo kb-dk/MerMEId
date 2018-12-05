@@ -6,7 +6,7 @@ declare namespace xdb="http://exist-db.org/xquery/xmldb";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
-declare namespace uuid="java:java.util.UUID";
+declare namespace util="http://exist-db.org/xquery/util";
 
 declare option    exist:serialize "method=xml media-type=text/html"; 
 
@@ -21,7 +21,7 @@ declare variable $isodate      := concat(substring($now,1,23),"Z");
 
 declare function local:id($element_name) {
     (: generate an ID :)
-    let $id := concat($element_name,"_",substring(uuid:to-string(uuid:random-UUID()),1,13))
+    let $id := concat($element_name,"_",substring(util:uuid()),1,13))
     return $id
 };
 
