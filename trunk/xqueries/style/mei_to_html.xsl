@@ -132,10 +132,9 @@
     	  </xsl:text>
 		</script>
 		
-		<!-- Include the Verovio toolkit for displaying incipits or score if needed -->
-		<!--<script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js">-->
+		<!-- Include the Verovio toolkit for displaying incipits or score if needed. Use 'latest' or 'develop' -->
 		<xsl:if test="m:meiHead/m:workDesc/m:work//m:incip/m:score/* or m:music//m:score/* or normalize-space(//m:incipCode[@form='pae' or @form='PAE' or @form='plaineAndEasie'])">
-			<script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript">
+			<script src="http://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript">
 		    	<xsl:text>
 	    		</xsl:text>
 			</script>
@@ -1006,20 +1005,22 @@
 					<script type="text/javascript">
 					  /* The Plain and Easy code to be rendered */
 					  var data = "@data:<xsl:value-of select="."/>";
-
+					  options = {
+							      	inputFormat: 'pae',
+							      	pageWidth: 3000,
+							      	pageHeight: 10000,
+								    pageMarginTop:      0,
+					    			pageMarginLeft:     0,
+								    noHeader:           true,
+								    noFooter:           true,
+								    spacingStaff:       3,
+					    			scale: 30,
+									adjustPageHeight: true,
+					    			breaks: 'auto',
+					    			openControlEvents: true
+					  			}
 					  /* Render the data and insert it as content of the target div */
-					  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData( 
-					      data, 
-					      JSON.stringify({ 
-					      	inputFormat: 'pae',
-					      	pageWidth: 3000,
-					      	pageHeight: 400,
-    						border: 0,
-    						scale: 30,
-    						adjustPageHeight: 1,
-    						ignoreLayout: 1
-					      	}) 
-					  );
+					  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData(data, options);
 					</script>
 				</xsl:when>
 				<xsl:otherwise>
@@ -1062,18 +1063,22 @@
 		<script type="text/javascript">
 		  /* The MEI encoding to be rendered */
 		  var data = document.getElementById('<xsl:value-of select="$xml_id"/>').innerHTML;
+		  options = {
+				      	inputFormat: 'mei',
+				      	pageWidth: 3000,
+				      	pageHeight: 10000,
+					    pageMarginTop:      0,
+		    			pageMarginLeft:     0,
+					    noHeader:           true,
+					    noFooter:           true,
+					    spacingStaff:       3,
+		    			scale: 30,
+						adjustPageHeight: true,
+		    			breaks: 'auto',
+		    			openControlEvents: true
+		  			}
 		  /* Render the data and insert it as content of the target div */
-		  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData( 
-		      data, 
-		      JSON.stringify({ 
-		      	inputFormat: 'mei',
-		      	pageWidth: 3000,
-    			border: 0,
-    			scale: 30,
-    			adjustPageHeight: 1,
-    			ignoreLayout: 1
-		      	}) 
-		  );
+		  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData(data, options);
 		</script>
 	</xsl:template>
 	
