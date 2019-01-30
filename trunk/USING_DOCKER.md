@@ -26,8 +26,21 @@ scripting.
 
 ## 2. Configure Form and Database
 
-* [Configure MerMEId Form](INSTALL.md#5-configure-mermeid-form)
-* [Configure eXist database](INSTALL.md#6-configure-database)
+### [Configure MerMEId Form](INSTALL.md#5-configure-mermeid-form)
+
+```
+  <orbeon_dir>http://<your host name>/orbeon/xforms-jsp/mei-form/</orbeon_dir>
+  <form_home>http://<your host name>/editor/forms/mei/</form_home>
+  <crud_home>http://172.17.0.2/filter/dcm/</crud_home>
+  <library_crud_home>http://172.17.0.2/filter/library/</library_crud_home>
+  <rism_crud_home>http://172.17.0.2/filter/rism_sigla/</rism_crud_home>
+  <server_name>http://<your host name>/</server_name>  
+  <exist_dir>storage/</exist_dir>
+  <document_root>storage/dcm/</document_root>
+```  
+
+
+### [Configure eXist database](INSTALL.md#6-configure-database)
 
 Here you have to choose the password of the eXist DB. You will need
 that later. The configuration is identical. 
