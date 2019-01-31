@@ -851,7 +851,7 @@
 							</xsl:for-each>
 						</xsl:variable>
 						<!-- make the source list a nodeset -->
-						<xsl:variable name="source_nodeset" select="local:nodifier($sources)"/>
+						<xsl:variable name="source_nodeset" select="$sources"/>
 						<xsl:for-each select="$source_nodeset/m:source">
 							<xsl:apply-templates select=".">
 								<xsl:with-param name="reprints" select="$reprints"/>
@@ -1629,7 +1629,7 @@
 					</xsl:for-each>
 				</xsl:variable>
 				<!-- make the source list a nodeset -->
-				<xsl:variable name="source_nodeset" select="local:nodifier($sources)"/>
+				<xsl:variable name="source_nodeset" select="$sources"/>
 
 				<xsl:variable name="sorted_sources">
 					<!-- loop through the selected sources; skip reproductions at this point -->
@@ -1637,7 +1637,7 @@
 						<xsl:copy-of select="."/>
 					</xsl:for-each>
 				</xsl:variable>
-				<xsl:variable name="sorted_sources_nodeset" select="local:nodifier($sorted_sources)"/>
+				<xsl:variable name="sorted_sources_nodeset" select="$sorted_sources"/>
 
 				<xsl:apply-templates select="$sorted_sources_nodeset/m:source">
 					<!-- also send the collection of all reprints to the template -->
