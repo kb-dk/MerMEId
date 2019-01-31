@@ -53,7 +53,7 @@ declare function loop:sort-key (
     if($coll) then
       $coll
     else
-      $doc//m:seriesStmt/m:identifier[@type="file_collection"][1]/string() 
+      $doc//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0][1]/string() 
 
   let $sort_key:=
     if($key eq "person") then
