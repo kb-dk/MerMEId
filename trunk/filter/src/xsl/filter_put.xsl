@@ -470,7 +470,7 @@
   <xsl:template match="h:span">
     <xsl:choose>
       <xsl:when test="contains(@title,'mei:')">
-        <!-- <span title="mei:persName" class="mei:atts[authURI(http://www.viaf.org),codedval(12345))]">Gade</span> -->
+        <!-- Translate encodings like this to MEI: <span title="mei:persName" class="mei:atts[authURI(http://www.viaf.org),codedval(12345))]">Niels Gade</span> -->
         <xsl:variable name="tagName" select="substring-after(@title,'mei:')"/>
         <xsl:variable name="atts">
           <xsl:call-template name="tokenize">
@@ -479,7 +479,7 @@
           </xsl:call-template>
         </xsl:variable>
         <xsl:element name="{$tagName}" namespace="http://www.music-encoding.org/ns/mei">
-          <xsl:for-each select="local:nodifier($atts)/*">
+          <xsl:for-each select="$atts/*">
             <xsl:variable name="attName" select="substring-before(.,'(')"/>
             <xsl:attribute name="{$attName}">
               <xsl:value-of select="substring-before(substring-after(.,'('),')')"/>
@@ -703,16 +703,5 @@
         <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
-
- <xsl:function name="local:nodifier" as="text()">
-   <xsl:param name="str"/>
-   <xsl:variable name="node">
-     <node>
-       <s><xsl:value-of select="$str"/></s>
-     </node>
-   </xsl:variable>
-   <xsl:value-of select="$node//s/text()"/>
- </xsl:function>
-
 
 </xsl:transform>

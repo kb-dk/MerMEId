@@ -107,7 +107,7 @@
 	</xsl:template>
 
 	<xsl:function name="local:nodifier" as="text()">
-    	<xsl:param name="str" />
+		<xsl:param name="str"/>
 		<xsl:value-of select="$str"/>
 	</xsl:function>
 
