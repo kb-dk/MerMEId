@@ -159,10 +159,6 @@
   </xsl:template>
 
   <!-- Trying to convert &nbsp; to &#160; ... -->
-  <!--<xsl:template match="text()[contains(.,'&nbsp;')]">
-    <xsl:apply-templates select="substring-before(.,'&nbsp;')"/> <xsl:apply-templates select="substring-after(.,'&nbsp;')"/>
-    </xsl:template>-->
-
   <xsl:template match="text()[contains(.,'&amp;nbsp;')]">
     <xsl:call-template name="cleanup_nbsp">
       <xsl:with-param name="string" select="."/>
@@ -172,15 +168,15 @@
   <xsl:template name="cleanup_nbsp">
     <xsl:param name="string"/>
     <xsl:variable name="remainder" select="substring-after($string,'&amp;nbsp;')"/>
-    <xsl:value-of select="substring-before($string,'&amp;nbsp;')"/> <xsl:choose>
+    <xsl:value-of select="substring-before($string,'&amp;nbsp;')"/>&#160;<xsl:choose>
       <xsl:when test="contains($remainder,'&amp;nbsp;')">
-                <xsl:call-template name="cleanup_nbsp">
+        <xsl:call-template name="cleanup_nbsp">
           <xsl:with-param name="string" select="$remainder"/>
-                </xsl:call-template>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-                <xsl:value-of select="$remainder"/>
-            </xsl:otherwise>
+        <xsl:value-of select="$remainder"/>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
