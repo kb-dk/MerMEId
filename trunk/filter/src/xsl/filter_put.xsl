@@ -1,4 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<xsl:transform xmlns="http://www.music-encoding.org/ns/mei" 
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:xl="http://www.w3.org/1999/xlink" 
+  xmlns:h="http://www.w3.org/1999/xhtml" 
+  xmlns:m="http://www.music-encoding.org/ns/mei" 
+  xmlns:local="urn:my-stuff" 
+  xmlns:dcm="http://www.kb.dk/dcm" 
+  exclude-result-prefixes="xsl m h dcm xl local" 
+  version="3.0">
+
 <!-- 
   Filter for cleaning MEI data when saving from MerMEId 
   
@@ -6,20 +15,11 @@
   Danish Centre for Music Editing
   Royal Danish Library, Copenhagen
   
-  2010-2018
+  2010-2019
   
   HTML to MEI conversion by Johannes Kepper
 
 -->
-
-<xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns="http://www.music-encoding.org/ns/mei" 
-  xmlns:m="http://www.music-encoding.org/ns/mei"
-  xmlns:xl="http://www.w3.org/1999/xlink" 
-  xmlns:h="http://www.w3.org/1999/xhtml" 
-  xmlns:dcm="http://www.kb.dk/dcm"
-  xmlns:local="urn:my-stuff"
-  exclude-result-prefixes="xsl m h dcm xl local" version="3.0">
 
   <xsl:param name="user" select="''"/>
   <xsl:param name="target" select="''"/>
@@ -117,10 +117,7 @@
 
 
   <!-- Remove empty attributes -->
-  <xsl:template
-    match="@accid|@authority|@authURI|@cert|@codedval|@count|@enddate|@evidence|
-    @isodate|@mode|@n|@notafter|@notbefore|@pname|@reg|@resp|
-    @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang">
+  <xsl:template match="@accid|@authority|@authURI|@cert|@codedval|@count|@enddate|@evidence|     @isodate|@mode|@n|@notafter|@notbefore|@pname|@reg|@resp|     @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang">
     <xsl:if test="normalize-space(.)">
       <xsl:copy-of select="."/>
     </xsl:if>
@@ -139,7 +136,7 @@
   <xsl:template match="m:titlePage[not(*)]"/>
   
   
-  <!-- Clean up double-escaped ampersands (&amp;amp;) -->
+  <!-- Clean up double-escaped ampersands (&amp;) -->
   <xsl:template match="text()[contains(.,'&amp;amp;')]">
     <xsl:call-template name="cleanup_amp">
       <xsl:with-param name="string" select="."/>
@@ -150,16 +147,20 @@
     <xsl:param name="string"/>
     <xsl:variable name="remainder" select="substring-after($string,'&amp;amp;')"/>
     <xsl:value-of select="substring-before($string,'&amp;amp;')"/>&amp;<xsl:choose>
-      <xsl:when test="contains($remainder,'&amp;amp;')"><xsl:call-template name="cleanup_amp">
-          <xsl:with-param name="string" select="$remainder"/></xsl:call-template>
+      <xsl:when test="contains($remainder,'&amp;amp;')">
+                <xsl:call-template name="cleanup_amp">
+          <xsl:with-param name="string" select="$remainder"/>
+                </xsl:call-template>
       </xsl:when>
-      <xsl:otherwise><xsl:value-of select="$remainder"/></xsl:otherwise>
+      <xsl:otherwise>
+                <xsl:value-of select="$remainder"/>
+            </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
   <!-- Trying to convert &nbsp; to &#160; ... -->
-  <!--<xsl:template match="text()[contains(.,'&amp;nbsp;')]">
-    <xsl:apply-templates select="substring-before(.,'&amp;nbsp;')"/>&#160;<xsl:apply-templates select="substring-after(.,'&amp;nbsp;')"/>
+  <!--<xsl:template match="text()[contains(.,'&nbsp;')]">
+    <xsl:apply-templates select="substring-before(.,'&nbsp;')"/> <xsl:apply-templates select="substring-after(.,'&nbsp;')"/>
     </xsl:template>-->
 
   <xsl:template match="text()[contains(.,'&amp;nbsp;')]">
@@ -171,23 +172,26 @@
   <xsl:template name="cleanup_nbsp">
     <xsl:param name="string"/>
     <xsl:variable name="remainder" select="substring-after($string,'&amp;nbsp;')"/>
-    <xsl:value-of select="substring-before($string,'&amp;nbsp;')"/>&#160;<xsl:choose>
-      <xsl:when test="contains($remainder,'&amp;nbsp;')"><xsl:call-template name="cleanup_nbsp">
-          <xsl:with-param name="string" select="$remainder"/></xsl:call-template>
+    <xsl:value-of select="substring-before($string,'&amp;nbsp;')"/> <xsl:choose>
+      <xsl:when test="contains($remainder,'&amp;nbsp;')">
+                <xsl:call-template name="cleanup_nbsp">
+          <xsl:with-param name="string" select="$remainder"/>
+                </xsl:call-template>
       </xsl:when>
-      <xsl:otherwise><xsl:value-of select="$remainder"/></xsl:otherwise>
+      <xsl:otherwise>
+                <xsl:value-of select="$remainder"/>
+            </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
 
   <!-- Delete duplicate language definitions (fixes an xforms problem) -->
-  <xsl:template
-    match="m:mei/m:meiHead/m:workDesc/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
+  <xsl:template match="m:mei/m:meiHead/m:workDesc/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
 
   <!-- Remove <rend> elements without any rendition information or empty -->
   <xsl:template match="m:rend">
     <xsl:choose>
-      <xsl:when test="count(@*[local-name(.)!='xml:id'])>0 and (* or text())">
+      <xsl:when test="count(@*[local-name(.)!='xml:id'])&gt;0 and (* or text())">
         <!-- contains relevant attributes and content; just copy it -->
         <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
           <xsl:apply-templates select="@*"/>
@@ -313,7 +317,7 @@
 
   <xsl:template name="replace_nodes">
     <xsl:param name="text"/>
-
+    
     <xsl:choose>
       <xsl:when test="contains($text,'&lt;') and contains(substring-after($text,'&lt;'),'&gt;')">
         <xsl:copy-of select="substring-before($text,'&lt;')"/>
@@ -337,7 +341,6 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-
         <xsl:variable name="attributes">
           <xsl:if test="contains($element_and_attr,' ')">
             <xsl:value-of select="substring-after($element_and_attr,' ')"/>
@@ -348,15 +351,12 @@
             <xsl:variable name="begin" select="concat('&lt;',$element_and_attr,'&gt;')"/>
             <xsl:variable name="end" select="concat('&lt;/',$element,'&gt;')"/>
             <!-- nodes are assumed to be HTML, hence the HTML namespace -->
-
             <xsl:element name="{$element}" namespace="http://www.w3.org/1999/xhtml">
-
               <xsl:call-template name="addAttributes">
                 <xsl:with-param name="attrString" select="$attributes"/>
               </xsl:call-template>
               <xsl:call-template name="replace_nodes">
-                <xsl:with-param name="text"
-                  select="substring-before(substring-after($text,$begin),$end)"/>
+                <xsl:with-param name="text" select="substring-before(substring-after($text,$begin),$end)"/>
               </xsl:call-template>
             </xsl:element>
             <xsl:call-template name="replace_nodes">
@@ -364,7 +364,7 @@
             </xsl:call-template>
           </xsl:when>
           <xsl:otherwise>
-            <!-- No end element. Something like &lt;br/&gt;, &lt;br&gt; or &lt;img src=""/&gt; assumed -->
+            <!-- No end element. Something like <br/>, <br> or <img src=""/> assumed -->
             <xsl:if test="string-length($element) &gt; 0">
               <xsl:element name="{$element}" namespace="http://www.w3.org/1999/xhtml">
                 <xsl:call-template name="addAttributes">
@@ -386,13 +386,10 @@
 
   <xsl:template name="addAttributes">
     <xsl:param name="attrString"/>
-    <xsl:variable name="thisAttrPart1"
-      select="normalize-space(substring-before($attrString,'&#34;'))"/>
-    <xsl:variable name="thisAttrPart2"
-      select="substring-before(substring-after($attrString,concat($thisAttrPart1,'&#34;')),'&#34;')"/>
+    <xsl:variable name="thisAttrPart1" select="normalize-space(substring-before($attrString,'&#34;'))"/>
+    <xsl:variable name="thisAttrPart2" select="substring-before(substring-after($attrString,concat($thisAttrPart1,'&#34;')),'&#34;')"/>
     <xsl:variable name="attrName" select="substring-before($thisAttrPart1,'=')"/>
-    <xsl:variable name="remainder"
-      select="substring-after(substring-after($attrString,$thisAttrPart2),'&#34;')"/>
+    <xsl:variable name="remainder" select="substring-after(substring-after($attrString,$thisAttrPart2),'&#34;')"/>
     <xsl:if test="$attrName">
       <xsl:attribute name="{$attrName}">
         <xsl:value-of select="$thisAttrPart2"/>
@@ -414,18 +411,13 @@
     <xsl:apply-templates select="node()"/>
   </xsl:template>
 
-  <xsl:template match="h:p"  mode="html2mei">
+  <xsl:template match="h:p">
     <xsl:choose>
+      <xsl:when test="not(normalize-space(.) or *)"><!-- filter away empty paragraphs --></xsl:when>
       <!-- Some text-containing elements don't allow <p>; convert any <p> elements created by tinyMCE 
            to line breaks where necessary -->
-      <xsl:when
-        test="
-        name(..)='physMedium' or
-        name(..)='watermark' or
-        name(..)='condition' or
-        name(..)='desc'
-        ">
-        <xsl:apply-templates select="node()"  mode="html2mei"  />
+      <xsl:when test="name(..)='physMedium' or name(..)='watermark' or name(..)='condition' or name(..)='desc'">
+        <xsl:apply-templates select="node()"/>
         <xsl:if test="normalize-space(following-sibling::*//text())">
           <!-- Don't add a line break after the last paragraph -->
           <xsl:element name="lb" namespace="http://www.music-encoding.org/ns/mei"/>
@@ -435,59 +427,58 @@
         <xsl:element name="p" namespace="http://www.music-encoding.org/ns/mei">
           <xsl:apply-templates select="@*"/>
           <!--<xsl:call-template name="make_id_if_absent"/>-->
-          <xsl:apply-templates select="node()"  mode="html2mei" />
+          <xsl:apply-templates select="node()"/>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="h:br"  mode="html2mei">
+  <xsl:template match="h:br">
     <!-- For some reason, the RTE editor sometimes adds a line break at the end of the edited contents. Removing it here -->
     <xsl:if test="following-sibling::node() or normalize-space(following-sibling::text())">
       <xsl:element name="lb" namespace="http://www.music-encoding.org/ns/mei"/>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="h:b|h:strong"  mode="html2mei">
+  <xsl:template match="h:b|h:strong">
     <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="fontweight">bold</xsl:attribute>
       <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="h:i|h:em"  mode="html2mei">
+  <xsl:template match="h:i|h:em">
     <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="fontstyle">italic</xsl:attribute>
       <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="h:u|h:span[@style='text-decoration: underline;']"  mode="html2mei">
+  <xsl:template match="h:u|h:span[@style='text-decoration: underline;']">
     <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="rend">underline</xsl:attribute>
       <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
-  <xsl:template match="h:sub"  mode="html2mei">
+  <xsl:template match="h:sub">
     <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="rend">sub</xsl:attribute>
       <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
-  <xsl:template match="h:sup"  mode="html2mei">
+  <xsl:template match="h:sup">
     <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="rend">sup</xsl:attribute>
       <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="h:span"  mode="html2mei">
+  <xsl:template match="h:span">
     <xsl:choose>
       <xsl:when test="contains(@title,'mei:')">
         <!-- <span title="mei:persName" class="mei:atts[authURI(http://www.viaf.org),codedval(12345))]">Gade</span> -->
         <xsl:variable name="tagName" select="substring-after(@title,'mei:')"/>
         <xsl:variable name="atts">
           <xsl:call-template name="tokenize">
-            <xsl:with-param name="str"
-              select="substring-before(substring-after(@class,'mei:atts['),']')"/>
+            <xsl:with-param name="str" select="substring-before(substring-after(@class,'mei:atts['),']')"/>
             <xsl:with-param name="splitString" select="','"/>
           </xsl:call-template>
         </xsl:variable>
@@ -511,22 +502,17 @@
         <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
           <xsl:if test="contains(@style, 'font-family')">
             <xsl:attribute name="fontfam">
-              <xsl:value-of
-                select="normalize-space(substring-before(substring-after(@style,'font-family:'),';'))"
-              />
+              <xsl:value-of select="normalize-space(substring-before(substring-after(@style,'font-family:'),';'))"/>
             </xsl:attribute>
           </xsl:if>
           <xsl:if test="contains(@style, 'font-size')">
             <xsl:attribute name="fontsize">
-              <xsl:value-of
-                select="normalize-space(substring-before(substring-after(@style,'font-size:'),';'))"
-              />
+              <xsl:value-of select="normalize-space(substring-before(substring-after(@style,'font-size:'),';'))"/>
             </xsl:attribute>
           </xsl:if>
           <xsl:if test="contains(@style, 'color')">
             <xsl:attribute name="color">
-              <xsl:value-of
-                select="normalize-space(substring-before(substring-after(@style,'color:'),';'))"/>
+              <xsl:value-of select="normalize-space(substring-before(substring-after(@style,'color:'),';'))"/>
             </xsl:attribute>
           </xsl:if>
           <xsl:if test="contains(@style, 'text-decoration: line-through')">
@@ -538,7 +524,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="h:a"  mode="html2mei">
+  <xsl:template match="h:a">
     <xsl:choose>
       <xsl:when test="@href">
         <xsl:element name="ref" namespace="http://www.music-encoding.org/ns/mei">
@@ -570,7 +556,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="h:div[contains(@style,'text-align')] | h:p[contains(@style,'text-align')]"  mode="html2mei">
+  <xsl:template match="h:div[contains(@style,'text-align')] | h:p[contains(@style,'text-align')]">
     <xsl:element name="rend" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="halign">
         <xsl:value-of select="substring-before(substring-after(@style,'text-align:'),';')"/>
@@ -581,33 +567,33 @@
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="h:ul"  mode="html2mei">
+  <xsl:template match="h:ul">
     <xsl:element name="list" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="form">simple</xsl:attribute>
       <xsl:for-each select="h:li">
         <xsl:element name="li" namespace="http://www.music-encoding.org/ns/mei">
-          <xsl:apply-templates select="node()"  mode="html2mei"/>
+          <xsl:apply-templates select="node()"/>
           <xsl:call-template name="make_id_if_absent"/>
-          <xsl:apply-templates select="@*"  mode="html2mei"/>
+          <xsl:apply-templates select="@*"/>
         </xsl:element>
       </xsl:for-each>
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="h:ol"  mode="html2mei">
+  <xsl:template match="h:ol">
     <xsl:element name="list" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:attribute name="form">ordered</xsl:attribute>
       <xsl:for-each select="h:li">
         <xsl:element name="li" namespace="http://www.music-encoding.org/ns/mei">
-          <xsl:apply-templates select="node()"  mode="html2mei"/>
+          <xsl:apply-templates select="node()"/>
           <xsl:call-template name="make_id_if_absent"/>
-          <xsl:apply-templates select="@*"  mode="html2mei"/>
+          <xsl:apply-templates select="@*"/>
         </xsl:element>
       </xsl:for-each>
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="h:img"  mode="html2mei">
+  <xsl:template match="h:img">
     <xsl:element name="fig" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:element name="graphic">
         <xsl:attribute name="label">
@@ -656,14 +642,7 @@
       <xsl:choose>
         <xsl:when test="$user">
             <xsl:choose>
-              <xsl:when test="$settings/dcm:parameters/dcm:automatic_log_main_switch='true'
-                and $penultimate &gt; 0
-                and not(m:change[$penultimate]/m:changeDesc//text())
-                and not(m:change[last()]//text())
-                and $penultimateDay=$today
-                and $penultimateChange/m:respStmt/m:resp=$user
-                and (m:change[last()]/m:respStmt/m:resp=$user or m:change[last()]/m:respStmt/m:resp='')
-                ">
+              <xsl:when test="$settings/dcm:parameters/dcm:automatic_log_main_switch='true'                 and $penultimate &gt; 0                 and not(m:change[$penultimate]/m:changeDesc//text())                 and not(m:change[last()]//text())                 and $penultimateDay=$today                 and $penultimateChange/m:respStmt/m:resp=$user                 and (m:change[last()]/m:respStmt/m:resp=$user or m:change[last()]/m:respStmt/m:resp='')                 ">
                 <!-- last entry is just a new save from the same user with no change description - just update the last timestamp -->
                 <xsl:for-each select="m:change">
                   <xsl:choose>
@@ -718,15 +697,19 @@
   </xsl:template>
 
   <xsl:template match="@*|node()" mode="html2mei">
-    <xsl:copy><xsl:apply-templates select="@*|node()"  mode="html2mei" /></xsl:copy>
+    <xsl:copy>
+        <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
   </xsl:template>
   
   <xsl:template match="@*|node()">
-    <xsl:copy><xsl:apply-templates select="@*|node()"/></xsl:copy>
+    <xsl:copy>
+        <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
   </xsl:template>
 
  <xsl:function name="local:nodifier" as="text()">
-   <xsl:param name="str" />
+   <xsl:param name="str"/>
    <xsl:variable name="node">
      <node>
        <s><xsl:value-of select="$str"/></s>

@@ -19,15 +19,13 @@
   
   <xsl:strip-space elements="*"/>
   
-  <xsl:variable name="empty_doc" 
-    select="document(concat($base_uri,'/editor/forms/mei/model/empty_doc.xml'))" />
+  <xsl:variable name="empty_doc" select="document(concat($base_uri,'/editor/forms/mei/model/empty_doc.xml'))" />
   
   <xsl:template match="m:mei">
 
     <!-- make a copy with an extra header from the empty model document -->
     <xsl:variable name="janus">
       <mei xmlns="http://www.music-encoding.org/ns/mei">
-        <xsl:copy-of select="@*"/>
         <xsl:copy-of select="@*|*"/>
         <xsl:copy-of select="$empty_doc/m:mei/m:meiHead"/>
       </mei>
@@ -37,8 +35,6 @@
           (because attributes are hard to add by XForms) -->
       <xsl:apply-templates select="$janus" mode="second_run"/>
     </xsl:variable>
-    <!-- output after second run: -->
-    <!-- <xsl:copy-of select="local:nodifier($second_run)"/> -->
     
     <!-- final run: convert formatted text to escaped HTML -->
     <xsl:apply-templates select="$second_run" mode="mei2html"/>
@@ -402,14 +398,5 @@
     </xsl:copy>
   </xsl:template>
 
- <xsl:function name="local:nodifier" as="text()">
-          <xsl:param name="str" />
-          <xsl:variable name="node">
-            <node>
-              <s><xsl:value-of select="$str"/></s>
-            </node>
-          </xsl:variable>
-          <xsl:value-of select="$node//s/text()"/>
-        </xsl:function>
-  
+
 </xsl:transform>
