@@ -804,7 +804,7 @@
 		  and m:source/m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
 
 				<!-- collect all reproductions (reprints) - they will be needed later -->
-				<xsl:variable name="collect_reprints">
+				<xsl:variable name="reprints">
 					<sourceDesc xmlns="http://www.music-encoding.org/ns/mei">
 						<xsl:for-each
 							select="m:source[m:relationList/m:relation[@rel='isReproductionOf']]">
@@ -812,8 +812,6 @@
 						</xsl:for-each>
 					</sourceDesc>
 				</xsl:variable>
-				<!-- make it a nodeset -->
-				<xsl:variable name="reprints" select="local:nodifier($collect_reprints)"/>
 
 				<xsl:apply-templates select="." mode="fold_section">
 					<xsl:with-param name="id"
@@ -825,19 +823,15 @@
 							<!-- skip reproductions (=reprints) - they are treated elsewhere -->
 							<xsl:for-each
 								select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' 
-			  and substring-after(@target,'#')=$expression_id] and 
-			  not(m:relationList/m:relation[@rel='isReproductionOf'])]">
+								and substring-after(@target,'#')=$expression_id] and 
+								not(m:relationList/m:relation[@rel='isReproductionOf'])]">
 								<xsl:choose>
 									<xsl:when test="@target!=''">
 										<!-- get external source description -->
-										<xsl:variable name="ext_id"
-											select="substring-after(@target,'#')"/>
-										<xsl:variable name="doc_name"
-											select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
+										<xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
+										<xsl:variable name="doc_name" select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
 										<xsl:variable name="doc" select="document($doc_name)"/>
-										<xsl:copy-of
-											select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"
-										/>
+										<xsl:copy-of select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
 									</xsl:when>
 									<xsl:when test="*//text()">
 										<xsl:copy-of select="."/>
@@ -845,9 +839,7 @@
 								</xsl:choose>
 							</xsl:for-each>
 						</xsl:variable>
-						<!-- make the source list a nodeset -->
-						<xsl:variable name="source_nodeset" select="$sources"/>
-						<xsl:for-each select="$source_nodeset/m:source">
+						<xsl:for-each select="$sources/m:source">
 							<xsl:apply-templates select=".">
 								<xsl:with-param name="reprints" select="$reprints"/>
 							</xsl:apply-templates>
@@ -1585,15 +1577,13 @@
 	<xsl:template match="m:sourceDesc">
 		<xsl:param name="global"/>
 		<!-- collect all reproductions (reprints) - they will be needed later -->
-		<xsl:variable name="collect_reprints">
+		<xsl:variable name="reprints">
 			<sourceDesc xmlns="http://www.music-encoding.org/ns/mei">
 				<xsl:for-each select="m:source[m:relationList/m:relation[@rel='isReproductionOf']]">
 					<xsl:copy-of select="."/>
 				</xsl:for-each>
 			</sourceDesc>
 		</xsl:variable>
-		<!-- make it a nodeset -->
-		<xsl:variable name="reprints" select="local:nodifier($collect_reprints)"/>
 
 		<xsl:apply-templates select="." mode="fold_section">
 			<xsl:with-param name="id" select="concat('source',generate-id(.),position())"/>
@@ -1603,9 +1593,7 @@
 				<xsl:variable name="sources">
 					<!-- If listing global sources, list only those not referring to a specific version (if more than one) -->
 					<xsl:for-each
-						select="m:source
-		      [$global!='true' or ($global='true' and (count(//m:work/m:expressionList/m:expression)&lt;2
-		      or not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)))]">
+						select="m:source[$global!='true' or ($global='true' and (count(//m:work/m:expressionList/m:expression)&lt;2 or not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)))]">
 						<xsl:choose>
 							<xsl:when test="@target!=''">
 								<!-- get external source description -->
@@ -1613,9 +1601,7 @@
 								<xsl:variable name="doc_name"
 									select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
 								<xsl:variable name="doc" select="document($doc_name)"/>
-								<xsl:copy-of
-									select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"
-								/>
+								<xsl:copy-of select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
 							</xsl:when>
 							<xsl:when test="*//text()">
 								<xsl:copy-of select="."/>
@@ -1623,18 +1609,15 @@
 						</xsl:choose>
 					</xsl:for-each>
 				</xsl:variable>
-				<!-- make the source list a nodeset -->
-				<xsl:variable name="source_nodeset" select="$sources"/>
 
 				<xsl:variable name="sorted_sources">
 					<!-- loop through the selected sources; skip reproductions at this point -->
-					<xsl:for-each select="$source_nodeset/m:source[not(m:relationList/m:relation[@rel='isReproductionOf']/@target)]">
+					<xsl:for-each select="$sources/m:source[not(m:relationList/m:relation[@rel='isReproductionOf']/@target)]">
 						<xsl:copy-of select="."/>
 					</xsl:for-each>
 				</xsl:variable>
-				<xsl:variable name="sorted_sources_nodeset" select="$sorted_sources"/>
 
-				<xsl:apply-templates select="$sorted_sources_nodeset/m:source">
+				<xsl:apply-templates select="$sorted_sources/m:source">
 					<!-- also send the collection of all reprints to the template -->
 					<xsl:with-param name="reprints" select="$reprints"/>
 				</xsl:apply-templates>
@@ -1747,13 +1730,12 @@
 		<!-- Separator between names with the same role -->
 		<xsl:param name="separator" select="';'"/>
 		<!-- make a local copy of the elements, making sure that corpNames are processed first -->
-		<xsl:variable name="local-copy-fragment">
+		<xsl:variable name="local-copy">
 			<xsl:for-each select="m:corpName[text() and not(@role=$exclude)] | m:persName[text() and not(@role=$exclude)]">
 				<xsl:sort select="name()"/>
 				<xsl:copy-of select="."/>			
 			</xsl:for-each>
 		</xsl:variable>
-		<xsl:variable name="local-copy" select="local:nodifier($local-copy-fragment)"/>
 		<xsl:for-each select="$local-copy/*">
 			<xsl:variable name="role_str">
 				<!-- look up the role description text (or use the attribute value unchanged if not found) -->
@@ -1996,25 +1978,22 @@
 			
 			
 			<!-- List the source's relations except those visualized otherwise: reproductions (=reprint) and the version embodied -->
-			<xsl:variable name="collect_source_relations">
+			<xsl:variable name="source_relations">
 				<relationList xmlns="http://www.music-encoding.org/ns/mei">
 					<xsl:for-each select="m:relationList/m:relation[@rel!='isEmbodimentOf' and @rel!='isReproductionOf' and @target!='']">
 						<xsl:copy-of select="."/>
 					</xsl:for-each>
 				</relationList>
 			</xsl:variable>
-			<xsl:variable name="source_relations" select="local:nodifier($collect_source_relations)"/>
 			<xsl:apply-templates select="$source_relations" mode="plain_relation_list"/>
 			
 
 			<!-- List exemplars (items) last if there is more than one or if it does have a heading of its own. 
-	   Otherwise, this is assumed to be a manuscript with some information given at item level, 
-	   which should be shown before the components. -->
+				 Otherwise, this is assumed to be a manuscript with some information given at item level, 
+				 which should be shown before the components. -->
 			<xsl:choose>
 				<xsl:when
-					test="local-name()='source' and 
-		  (count(m:itemList/m:item[//text()])&gt;1 or 
-		  (m:itemList/m:item/@label and m:itemList/m:item/@label!=''))">
+					test="local-name()='source' and (count(m:itemList/m:item[//text()])&gt;1 or (m:itemList/m:item/@label and m:itemList/m:item/@label!=''))">
 					<xsl:apply-templates select="m:componentGrp"/>
 					<xsl:apply-templates select="m:itemList"/>
 				</xsl:when>
@@ -2997,7 +2976,7 @@
 			</xsl:copy>
 		</xsl:variable>
 		<!-- process the element without @authURI and @codedval -->
-		<xsl:apply-templates select="local:nodifier($local-copy)"/>
+		<xsl:apply-templates select="$local-copy"/>
 		<!-- and add a link when done -->
 		<xsl:if test="$display_authority_links = 'true'">
 			<xsl:element name="a">
@@ -3488,7 +3467,7 @@
 			<xsl:variable name="vPat" select="$abbreviations[starts-with($pText, m:abbr)][1]"/>        
 			<xsl:choose>
 				<xsl:when test="not($vPat)">
-					<xsl:copy-of select="substring($pText,1,1)"/>
+					<xsl:value-of select="substring($pText,1,1)"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:variable name="expan" select="$vPat/m:expan/node()"/>
