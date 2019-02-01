@@ -107,14 +107,9 @@
 	</xsl:template>
 
 	<xsl:function name="local:nodifier" as="text()">
-          <xsl:param name="str" />
-          <xsl:variable name="node">
-            <node>
-              <s><xsl:value-of select="$str"/></s>
-            </node>
-          </xsl:variable>
-          <xsl:value-of select="$node//s/text()"/>
-        </xsl:function>
+    	<xsl:param name="str" />
+		<xsl:value-of select="$str"/>
+	</xsl:function>
 
 	<!-- MAIN TEMPLATES -->
 
@@ -3349,16 +3344,16 @@
 		<xsl:apply-templates select="." mode="entities"/>
 	</xsl:template>	
 	
-	<xsl:template match="text()[contains(.,'&amp;nbsp;')] | @*[contains(.,'&amp;nbsp;')]" mode="entities">
-		<xsl:apply-templates select="local:nodifier(substring-before(.,'&amp;nbsp;'))" mode="entities"/>&#160;<xsl:apply-templates select="local:nodifier(substring-after(.,'&amp;nbsp;'))" mode="entities"/>
+	<!--	<xsl:template match="text()[contains(.,'&amp;nbsp;')] | @*[contains(.,'&amp;nbsp;')]" mode="entities" priority="1">
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'&amp;nbsp;'))" mode="entities"/> <xsl:apply-templates select="local:nodifier(substring-after(.,'&amp;nbsp;'))" mode="entities"/>
+		</xsl:template>-->
+	<xsl:template match="text()[contains(.,'&amp;lt;')] | @*[contains(.,'&amp;lt;')]" mode="entities" priority="2">
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'&amp;lt;'))" mode="entities"/>&lt;<xsl:apply-templates select="local:nodifier(substring-after(.,'&amp;lt;'))" mode="entities"/>
 	</xsl:template>
-	<!-- Why these two... lt and gt entities are perfectly normal in xml -->
-	<!-- xsl:template match="text()[contains(.,'&amp;lt;')] | @*[contains(.,'&amp;lt;')]" mode="entities">
-		<xsl:apply-templates select="local:nodifier(substring-before(.,'&amp;lt;'))" mode="entities"/>&#60;<xsl:apply-templates select="local:nodifier(substring-after(.,'&amp;lt;'))" mode="entities"/>
+	<xsl:template match="text()[contains(.,'&amp;gt;')] | @*[contains(.,'&amp;gt;')]" mode="entities" priority="3">
+		<xsl:apply-templates select="local:nodifier(substring-before(.,'&amp;gt;'))" mode="entities"/>&gt;<xsl:apply-templates select="local:nodifier(substring-after(.,'&amp;gt;'))" mode="entities"/>
 	</xsl:template>
-	<xsl:template match="text()[contains(.,'&amp;gt;')] | @*[contains(.,'&amp;gt;')]" mode="entities">
-		<xsl:apply-templates select="local:nodifier(substring-before(.,'&amp;gt;'))" mode="entities"/>&#62;<xsl:apply-templates select="local:nodifier(substring-after(.,'&amp;gt;'))" mode="entities"/>
-	</xsl:template -->
+	
 
 	<!-- ad hoc code replacements -->
 	<xsl:template match="text()[contains(.,'[flat]')] | @*[contains(.,'[flat]')]" mode="entities">
