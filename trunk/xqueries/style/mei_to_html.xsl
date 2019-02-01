@@ -3695,14 +3695,17 @@
 				  /* Render the data and insert it as content of the target div */
 				  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData( 
 				      data, 
-				      JSON.stringify({ 
+				      { 
 				      	inputFormat: 'mei',
 				      	pageWidth: 2100,
-		    			border: 0,
 		    			scale: 40,
 		    			adjustPageHeight: 1,
-		    			ignoreLayout: 1
-				      	}) 
+		    			pageMarginTop:        0,
+		    			pageMarginLeft:       0,
+		    			noHeader:             1,
+		    			noFooter:             1,
+		    			breaks: 'encoded'
+				      } 
 				  );
 				</script>
 			</xsl:for-each>
