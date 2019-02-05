@@ -993,19 +993,18 @@
 					  /* The Plain and Easy code to be rendered */
 					  var data = "@data:<xsl:value-of select="."/>";
 					  options = {
-							      	inputFormat: 'pae',
-							      	pageWidth: 3000,
-							      	pageHeight: 10000,
-								    pageMarginTop:      0,
-					    			pageMarginLeft:     0,
-								    noHeader:           true,
-								    noFooter:           true,
-								    spacingStaff:       3,
-					    			scale: 30,
-									adjustPageHeight: true,
-					    			breaks: 'auto',
-					    			openControlEvents: true
-					  			}
+							      	inputFormat:        'pae',
+							      	pageWidth:          3000,
+							      	pageMarginTop:      50,
+					    			pageMarginLeft:     50,
+							      	noHeader:           true,
+							      	noFooter:           true,
+							      	spacingStaff:       3,
+					    			scale:              30,
+							      	adjustPageHeight:   true,
+					    			breaks:             'encoded',
+					    			openControlEvents:  true
+					  		}
 					  /* Render the data and insert it as content of the target div */
 					  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData(data, options);
 					</script>
@@ -1051,19 +1050,18 @@
 		  /* The MEI encoding to be rendered */
 		  var data = document.getElementById('<xsl:value-of select="$xml_id"/>').innerHTML;
 		  options = {
-				      	inputFormat: 'mei',
-				      	pageWidth: 3000,
-				      	pageHeight: 10000,
-					    pageMarginTop:      0,
-		    			pageMarginLeft:     0,
-					    noHeader:           true,
-					    noFooter:           true,
-					    spacingStaff:       3,
-		    			scale: 30,
-						adjustPageHeight: true,
-		    			breaks: 'auto',
-		    			openControlEvents: true
-		  			}
+				      	inputFormat:       'mei',
+				      	pageWidth:          3000,
+				      	pageMarginTop:      50,
+		    			pageMarginLeft:     50,
+				      	noHeader:           true,
+				      	noFooter:           true,
+				      	spacingStaff:       3,
+		    			scale:              30,
+				      	adjustPageHeight:   true,
+		    			breaks:             'encoded',
+		    			openControlEvents:  true
+		  		}
 		  /* Render the data and insert it as content of the target div */
 		  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData(data, options);
 		</script>
@@ -3675,12 +3673,12 @@
 				  document.getElementById("<xsl:value-of select="$id"/>").innerHTML = vrvToolkit.renderData( 
 				      data, 
 				      { 
-				      	inputFormat: 'mei',
-				      	pageWidth: 2100,
-		    			scale: 40,
-		    			adjustPageHeight: 1,
-		    			pageMarginTop:        0,
-		    			pageMarginLeft:       0,
+				      	inputFormat:          'mei',
+				      	pageWidth:            2100,
+		    			scale:                40,
+		    			adjustPageHeight:     1,
+		    			pageMarginTop:        50,
+		    			pageMarginLeft:       50,
 		    			noHeader:             1,
 		    			noFooter:             1,
 		    			breaks: 'encoded'
