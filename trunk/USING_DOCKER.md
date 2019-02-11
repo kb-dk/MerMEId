@@ -68,6 +68,8 @@ want change the security settings. [See INSTALL.md](./INSTALL.md#more-httpd).
 
 ### Host server http
 
+In order to get hold of the services we add the following on the server running dockerd:
+
 ```
 ProxyPass /exist/ "http://172.17.0.2:8080/exist/"
 ProxyPass / "http://172.17.0.2/"
