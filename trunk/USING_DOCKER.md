@@ -65,6 +65,14 @@ in the [Dockerfile](./Dockerfile)
 It isn't necessary to modify the code there to run MerMEId, but you
 must do so if you want to have more than one editor user, or if you
 want change the security settings. [See INSTALL.md](./INSTALL.md#more-httpd).
+
+### Host server http
+
+```
+ProxyPass /exist/ "http://172.17.0.2:8080/exist/"
+ProxyPass / "http://172.17.0.2/"
+
+```
     						
 ## 5. Make docker image
 
