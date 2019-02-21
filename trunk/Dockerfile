@@ -81,8 +81,11 @@ RUN chmod +x /etc/service/tomcat/run
 # and that orbeon and exist has to be hacked a bit before we run this.
 # see build-docker-image.sh
 #
+# You almost certainly want to change the passwords set in the tomcat-users.xml
+#
 
 ADD mermeid/editor.war other-wars/exist.war  build/orbeon.war  ${CATALINA_HOME}/webapps/
+COPY apache-tomcat/tomcat-users.xml  ${CATALINA_HOME}/conf/tomcat-users.xml
 
 # Use baseimage-docker's init system.
 
