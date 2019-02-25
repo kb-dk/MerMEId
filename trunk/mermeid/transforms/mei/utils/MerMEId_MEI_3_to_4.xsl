@@ -9,15 +9,15 @@
     version="2.0">
     
     <!-- 
-    Transform MEI header information created with MerMEId from MEI 3.0.0 to MEI 4.0.0.
-    
-    Caution: This transform is made specifically for transforming metadata created using 
-    MEI 3.0.0-versions of MerMEId. Metadata from other applications or older versions of MerMEId 
-    may or may not be successfully transformed with it.
-    
-    Axel Teich Geertinger
-    Royal Danish Library, 2019    
-    
+        Transform MEI header information created with MerMEId from MEI 3.0.0 to MEI 4.0.0.
+        
+        Caution: This transform is made specifically for transforming metadata created using 
+        MEI 3.0.0-versions of MerMEId. Metadata from other applications or older versions of MerMEId 
+        may or may not be successfully transformed with it.
+        
+        Axel Teich Geertinger
+        Royal Danish Library, 2019    
+        
     -->
     
     <xsl:output indent="yes" encoding="UTF-8"/>
@@ -56,7 +56,7 @@
     <xsl:template match="m:work/m:titleStmt/m:respStmt | m:expression/m:titleStmt/m:respStmt">
         <contributor><xsl:apply-templates select="@* | node()"/></contributor>
     </xsl:template>
-
+    
     <xsl:template match="m:revisionDesc/m:change/m:respStmt/m:resp">
         <name><xsl:apply-templates select="@* | node()"/></name>
     </xsl:template>
@@ -78,13 +78,17 @@
             <xsl:attribute name="label"><xsl:value-of select="."/></xsl:attribute>
         </xsl:if>
     </xsl:template>
-
+    
     <!-- Music -->
     <xsl:template match="@barthru">
         <xsl:attribute name="bar.thru" select="."/>
     </xsl:template>
     
-
+    <xsl:template match="@key.sig.showchange">
+        <xsl:attribute name="keysig.showchange" select="."/>
+    </xsl:template>
+    
+    
     <!-- MOVE ELEMENTS -->     
     
     <!-- Move sources to manifestation list -->
@@ -107,18 +111,20 @@
             <xsl:apply-templates select="m:extMeta | m:revisionDesc"/>
         </xsl:copy>
     </xsl:template>
-
+    
     <!-- Move source taxonomy  -->
     <xsl:template match="m:encodingDesc">
         <xsl:copy>
             <xsl:apply-templates select="@* | *"/>
             <classDecls>
                 <taxonomy xml:id="DcmSourceClassification">
-                    <xsl:apply-templates select="../m:workDesc/m:work/m:classification/m:classCode" mode="move"></xsl:apply-templates>
+                    <xsl:apply-templates select="../m:workDesc/m:work/m:classification/m:classCode" mode="move"/>
                 </taxonomy>
             </classDecls>
         </xsl:copy>
     </xsl:template>
+    
+    <xsl:template match="m:workDesc/m:work/m:classification"/>
     
     <xsl:template match="m:classCode"/>
     
@@ -144,20 +150,22 @@
     
     <!-- DELETE ELEMENTS -->
     
+    <!-- Move contents out of <titleStmt> in work and expression -->
     <xsl:template match="m:work/m:titleStmt | m:expression/m:titleStmt">
         <xsl:apply-templates select="*"/>
     </xsl:template>
     
+    <!-- Delete empty <respStmt> elements -->
     <xsl:template match="m:source/m:titleStmt/m:respStmt[not(*)] | m:item/m:titleStmt/m:respStmt[not(*)]"/>
-
+    
     <!-- MISCELLANEOUS -->
-
+    
     <xsl:template match="@*|*">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
     </xsl:template>
-
+    
     <!-- Add a record of the conversion to revisionDesc  -->
     <xsl:template match="m:revisionDesc">
         <xsl:copy>
@@ -170,7 +178,7 @@
                     <xsl:value-of select="concat('change_',$no_of_nodes,$generated_id)"/>
                 </xsl:attribute>
                 <respStmt>
-                    <resp>MerMEId</resp>
+                    <name>MerMEId</name>
                 </respStmt>
                 <changeDesc>
                     <p>Transform from MEI 3.0.0 to 4.0.0</p>
@@ -178,5 +186,5 @@
             </change>
         </xsl:copy>
     </xsl:template>
-
+    
 </xsl:stylesheet>
