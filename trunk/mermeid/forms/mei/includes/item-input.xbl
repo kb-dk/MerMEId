@@ -96,7 +96,7 @@
           <xf:var name="binding" as="node()?">
             <xxf:value select="." xxbl:scope="outer"/>
           </xf:var>
-          <!-- get item level (itemList or componentGrp) -->
+          <!-- get item level (itemList or componentList) -->
           <xf:var name="parent" as="string">
             <xxf:value select="name(..)" xxbl:scope="outer"/>
           </xf:var>

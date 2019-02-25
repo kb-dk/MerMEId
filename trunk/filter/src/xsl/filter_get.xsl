@@ -136,7 +136,7 @@
       
       <xsl:choose>
         <!-- component expressions need special treatment -->
-        <xsl:when test="local-name(..)='expression' and local-name()='componentGrp'">
+        <xsl:when test="local-name(..)='expression' and local-name()='componentList'">
           <xsl:apply-templates mode="component"/>
         </xsl:when>
         <xsl:otherwise>
@@ -167,7 +167,7 @@
             select="name()"/></xsl:for-each>
     </xsl:variable>
     <!-- always copy from the model's top-level expression -->
-    <xsl:variable name="path">/m:mei/m:meiHead[1]/m:workDesc/m:work/m:expressionList/m:expression/<xsl:call-template name="substring-after-last">
+    <xsl:variable name="path">/m:mei/m:meiHead[1]/m:workList/m:work/m:expressionList/m:expression/<xsl:call-template name="substring-after-last">
         <xsl:with-param name="string" select="$complete_path"/>
         <xsl:with-param name="delimiter" select="'m:expression/'"/>
       </xsl:call-template>

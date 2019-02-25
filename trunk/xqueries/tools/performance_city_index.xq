@@ -48,16 +48,16 @@ declare function loop:sort-key ($identifier as xs:string) as xs:string
                   else 
                     for $c in distinct-values(
             		collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]/
-            		m:workDesc/m:work//m:eventList[@type='performances']/m:event/m:geogName[@role='place' and normalize-space(.)] )
+            		m:workList/m:work//m:eventList[@type='performances']/m:event/m:geogName[@role='place' and normalize-space(.)] )
                     order by normalize-space(string($c))
             	    return
             		  <div>
             		  {concat(normalize-space($c),' &#160; ',$collection,' ')} 
             		  {let $numbers :=
             		  for $n in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]
-                         where $n/m:workDesc/m:work//m:eventList[@type='performances']/m:event/m:geogName[@role='place' and normalize-space(.)] = $c
-                         order by loop:sort-key($n/m:workDesc/m:work/m:identifier[@label=$collection]/string()) 
-                	     return $n/m:workDesc/m:work/m:identifier[@label=$collection]/string()
+                         where $n/m:workList/m:work//m:eventList[@type='performances']/m:event/m:geogName[@role='place' and normalize-space(.)] = $c
+                         order by loop:sort-key($n/m:workList/m:work/m:identifier[@label=$collection]/string()) 
+                	     return $n/m:workList/m:work/m:identifier[@label=$collection]/string()
                 	   return string-join($numbers,', ') 
                    	   } 
                 	   </div>

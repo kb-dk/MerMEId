@@ -50,7 +50,7 @@ declare function local:getlist (
 
 declare function local:get-work-number($doc as node() ) as xs:string* {
   let $c := $doc//m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"][1]/string()
-  let $no := $doc//m:meiHead/m:workDesc/m:work[1]/m:identifier[@label=$c][1]/string()
+  let $no := $doc//m:meiHead/m:workList/m:work[1]/m:identifier[@label=$c][1]/string()
   return ($c, $no)	
 };
 

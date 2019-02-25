@@ -13,27 +13,27 @@
 	
 	<h:div class="inputdiv">
 		
-		<xf:group ref="instance('data-instance')/m:meiHead[not(m:workDesc/m:work/m:expressionList/m:expression)]">
+		<xf:group ref="instance('data-instance')/m:meiHead[not(m:workList/m:work/m:expressionList/m:expression)]">
 			<h:div class="vertical_spacer"/>
 			<dcm:create 
-				nodeset="m:workDesc"
+				nodeset="m:workList"
 				label="Add basic work metadata"
-				origin="instance('reduced-template')/m:meiHead/m:workDesc"/>
-			<dcm:create ref="m:workDesc"
+				origin="instance('reduced-template')/m:meiHead/m:workList"/>
+			<dcm:create ref="m:workList"
 				nodeset="m:work"
 				label="Add basic work metadata"
-				origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work"/>
-			<dcm:create ref="m:workDesc/m:work"
+				origin="instance('reduced-template')/m:meiHead/m:workList/m:work"/>
+			<dcm:create ref="m:workList/m:work"
 				nodeset="m:expressionList"
 				label="Add basic music metadata"
-				origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList"/>
-			<dcm:create ref="m:workDesc/m:work/m:expressionList"
+				origin="instance('reduced-template')/m:meiHead/m:workList/m:work/m:expressionList"/>
+			<dcm:create ref="m:workList/m:work/m:expressionList"
 				nodeset="m:expression"
 				label="Add basic music metadata"
-				origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression"/>
+				origin="instance('reduced-template')/m:meiHead/m:workList/m:work/m:expressionList/m:expression"/>
 		</xf:group>
 		
-		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList">
+		<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:expressionList">
 			
 			<xf:repeat nodeset="m:expression" id="repeat-expression">
 				
@@ -48,7 +48,7 @@
 							triggers="all" 
 							nodeset="m:expression" 
 							index="repeat-expression"
-							origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]"/>
+							origin="instance('reduced-template')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]"/>
 						<dcm:id/>
 						<dcm:attribute-editor ref="."/>
 					</h:legend>
@@ -67,7 +67,7 @@
 						</h:div>
 						<dcm:create nodeset="m:titleStmt"
 							label="Add version title"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:titleStmt"/>
 						<xf:group ref="m:titleStmt">
 							<xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
 								<h:div>
@@ -86,14 +86,14 @@
 											triggers="all" 
 											nodeset="m:title" 
 											index="repeat-version-titles"
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
 									</xf:group>										
 									<xf:group ref=".[count(../m:title)=1]">
 										<dcm:element-buttons 
 											triggers="up down copy add" 
 											nodeset="m:title" 
 											index="repeat-version-titles"
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
 										<xf:trigger appearance="minimal" class="non-standard_button editmenu">
 											<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete row"/></xf:label>
 											<xf:action ev:event="DOMActivate">
@@ -112,7 +112,7 @@
 						<dcm:create 
 							nodeset="m:identifier"
 							label="Add identifier"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:identifier"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:identifier"/>
 						<xf:group ref="m:identifier">
 							<xf:group ref=".[number($num_ex)=1 and .!='']">
 								<h:a class="help_plain"><h:img src="{instance('parameters')/dcm:server_name}/editor/images/warning.png" 
@@ -139,7 +139,7 @@
 									triggers="add remove" 
 									nodeset="m:identifier" 
 									index="work-id-repeat"
-									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:identifier"/>
+									origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:identifier"/>
 								<dcm:attribute-editor ref="."/>
 							</h:div>
 						</xf:repeat>
@@ -157,7 +157,7 @@
 							<dcm:create 
 								nodeset="m:tempo"
 								label="Add tempo"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:tempo"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:tempo"/>
 							<xf:input ref="m:tempo" class="maxlong">
 								<xf:label class="fixed_width">Tempo</xf:label>
 							</xf:input>
@@ -175,7 +175,7 @@
 							<dcm:create 
 								nodeset="m:key"
 								label="Add main key"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:key"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:key"/>
 							<xf:group ref="m:key">
 								<xi:include href="includes/key_select.xml" parse="xml"/>
 								<xf:trigger appearance="minimal">
@@ -191,7 +191,7 @@
 							<dcm:create
 								nodeset="m:perfDuration"
 								label="Add duration"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfDuration"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfDuration"/>
 							<h:div>
 								<xf:repeat nodeset="m:perfDuration" id="details-expression-duration-repeat">
 									<xf:input ref=".">
@@ -203,14 +203,14 @@
 										triggers="remove"
 										nodeset="m:perfDuration"
 										index="details-expression-duration-repeat"
-										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfDuration"/>
+										origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfDuration"/>
 									<dcm:attribute-editor/>
 								</xf:repeat>
 							</h:div>
 							<dcm:create 
 								nodeset="m:extent"
 								label="Add extent"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:extent"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:extent"/>
 							<xf:repeat nodeset="m:extent" id="details-expression-extent-repeat">
 								<h:div>
 									<xf:input ref=".">
@@ -225,7 +225,7 @@
 										triggers="remove" 
 										nodeset="m:extent" 
 										index="details-expression-extent-repeat"
-										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:extent"/>
+										origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:extent"/>
 									<dcm:attribute-editor/>
 								</h:div>
 							</xf:repeat>							
@@ -240,7 +240,7 @@
 						</h:span></h:a></h:span>
 						<dcm:create nodeset="m:incip"
 							label="Add incipits"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:incip"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:incip"/>
 						
 						<xi:include href="includes/incipit-input.xml" parse="xml"/>
 						
@@ -253,12 +253,12 @@
 							with different authors</h:span></h:a></h:legend>	
 						<dcm:create nodeset="m:titleStmt"
 							label="Add persons"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:titleStmt"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:titleStmt"/>
 						<xf:group ref="m:titleStmt">
 							<dcm:create 
 								nodeset="m:respStmt"
 								label="Add person"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt"/>
 							<xf:group ref="m:respStmt">
 								<xi:include href="includes/person-input.xml"/>
 							</xf:group>
@@ -280,11 +280,11 @@
 						<dcm:create 
 							nodeset="m:relationList"
 							label="Add relation"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:relationList"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:relationList"/>
 						<dcm:create ref="m:relationList" 
 							nodeset="m:relation"
 							label="Add relation"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:relationList/m:relation"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:relationList/m:relation"/>
 						
 						
 						<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
@@ -311,7 +311,7 @@
 												<xf:label>Select file...</xf:label>
 												<xf:action ev:event="DOMActivate">
 													<xf:setvalue ref="instance('temp')/nodeset" 
-														value='"instance(&apos;data-instance&apos;)/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[index(&apos;repeat-expression&apos;)]/m:relationList/m:relation[index(&apos;version_relations&apos;)]"'/>
+														value='"instance(&apos;data-instance&apos;)/m:meiHead/m:workList/m:work/m:expressionList/m:expression[index(&apos;repeat-expression&apos;)]/m:relationList/m:relation[index(&apos;version_relations&apos;)]"'/>
 													<xxf:show dialog="relation_dialog"/>
 													<xf:setvalue ref="instance('temp')/target_uri"
 														value="concat(instance('parameters')/dcm:server_name,'filter/filtered_scripts/cross-link.xq?get=works')"/>
@@ -347,7 +347,7 @@
 												triggers="up down add del-parent-with-last" 
 												nodeset="m:relation" 
 												index="version_relations"
-												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList/m:relation"/>
+												origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:relationList/m:relation"/>
 											<dcm:attribute-editor ref="."/>
 										</h:span>
 									</h:td>
@@ -373,13 +373,13 @@
 						<dcm:create  
 							nodeset="m:perfMedium"
 							label="Add instrumentation &amp; voices"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium[m:perfResList]"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:componentList/m:expression/m:perfMedium[m:perfResList]"/>
 						
 						<xf:group ref="m:perfMedium">
 							<dcm:create
 								nodeset="m:perfResList"
 								label="Add instrumentation &amp; voices"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:componentList/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
 							<dcm:instrumentation ref="m:perfResList[not(@source)]"/>
 							<br/>
 							<h:div class="vertical_spacer"/>
@@ -487,7 +487,7 @@
 												</xf:label>
 												<xf:action ev:event="DOMActivate">
 													<xf:insert context="$inst-add-binding" nodeset="m:perfResList" at="last()" position="after" 
-														origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
+														origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:componentList/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
 													<xf:insert context="$inst-add-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('source',$sourceId)"/>
 													<xf:insert context="$inst-add-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('codedval')"/>
 													<xf:insert context="$inst-add-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('xml:id',xxf:attribute('xml:id',concat('perfResList_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))))"/>
@@ -518,12 +518,12 @@
 						<dcm:create  
 							nodeset="m:perfMedium"
 							label="Add roles (characters)"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium[m:castList][1]"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium[m:castList][1]"/>
 						
 						<xf:group ref="m:perfMedium">
 							<dcm:create nodeset="m:castList"
 								label="Add role (character)"
-								origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium[m:castList][1]/m:castList"/>
+								origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium[m:castList][1]/m:castList"/>
 							<dcm:castlist ref="m:castList[not(@source)]"/>
 							
 						</xf:group>
@@ -544,17 +544,17 @@
 							Components may be nested to define several layers of components (e.g. a work 
 							divided into acts, each divided into scenes)
 						</h:span></h:a>
-							<dcm:attribute-editor ref="m:componentGrp"/>
+							<dcm:attribute-editor ref="m:componentList"/>
 						</h:legend>
 						<dcm:create 
-							nodeset="m:componentGrp"
+							nodeset="m:componentList"
 							label="Add component group"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp"/>
-						<xf:group ref="m:componentGrp">
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:componentList"/>
+						<xf:group ref="m:componentList">
 							<dcm:create
 								nodeset="m:expression"
 								label="Add components"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:componentGrp/m:expression[1]"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:componentList/m:expression[1]"/>
 							<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
 								<xf:repeat nodeset="m:expression" id="component-list1">
 									<h:tr class="hoverclass">
@@ -594,7 +594,7 @@
 											
 											<h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_left_disabled.png" class="button_patch"/>
 											
-											<xf:var name="tooManySublevels" select="m:componentGrp/m:expression/m:componentGrp/m:expression"/> 
+											<xf:var name="tooManySublevels" select="m:componentList/m:expression/m:componentList/m:expression"/> 
 											<xf:var name="expTarget" select="preceding-sibling::m:expression[1][not($tooManySublevels)]"/>
 											<xf:group ref=".[not($expTarget)]">
 												<h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_right_disabled.png" class="button_patch"/><xf:output value="''"/>
@@ -603,27 +603,27 @@
 												<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_right.png" alt="move right" title="Make this a sub-component (child) of the above"/></xf:label>
 												<xf:action ev:event="DOMActivate">
 													<xf:var name="expOrig" select="."/>
-													<xf:action if="not($expTarget/m:componentGrp)">
-														<!-- insert <componentGrp> if it doesn't exist -->
-														<xf:var name="origin" select="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
-														<xf:insert context="$expTarget" origin="$origin" nodeset="m:componentGrp" at="1" position="before"/>
-														<!-- move the componentGrp into place according to the empty model if necessary-->
-														<xf:var name="emptyDocExp" select="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
-														<xf:action while="$emptyDocExp/preceding-sibling::*[local-name()=local-name($expTarget/m:componentGrp/following-sibling::*[1])]
-															and count($expTarget/m:componentGrp/preceding-sibling::*)+1 &lt; count($expTarget/*)">
-															<xf:var name="pos" select="count($expTarget/m:componentGrp/preceding-sibling::*)+1"/>
-															<xf:insert context="$expTarget" origin="m:componentGrp"
+													<xf:action if="not($expTarget/m:componentList)">
+														<!-- insert <componentList> if it doesn't exist -->
+														<xf:var name="origin" select="instance('reduced-template')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:componentList"/>
+														<xf:insert context="$expTarget" origin="$origin" nodeset="m:componentList" at="1" position="before"/>
+														<!-- move the componentList into place according to the empty model if necessary-->
+														<xf:var name="emptyDocExp" select="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:componentList"/>
+														<xf:action while="$emptyDocExp/preceding-sibling::*[local-name()=local-name($expTarget/m:componentList/following-sibling::*[1])]
+															and count($expTarget/m:componentList/preceding-sibling::*)+1 &lt; count($expTarget/*)">
+															<xf:var name="pos" select="count($expTarget/m:componentList/preceding-sibling::*)+1"/>
+															<xf:insert context="$expTarget" origin="m:componentList"
 																nodeset="*" at="$pos+1" position="after"/>
 															<xf:delete context="$expTarget" nodeset="*" at="$pos"/>	
 														</xf:action>
 													</xf:action>
-													<xf:insert context="$expTarget/m:componentGrp" nodeset="m:expression" origin="$expOrig"/>
+													<xf:insert context="$expTarget/m:componentList" nodeset="m:expression" origin="$expOrig"/>
 													<xf:delete context="." nodeset="." at="index('component-list1')"/>
 												</xf:action>
 											</xf:trigger>
 											
 											<dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list1" 
-												origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>
+												origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:componentList/m:expression"/>
 											<dcm:id/>
 											<dcm:attribute-editor/>
 										</h:td>
@@ -632,7 +632,7 @@
 									<!-- 1st sub-level -->
 									<h:tr>
 										<h:td colspan="3">
-											<xf:group ref="m:componentGrp">
+											<xf:group ref="m:componentList">
 												<h:table class="sub_element_list" cellspacing="0" cellpadding="0" border="0">
 													<xf:repeat nodeset="m:expression" id="component-list2">
 														<h:tr class="hoverclass">
@@ -681,12 +681,12 @@
 																	<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
 																	<xf:action ev:event="DOMActivate">
 																		<xf:var name="origin" select="."/>
-																		<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list1')" position="after"/>
+																		<xf:insert context="../../../../m:componentList" origin="$origin" nodeset="*" at="index('component-list1')" position="after"/>
 																		<xf:delete nodeset="."/>
 																	</xf:action>
 																</xf:trigger>
 																
-																<xf:var name="tooManySublevels" select="m:componentGrp/m:expression"/> 
+																<xf:var name="tooManySublevels" select="m:componentList/m:expression"/> 
 																<xf:var name="expTarget" select="preceding-sibling::m:expression[1][not($tooManySublevels)]"/>
 																<xf:group ref=".[not($expTarget)]">
 																	<h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_right_disabled.png" class="button_patch"/><xf:output value="''"/>
@@ -695,27 +695,27 @@
 																	<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_right.png" alt="move right" title="Make this a sub-component (child) of the above"/></xf:label>
 																	<xf:action ev:event="DOMActivate">
 																		<xf:var name="expOrig" select="."/>
-																		<xf:action if="not($expTarget/m:componentGrp)">
-																			<!-- insert <componentGrp> if it doesn't exist -->
-																			<xf:var name="origin" select="instance('reduced-template')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
-																			<xf:insert context="$expTarget" origin="$origin" nodeset="m:componentGrp" at="1" position="before"/>
-																			<!-- move the componentGrp into place according to the empty model if necessary-->
-																			<xf:var name="emptyDocExp" select="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp"/>
-																			<xf:action while="$emptyDocExp/preceding-sibling::*[local-name()=local-name($expTarget/m:componentGrp/following-sibling::*[1])]
-																				and count($expTarget/m:componentGrp/preceding-sibling::*)+1 &lt; count($expTarget/*)">
-																				<xf:var name="pos" select="count($expTarget/m:componentGrp/preceding-sibling::*)+1"/>
-																				<xf:insert context="$expTarget" origin="m:componentGrp"
+																		<xf:action if="not($expTarget/m:componentList)">
+																			<!-- insert <componentList> if it doesn't exist -->
+																			<xf:var name="origin" select="instance('reduced-template')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:componentList"/>
+																			<xf:insert context="$expTarget" origin="$origin" nodeset="m:componentList" at="1" position="before"/>
+																			<!-- move the componentList into place according to the empty model if necessary-->
+																			<xf:var name="emptyDocExp" select="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:componentList"/>
+																			<xf:action while="$emptyDocExp/preceding-sibling::*[local-name()=local-name($expTarget/m:componentList/following-sibling::*[1])]
+																				and count($expTarget/m:componentList/preceding-sibling::*)+1 &lt; count($expTarget/*)">
+																				<xf:var name="pos" select="count($expTarget/m:componentList/preceding-sibling::*)+1"/>
+																				<xf:insert context="$expTarget" origin="m:componentList"
 																					nodeset="*" at="$pos+1" position="after"/>
 																				<xf:delete context="$expTarget" nodeset="*" at="$pos"/>	
 																			</xf:action>
 																		</xf:action>
-																		<xf:insert context="$expTarget/m:componentGrp" nodeset="m:expression" origin="$expOrig"/>
+																		<xf:insert context="$expTarget/m:componentList" nodeset="m:expression" origin="$expOrig"/>
 																		<xf:delete context="." nodeset="." at="index('component-list1')"/>
 																	</xf:action>
 																</xf:trigger>
 																
 																<dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list2" 
-																	origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>
+																	origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:componentList/m:expression"/>
 																<dcm:id/>
 																<dcm:attribute-editor/>
 															</h:td>
@@ -724,7 +724,7 @@
 														<!-- 2nd sub-level -->
 														<h:tr>
 															<h:td colspan="4">
-																<xf:group ref="m:componentGrp">
+																<xf:group ref="m:componentList">
 																	<h:table class="sub_element_list" cellspacing="0" cellpadding="0" border="0">
 																		<xf:repeat nodeset="m:expression" id="component-list3">
 																			<h:tr class="hoverclass">
@@ -781,7 +781,7 @@
 																						<xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_left.png" alt="move left" title="Move up one level"/></xf:label>
 																						<xf:action ev:event="DOMActivate">
 																							<xf:var name="origin" select="."/>
-																							<xf:insert context="../../../../m:componentGrp" origin="$origin" nodeset="*" at="index('component-list2')" position="after"/>
+																							<xf:insert context="../../../../m:componentList" origin="$origin" nodeset="*" at="index('component-list2')" position="after"/>
 																							<xf:delete nodeset="."/>
 																						</xf:action>
 																					</xf:trigger>
@@ -789,7 +789,7 @@
 																					<h:img src="{instance('parameters')/dcm:server_name}/editor/images/arrow_right_disabled.png" class="button_patch"/>
 																					
 																					<dcm:element-buttons triggers="up down copy add remove" nodeset="m:expression" index="component-list3" 
-																						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:componentGrp/m:expression"/>
+																						origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:componentList/m:expression"/>
 																					<dcm:id/>
 																					<dcm:attribute-editor/>
 																				</h:td>

@@ -96,7 +96,7 @@
                   </repository>
                   <identifier/>
                 </physLoc>
-                <componentGrp/>
+                <componentList/>
               </item>
             </itemList>
             <relationList xmlns="http://www.music-encoding.org/ns/mei">
@@ -252,7 +252,7 @@
                     
                     
                     <!-- change isEmbodimentOf relation -->
-                    <xf:group ref=".[count($data-instance//m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
+                    <xf:group ref=".[count($data-instance//m:workList/m:work/m:expressionList/m:expression)&gt;1]">
                       <h:a class="popup"><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/expand.png" 
                       title="Move this source to another version"/>Move to...<h:span 
                       class="comment">
@@ -268,7 +268,7 @@
                         </h:div>
                         <xf:var name="source" select="@xml:id"/>
                         <xf:var name="target" select="substring-after(m:relationList/m:relation[@rel='isEmbodimentOf']/@target,'#')"/>
-                        <xf:repeat nodeset="$data-instance//m:workDesc/m:work/m:expressionList/m:expression[@xml:id!=$target or not($target)]">
+                        <xf:repeat nodeset="$data-instance//m:workList/m:work/m:expressionList/m:expression[@xml:id!=$target or not($target)]">
                           <xf:var name="exp" select="@xml:id"/>
                           <xf:var name="title" select="if (m:titleStmt/m:title/text()) then m:titleStmt/m:title[text()][1] else concat('[',$exp,']')"/>
                           <h:div>

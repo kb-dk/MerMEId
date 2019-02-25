@@ -128,7 +128,7 @@
 		</script>
 		
 		<!-- Include the Verovio toolkit for displaying incipits or score if needed. Use 'latest' or 'develop' -->
-		<xsl:if test="m:meiHead/m:workDesc/m:work//m:incip/m:score/* or m:music//m:score/* or normalize-space(//m:incipCode[@form='pae' or @form='PAE' or @form='plaineAndEasie'])">
+		<xsl:if test="m:meiHead/m:workList/m:work//m:incip/m:score/* or m:music//m:score/* or normalize-space(//m:incipCode[@form='pae' or @form='PAE' or @form='plaineAndEasie'])">
 			<script src="http://www.verovio.org/javascript/develop/verovio-toolkit.js" type="text/javascript">
 		    	<xsl:text>
 	    		</xsl:text>
@@ -145,7 +145,7 @@
 
 		<!-- main identification -->
 		<xsl:variable name="catalogue_no">
-			<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]"/>
+			<xsl:value-of select="m:meiHead/m:workList/m:work/m:identifier[@label=$file_context]"/>
 		</xsl:variable>
 
 		<xsl:if test="$file_context!=''">
@@ -191,7 +191,7 @@
 		<xsl:apply-templates select="." mode="settings_menu"/>
 
 		<xsl:for-each select="m:meiHead/
-			  m:workDesc/
+			  m:workList/
 			  m:work/
 			  m:titleStmt/m:respStmt">
 			<xsl:for-each select="m:persName[@role='composer'][text()]">
@@ -202,21 +202,21 @@
 		</xsl:for-each>
 
 		<!-- work title -->
-		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:titleStmt"/>
+		<xsl:apply-templates select="m:meiHead/m:workList/m:work/m:titleStmt"/>
 
 		<!-- other identifiers -->
-		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work[m:identifier/text()]"
+		<xsl:apply-templates select="m:meiHead/m:workList/m:work[m:identifier/text()]"
 			mode="work_identifiers"/>
 
 		<!-- persons -->
 		<xsl:apply-templates
-			select="m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt[m:persName[text()]]">
+			select="m:meiHead/m:workList/m:work/m:titleStmt/m:respStmt[m:persName[text()]]">
 			<xsl:with-param name="exclude">composer</xsl:with-param>
 		</xsl:apply-templates>
 
 		<!-- text source -->
 		<xsl:for-each
-			select="m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source'][text()]">
+			select="m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='text_source'][text()]">
 			<div>
 				<xsl:if test="position()=1">
 					<span class="p_heading"><xsl:value-of select="$l/text_source"/>: </span>
@@ -229,23 +229,23 @@
 		</xsl:for-each>
 
 		<!-- general description -->
-		<xsl:for-each select="m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='general_description'][//text()]">
+		<xsl:for-each select="m:meiHead/m:workList/m:work/m:notesStmt/m:annot[@type='general_description'][//text()]">
 			<xsl:if test="normalize-space(@label)">
 				<p class="p_heading"><xsl:value-of select="@label"/></p>
 			</xsl:if>
 			<xsl:apply-templates select="."/>
 		</xsl:for-each>
-		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links'][m:ptr[normalize-space(@target)]]" mode="link_list_p"/>
+		<xsl:apply-templates select="m:meiHead/m:workList/m:work/m:notesStmt/m:annot[@type='links'][m:ptr[normalize-space(@target)]]" mode="link_list_p"/>
 		
 		<!-- related files -->
-		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:relationList"/>
+		<xsl:apply-templates select="m:meiHead/m:workList/m:work/m:relationList"/>
 
 		<!-- work history -->
-		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:creation[//text()]"/>
-		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:history[//text()]" mode="history"/>
+		<xsl:apply-templates select="m:meiHead/m:workList/m:work/m:creation[//text()]"/>
+		<xsl:apply-templates select="m:meiHead/m:workList/m:work/m:history[//text()]" mode="history"/>
 
 		<!-- works with versions: show global sources and performances before version details -->
-		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
+		<xsl:if test="count(m:meiHead/m:workList/m:work/m:expressionList/m:expression)&gt;1">
 			<!-- global sources -->
 			<xsl:apply-templates
 				select="m:meiHead/m:fileDesc/m:sourceDesc[count(m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0]">
@@ -253,38 +253,38 @@
 			</xsl:apply-templates>
 			<!-- work-level performances  -->
 			<xsl:apply-templates
-				select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']/m:event/*/text()]"
+				select="m:meiHead/m:workList/m:work/m:history[m:eventList[@type='performances']/m:event/*/text()]"
 				mode="performances"/>
 		</xsl:if>
 
 		<!-- top-level expression (versions and one-movement work details) -->
-		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:expressionList/m:expression"
+		<xsl:apply-templates select="m:meiHead/m:workList/m:work/m:expressionList/m:expression"
 			mode="top_level"/>
 
 		<!-- works with only one version: show performances and global sources after movements -->
-		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&lt;2">
+		<xsl:if test="count(m:meiHead/m:workList/m:work/m:expressionList/m:expression)&lt;2">
 			<!-- sources -->
 			<xsl:apply-templates
 				select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(string-join(*//text(),'')) or m:source/@target!='']"/>
 			<!-- work-level performances -->
 			<xsl:apply-templates
-				select="m:meiHead/m:workDesc/m:work/m:history[m:eventList[@type='performances']/m:event/*/text()]"
+				select="m:meiHead/m:workList/m:work/m:history[m:eventList[@type='performances']/m:event/*/text()]"
 				mode="performances"/>
 			<!-- Performances entered at expression level displayed at work level if only one expression -->
 			<xsl:apply-templates
-				select="m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:history[m:eventList[@type='performances']/m:event/*/text()]"
+				select="m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:history[m:eventList[@type='performances']/m:event/*/text()]"
 				mode="performances"/>
 		</xsl:if>
 
 		<!-- works with versions: draw separator before general bibliography -->
-		<xsl:if test="count(m:meiHead/m:workDesc/m:work/m:expressionList/m:expression)&gt;1">
-			<xsl:if test="m:meiHead/m:workDesc/m:work/m:biblList[m:bibl/*[text()]]">
+		<xsl:if test="count(m:meiHead/m:workList/m:work/m:expressionList/m:expression)&gt;1">
+			<xsl:if test="m:meiHead/m:workList/m:work/m:biblList[m:bibl/*[text()]]">
 				<hr class="noprint"/>
 			</xsl:if>
 		</xsl:if>
 
 		<!-- bibliography -->
-		<xsl:apply-templates select="m:meiHead/m:workDesc/m:work/m:biblList[m:bibl/*[text()]]"/>
+		<xsl:apply-templates select="m:meiHead/m:workList/m:work/m:biblList[m:bibl/*[text()]]"/>
 		
 		<!-- score -->
 		<xsl:apply-templates select="m:music[//m:score]"/>
@@ -299,7 +299,7 @@
 	<!-- generate a page title -->
 	<xsl:template name="page_title">
 		<xsl:for-each select="m:meiHead/
-			  m:workDesc/
+			  m:workList/
 			  m:work/
 			  m:titleStmt">
 			<xsl:choose>
@@ -332,7 +332,7 @@
 	</xsl:template>
 	
 	
-	<xsl:template match="m:meiHead/m:workDesc/m:work/m:titleStmt">
+	<xsl:template match="m:meiHead/m:workList/m:work/m:titleStmt">
 		<!--  Work title -->
 		<xsl:if test="m:title[@type='main' or not(@type)][text()]">
 			<xsl:for-each select="m:title[@type='main' or not(@type)][text()]">
@@ -473,7 +473,7 @@
 	</xsl:template>
 
 	<!-- work identifiers -->
-	<xsl:template match="m:meiHead/m:workDesc/m:work" mode="work_identifiers">
+	<xsl:template match="m:meiHead/m:workList/m:work" mode="work_identifiers">
 		<p>
 			<xsl:for-each select="m:identifier[text()]">
 				<!--<xsl:variable name="type"><xsl:apply-templates select="@label"/></xsl:variable>
@@ -663,7 +663,7 @@
 			<xsl:variable name="file_context"
 				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
 			<xsl:variable name="catalogue_no"
-				select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]"/>
+				select="$linkedDoc/m:mei/m:meiHead/m:workList/m:work/m:identifier[@label=$file_context]"/>
 			<xsl:variable name="output">
 				<xsl:value-of select="$file_context"/>
 				<xsl:text> </xsl:text>
@@ -786,7 +786,7 @@
 		<xsl:apply-templates select="m:relationList[m:relation[@target!='']]"/>
 		<!-- components (movements) -->
 		<xsl:for-each
-			select="m:componentGrp[normalize-space(string-join(*//text(),'')) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">
+			select="m:componentList[normalize-space(string-join(*//text(),'')) or *//@n!='' or *//@pitch!='' or *//@symbol!='' or *//@count!='']">
 			<xsl:apply-templates select="." mode="fold_section">
 				<xsl:with-param name="id" select="concat('movements',generate-id(),position())"/>
 				<xsl:with-param name="heading"><xsl:value-of select="$l/music"/></xsl:with-param>
@@ -860,14 +860,14 @@
 	<xsl:template match="m:expression">
 		<!-- display title etc. only with components or versions -->
 		<xsl:if
-			test="ancestor-or-self::*[local-name()='componentGrp'] or count(../m:expression)&gt;1">
+			test="ancestor-or-self::*[local-name()='componentList'] or count(../m:expression)&gt;1">
 			<xsl:if test="@n!='' or m:titleStmt//text()">
 				<xsl:variable name="level">
 					<!-- expression headings start with <H3>, decreasing in size with each level -->
 					<xsl:choose>
-						<xsl:when test="ancestor-or-self::*[local-name()='componentGrp']">
+						<xsl:when test="ancestor-or-self::*[local-name()='componentList']">
 							<xsl:value-of
-								select="count(ancestor-or-self::*[local-name()='componentGrp'])+2"/>
+								select="count(ancestor-or-self::*[local-name()='componentList'])+2"/>
 						</xsl:when>
 						<xsl:otherwise>3</xsl:otherwise>
 					</xsl:choose>
@@ -900,7 +900,7 @@
 				<xsl:apply-templates/>
 			</p>
 		</xsl:for-each>
-		<xsl:apply-templates select="m:componentGrp"/>
+		<xsl:apply-templates select="m:componentList"/>
 	</xsl:template>
 
 
@@ -931,7 +931,7 @@
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template match="m:expression/m:componentGrp">
+	<xsl:template match="m:expression/m:componentList">
 		<xsl:choose>
 			<xsl:when test="count(m:expression)&gt;1">
 				<!-- displaying movements non-folding 
@@ -1194,8 +1194,8 @@
 		<xsl:variable name="level">
 			<!-- expression headings start with <H3>, decreasing in size with each level -->
 			<xsl:choose>
-				<xsl:when test="ancestor-or-self::*[local-name()='componentGrp']">
-					<xsl:value-of select="count(ancestor-or-self::*[local-name()='componentGrp'])+2"
+				<xsl:when test="ancestor-or-self::*[local-name()='componentList']">
+					<xsl:value-of select="count(ancestor-or-self::*[local-name()='componentList'])+2"
 					/>
 				</xsl:when>
 				<xsl:otherwise>3</xsl:otherwise>
@@ -1850,10 +1850,10 @@
 			<xsl:variable name="level">
 				<xsl:choose>
 					<xsl:when test="$mode='reprint'">4</xsl:when>
-					<xsl:when test="name(..)='componentGrp'">5</xsl:when>
+					<xsl:when test="name(..)='componentList'">5</xsl:when>
 					<xsl:when test="count(ancestor-or-self::*[name()='itemList']) &gt; 0">
 						<xsl:value-of
-							select="count(ancestor-or-self::*[name()='componentGrp' or name()='itemList'])+3"
+							select="count(ancestor-or-self::*[name()='componentList' or name()='itemList'])+3"
 						/>
 					</xsl:when>
 					<xsl:otherwise>3</xsl:otherwise>
@@ -1863,7 +1863,7 @@
 			<!-- source title -->
 			<xsl:variable name="label">
 				<xsl:choose>
-					<xsl:when test="name(..)='componentGrp'"/>
+					<xsl:when test="name(..)='componentList'"/>
 					<xsl:otherwise><xsl:apply-templates select="@label"/>
 						<xsl:if test="@label!='' and m:titleStmt/m:title/text()">
 							<xsl:text>: </xsl:text>
@@ -1874,7 +1874,7 @@
 			<xsl:if test="m:titleStmt/m:title/text() or @label!=''">
 				<xsl:choose>
 					<xsl:when
-						test="local-name()='item' and normalize-space(@label) and name(..)!='componentGrp'">
+						test="local-name()='item' and normalize-space(@label) and name(..)!='componentList'">
 						<!-- item label -->
 						<xsl:element name="{$heading_element}">
 							<xsl:apply-templates select="@label"/>
@@ -1992,12 +1992,12 @@
 			<xsl:choose>
 				<xsl:when
 					test="local-name()='source' and (count(m:itemList/m:item[//text()])&gt;1 or (m:itemList/m:item/@label and m:itemList/m:item/@label!=''))">
-					<xsl:apply-templates select="m:componentGrp"/>
+					<xsl:apply-templates select="m:componentList"/>
 					<xsl:apply-templates select="m:itemList"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:apply-templates select="m:itemList"/>
-					<xsl:apply-templates select="m:componentGrp"/>
+					<xsl:apply-templates select="m:componentList"/>
 				</xsl:otherwise>
 			</xsl:choose>
 
@@ -2094,7 +2094,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="m:source/m:componentGrp | m:item/m:componentGrp">
+	<xsl:template match="m:source/m:componentList | m:item/m:componentList">
 		<xsl:variable name="labels" select="count(*[@label!=''])"/>
 		<xsl:choose>
 			<xsl:when test="count(*)&gt;1">

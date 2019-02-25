@@ -7,25 +7,25 @@
 
 	<h:div class="inputdiv">
 
-		<xf:group ref=".[not(instance('data-instance')/m:meiHead/m:workDesc/m:work)]">
+		<xf:group ref=".[not(instance('data-instance')/m:meiHead/m:workList/m:work)]">
 			<h:div class="vertical_spacer"/>
-			<dcm:create ref="instance('data-instance')/m:meiHead" nodeset="m:workDesc"
+			<dcm:create ref="instance('data-instance')/m:meiHead" nodeset="m:workList"
 				label="Add basic work metadata"
-				origin="instance('reduced-template')/m:meiHead/m:workDesc"/>
-			<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc" nodeset="m:work"
+				origin="instance('reduced-template')/m:meiHead/m:workList"/>
+			<dcm:create ref="instance('data-instance')/m:meiHead/m:workList" nodeset="m:work"
 				label="Add basic work metadata"
-				origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work"/>
+				origin="instance('reduced-template')/m:meiHead/m:workList/m:work"/>
 		</xf:group>
 
-		<xf:group ref=".[instance('data-instance')/m:meiHead/m:workDesc/m:work]">
+		<xf:group ref=".[instance('data-instance')/m:meiHead/m:workList/m:work]">
 
 			<h:fieldset>
 				<h:legend>Titles</h:legend>
-				<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt"
+				<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:titleStmt"
 					id="repeat-title">
 					<h:div class="blocklabel">Main title </h:div>
 					<dcm:create nodeset="m:title[not(@type) or @type='main']" label="Add main title"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[not(@type)]"/>
+						origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[not(@type)]"/>
 
 					<xf:repeat nodeset="m:title[not(@type) or @type='main']" id="main_titles"
 						class="input_group">
@@ -33,7 +33,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="all"
 								nodeset="m:title[@type='main' or not(@type)]" index="main_titles"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[not(@type)]"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[not(@type)]"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -47,7 +47,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="up down move copy add remove"
 								nodeset="m:title[@type='alternative']" index="alternative_titles"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='alternative']"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='alternative']"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -61,7 +61,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="up down move copy add remove"
 								nodeset="m:title[@type='subordinate']" index="subtitles"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='subordinate']"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='subordinate']"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -75,7 +75,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="up down move copy add remove"
 								nodeset="m:title[@type='uniform']" index="uniform_titles"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='uniform']"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -89,7 +89,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="up down move copy add remove"
 								nodeset="m:title[@type='original']" index="original_titles"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='original']"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='original']"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -106,7 +106,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="up down move copy add remove"
 								nodeset="m:title[@type='text_source']" index="text_sources"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='text_source']"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -126,31 +126,31 @@
 									<h:div>
 										<dcm:create nodeset="m:title[@type='alternative']"
 											label="Add alternative title"
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='alternative']"
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='alternative']"
 										/>
 									</h:div>
 									<h:div>
 										<dcm:create nodeset="m:title[@type='subordinate']"
 											label="Add subtitle"
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='subordinate']"
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='subordinate']"
 										/>
 									</h:div>
 									<h:div>
 										<dcm:create nodeset="m:title[@type='uniform']"
 											label="Add uniform title"
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='uniform']"
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='uniform']"
 										/>
 									</h:div>
 									<h:div>
 										<dcm:create nodeset="m:title[@type='original']"
 											label="Add original title"
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='original']"
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='original']"
 										/>
 									</h:div>
 									<h:div>
 										<dcm:create nodeset="m:title[@type='text_source']"
 											label="Add title of text source"
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[@type='text_source']"
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='text_source']"
 										/>
 									</h:div>
 								</h:div>
@@ -162,10 +162,10 @@
 
 			<h:fieldset>
 				<h:legend>Identification</h:legend>
-				<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work"
+				<dcm:create ref="instance('data-instance')/m:meiHead/m:workList/m:work"
 					nodeset="m:identifier" label="Add identifier"
-					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:identifier"/>
-				<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:identifier">
+					origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:identifier"/>
+				<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:identifier">
 					<h:div class="blocklabel">
 						<h:span class="fixed_width"> List name <h:a class="help">&#160;?<h:span
 									class="comment">Name of a list, catalogue or other numbering
@@ -182,14 +182,14 @@
 					</h:div>
 				</xf:group>
 				<xf:repeat
-					nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:identifier"
+					nodeset="instance('data-instance')/m:meiHead/m:workList/m:work/m:identifier"
 					id="work-id-repeat">
 					<h:div>
 						<xf:input ref="@label" class="mediumshort"/>
 						<xf:input ref="." class="mediumshort"/>
 						<dcm:element-buttons triggers="add remove up down" nodeset="m:identifier"
 							index="work-id-repeat"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:identifier"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:identifier"/>
 						<dcm:attribute-editor ref="."/>
 					</h:div>
 				</xf:repeat>
@@ -199,25 +199,25 @@
 				<h:legend>Persons <h:a class="help">&#160;?<h:span class="comment">A list of person
 							involved in the creation or transmission of this work in general, such
 							as the composer or text author</h:span></h:a></h:legend>
-				<dcm:create ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt"
+				<dcm:create ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:titleStmt"
 					nodeset="m:respStmt" label="Add person"
-					origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt"/>
+					origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:respStmt"/>
 				<xf:group
-					ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt">
+					ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:respStmt">
 					<xi:include href="includes/person-input.xml"/>
 				</xf:group>
 			</h:fieldset>
 
-			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">
+			<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work">
 				<h:fieldset>
 					<h:legend>Work notes</h:legend>
 					<h:div class="vertical_spacer"/>
 					<dcm:create nodeset="m:notesStmt" label="Add work description"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt"/>
+						origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:notesStmt"/>
 					<xf:group ref="m:notesStmt">
 						<dcm:create nodeset="m:annot[@type='general_description']"
 							label="Add work description"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='general_description']"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:notesStmt/m:annot[@type='general_description']"/>
 						<xf:group ref="m:annot[@type='general_description']">
 							<h:div class="blocklabel">General work description <h:a class="help"
 										>&#160;?<h:span class="comment">A general description of or
@@ -236,7 +236,7 @@
 							</xf:input>&#160; <dcm:element-buttons-typed
 								triggers="add up down remove" index="repeat_work_description"
 								nodeset="m:annot[@type='general_description']"
-								origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='general_description']"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:notesStmt/m:annot[@type='general_description']"/>
 							<dcm:id/>
 							<dcm:attribute-editor/>
 							<fr:tinymce ref="."/>
@@ -249,9 +249,9 @@
 									particular source.									
 						</h:span></h:a></h:div>
 						<dcm:create nodeset="m:annot[@type='links']" label="Add link"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:notesStmt/m:annot[@type='links']"/>
 						<dcm:create ref="m:annot[@type='links']" nodeset="m:ptr" label="Add link"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:notesStmt/m:annot[@type='links']/m:ptr"/>
 						<xf:group ref="m:annot[@type='links']">
 							<xf:repeat nodeset="m:ptr" id="general-notesstmt-annot-repeat-ptr">
 								<h:div>
@@ -274,7 +274,7 @@
 									</xf:input>
 									<dcm:element-buttons triggers="up down copy add remove"
 										nodeset="m:ptr" index="general-notesstmt-annot-repeat-ptr"
-										origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+										origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:notesStmt/m:annot[@type='links']/m:ptr"/>
 									<dcm:attribute-editor ref="."/>
 								</h:div>
 							</xf:repeat>
@@ -283,7 +283,7 @@
 				</h:fieldset>
 			</xf:group>
 
-			<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">
+			<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work">
 				<h:fieldset>
 					<h:legend>Relations <h:a class="help">&#160;?<h:span class="comment">Relations
 								between this work and other works or files may be specified here to
@@ -298,7 +298,7 @@
 								this, make the URI absolute (i.e., starting with a protocol like
 								"http://"). </h:span></h:a></h:legend>
 					<dcm:create nodeset="m:relationList" label="Add relation"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList"/>
+						origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:relationList"/>
 					<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
 						<xf:repeat nodeset="m:relationList/m:relation" id="work_relations">
 							<h:tr>
@@ -332,7 +332,7 @@
 												title="search for file" alt="search"/> Select file</xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xf:setvalue ref="instance('temp')/nodeset"
-												value="&quot;instance(&apos;data-instance&apos;)/m:meiHead/m:workDesc/m:work/m:relationList/m:relation[index(&apos;work_relations&apos;)]&quot;"/>
+												value="&quot;instance(&apos;data-instance&apos;)/m:meiHead/m:workList/m:work/m:relationList/m:relation[index(&apos;work_relations&apos;)]&quot;"/>
 												<xxf:show dialog="relation_dialog"/>
 												<xf:setvalue ref="instance('temp')/target_uri"
 												value="concat(instance('parameters')/dcm:server_name,'filter/filtered_scripts/cross-link.xq?get=works')"/>
@@ -380,7 +380,7 @@
 										<dcm:element-buttons
 											triggers="up down add del-parent-with-last"
 											nodeset="m:relation" index="work_relations"
-											origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList/m:relation"/>
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:relationList/m:relation"/>
 										<dcm:attribute-editor ref="."/>
 									</h:span>
 								</h:td>
@@ -394,13 +394,13 @@
 			<h:fieldset>
 				<h:legend>Classification and keywords</h:legend>
 				
-				<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">
+				<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work">
 					
 					<dcm:create nodeset="m:classification" label="Add classification keywords"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification"/>
+						origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:classification"/>
 
 					<dcm:create ref="m:classification" nodeset="m:termList" label="Add keyword(s)"
-						origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList"/>
+						origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList"/>
 						
 					<xf:group ref="m:classification/m:termList">
 						
@@ -416,13 +416,13 @@
 								<xf:input ref="." class="maxlong"/>
 								<dcm:element-buttons triggers="add del-parent-with-last up down"
 									nodeset="m:term" index="repeat-work-terms"
-									origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term"/>
+									origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList/m:term"/>
 								<dcm:attribute-editor ref="."/>
 							</h:div>
 						</xf:repeat>
 
 						<dcm:create nodeset="m:term" label="Add keyword"
-							origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term"/>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList/m:term"/>
 						
 						<xf:trigger>
 							<xf:label><h:img
@@ -449,10 +449,10 @@
 		visible="false">
 		<xf:action ev:event="check-for-termlist">
 			<xf:action
-				if="not(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList)">
+				if="not(instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList)">
 				<xf:dispatch name="DOMActivate" target="termList-create"/>
 				<xf:delete
-					nodeset="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term"
+					nodeset="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList/m:term"
 				/>
 			</xf:action>
 		</xf:action>
@@ -477,16 +477,16 @@
 									<xf:dispatch name="check-for-termlist" target="keywords_menu"/>
 									<!-- insert new node -->
 									<xf:action
-										ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
+										ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
 										<xf:insert
-											context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList"
+											context="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList"
 											nodeset="m:term" at="last()" position="after"
 											origin="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/m:term"
 										/>
 									</xf:action>
 									<!-- or write values to existing, empty node -->
 									<xf:action
-										ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.='']">
+										ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList/m:term[1][.='']">
 										<xf:setvalue ref="."
 											value="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/m:term"
 										/>
@@ -511,15 +511,15 @@
 											<xf:dispatch name="check-for-termlist"
 												target="keywords_menu"/>
 											<xf:action
-												ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
+												ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
 												<xf:insert
-													context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList"
+													context="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList"
 													nodeset="m:term" at="last()" position="after"
 													origin="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/following-sibling::m:termList[1]/m:term[index('level2_keywords-repeat')]"
 												/>
 											</xf:action>
 											<xf:action
-												ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.='']">
+												ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList/m:term[1][.='']">
 												<xf:setvalue ref="."
 													value="instance('keywords-instance')/m:termList[@label='level1'][index('level1_keywords-repeat')]/following-sibling::m:termList[1]/m:term[index('level2_keywords-repeat')]"
 												/>
@@ -553,15 +553,15 @@
 										<xf:dispatch name="check-for-termlist"
 											target="keywords_menu"/>
 										<xf:action
-											ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
+											ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList[m:term[1][.!=''] or not(m:term)]">
 											<xf:insert
-												context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList"
+												context="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList"
 												nodeset="m:term" at="last()" position="after"
 												origin="instance('keywords-instance')/m:termList[@label='keywords']/m:term[index('additional_keywords-repeat')]"
 											/>
 										</xf:action>
 										<xf:action
-											ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:classification/m:termList/m:term[1][.='']">
+											ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList/m:term[1][.='']">
 											<xf:setvalue ref="."
 												value="instance('keywords-instance')/m:termList[@label='keywords']/m:term[index('additional_keywords-repeat')]"
 											/>

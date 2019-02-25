@@ -28,7 +28,7 @@
         <!-- add missing language declarations -->
         <action while="xxf:instance('languages')/m:language[@xml:id=xxf:instance('data-instance')//@xml:lang[not(.=xxf:instance('data-instance')//m:langUsage/m:language/@xml:id)]]">
             <xf:insert 
-                context="xxf:instance('data-instance')/m:meiHead/m:workDesc/m:work/m:langUsage"
+                context="xxf:instance('data-instance')/m:meiHead/m:workList/m:work/m:langUsage"
                 origin="xxf:instance('languages')/m:language[@xml:id=xxf:instance('data-instance')//@xml:lang[not(.=xxf:instance('data-instance')//m:langUsage/m:language/@xml:id)]][1]"/>
         </action>
         <!-- delete unused language declarations -->        

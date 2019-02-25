@@ -78,7 +78,7 @@ let $options:=
     declare function app:get-edition-and-number($doc as node() ) as xs:string* {
       let $c := 
 	  $doc//m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"][1]/string()
-      let $no := $doc//m:meiHead/m:workDesc/m:work[1]/m:identifier[@label=$c][1]/string()
+      let $no := $doc//m:meiHead/m:workList/m:work[1]/m:identifier[@label=$c][1]/string()
       (: shorten very long identifiers (i.e. lists of numbers) :)
 	  let $part1 := substring($no, 1, 11)
 	  let $part2 := substring($no, 12)
@@ -97,7 +97,7 @@ let $options:=
       <a  target="_blank"
       title="View" 
       href="/storage/present.xq?doc={util:document-name($doc)}">
-	{$doc//m:workDesc/m:work/m:titleStmt[1]/m:title[1]/string()}
+	{$doc//m:workList/m:work/m:titleStmt[1]/m:title[1]/string()}
       </a>
       return $ref
     };

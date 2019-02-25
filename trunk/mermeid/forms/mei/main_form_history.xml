@@ -11,23 +11,23 @@
 	
 	<h:div class="inputdiv">
 		
-		<xf:group ref="instance('data-instance')/m:meiHead[not(m:workDesc/m:work/m:history)]">
+		<xf:group ref="instance('data-instance')/m:meiHead[not(m:workList/m:work/m:history)]">
 			<h:div class="vertical_spacer"/>
 			<dcm:create 
-				nodeset="m:workDesc"
+				nodeset="m:workList"
 				label="Add basic work metadata"
-				origin="instance('reduced-template')/m:meiHead/m:workDesc"/>
-			<dcm:create ref="m:workDesc"
+				origin="instance('reduced-template')/m:meiHead/m:workList"/>
+			<dcm:create ref="m:workList"
 				nodeset="m:work"
 				label="Add basic work metadata"
-				origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work"/>
-			<dcm:create ref="m:workDesc/m:work" 
+				origin="instance('reduced-template')/m:meiHead/m:workList/m:work"/>
+			<dcm:create ref="m:workList/m:work" 
 				nodeset="m:history"
 				label="Add history metadata"
-				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history"/>
+				origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:history"/>
 		</xf:group>
 		
-		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">
+		<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work">
 			
 			<dcm:history-input id="history-input-work"/>
 
@@ -44,7 +44,7 @@
 		</xf:group> 
 
 		<!-- Show "work level" performances entered at expression level, if any	-->
-		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList[count(m:expression)=1]/m:expression/m:history[m:eventList//text()]">
+		<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:expressionList[count(m:expression)=1]/m:expression/m:history[m:eventList//text()]">
 			<h:p>[Performance entered at expression (version) level]</h:p>
 			<dcm:performance-list>
 				<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
@@ -57,7 +57,7 @@
 		
 		<!-- Expression-level history and performances. Used only if more than one expression -->
 
-		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">			
+		<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work">			
 			<xf:repeat nodeset="m:expressionList[count(m:expression)>1]/m:expression" 
 				id="repeat-expression-history">
 				<h:div class="vertical_spacer"/>

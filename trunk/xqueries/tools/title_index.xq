@@ -49,7 +49,7 @@ declare function local:format-main-title ($key as xs:string) as node()
                 
     		    {
     
-                	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type eq "file_collection"]  eq $collection]/m:workDesc/m:work
+                	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type eq "file_collection"]  eq $collection]/m:workList/m:work
                         order by lower-case($c/m:titleStmt/m:title[1]/string()), lower-case($c/m:titleStmt/m:title[@type='subordinate'][1]/string()), lower-case($c/m:titleStmt/m:title[@type='alternative'][1]/string())
                 	    return
                 	       <div>
@@ -83,7 +83,7 @@ declare function local:format-main-title ($key as xs:string) as node()
         <div>
                 
     		    {
-                	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type eq "file_collection"]  eq $collection]/m:workDesc/m:work[m:titleStmt/m:title[@type='alternative']]
+                	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type eq "file_collection"]  eq $collection]/m:workList/m:work[m:titleStmt/m:title[@type='alternative']]
                         order by lower-case($c/m:titleStmt/m:title[@type='alternative'][1]/string()), lower-case($c/m:titleStmt/m:title[1]/string()) 
                 	    return
                 	       <div>

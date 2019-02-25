@@ -133,7 +133,7 @@
 			<xsl:variable name="file_context"
 				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
 			<xsl:variable name="catalogue_no"
-				select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]"/>
+				select="$linkedDoc/m:mei/m:meiHead/m:workList/m:work/m:identifier[@label=$file_context]"/>
 			<xsl:variable name="output">
 				<!-- the printed catalogue omits the collection name ("CNW") -->
 				<!--<xsl:value-of select="$file_context"/>
@@ -179,7 +179,7 @@
 	<!-- Different formatting templates -->
 	
 	<!-- work identifiers -->
-	<xsl:template match="m:meiHead/m:workDesc/m:work" mode="work_identifiers">
+	<xsl:template match="m:meiHead/m:workList/m:work" mode="work_identifiers">
 		<p>
 			<!-- omit opus and CNW numbers here -->
 			<xsl:for-each select="m:identifier[text() and contains(@label,'CNU')]">
@@ -284,7 +284,7 @@
 				<b><xsl:apply-templates select="m:title"/></b>.
 			</xsl:for-each>
 			<!-- item label -->
-			<xsl:if test="local-name()='item' and normalize-space(@label) and name(..)!='componentGrp'">
+			<xsl:if test="local-name()='item' and normalize-space(@label) and name(..)!='componentList'">
 				<xsl:value-of select="@label"/>.
 			</xsl:if>
 <!--			
@@ -345,12 +345,12 @@
 					test="local-name()='source' and 
 					(count(m:itemList/m:item[//text()])&gt;1 or 
 					(m:itemList/m:item/@label and m:itemList/m:item/@label!=''))">
-					<xsl:apply-templates select="m:componentGrp"/>
+					<xsl:apply-templates select="m:componentList"/>
 					<xsl:apply-templates select="m:itemList"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:apply-templates select="m:itemList"/>
-					<xsl:apply-templates select="m:componentGrp"/>
+					<xsl:apply-templates select="m:componentList"/>
 				</xsl:otherwise>
 			</xsl:choose>
 			

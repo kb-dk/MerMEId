@@ -57,17 +57,17 @@ declare function loop:sort-key (
 
   let $sort_key:=
     if($key eq "person") then
-      replace(lower-case($doc/m:meiHead/m:workDesc/m:work/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
+      replace(lower-case($doc/m:meiHead/m:workList/m:work/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
     else if($key eq "title") then
-      replace(lower-case($doc/m:meiHead/m:workDesc/m:work/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
+      replace(lower-case($doc/m:meiHead/m:workList/m:work/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
     else if($key eq "date") then    
       let $dates := 
-        if($doc/m:meiHead/m:workDesc/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)) then
-          for $date in $doc/m:meiHead/m:workDesc/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)
+        if($doc/m:meiHead/m:workList/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)) then
+          for $date in $doc/m:meiHead/m:workList/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)
 	      return substring($date,1,4)
 	    else 
 	      (: if the composition does not have an overall dating, look for version datings instead and use the first dated version :)
-          for $date in $doc/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:creation/m:date[@notafter|@isodate|@notbefore|@startdate|@enddate][1]/(@notafter|@isodate|@notbefore|@startdate|@enddate)
+          for $date in $doc/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:creation/m:date[@notafter|@isodate|@notbefore|@startdate|@enddate][1]/(@notafter|@isodate|@notbefore|@startdate|@enddate)
 	      return substring($date,1,4)
       return 
       if(count($dates)>=1) then
@@ -75,7 +75,7 @@ declare function loop:sort-key (
       else
         "0000"
     else if($key eq "work_number") then
-      let $identifier:=$doc/m:meiHead/m:workDesc[1]/m:work[1]/m:identifier[@label=$collection][1]/string()
+      let $identifier:=$doc/m:meiHead/m:workList[1]/m:work[1]/m:identifier[@label=$collection][1]/string()
       (: extract any trailing number :)
       let $number:= replace($identifier,'^.*?(\d*)$','$1')
       (: and anything that might be before the number :)

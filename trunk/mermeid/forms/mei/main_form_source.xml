@@ -14,7 +14,7 @@
     <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc">
       
       <!-- List all sources, if there is only one version -->
-      <xf:group ref=".[count(../m:workDesc/m:work/m:expressionList/m:expression)&lt;2]">
+      <xf:group ref=".[count(../m:workList/m:work/m:expressionList/m:expression)&lt;2]">
         <h:fieldset>
           <h:legend>Sources</h:legend>
           <h:div class="vertical_spacer"/>
@@ -43,7 +43,7 @@
       </xf:group>
       
       <!-- List global sources -->
-      <xf:group ref=".[count(../m:workDesc/m:work/m:expressionList/m:expression)&gt;1]">
+      <xf:group ref=".[count(../m:workList/m:work/m:expressionList/m:expression)&gt;1]">
         <h:fieldset>
           <h:legend>Sources (work)
             <h:a class="help">&#160;?<h:span class="comment">Sources may be listed at work level 
@@ -76,7 +76,7 @@
       </xf:group>
       
       <!-- List version sources -->
-      <xf:group ref="../m:workDesc/m:work/m:expressionList[count(m:expression)&gt;1]">
+      <xf:group ref="../m:workList/m:work/m:expressionList[count(m:expression)&gt;1]">
         <xf:repeat nodeset="m:expression">
           <h:fieldset>
             <h:legend>Sources (version)

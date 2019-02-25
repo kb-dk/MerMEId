@@ -94,8 +94,8 @@ declare function loop:lookup-archive ($location as xs:string, $country_code as x
             		  for $n in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]
                          where $n/m:fileDesc/m:sourceDesc/m:source//m:physLoc/m:repository/
             		      (m:identifier[@authority='RISM' and normalize-space(.)] | m:corpName[normalize-space(.)]) = $c
-                         order by loop:sort-key($n/m:workDesc/m:work/m:identifier[@label=$collection]/string()) 
-                	     return $n/m:workDesc/m:work/m:identifier[@label=$collection]/string()
+                         order by loop:sort-key($n/m:workList/m:work/m:identifier[@label=$collection]/string()) 
+                	     return $n/m:workList/m:work/m:identifier[@label=$collection]/string()
                 	   return string-join($numbers,', ') 
                    	   } 
                 	   </div>

@@ -62,28 +62,28 @@ declare function local:format-reference(
 	"even"
 
       let $date_output :=
-    	if($doc//m:workDesc/m:work/m:creation/m:date/(@notbefore|@notafter|@startdate|@enddate)!='') then
-    	  concat(substring($doc//m:workDesc/m:work/m:creation/m:date/@notbefore,1,4),
-    	  substring($doc//m:workDesc/m:work/m:creation/m:date/@startdate,1,4),
+    	if($doc//m:workList/m:work/m:creation/m:date/(@notbefore|@notafter|@startdate|@enddate)!='') then
+    	  concat(substring($doc//m:workList/m:work/m:creation/m:date/@notbefore,1,4),
+    	  substring($doc//m:workList/m:work/m:creation/m:date/@startdate,1,4),
     	  '-',
-    	  substring($doc//m:workDesc/m:work/m:creation/m:date/@enddate,1,4),
-    	  substring($doc//m:workDesc/m:work/m:creation/m:date/@notafter,1,4))
-        else if($doc//m:workDesc/m:work/m:creation/m:date/@isodate!='') then
-          substring($doc//m:workDesc/m:work/m:creation/m:date/@isodate,1,4)
-        else if($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/(@notbefore|@notafter|@startdate|@enddate)!='') then
-    	  concat(substring($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@notbefore,1,4),
-    	  substring($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@startdate,1,4),
+    	  substring($doc//m:workList/m:work/m:creation/m:date/@enddate,1,4),
+    	  substring($doc//m:workList/m:work/m:creation/m:date/@notafter,1,4))
+        else if($doc//m:workList/m:work/m:creation/m:date/@isodate!='') then
+          substring($doc//m:workList/m:work/m:creation/m:date/@isodate,1,4)
+        else if($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/(@notbefore|@notafter|@startdate|@enddate)!='') then
+    	  concat(substring($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@notbefore,1,4),
+    	  substring($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@startdate,1,4),
     	  '-',
-    	  substring($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@enddate,1,4),
-    	  substring($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@notafter,1,4))
+    	  substring($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@enddate,1,4),
+    	  substring($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@notafter,1,4))
         else
-          substring($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date[@isodate][1]/@isodate,1,4)
+          substring($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date[@isodate][1]/@isodate,1,4)
 
 
 	let $ref   := 
 	<tr class="result {$class}">
 	  <td nowrap="nowrap">
-	    {$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']}
+	    {$doc//m:workList/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']}
 	  </td>
 	  <td>{app:view-document-reference($doc)}</td>
 	  <td>{"  ",$date_output}</td>

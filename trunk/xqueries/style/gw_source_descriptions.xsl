@@ -85,10 +85,10 @@
 		<div id="main_content">
 			<!-- main identification -->
 			<xsl:variable name="catalogue_no">
-				<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
+				<xsl:value-of select="m:meiHead/m:workList/m:work/m:identifier[@type=$file_context]"/>
 			</xsl:variable>
 
-			<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]/text()">
+			<xsl:if test="m:meiHead/m:workList/m:work/m:identifier[@type=$file_context]/text()">
 				<div class="series_header {$file_context}">
 					<xsl:value-of select="$file_context"/>
 					<xsl:text> </xsl:text>
@@ -116,7 +116,7 @@
 	<xsl:template name="body_main_content">
 
 		<xsl:for-each select="m:meiHead/
-			m:workDesc/
+			m:workList/
 			m:work/
 			m:titleStmt">
 			<xsl:if test="m:title[@type='main' or not(@type)][text()]">
@@ -181,7 +181,7 @@
 	<!-- generate a page title -->
 	<xsl:template name="page_title">
 		<xsl:for-each select="m:meiHead/
-			m:workDesc/
+			m:workList/
 			m:work/
 			m:titleStmt">
 			<xsl:choose>
@@ -445,7 +445,7 @@
 			</xsl:for-each>
 			<!-- item label -->
 			<xsl:if
-				test="local-name()='item' and normalize-space(@label) and name(..)!='componentGrp'">
+				test="local-name()='item' and normalize-space(@label) and name(..)!='componentList'">
 				<!--  should be (the editor is supposed to mention "source" in @type):
 				<xsl:if test="normalize-space(m:identifier[contains(translate(@type,'S','s'),'source')])">
 					<b><xsl:apply-templates select="m:identifier[contains(translate(@type,'S','s'),'source')]"
@@ -530,12 +530,12 @@
 					test="local-name()='source' and 
 						(count(m:itemList/m:item[//text()])&gt;1 or 
 						(m:itemList/m:item/@label and m:itemList/m:item/@label!=''))">
-					<xsl:apply-templates select="m:componentGrp"/>
+					<xsl:apply-templates select="m:componentList"/>
 					<xsl:apply-templates select="m:itemList"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:apply-templates select="m:itemList"/>
-					<xsl:apply-templates select="m:componentGrp"/>
+					<xsl:apply-templates select="m:componentList"/>
 				</xsl:otherwise>
 			</xsl:choose>
 
@@ -633,7 +633,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="m:source/m:componentGrp | m:item/m:componentGrp">
+	<xsl:template match="m:source/m:componentList | m:item/m:componentList">
 		<xsl:variable name="labels" select="count(*[@label!=''])"/>
 		<xsl:choose>
 			<xsl:when test="count(*)&gt;1">

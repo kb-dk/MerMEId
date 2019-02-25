@@ -68,11 +68,11 @@
                             
 								<dcm:create nodeset="m:castItem"
 									label="Add roles (characters)"
-									origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem"/>
+									origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem"/>
 								<xf:repeat nodeset="m:castItem" id="repeat-cast">
 									<dcm:create nodeset="m:role"
 										label="Add role"
-										origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem/m:role"/>
+										origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem/m:role"/>
 									<xf:action ev:event="xforms-value-changed">
 										<xf:dispatch name="add-id" target="form-group"/>
 									</xf:action>
@@ -83,13 +83,13 @@
 												triggers="add up down" 
 												nodeset="m:castItem" 
 												index="repeat-cast"
-												origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]"/>
+												origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]"/>
 											
 											<h:span class="editmenu">
 												<xxf:dialog id="delete-cast-dialog" appearance="full">
 													<xf:label>There are references to this performer</xf:label>
 													<xf:var name="thisid" select="@xml:id"/>
-													<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$thisid])"/> 
+													<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentList//m:perfRes[@n=$thisid])"/> 
 														music component(s) (movements or sections defined below) refer to this
 														performer.<h:br/>
 														Do you want to delete all occurrences in components also?
@@ -107,7 +107,7 @@
 														<xf:label>Yes, delete all occurrences</xf:label>
 														<xf:action ev:event="DOMActivate">
 															<xf:delete nodeset="."/>
-															<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:castItem[@n=$thisid]">
+															<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentList//m:castItem[@n=$thisid]">
 																<xf:delete nodeset="."/>
 															</xf:action>
 															<xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
@@ -126,7 +126,7 @@
 													<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xf:var name="id" select="@xml:id"/>
-														<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:castItem[@n=$id])"/>
+														<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentList//m:castItem[@n=$id])"/>
 														<xf:action if="$no = 0">
 															<xf:delete nodeset="."/>
 															<xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
@@ -148,9 +148,9 @@
 													<xf:trigger class="create_button">
 														<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add row"/>Add name and description</xf:label>
 														<xf:action ev:event="DOMActivate">
-															<xf:insert context="." origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem/m:role/m:name" 
+															<xf:insert context="." origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem/m:role/m:name" 
 																nodeset="m:name"/>
-															<xf:insert context=".." origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem/m:roleDesc" 
+															<xf:insert context=".." origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem/m:roleDesc" 
 																nodeset="*" at="last()" position="after"/>
 														</xf:action>
 													</xf:trigger>
@@ -198,9 +198,9 @@
 															<xf:action ev:event="DOMActivate">
 																<xf:var name="idx" select="index('repeat-role')"/>
 																<xf:insert context="parent::node()" nodeset="m:name" at="$idx"
-																	origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]/m:role/m:name"/>
+																	origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]/m:role/m:name"/>
 																<xf:insert context="../.." nodeset="m:roleDesc" at="$idx"
-																	origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]/m:roleDesc"/>
+																	origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem[1]/m:roleDesc"/>
 																<xf:dispatch name="id-update" target="form-group"/>
 															</xf:action>
 														</xf:trigger>
@@ -229,7 +229,7 @@
 										<dcm:create
 											nodeset="m:perfRes"
 											label="Add performer"
-											origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem/m:perfRes[1]"/>
+											origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:castList/m:castItem/m:perfRes[1]"/>
 										<xf:group ref=".[m:perfRes]">
 											<h:div class="vertical_spacer"/> 
 											<xf:repeat nodeset="m:perfRes" id="repeat-role-performer">
@@ -277,7 +277,7 @@
 												<dcm:element-buttons
 													triggers="add up down copy remove" 
 													nodeset="m:perfRes" 
-													origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"
+													origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"
 													index="repeat-performer"/>
 												<dcm:id/>
 												<dcm:attribute-editor/>

@@ -182,7 +182,7 @@
 
 
   <!-- Delete duplicate language definitions (fixes an xforms problem) -->
-  <xsl:template match="m:mei/m:meiHead/m:workDesc/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
+  <xsl:template match="m:mei/m:meiHead/m:workList/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
 
   <!-- Remove <rend> elements without any rendition information or empty -->
   <xsl:template match="m:rend">
@@ -229,7 +229,7 @@
       <xsl:apply-templates select="m:notesStmt"/>
       <xsl:apply-templates select="m:classification"/>
       <xsl:apply-templates select="m:itemList"/>
-      <xsl:apply-templates select="m:componentGrp"/>
+      <xsl:apply-templates select="m:componentList"/>
       <xsl:apply-templates select="m:relationList"/>
     </xsl:element>
   </xsl:template>
@@ -259,7 +259,7 @@
       <xsl:apply-templates select="m:notesStmt"/>
       <xsl:apply-templates select="m:classification"/>
       <xsl:apply-templates select="m:expressionList"/>
-      <xsl:apply-templates select="m:componentGrp"/>
+      <xsl:apply-templates select="m:componentList"/>
       <xsl:apply-templates select="m:relationList"/>
     </xsl:element>
   </xsl:template>
@@ -289,7 +289,7 @@
       <xsl:apply-templates select="m:notesStmt"/>
       <xsl:apply-templates select="m:classification"/>
       <xsl:apply-templates select="m:expressionList"/>
-      <xsl:apply-templates select="m:componentGrp"/>
+      <xsl:apply-templates select="m:componentList"/>
       <xsl:apply-templates select="m:relationList"/>
     </xsl:element>
   </xsl:template>

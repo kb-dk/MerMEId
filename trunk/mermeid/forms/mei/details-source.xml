@@ -223,7 +223,7 @@
                                             <dcm:element-buttons
                                                 triggers="up down add del-parent-with-last"
                                                 nodeset="m:relation" index="work_relations"
-                                                origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:relationList/m:relation"/>
+                                                origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:relationList/m:relation"/>
                                             <dcm:attribute-editor/>
                                         </h:span>
                                     </h:td>
@@ -238,18 +238,18 @@
                         <h:legend class="source-components">Components <h:a class="help">?<h:span
                                     class="comment">Descriptions of the individual parts that
                                     constitute a composite source</h:span></h:a>
-                            <dcm:id ref="m:componentGrp"/>
-                            <dcm:attribute-editor ref="m:componentGrp"/>
+                            <dcm:id ref="m:componentList"/>
+                            <dcm:attribute-editor ref="m:componentList"/>
                         </h:legend>
                         <h:div class="vertical_spacer"/>
-                        <dcm:create nodeset="m:componentGrp" label="Add components"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentGrp"/>
-                        <dcm:create ref="m:componentGrp" nodeset="m:source" label="Add component"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentGrp/m:source"/>
-                        <xf:group ref=".[m:componentGrp]">
+                        <dcm:create nodeset="m:componentList" label="Add components"
+                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentList"/>
+                        <dcm:create ref="m:componentList" nodeset="m:source" label="Add component"
+                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentList/m:source"/>
+                        <xf:group ref=".[m:componentList]">
                             <h:table class="component_list" cellpadding="0" cellspacing="0"
                                 border="0">
-                                <xf:repeat nodeset="m:componentGrp/m:source"
+                                <xf:repeat nodeset="m:componentList/m:source"
                                     id="repeat-source-component">
                                     <h:tr class="component">
                                         <h:td
@@ -264,7 +264,7 @@
                                                   <dcm:element-buttons
                                                   triggers="up down copy add remove"
                                                   nodeset="m:source" index="repeat-source-component"
-                                                  origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentGrp/m:source"/>
+                                                  origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentList/m:source"/>
                                                   <dcm:attribute-editor/>
                                                 </h:span>
                                                 <h:div class="vertical_spacer"/>

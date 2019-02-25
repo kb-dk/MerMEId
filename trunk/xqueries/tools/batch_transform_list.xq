@@ -64,11 +64,11 @@ declare function local:sort-key (
 
   let $sort_key:=
     if($key eq "title") then
-      replace(lower-case($doc//m:workDesc/m:work/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
+      replace(lower-case($doc//m:workList/m:work/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
     else if($key eq "date") then
-      substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/(@notafter|@isodate|@enddate|@startdate|@notbefore)[1],1,4)
+      substring($doc//m:workList/m:work/m:history/m:creation/m:date/(@notafter|@isodate|@enddate|@startdate|@notbefore)[1],1,4)
     else if($key eq "work_number") then
-      let $identifier:=$doc//m:workDesc/m:work/m:identifier[@label=$collection][1]/string()
+      let $identifier:=$doc//m:workList/m:work/m:identifier[@label=$collection][1]/string()
       (: extract any trailing number :)
       let $number:= replace($identifier,'^.*?(\d*)$','$1')
       (: and anything that might be before the number :)
@@ -85,7 +85,7 @@ declare function local:sort-key (
 
 declare function local:get-work-number($doc as node() ) as xs:string* {
   let $c := $doc//m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"][1]/string()
-  let $no := $doc//m:meiHead/m:workDesc/m:work[1]/m:identifier[@label=$c][1]/string()
+  let $no := $doc//m:meiHead/m:workList/m:work[1]/m:identifier[@label=$c][1]/string()
   return ($c, $no)	
 };
 

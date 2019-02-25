@@ -102,7 +102,7 @@ declare function loop:padded-numbers ($key as xs:string) as xs:string
             <option value=""/>
     		    {
                 	    for $c in distinct-values(
-                		collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $coll]/m:workDesc/m:work/m:identifier[@label=$coll]/string()[string-length(.) > 0])
+                		collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $coll]/m:workList/m:work/m:identifier[@label=$coll]/string()[string-length(.) > 0])
                         order by loop:padded-numbers($c)
                 	    return 
                 	       <option value="{$c}">{$c}</option>
@@ -117,7 +117,7 @@ declare function loop:padded-numbers ($key as xs:string) as xs:string
             <option value=""/>
     		    {
                 	    for $c in distinct-values(
-                		collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $coll]/m:workDesc/m:work/m:identifier[@label='Opus']/string()[string-length(.) > 0])
+                		collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $coll]/m:workList/m:work/m:identifier[@label='Opus']/string()[string-length(.) > 0])
                         order by number(translate($c,'abcdefghijklmnopqrstuvwxyz',''))
                 	    return 
                 	       <option value="{$c}">{$c}</option>

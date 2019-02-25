@@ -13,21 +13,21 @@ declare function list:getlist ($coll  as xs:string,
     if($coll) then 
       if($query) then
 	for $doc in collection("/db/dcm")/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll and string-length(string-join(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title,""))>0 and ft:query(.,$query)] 
-	order by $doc//m:workDesc/m:work[1]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[1]/string()
+	order by $doc//m:workList/m:work[1]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workList/m:work[1]/m:titleStmt/m:title[1]/string()
 	return $doc 
       else
 	for $doc in collection("/db/dcm")/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll and string-length(string-join(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title,""))>0 ] 
-	order by $doc//m:workDesc/m:work[1]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[1]/string()
+	order by $doc//m:workList/m:work[1]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workList/m:work[1]/m:titleStmt/m:title[1]/string()
 
 	return $doc 
       else
 	if($query) then
           for $doc in collection("/db/dcm")/m:mei[ft:query(.,$query) and string-length(string-join(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title,""))>0 ]
-	  order by $doc//m:workDesc/m:work[1]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[1]/string()
+	  order by $doc//m:workList/m:work[1]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workList/m:work[1]/m:titleStmt/m:title[1]/string()
 	  return $doc
         else
           for $doc in collection("/db/dcm")/m:mei[string-length(string-join(m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt/m:title,""))>0]
-	  order by $doc//m:workDesc/m:work[1]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workDesc/m:work[1]/m:titleStmt/m:title[1]/string()
+	  order by $doc//m:workList/m:work[1]/m:titleStmt/m:respStmt/m:persName[1]/string(),$doc//m:workList/m:work[1]/m:titleStmt/m:title[1]/string()
 	  return $doc
 	      
   return $list

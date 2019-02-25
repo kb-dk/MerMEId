@@ -58,7 +58,7 @@ declare function local:numerical-value($opus) as xs:double {
                     </td></tr>
                   else 
 		    
-            	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]/m:workDesc/m:work[m:identifier[normalize-space(@label)='Opus']]
+            	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]/m:workList/m:work[m:identifier[normalize-space(@label)='Opus']]
                     order by local:numerical-value(normalize-space($c/m:identifier[normalize-space(@label)='Opus'][1]))
             	    return 
             	       <tr>

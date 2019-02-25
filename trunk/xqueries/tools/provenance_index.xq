@@ -76,8 +76,8 @@ declare function loop:sort-key ($num as xs:string) as xs:string
             		  {let $numbers :=
             		  for $n in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]
                          where $n/m:fileDesc/m:sourceDesc/m:source//m:provenance/m:eventList/m:event/m:p = $c
-                         order by loop:sort-key(string($n/m:workDesc/m:work/m:identifier[@label=$collection])) 
-                	     return $n/m:workDesc/m:work/m:identifier[@label=$collection]/string()
+                         order by loop:sort-key(string($n/m:workList/m:work/m:identifier[@label=$collection])) 
+                	     return $n/m:workList/m:work/m:identifier[@label=$collection]/string()
                 	   return string-join($numbers,', ') 
                    	   } 
                 	   </div>
