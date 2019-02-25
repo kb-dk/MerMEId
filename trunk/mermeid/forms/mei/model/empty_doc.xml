@@ -1,461 +1,445 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mei meiversion="3.0.0" xmlns="http://www.music-encoding.org/ns/mei">
-  <!-- 
-    This file serves as a template defining all possible elements and attributes editable in MerMEId. 
-    Elements added using the editor interface are copied from this file.
-    The template for NEW files created with MerMEId is the file named new_file.xml, which may be simplified
-    to reduce the amount of empty elements when starting a new document.
-
-    Danish Centre for Music Editing
-    The Royal Library, Copenhagen 2013
-  -->
-  <meiHead>
-    <fileDesc>
-      <titleStmt>
-        <title/>
-      </titleStmt>
-      <pubStmt>
-        <respStmt>
-          <resp>Publisher</resp>
-          <corpName>
-            <abbr/>
-            <expan/>
-            <address>
-              <addrLine/>
-              <addrLine><ptr target="" label="WWW"/></addrLine>
-              <addrLine><ptr target="" label="E-mail"/></addrLine>
-            </address>
-          </corpName>
-          <persName role="editor"/>
-        </respStmt>
-        <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-        <availability>
-          <accessRestrict/> 
-          <useRestrict/>
-        </availability>
-      </pubStmt>      
-      <seriesStmt>
-        <title/>
-        <identifier type="file_collection"/>
-      </seriesStmt>
-      <notesStmt>
-        <annot type="private_notes"/>
-      </notesStmt>
-      <sourceDesc>
-        <source analog="frbr:manifestation">
-          <identifier label=""/>
-          <titleStmt>
+<mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="4.0.0">
+   <meiHead>
+      <fileDesc>
+         <titleStmt>
             <title/>
+         </titleStmt>
+         <pubStmt>
             <respStmt>
-              <persName role=""/>
+               <resp>Publisher</resp>
+               <corpName>
+                  <abbr/>
+                  <expan/>
+                  <address>
+                     <addrLine/>
+                     <addrLine>
+                        <ptr target="" label="WWW"/>
+                     </addrLine>
+                     <addrLine>
+                        <ptr target="" label="E-mail"/>
+                     </addrLine>
+                  </address>
+               </corpName>
+               <persName role="editor"/>
             </respStmt>
-          </titleStmt>
-          <pubStmt>
-            <publisher/>
-            <pubPlace/>
             <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-          </pubStmt>
-          <physDesc>
-            <titlePage label="">
-              <p n="MerMEId_temporary_wrapper"/>
-            </titlePage>
-            <extent unit=""/>
-            <dimensions unit=""/>
-            <watermark/>
-            <physMedium/>
-            <plateNum/>
-          </physDesc>
-          <notesStmt>
-            <annot type="source_description"/>
-            <annot type="links">
-              <ptr target="" mimetype="" label=""/>
-            </annot>
-          </notesStmt>
-          <classification>
-            <termList>
-              <term classcode="#DcmContentClass"/>
-              <term classcode="#DcmPresentationClass"/>
-              <term classcode="#DcmAuthorityClass"/>
-              <term classcode="#DcmScoringClass"/>
-              <term classcode="#DcmStateClass"/>
-              <term classcode="#DcmCompletenessClass"/>
-              <term/>
-            </termList>
-          </classification>
-          <itemList>
-            <item label="" target="">
-              <identifier label=""/>
-              <physDesc>
-                <condition/>
-                <titlePage label="">
-                  <p n="MerMEId_temporary_wrapper"/>
-                </titlePage>
-                <extent unit=""/>
-                <dimensions unit=""/>
-                <handList>
-                  <hand medium="" initial="true"><p n="MerMEId_temporary_wrapper"/></hand>
-                </handList>
-                <watermark/>
-                <physMedium/>
-                <plateNum/>
-              </physDesc>
-              <physLoc>
-                <repository>
-                  <corpName/>
-                  <geogName/>
-                  <identifier authority="RISM" authURI="http://www.rism.info"/>
-                  <ptr target="" mimetype="" label=""/>
-                </repository>
-                <identifier/>
-                <provenance>
-                  <eventList>
-                    <event evidence="">
-                      <desc/>
-                      <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-                      <geogName role=""/>
-                      <corpName role=""/>
-                      <persName role=""/>
-                    </event>
-                  </eventList>
-                </provenance>
-              </physLoc>
-              <notesStmt>
-                <annot type="source_description"/>
-                <annot type="links">
-                  <ptr target="" mimetype="" label=""/>
-                </annot>
-              </notesStmt>
-              <componentGrp>
-                <item label="">
-                  <physDesc/>
-                </item>
-              </componentGrp>
-            </item>
-          </itemList>
-          <componentGrp>
-            <source label="" target="" analog="frbr:manifestation">
-              <titleStmt>
-                <title/>
-              </titleStmt>
-              <physDesc/>
-            </source> 
-          </componentGrp>
-          <relationList>
-            <relation rel="isEmbodimentOf" target="" label=""/>
-          </relationList>
-        </source>
-        <source label="" target="">
-          <relationList>
-            <relation rel="isEmbodimentOf" target="" label=""/>
-          </relationList>
-        </source>
-        <source>
-          <relationList>
-            <relation rel="isEmbodimentOf" target="" label=""/>
-            <relation rel="hasPart" target="" label=""/>
-          </relationList>
-        </source>
-        <source>
-          <itemList>
-            <item label="">
-              <physDesc/>
-            </item>
-          </itemList>
-        </source>
-      </sourceDesc>
-    </fileDesc>
-    
-    <encodingDesc>
-      <appInfo>
-        <application version="2015">
-          <name>MerMEId</name>
-        </application>
-      </appInfo>
-      <projectDesc>
-        <p/>
-      </projectDesc>
-    </encodingDesc>
-    
-    <workDesc>
-      <work analog="frbr:work">
-        <identifier label=""/>
-        <titleStmt>
-          <title xml:lang="en"/>
-          <title type="alternative" xml:lang="en"/>
-          <title type="uniform" xml:lang="en"/>
-          <title type="original" xml:lang="en"/>
-          <title type="subordinate" xml:lang="en"/>
-          <title type="text_source" xml:lang="en"/>
-          <respStmt>
-            <persName role="composer"/>
-          </respStmt>
-        </titleStmt>
-        <creation>
-          <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-          <geogName/>            
-        </creation>        
-        <history>
-          <p n="MerMEId_temporary_wrapper"/>
-          <eventList type="history">
-            <event evidence="">
-              <desc/>
-              <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-            </event>
-          </eventList>
-          <eventList type="performances">
-            <event>
-              <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-              <geogName role="venue"/>
-              <geogName role="place"/>
-              <corpName role="ensemble"/>
-              <persName role="conductor"/>
-              <desc/>
-              <biblList>
-                <head>Reviews</head>
-                <bibl label="">
-                  <genre>article</genre>
-                  <genre>journal</genre>
+            <availability>
+               <accessRestrict/>
+               <useRestrict/>
+            </availability>
+         </pubStmt>
+         <seriesStmt>
+            <title/>
+            <identifier type="file_collection"/>
+         </seriesStmt>
+         <notesStmt>
+            <annot type="private_notes"/>
+         </notesStmt>
+      </fileDesc>
+      <encodingDesc>
+         <appInfo>
+            <application version="2015">
+               <name>MerMEId</name>
+            </application>
+         </appInfo>
+         <projectDesc>
+            <p/>
+         </projectDesc>
+         <classDecls>
+            <taxonomy xml:id="DcmSourceClassification">
+               <category xml:id="DcmContentClass"/>
+               <category xml:id="DcmPresentationClass"/>
+               <category xml:id="DcmAuthorityClass"/>
+               <category xml:id="DcmScoringClass"/>
+               <category xml:id="DcmStateClass"/>
+               <category xml:id="DcmCompletenessClass"/>
+            </taxonomy>
+         </classDecls>
+      </encodingDesc>
+      <workList>
+         <work analog="frbr:work">
+            <identifier label=""/>
+            <title xml:lang="en"/>
+            <title type="alternative" xml:lang="en"/>
+            <title type="uniform" xml:lang="en"/>
+            <title type="original" xml:lang="en"/>
+            <title type="subordinate" xml:lang="en"/>
+            <title type="text_source" xml:lang="en"/>
+            <contributor>
+               <persName role="composer"/>
+            </contributor>
+            <creation>
+               <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+               <geogName/>
+            </creation>
+            <history>
+               <p n="MerMEId_temporary_wrapper"/>
+               <eventList type="history">
+                  <event evidence="">
+                     <desc/>
+                     <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+                  </event>
+               </eventList>
+               <eventList type="performances">
+                  <event>
+                     <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+                     <geogName role="venue"/>
+                     <geogName role="place"/>
+                     <corpName role="ensemble"/>
+                     <persName role="conductor"/>
+                     <desc/>
+                     <biblList>
+                        <head>Reviews</head>
+                        <bibl label="">
+                           <genre>article</genre>
+                           <genre>journal</genre>
+                           <author/>
+                           <date isodate="" notbefore="" notafter=""/>
+                           <title level="a"/>
+                           <title level="j"/>
+                           <editor/>
+                           <biblScope unit="vol"/>
+                           <biblScope unit="issue"/>
+                           <biblScope unit="page"/>
+                           <pubPlace/>
+                           <publisher/>
+                           <ptr target="" label=""/>
+                        </bibl>
+                     </biblList>
+                     <biblList>
+                        <head>Evidence</head>
+                     </biblList>
+                  </event>
+               </eventList>
+            </history>
+            <langUsage>
+               <language xml:id="en">English</language>
+            </langUsage>
+            <biblList>
+               <head>Bibliography</head>
+            </biblList>
+            <biblList>
+               <head/>
+               <bibl label="">
+                  <genre/>
                   <author/>
-                  <date isodate="" notbefore="" notafter=""/>
+                  <creation>
+                     <date isodate=""/>
+                     <geogName/>
+                  </creation>
+                  <physLoc>
+                     <repository>
+                        <corpName/>
+                        <geogName/>
+                        <identifier auth="RISM" auth.uri="http://www.rism.info/"/>
+                     </repository>
+                     <identifier/>
+                  </physLoc>
+                  <annot/>
                   <title level="a"/>
+                  <title level="m"/>
+                  <title level="s"/>
                   <title level="j"/>
                   <editor/>
                   <biblScope unit="vol"/>
                   <biblScope unit="issue"/>
                   <biblScope unit="page"/>
-                  <pubPlace/>
-                  <publisher/>
+                  <imprint>
+                     <date/>
+                     <pubPlace/>
+                     <publisher/>
+                  </imprint>
                   <ptr target="" label=""/>
-                </bibl>
-              </biblList>
-              <biblList>
-                <head>Evidence</head>
-              </biblList>
-            </event>
-          </eventList>
-        </history>
-        
-        <langUsage>
-          <language xml:id="en">English</language>
-        </langUsage>
-        
-        <biblList>
-          <head>Bibliography</head>
-        </biblList>
-        <biblList>
-          <head/>
-          <bibl label="">
-            <genre/>
-            <author/>
-            <creation>
-              <date isodate=""/>
-              <geogName/>
-            </creation>
-            <physLoc>
-              <repository>
-                <corpName/>
-                <geogName/>
-                <identifier authority="RISM" authURI="http://www.rism.info/"/>
-              </repository>
-              <identifier/>
-            </physLoc>
-            <annot/>
-            <title level="a"/>
-            <title level="m"/>
-            <title level="s"/>
-            <title level="j"/>
-            <editor/>
-            <biblScope unit="vol"/>
-            <biblScope unit="issue"/>
-            <biblScope unit="page"/>
-            <imprint>
-              <date/>
-              <pubPlace/>
-              <publisher/>
-            </imprint>
-            <ptr target="" label=""/>
-            <relatedItem rel="host">
-              <bibl label="">
-                <title/>
-                <biblScope unit=""/>
-              </bibl>
-            </relatedItem>
-          </bibl>
-        </biblList>
-        
-        <notesStmt>
-          <annot type="links">
-            <ptr target="" mimetype="" label=""/> 
-          </annot>
-          <annot type="general_description" label=""/>
-        </notesStmt>        
-        
-        <classification>
-          <classCode xml:id="DcmContentClass"/>
-          <classCode xml:id="DcmPresentationClass"/>
-          <classCode xml:id="DcmAuthorityClass"/>
-          <classCode xml:id="DcmScoringClass"/>
-          <classCode xml:id="DcmStateClass"/>
-          <classCode xml:id="DcmCompletenessClass"/>
-          <termList>
-            <term/>
-          </termList>
-        </classification>
-
-        <expressionList>
-          <expression   analog="frbr:expression" n="">
+                  <relatedItem rel="host">
+                     <bibl label="">
+                        <title/>
+                        <biblScope unit=""/>
+                     </bibl>
+                  </relatedItem>
+               </bibl>
+            </biblList>
+            <notesStmt>
+               <annot type="links">
+                  <ptr target="" mimetype="" label=""/>
+               </annot>
+               <annot type="general_description" label=""/>
+            </notesStmt>
+            <expressionList>
+               <expression analog="frbr:expression" n="">
+                  <identifier label=""/>
+                  <title xml:lang="en"/>
+                  <contributor>
+                     <persName role=""/>
+                  </contributor>
+                  <incip>
+                     <incipText>
+                        <p xml:lang="en"/>
+                     </incipText>
+                     <graphic target="" label="" targettype="lowres"/>
+                     <incipCode form=""/>
+                  </incip>
+                  <key pname="" accid="" mode=""/>
+                  <tempo/>
+                  <meter count="" unit="" sym=""/>
+                  <creation>
+                     <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+                     <geogName/>
+                  </creation>
+                  <history>
+                     <p n="MerMEId_temporary_wrapper"/>
+                     <eventList type="history">
+                        <event>
+                           <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+                           <desc/>
+                        </event>
+                     </eventList>
+                     <eventList type="performances">
+                        <event>
+                           <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+                           <geogName role="venue"/>
+                           <geogName role="place"/>
+                           <corpName role="ensemble"/>
+                           <persName role="conductor"/>
+                           <desc/>
+                           <biblList>
+                              <head>Reviews</head>
+                              <bibl label="">
+                                 <genre>article</genre>
+                                 <genre>journal</genre>
+                                 <author/>
+                                 <date isodate="" notbefore="" notafter=""/>
+                                 <title level="a"/>
+                                 <title level="j"/>
+                                 <editor/>
+                                 <biblScope unit="vol"/>
+                                 <biblScope unit="issue"/>
+                                 <biblScope unit="page"/>
+                                 <pubPlace/>
+                                 <publisher/>
+                                 <ptr target="" label=""/>
+                              </bibl>
+                           </biblList>
+                           <biblList>
+                              <head>Evidence</head>
+                           </biblList>
+                        </event>
+                     </eventList>
+                  </history>
+                  <perfMedium>
+                     <castList>
+                        <castItem n="">
+                           <perfRes count="" solo="" codedval="" n=""/>
+                           <role>
+                              <name xml:lang="en"/>
+                           </role>
+                           <roleDesc xml:lang="en"/>
+                        </castItem>
+                     </castList>
+                  </perfMedium>
+                  <perfMedium>
+                     <perfResList>
+                        <PerfResList codedval="" n="">
+                           <head/>
+                           <perfRes codedval="" count="1" solo="false" n=""/>
+                        </PerfResList>
+                        <perfRes codedval="" count="1" solo="false" n=""/>
+                     </perfResList>
+                  </perfMedium>
+                  <perfDuration/>
+                  <extent unit=""/>
+                  <notesStmt>
+                     <annot/>
+                  </notesStmt>
+                  <classification>
+                     <termList>
+                        <term/>
+                     </termList>
+                  </classification>
+                  <componentList>
+                     <expression n="">
+                        <title xml:lang="en"/>
+                        <contributor>
+                           <persName role=""/>
+                        </contributor>
+                        <incip>
+                           <incipText>
+                              <p xml:lang="en"/>
+                           </incipText>
+                           <graphic target="" label="" targettype="lowres"/>
+                           <graphic target="" label="" targettype="hires"/>
+                           <incipCode form=""/>
+                        </incip>
+                        <key pname="" accid="" mode=""/>
+                        <tempo/>
+                        <meter count="" unit="" sym=""/>
+                        <perfMedium>
+                           <perfResList/>
+                        </perfMedium>
+                        <extent unit=""/>
+                        <notesStmt>
+                           <annot/>
+                        </notesStmt>
+                        <componentList/>
+                        <relationList>
+                           <relation rel="hasReproduction" label="" target=""/>
+                        </relationList>
+                     </expression>
+                  </componentList>
+                  <relationList>
+                     <relation rel="hasReproduction" label="" target=""/>
+                  </relationList>
+               </expression>
+            </expressionList>
+            <relationList>
+               <relation rel="isPartOf" label="" target=""/>
+            </relationList>
+         </work>
+      </workList>
+      <manifestationList>
+         <manifestation analog="frbr:manifestation">
             <identifier label=""/>
             <titleStmt>
-              <title xml:lang="en"/>
-              <respStmt>
-                <persName role=""/>
-              </respStmt>
+               <title/>
+               <respStmt>
+                  <persName role=""/>
+               </respStmt>
             </titleStmt>
-            <incip>     
-              <incipText> 
-                <p xml:lang="en"/>
-              </incipText>
-              <graphic target="" label="" targettype="lowres"/>
-              <incipCode form=""/>
-            </incip>
-            <key pname="" accid="" mode=""/>
-            <tempo/>
-            <meter count="" unit="" sym=""/>
-            <creation>
-              <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-              <geogName/>            
-            </creation>
-            <history>
-              <p n="MerMEId_temporary_wrapper"/>
-              <eventList type="history">
-                <event>
-                  <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-                  <desc/>
-                </event>
-              </eventList>
-              <eventList type="performances">
-                <event>
-                  <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
-                  <geogName role="venue"/>
-                  <geogName role="place"/>
-                  <corpName role="ensemble"/>
-                  <persName role="conductor"/>
-                  <desc/>
-                  <biblList>
-                    <head>Reviews</head>
-                    <bibl label="">
-                      <genre>article</genre>
-                      <genre>journal</genre>
-                      <author/>
-                      <date isodate="" notbefore="" notafter=""/>
-                      <title level="a"/>
-                      <title level="j"/>
-                      <editor/>
-                      <biblScope unit="vol"/>
-                      <biblScope unit="issue"/>
-                      <biblScope unit="page"/>
-                      <pubPlace/>
-                      <publisher/>
-                      <ptr target="" label=""/>
-                    </bibl>
-                  </biblList>
-                  <biblList>
-                    <head>Evidence</head>
-                  </biblList>
-                </event>
-              </eventList>
-            </history>
-            <!-- Two <perfMedium> elements to allow inserting instrumentation and cast list separately  -->
-            <perfMedium>
-              <castList>
-                <castItem n="">
-                  <perfRes count="" solo="" codedval="" n=""/> 
-                  <role>
-                    <name xml:lang="en"/>
-                  </role>
-                  <roleDesc xml:lang="en"/>
-                </castItem>
-              </castList>
-            </perfMedium>
-            <perfMedium>
-              <perfResList>
-                <PerfResList codedval="" n="">
-                  <head/>
-                  <perfRes codedval="" count="1" solo="false" n=""/>
-                </PerfResList>
-                <perfRes codedval="" count="1" solo="false" n=""/>
-              </perfResList>
-            </perfMedium>
-            <perfDuration/>
-            <extent unit=""/>
+            <pubStmt>
+               <publisher/>
+               <pubPlace/>
+               <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+            </pubStmt>
+            <physDesc>
+               <titlePage label="">
+                  <p n="MerMEId_temporary_wrapper"/>
+               </titlePage>
+               <extent unit=""/>
+               <dimensions unit=""/>
+               <watermark/>
+               <physMedium/>
+               <plateNum/>
+            </physDesc>
             <notesStmt>
-              <annot/>
+               <annot type="source_description"/>
+               <annot type="links">
+                  <ptr target="" mimetype="" label=""/>
+               </annot>
             </notesStmt>
             <classification>
-              <termList>
-                <term/>
-              </termList>
+               <termList>
+                  <term class="#DcmContentClass"/>
+                  <term class="#DcmPresentationClass"/>
+                  <term class="#DcmAuthorityClass"/>
+                  <term class="#DcmScoringClass"/>
+                  <term class="#DcmStateClass"/>
+                  <term class="#DcmCompletenessClass"/>
+                  <term/>
+               </termList>
             </classification>
-            
-            <!-- top-level components -->            
-            <componentGrp>
-              <expression n=""> 
-                <titleStmt>
-                  <title xml:lang="en"/>
-                  <respStmt>
-                    <persName role=""/> 
-                  </respStmt>
-                </titleStmt>
-                <incip>     
-                  <incipText> 
-                    <p xml:lang="en"/>
-                  </incipText>
-                  <graphic target="" label="" targettype="lowres"/>
-                  <graphic target="" label="" targettype="hires"/>
-                  <incipCode form=""/>
-                </incip>
-                <key pname="" accid="" mode=""/>
-                <tempo/>
-                <meter count="" unit="" sym=""/>
-                <perfMedium>
-                  <perfResList/>
-                </perfMedium>
-                <extent unit=""/>
-                <notesStmt>
-                  <annot/>
-                </notesStmt>
-                
-                <!-- next sub-level components -->
-                <componentGrp/>
-                <relationList>
-                  <relation rel="hasReproduction" label="" target=""/> 
-                </relationList>
-              </expression>
-            </componentGrp>
+            <itemList>
+               <item label="" target="">
+                  <identifier label=""/>
+                  <physDesc>
+                     <condition/>
+                     <titlePage label="">
+                        <p n="MerMEId_temporary_wrapper"/>
+                     </titlePage>
+                     <extent unit=""/>
+                     <dimensions unit=""/>
+                     <handList>
+                        <hand medium="" initial="true">
+                           <p n="MerMEId_temporary_wrapper"/>
+                        </hand>
+                     </handList>
+                     <watermark/>
+                     <physMedium/>
+                     <plateNum/>
+                  </physDesc>
+                  <physLoc>
+                     <repository>
+                        <corpName/>
+                        <geogName/>
+                        <identifier auth="RISM" auth.uri="http://www.rism.info"/>
+                        <ptr target="" mimetype="" label=""/>
+                     </repository>
+                     <identifier/>
+                  </physLoc>
+                  <history>
+                     <provenance>
+                        <eventList>
+                           <event evidence="">
+                              <desc/>
+                              <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
+                              <geogName role=""/>
+                              <corpName role=""/>
+                              <persName role=""/>
+                           </event>
+                        </eventList>
+                     </provenance>
+                  </history>
+                  <notesStmt>
+                     <annot type="source_description"/>
+                     <annot type="links">
+                        <ptr target="" mimetype="" label=""/>
+                     </annot>
+                  </notesStmt>
+                  <componentList>
+                     <item label="">
+                        <physDesc/>
+                     </item>
+                  </componentList>
+               </item>
+            </itemList>
+            <componentList>
+               <manifestation label="" target="" analog="frbr:manifestation">
+                  <titleStmt>
+                     <title/>
+                  </titleStmt>
+                  <physDesc/>
+               </manifestation>
+            </componentList>
             <relationList>
-              <relation rel="hasReproduction" label="" target=""/> 
+               <relation rel="isEmbodimentOf" target="" label=""/>
             </relationList>
-          </expression>
-        </expressionList>
-        <relationList>
-          <relation rel="isPartOf" label="" target=""/> 
-        </relationList>
-      </work>
-    </workDesc>
-    
-    <revisionDesc>
-      <change isodate="">
-        <respStmt>
-          <resp/>
-        </respStmt>
-        <changeDesc>
-          <p/>
-        </changeDesc>
-      </change>
-    </revisionDesc>
-    
-  </meiHead>
-
-  <music/>
-  
+         </manifestation>
+         <manifestation label="" target="">
+            <relationList>
+               <relation rel="isEmbodimentOf" target="" label=""/>
+            </relationList>
+         </manifestation>
+         <manifestation>
+            <relationList>
+               <relation rel="isEmbodimentOf" target="" label=""/>
+               <relation rel="hasPart" target="" label=""/>
+            </relationList>
+         </manifestation>
+         <manifestation>
+            <itemList>
+               <item label="">
+                  <physDesc/>
+               </item>
+            </itemList>
+         </manifestation>
+      </manifestationList>
+      <revisionDesc>
+         <change isodate="">
+            <respStmt>
+               <name/>
+            </respStmt>
+            <changeDesc>
+               <p/>
+            </changeDesc>
+         </change>
+         <change isodate="2019-02-25T17:07:55.289+01:00" xml:id="change_320d1e334">
+            <respStmt>
+               <name>MerMEId</name>
+            </respStmt>
+            <changeDesc>
+               <p>Transform from MEI 3.0.0 to 4.0.0</p>
+            </changeDesc>
+         </change>
+      </revisionDesc>
+   </meiHead>
+   <music/>
 </mei>
