@@ -193,7 +193,7 @@
 		<xsl:for-each select="m:meiHead/
 			  m:workList/
 			  m:work/
-			  m:titleStmt/m:respStmt">
+			  m:contributor">
 			<xsl:for-each select="m:persName[@role='composer'][text()]">
 				<p class="composer_top">
 					<xsl:apply-templates select="."/>
@@ -202,7 +202,7 @@
 		</xsl:for-each>
 
 		<!-- work title -->
-		<xsl:apply-templates select="m:meiHead/m:workList/m:work/m:titleStmt"/>
+		<xsl:apply-templates select="m:meiHead/m:workList/m:work" mode="titles"/>
 
 		<!-- other identifiers -->
 		<xsl:apply-templates select="m:meiHead/m:workList/m:work[m:identifier/text()]"
@@ -210,13 +210,13 @@
 
 		<!-- persons -->
 		<xsl:apply-templates
-			select="m:meiHead/m:workList/m:work/m:titleStmt/m:respStmt[m:persName[text()]]">
+			select="m:meiHead/m:workList/m:work/m:contributor[m:persName[text()]]">
 			<xsl:with-param name="exclude">composer</xsl:with-param>
 		</xsl:apply-templates>
 
 		<!-- text source -->
 		<xsl:for-each
-			select="m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='text_source'][text()]">
+			select="m:meiHead/m:workList/m:work/m:title[@type='text_source'][text()]">
 			<div>
 				<xsl:if test="position()=1">
 					<span class="p_heading"><xsl:value-of select="$l/text_source"/>: </span>
@@ -300,21 +300,20 @@
 	<xsl:template name="page_title">
 		<xsl:for-each select="m:meiHead/
 			  m:workList/
-			  m:work/
-			  m:titleStmt">
+			  m:work">
 			<xsl:choose>
 				<xsl:when test="m:title[@type='main']//text()">
-					<xsl:value-of select="m:title[@type='main']"/>
+					<xsl:value-of select="m:title[@type='main'][1]"/>
 				</xsl:when>
 				<xsl:when test="m:title[@type='uniform']//text()">
-					<xsl:value-of select="m:title[@type='uniform']"/>
+					<xsl:value-of select="m:title[@type='uniform'][1]"/>
 				</xsl:when>
 				<xsl:when test="m:title[not(@type)]//text()">
-					<xsl:value-of select="m:title[not(@type)]"/>
+					<xsl:value-of select="m:title[not(@type)][1]"/>
 				</xsl:when>
 			</xsl:choose>
-			<xsl:if test="m:respStmt/m:persName[@role='composer'][text()]"> - </xsl:if>
-			<xsl:value-of select="m:respStmt/m:persName[@role='composer'][text()]"/>
+			<xsl:if test="m:contributor/m:persName[@role='composer'][text()]"> - </xsl:if>
+			<xsl:value-of select="m:contributor/m:persName[@role='composer'][text()][1]"/>
 		</xsl:for-each>
 	</xsl:template>
 
@@ -332,7 +331,7 @@
 	</xsl:template>
 	
 	
-	<xsl:template match="m:meiHead/m:workList/m:work/m:titleStmt">
+	<xsl:template match="m:meiHead/m:workList/m:work" mode="titles">
 		<!--  Work title -->
 		<xsl:if test="m:title[@type='main' or not(@type)][text()]">
 			<xsl:for-each select="m:title[@type='main' or not(@type)][text()]">
@@ -420,7 +419,7 @@
 		</xsl:if>
 	</xsl:template>
 	
-	<xsl:template match="m:titleStmt/m:respStmt[m:persName[text()]]">
+	<xsl:template match="m:contributor[m:persName[text()]]">
 		<!-- certain roles may be excluded from the list -->
 		<xsl:param name="exclude"/>		
 		<!-- list persons grouped by role -->
@@ -734,22 +733,9 @@
 		<!-- top-level expression (versions and one-movement work details) -->
 		<!-- show title/tempo/number as heading only if more than one version -->
 		<xsl:if test="count(../m:expression)&gt;1">
-			<!--<p>&#160;</p>-->
-			<!--<xsl:variable name="title">
-				<xsl:apply-templates select="m:titleStmt">
-					<xsl:with-param name="tempo">
-						<xsl:apply-templates select="m:tempo"/>
-					</xsl:with-param>
-				</xsl:apply-templates>
-			</xsl:variable>
-			<xsl:if test="normalize-space($title)">
-				<h2>
-					<xsl:value-of select="$title"/>
-				</h2>
-			</xsl:if>-->
 			<xsl:if test="normalize-space(m:titleStmt//text())">
 				<h2 class="expression_heading">
-					<xsl:apply-templates select="m:titleStmt"/>
+					<xsl:apply-templates select="." mode="titles"/>
 				</h2>
 			</xsl:if>
 		</xsl:if>
@@ -766,7 +752,7 @@
 			</p>
 		</xsl:if>
 		<!-- persons -->
-		<xsl:apply-templates select="m:titleStmt/m:respStmt[m:persName]"/>
+		<xsl:apply-templates select="m:contributor[m:persName]"/>
 		<!-- version history -->
 		<xsl:apply-templates select="m:creation[//text()]"/>
 		<xsl:apply-templates select="m:history[//text()]" mode="history"/>
@@ -861,7 +847,7 @@
 		<!-- display title etc. only with components or versions -->
 		<xsl:if
 			test="ancestor-or-self::*[local-name()='componentList'] or count(../m:expression)&gt;1">
-			<xsl:if test="@n!='' or m:titleStmt//text()">
+			<xsl:if test="@n!='' or m:title/text()">
 				<xsl:variable name="level">
 					<!-- expression headings start with <H3>, decreasing in size with each level -->
 					<xsl:choose>
@@ -879,7 +865,7 @@
 						<xsl:value-of select="@n"/>
 						<xsl:text>. </xsl:text>
 					</xsl:if>
-					<xsl:apply-templates select="m:titleStmt[//text()]"/>
+					<xsl:apply-templates select=".[m:title/text()]" mode="titles"/>
 				</xsl:element>
 			</xsl:if>
 		</xsl:if>
@@ -890,7 +876,7 @@
 		<xsl:apply-templates select="m:key[normalize-space(concat(@pname,@accid,@mode,string(.)))]"/>
 		<xsl:apply-templates select="m:extent"/>
 		<xsl:apply-templates select="m:incip"/>
-		<xsl:apply-templates select="m:titleStmt/m:respStmt[m:persName]"/>
+		<xsl:apply-templates select="m:contributor[m:persName]"/>
 		<xsl:apply-templates
 			select="m:perfMedium[m:perfResList[m:perfRes or m:perfResList] or m:castList/m:castItem]"
 			mode="subLevel"/>
@@ -904,7 +890,7 @@
 	</xsl:template>
 
 
-	<xsl:template match="m:expression/m:titleStmt">
+	<xsl:template match="m:expression" mode="titles">
 		<xsl:if test="m:title/text()">
 			<xsl:for-each select="m:title[text()]">
 				<xsl:choose>
@@ -1203,7 +1189,7 @@
 		</xsl:variable>
 		<xsl:variable name="element" select="concat('h',$level)"/>
 		<xsl:choose>
-			<xsl:when test="../@n!='' or ../m:titleStmt/m:title!=''">
+			<xsl:when test="../@n!='' or ../m:title!=''">
 				<p>
 					<span class="label"><xsl:value-of select="$l/tempo"/>: </span>
 					<xsl:apply-templates/>
@@ -2609,7 +2595,7 @@
 					<td>
 						<!-- do not display name if it is the composer's own diary -->
 						<xsl:if
-							test="m:author/text() or (m:author/text() and m:author!=/*//m:work/m:titleStmt/m:respStmt/m:persName[@role='composer'])">
+							test="m:author/text() or (m:author/text() and m:author!=/*//m:work/m:contributor/m:persName[@role='composer'])">
 							<xsl:text> </xsl:text>
 							<xsl:value-of select="m:author"/>
 							<xsl:if

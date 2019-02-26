@@ -23,13 +23,13 @@
         origin:     the nodeset to use as a model when adding a new elements
         
         Example: 
-        <xf:repeat nodeset="m:titlestmt/m:title[@type='main']" id="main_titles">
+        <xf:repeat nodeset="m:title[@type='main']" id="main_titles">
             <xf:input ref="."/>
             <dcm:element-buttons-typed 
                 triggers="add delete copy" 
                 nodeset="m:title[@type='main']" 
                 index="main_titles"
-                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:titleStmt/m:title[@type='main']"/>
+                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:title[@type='main']"/>
         </xf:repeat>
         
         Danish Centre for Music Editing (DCM) 

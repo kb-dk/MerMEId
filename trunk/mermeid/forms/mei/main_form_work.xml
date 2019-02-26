@@ -21,11 +21,11 @@
 
 			<h:fieldset>
 				<h:legend>Titles</h:legend>
-				<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:titleStmt"
+				<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work"
 					id="repeat-title">
 					<h:div class="blocklabel">Main title </h:div>
 					<dcm:create nodeset="m:title[not(@type) or @type='main']" label="Add main title"
-						origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[not(@type)]"/>
+						origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[not(@type)]"/>
 
 					<xf:repeat nodeset="m:title[not(@type) or @type='main']" id="main_titles"
 						class="input_group">
@@ -33,7 +33,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="all"
 								nodeset="m:title[@type='main' or not(@type)]" index="main_titles"
-								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[not(@type)]"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[not(@type)]"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -47,7 +47,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="up down move copy add remove"
 								nodeset="m:title[@type='alternative']" index="alternative_titles"
-								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='alternative']"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[@type='alternative']"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -61,7 +61,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="up down move copy add remove"
 								nodeset="m:title[@type='subordinate']" index="subtitles"
-								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='subordinate']"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[@type='subordinate']"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -75,7 +75,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="up down move copy add remove"
 								nodeset="m:title[@type='uniform']" index="uniform_titles"
-								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='uniform']"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[@type='uniform']"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -89,7 +89,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="up down move copy add remove"
 								nodeset="m:title[@type='original']" index="original_titles"
-								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='original']"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[@type='original']"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -106,7 +106,7 @@
 							<xi:include href="includes/input_with_xmllang.xml" parse="xml"/>&#160;
 								<dcm:element-buttons-typed triggers="up down move copy add remove"
 								nodeset="m:title[@type='text_source']" index="text_sources"
-								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='text_source']"/>
+								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[@type='text_source']"/>
 							<dcm:attribute-editor ref="."/>
 						</h:div>
 					</xf:repeat>
@@ -126,31 +126,31 @@
 									<h:div>
 										<dcm:create nodeset="m:title[@type='alternative']"
 											label="Add alternative title"
-											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='alternative']"
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[@type='alternative']"
 										/>
 									</h:div>
 									<h:div>
 										<dcm:create nodeset="m:title[@type='subordinate']"
 											label="Add subtitle"
-											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='subordinate']"
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[@type='subordinate']"
 										/>
 									</h:div>
 									<h:div>
 										<dcm:create nodeset="m:title[@type='uniform']"
 											label="Add uniform title"
-											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='uniform']"
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[@type='uniform']"
 										/>
 									</h:div>
 									<h:div>
 										<dcm:create nodeset="m:title[@type='original']"
 											label="Add original title"
-											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='original']"
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[@type='original']"
 										/>
 									</h:div>
 									<h:div>
 										<dcm:create nodeset="m:title[@type='text_source']"
 											label="Add title of text source"
-											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:title[@type='text_source']"
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:title[@type='text_source']"
 										/>
 									</h:div>
 								</h:div>
@@ -199,11 +199,10 @@
 				<h:legend>Persons <h:a class="help">&#160;?<h:span class="comment">A list of person
 							involved in the creation or transmission of this work in general, such
 							as the composer or text author</h:span></h:a></h:legend>
-				<dcm:create ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:titleStmt"
-					nodeset="m:respStmt" label="Add person"
-					origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:respStmt"/>
-				<xf:group
-					ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:titleStmt/m:respStmt">
+				<dcm:create ref="instance('data-instance')/m:meiHead/m:workList/m:work"
+					nodeset="m:contributor" label="Add person"
+					origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor"/>
+				<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:contributor">
 					<xi:include href="includes/person-input.xml"/>
 				</xf:group>
 			</h:fieldset>

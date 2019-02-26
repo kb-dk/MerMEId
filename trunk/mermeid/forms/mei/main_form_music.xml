@@ -57,7 +57,7 @@
 					<xf:var name="binding" select="."/>
 					
 					<!-- display expression-specific details at top level only if more than one expression or not empty -->
-					<xf:group ref=".[number($num_ex)&gt;1 or m:titleStmt/m:title[normalize-space(.)!='']]">
+					<xf:group ref=".[number($num_ex)&gt;1 or m:title[normalize-space(.)!='']]">
 						<h:div class="blocklabel" style="margin-top:10px">
 							Version title
 							<h:a class="help">&#160;?<h:span class="comment">E.g. 'Version for piano' or 
@@ -65,10 +65,9 @@
 								want to distinguish different versions of the work. 
 								Otherwise leave empty.</h:span></h:a>
 						</h:div>
-						<dcm:create nodeset="m:titleStmt"
+						<dcm:create nodeset="m:title"
 							label="Add version title"
-							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:titleStmt"/>
-						<xf:group ref="m:titleStmt">
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:title"/>
 							<xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
 								<h:div>
 									<xf:group ref=".[number($num_ex)=1 and .!='']">
@@ -86,14 +85,14 @@
 											triggers="all" 
 											nodeset="m:title" 
 											index="repeat-version-titles"
-											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:title"/>
 									</xf:group>										
 									<xf:group ref=".[count(../m:title)=1]">
 										<dcm:element-buttons 
 											triggers="up down copy add" 
 											nodeset="m:title" 
 											index="repeat-version-titles"
-											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
+											origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:title"/>
 										<xf:trigger appearance="minimal" class="non-standard_button editmenu">
 											<xf:label><img src="{instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete row"/></xf:label>
 											<xf:action ev:event="DOMActivate">
@@ -104,7 +103,6 @@
 									<dcm:attribute-editor ref="."/>
 								</h:div>
 							</xf:repeat>
-						</xf:group>
 					</xf:group>
 					
 					<xf:group ref=".[number($num_ex)&gt;1 or m:identifier[normalize-space(.)!='']]">
@@ -251,17 +249,11 @@
 							class="comment">Persons with connection to this particular version
 							only, e.g. an arranger, or a text author in a collection of songs 
 							with different authors</h:span></h:a></h:legend>	
-						<dcm:create nodeset="m:titleStmt"
+						<dcm:create nodeset="m:contributor"
 							label="Add persons"
-							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:titleStmt"/>
-						<xf:group ref="m:titleStmt">
-							<dcm:create 
-								nodeset="m:respStmt"
-								label="Add person"
-								origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt"/>
-							<xf:group ref="m:respStmt">
-								<xi:include href="includes/person-input.xml"/>
-							</xf:group>
+							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:contributor"/>
+						<xf:group ref="m:contributor">
+							<xi:include href="includes/person-input.xml"/>
 						</xf:group>
 					</h:fieldset>
 					
@@ -561,10 +553,10 @@
 										<h:td>
 											<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
 											<xf:output 
-												value="m:titleStmt/m:title"/><xf:group 
-													ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
+												value="m:title"/><xf:group 
+													ref=".[normalize-space(m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
 											<xf:output value="m:tempo"/>
-											<xf:group ref=".[normalize-space(concat(@n,m:titleStmt/m:title[1],m:tempo))='']"> 
+											<xf:group ref=".[normalize-space(concat(@n,m:title[1],m:tempo))='']"> 
 												[No number, title or tempo] 
 											</xf:group>
 											&#160;
@@ -646,10 +638,10 @@
 															</h:td>
 															<h:td>
 																<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
-																<xf:output value="m:titleStmt/m:title[1]"/><xf:group
-																	ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
+																<xf:output value="m:title[1]"/><xf:group
+																	ref=".[normalize-space(m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
 																<xf:output value="m:tempo"/>
-																<xf:group ref=".[normalize-space(concat(@n,m:titleStmt/m:title[1],m:tempo))='']"> 
+																<xf:group ref=".[normalize-space(concat(@n,m:title[1],m:tempo))='']"> 
 																	[No number, title or tempo] 
 																</xf:group>
 																&#160;
@@ -746,10 +738,10 @@
 																				</h:td>
 																				<h:td>
 																					<xf:group ref=".[@n!='']"><xf:output value="@n"/>.&#160;</xf:group>
-																					<xf:output value="m:titleStmt/m:title[1]"/><xf:group
-																						ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
+																					<xf:output value="m:title[1]"/><xf:group
+																						ref=".[normalize-space(m:title[1]) and normalize-space(m:tempo)]">. </xf:group>
 																					<xf:output value="m:tempo"/>
-																					<xf:group ref=".[normalize-space(concat(@n,m:titleStmt/m:title[1],m:tempo))='']">
+																					<xf:group ref=".[normalize-space(concat(@n,m:title[1],m:tempo))='']">
 																						[No number, title or tempo] 
 																					</xf:group>
 																					&#160;

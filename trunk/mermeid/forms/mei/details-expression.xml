@@ -83,12 +83,12 @@
                                 <xf:group ref=".[normalize-space(@n)]"> 
                                     <xf:output value="concat(@n, '. ')"/>
                                 </xf:group>
-                                <xf:output value="m:titleStmt/m:title[1]"/>
-                                <xf:group ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo[1])]">                 
+                                <xf:output value="m:title[1]"/>
+                                <xf:group ref=".[normalize-space(m:title[1]) and normalize-space(m:tempo[1])]">                 
                                     <xf:output value="'. '"/>
                                 </xf:group>
                                 <xf:output value="m:tempo"/>
-                                <xf:group ref=".[normalize-space(concat(m:titleStmt/m:title[1],m:tempo,@n))='']">
+                                <xf:group ref=".[normalize-space(concat(m:title[1],m:tempo,@n))='']">
                                     <xf:output value="'[component]'"/> 
                                 </xf:group> / 
                             </xf:group>
@@ -97,12 +97,12 @@
                                 <xf:group ref=".[normalize-space(@n)]"> 
                                     <xf:output value="concat(@n, '. ')"/>
                                 </xf:group>
-                                <xf:output value="m:titleStmt/m:title[1]"/>
-                                <xf:group ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo[1])]">                 
+                                <xf:output value="m:title[1]"/>
+                                <xf:group ref=".[normalize-space(m:title[1]) and normalize-space(m:tempo[1])]">                 
                                     <xf:output value="'. '"/>
                                 </xf:group>
                                 <xf:output value="m:tempo"/>
-                                <xf:group ref=".[normalize-space(concat(m:titleStmt/m:title[1],m:tempo,@n))='']">
+                                <xf:group ref=".[normalize-space(concat(m:title[1],m:tempo,@n))='']">
                                     <xf:output value="'[component]'"/> 
                                 </xf:group> / 
                             </xf:group>
@@ -110,24 +110,24 @@
                                 <xf:group ref=".[normalize-space(@n)]"> 
                                     <xf:output value="concat(@n, '. ')"/>
                                 </xf:group>
-                                <xf:output value="m:titleStmt/m:title[1]"/>
-                                <xf:group ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo[1])]">                 
+                                <xf:output value="m:title[1]"/>
+                                <xf:group ref=".[normalize-space(m:title[1]) and normalize-space(m:tempo[1])]">                 
                                     <xf:output value="'. '"/>
                                 </xf:group>
                                 <xf:output value="m:tempo"/>
-                                <xf:group ref=".[normalize-space(concat(m:titleStmt/m:title[1],m:tempo,@n))='']">
+                                <xf:group ref=".[normalize-space(concat(m:title[1],m:tempo,@n))='']">
                                     <xf:output value="'[component]'"/> 
                                 </xf:group> / 
                             </xf:group>
                             <xf:group ref=".[normalize-space(@n)]"> 
                                 <xf:output value="concat(@n, '. ')"/>
                             </xf:group>
-                            <xf:output value="m:titleStmt/m:title[1]"/>
-                            <xf:group ref=".[normalize-space(m:titleStmt/m:title[1]) and normalize-space(m:tempo[1])]">                 
+                            <xf:output value="m:title[1]"/>
+                            <xf:group ref=".[normalize-space(m:title[1]) and normalize-space(m:tempo[1])]">                 
                                 <xf:output value="'. '"/>
                             </xf:group>
                             <xf:output value="m:tempo"/>
-                            <xf:group ref=".[normalize-space(concat(m:titleStmt/m:title[1],m:tempo,@n))='']">
+                            <xf:group ref=".[normalize-space(concat(m:title[1],m:tempo,@n))='']">
                                 <xf:output value="'[this component]'"/> 
                             </xf:group> 
                             <!-- end path -->
@@ -164,20 +164,18 @@
                                 Use the title field instead to enter values using special characters or spaces.</h:span></h:a></xf:label>
                         </xf:input>
                     </h:div>
-                    <xf:group ref="m:titleStmt">
-                        <xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
-                            <h:div>
-                                <h:label class="fixed_width">Title</h:label><xi:include 
-                                    href="includes/input_with_xmllang.xml" parse="xml"/>
-                                <dcm:element-buttons 
-                                    triggers="all" 
-                                    nodeset="m:title" 
-                                    index="repeat-version-titles"
-                                    origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:title"/>
-                                <dcm:attribute-editor/>
-                            </h:div>
-                        </xf:repeat>
-                    </xf:group>                                    
+                    <xf:repeat nodeset="m:title" id="repeat-version-titles" class="input_group">
+                        <h:div>
+                            <h:label class="fixed_width">Title</h:label><xi:include 
+                                href="includes/input_with_xmllang.xml" parse="xml"/>
+                            <dcm:element-buttons 
+                                triggers="all" 
+                                nodeset="m:title" 
+                                index="repeat-version-titles"
+                                origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:title"/>
+                            <dcm:attribute-editor/>
+                        </h:div>
+                    </xf:repeat>   
                     
                     <h:div>                 
                         <dcm:create nodeset="m:tempo"
@@ -266,29 +264,25 @@
                             nodeset="m:incip"
                             label="Add incipits"
                             origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:incip"/>
-
                         <xi:include href="includes/incipit-input.xml" parse="xml"/>
 
                     </h:fieldset>
                     
-                    
-                    <xf:group ref="m:titleStmt">
-                        <h:fieldset>
-                            <h:legend>Persons <h:a class="help">&#160;?<h:span 
-                                class="comment">Persons with connection to this particular component
-                                only, e.g. an arranger, or a text author in a collection of songs 
-                                with different authors.<h:br/>
-                                Not for persons appearing in this component (characters). 
-                            </h:span></h:a></h:legend>
-                            <dcm:create 
-                                nodeset="m:respStmt"
-                                label="Add list of persons"
-                                origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:titleStmt/m:respStmt"/>
-                            <xf:group ref="m:respStmt">
-                                <xi:include href="includes/person-input.xml"/>
-                            </xf:group>
-                        </h:fieldset>
-                    </xf:group>
+                    <h:fieldset>
+                        <h:legend>Persons <h:a class="help">&#160;?<h:span 
+                            class="comment">Persons with connection to this particular component
+                            only, e.g. an arranger, or a text author in a collection of songs 
+                            with different authors.<h:br/>
+                            Not for persons appearing in this component (characters). 
+                        </h:span></h:a></h:legend>
+                        <dcm:create 
+                            nodeset="m:contributor"
+                            label="Add list of persons"
+                            origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:contributor"/>
+                        <xf:group ref="m:contributor">
+                            <xi:include href="includes/person-input.xml"/>
+                        </xf:group>
+                    </h:fieldset>
                     
                     
                     <!-- Movement-specific instrumentation selection -->

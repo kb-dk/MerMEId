@@ -63,7 +63,7 @@
 				<h:div class="vertical_spacer"/>
 				<h:div class="vertical_spacer"/>
 				<!-- get expression title -->
-				<xf:var name="title" select="m:titleStmt/m:title[1]"/>
+				<xf:var name="title" select="m:title[1]"/>
 				<h:fieldset>
 					<h:legend>Version history 
 						<xf:group ref=".[normalize-space($title)!='']">
