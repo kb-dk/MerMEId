@@ -71,10 +71,10 @@ declare function local:numerical-value($opus) as xs:double {
             	           <td>{
             	           if(contains($c/m:identifier[normalize-space(@label)='Opus'][1],$separator)) then
             	               <span>{fn:concat($c/m:identifier[normalize-space(@label)='Opus'][1],' ')}
-                	               <i>{local:get-title($c/m:titleStmt/m:title[@type='main' or not(@type)][1])}</i>
+                	               <i>{local:get-title($c/m:title[@type='main' or not(@type)][1])}</i>
             	               </span>
                            else
-                                <i>{local:get-title($c/m:titleStmt/m:title[@type='main' or not(@type)][1])}</i>
+                                <i>{local:get-title($c/m:title[@type='main' or not(@type)][1])}</i>
                                 }<!--</td>
             	           <td>-->{fn:concat(' &#160; ',$collection,' ',$c/m:identifier[@label=$collection]/string())}</td>
             	       </tr>

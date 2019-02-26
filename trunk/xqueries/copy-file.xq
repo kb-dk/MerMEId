@@ -47,7 +47,7 @@ return
     let $odoc    := doc($old_file)
     let $stored  := xmldb:store($dcmroot,$new_file, $odoc )
     let $new_doc := doc($new_file)
-    for $title in $new_doc//m:workList/m:work[1]/m:titleStmt[1]/m:title[string()][1]
+    for $title in $new_doc//m:workList/m:work[1]/m:title[string()][1]
     let $new_title_text := concat($title//string()," (copy) ")
     let $new_title := 
     <title xmlns="http://www.music-encoding.org/ns/mei">{$new_title_text}</title>

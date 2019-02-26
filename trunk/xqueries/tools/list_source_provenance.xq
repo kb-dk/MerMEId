@@ -98,7 +98,7 @@ declare function local:source($source) as node()
                     order by local:sort-key(string($c/m:workList/m:work/m:identifier[@label=$collection])) 
             	    return 
             	       <div class="work" style="margin-left:2em;">
-            	         <p class="heading" style="page-break-after: avoid; margin-left:-2em;"><b>{concat($collection,' ',$c/m:workList/m:work/m:identifier[@label=$collection]/string(),' ',$c/m:workList/m:work[1]/m:titleStmt/m:title[@type='main' or not(@type)][1]/string())}</b></p>
+            	         <p class="heading" style="page-break-after: avoid; margin-left:-2em;"><b>{concat($collection,' ',$c/m:workList/m:work/m:identifier[@label=$collection]/string(),' ',$c/m:workList/m:work[1]/m:title[@type='main' or not(@type)][1]/string())}</b></p>
             	         {
             	         for $source in $c/m:fileDesc/m:sourceDesc/m:source
             	         (: loop through sources :)

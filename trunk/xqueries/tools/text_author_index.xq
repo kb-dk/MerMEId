@@ -64,7 +64,7 @@ declare function loop:sort-key ($num as xs:string) as xs:string
                   else 
                     for $c in distinct-values(
             		collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]/
-            		m:workList/m:work//m:titleStmt/m:respStmt/m:persName[@role="author"]
+            		m:workList/m:work//m:contributor/m:persName[@role="author"]
                     /normalize-space(loop:clean-names(string()))[string-length(.) > 0])  
                     (: Add exception to last clause to exclude the composer, e.g. " and not(contains(.,'Carl Nielsen'))"  :)
                     order by loop:invert-names($c)

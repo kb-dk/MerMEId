@@ -83,7 +83,7 @@ declare function local:format-reference(
 	let $ref   := 
 	<tr class="result {$class}">
 	  <td nowrap="nowrap">
-	    {$doc//m:workList/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']}
+	    {$doc//m:workList/m:work/m:contributor/m:persName[@role='composer']}
 	  </td>
 	  <td>{app:view-document-reference($doc)}</td>
 	  <td>{"  ",$date_output}</td>

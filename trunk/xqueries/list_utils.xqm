@@ -97,7 +97,7 @@ let $options:=
       <a  target="_blank"
       title="View" 
       href="/storage/present.xq?doc={util:document-name($doc)}">
-	{$doc//m:workList/m:work/m:titleStmt[1]/m:title[1]/string()}
+	{$doc//m:workList/m:work/m:title[1]/string()}
       </a>
       return $ref
     };

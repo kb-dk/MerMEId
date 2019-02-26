@@ -25,12 +25,12 @@
     <xsl:strip-space elements="*"/>
     
     <xsl:template match="/">
-        <xsl:processing-instruction name="xml-model">href="https://music-encoding.org/schema/4.0.0/mei-all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"</xsl:processing-instruction>
+        <!--<xsl:processing-instruction name="xml-model">href="https://music-encoding.org/schema/4.0.0/mei-all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"</xsl:processing-instruction>
         <xsl:text>
 </xsl:text>
         <xsl:processing-instruction name="xml-model">xml-model href="https://music-encoding.org/schema/4.0.0/mei-all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
         <xsl:text>
-</xsl:text>
+</xsl:text>-->
         <xsl:copy>
             <xsl:apply-templates/>
         </xsl:copy>

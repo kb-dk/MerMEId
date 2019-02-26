@@ -64,7 +64,7 @@ declare function local:sort-key (
 
   let $sort_key:=
     if($key eq "title") then
-      replace(lower-case($doc//m:workList/m:work/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
+      replace(lower-case($doc//m:workList/m:work/m:title[1]/string()),"\\\\ ","")
     else if($key eq "date") then
       substring($doc//m:workList/m:work/m:history/m:creation/m:date/(@notafter|@isodate|@enddate|@startdate|@notbefore)[1],1,4)
     else if($key eq "work_number") then

@@ -57,9 +57,9 @@ declare function loop:sort-key (
 
   let $sort_key:=
     if($key eq "person") then
-      replace(lower-case($doc/m:meiHead/m:workList/m:work/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
+      replace(lower-case($doc/m:meiHead/m:workList/m:work/m:contributor/m:persName[1]/string()),"\\\\ ","")
     else if($key eq "title") then
-      replace(lower-case($doc/m:meiHead/m:workList/m:work/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
+      replace(lower-case($doc/m:meiHead/m:workList/m:work/m:title[1]/string()),"\\\\ ","")
     else if($key eq "date") then    
       let $dates := 
         if($doc/m:meiHead/m:workList/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)) then
