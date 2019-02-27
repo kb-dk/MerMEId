@@ -1256,7 +1256,7 @@
 				<xsl:value-of select="@xl:show"/>
 			</xsl:attribute>
 			<xsl:attribute name="title">
-				<xsl:value-of select="@xl:title"/>
+				<xsl:value-of select="@label"/>
 			</xsl:attribute>
 			<xsl:apply-templates/>
 		</xsl:element>

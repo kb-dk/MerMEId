@@ -541,7 +541,7 @@
             </xsl:attribute>
           </xsl:if>
           <xsl:if test="@title">
-            <xsl:attribute name="xl:title">
+            <xsl:attribute name="label">
               <xsl:value-of select="@title"/>
             </xsl:attribute>
           </xsl:if>
@@ -597,7 +597,7 @@
         <xsl:attribute name="label">
           <xsl:value-of select="@title"/>
         </xsl:attribute>
-        <xsl:attribute name="xl:title">
+        <xsl:attribute name="label">
           <xsl:value-of select="@alt"/>
         </xsl:attribute>
         <xsl:attribute name="target">

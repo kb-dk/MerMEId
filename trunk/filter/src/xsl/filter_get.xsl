@@ -342,13 +342,13 @@
       </xsl:choose><xsl:text>" </xsl:text>
     </xsl:if>
     <xsl:text>title="</xsl:text><xsl:value-of
-      select="@xl:title"/><xsl:text>"&gt;</xsl:text>
+      select="@label"/><xsl:text>"&gt;</xsl:text>
     <xsl:apply-templates mode="mei2html"/>&lt;/a&gt;
   </xsl:template>
   
   <xsl:template match="m:fig[m:graphic]" mode="mei2html">&lt;img 
     src="<xsl:value-of select="m:graphic/@target"/>" 
-    alt="<xsl:value-of select="m:graphic/@xl:title"/>"
+    alt="<xsl:value-of select="m:graphic/@label"/>"
     title="<xsl:value-of select="m:graphic/@label"/>"/&gt;</xsl:template> 
   <!-- END MEI -> HTML -->
   
