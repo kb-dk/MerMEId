@@ -160,6 +160,17 @@
     
     <!-- MISCELLANEOUS -->
     
+    <!-- Cleaning up an old misconception... -->
+    <xsl:template match="m:hand/@initial">
+        <xsl:attribute name="type">
+            <xsl:choose>
+                <xsl:when test=".='true'">main</xsl:when>
+                <xsl:otherwise>additions</xsl:otherwise>
+            </xsl:choose>
+        </xsl:attribute>
+    </xsl:template>
+    
+    
     <xsl:template match="@*|*">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>

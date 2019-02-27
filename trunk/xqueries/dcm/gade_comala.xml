@@ -1328,32 +1328,32 @@
                                     solo="false"
                                     xml:id="perfRes_39ec4b6d">B</perfRes>
                         </perfResList>
-                     </perfResList>
-                     <perfResList source="source_D" xml:id="perfResList_7cfba949">
-                        <perfResList auth.uri="https://www.loc.gov/standards/valuelist/marcmusperf.html" auth="MARC"
-                                     codedval="ca"
-                                     label="Mixed choir (SATB)"
-                                     xml:id="perfResList_488af5c0">
-                           <head xml:id="head_00f99373">Choir</head>
+                        <perfResList source="#source_D" xml:id="perfResList_7cfba949">
+                           <perfResList auth.uri="https://www.loc.gov/standards/valuelist/marcmusperf.html" auth="MARC"
+                              codedval="ca"
+                              label="Mixed choir (SATB)"
+                              xml:id="perfResList_488af5c0">
+                              <head xml:id="head_00f99373">Choir</head>
+                           </perfResList>
+                           <perfRes auth.uri="https://www.loc.gov/standards/valuelist/marcmusperf.html" auth="MARC"
+                              codedval="vn"
+                              count="5"
+                              solo="false"
+                              xml:id="perfRes_4ac33698"
+                              xml:lang="en">soloists</perfRes>
+                           <perfRes auth.uri="https://www.loc.gov/standards/valuelist/marcmusperf.html" auth="MARC"
+                              codedval="ka"
+                              solo="false"
+                              xml:id="perfRes_f258032a"
+                              xml:lang="it">pf.</perfRes>
                         </perfResList>
-                        <perfRes auth.uri="https://www.loc.gov/standards/valuelist/marcmusperf.html" auth="MARC"
-                                 codedval="vn"
-                                 count="5"
-                                 solo="false"
-                                 xml:id="perfRes_4ac33698"
-                                 xml:lang="en">soloists</perfRes>
-                        <perfRes auth.uri="https://www.loc.gov/standards/valuelist/marcmusperf.html" auth="MARC"
-                                 codedval="ka"
-                                 solo="false"
-                                 xml:id="perfRes_f258032a"
-                                 xml:lang="it">pf.</perfRes>
-                     </perfResList>
-                     <perfResList source="source_N" xml:id="perfResList_f80fc357">
-                        <perfRes auth.uri="https://www.loc.gov/standards/valuelist/marcmusperf.html" auth="MARC"
-                                 codedval="ka"
-                                 solo="false"
-                                 xml:id="perfRes_a59e965b"
-                                 xml:lang="it">pf.</perfRes>
+                        <perfResList source="#source_N" xml:id="perfResList_f80fc357">
+                           <perfRes auth.uri="https://www.loc.gov/standards/valuelist/marcmusperf.html" auth="MARC"
+                              codedval="ka"
+                              solo="false"
+                              xml:id="perfRes_a59e965b"
+                              xml:lang="it">pf.</perfRes>
+                        </perfResList>
                      </perfResList>
                   </perfMedium>
                   <classification xml:id="classification_52dbe953">
@@ -1999,13 +1999,11 @@
             </physDesc>
             <notesStmt xml:id="notesStmt_6b4b1b64">
                <annot type="source_description" xml:id="annot_c5b93247">
-                  <p>In full cloth binding stamped <rend fontstyle="italic">COMALA.</rend> in gold on front cover. Hand-written label pasted on front cover inscribed <rend fontstyle="italic">Op. 12. / Comala / Partitur.</rend> Pagination is sporadic, pages 107-162 incorrectly paginated 106-161. At the end of the music 
-                                on p. 161 [recte 162] is the dating <rend fontstyle="italic">Leipzig den 11 Märtz 1846 / 
-                                    Königstr: N<rend rend="sup">
-                           <rend rend="underline">o</rend>
-                        </rend> 
-                                    16.</rend> At top of page 3 inscribed in runes ᚵᚢᚦ: ᚵᛁᚢᛅ: ᛚᚤᚴᚴᛅ: 
-                                (<rend fontstyle="italic">GUD GIVE LYKKE</rend>). </p>
+                  <p>In full cloth binding stamped <rend fontstyle="italic">COMALA.</rend> in gold on front cover. Hand-written label pasted on front cover inscribed <rend fontstyle="italic">Op. 12. / Comala / Partitur.</rend> Pagination is sporadic, pages 107-162 incorrectly paginated 106-161. At the end of the music
+                     on p. 161 [recte 162] is the dating <rend fontstyle="italic">Leipzig den 11 Märtz 1846 / 
+                        Königstr: N<rend rend="sup"><rend rend="underline">o</rend></rend> 16.</rend> At top of page 3 inscribed in runes ᚵᚢᚦ: ᚵᛁᚢᛅ: ᛚᚤᚴᚴᛅ: (<rend 
+                           fontstyle="italic">GUD GIVE LYKKE</rend>). 
+                  </p>
                </annot>
                <annot type="links" xml:id="annot_1aca5f62"/>
             </notesStmt>
@@ -2023,10 +2021,10 @@
                <item label="" xml:id="item_d1e378368">
                   <physDesc xml:id="physDesc_e359a35b">
                      <handList xml:id="handList_a3731fac">
-                        <hand initial="true" medium="Ink" xml:id="hand_5295df02">Gade</hand>
-                        <hand initial="false" medium="pencil" xml:id="hand_ff1669d5"/>
-                        <hand initial="false" medium="blue_crayon" xml:id="hand_1b48ca21"/>
-                        <hand initial="false" medium="red_pen" xml:id="hand_5fe20236"/>
+                        <hand type="main" medium="Ink" xml:id="hand_5295df02">Gade</hand>
+                        <hand type="additions" medium="pencil" xml:id="hand_ff1669d5"/>
+                        <hand type="additions" medium="blue_crayon" xml:id="hand_1b48ca21"/>
+                        <hand type="additions" medium="red_pen" xml:id="hand_5fe20236"/>
                      </handList>
                      <physMedium xml:id="physMedium_4cb4dc68"/>
                   </physDesc>
@@ -2090,9 +2088,9 @@
                <item label="" xml:id="item_d1e506494">
                   <physDesc xml:id="physDesc_f1d810c3">
                      <handList xml:id="handList_61d921bf">
-                        <hand initial="true" medium="brown ink" xml:id="hand_87d4f996">copyist</hand>
-                        <hand initial="false" medium="pencil" xml:id="hand_5b5f95f6"/>
-                        <hand initial="false" medium="blue crayon" xml:id="hand_cdb97427"/>
+                        <hand type="main" medium="brown ink" xml:id="hand_87d4f996">copyist</hand>
+                        <hand type="additions" medium="pencil" xml:id="hand_5b5f95f6"/>
+                        <hand type="additions" medium="blue crayon" xml:id="hand_cdb97427"/>
                      </handList>
                      <physMedium xml:id="physMedium_33e61d3e"/>
                   </physDesc>
@@ -2171,8 +2169,8 @@
                      <extent xml:id="extent_968b17e4"> pages</extent>
                      <dimensions unit="cm" xml:id="dimensions_28a8a309">33.6x26</dimensions>
                      <handList xml:id="handList_7d2debf7">
-                        <hand initial="false" medium="pencil" xml:id="hand_dc19aa1b">Gade and other</hand>
-                        <hand initial="false" medium="black ink" xml:id="hand_a6b84c81"/>
+                        <hand type="additions" medium="pencil" xml:id="hand_dc19aa1b">Gade and other</hand>
+                        <hand type="additions" medium="black ink" xml:id="hand_a6b84c81"/>
                      </handList>
                      <physMedium xml:id="physMedium_60a411e4"/>
                      <plateNum xml:id="plateNum_5dec594f"/>
@@ -2195,8 +2193,8 @@
                   <physDesc xml:id="physDesc_0eecd565">
                      <dimensions unit="cm" xml:id="dimensions_0688158e">32.5x26.5</dimensions>
                      <handList xml:id="handList_dc4cede9">
-                        <hand initial="false" medium="pencil" xml:id="hand_812300b6"/>
-                        <hand initial="false" medium="blue crayon" xml:id="hand_e3cd514b"/>
+                        <hand type="additions" medium="pencil" xml:id="hand_812300b6"/>
+                        <hand type="additions" medium="blue crayon" xml:id="hand_e3cd514b"/>
                      </handList>
                      <physMedium xml:id="physMedium_d7bd22a1"/>
                   </physDesc>
@@ -2279,7 +2277,7 @@
                      xml:id="item_d1e15451508">
                   <physDesc xml:id="physDesc_d730e2a7">
                      <handList xml:id="handList_859d60db">
-                        <hand initial="false" medium="" xml:id="hand_a6c321f7"/>
+                        <hand type="additions" medium="" xml:id="hand_a6c321f7"/>
                      </handList>
                      <physMedium xml:id="physMedium_64dbdd4e"/>
                   </physDesc>
@@ -2345,9 +2343,9 @@ century).</p>
                <item label="" xml:id="item_d1e19031856">
                   <physDesc xml:id="physDesc_c0958bad">
                      <handList xml:id="handList_d5af817a">
-                        <hand initial="true" medium="ink" xml:id="hand_789dfc36"/>
-                        <hand initial="false" medium="black ink" xml:id="hand_95a462f3"/>
-                        <hand initial="false" medium="pencil" xml:id="hand_b6fdf5cf"/>
+                        <hand type="main" medium="ink" xml:id="hand_789dfc36"/>
+                        <hand type="additions" medium="black ink" xml:id="hand_95a462f3"/>
+                        <hand type="additions" medium="pencil" xml:id="hand_b6fdf5cf"/>
                      </handList>
                      <physMedium xml:id="physMedium_453d7316"/>
                   </physDesc>
@@ -2951,7 +2949,7 @@ Two reprint editions of these parts were published.</p>
                <p xml:id="p_73c91446"/>
             </changeDesc>
          </change>
-         <change isodate="2019-02-26T17:10:28.817+01:00" xml:id="change_2074d1e2900">
+         <change isodate="2019-02-27T13:59:44.5+01:00" xml:id="change_2074d1e2900">
             <respStmt>
                <name>MerMEId</name>
             </respStmt>

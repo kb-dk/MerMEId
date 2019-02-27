@@ -772,17 +772,17 @@
 
 	<!-- list scribes -->
 	<xsl:template match="m:handList">
-		<xsl:if test="count(m:hand[@initial='true' and (@medium!='' or text())]) &gt; 0">
+		<xsl:if test="count(m:hand[@type='main' and (@medium!='' or text())]) &gt; 0">
 			<xsl:text>Written in </xsl:text>
-			<xsl:for-each select="m:hand[@initial='true' and (@medium!='' or text())]">
+			<xsl:for-each select="m:hand[@type='main' and (@medium!='' or text())]">
 				<xsl:if test="position()&gt;1 and position()&lt;last()">, </xsl:if>
 				<xsl:if test="position()=last() and position()&gt;1">
 					<xsl:text> and </xsl:text>
 				</xsl:if>
 				<xsl:apply-templates select="." mode="scribe"/></xsl:for-each>. </xsl:if>
-		<xsl:if test="count(m:hand[@initial='false' and (@medium!='' or text())]) &gt; 0">
+		<xsl:if test="count(m:hand[@type='additions' and (@medium!='' or text())]) &gt; 0">
 			<xsl:text>Additions in </xsl:text>
-			<xsl:for-each select="m:hand[@initial='false']">
+			<xsl:for-each select="m:hand[@type='additions']">
 				<xsl:if test="position()&gt;1 and position()&lt;last()">, </xsl:if>
 				<xsl:if test="position()=last() and position()&gt;1">
 					<xsl:text> and </xsl:text>
