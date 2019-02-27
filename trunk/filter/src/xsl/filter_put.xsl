@@ -117,7 +117,9 @@
 
 
   <!-- Remove empty attributes -->
-  <xsl:template match="@accid|@authority|@authURI|@cert|@codedval|@count|@enddate|@evidence|     @isodate|@mode|@n|@notafter|@notbefore|@pname|@reg|@resp|     @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang">
+  <xsl:template match="@accid|@authority|@authURI|@cert|@codedval|@count|@enddate|@evidence|     
+    @isodate|@mode|@n|@notafter|@notbefore|@pname|@reg|@resp|     
+    @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang">
     <xsl:if test="normalize-space(.)">
       <xsl:copy-of select="."/>
     </xsl:if>
@@ -638,7 +640,14 @@
       <xsl:choose>
         <xsl:when test="$user">
             <xsl:choose>
-              <xsl:when test="$settings/dcm:parameters/dcm:automatic_log_main_switch='true'                 and $penultimate &gt; 0                 and not(m:change[$penultimate]/m:changeDesc//text())                 and not(m:change[last()]//text())                 and $penultimateDay=$today                 and $penultimateChange/m:respStmt/m:resp=$user                 and (m:change[last()]/m:respStmt/m:resp=$user or m:change[last()]/m:respStmt/m:resp='')                 ">
+              <xsl:when test="$settings/dcm:parameters/dcm:automatic_log_main_switch='true'                 
+                and $penultimate &gt; 0                 
+                and not(m:change[$penultimate]/m:changeDesc//text())                 
+                and not(m:change[last()]//text())                 
+                and $penultimateDay=$today                 
+                and $penultimateChange/m:respStmt/m:resp=$user                 
+                and (m:change[last()]/m:respStmt/m:resp=$user or m:change[last()]/m:respStmt/m:resp='')                 
+                ">
                 <!-- last entry is just a new save from the same user with no change description - just update the last timestamp -->
                 <xsl:for-each select="m:change">
                   <xsl:choose>
@@ -664,12 +673,12 @@
                 <!-- just make sure to add the user name to the last entry if missing -->
                 <xsl:for-each select="m:change">
                   <xsl:choose>
-                    <xsl:when test="position()=last() and not(normalize-space(m:respStmt/m:resp))">
+                    <xsl:when test="position()=last() and not(normalize-space(m:respStmt/m:name))">
                       <change>
                         <xsl:copy-of select="@*"/>
                         <xsl:call-template name="make_id_if_absent"/>
                         <respStmt>
-                          <resp><xsl:value-of select="$user"/></resp>
+                          <name><xsl:value-of select="$user"/></name>
                         </respStmt>
                         <xsl:apply-templates select="m:changeDesc"/>
                       </change>

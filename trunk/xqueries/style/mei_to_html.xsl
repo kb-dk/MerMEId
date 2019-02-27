@@ -3003,7 +3003,7 @@
 				<xsl:text>&#160;</xsl:text>
 			</td>
 			<td>
-				<xsl:value-of select="m:respStmt/m:resp"/>
+				<xsl:value-of select="m:respStmt/m:name"/>
 				<xsl:text>&#160;</xsl:text>
 			</td>
 			<td>
@@ -3023,8 +3023,8 @@
 	<xsl:template match="m:revisionDesc/m:change" mode="last">
 		<br/><xsl:value-of select="$l/last_changed"/>
 		<xsl:text> </xsl:text><xsl:apply-templates select="@isodate" mode="dateTime"/><xsl:text> </xsl:text>
-		<xsl:if test="normalize-space(m:respStmt/m:resp)">
-			<xsl:text> </xsl:text><xsl:value-of select="$l/by"/><xsl:text> </xsl:text><i><xsl:value-of select="m:respStmt/m:resp[1]"/></i>
+		<xsl:if test="normalize-space(m:respStmt/m:name)">
+			<xsl:text> </xsl:text><xsl:value-of select="$l/by"/><xsl:text> </xsl:text><i><xsl:value-of select="m:respStmt/m:name[1]"/></i>
 		</xsl:if>
 	</xsl:template>
 	
