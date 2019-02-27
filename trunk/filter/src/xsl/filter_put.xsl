@@ -117,7 +117,7 @@
 
 
   <!-- Remove empty attributes -->
-  <xsl:template match="@accid|@authority|@authURI|@cert|@codedval|@count|@enddate|@evidence|     
+  <xsl:template match="@accid|@auth|@auth-uri|@cert|@codedval|@count|@enddate|@evidence|     
     @isodate|@mode|@n|@notafter|@notbefore|@pname|@reg|@resp|     
     @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang">
     <xsl:if test="normalize-space(.)">

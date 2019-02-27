@@ -579,8 +579,8 @@
 				<xsl:when test="m:repository/m:corpName/text()">
 					<xsl:value-of select="m:repository/m:corpName/text()"/>
 				</xsl:when>
-				<xsl:when test="m:repository/m:identifier[@authority='RISM']/text()">
-					<xsl:value-of select="m:repository/m:identifier[@authority='RISM']"/>
+				<xsl:when test="m:repository/m:identifier[@auth='RISM']/text()">
+					<xsl:value-of select="m:repository/m:identifier[@auth='RISM']"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="m:repository/m:identifier"/>
@@ -987,7 +987,7 @@
 	
 	
 	<!-- omit pop-up information -->
-	<xsl:template match="m:bibl//m:title | m:identifier[@authority='RISM'] | m:perfRes/text() | 
+	<xsl:template match="m:bibl//m:title | m:identifier[@auth='RISM'] | m:perfRes/text() | 
 		m:identifier/text() | m:identifier/@type">
 		<xsl:value-of select="."/>
 	</xsl:template>

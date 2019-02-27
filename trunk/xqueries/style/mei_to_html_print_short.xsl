@@ -60,7 +60,7 @@
 	<xsl:template match="m:work/m:biblList"/>
 	
 	<!-- omit pop-up information -->
-	<xsl:template match="m:bibl//m:title | m:identifier[@authority='RISM'] | m:instrVoice/text() | 
+	<xsl:template match="m:bibl//m:title | m:identifier[@auth='RISM' or @auth='rism'] | m:instrVoice/text() | 
 		m:identifier/text() | m:identifier/@label">
 		<xsl:value-of select="."/>
 	</xsl:template>
