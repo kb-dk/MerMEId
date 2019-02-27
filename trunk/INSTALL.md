@@ -58,7 +58,7 @@ should be able to use what comes with your operating system)
 * Java build tool Apache Ant (something like version 1.10.*)
 * PERL scripting language (v5.26.*)
 
-Install these using you yum or apt-get or whatever. If your Linux is
+Install these using your yum or apt-get or whatever. If your Linux is
 recent, that will do. You shouldn't need to look at my proposed
 versions. Configure HTTPD and Tomcat the standard ways, the former
 should run on port 80, and the latter on 8080. In the following I will
@@ -72,15 +72,15 @@ refer to your server as example.org.
 ### More HTTPD
 
 Then copy the file
-[apache-httpd/conf-devel.conf]/(apache-httpd/conf-devel.conf) to where
+[apache-httpd/conf-devel.conf](apache-httpd/conf-devel.conf) to where
 your httpd has its virtual host configurations and restart HTTPD.
 
 (On Ubuntu this is /etc/apache2/sites-enabled/, on Red Hat/Cent OS it is
 /etc/httpd/conf.d/)
 
 Complete this by creating a /home/xml-store directory and a
-passwordfile there. This will protect the database. You can create
-the passwordfile like this:
+password file there. This will protect the database. You can create
+the password file like this:
 
 ```
   mkdir /home/xml-store
@@ -170,7 +170,7 @@ that is, it should get a new name index.jsp while copying.
 
 ## 5. Configure MerMEId Form
 
-You will find a file in [local_config](./local_config/), named
+You will find a file in [local_config](./local_config/) named
 [mermeid_configuration.xml_distro](./local_config/mermeid_configuration.xml_distro), the beginning of which looks somewhat like
 
 ```
@@ -185,8 +185,8 @@ You will find a file in [local_config](./local_config/), named
 
 ```
 
-The MerMEId form and Orbeon need to know where to find different
-stuff. Your tasks is to copy that file to a name suitable for your
+The MerMEId forms and Orbeon need to know where to find stuff. 
+Your task is to copy that file to a name suitable for your
 local configuration. Like mymermeid. Then edit the file and replace
 example.org with the name of your server. That is, if you don't try to
 do something really complicated.
@@ -198,8 +198,8 @@ mermeid_configuration.xml_mymermeid in local_config
 
 ## 6. Configure database
 
-You will find a file in [local_config](./local_config/), named
-[login.xqm_distro](./local_config/login.xqm_distro) which contains
+You will find a file in [local_config](./local_config/) named
+[login.xqm_distro](./local_config/login.xqm_distro), which contains
 code used for logging in before doing sensitive operations in the
 database. Inside it, there is a function looking like
 
@@ -261,7 +261,7 @@ cp ./mermeid/editor.war <YOUR TOMCAT WEBAPPS directory>/
 
 * Your http://example.org/editor/ whould return a page just like http://labs.kb.dk/editor/
 
-Note that you must do the build before you procede to install the
+Note that you must do the build before you proceed to install the
 database.
 
 ## 8. Install database
@@ -286,7 +286,7 @@ to make sure you leave the source tree in pristine conditions.
 
 ### Setting execute permissions for database
 
-Note also the text appearing after each set of files having been install:
+Note also the text appearing after each set of files having been installed:
 
 ```
      [echo] Remember to make all scripts executable by retrieving:
@@ -301,13 +301,13 @@ and
      [echo] http://example.org:8080/exist/rest/db/mermeid/xchmod.xq
 ```
 
-You have to do that, because that give MerMEId database execute permissions withing eXist DB
+You have to do that in order to give MerMEId execute permissions within eXist DB.
 
 
 ## Final Checks
 
 * http://example.org:8080/exist/rest/db/mermeid/ should (thanks to the configuration of HTTPD above) give the same content as http://example.org/storage/
-* The database scripts should work. For instance http://example.org/storage/list_files.xq should return a list of records in the database, just like the one here http://labs.kb.dk/storage/list_files.xq. If it doesn't you forgot to [set execute permissions](#setting-execute-permissions-for-database).
+* The database scripts should work. For instance http://example.org/storage/list_files.xq should return a list of records in the database, just like the one here http://labs.kb.dk/storage/list_files.xq. If it doesn't, you probably forgot to [set execute permissions](#setting-execute-permissions-for-database).
 * If you try to delete, copy or create new files you should be forced to authenticate (for example) as first_trusted_user using his or her magic_word
-* The same should happen if you load the editor, and try to change a text or something.
+* The same should happen if you load the editor and try to change a text or something.
 

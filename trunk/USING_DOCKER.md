@@ -28,6 +28,10 @@ scripting.
 
 ### [Configure MerMEId Form](INSTALL.md#5-configure-mermeid-form)
 
+When using Docker, look for the file 
+[mermeid_configuration.xml_docker](./local_config/mermeid_configuration.xml_docker) 
+and enter your host name where indicated:
+
 ```
   <orbeon_dir>http://<your host name>/orbeon/xforms-jsp/mei-form/</orbeon_dir>
   <form_home>http://<your host name>/editor/forms/mei/</form_home>
@@ -68,7 +72,7 @@ want change the security settings. [See INSTALL.md](./INSTALL.md#more-httpd).
 
 ### Host server http
 
-In order to get hold of the services we add the following on the server running dockerd:
+In order to get hold of the services we add the following on the server running Docker:
 
 ```
 ProxyPass /exist/ "http://172.17.0.2:8080/exist/"
@@ -80,10 +84,10 @@ ProxyPass / "http://172.17.0.2/"
 
 If you are a seasoned Docker user you might want to review the
 [Dockerfile](./Dockerfile) before building. One thing you might want
-to uncomment the section about sshd. It can be nice to be able to log
+to uncomment is the section about sshd. It can be nice to be able to log
 on to the container.
 
-Now you should be able to everything in one go by running the shell
+Now you should be able to do everything in one go by running the shell
 script. It does a little more than just running a docker build.
 
 [./build-docker-image.sh](./trunk/build-docker-image.sh)
