@@ -187,10 +187,12 @@ let $options:=
         <img src="/editor/images/remove_disabled.gif" alt="Remove (disabled)" title="Only unpublished files may be deleted"/>
         </span>
         else
-	<form id="del{$form-id}" action="./delete-file.xq" method="post" style="display:inline;">
-    	<input type="hidden" value="delete" name="{util:document-name($doc)}" />
-    	<input type="image" src="/editor/images/remove.gif" name="button" value="remove" title="Remove"/>
-	</form>
+    	<form id="del{$form-id}" action="./delete-file.xq" method="post" style="display:inline;">
+        	<input type="hidden" value="delete" name="{util:document-name($doc)}" />
+        	<input 
+        	    onclick="{string-join(('show_confirm(&quot;del',$form-id,'&quot;,&quot;',$doc//m:workList/m:work/m:title[string()][1]/string(),'&quot;);return false;'),'')}" 
+        	    type="image" src="/editor/images/remove.gif" name="button" value="remove" title="Remove"/>
+    	</form>
       return  $form
     };
 
