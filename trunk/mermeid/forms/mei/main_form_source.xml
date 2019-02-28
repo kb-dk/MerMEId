@@ -11,7 +11,7 @@
   
   <h:div class="inputdiv">
     
-    <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc">
+    <xf:group ref="instance('data-instance')/m:meiHead">
       
       <!-- List all sources if there is only one version -->
       <xf:group ref=".[count(../m:workList/m:work/m:expressionList/m:expression)&lt;2]">
