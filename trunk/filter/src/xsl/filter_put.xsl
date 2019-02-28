@@ -215,10 +215,13 @@
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="m:source">
-    <xsl:element name="source" namespace="http://www.music-encoding.org/ns/mei">
+  <xsl:template match="m:manifestation">
+    <xsl:element name="manifestation" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
       <xsl:call-template name="make_id_if_absent"/>
+      <xsl:apply-templates select="m:head"/>
+      <xsl:apply-templates select="m:locus"/>
+      <xsl:apply-templates select="m:locusGrp"/>
       <xsl:apply-templates select="m:identifier"/>
       <xsl:apply-templates select="m:titleStmt"/>
       <xsl:apply-templates select="m:editionStmt"/>
@@ -226,13 +229,17 @@
       <xsl:apply-templates select="m:physDesc"/>
       <xsl:apply-templates select="m:physLoc"/>
       <xsl:apply-templates select="m:seriesStmt"/>
-      <xsl:apply-templates select="m:contents"/>
+      <xsl:apply-templates select="m:creation"/>
+      <xsl:apply-templates select="m:history"/>
       <xsl:apply-templates select="m:langUsage"/>
+      <xsl:apply-templates select="m:contents"/>
+      <xsl:apply-templates select="m:biblList"/>
       <xsl:apply-templates select="m:notesStmt"/>
       <xsl:apply-templates select="m:classification"/>
       <xsl:apply-templates select="m:itemList"/>
       <xsl:apply-templates select="m:componentList"/>
       <xsl:apply-templates select="m:relationList"/>
+      <xsl:apply-templates select="m:extMeta"/>
     </xsl:element>
   </xsl:template>
 
@@ -240,8 +247,10 @@
     <xsl:element name="work" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
       <xsl:call-template name="make_id_if_absent"/>
+      <xsl:apply-templates select="m:head"/>
       <xsl:apply-templates select="m:identifier"/>
-      <xsl:apply-templates select="m:titleStmt"/>
+      <xsl:apply-templates select="m:title"/>
+      <xsl:apply-templates select="m:contributor | m:author | m:arranger | m:composer | m:editor | m:funder"/>
       <xsl:apply-templates select="m:incip"/>
       <xsl:apply-templates select="m:tempo"/>
       <xsl:apply-templates select="m:key"/>
@@ -253,7 +262,6 @@
       <xsl:apply-templates select="m:langUsage"/>
       <xsl:apply-templates select="m:perfMedium"/>
       <xsl:apply-templates select="m:perfDuration"/>
-      <xsl:apply-templates select="m:extent"/>
       <xsl:apply-templates select="m:audience"/>
       <xsl:apply-templates select="m:contents"/>
       <xsl:apply-templates select="m:context"/>
@@ -263,6 +271,7 @@
       <xsl:apply-templates select="m:expressionList"/>
       <xsl:apply-templates select="m:componentList"/>
       <xsl:apply-templates select="m:relationList"/>
+      <xsl:apply-templates select="m:extMeta"/>
     </xsl:element>
   </xsl:template>
 
@@ -271,8 +280,10 @@
     <xsl:element name="expression" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
       <xsl:call-template name="make_id_if_absent"/>
+      <xsl:apply-templates select="m:head"/>
       <xsl:apply-templates select="m:identifier"/>
-      <xsl:apply-templates select="m:titleStmt"/>
+      <xsl:apply-templates select="m:title"/>
+      <xsl:apply-templates select="m:contributor | m:author | m:arranger | m:composer | m:editor | m:funder"/>
       <xsl:apply-templates select="m:incip"/>
       <xsl:apply-templates select="m:tempo"/>
       <xsl:apply-templates select="m:key"/>
@@ -281,18 +292,17 @@
       <xsl:apply-templates select="m:otherChar"/>
       <xsl:apply-templates select="m:creation"/>
       <xsl:apply-templates select="m:history"/>
+      <xsl:apply-templates select="m:langUsage"/>
       <xsl:apply-templates select="m:perfMedium"/>
       <xsl:apply-templates select="m:perfDuration"/>
-      <xsl:apply-templates select="m:extent"/>
-      <xsl:apply-templates select="m:audience"/>
       <xsl:apply-templates select="m:contents"/>
       <xsl:apply-templates select="m:context"/>
       <xsl:apply-templates select="m:biblList"/>
       <xsl:apply-templates select="m:notesStmt"/>
       <xsl:apply-templates select="m:classification"/>
-      <xsl:apply-templates select="m:expressionList"/>
       <xsl:apply-templates select="m:componentList"/>
       <xsl:apply-templates select="m:relationList"/>
+      <xsl:apply-templates select="m:extMeta"/>
     </xsl:element>
   </xsl:template>
   

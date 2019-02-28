@@ -131,24 +131,24 @@
                     triggers="remove" 
                     nodeset="m:repository" 
                     index="repeat-repository"
-                    origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physLoc/m:repository"/>
               </xf:group>
               </h:legend>
               <dcm:create 
                   nodeset="m:physLoc"
                   label="Add location"
-                  origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc"/>
+                  origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physLoc"/>
               <xf:group ref="m:physLoc">
                 <dcm:create 
                     nodeset="m:repository"
                     label="Add location"
-                    origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository"/>
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physLoc/m:repository"/>
                 <xf:repeat nodeset="m:repository" id="repeat-repository">
                   <h:div>
                     <dcm:create  
                         nodeset="m:corpName"
                         label="Add repository name"
-                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:itemList/m:item/m:physLoc/m:repository/m:corpName"/>
+                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[1]/m:itemList/m:item/m:physLoc/m:repository/m:corpName"/>
                     <xf:input ref="m:corpName" class="maxlong">
                       <xf:label class="fixed_width">Repository name </xf:label>
                     </xf:input>
@@ -158,7 +158,7 @@
                     <dcm:create  
                       nodeset="m:geogName"
                       label="Add place (city)"
-                      origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:itemList/m:item/m:physLoc/m:repository/m:geogName"/>
+                      origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[1]/m:itemList/m:item/m:physLoc/m:repository/m:geogName"/>
                     <xf:input ref="m:geogName" class="maxlong">
                       <xf:label class="fixed_width">Place (city) </xf:label>
                     </xf:input>
@@ -170,7 +170,7 @@
                     <dcm:create  
                         nodeset="m:identifier"
                         label="Add RISM siglum"
-                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:itemList/m:item/m:physLoc/m:repository/m:identifier"/>
+                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[1]/m:itemList/m:item/m:physLoc/m:repository/m:identifier"/>
                     <dcm:rism-sigla ref="m:identifier[@auth='RISM' or @auth='rism']"/>
                   </h:div>
                   
@@ -178,7 +178,7 @@
                     <dcm:create 
                         nodeset="m:ptr"
                         label="Add link to repository"
-                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository/m:ptr"/>
+                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physLoc/m:repository/m:ptr"/>
                     <xf:repeat nodeset="m:ptr" id="repeat-physloc-extptr">
                       <h:div>
                         <xf:input ref="@target" class="maxlong">
@@ -196,7 +196,7 @@
                             triggers="add remove" 
                             nodeset="m:ptr" 
                             index="repeat-physloc-extptr"
-                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:repository/m:ptr[1]"/>
+                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physLoc/m:repository/m:ptr[1]"/>
                         <dcm:attribute-editor/>
                       </h:div>
                     </xf:repeat>
@@ -206,7 +206,7 @@
                   <dcm:create 
                       nodeset="m:identifier"
                       label="Add shelfmark"
-                      origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physLoc/m:identifier"/>
+                      origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physLoc/m:identifier"/>
                   <xf:input ref="m:identifier">
                     <xf:label class="fixed_width">Shelfmark 
                     <h:a class="help">&#160;?<h:span class="comment">The shelfmark or other signature
@@ -224,20 +224,17 @@
               class="comment">Identifiers other than the repository's own shelf mark, 
               e.g. RISM identifiers or other catalogue numbers identifying this specific item<h:br/>
               With prints, RISM identifiers should be given at general 
-              source level.
+              source (FRBR: manifestation) level.
               </h:span></h:a></h:legend>
               <dcm:create
                   nodeset="m:identifier"
                   label="Add other identifiers"
-                  origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
+                  origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:identifier"/>
               <xf:repeat nodeset="m:identifier" id="repeat-item-identifier">
                 <xf:input ref="@label" class="mediumshort">
                   <xf:label class="fixed_width">List name <h:a class="help">&#160;?<h:span 
                   class="comment">The name of the catalogue or list identifying this 
-                  specific item, e.g. "RISM"
-                  <h:br/>Note: Please do not enter spaces in this field, as this is a so-called NMTOKEN type field. 
-                  Please use underscore _ instead.
-                  </h:span></h:a></xf:label>
+                  specific item, e.g. "RISM"</h:span></h:a></xf:label>
                 </xf:input>
                 <xf:input ref="." class="mediumlong">
                   <xf:label> No. <h:a class="help">&#160;?<h:span class="comment">The number 
@@ -247,7 +244,7 @@
                     triggers="add remove up down" 
                     nodeset="m:identifier" 
                     index="repeat-item-identifier"
-                    origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:identifier"/>
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:identifier"/>
                 <dcm:attribute-editor ref="."/>
                 <h:br clear="all"/>
               </xf:repeat>
@@ -262,15 +259,15 @@
                 <dcm:create 
                     nodeset="m:provenance"
                     label="Add provenance list"
-                    origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance"/>                                            
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:provenance"/>                                            
                 <dcm:create ref="m:provenance"
                             nodeset="m:eventList"
                             label="Add provenance"
-                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList"/>                                            
+                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:provenance/m:eventList"/>                                            
                 <dcm:create ref="m:provenance/m:eventList"
                             nodeset="m:event"
                             label="Add event"
-                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>                                            
+                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>                                            
                 <xf:group ref="m:provenance/m:eventList">
                   <xf:repeat nodeset="m:event" id="physdesc-provenance">
                     <h:fieldset>
@@ -280,7 +277,7 @@
                             triggers="up down copy add del-parent-with-last" 
                             nodeset="m:event" 
                             index="physdesc-provenance"
-                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>
+                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:provenance/m:eventList/m:event"/>
                         <dcm:attribute-editor/>
                       </h:legend>
                       <h:div>
@@ -301,7 +298,7 @@
             
             <dcm:create nodeset="m:physDesc"
                         label="Add physical description"
-                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc"/>
+                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc"/>
             
             <xf:group ref="m:physDesc">                                    
               <h:fieldset>
@@ -311,7 +308,7 @@
                 </h:legend>
                 <dcm:create nodeset="m:titlePage"
                             label="Add title page"
-                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:titlePage"/>
+                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:titlePage"/>
                 <xf:group ref=".[m:titlePage]">
                   <xf:repeat nodeset="m:titlePage" id="physdesc-titlepage">
                     <xf:input ref="@label">
@@ -325,7 +322,7 @@
                         triggers="add copy up down remove" 
                         nodeset="m:titlePage" 
                         index="physdesc-titlepage"
-                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
+                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:titlePage"/>
                     <dcm:attribute-editor ref="."/>
                     <h:br/>
                     <fr:tinymce ref="m:p"/>	                    
@@ -342,7 +339,7 @@
                 <h:div>
                   <dcm:create nodeset="m:extent"
                               label="Add extent"
-                              origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:extent"/>
+                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:extent"/>
                   <xf:repeat nodeset="m:extent" id="physdesc-extent">
                     <h:div>
                       <h:span class="fixed_width">Extent:</h:span>
@@ -356,7 +353,7 @@
                           triggers="add remove" 
                           nodeset="m:extent" 
                           index="physdesc-extent"
-                          origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:extent"/>
+                          origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:extent"/>
                     </h:div>
                   </xf:repeat>
                 </h:div>
@@ -364,7 +361,7 @@
                 <h:div>
                   <dcm:create nodeset="m:dimensions"
                               label="Add dimensions"
-                              origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:dimensions"/>
+                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:dimensions"/>
                   <xf:repeat nodeset="m:dimensions" id="physdesc-dimensions">
                     <h:div>
                       <h:span class="fixed_width">Dimensions:</h:span>
@@ -378,7 +375,7 @@
                           triggers="add remove" 
                           nodeset="m:dimensions" 
                           index="physdesc-dimensions"
-                          origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:dimensions"/>
+                          origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:dimensions"/>
                     </h:div>
                   </xf:repeat>
                 </h:div>
@@ -386,7 +383,7 @@
                 <h:div>
                   <dcm:create nodeset="m:handList"
                               label="Add list of hands"
-                              origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:handList"/>
+                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:handList"/>
                   <xf:group ref="m:handList">
                     <h:hr/>
                     <h:span class="blocklabel">List of hands
@@ -399,7 +396,7 @@
                             triggers="add up down del-parent-with-last" 
                             nodeset="m:hand" 
                             index="repeat-source-physdesc-handlist"
-                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
+                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
                         <dcm:attribute-editor ref="."/>                                                    
                       </h:div>
                     </xf:repeat>
@@ -410,7 +407,7 @@
                 <h:div>
                   <dcm:create nodeset="m:physMedium"
                               label="Add physical medium"
-                              origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physMedium"/>
+                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:physMedium"/>
                   <xf:repeat nodeset="m:physMedium" id="repeat-physMedium">
                     <fr:tinymce ref="." class="mediumheight">
                       <xf:label class="blocklabel">Physical medium <h:a class="help">&#160;?<h:span class="comment">Description of 
@@ -421,7 +418,7 @@
                     <dcm:element-buttons triggers="remove"
                                          nodeset="m:physMedium"
                                          index="repeat-physMedium"
-                                         origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:physMedium"/>
+                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:physMedium"/>
                     <h:br/>						
                   </xf:repeat>
                 </h:div>
@@ -429,7 +426,7 @@
                 <h:div>
                   <dcm:create nodeset="m:condition"
                               label="Add condition"
-                              origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:condition"/>
+                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:condition"/>
                   <xf:repeat nodeset="m:condition" id="repeat-condition">
                     <fr:tinymce ref="." class="mediumheight">
                       <xf:label class="blocklabel">Condition</xf:label>
@@ -438,7 +435,7 @@
                     <dcm:element-buttons triggers="remove"
                                          nodeset="m:condition"
                                          index="repeat-condition"
-                                         origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:condition"/>
+                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:condition"/>
                     <h:br/>						
                   </xf:repeat>
                 </h:div>
@@ -446,7 +443,7 @@
                 <h:div>
                   <dcm:create nodeset="m:watermark"
                               label="Add watermark"
-                              origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:watermark"></dcm:create>
+                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:watermark"></dcm:create>
                   <xf:repeat nodeset="m:watermark" id="repeat-watermark">
                     <fr:tinymce ref="." class="mediumheight">
                       <xf:label class="blocklabel">Watermark</xf:label>
@@ -455,7 +452,7 @@
                     <dcm:element-buttons triggers="remove"
                                          nodeset="m:watermark"
                                          index="repeat-watermark"
-                                         origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:watermark"/>
+                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:watermark"/>
                     <h:br/>						
                   </xf:repeat>
                 </h:div>
@@ -470,12 +467,12 @@
             </h:span>
             <dcm:create nodeset="m:notesStmt"
                         label="Add links or general description"
-                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt"/>
+                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:notesStmt"/>
             <xf:group ref="m:notesStmt">
               <dcm:create
                   nodeset="m:annot[@type='source_description']"
                   label="Add general description"
-                  origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='source_description']"/>
+                  origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:notesStmt/m:annot[@type='source_description']"/>
               <xf:repeat nodeset="m:annot[@type='source_description']" id="item-generaldesc">
                 <fr:tinymce ref="." class="mediumheight"/>
                 
@@ -483,7 +480,7 @@
                 <dcm:element-buttons-typed triggers="remove"
       					   nodeset="m:annot[@type='source_description']"
       					   index="item-generaldesc"
-      					   origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='source_description']"/>
+      					   origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:notesStmt/m:annot[@type='source_description']"/>
               </xf:repeat>
               <h:div class="vertical_spacer"/>
               <h:span class="blocklabel">Links <h:a class="help">&#160;?<h:span class="comment">Links to external resources (for instance, texts) related to 
@@ -492,12 +489,12 @@
               <dcm:create 
                   nodeset="m:annot[@type='links']"
                   label="Add links"
-                  origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='links']"/>
+                  origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:notesStmt/m:annot[@type='links']"/>
               <xf:group ref="m:annot[@type='links']">
                 <dcm:create 
                     nodeset="m:ptr"
                     label="Add links"
-                    origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:notesStmt/m:annot[@type='links']/m:ptr"/>
                 <xf:repeat nodeset="m:ptr" id="source-notesstmt-annot-repeat-extptr">
                   <h:div>
                     <xf:input ref="@target" class="long">
@@ -514,7 +511,7 @@
                         triggers="add up down del-parent-with-last" 
                         nodeset="m:ptr" 
                         index="source-notesstmt-annot-repeat-extptr"
-                        origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:notesStmt/m:annot[@type='links']/m:ptr"/>
                     <dcm:attribute-editor ref="."/>
                   </h:div>
                 </xf:repeat>
@@ -532,11 +529,11 @@
               <dcm:create
                   nodeset="m:componentList"
                   label="Add components"
-                  origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentList"/>
+                  origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:componentList"/>
               <dcm:create ref="m:componentList"
                           nodeset="m:item"
                           label="Add component"
-                          origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentList/m:item"/>
+                          origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:componentList/m:item"/>
               <xf:group ref=".[m:componentList]">
                 <h:table class="component_list" cellpadding="0" cellspacing="0" border="0">
                   <xf:repeat nodeset="m:componentList/m:item" id="repeat-item-component">
@@ -551,7 +548,7 @@
                               triggers="up down copy add remove" 
                               nodeset="m:item" 
                               index="repeat-item-component"
-                              origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentList/m:item"/>
+                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:componentList/m:item"/>
                           <dcm:attribute-editor ref="."/>
                           </h:span>
                           <h:div class="vertical_spacer"> </h:div>
@@ -598,7 +595,7 @@
                                           triggers="all" 
                                           nodeset="m:titlePage" 
                                           index="component-physdesc-titlepage"
-                                          origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:physDesc/m:titlePage"/>
+                                          origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:titlePage"/>
                                       <dcm:attribute-editor/>
                                       <h:br/>
                                       <fr:tinymce ref="m:p" class="mediumheight"/>
@@ -645,7 +642,7 @@
                                             triggers="all" 
                                             nodeset="m:hand" 
                                             index="repeat-component-physdesc-handlist"
-                                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
                                         <dcm:attribute-editor ref="."/>                                                    
                                       </h:div>
                                     </xf:repeat>
@@ -693,7 +690,7 @@
                                             triggers="all" 
                                             nodeset="m:ptr" 
                                             index="component-notesstmt-annot-repeat-extptr"
-                                            origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:notesStmt/m:annot[@type='links']/m:ptr"/>
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:notesStmt/m:annot[@type='links']/m:ptr"/>
                                         <dcm:attribute-editor ref="."/>
                                       </h:div>
                                     </xf:repeat>

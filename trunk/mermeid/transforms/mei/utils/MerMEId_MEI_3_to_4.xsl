@@ -148,7 +148,7 @@
     </xsl:template>
     
     
-    <!-- DELETE ELEMENTS -->
+    <!-- DELETE ELEMENTS AND ATTRIBUTES -->
     
     <!-- Move contents out of <titleStmt> in work and expression -->
     <xsl:template match="m:work/m:titleStmt | m:expression/m:titleStmt">
@@ -157,6 +157,9 @@
     
     <!-- Delete empty <respStmt> elements -->
     <xsl:template match="m:source/m:titleStmt/m:respStmt[not(*)] | m:item/m:titleStmt/m:respStmt[not(*)]"/>
+    
+    <!-- MEI elements names now correspond to FRBR group 1 entity names; no need to specify the analogy -->
+    <xsl:template match="*[name()='work' or name()='expression' or name()='source' or name()='item']/@analog[contains(.,'frbr:')]"/>
     
     <!-- MISCELLANEOUS -->
     

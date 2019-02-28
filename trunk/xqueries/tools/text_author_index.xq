@@ -72,9 +72,8 @@ declare function loop:sort-key ($num as xs:string) as xs:string
             		  <div>{concat(loop:invert-names($c),' &#160; ',$collection,' ')} 
             		  {let $numbers :=
             		  for $n in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]
-                         where $n/m:workList/m:work//m:persName[@role="author"][normalize-space(loop:clean-names(string())) = $c]
-                         (: to include only first performances:  where contains($n/(m:workList | m:fileDesc/m:sourceDesc)//m:persName[not(local-name(..)='event' and count(../preceding-sibling::m:event)>0)],$c)  :)
-
+                         where $n/(m:workList | m:manifestationList)/m:work//m:persName[@role="author"][normalize-space(loop:clean-names(string())) = $c]
+                         (: to include only first performances:  where contains($n/(m:workList | m:manifestationList)//m:persName[not(local-name(..)='event' and count(../preceding-sibling::m:event)>0)],$c)  :)
                          order by loop:sort-key($n/m:workList/m:work/m:identifier[@label=$collection]/string()) 
                 	     return $n/m:workList/m:work/m:identifier[@label=$collection]/string()
                 	   return string-join($numbers,', ') 

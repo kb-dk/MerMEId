@@ -274,7 +274,7 @@
 	
 
 	<!-- compact source description -->
-	<xsl:template match="m:source[*[name()!='classification']//text()]|m:item[*//text()]">
+	<xsl:template match="m:manifestation[*[name()!='classification']//text()]|m:item[*//text()]">
 		<xsl:param name="mode" select="''"/>
 		<xsl:param name="reprints"/>
 		<xsl:variable name="source_id" select="@xml:id"/>
@@ -342,7 +342,7 @@
 			     which should be shown before the components. -->
 			<xsl:choose>
 				<xsl:when
-					test="local-name()='source' and 
+					test="local-name()='manifestation' and 
 					(count(m:itemList/m:item[//text()])&gt;1 or 
 					(m:itemList/m:item/@label and m:itemList/m:item/@label!=''))">
 					<xsl:apply-templates select="m:componentList"/>
@@ -357,7 +357,7 @@
 			
 			<!-- List reproductions (reprints) -->
 			<xsl:if test="$reprints">
-				<xsl:for-each select="$reprints/m:sourceDesc/m:source[m:relationList/m:relation[@rel='isReproductionOf'
+				<xsl:for-each select="$reprints/m:manifestationList/m:manifestation[m:relationList/m:relation[@rel='isReproductionOf'
 					and substring-after(@target,'#')=$source_id]]">
 					<xsl:if test="position()=1">
 						<xsl:if test="not(m:titleStmt/m:title/text())">
@@ -374,7 +374,7 @@
 		
 		<!-- output the resulting source html -->
 		<xsl:choose>
-			<xsl:when test="local-name(.)='source'">
+			<xsl:when test="local-name(.)='manifestation'">
 				<p class="source">
 					<xsl:copy-of select="$html_content"/>
 				</p>

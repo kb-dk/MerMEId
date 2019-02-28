@@ -70,7 +70,7 @@
                     <xi:include href="includes/topmenu.xml" parse="xml"/>  
                                         
                     <xf:group
-                        ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=instance('temp')/id]">
+                        ref="instance('data-instance')/m:meiHead/m:manifestationList/m:manifestation[@xml:id=instance('temp')/id]">
                         <h:div>
                             <h:h3>
                                 <xf:output value="m:titleStmt/m:title"/>
@@ -100,7 +100,7 @@
 
 
                 <xf:group
-                    ref="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=instance('temp')/id]">
+                    ref="instance('data-instance')/m:meiHead/m:manifestationList/m:manifestation[@xml:id=instance('temp')/id]">
                     <h:div class="blocklabel strong"> Source details <h:a class="help"
                                 >&#160;?<h:span class="comment">A source corresponds to the FRBR
                                 "manifestation" level. At this level, therefore, only information
@@ -117,7 +117,7 @@
                         <h:legend> Source title </h:legend>
                         
                         <dcm:create nodeset="m:titleStmt" label="Add title"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:titleStmt"/>
+                            origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:titleStmt"/>
                         <xf:input ref="m:titleStmt/m:title" class="maxlong">
                             <xf:label class="fixed_width">Source title <h:a
                                     class="help">&#160;?<h:span class="comment">A heading
@@ -159,9 +159,9 @@
                     <!-- Relations -->
                     <h:fieldset>
                         <h:legend>Relations <h:a class="help">&#160;?<h:span class="comment">Defines
-                                    relations between this source and other sources, versions (FRBR:
-                                    "expressions") of this work, other works etc.<h:br/> Currently
-                                    two relations are handled in a special way in MerMEId's HTML preview: the
+                            relations between this source and other sources (in FRBR terms: "manifestations"), 
+                            versions (FRBR: "expressions") of this work, other works etc.<h:br/> 
+                            Currently two relations are handled in a special way in MerMEId's HTML preview: the
                                     relation "is reproduction of" pointing to another source marks
                                     this source as being a reprint of the other source; the "is
                                     embodiment of" relation pointing to an expression (version) of
@@ -176,9 +176,9 @@
                                     http://www.ifla.org/files/cataloguing/frbr/frbr_2008.pdf).
                                 </h:span></h:a></h:legend>
                         <dcm:create nodeset="m:relationList" label="Add relation"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:relationList"/>
+                            origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[1]/m:relationList"/>
                         <dcm:create ref="m:relationList" nodeset="m:relation" label="Add relation"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:relationList/m:relation"/>
+                            origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[1]/m:relationList/m:relation"/>
                         <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
                             <xf:repeat nodeset="m:relationList/m:relation" id="work_relations">
                                 <xf:var name="this_id" select="../../@xml:id"/>
@@ -193,7 +193,7 @@
                                                 <xf:value/>
                                             </xf:item>
                                             <xf:itemset
-                                                nodeset="instance('data-instance')//m:source/@xml:id[.!=$this_id] | instance('data-instance')//m:expression/@xml:id">
+                                                nodeset="instance('data-instance')//m:manifestation/@xml:id[.!=$this_id] | instance('data-instance')//m:expression/@xml:id">
                                                 <xf:label>
                                                   <xf:output value="concat(../m:titleStmt/m:title[1],' (',.,')')"/>
                                                 </xf:label>
@@ -243,13 +243,13 @@
                         </h:legend>
                         <h:div class="vertical_spacer"/>
                         <dcm:create nodeset="m:componentList" label="Add components"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentList"/>
-                        <dcm:create ref="m:componentList" nodeset="m:source" label="Add component"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentList/m:source"/>
+                            origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[1]/m:componentList"/>
+                        <dcm:create ref="m:componentList" nodeset="m:manifestation" label="Add component"
+                            origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[1]/m:componentList/m:manifestation"/>
                         <xf:group ref=".[m:componentList]">
                             <h:table class="component_list" cellpadding="0" cellspacing="0"
                                 border="0">
-                                <xf:repeat nodeset="m:componentList/m:source"
+                                <xf:repeat nodeset="m:componentList/m:manifestation"
                                     id="repeat-source-component">
                                     <h:tr class="component">
                                         <h:td
@@ -263,8 +263,8 @@
                                                 <h:span class="blocklabel strong">Component <dcm:id/>
                                                   <dcm:element-buttons
                                                   triggers="up down copy add remove"
-                                                  nodeset="m:source" index="repeat-source-component"
-                                                  origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[1]/m:componentList/m:source"/>
+                                                  nodeset="m:manifestation" index="repeat-source-component"
+                                                  origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[1]/m:componentList/m:manifestation"/>
                                                   <dcm:attribute-editor/>
                                                 </h:span>
                                                 <h:div class="vertical_spacer"/>
@@ -326,11 +326,11 @@
                                                       <dcm:create
                                                           nodeset="m:itemList"
                                                           label="Add items"
-                                                          origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[m:itemList and count(*)=1]/m:itemList"/>
+                                                          origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[m:itemList and count(*)=1]/m:itemList"/>
                                                       <dcm:create ref="m:itemList"
                                                           nodeset="m:item"
                                                           label="Add item"
-                                                          origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[m:itemList and count(*)=1]/m:itemList/m:item"/>
+                                                          origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[m:itemList and count(*)=1]/m:itemList/m:item"/>
                                                       <xf:repeat nodeset="m:itemList/m:item" id="repeat-source-component-item">
                                                           
                                                           <h:fieldset class="compact source">
@@ -339,7 +339,7 @@
                                                                       triggers="up down copy add remove" 
                                                                       nodeset="m:item" 
                                                                       index="repeat-source-component-item"
-                                                                      origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source[m:itemList and count(*)=1]/m:itemList/m:item"/>
+                                                                      origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[m:itemList and count(*)=1]/m:itemList/m:item"/>
                                                                   <dcm:id/>
                                                                   <dcm:attribute-editor/>
                                                               </h:legend>
@@ -391,7 +391,7 @@
                 </xf:group>
 
                 <xf:group
-                    ref=".[not(instance('data-instance')//m:source[@xml:id=instance('temp')/id])]">
+                    ref=".[not(instance('data-instance')//m:manifestation[@xml:id=instance('temp')/id])]">
                     <h:h3>Item not found</h:h3>
                     <h:p>Did you remember to save your work before you opened the details
                         editor?</h:p>

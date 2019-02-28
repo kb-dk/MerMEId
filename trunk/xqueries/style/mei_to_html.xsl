@@ -248,7 +248,7 @@
 		<xsl:if test="count(m:meiHead/m:workList/m:work/m:expressionList/m:expression)&gt;1">
 			<!-- global sources -->
 			<xsl:apply-templates
-				select="m:meiHead/m:fileDesc/m:sourceDesc[count(m:source[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0]">
+				select="m:meiHead/m:manifestationList[count(m:manifestation[not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)])&gt;0]">
 				<xsl:with-param name="global">true</xsl:with-param>
 			</xsl:apply-templates>
 			<!-- work-level performances  -->
@@ -265,7 +265,7 @@
 		<xsl:if test="count(m:meiHead/m:workList/m:work/m:expressionList/m:expression)&lt;2">
 			<!-- sources -->
 			<xsl:apply-templates
-				select="m:meiHead/m:fileDesc/m:sourceDesc[normalize-space(string-join(*//text(),'')) or m:source/@target!='']"/>
+				select="m:meiHead/m:manifestationList[normalize-space(string-join(*//text(),'')) or m:manifestation/@target!='']"/>
 			<!-- work-level performances -->
 			<xsl:apply-templates
 				select="m:meiHead/m:workList/m:work/m:history[m:eventList[@type='performances']/m:event/*/text()]"
@@ -785,18 +785,17 @@
 		<xsl:if test="count(../m:expression)&gt;1">
 			<xsl:variable name="expression_id" select="@xml:id"/>
 			<xsl:for-each
-				select="/m:mei/m:meiHead/m:fileDesc/
-		  m:sourceDesc[(normalize-space(string-join(*//text(),'')) or m:source/@target!='') 
-		  and m:source/m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
+				select="/m:mei/m:meiHead/m:manifestationList[(normalize-space(string-join(*//text(),'')) or m:manifestation/@target!='') 
+				and m:manifestation/m:relationList/m:relation[@rel='isEmbodimentOf' and substring-after(@target,'#')=$expression_id]]">
 
 				<!-- collect all reproductions (reprints) - they will be needed later -->
 				<xsl:variable name="reprints">
-					<sourceDesc xmlns="http://www.music-encoding.org/ns/mei">
+					<manifestationList xmlns="http://www.music-encoding.org/ns/mei">
 						<xsl:for-each
-							select="m:source[m:relationList/m:relation[@rel='isReproductionOf']]">
+							select="m:manifestation[m:relationList/m:relation[@rel='isReproductionOf']]">
 							<xsl:copy-of select="."/>
 						</xsl:for-each>
-					</sourceDesc>
+					</manifestationList>
 				</xsl:variable>
 
 				<xsl:apply-templates select="." mode="fold_section">
@@ -808,7 +807,7 @@
 						<xsl:variable name="sources">
 							<!-- skip reproductions (=reprints) - they are treated elsewhere -->
 							<xsl:for-each
-								select="m:source[m:relationList/m:relation[@rel='isEmbodimentOf' 
+								select="m:manifestation[m:relationList/m:relation[@rel='isEmbodimentOf' 
 								and substring-after(@target,'#')=$expression_id] and 
 								not(m:relationList/m:relation[@rel='isReproductionOf'])]">
 								<xsl:choose>
@@ -817,7 +816,7 @@
 										<xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
 										<xsl:variable name="doc_name" select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
 										<xsl:variable name="doc" select="document($doc_name)"/>
-										<xsl:copy-of select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
+										<xsl:copy-of select="$doc/m:mei/m:meiHead/m:manifestationList/m:manifestation[@xml:id=$ext_id]"/>
 									</xsl:when>
 									<xsl:when test="*//text()">
 										<xsl:copy-of select="."/>
@@ -825,7 +824,7 @@
 								</xsl:choose>
 							</xsl:for-each>
 						</xsl:variable>
-						<xsl:for-each select="$sources/m:source">
+						<xsl:for-each select="$sources/m:manifestation">
 							<xsl:apply-templates select=".">
 								<xsl:with-param name="reprints" select="$reprints"/>
 							</xsl:apply-templates>
@@ -1558,26 +1557,26 @@
 	</xsl:template>
 
 	<!-- sources -->
-	<xsl:template match="m:sourceDesc">
+	<xsl:template match="m:manifestationList">
 		<xsl:param name="global"/>
 		<!-- collect all reproductions (reprints) - they will be needed later -->
 		<xsl:variable name="reprints">
-			<sourceDesc xmlns="http://www.music-encoding.org/ns/mei">
-				<xsl:for-each select="m:source[m:relationList/m:relation[@rel='isReproductionOf']]">
+			<manifestationList xmlns="http://www.music-encoding.org/ns/mei">
+				<xsl:for-each select="m:manifestation[m:relationList/m:relation[@rel='isReproductionOf']]">
 					<xsl:copy-of select="."/>
 				</xsl:for-each>
-			</sourceDesc>
+			</manifestationList>
 		</xsl:variable>
 
 		<xsl:apply-templates select="." mode="fold_section">
-			<xsl:with-param name="id" select="concat('source',generate-id(.),position())"/>
+			<xsl:with-param name="id" select="concat('manifestation',generate-id(.),position())"/>
 			<xsl:with-param name="heading"><xsl:value-of select="$l/sources"/></xsl:with-param>
 			<xsl:with-param name="content">
 				<!-- collect all external source data first to create a complete list of sources -->
 				<xsl:variable name="sources">
 					<!-- If listing global sources, list only those not referring to a specific version (if more than one) -->
 					<xsl:for-each
-						select="m:source[$global!='true' or ($global='true' and (count(//m:work/m:expressionList/m:expression)&lt;2 or not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)))]">
+						select="m:manifestation[$global!='true' or ($global='true' and (count(//m:work/m:expressionList/m:expression)&lt;2 or not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)))]">
 						<xsl:choose>
 							<xsl:when test="@target!=''">
 								<!-- get external source description -->
@@ -1585,7 +1584,7 @@
 								<xsl:variable name="doc_name"
 									select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
 								<xsl:variable name="doc" select="document($doc_name)"/>
-								<xsl:copy-of select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"/>
+								<xsl:copy-of select="$doc/m:mei/m:meiHead/m:manifestationList/m:manifestation[@xml:id=$ext_id]"/>
 							</xsl:when>
 							<xsl:when test="*//text()">
 								<xsl:copy-of select="."/>
@@ -1596,12 +1595,12 @@
 
 				<xsl:variable name="sorted_sources">
 					<!-- loop through the selected sources; skip reproductions at this point -->
-					<xsl:for-each select="$sources/m:source[not(m:relationList/m:relation[@rel='isReproductionOf']/@target)]">
+					<xsl:for-each select="$sources/m:manifestation[not(m:relationList/m:relation[@rel='isReproductionOf']/@target)]">
 						<xsl:copy-of select="."/>
 					</xsl:for-each>
 				</xsl:variable>
 
-				<xsl:apply-templates select="$sorted_sources/m:source">
+				<xsl:apply-templates select="$sorted_sources/m:manifestation">
 					<!-- also send the collection of all reprints to the template -->
 					<xsl:with-param name="reprints" select="$reprints"/>
 				</xsl:apply-templates>
@@ -1814,7 +1813,7 @@
 
 	<!-- source-related templates -->
 
-	<xsl:template match="m:source[*[name()!='classification']//text()] | m:item[*[name()!='classification']//text()]">
+	<xsl:template match="m:manifestation[*[name()!='classification']//text()] | m:item[*[name()!='classification']//text()]">
 		<xsl:param name="mode" select="''"/>
 		<xsl:param name="reprints"/>
 		<xsl:variable name="source_id" select="@xml:id"/>
@@ -1829,7 +1828,7 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:attribute>
-			<xsl:if test="local-name()='source'">
+			<xsl:if test="local-name()='manifestation'">
 				<xsl:attribute name="class">source</xsl:attribute>
 			</xsl:if>
 			<!-- generate decreasing headings -->
@@ -1977,7 +1976,7 @@
 				 which should be shown before the components. -->
 			<xsl:choose>
 				<xsl:when
-					test="local-name()='source' and (count(m:itemList/m:item[//text()])&gt;1 or (m:itemList/m:item/@label and m:itemList/m:item/@label!=''))">
+					test="local-name()='manifestation' and (count(m:itemList/m:item[//text()])&gt;1 or (m:itemList/m:item/@label and m:itemList/m:item/@label!=''))">
 					<xsl:apply-templates select="m:componentList"/>
 					<xsl:apply-templates select="m:itemList"/>
 				</xsl:when>
@@ -1989,10 +1988,10 @@
 
 			<!-- List reproductions (reprints) -->
 			<xsl:if test="$reprints">
-				<xsl:variable name="count" select="count($reprints/m:sourceDesc/m:source[m:relationList/m:relation[@rel='isReproductionOf'
+				<xsl:variable name="count" select="count($reprints/m:manifestationList/m:manifestation[m:relationList/m:relation[@rel='isReproductionOf'
 					and substring-after(@target,'#')=$source_id]])"/>
 				<xsl:for-each
-					select="$reprints/m:sourceDesc/m:source[m:relationList/m:relation[@rel='isReproductionOf'
+					select="$reprints/m:manifestationList/m:manifestation[m:relationList/m:relation[@rel='isReproductionOf'
 		    and substring-after(@target,'#')=$source_id]]">
 					<xsl:if test="position()=1">
 						<xsl:if test="not(m:titleStmt/m:title/text())">
@@ -2080,12 +2079,12 @@
 	</xsl:template>
 
 
-	<xsl:template match="m:source/m:componentList | m:item/m:componentList">
+	<xsl:template match="m:manifestation/m:componentList | m:item/m:componentList">
 		<xsl:variable name="labels" select="count(*[@label!=''])"/>
 		<xsl:choose>
 			<xsl:when test="count(*)&gt;1">
 				<table cellpadding="0" cellspacing="0" border="0" class="source_component_list">
-					<xsl:for-each select="m:item | m:source">
+					<xsl:for-each select="m:item | m:manifestation">
 						<tr>
 							<xsl:if test="$labels &gt; 0">
 								<td class="label_cell">
@@ -2105,7 +2104,7 @@
 				</table>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:apply-templates select="m:item | m:source"/>
+				<xsl:apply-templates select="m:item | m:manifestation"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -2184,7 +2183,7 @@
 	</xsl:template>
 
 	<xsl:template match="m:physLoc">
-		<!-- locations and shelf marks - both for <source>, <item> and <bibl> -->
+		<!-- locations and shelf marks - both for <manifestation>, <item> and <bibl> -->
 		<xsl:for-each select="m:repository[*//text()]">
 			<!-- (RISM) identifier -->
 			<xsl:for-each select="m:identifier[text()]">

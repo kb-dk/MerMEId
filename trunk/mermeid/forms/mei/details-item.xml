@@ -126,11 +126,11 @@
                         <dcm:create
                             nodeset="m:componentList"
                             label="Add components"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentList"/>
+                            origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:componentList"/>
                         <dcm:create ref="m:componentList"
                             nodeset="m:item"
                             label="Add component"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentList/m:item"/>
+                            origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:componentList/m:item"/>
                         <xf:group ref=".[m:componentList]">
                             <h:table class="component_list" cellpadding="0" cellspacing="0" border="0">
                                 <xf:repeat nodeset="m:componentList/m:item" id="repeat-item-component">
@@ -145,7 +145,7 @@
                                                         triggers="up down copy add remove" 
                                                         nodeset="m:item" 
                                                         index="repeat-item-component"
-                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentList/m:item"/>
+                                                        origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:componentList/m:item"/>
                                                     <dcm:attribute-editor ref="."/>
                                                 </h:span>
                                                 <h:div class="vertical_spacer"> </h:div>

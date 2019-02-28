@@ -13,25 +13,25 @@
     
     <xf:group ref="instance('data-instance')/m:meiHead/m:fileDesc">
       
-      <!-- List all sources, if there is only one version -->
+      <!-- List all sources if there is only one version -->
       <xf:group ref=".[count(../m:workList/m:work/m:expressionList/m:expression)&lt;2]">
         <h:fieldset>
           <h:legend>Sources</h:legend>
           <h:div class="vertical_spacer"/>
-          <xf:trigger ref=".[not(m:sourceDesc)]" class="create_button">
+          <xf:trigger ref=".[not(m:manifestationList)]" class="create_button">
             <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add sources"/> Add sources</xf:label>
             <xf:action ev:event="DOMActivate">
               <xf:insert context="." 
                 nodeset="*"
                 at="last()"
                 position="after"
-                origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc"/>
-              <xf:delete context="m:sourceDesc" nodeset="m:source"/>
+                origin="instance('reduced-template')/m:meiHead/m:manifestationList"/>
+              <xf:delete context="m:manifestationList" nodeset="m:manifestation"/>
               <xf:dispatch name="id-update" targetid="form-group"/>
             </xf:action>
           </xf:trigger> 
           <xf:var name="expression" select="'all'"/>
-          <dcm:source-list ref="m:sourceDesc" id="all_sources_list">
+          <dcm:source-list ref="m:manifestationList" id="all_sources_list">
             <xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
             <xf:action ev:event="save-data">
               <xf:dispatch name="save" targetid="save-button"/>
@@ -51,20 +51,20 @@
               Versions are defined at the Music tab. </h:span></h:a>
           </h:legend>
           <h:div class="vertical_spacer"/>
-          <xf:trigger ref=".[not(m:sourceDesc)]" class="create_button">
+          <xf:trigger ref=".[not(m:manifestationList)]" class="create_button">
             <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add sources"/> Add sources</xf:label>
             <xf:action ev:event="DOMActivate">
               <xf:insert context="." 
                 nodeset="*"
                 at="last()"
                 position="after"
-                origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc"/>
-              <xf:delete context="m:sourceDesc" nodeset="m:source"/>
+                origin="instance('reduced-template')/m:meiHead/m:manifestationList"/>
+              <xf:delete context="m:manifestationList" nodeset="m:manifestation"/>
               <xf:dispatch name="id-update" targetid="form-group"/>
             </xf:action>
           </xf:trigger> 
           <xf:var name="expression" select="'global'"/>
-          <dcm:source-list ref="m:sourceDesc" id="global_sources_list">
+          <dcm:source-list ref="m:manifestationList" id="global_sources_list">
             <xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
             <xf:action ev:event="save-data">
               <xf:dispatch name="save" targetid="save-button"/>
@@ -80,27 +80,27 @@
         <xf:repeat nodeset="m:expression">
           <h:fieldset>
             <h:legend>Sources (version)
-              <xf:group ref=".[m:titleStmt/m:title/text()]">
-                <xf:output value="concat(' - ',m:titleStmt/m:title[text()][1])"/>
+              <xf:group ref=".[m:title/text()]">
+                <xf:output value="concat(' - ',m:title[text()][1])"/>
               </xf:group>
               <h:a class="help">&#160;?<h:span class="comment">Sources may be listed at work level 
                 and at version level. Versions are defined at the Music tab.</h:span></h:a>
             </h:legend>
             <h:div class="vertical_spacer"/>
-            <xf:trigger ref="/*//m:fileDesc[not(m:sourceDesc)]" class="create_button">
+            <xf:trigger ref="/*//m:meiHead[not(m:manifestationList)]" class="create_button">
               <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add sources"/> Add sources</xf:label>
               <xf:action ev:event="DOMActivate">
                 <xf:insert context="." 
                   nodeset="*"
                   at="last()"
                   position="after"
-                  origin="instance('reduced-template')/m:meiHead/m:fileDesc/m:sourceDesc"/>
-                <xf:delete context="m:sourceDesc" nodeset="m:source"/>
+                  origin="instance('reduced-template')/m:meiHead/m:manifestationList"/>
+                <xf:delete context="m:manifestationList" nodeset="m:manifestation"/>
                 <xf:dispatch name="id-update" targetid="form-group"/>
               </xf:action>
             </xf:trigger> 
             <xf:var name="expression" select="concat('#',@xml:id)"/>
-            <dcm:source-list ref="/*//m:fileDesc/m:sourceDesc" id="expression_sources_list">
+            <dcm:source-list ref="/*//m:manifestationList" id="expression_sources_list">
               <xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
               <xf:action ev:event="save-data">
                 <xf:dispatch name="save" targetid="save-button"/>

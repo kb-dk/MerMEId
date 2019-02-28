@@ -377,10 +377,10 @@
 							<h:div class="vertical_spacer"/>
 							
 							<!-- Source-specific instrumentations -->
-							<xf:group ref=".[instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source]">
+							<xf:group ref=".[instance('data-instance')/m:meiHead/m:manifestationList/m:manifestation]">
 								<xf:var name="thisPerfMedium" select="."/>
 								<xf:var name="source-instrumentation-ids" select="string-join(/*//m:perfResList[@source]/@source,' ')"/>
-								<xf:var name="all-sources" select="instance('data-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source"/>
+								<xf:var name="all-sources" select="instance('data-instance')/m:meiHead/m:manifestationList/m:manifestation"/>
 								<xf:var name="used-sources" select="$all-sources[contains($source-instrumentation-ids, @xml:id)]"/>
 								<xf:var name="unused-sources" select="$all-sources[not(contains($source-instrumentation-ids, @xml:id))]"/>
 								<!-- a list of sources associated to this particular expression (version) or none -->

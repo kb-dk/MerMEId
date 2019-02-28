@@ -47,20 +47,20 @@
   </xsl:template>
   
   <!-- get external source description --> 
-  <xsl:template match="m:source[@target!='']">
+  <xsl:template match="m:manifestation[@target!='']">
     <xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
     <!-- Ouch! directory name "public" hard-coded here - can we find some more generic solution? -->
     <xsl:variable name="doc_name"
       select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'public/',substring-before(@target,'#'))"/>
     <xsl:variable name="doc" select="document($doc_name)"/>
-    <source>
+    <manifestation>
       <xsl:apply-templates select="@*[name()!='target' and name()!='xml:id' and name()!='label']"/>
       <xsl:attribute name="xml:id"><xsl:value-of select="@xml:id"/></xsl:attribute>
       <xsl:comment> Source description imported from <xsl:value-of select="@target"/> </xsl:comment>
       <xsl:apply-templates
-        select="$doc//m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]/*[name()!='relationList']"/>
+        select="$doc//m:meiHead/m:manifestationList/m:manifestation[@xml:id=$ext_id]/*[name()!='relationList']"/>
       <xsl:apply-templates select="m:relationList"/>
-    </source>
+    </manifestation>
   </xsl:template>
   
   

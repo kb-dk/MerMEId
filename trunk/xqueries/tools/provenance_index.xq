@@ -64,7 +64,7 @@ declare function loop:sort-key ($num as xs:string) as xs:string
                   else 
                     for $c in distinct-values(
             		collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]/
-            		m:fileDesc/m:sourceDesc/m:source//m:provenance/m:eventList/m:event/m:p
+            		m:manifestationList/m:manifestation//m:provenance/m:eventList/m:event/m:p
                     /string()[string-length(.) > 0])  
                     (: IF the provenance text field (paragraph) contains only a name, name inversion may be used.  :)
                     (: In that case, you may want to change the preceding line to 
@@ -75,7 +75,7 @@ declare function loop:sort-key ($num as xs:string) as xs:string
             		  <div>{concat(loop:invert-names($c),' &#160; ',$collection,' ')} 
             		  {let $numbers :=
             		  for $n in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]
-                         where $n/m:fileDesc/m:sourceDesc/m:source//m:provenance/m:eventList/m:event/m:p = $c
+                         where $n/m:manifestationList/m:manifestation//m:provenance/m:eventList/m:event/m:p = $c
                          order by loop:sort-key(string($n/m:workList/m:work/m:identifier[@label=$collection])) 
                 	     return $n/m:workList/m:work/m:identifier[@label=$collection]/string()
                 	   return string-join($numbers,', ') 
