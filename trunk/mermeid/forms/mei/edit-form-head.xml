@@ -199,12 +199,13 @@
       </xf:action>
     </xf:submission>
 
+    <!-- was: resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" -->
     <xf:submission id="save-to-file"
       ref="instance('data-instance')"
       validate="false"
       relevant="false"
       xxf:calculate="false"
-      resource="{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}" 
+      resource="http://localhost/filter/dcm/{instance('parameters')/dcm:xml_file}" 
       method="put"
       replace="instance"
       xxf:show-progress="true"/>
