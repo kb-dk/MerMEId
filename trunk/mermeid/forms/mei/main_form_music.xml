@@ -397,7 +397,7 @@
 									</h:legend>
 									<xf:repeat nodeset="m:perfResList[@source]" id="source-instrumentation-repeat">
 										<xf:var name="perfResList-binding" select="."/>
-										<xf:var name="source-id" select="@source"/>
+										<xf:var name="source-ids" select="@source"/>
 										<h:fieldset>
 											<h:legend>Instrumentation
 												<dcm:element-buttons 
@@ -409,15 +409,16 @@
 											<h:div style="float:left; width:400px;">
 												<h:b>Applies to source(s):</h:b>
 												<h:ul>
-													<xf:repeat nodeset="$all-sources[contains($source-id,@xml:id)]">
+													<xf:repeat nodeset="$all-sources[contains($source-ids,@xml:id)]">
 														<xf:var name="source-title" select="if (string-length(m:titleStmt/m:title) &lt; 35) then 
 															m:titleStmt/m:title else concat(substring(m:titleStmt/m:title,1,30),'...')"/>
+														<xf:var name="source-idref" select="concat('#',@xml:id)"/>
 														<h:li>
 															<xf:output value="concat(@label,' ',$source-title,' (',@xml:id,')')"/>
-															<xf:trigger appearance="minimal" ref=".[count(tokenize(normalize-space($source-id),' ')) &gt; 1]">
+															<xf:trigger appearance="minimal" ref=".[count(tokenize(normalize-space($source-ids),' ')) &gt; 1]">
 																<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/delete.gif" alt="Remove source"/></xf:label>
 																<xf:action ev:event="DOMActivate">
-																	<xf:var name="updated-source-list" select="concat(substring-before($source-id,@xml:id),substring-after($source-id,@xml:id))"/>
+																	<xf:var name="updated-source-list" select="concat(substring-before($source-ids,$source-idref),substring-after($source-ids,$source-idref))"/>
 																	<xf:setvalue ref="$perfResList-binding/@source" value="$updated-source-list"/> 
 																</xf:action>
 															</xf:trigger>
@@ -449,7 +450,7 @@
 													</xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xf:setvalue ref="$binding/@source" 
-															value="concat(., ' ', $sourceId)"/>
+															value="concat(., ' #', $sourceId)"/>
 														<xxf:hide dialog="instrumentation-add-source-menu"/>
 													</xf:action>
 												</xf:trigger>

@@ -161,8 +161,9 @@
     <!-- MEI elements names now correspond to FRBR group 1 entity names; no need to specify the analogy -->
     <xsl:template match="*[name()='work' or name()='expression' or name()='source' or name()='item']/@analog[contains(.,'frbr:')]"/>
     
-    <!-- MISCELLANEOUS -->
-    
+
+    <!-- CORRECTIONS -->
+
     <!-- Cleaning up an old misconception... -->
     <xsl:template match="m:hand/@initial">
         <xsl:attribute name="type">
@@ -173,6 +174,12 @@
         </xsl:attribute>
     </xsl:template>
     
+    <!-- Add # to @source IDref if missing -->
+    <xsl:template match="@source">
+        <xsl:attribute name="source">#<xsl:value-of select="translate(.,'#','')"/></xsl:attribute>
+    </xsl:template>
+
+    <!-- MISCELLANEOUS -->
     
     <xsl:template match="@*|*">
         <xsl:copy>
