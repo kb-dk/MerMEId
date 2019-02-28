@@ -481,7 +481,7 @@
 												<xf:action ev:event="DOMActivate">
 													<xf:insert context="$inst-add-binding" nodeset="m:perfResList" at="last()" position="after" 
 														origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:componentList/m:expression/m:perfMedium[m:perfResList]/m:perfResList"/>
-													<xf:insert context="$inst-add-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('source',$sourceId)"/>
+													<xf:insert context="$inst-add-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('source',concat('#',$sourceId))"/>
 													<xf:insert context="$inst-add-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('codedval')"/>
 													<xf:insert context="$inst-add-binding/m:perfResList[last()]" nodeset="m:perfResList" origin="xxf:attribute('xml:id',xxf:attribute('xml:id',concat('perfResList_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8))))"/>
 													<xxf:hide dialog="instrumentation-add-menu"/>
