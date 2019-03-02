@@ -124,7 +124,7 @@
         </xsl:copy>
     </xsl:template>
     
-    <xsl:template match="m:workDesc/m:work/m:classification"/>
+    <xsl:template match="m:workDesc/m:work/m:classification/m:classCode"/>
     
     <xsl:template match="m:classCode"/>
     

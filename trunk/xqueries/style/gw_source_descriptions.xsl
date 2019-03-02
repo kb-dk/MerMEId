@@ -265,18 +265,18 @@
 		<xsl:variable name="sources_sorted">
 			<xsl:for-each select="$source_nodeset/m:manifestation">
 				<!-- process all sources, sorted according to classification -->
-				<xsl:sort select="m:classification/m:termList/m:term[@classcode='#DcmContentClass']"/>
+				<xsl:sort select="m:classification/m:termList/m:term[@class='#DcmContentClass']"/>
 				<xsl:sort
-					select="m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']"/>
+					select="m:classification/m:termList/m:term[@class='#DcmPresentationClass']"/>
 				<!-- adding 100 ensures that combinations of 1- and 2-digit numbers are sorted correctly -->
 				<xsl:sort
-					select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='#DcmAuthorityClass'],';'))))"/>
+					select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@class='#DcmAuthorityClass'],';'))))"/>
 				<xsl:sort
-					select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;#DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
+					select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@class=&quot;#DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
 				<xsl:sort
-					select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='#DcmScoringClass'],';'))))"/>
+					select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@class='#DcmScoringClass'],';'))))"/>
 				<xsl:sort
-					select="m:classification/m:termList/m:term[@classcode='#DcmCompletenessClass']"/>
+					select="m:classification/m:termList/m:term[@class='#DcmCompletenessClass']"/>
 				<xsl:copy-of select="."/>
 			</xsl:for-each>
 		</xsl:variable>
@@ -285,22 +285,22 @@
 		<xsl:for-each select="$source_nodeset_sorted/m:manifestation">
 			<xsl:choose>
 				<xsl:when
-					test="m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']='manuscript'
-					and count(preceding-sibling::m:manifestation[m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']='manuscript'])=0">
+					test="m:classification/m:termList/m:term[@class='#DcmPresentationClass']='manuscript'
+					and count(preceding-sibling::m:manifestation[m:classification/m:termList/m:term[@class='#DcmPresentationClass']='manuscript'])=0">
 					<p>
 						<b>Manuscript</b>
 					</p>
 				</xsl:when>
 				<xsl:when
-					test="contains(m:classification/m:termList/m:term[@classcode='#DcmPresentationClass'],'print')
-					and count(preceding-sibling::m:manifestation[contains(m:classification/m:termList/m:term[@classcode='#DcmPresentationClass'],'print')])=0">
+					test="contains(m:classification/m:termList/m:term[@class='#DcmPresentationClass'],'print')
+					and count(preceding-sibling::m:manifestation[contains(m:classification/m:termList/m:term[@class='#DcmPresentationClass'],'print')])=0">
 					<p>
 						<b>Printed</b>
 					</p>
 				</xsl:when>
 				<xsl:when
-					test="m:classification/m:termList/m:term[@classcode='#DcmContentClass']='text'
-					and count(preceding-sibling::m:manifestation[m:classification/m:termList/m:term[@classcode='#DcmContentClass']='text'])=0">
+					test="m:classification/m:termList/m:term[@class='#DcmContentClass']='text'
+					and count(preceding-sibling::m:manifestation[m:classification/m:termList/m:term[@class='#DcmContentClass']='text'])=0">
 					<p>
 						<b>Text</b>
 					</p>
@@ -608,7 +608,7 @@
 			<xsl:when
 				test="count(m:item)&gt;1 or 
 				(m:item/@label and m:item/@label!='' and
-				../m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']!='manuscript')">
+				../m:classification/m:termList/m:term[@class='#DcmPresentationClass']!='manuscript')">
 				<ul class="item_list">
 					<xsl:for-each select="m:item[*//text()]">
 						<li>
@@ -621,7 +621,7 @@
 			<xsl:when
 				test="(count(m:item)&lt;=1 and
 				m:item/@label and m:item/@label!='' and
-				../m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']='manuscript')">
+				../m:classification/m:termList/m:term[@class='#DcmPresentationClass']='manuscript')">
 				<div class="ms_item">
 					<xsl:apply-templates select="m:item[*//text()]"/>
 				</div>

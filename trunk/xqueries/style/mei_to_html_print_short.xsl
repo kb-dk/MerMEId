@@ -394,7 +394,7 @@
 			<xsl:when
 				test="count(m:item)&gt;1 or 
 				(m:item/@label and m:item/@label!='' and
-				../m:classification/m:termList/m:term[@classcode='DcmPresentationClass']!='manuscript')">
+				../m:classification/m:termList/m:term[@class='DcmPresentationClass']!='manuscript')">
 				<ul class="item_list">
 					<xsl:for-each select="m:item[*//text()]">
 						<li>

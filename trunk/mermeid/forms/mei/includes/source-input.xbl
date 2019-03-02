@@ -140,24 +140,24 @@
                                     />
                                 </xf:group>
                                 <xf:group
-                                    ref="m:classification/m:termList[m:term[contains(@classcode,'#Dcm')]]">
-                                    <xf:select1 ref="m:term[@classcode='#DcmContentClass']"
+                                    ref="m:classification/m:termList[m:term[contains(@class,'#Dcm')]]">
+                                    <xf:select1 ref="m:term[@class='#DcmContentClass']"
                                         class="mediumlong">
                                         <xf:label class="fixed_width">Content</xf:label>
                                         <xf:item>
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmContentClass']/item">
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@class='DcmContentClass']/item">
                                             <xf:label>
                                                 <xf:output value="label"/>
                                             </xf:label>
                                             <xf:value ref="value"/>
                                         </xf:itemset>
                                     </xf:select1>
-                                    <dcm:attribute-editor ref="m:term[@classcode='#DcmContentClass']"/>
+                                    <dcm:attribute-editor ref="m:term[@class='#DcmContentClass']"/>
                                     <h:br clear="both"/>
-                                    <xf:select1 ref="m:term[@classcode='#DcmPresentationClass']"
+                                    <xf:select1 ref="m:term[@class='#DcmPresentationClass']"
                                         class="mediumlong">
                                         <xf:label class="fixed_width">Presentation <h:a class="help"
                                                   >&#160;?<h:span class="comment">Describes the
@@ -168,7 +168,7 @@
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmPresentationClass']/item">
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@class='DcmPresentationClass']/item">
                                             <xf:label>
                                                 <xf:output value="label"/>
                                             </xf:label>
@@ -176,9 +176,9 @@
                                         </xf:itemset>
                                     </xf:select1>
                                     <dcm:attribute-editor
-                                        ref="m:term[@classcode='#DcmPresentationClass']"/>
+                                        ref="m:term[@class='#DcmPresentationClass']"/>
                                     <h:br clear="both"/>
-                                    <xf:select1 ref="m:term[@classcode='#DcmAuthorityClass']"
+                                    <xf:select1 ref="m:term[@class='#DcmAuthorityClass']"
                                         class="mediumlong">
                                         <xf:label class="fixed_width">Authority <h:a class="help"
                                                   >&#160;?<h:span class="comment">For use with
@@ -192,7 +192,7 @@
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmAuthorityClass']/item">
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@class='DcmAuthorityClass']/item">
                                             <xf:label>
                                                 <xf:output value="label"/>
                                             </xf:label>
@@ -200,41 +200,41 @@
                                         </xf:itemset>
                                     </xf:select1>
                                     <dcm:attribute-editor
-                                        ref="m:term[@classcode='#DcmAuthorityClass']"/>
+                                        ref="m:term[@class='#DcmAuthorityClass']"/>
                                     <h:br clear="both"/>
-                                    <xf:select1 ref="m:term[@classcode='#DcmScoringClass']"
+                                    <xf:select1 ref="m:term[@class='#DcmScoringClass']"
                                         class="mediumlong">
                                         <xf:label class="fixed_width">Scoring</xf:label>
                                         <xf:item>
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmScoringClass']/item">
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@class='DcmScoringClass']/item">
                                             <xf:label>
                                                 <xf:output value="label"/>
                                             </xf:label>
                                             <xf:value ref="value"/>
                                         </xf:itemset>
                                     </xf:select1>
-                                    <dcm:attribute-editor ref="m:term[@classcode='#DcmScoringClass']"/>
+                                    <dcm:attribute-editor ref="m:term[@class='#DcmScoringClass']"/>
                                     <h:br clear="both"/>
-                                    <xf:select1 ref="m:term[@classcode='#DcmStateClass']"
+                                    <xf:select1 ref="m:term[@class='#DcmStateClass']"
                                         class="mediumlong">
                                         <xf:label class="fixed_width">State</xf:label>
                                         <xf:item>
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmStateClass']/item">
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@class='DcmStateClass']/item">
                                             <xf:label>
                                                 <xf:output value="label"/>
                                             </xf:label>
                                             <xf:value ref="value"/>
                                         </xf:itemset>
                                     </xf:select1>
-                                    <dcm:attribute-editor ref="m:term[@classcode='#DcmStateClass']"/>
+                                    <dcm:attribute-editor ref="m:term[@class='#DcmStateClass']"/>
                                     <h:br clear="both"/>
-                                    <xf:select1 ref="m:term[@classcode='#DcmCompletenessClass']"
+                                    <xf:select1 ref="m:term[@class='#DcmCompletenessClass']"
                                         class="mediumlong">
                                         <xf:label class="fixed_width">Completeness <h:a class="help"
                                                   >&#160;?<h:span class="comment">Describes the
@@ -256,7 +256,7 @@
                                             <xf:value/>
                                             <xf:label> </xf:label>
                                         </xf:item>
-                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@classcode='DcmCompletenessClass']/item">
+                                        <xf:itemset nodeset="xxf:instance('classification-instance')/*[@class='DcmCompletenessClass']/item">
                                             <xf:label>
                                                 <xf:output value="label"/>
                                             </xf:label>
@@ -264,32 +264,32 @@
                                         </xf:itemset>
                                     </xf:select1>
                                     <dcm:attribute-editor
-                                        ref="m:term[@classcode='#DcmCompletenessClass']"/>
+                                        ref="m:term[@class='#DcmCompletenessClass']"/>
                                 </xf:group>
 
                                 <xf:group
-                                    ref="m:classification/m:termList[count(m:term[contains(@classcode,'#Dcm')])&gt;0]">
+                                    ref="m:classification/m:termList[count(m:term[contains(@class,'#Dcm')])&gt;0]">
                                     <h:span class="blocklabel">Other classification terms</h:span>
                                 </xf:group>
                                 <xf:group
-                                    ref="m:classification/m:termList[count(m:term[not(contains(@classcode,'#Dcm'))])=0]">
+                                    ref="m:classification/m:termList[count(m:term[not(contains(@class,'#Dcm'))])=0]">
                                     <dcm:create
-                                        nodeset="m:term[not(@classcode) or not(contains(@classcode,'#Dcm'))]"
+                                        nodeset="m:term[not(@class) or not(contains(@class,'#Dcm'))]"
                                         label="Add classification term"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:classification/m:termList/m:term[not(@classcode)]"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:classification/m:termList/m:term[not(@class)]"
                                     />
                                 </xf:group>
                                 <xf:repeat
-                                    nodeset="m:classification/m:termList/m:term[not(@classcode) or not(contains(@classcode,'#Dcm'))]"
+                                    nodeset="m:classification/m:termList/m:term[not(@class) or not(contains(@class,'#Dcm'))]"
                                     id="repeat-classification-terms">
                                     <h:div>
                                         <xf:input ref=".">
                                             <xf:label>Term</xf:label>
                                         </xf:input>&#160; <dcm:element-buttons-typed
                                             triggers="add remove"
-                                            nodeset="m:term[not(@classcode) or not(contains(@classcode,'#Dcm'))]"
+                                            nodeset="m:term[not(@class) or not(contains(@class,'#Dcm'))]"
                                             index="repeat-classification-terms"
-                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:classification/m:termList/m:term[not(@classcode)]"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:classification/m:termList/m:term[not(@class)]"
                                         />
                                     </h:div>
                                 </xf:repeat>

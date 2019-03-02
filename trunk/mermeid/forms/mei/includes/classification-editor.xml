@@ -6,7 +6,7 @@
 		<h:legend>Classification</h:legend>
 		<xf:repeat nodeset="m:classification/m:termList">
 			
-			<xf:select1 ref="m:term[@classcode='DcmContentClass']">
+			<xf:select1 ref="m:term[@class='DcmContentClass']">
 				<xf:label class="fixed_width">Content</xf:label>
 				<xf:item>
 					<xf:value/>
@@ -24,7 +24,7 @@
 			
 			<h:br clear="both"/>
 			
-			<xf:select1 ref="m:term[@classcode='DcmPresentationClass']">
+			<xf:select1 ref="m:term[@class='DcmPresentationClass']">
 				<xf:label class="fixed_width">Presentation <h:a class="help">&#160;?<h:span class="comment">Describes
 					the source's basic mode of production (manuscript or print). <br/> "Print, specific copy" refers to a 
 					specific copy of a printed source, e.g. the composer's own copy.</h:span></h:a></xf:label>
@@ -48,7 +48,7 @@
 			
 			<h:br clear="both"/>
 			
-			<xf:select1 ref="m:term[@classcode='DcmAuthorityClass']">
+			<xf:select1 ref="m:term[@class='DcmAuthorityClass']">
 				<xf:label class="fixed_width">Authority <h:a class="help">&#160;?<h:span class="comment">For 
 					use with manuscript sources. Describes the composer's degree of involvement
 					in the production of the source. Thus, an arranger's
@@ -78,7 +78,7 @@
 			
 			<h:br clear="both"/>
 			
-			<xf:select1 ref="m:term[@classcode='DcmScoringClass']">
+			<xf:select1 ref="m:term[@class='DcmScoringClass']">
 				<xf:label class="fixed_width">Scoring</xf:label>
 				<xf:item>
 					<xf:value></xf:value>
@@ -112,7 +112,7 @@
 			
 			<h:br clear="both"/>
 			
-			<xf:select1 ref="m:term[@classcode='DcmStateClass']">
+			<xf:select1 ref="m:term[@class='DcmStateClass']">
 				<xf:label class="fixed_width">State</xf:label>
 				<xf:item>
 					<xf:value></xf:value>
@@ -150,7 +150,7 @@
 			
 			<h:br clear="both"/>
 			
-			<xf:select1 ref="m:term[@classcode='DcmCompletenessClass']">
+			<xf:select1 ref="m:term[@class='DcmCompletenessClass']">
 				<xf:label class="fixed_width">Completeness <h:a class="help">&#160;?<h:span class="comment">Describes 
 					the completeness of the source: "Complete" indicates that this source is complete (this would also be true
 					with a single solo violin part from an orchestral work, if it is not the remainder of an originally larger 

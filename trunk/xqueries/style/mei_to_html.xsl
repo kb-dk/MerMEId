@@ -2020,7 +2020,7 @@
 			<xsl:variable name="sort_order"
 				select="'DcmContentClass,DcmPresentationClass,DcmAuthorityClass,DcmScoringClass,DcmStateClass,DcmCompletenessClass'"/>
 			<xsl:for-each select="m:term[text()]">
-				<xsl:sort select="string-length(substring-before($sort_order,@classcode))"/>
+				<xsl:sort select="string-length(substring-before($sort_order,@class))"/>
 				<xsl:variable name="elementName" select="translate(.,' /-,.:()','________')"/>
 				<xsl:if test="position()=1">[<xsl:value-of select="$l/classification"/>: </xsl:if>
 				<xsl:choose>
@@ -2054,7 +2054,7 @@
 			<xsl:when
 				test="count(m:item)&gt;1 or 
 		(m:item/@label and m:item/@label!='' and
-		../m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']!='manuscript')">
+		../m:classification/m:termList/m:term[@class='#DcmPresentationClass']!='manuscript')">
 				<ul class="item_list">
 					<xsl:for-each select="m:item[*//text()]">
 						<li>
@@ -2067,7 +2067,7 @@
 			<xsl:when
 				test="(count(m:item)&lt;=1 and
 		m:item/@label and m:item/@label!='' and
-		../m:classification/m:termList/m:term[@classcode='DcmPresentationClass']='manuscript')">
+		../m:classification/m:termList/m:term[@class='DcmPresentationClass']='manuscript')">
 				<div class="ms_item">
 					<xsl:apply-templates select="m:item[*//text()]"/>
 				</div>
