@@ -64,7 +64,7 @@
          </classDecls>
       </encodingDesc>
       <workList xml:id="workDesc_751ca608">
-         <work analog="frbr:work" xml:id="work_d1e37833698">
+         <work xml:id="work_d1e37833698">
             <identifier label="Opus" xml:id="identifier_4fd9c1f0">12</identifier>
             <identifier label="Demo" xml:id="identifier_9d817535">2</identifier>
             <title xml:id="title_9281bfe7" xml:lang="de">Comala (demonstrates advanced source descriptions)</title>
@@ -1143,6 +1143,12 @@
                   </p>
                </annot>
             </notesStmt>
+            <classification xml:id="classification_e7e848e4">
+               <termList xml:id="termList_b3069d8d">
+                  <term xml:id="term_e9dd7bf1">Vocal music</term>
+                  <term xml:id="term_e882297f">Music for choir, vocal soloists and instruments</term>
+               </termList>
+            </classification>
             <expressionList xml:id="expressionList_1dab3c84">
                <expression xml:id="expression_1">
                   <title xml:id="title_754ae316" xml:lang="en"/>
@@ -1913,7 +1919,7 @@
             </expressionList>
          </work>
       </workList>
-      <manifestationList xml:id="manifestationList_d5913b25">
+      <manifestationList xml:id="sourceDesc_d5913b25">
          <manifestation label="A" xml:id="source_A">
             <titleStmt xml:id="titleStmt_5f94df6c">
                <title xml:id="title_fb89ae44">Printed score</title>
@@ -1999,11 +2005,13 @@
             </physDesc>
             <notesStmt xml:id="notesStmt_6b4b1b64">
                <annot type="source_description" xml:id="annot_c5b93247">
-                  <p>In full cloth binding stamped <rend fontstyle="italic">COMALA.</rend> in gold on front cover. Hand-written label pasted on front cover inscribed <rend fontstyle="italic">Op. 12. / Comala / Partitur.</rend> Pagination is sporadic, pages 107-162 incorrectly paginated 106-161. At the end of the music
-                     on p. 161 [recte 162] is the dating <rend fontstyle="italic">Leipzig den 11 Märtz 1846 / 
-                        Königstr: N<rend rend="sup"><rend rend="underline">o</rend></rend> 16.</rend> At top of page 3 inscribed in runes ᚵᚢᚦ: ᚵᛁᚢᛅ: ᛚᚤᚴᚴᛅ: (<rend 
-                           fontstyle="italic">GUD GIVE LYKKE</rend>). 
-                  </p>
+                  <p>In full cloth binding stamped <rend fontstyle="italic">COMALA.</rend> in gold on front cover. Hand-written label pasted on front cover inscribed <rend fontstyle="italic">Op. 12. / Comala / Partitur.</rend> Pagination is sporadic, pages 107-162 incorrectly paginated 106-161. At the end of the music 
+                                on p. 161 [recte 162] is the dating <rend fontstyle="italic">Leipzig den 11 Märtz 1846 / 
+                                    Königstr: N<rend rend="sup">
+                           <rend rend="underline">o</rend>
+                        </rend> 
+                                    16.</rend> At top of page 3 inscribed in runes ᚵᚢᚦ: ᚵᛁᚢᛅ: ᛚᚤᚴᚴᛅ: 
+                                (<rend fontstyle="italic">GUD GIVE LYKKE</rend>). </p>
                </annot>
                <annot type="links" xml:id="annot_1aca5f62"/>
             </notesStmt>
@@ -2949,7 +2957,7 @@ Two reprint editions of these parts were published.</p>
                <p xml:id="p_73c91446"/>
             </changeDesc>
          </change>
-         <change isodate="2019-02-27T13:59:44.5+01:00" xml:id="change_2074d1e2900">
+         <change isodate="2019-03-11T11:59:33.475+01:00" xml:id="change_2074d1e2900">
             <respStmt>
                <name>MerMEId</name>
             </respStmt>
