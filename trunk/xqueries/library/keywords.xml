@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<classification xmlns="http://www.music-encoding.org/ns/mei" >
+<classification xmlns="http://www.music-encoding.org/ns/mei">
     
     <!-- 
         This file defines systematic keywords for the classification of works. 
@@ -10,38 +10,58 @@
     -->
     
     <!-- Structured classification, 2 levels -->
-    
-    <termList label="level1">
-        <term>Stage music</term>
-    </termList>
-    <termList label="level2">
-        <term>Opera</term>
-        <term>Incidental music</term>
-        <term>Ballet</term>
-    </termList>
-    <termList label="level1">
-        <term>Instrumental music</term>
-    </termList>
-    <termList label="level2">
-        <term>Symphony</term>
-        <term>Concerto</term>
-        <term>Other orchestral music</term>
-        <term>Chamber music</term>
-        <term>Music for one instrument</term>
-    </termList>
-    <termList label="level1">
-        <term>Vocal music</term>
-    </termList>
-    <termList label="level2">
-        <term>Music for vocal soloists and instruments with or without choir</term>
-        <term>Choral music with instruments</term>
-        <term>A cappella choral music</term>
-        <term>Song</term>
-    </termList>          
+
+    <taxonomy xml:id="Genre">
+        <category xml:id="StageMusic">
+            <desc>Stage music</desc>
+            <category xml:id="Opera">
+                <desc>Opera</desc>
+            </category>
+            <category xml:id="IncidentalMusic">
+                <desc>Incidental music</desc>
+            </category>
+            <category xml:id="Ballet">
+                <desc>Ballet</desc>
+            </category>
+        </category>
+        <category xml:id="InstrumentalMusic">
+            <desc>>Instrumental music</desc>
+            <category xml:id="Symphony">
+                <desc>Symphony</desc>
+            </category>
+            <category xml:id="Concerto">
+                <desc>Concerto</desc>
+            </category>
+            <category xml:id="OtherOrchestralMusic">
+                <desc>Other orchestral music</desc>
+            </category>
+            <category xml:id="ChamberMusic">
+                <desc>Chamber music</desc>
+            </category>
+            <category xml:id="MusicForOneInstrument">
+                <desc>Music for one instrument</desc>
+            </category>
+        </category>
+        <category xml:id="VocalMusic">
+            <desc>Vocal music</desc>
+            <category xml:id="VocalMusicSoloistsInstrumentsOptionalChoir">
+                <desc>Music for vocal soloists and instruments with or without choir</desc>
+            </category>
+            <category xml:id="ChoralMusicWithInstrumental">
+                <desc>Choral music with instruments</desc>
+            </category>
+            <category xml:id="UnaccompaniedChoralMusic">
+                <desc>A cappella choral music</desc>
+            </category>
+            <category xml:id="Song">
+                <desc>Song</desc>
+            </category>
+        </category>
+    </taxonomy>
     
     <!-- Unordered supplementary keywords (may also be entered manually in the editor instead)  -->
     
-    <termList label="keywords">
+    <termList label="work_keywords">
         <term>Trio</term>
         <term>Quartet</term>
         <term>Quintet</term>
