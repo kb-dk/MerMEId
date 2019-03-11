@@ -536,7 +536,7 @@
 				<h:tr>
 					<h:td style="vertical-align:top">
 						<xf:repeat
-							nodeset="instance('keywords-instance')/m:termList[@label='keywords']/m:term"
+							nodeset="instance('keywords-instance')/m:termList[@label='work_keywords']/m:term"
 							id="additional_keywords-repeat">
 							<h:div>
 								<xf:trigger submission="replace-form-with" appearance="minimal">
@@ -554,13 +554,13 @@
 											<xf:insert
 												context="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList"
 												nodeset="m:term" at="last()" position="after"
-												origin="instance('keywords-instance')/m:termList[@label='keywords']/m:term[index('additional_keywords-repeat')]"
+												origin="instance('keywords-instance')/m:termList[@label='work_keywords']/m:term[index('additional_keywords-repeat')]"
 											/>
 										</xf:action>
 										<xf:action
 											ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:classification/m:termList/m:term[position()=last()][.='']">
 											<xf:setvalue ref="."
-												value="instance('keywords-instance')/m:termList[@label='keywords']/m:term[index('additional_keywords-repeat')]"
+												value="instance('keywords-instance')/m:termList[@label='work_keywords']/m:term[index('additional_keywords-repeat')]"
 											/>
 										</xf:action>
 									</xf:action>
