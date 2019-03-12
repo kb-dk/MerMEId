@@ -69,23 +69,19 @@ declare function loop:genre-filter(
   $genre as xs:string,
   $doc as node()) as xs:boolean
 {
-  (: we are searchin in level 2 genre keywords :)
-
-  let $docgenre1 := string-join($doc//m:workList/m:work/m:classification/m:termList/m:term[.=$loop:vocabulary//m:termList[@label='level1']/m:term and .!='']/string(), " ")
-  let $docgenre2 := string-join($doc//m:workList/m:work/m:classification/m:termList/m:term[.=$loop:vocabulary//m:termList[@label='level2']/m:term and .!='']/string(), " ")
+    
+  let $docgenre := string-join($doc//m:workList/m:work/m:classification/m:termList/m:term/string(), " ")
 
   let $occurrence :=
     if( string-length($genre)=0) then
       true()
     else 
-      if(contains($docgenre1,$genre) ) then
-	true()
-      else if( contains($docgenre2,$genre) ) then
+      if(contains($docgenre,$genre) ) then
 	true()
       else
 	false()
 
-      return $occurrence
+  return $occurrence
 };
 
 
@@ -141,23 +137,23 @@ declare function loop:getlist (
       if($coll) then 
 	if($query) then
           for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
-          where loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
+          where loop:genre-filter($genre,$doc) 
 	  order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	  return $doc 
 	else
 	  for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
-          where loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
+          where loop:genre-filter($genre,$doc) 
 	  order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	  return $doc 
         else
 	  if($query) then
             for $doc in collection($database)/m:mei[ft:query(.,$query)]
-            where loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
+            where loop:genre-filter($genre,$doc) 
 	    order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	    return $doc
       else
         for $doc in collection($database)/m:mei
-        where loop:genre-filter($genre,$doc) and loop:date-filters($doc)
+        where loop:genre-filter($genre,$doc)
 	order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	return $doc
 	      

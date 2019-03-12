@@ -34,7 +34,7 @@ declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
 
 
-(: Why should style attributes be filtered away? :)
+(: This seems to be obsolete :)
 declare function local:copy($element as element()) {
   element {node-name($element)}
   {
@@ -69,7 +69,7 @@ return
 <script src="/editor/js/toggle_openness.js" type="text/javascript">
     /* js for foldable sections */
 </script>
-<script src="http://www.verovio.org/javascript/latest/verovio-toolkit-light.js" type="text/javascript">
+<script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript">
     /* Include the Verovio toolkit for displaying incipits */
 </script>
  <script type="text/javascript">
@@ -80,14 +80,9 @@ return
 <body>
 {
   for $doc in $list
-  let $html := 
-  <div>
-    { transform:transform($doc,$stURI,$params)//div[@id='main_content'] }
-  </div>
-  return 
-  <div class="work">
-    {local:copy($html)}
-  </div>
+  let $html := transform:transform($doc,$stURI,$params)//div[@id='main_content']   
+  (: return local:copy($html)  :)
+  return $html
 }
 </body>
 </html>
