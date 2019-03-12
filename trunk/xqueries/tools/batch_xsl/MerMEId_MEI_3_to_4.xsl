@@ -15,6 +15,8 @@
         MEI 3.0.0-versions of MerMEId. Metadata from other applications or older versions of MerMEId 
         may or may not be successfully transformed with it.
         
+        Please note: Any encoded music - whether in <music> or <incip> – is NOT transformed
+        
         Axel Teich Geertinger
         Royal Danish Library, 2019    
         
