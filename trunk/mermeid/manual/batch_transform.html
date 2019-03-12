@@ -31,8 +31,9 @@
                     process.<br /> If your transformation does not work as expected, your data may
                     be completely and permanently damaged. Make sure to test your transformation
                     thoroughly and to save a backup copy of your data somewhere else before running
-                    the transformation. <br /> For safety reasons, only database administrators have
-                    access to using the transformation service. </li>
+                    the transformation. <br /> For safety reasons, the batch transformation service 
+                    is disabled by default. Ask your system administrator to enable it by editing the 
+                    file <kbd>/db/mermeid/tools/batch_transform.xq</kbd> in the eXist database.</li>
             </ul>
             <p>Prior to using the script, an XSLT style sheet making the desired changes must be
                 placed somewhere where your server has access to it.</p>

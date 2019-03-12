@@ -1,6 +1,7 @@
 xquery version "1.0" encoding "UTF-8";
 
-(:import module namespace login="http://kb.dk/this/login" at "/db/login.xqm";:)
+import module namespace login="http://kb.dk/this/login" at "../login.xqm";
+import module namespace rd="http://kb.dk/this/redirect" at "../redirect_host.xqm";
 
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
@@ -10,6 +11,7 @@ declare namespace file="http://exist-db.org/xquery/file";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace ft="http://exist-db.org/xquery/lucene";
 declare namespace ht="http://exist-db.org/xquery/httpclient";
+declare namespace xdb="http://exist-db.org/xquery/xmldb";
 
 declare namespace local="http://kb.dk/this/app";
 declare namespace m="http://www.music-encoding.org/ns/mei";
@@ -78,7 +80,44 @@ declare function local:transformed($doc as node() ) as node() {
 };
 
 
+(: Administrator: Uncomment the following line to allow users to perform batch transformations of data :)
+(: let $log-in := login:function() :)
+
 let $list := local:getlist($database, $coll, $query)
+
+
+let $content := 
+    if(xdb:get-current-user() = "admin") then 
+        <div>
+            <h1>Batch transform XML files in the database</h1> 
+            <table cellpadding="2" cellspacing="0" border="0" style="width: auto;">
+                <tr><th>Work no.&#160;</th><th>Title&#160;</th><th>File</th><th>Status</th></tr>
+                {
+                  for $doc in $list
+                  let $html := 
+                  <tr>
+                     <td>{local:get-work-number($doc)} &#160;</td>
+                     <td><a href="{concat("http://",rd:host(),"/storage/present.xq?doc=",substring-after(document-uri(root($doc)),$database))}" 
+                        target="_blank" title="HTML preview">{$doc/m:meiHead/m:fileDesc/m:titleStmt/m:title[1]/string()}</a> &#160;</td>
+                     <td><a href="{concat("http://",rd:host(),replace(document-uri(root($doc)),'/db/','/storage/'))}" 
+                        target="_blank" title="XML">{substring-after(document-uri(root($doc)),$database)}</a></td>
+                     <td>{local:transformed($doc)}</td>
+                  </tr>
+                  return $html
+                }   
+            </table>
+            <p>&#160;</p>
+            <p>{count($list)} file(s) processed. </p>
+        </div>
+    else 
+        <div>
+            <h1>Batch transformation is currently disabled</h1>
+            <p>Batch tranformation is disabled for security reasons on this server. <br/>
+            Please ask your system administrator to enable transformation by editing the 
+            file <kbd>/db/mermeid/tools/batch_transform.xq</kbd> in the eXist database.</p>
+        </div>
+
+
 
 return 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -90,29 +129,11 @@ return
     <link rel="styleSheet" type="text/css" href="/editor/style/xform_style.css"/>
 </head>
 <body class="list_files">
-  <div id="all">
-    <div id="main">
-        <h1>Batch transform XML files in the database</h1> 
-        <table cellpadding="2" cellspacing="0" border="0" style="width: auto;">
-            <tr><th>Work no.&#160;</th><th>Title&#160;</th><th>File</th><th>Status</th></tr>
-            {
-              for $doc in $list
-              let $html := 
-              <tr>
-                 <td>{local:get-work-number($doc)} &#160;</td>
-                 <td><a href="{concat("http://",request:get-header('HOST'),"/storage/present.xq?doc=",substring-after(document-uri(root($doc)),$database))}" 
-                    target="_blank" title="HTML preview">{$doc/m:meiHead/m:fileDesc/m:titleStmt/m:title[1]/string()}</a> &#160;</td>
-                 <td><a href="{concat("http://",request:get-header('HOST'),replace(document-uri(root($doc)),'/db/','/storage/'))}" 
-                    target="_blank" title="XML">{substring-after(document-uri(root($doc)),$database)}</a></td>
-                 <td>{local:transformed($doc)}</td>
-              </tr>
-              return $html
-            }   
-        </table>
-        <p>&#160;</p>
-        <p>{count($list)} file(s) processed. </p>
+    <div id="all">
+        <div id="main">
+            {$content}
+        </div>
     </div>
-  </div>
 </body>
 </html>
 
