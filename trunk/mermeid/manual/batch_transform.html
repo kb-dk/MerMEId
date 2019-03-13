@@ -25,7 +25,13 @@
                 XSL transformation for such tasks often is more efficient than editing all the
                 documents by hand. Instead of downloading all of your files, transforming them
                 locally on your computer, and upload them back to the server, MerMEId offers a
-                script to do such a transformation directly on the server. </p>
+                script to do such a transformation directly on the server.<br/>
+                Please note, however, that due to software limitations transformations cannot make 
+                any changes to the documents' root element (that is, <kbd>&lt;mei&gt;</kbd>), 
+                such as changing the <kbd>meiversion</kbd> attribute. To migrate your data to newer 
+                MEI versions, therefore, you will need to download your data, transform them locally 
+                and upload them to the new database.
+            </p>
             <ul class="important">
                 <li>Warning! Transforming your documents directly on the server is an irreversible
                     process.<br /> If your transformation does not work as expected, your data may
