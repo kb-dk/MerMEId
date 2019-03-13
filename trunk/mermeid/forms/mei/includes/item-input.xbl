@@ -161,7 +161,7 @@
                         nodeset="m:identifier"
                         label="Add RISM siglum"
                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation[1]/m:itemList/m:item/m:physLoc/m:repository/m:identifier"/>
-                    <dcm:rism-sigla ref="m:identifier[@auth='RISM' or @auth='rism']"/>
+                    <dcm:rism-sigla ref="m:identifier[@authority='RISM' or @authority='rism']"/>
                   </h:div>
                   
                   <h:div>
