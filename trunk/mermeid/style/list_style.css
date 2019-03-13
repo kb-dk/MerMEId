@@ -36,7 +36,7 @@ div.footer, p.footer {
     padding: 10px 20px;
 }
 
-div.footer a, p.footer a {
+.footer, .footer a:link, .footer a:visited, .footer a:active {
     color: #ccc;
 }
 
@@ -72,10 +72,6 @@ a.addLink:hover img {
     border: 1px solid #999;
 }
 
-
-.footer, .footer a:link, .footer a:visited, .footer a:active {
-    color: #fff;
-}
 
 table {
     width: 100%;
