@@ -211,50 +211,37 @@
             
             
             
-            <xf:group ref="m:physLoc">
-              <h:fieldset>
-                <h:legend>Provenance
-                <dcm:attribute-editor ref="."/>
-                </h:legend>
-                <dcm:create 
-                    nodeset="m:provenance"
-                    label="Add provenance list"
-                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physLoc/m:provenance"/>                                            
-                <dcm:create ref="m:provenance"
-                            nodeset="m:eventList"
-                            label="Add provenance"
-                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physLoc/m:provenance/m:eventList"/>                                            
-                <dcm:create ref="m:provenance/m:eventList"
-                            nodeset="m:event"
-                            label="Add event"
-                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physLoc/m:provenance/m:eventList/m:event"/>                                            
-                <xf:group ref="m:provenance/m:eventList">
-                  <xf:repeat nodeset="m:event" id="physloc-provenance">
-                    <h:fieldset>
-                      <h:legend>
-                        Event
-                        <dcm:element-buttons 
-                            triggers="up down copy add del-parent-with-last" 
-                            nodeset="m:event" 
-                            index="physloc-provenance"
-                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physLoc/m:provenance/m:eventList/m:event"/>
-                        <dcm:attribute-editor/>
-                      </h:legend>
-                      <h:div>
-                        <h:span class="fixed_width">Date <h:a class="help">&#160;?<h:span class="comment">Date 
-                          or date span of the event</h:span></h:a></h:span>
-                        <dcm:date-editor ref="m:date"/>                        
-                      </h:div>
-                      <xf:input ref="m:desc" class="maxlong">
-                        <xf:label class="fixed_width">Description <h:a class="help">&#160;?<h:span class="comment">Description of the event,
+            <h:fieldset>
+              <h:legend>Provenance <dcm:attribute-editor ref="."/>
+              </h:legend>
+              <dcm:create nodeset="m:history" label="Add provenance list" 
+                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:history"/>
+              <dcm:create ref="m:history" nodeset="m:provenance" label="Add provenance list" 
+                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:history/m:provenance"/>
+              <dcm:create ref="m:history/m:provenance" nodeset="m:eventList" label="Add provenance" 
+                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:history/m:provenance/m:eventList"/>
+              <dcm:create ref="m:history/m:provenance/m:eventList" nodeset="m:event" label="Add event" 
+                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:history/m:provenance/m:eventList/m:event"/>
+              <xf:group ref="m:history/m:provenance/m:eventList">
+                <xf:repeat nodeset="m:event" id="physloc-provenance">
+                  <h:fieldset>
+                    <h:legend> Event <dcm:element-buttons triggers="up down copy add del-parent-with-last" nodeset="m:event" index="physloc-provenance" 
+                      origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:history/m:provenance/m:eventList/m:event"/>
+                      <dcm:attribute-editor/>
+                    </h:legend>
+                    <h:div>
+                      <h:span class="fixed_width">Date <h:a class="help">&#160;?<h:span class="comment">Date or date span of the event</h:span></h:a></h:span>
+                      <dcm:date-editor ref="m:date"/>
+                    </h:div>
+                    <xf:input ref="m:desc" class="maxlong">
+                      <xf:label class="fixed_width">Description <h:a class="help">&#160;?<h:span class="comment">Description of the event, 
                         e.g. "Purchased by The Royal Library from John Doe"</h:span></h:a></xf:label>
-                      </xf:input>
-                      <dcm:attribute-editor ref="m:desc"/>
-                    </h:fieldset>
-                  </xf:repeat>
-                </xf:group> 
-              </h:fieldset>
-            </xf:group>
+                    </xf:input>
+                    <dcm:attribute-editor ref="m:desc"/>
+                  </h:fieldset>
+                </xf:repeat>
+              </xf:group>
+            </h:fieldset>
             
             
             <h:fieldset>

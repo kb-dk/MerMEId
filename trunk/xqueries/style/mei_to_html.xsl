@@ -1938,13 +1938,18 @@
 			</xsl:for-each>
 
 			<!-- source location and identifiers -->
-			<xsl:for-each
-				select="m:physLoc[m:repository//text() or m:identifier/text() or m:provenance//text() or m:ptr/@target]">
+			<xsl:for-each select="m:physLoc[m:repository//text() or m:identifier/text() or m:ptr/@target]">
 				<div>
 					<xsl:apply-templates select="."/>
 				</div>
 			</xsl:for-each>
 
+			<xsl:for-each select="m:history/m:provenance[//text()]">
+				<div>
+					<xsl:apply-templates select="."/>
+				</div>
+			</xsl:for-each>
+			
 			<xsl:for-each select="m:identifier[text()]">
 				<div>
 					<xsl:apply-templates select="@label"/>
@@ -2225,22 +2230,20 @@
 				<xsl:text>, </xsl:text>
 			</xsl:if>
 		</xsl:for-each>
-		
-		<xsl:for-each select="m:provenance[*//text()]">
-			<div>
-				<xsl:value-of select="$l/provenance"/><xsl:text>: </xsl:text>
-				<xsl:for-each select="m:eventList/m:event[*/text()]">
-					<xsl:for-each select="m:desc">
-						<xsl:apply-templates/>
-					</xsl:for-each>
-					<xsl:for-each select="m:date[text()]">
-						<xsl:text> (</xsl:text>
-						<xsl:apply-templates select="."/>
-						<xsl:text>)</xsl:text>
-					</xsl:for-each>. </xsl:for-each>
-			</div>
-		</xsl:for-each>
-		
+	</xsl:template>
+	
+	<xsl:template match="m:provenance">
+		<xsl:value-of select="$l/provenance"/>
+		<xsl:text>: </xsl:text>
+		<xsl:for-each select="m:eventList/m:event[*/text()]">
+			<xsl:for-each select="m:desc">
+				<xsl:apply-templates/>
+			</xsl:for-each>
+			<xsl:for-each select="m:date[text()]">
+				<xsl:text> (</xsl:text>
+				<xsl:apply-templates select="."/>
+				<xsl:text>)</xsl:text>
+			</xsl:for-each>. </xsl:for-each>
 	</xsl:template>
 
 	<!-- format scribe's name and medium -->

@@ -507,7 +507,7 @@
 				<br/>Pl. no. <xsl:apply-templates/>.
 			</xsl:for-each>
 
-			<xsl:for-each select="m:physLoc/m:provenance[normalize-space(*//text())]">
+			<xsl:for-each select="m:history/m:provenance[normalize-space(*//text())]">
 					<br/><xsl:text>Provenance: </xsl:text>
 					<xsl:for-each select="m:eventList/m:event[*/text()]">
 						<xsl:for-each select="m:desc">
