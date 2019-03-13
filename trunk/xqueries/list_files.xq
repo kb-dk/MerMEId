@@ -1,7 +1,9 @@
-xquery version "1.0" encoding "UTF-8";
+xquery version "3.0" encoding "UTF-8";
 
 import module namespace loop="http://kb.dk/this/getlist" at "./main_loop.xqm";
-import module namespace  app="http://kb.dk/this/listapp" at "./list_utils.xqm";
+import module namespace app="http://kb.dk/this/listapp"  at "./list_utils.xqm";
+import module namespace rd="http://kb.dk/this/redirect"  at "./redirect_host.xqm";
+import module namespace v="http://kb.dk/this/version"    at "./version.xqm";
 
 declare namespace xl="http://www.w3.org/1999/xlink";
 declare namespace request="http://exist-db.org/xquery/request";
@@ -11,6 +13,7 @@ declare namespace file="http://exist-db.org/xquery/file";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace ft="http://exist-db.org/xquery/lucene";
 declare namespace ht="http://exist-db.org/xquery/httpclient";
+declare namespace xi="http://www.w3.org/2001/XInclude";
 
 declare namespace local="http://kb.dk/this/app";
 declare namespace m="http://www.music-encoding.org/ns/mei";
@@ -111,7 +114,7 @@ declare function local:format-reference(
 
 	  
 	  
-      <html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 	  <title>
 	    {app:list-title()}
@@ -322,12 +325,13 @@ declare function local:format-reference(
       </div>
     }
     <div class="footer">
-      <a href="http://www.kb.dk/en/nb/dcm" title="DCM" 
+      <div style="float:right" class="version">MerMEId {v:version()}</div>
+      <a href="http://www.kb.dk/en/nb/dcm" title="DCM"
       style="text-decoration:none;"><img 
            style="border: 0px; vertical-align:middle;" 
            alt="DCM Logo" 
            src="/editor/images/dcm_logo_small_white.png"/></a>
-           Danish Centre for Music Editing | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/en/nb/dcm">www.kb.dk/en/nb/dcm</a>
+           Danish Centre for Music Editing | Royal Danish Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk">www.kb.dk</a>
     </div>
   </body>
 </html>
