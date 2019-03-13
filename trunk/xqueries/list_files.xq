@@ -326,11 +326,10 @@ declare function local:format-reference(
     }
     <div class="footer">
       <div style="float:right" class="version">MerMEId {v:version()}</div>
-      <a href="http://www.kb.dk/en/nb/dcm" title="DCM"
-      style="text-decoration:none;"><img 
+      <img 
            style="border: 0px; vertical-align:middle;" 
            alt="DCM Logo" 
-           src="/editor/images/dcm_logo_small_white.png"/></a>
+           src="/editor/images/dcm_logo_small_white.png"/>
            Danish Centre for Music Editing | Royal Danish Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk">www.kb.dk</a>
     </div>
   </body>
