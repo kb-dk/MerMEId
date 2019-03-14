@@ -482,7 +482,7 @@
   <xsl:template match="h:span">
     <xsl:choose>
       <xsl:when test="contains(@title,'mei:')">
-        <!-- Translate encodings like this to MEI: <span title="mei:persName" class="mei:atts[authURI(http://www.viaf.org),codedval(12345))]">Niels Gade</span> -->
+        <!-- Translate encodings like this to MEI: <span title="mei:persName" class="mei:atts[auth.uri(http://www.viaf.org),codedval(12345))]">Niels Gade</span> -->
         <xsl:variable name="tagName" select="substring-after(@title,'mei:')"/>
         <xsl:variable name="atts">
           <xsl:call-template name="tokenize">
