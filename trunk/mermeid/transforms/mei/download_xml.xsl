@@ -2,7 +2,7 @@
 <xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.music-encoding.org/ns/mei" 
   xmlns:m="http://www.music-encoding.org/ns/mei" 
-  xmlns:dcm="http://www.kb.dk" 
+  xmlns:dcm="http://www.kb.dk/dcm" 
   xmlns:h="http://www.w3.org/1999/xhtml"
   xmlns:xl="http://www.w3.org/1999/xlink"
   exclude-result-prefixes="m dcm h xl"

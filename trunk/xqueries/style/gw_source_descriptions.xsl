@@ -14,7 +14,7 @@
 
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:m="http://www.music-encoding.org/ns/mei"
-	xmlns:dcm="http://www.kb.dk" xmlns:xl="http://www.w3.org/1999/xlink"
+	xmlns:dcm="http://www.kb.dk/dcm" xmlns:xl="http://www.w3.org/1999/xlink"
 	xmlns:foo="http://www.kb.dk/foo" xmlns:exsl="http://exslt.org/common"
 	xmlns:java="http://xml.apache.org/xalan/java" xmlns:zs="http://www.loc.gov/zing/srw/"
 	xmlns:marc="http://www.loc.gov/MARC21/slim" extension-element-prefixes="exsl java"

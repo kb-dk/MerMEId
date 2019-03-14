@@ -4,7 +4,7 @@
   xmlns:h="http://www.w3.org/1999/xhtml" 
   xmlns:m="http://www.music-encoding.org/ns/mei" 
   xmlns:local="urn:my-stuff" 
-  xmlns:dcm="http://www.kb.dk" 
+  xmlns:dcm="http://www.kb.dk/dcm" 
   exclude-result-prefixes="xsl m h dcm xl local" 
   version="3.0">
 

@@ -9,7 +9,7 @@
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     xmlns:m="http://www.music-encoding.org/ns/mei"
-    xmlns:dcm="http://www.kb.dk">
+    xmlns:dcm="http://www.kb.dk/dcm">
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
         xxf:exclude-result-prefixes="#all"
@@ -62,28 +62,28 @@
         <mei/>
     </xf:instance>
     
-    <xf:instance xmlns="http://www.kb.dk"
+    <xf:instance xmlns="http://www.kb.dk/dcm"
         id="relators-instance">
         <relators/>
     </xf:instance>
     
-    <xf:instance xmlns="http://www.kb.dk"
+    <xf:instance xmlns="http://www.kb.dk/dcm"
         id="resolutions-instance">
         <resolutions/>
     </xf:instance>
     
-    <xf:instance xmlns="http://www.kb.dk"
+    <xf:instance xmlns="http://www.kb.dk/dcm"
         id="classification-instance">
         <classification/>
     </xf:instance>
 
-    <xf:instance xmlns="http://www.kb.dk"
+    <xf:instance xmlns="http://www.kb.dk/dcm"
         id="writing-medium-instance">
         <writingMedium/>
     </xf:instance>
     
     <xf:instance id="XMLfiles" 
-        xmlns="http://www.kb.dk">
+        xmlns="http://www.kb.dk/dcm">
         <fileList/>
     </xf:instance>
         
@@ -92,7 +92,7 @@
     </xf:instance>
     
     <xf:instance id="parameters" 
-        xmlns="http://www.kb.dk"
+        xmlns="http://www.kb.dk/dcm"
         parse="xml">
         <xi:include href="mermeid_configuration.xml"/> 
     </xf:instance>
