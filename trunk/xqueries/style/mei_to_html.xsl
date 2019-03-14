@@ -3,7 +3,7 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 	xmlns:m="http://www.music-encoding.org/ns/mei"
-	xmlns:dcm="http://www.kb.dk/dcm" 
+	xmlns:dcm="http://www.kb.dk" 
 	xmlns:xl="http://www.w3.org/1999/xlink"
 	xmlns:foo="http://www.kb.dk/foo" 
 	xmlns:zs="http://www.loc.gov/zing/srw/"

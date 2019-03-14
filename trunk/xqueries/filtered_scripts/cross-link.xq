@@ -5,7 +5,7 @@ xquery version "1.0" encoding "UTF-8";
 import module namespace source_list="http://kb.dk/this/getlist-sources" at "../main_loop_sources.xqm";
 import module namespace loop="http://kb.dk/this/getlist" at "../main_loop.xqm";
 
-declare default element namespace "http://www.kb.dk/dcm";
+declare default element namespace "http://www.kb.dk";
 declare namespace transform="http://exist-db.org/xquery/transform";
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
 declare namespace request="http://exist-db.org/xquery/request";

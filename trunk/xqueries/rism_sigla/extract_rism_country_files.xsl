@@ -5,7 +5,7 @@
   xmlns:xl="http://www.w3.org/1999/xlink"
   xmlns:zs="http://www.loc.gov/zing/srw/"
   xmlns:marc="http://www.loc.gov/MARC21/slim"
-  xmlns:dcm="http://www.kb.dk/dcm"
+  xmlns:dcm="http://www.kb.dk"
   exclude-result-prefixes="xsl m zs marc xl"
   version="1.0">
 
@@ -35,7 +35,7 @@
     <xsl:text>
       
     </xsl:text>
-    <rismSigla xmlns="http://www.kb.dk/dcm">
+    <rismSigla xmlns="http://www.kb.dk">
       <xsl:for-each select="/marc:collection/marc:record[marc:datafield[@tag='040']/marc:subfield[@code='a']/text()[contains(.,'-')]]">
         <xsl:sort select="marc:datafield[@tag='040']/marc:subfield[@code='a']"/>
         <xsl:variable name="country" select="substring-before(marc:datafield[@tag='040']/marc:subfield[@code='a']/text(),'-')"/>

@@ -4,7 +4,7 @@
     xmlns:xf="http://www.w3.org/2002/xforms" 
     xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
     xmlns:ev="http://www.w3.org/2001/xml-events" 
-    xmlns:dcm="http://www.kb.dk/dcm">
+    xmlns:dcm="http://www.kb.dk">
     
     <h:title id="PageTitle">MerMEId - Editing standard data</h:title>
     
@@ -37,7 +37,7 @@
         </xf:instance>
         
         <xf:instance id="parameters" 
-            xmlns="http://www.kb.dk/dcm"
+            xmlns="http://www.kb.dk"
             parse="xml">
             <xi:include href="mermeid_configuration.xml"/>
         </xf:instance>
@@ -48,7 +48,7 @@
         </xf:instance>
         
         <xf:instance id="XMLfiles" 
-            xmlns="http://www.kb.dk/dcm">
+            xmlns="http://www.kb.dk">
             <fileList/>
         </xf:instance>
         

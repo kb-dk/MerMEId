@@ -10,7 +10,7 @@
   xmlns:xl="http://www.w3.org/1999/xlink"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" 
   xmlns:m="http://www.music-encoding.org/ns/mei"
-  xmlns:dcm="http://www.kb.dk/dcm">
+  xmlns:dcm="http://www.kb.dk">
   
   
   <h:title id="PageTitle">MerMEId - Editing MEI metadata</h:title>
@@ -95,22 +95,22 @@
       <mei/>
     </xf:instance>
 
-    <xf:instance xmlns="http://www.kb.dk/dcm"
+    <xf:instance xmlns="http://www.kb.dk"
       id="relators-instance">
       <relators/>
     </xf:instance>
 
-    <xf:instance xmlns="http://www.kb.dk/dcm"
+    <xf:instance xmlns="http://www.kb.dk"
       id="resolutions-instance">
       <resolutions/>
     </xf:instance>
 
-    <xf:instance xmlns="http://www.kb.dk/dcm"
+    <xf:instance xmlns="http://www.kb.dk"
       id="classification-instance">
       <classification/>
     </xf:instance>
     
-    <xf:instance id="XMLfiles" xmlns="http://www.kb.dk/dcm">
+    <xf:instance id="XMLfiles" xmlns="http://www.kb.dk">
       <fileList/>
     </xf:instance>
 
@@ -143,7 +143,7 @@
     <!-- end upload -->    
 
     <xf:instance id="parameters" 
-      xmlns="http://www.kb.dk/dcm"
+      xmlns="http://www.kb.dk"
       src="/editor/forms/mei/mermeid_configuration.xml"/>
     
     <xf:instance id="temp">

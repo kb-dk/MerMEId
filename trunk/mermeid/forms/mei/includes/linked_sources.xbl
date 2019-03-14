@@ -7,7 +7,7 @@
   xmlns:xbl="http://www.w3.org/ns/xbl"
   xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
   xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
-  xmlns:dcm="http://www.kb.dk/dcm">
+  xmlns:dcm="http://www.kb.dk">
   
   <!--
     Component to display a list of sources pointing to the context node (must be <source>).
@@ -32,7 +32,7 @@
     <xbl:implementation>
       <!-- Local model -->
       <xf:model id="editor-model">
-        <xf:instance id="files" xmlns="http://www.kb.dk/dcm">
+        <xf:instance id="files" xmlns="http://www.kb.dk">
           <fileList/>
         </xf:instance>
         
