@@ -91,14 +91,11 @@
         <xi:include href="./model/MEI_attr_list.xml"/> 
     </xf:instance>
     
-    <!--<xf:instance id="parameters" 
+    <xf:instance id="parameters" 
         xmlns="http://www.kb.dk/dcm"
         parse="xml">
         <xi:include href="mermeid_configuration.xml"/> 
-    </xf:instance>-->
-    <xf:instance id="parameters" 
-        xmlns="http://www.kb.dk/dcm"
-        src="/editor/forms/mei/mermeid_configuration.xml"/>
+    </xf:instance>
     
     <!-- Upload -->
     <xf:instance id="upload-instance" >

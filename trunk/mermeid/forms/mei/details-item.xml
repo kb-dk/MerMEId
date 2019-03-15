@@ -136,8 +136,7 @@
                                 <xf:repeat nodeset="m:componentList/m:item" id="repeat-item-component">
                                     <h:tr class="component">
                                         <h:td class="{if(position()=last()) then 'last_cell' else 'index_cell'}">
-                                            <h:img src="../editor/images/tree-1.png" alt="---" border="0"/>
-                                            -<xf:output value="{instance('parameters')/dcm:server_name}"/>-
+                                            <h:img src="{instance('parameters')/dcm:server_name}editor/images/tree-1.png" alt="---" border="0"/>
                                         </h:td>
                                         <h:td>
                                             <h:fieldset class="compact">
