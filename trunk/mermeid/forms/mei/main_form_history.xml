@@ -32,32 +32,35 @@
 			<dcm:history-input id="history-input-work"/>
 
 			<!-- List work level performances -->
-			<dcm:performance-list ref="m:history[m:eventList[@type='performances']//text() or
+			<xf:group ref="m:history[m:eventList[@type='performances']//text() or count(../m:expressionList/m:expression) &gt; 1 or
 				(count(../m:expressionList/m:expression)=1 and not(../m:expressionList/m:expression/m:history/m:eventList[@type='performances']//text()))]">
-				<!-- this list is supressed if work level performances are entered at expression level instead -->
-				<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
-				<xf:action ev:event="save-data">
-					<xf:dispatch name="save" targetid="save-button"/>
-					<xf:load resource="{event('goto-uri')}" show="replace"/>
-				</xf:action>
-			</dcm:performance-list>
-		</xf:group> 
-
-		<!-- Show "work level" performances entered at expression level, if any	-->
-		<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:expressionList[count(m:expression)=1]/m:expression/m:history[m:eventList//text()]">
-			<h:p>[Performance entered at expression (version) level]</h:p>
-			<dcm:performance-list>
-				<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
-				<xf:action ev:event="save-data">
-					<xf:dispatch name="save" targetid="save-button"/>
-					<xf:load resource="{event('goto-uri')}" show="replace"/>
-				</xf:action>
-			</dcm:performance-list>
-		</xf:group>
-		
-		<!-- Expression-level history and performances. Used only if more than one expression -->
-
-		<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work">			
+				<h:p>[Performance(s) entered at work level] <h:a class="help">&#160;?<h:span class="comment">Performances should be entered 
+					at expression (version) level whenever possible. Consider moving performances to a specific version (expresssion), unless
+					there is more than one version and it is not possible to determine which one was performed.</h:span></h:a></h:p>
+				<dcm:performance-list>
+					<!-- This list is omitted (unless not empty) if there is only one expression. 
+						 Performances should be entered at expression level whenever possible -->
+					<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
+					<xf:action ev:event="save-data">
+						<xf:dispatch name="save" targetid="save-button"/>
+						<xf:load resource="{event('goto-uri')}" show="replace"/>
+					</xf:action>
+				</dcm:performance-list>
+			</xf:group>
+	
+			<!-- Show "work level" performances entered at expression level, if any	-->
+			<xf:group ref="m:expressionList[count(m:expression)=1]/m:expression/m:history[m:eventList//text()]">
+				<dcm:performance-list>
+					<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
+					<xf:action ev:event="save-data">
+						<xf:dispatch name="save" targetid="save-button"/>
+						<xf:load resource="{event('goto-uri')}" show="replace"/>
+					</xf:action>
+				</dcm:performance-list>
+			</xf:group>
+			
+			<!-- Expression-level history and performances. Used only if more than one expression -->
+	
 			<xf:repeat nodeset="m:expressionList[count(m:expression)>1]/m:expression" 
 				id="repeat-expression-history">
 				<h:div class="vertical_spacer"/>
@@ -86,8 +89,8 @@
 					</xf:group>
 				</h:fieldset>
 			</xf:repeat>
-		</xf:group>
 		
+		</xf:group>
 	</h:div>
 	
 	<xi:include href="includes/code-inspector.xml" parse="xml"/>
