@@ -212,7 +212,7 @@ tinymce.PluginManager.add('persName', function(editor) {
     function insertPersName() {
         var selection = editor.selection, dom = editor.dom, selectedElm, anchorElm;
         meiElementName = 'persName';
-        defaultMeiAtts = {role: "", auth: "VIAF", auth.uri: "http://www.viaf.org", codedval: ""};
+        defaultMeiAtts = {role: "", auth: "VIAF", auth_uri: "http://www.viaf.org", codedval: ""};
         editor.execCommand('mceEditMeiAttributes', false);
     }
 
