@@ -34,9 +34,6 @@
 			<!-- List work level performances -->
 			<xf:group ref="m:history[m:eventList[@type='performances']//text() or count(../m:expressionList/m:expression) &gt; 1 or
 				(count(../m:expressionList/m:expression)=1 and not(../m:expressionList/m:expression/m:history/m:eventList[@type='performances']//text()))]">
-				<h:p>[Performance(s) entered at work level] <h:a class="help">&#160;?<h:span class="comment">Performances should be entered 
-					at expression (version) level whenever possible. Consider moving performances to a specific version (expresssion), unless
-					there is more than one version and it is not possible to determine which one was performed.</h:span></h:a></h:p>
 				<dcm:performance-list>
 					<!-- This list is omitted (unless not empty) if there is only one expression. 
 						 Performances should be entered at expression level whenever possible -->
