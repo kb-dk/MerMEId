@@ -311,7 +311,8 @@
     and (ancestor::m:annot or ancestor::m:p or ancestor::m:physMedium or ancestor::m:watermark or ancestor::m:condition)]" mode="mei2html">
     <xsl:variable name="atts">
      <xsl:for-each select="@*">
-      <xsl:value-of select="concat(name(),'(',.,'),')"/>
+       <!-- no dots allowed in attribute names when editing in tinyMCE -->
+       <xsl:value-of select="concat(translate(name(),'.','_'),'(',.,'),')"/>
      </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="bgColor">

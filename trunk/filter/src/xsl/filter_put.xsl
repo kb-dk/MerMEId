@@ -492,7 +492,8 @@
         </xsl:variable>
         <xsl:element name="{$tagName}" namespace="http://www.music-encoding.org/ns/mei">
           <xsl:for-each select="$atts/*">
-            <xsl:variable name="attName" select="substring-before(.,'(')"/>
+            <!-- convert underscores in attribute names back to dots -->
+            <xsl:variable name="attName" select="translate(substring-before(.,'('),'_','.')"/>
             <xsl:attribute name="{$attName}">
               <xsl:value-of select="substring-before(substring-after(.,'('),')')"/>
             </xsl:attribute>
