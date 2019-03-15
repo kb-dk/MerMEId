@@ -1364,33 +1364,28 @@
 			</xsl:if>
 			<xsl:if test="$show='label' and (@source or not(name(parent::*)='perfResList'))">
 				<xsl:value-of select="$l/instrumentation"/>
-				<xsl:text>: </xsl:text> 
+				<xsl:text>: </xsl:text>
 			</xsl:if>
-			<xsl:apply-templates select="m:perfResList[*//text()][boolean(@source) = boolean($source-specific)]">
+			<xsl:apply-templates select="m:perfResList[*//text()][boolean(ancestor-or-self::*/@source) = boolean($source-specific)]">
 				<xsl:with-param name="source-specific" select="$source-specific"/>
 				<xsl:with-param name="show" select="$show"/>
 			</xsl:apply-templates>
 			<xsl:if test="m:head[text()]">
 				<xsl:value-of select="m:head"/>
-				<xsl:choose>
-					<xsl:when test="m:perfRes[text()]">
-						<xsl:text>: </xsl:text>
-					</xsl:when>
-					<xsl:when test="$show='label' and ../m:perfRes[text()]">
-						<xsl:text>; </xsl:text>
-					</xsl:when>
-				</xsl:choose>
+				<xsl:if test="m:perfRes[text()]">
+					<xsl:text>: </xsl:text>
+				</xsl:if>
 			</xsl:if>
 			<!-- list performers -->
 			<xsl:if test="m:perfRes[text()][not(@solo='true')]">
 				<xsl:apply-templates select="m:perfRes[text()][not(@solo='true')]">
 					<!-- Sort instruments according to top-level list -->
-					<xsl:sort data-type="number" select="string-length(substring-before($InstrSortingValues,concat(',',@n,',')))"/>			
+					<xsl:sort data-type="number" select="string-length(substring-before($InstrSortingValues,concat(',',@n,',')))"/>                                                        
 				</xsl:apply-templates>
 			</xsl:if>
-			<xsl:if test="$show='label' and m:perfRes[@solo='true'][text()] and m:perfRes[not(@solo='true')][text()]"> 
-				<!-- if inline: put ';' separator between soloists and other and performers -->
-				<xsl:text>; </xsl:text> 
+			<xsl:if test="$show='label' and m:perfRes[@solo='true'][text()] and m:perfRes[not(@solo='true')][text()]">
+				<!-- if inline: put ';' separator between soloists and other and performers  -->
+				<xsl:text>; </xsl:text>
 			</xsl:if>
 			<!-- list soloists -->
 			<xsl:if test="m:perfRes[@solo='true']">
@@ -1407,12 +1402,15 @@
 				</span>
 				<xsl:apply-templates select="m:perfRes[@solo='true'][text()]">
 					<!-- Sort instruments according to top-level list -->
-					<xsl:sort data-type="number" select="string-length(substring-before($InstrSortingValues,concat(',',@n,',')))"/>			
+					<xsl:sort data-type="number" select="string-length(substring-before($InstrSortingValues,concat(',',@n,',')))"/>                                                        
 				</xsl:apply-templates>
+			</xsl:if>
+			<xsl:if test="$show='label' and name(.)='perfResList' and not(m:perfResList)">
+				<!-- if inline: put ';' separator between ensembles or between ensembles and soloists   -->
+				<xsl:text>; </xsl:text>
 			</xsl:if>
 		</span>
 	</xsl:template>
-	
 	
 	<xsl:template match="m:perfRes"> 
 		<xsl:if test="@count &gt; 1">
@@ -2132,7 +2130,7 @@
 				<xsl:value-of select="$l/unit_pages"/>
 			</xsl:when>
 			<xsl:when test="$l/*[name()=$elementName]!=''"><xsl:value-of select="$l/*[name()=$elementName]"/></xsl:when>
-			<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+			<xsl:otherwise><xsl:value-of select="translate(.,'_',' ')"/></xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 
