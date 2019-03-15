@@ -74,7 +74,7 @@
               </h:legend>
               <h:div class="vertical_spacer"/> 
               
-              <xf:group ref=".[m:eventList[@type='performances']//text() and not(ancestor::m:expression)]">
+              <xf:group ref=".[m:eventList[@type='performances']/*//text() and not(ancestor::m:expression)]">
                 <h:p>[Performance(s) entered at work level] <h:a class="help">&#160;?<h:span class="comment">Performances should be entered 
                   at expression (version) level whenever possible. Consider moving performances to a specific version (expresssion), unless
                   there is more than one version and it is not possible to determine which one was performed.</h:span></h:a></h:p>
