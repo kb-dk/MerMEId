@@ -1359,20 +1359,26 @@
 		</xsl:variable>
 		<span class="{$class}">
 			<xsl:if test="$show='full' and not(name(parent::*)='perfResList')">
-				<span class="p_heading relation_list_label"><xsl:value-of select="$l/instrumentation"/>: </span>
+				<span class="p_heading relation_list_label">
+					<xsl:value-of select="$l/instrumentation"/>: </span>
 			</xsl:if>
-			<xsl:if test="$show='label' and not(name(parent::*)='perfResList')">
-				<xsl:value-of select="$l/instrumentation"/><xsl:text>: </xsl:text> 
+			<xsl:if test="$show='label' and (@source or not(name(parent::*)='perfResList'))">
+				<xsl:value-of select="$l/instrumentation"/>
+				<xsl:text>: </xsl:text> 
 			</xsl:if>
-			<xsl:apply-templates select="m:perfResList[*//text()]">
+			<xsl:apply-templates select="m:perfResList[*//text()][boolean(@source) = boolean($source-specific)]">
 				<xsl:with-param name="source-specific" select="$source-specific"/>
 				<xsl:with-param name="show" select="$show"/>
 			</xsl:apply-templates>
 			<xsl:if test="m:head[text()]">
 				<xsl:value-of select="m:head"/>
 				<xsl:choose>
-					<xsl:when test="m:perfRes[text()]"><xsl:text>: </xsl:text></xsl:when>
-					<xsl:when test="$show='label' and ../m:perfRes[text()]"><xsl:text>; </xsl:text></xsl:when>
+					<xsl:when test="m:perfRes[text()]">
+						<xsl:text>: </xsl:text>
+					</xsl:when>
+					<xsl:when test="$show='label' and ../m:perfRes[text()]">
+						<xsl:text>; </xsl:text>
+					</xsl:when>
 				</xsl:choose>
 			</xsl:if>
 			<!-- list performers -->
@@ -1391,19 +1397,23 @@
 				<xsl:if test="$show!='label' and m:perfRes[not(@solo='true')]">
 					<br/>
 				</xsl:if>
-					<span class="p_heading:"><xsl:call-template name="capitalize">
-							<xsl:with-param name="str"><xsl:value-of select="$l/soloist"/></xsl:with-param>
-						</xsl:call-template>
-						<xsl:if test="count(m:perfRes[@solo='true'])&gt;1 and ($language='en' or ($language='' and $default_language='en'))">s</xsl:if>:
-					</span>
-					<xsl:apply-templates select="m:perfRes[@solo='true'][text()]">
-						<!-- Sort instruments according to top-level list -->
-						<xsl:sort data-type="number" select="string-length(substring-before($InstrSortingValues,concat(',',@n,',')))"/>			
-					</xsl:apply-templates>
+				<span class="p_heading:">
+					<xsl:call-template name="capitalize">
+						<xsl:with-param name="str">
+							<xsl:value-of select="$l/soloist"/>
+						</xsl:with-param>
+					</xsl:call-template>
+					<xsl:if test="count(m:perfRes[@solo='true'])&gt;1 and ($language='en' or ($language='' and $default_language='en'))">s</xsl:if>:
+				</span>
+				<xsl:apply-templates select="m:perfRes[@solo='true'][text()]">
+					<!-- Sort instruments according to top-level list -->
+					<xsl:sort data-type="number" select="string-length(substring-before($InstrSortingValues,concat(',',@n,',')))"/>			
+				</xsl:apply-templates>
 			</xsl:if>
 		</span>
 	</xsl:template>
-
+	
+	
 	<xsl:template match="m:perfRes"> 
 		<xsl:if test="@count &gt; 1">
 			<xsl:apply-templates select="@count"/>

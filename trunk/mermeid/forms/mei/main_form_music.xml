@@ -377,7 +377,7 @@
 							<h:div class="vertical_spacer"/>
 							
 							<!-- Source-specific instrumentations -->
-							<xf:group ref=".[instance('data-instance')/m:meiHead/m:manifestationList/m:manifestation]">
+							<xf:group ref="m:perfResList[instance('data-instance')/m:meiHead/m:manifestationList/m:manifestation]">
 								<xf:var name="thisPerfMedium" select="."/>
 								<xf:var name="source-instrumentation-ids" select="string-join(/*//m:perfResList[@source]/@source,' ')"/>
 								<xf:var name="all-sources" select="instance('data-instance')/m:meiHead/m:manifestationList/m:manifestation"/>
