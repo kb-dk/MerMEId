@@ -94,13 +94,13 @@
 							
 							<xf:group ref=".">
 								<h:div class="blocklabel strong">Ensembles </h:div>
-								<xf:trigger ref=".[count(m:perfResList)=0]" class="create_button">
+								<xf:trigger ref=".[count(m:perfResList[not(@source)])=0]" class="create_button">
 									<xf:label><img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
 									<xf:action ev:event="DOMActivate">
 										<xxf:show dialog="ensemble-menu"/>
 									</xf:action>
 								</xf:trigger>
-								<xf:repeat nodeset="m:perfResList" id="repeat-ensemble">
+								<xf:repeat nodeset="m:perfResList[not(@source)]" id="repeat-ensemble">
 									<h:fieldset>
 										<h:legend>
 											<xf:output value="if (m:head!='') then m:head else '[Ensemble]'"/> &#160;
