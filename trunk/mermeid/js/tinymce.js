@@ -233,7 +233,7 @@ tinymce.PluginManager.add('geogName', function(editor) {
     function insertGeogName() {
         var selection = editor.selection, dom = editor.dom, selectedElm, anchorElm;
         meiElementName = 'geogName';
-        defaultMeiAtts = {role: "", auth: "VIAF", auth.uri: "http://www.viaf.org", codedval: ""};
+        defaultMeiAtts = {role: "", auth: "VIAF", auth_uri: "http://www.viaf.org", codedval: ""};
         editor.execCommand('mceEditMeiAttributes', false);
     }
 
@@ -255,7 +255,7 @@ tinymce.PluginManager.add('corpName', function(editor) {
     function insertCorpName() {
         var selection = editor.selection, dom = editor.dom, selectedElm, anchorElm;
         meiElementName = 'corpName';
-        defaultMeiAtts = {role: "", auth: "VIAF", auth.uri: "http://www.viaf.org", codedval: ""};
+        defaultMeiAtts = {role: "", auth: "VIAF", auth_uri: "http://www.viaf.org", codedval: ""};
         editor.execCommand('mceEditMeiAttributes', false);
     }
 
@@ -277,7 +277,7 @@ tinymce.PluginManager.add('title', function(editor) {
     function insertTitle() {
         var selection = editor.selection, dom = editor.dom, selectedElm, anchorElm;
         meiElementName = 'title';
-        defaultMeiAtts = {type: "", auth: "VIAF", auth.uri: "http://www.viaf.org", codedval: ""};
+        defaultMeiAtts = {type: "", auth: "VIAF", auth_uri: "http://www.viaf.org", codedval: ""};
         editor.execCommand('mceEditMeiAttributes', false);
     }
 
