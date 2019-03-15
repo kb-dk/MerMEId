@@ -139,13 +139,13 @@
                                             <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/tree-1.png" alt="component" border="0"/>
                                         </h:td>
                                         <h:td>
-                                            <!--<h:fieldset class="compact">
+                                            <h:fieldset class="compact">
                                                 <h:span class="blocklabel strong">Component <dcm:id/> 
-                                                    <dcm:element-buttons 
+                                                    <!--<dcm:element-buttons 
                                                         triggers="up down copy add remove" 
                                                         nodeset="m:item" 
                                                         index="repeat-item-component"
-                                                        origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:componentList/m:item"/>
+                                                        origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:componentList/m:item"/>-->
                                                     <dcm:attribute-editor ref="."/>
                                                 </h:span>
                                                 <h:div class="vertical_spacer"> </h:div>
@@ -175,7 +175,7 @@
                                                         
                                                     </xf:case>
                                                 </xf:switch>
-                                            </h:fieldset>-->
+                                            </h:fieldset>
                                         </h:td>
                                     </h:tr>
                                 </xf:repeat>
