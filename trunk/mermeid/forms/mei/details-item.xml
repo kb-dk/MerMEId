@@ -134,12 +134,12 @@
                         <xf:group ref=".[m:componentList]">
                             <h:table class="component_list" cellpadding="0" cellspacing="0" border="0">
                                 <xf:repeat nodeset="m:componentList/m:item" id="repeat-item-component">
-                                    <!--<h:tr class="component">
+                                    <h:tr class="component">
                                         <h:td class="{if(position()=last()) then 'last_cell' else 'index_cell'}">
                                             <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/tree-1.png" alt="component" border="0"/>
                                         </h:td>
                                         <h:td>
-                                            <h:fieldset class="compact">
+                                            <!--<h:fieldset class="compact">
                                                 <h:span class="blocklabel strong">Component <dcm:id/> 
                                                     <dcm:element-buttons 
                                                         triggers="up down copy add remove" 
@@ -175,9 +175,9 @@
                                                         
                                                     </xf:case>
                                                 </xf:switch>
-                                            </h:fieldset>
+                                            </h:fieldset>-->
                                         </h:td>
-                                    </h:tr>-->
+                                    </h:tr>
                                 </xf:repeat>
                             </h:table>
                         </xf:group>
