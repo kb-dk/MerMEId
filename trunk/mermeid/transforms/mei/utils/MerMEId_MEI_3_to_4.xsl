@@ -180,6 +180,18 @@
     <xsl:template match="@source">
         <xsl:attribute name="source">#<xsl:value-of select="translate(.,'#','')"/></xsl:attribute>
     </xsl:template>
+    
+    <!-- Move source-specific instrumentations inside main <perfResList> (only one <perfResList> allowed in <perfMedium>)  -->
+    <xsl:template match="m:perfMedium/m:perfResList[@source and ../m:perfResList[not(@source)]]">
+        <!-- Delete only if there is a general <perfResList> element to move it into -->
+    </xsl:template>
+    <xsl:template match="m:perfMedium/m:perfResList[not(@source)]">
+        <xsl:copy>
+            <xsl:apply-templates select="@* | *"/>
+            <xsl:copy-of select="//m:perfResList[@source]"/>
+        </xsl:copy>
+    </xsl:template>
+    
 
     <!-- MISCELLANEOUS -->
     
