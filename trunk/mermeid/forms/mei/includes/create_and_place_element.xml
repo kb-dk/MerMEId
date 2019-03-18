@@ -29,7 +29,7 @@
     
     <!-- Try to guess the right point of insertion if element has a predicate (like [@type='subordinate']) and element of the same name exist already. -->
     <!-- This should make some of the calculations below obsolete -->
-    <xf:var name="insertposition" select="if (contains($nodeset,'[') and *[local-name()=$local-name]) then count(*[local-name()=$local-name][position()=last()]::preceding-sibling::*)+2 else 1"/>
+    <xf:var name="insertposition" select="if (contains($nodeset,'[') and *[local-name()=$local-name]) then count(*[local-name()=$local-name][position()=last()]/preceding-sibling::*)+2 else 1"/>
     
 
     <xf:action if="$origin">
