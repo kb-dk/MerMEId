@@ -32,7 +32,7 @@
     <xf:var name="insertposition" select="if (contains($nodeset,'[') and *[local-name()=$local-name]) then count(*[local-name()=$local-name][position()=last()]/preceding-sibling::*)+2 else 1"/>
     
 <!-- Debug -->    
-<h:p>Insert at: <xf:output value="$insertposition"/></h:p>
+<h:p>Insert at: <xf:output ref="$insertposition"/></h:p>
 
     <xf:action if="$origin">
         <xf:insert context="." origin="$origin" nodeset="xxf:evaluate($nodeset)" at="$insertposition"/>
