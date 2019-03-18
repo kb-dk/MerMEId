@@ -35,14 +35,15 @@
 <xf:message>Insert at: <xf:output value="$insertposition"/></xf:message>
 
     <xf:action if="$origin">
-        <xf:insert context="." origin="$origin" nodeset="xxf:evaluate($nodeset)" at="$insertposition"/>
+        <!--<xf:insert context="." origin="$origin" nodeset="xxf:evaluate($nodeset)" at="$insertposition"/>-->
+        <xf:insert context="." origin="$origin" nodeset="*" at="$insertposition"/>
     </xf:action>
     <xf:action if="not($origin)">
         <!-- if no model is pointed to, just create an empty element of the name indicated. -->
         <!-- Still some issues here. The element is created with m: prefix and namespace declaration. 
              Using resolve-QName doesn't seem to work: 
              <xf:insert context="." origin="xf:element(resolve-QName($nodeset,.))"/>     -->
-        <xf:insert context="." origin="xf:element($nodeset)" at="$insertposition"/>
+        <xf:insert context="." origin="xf:element($nodeset)" nodeset="*" at="$insertposition"/>
     </xf:action>
 
     <!-- now, move the new element into place according to the empty model if necessary-->
