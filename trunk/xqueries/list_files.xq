@@ -47,7 +47,6 @@ declare variable $to       :=  $from      + xs:integer(session:get-attribute("nu
 declare variable $sort-options :=
 (<option value="person,title">Composer,Title</option>,
 <option value="person,date">Composer, Year</option>,
-<option value="person,work_number">Composer,Work number</option>,
 <option value="date,person">Year, Composer</option>,
 <option value="date,title">Year, Title</option>,
 <option value="null,work_number">Work number</option>
@@ -82,6 +81,8 @@ declare function local:format-reference(
         else
           substring($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date[@isodate][1]/@isodate,1,4)
 
+	(: for some reason the sort-key function must be called outside the actual searching to have correct work number sorting when searching within all collections :)
+    let $dummy := loop:sort-key("dummy_collection", $doc, "null")
 
 	let $ref   := 
 	<tr class="result {$class}">
@@ -90,7 +91,7 @@ declare function local:format-reference(
 	  </td>
 	  <td>{app:view-document-reference($doc)}</td>
 	  <td>{"  ",$date_output}</td>
-	  <td nowrap="nowrap">{app:get-edition-and-number($doc)} </td>
+	  <td nowrap="nowrap">{app:get-edition-and-number($doc)}</td>
 	  <td class="tools">
 	    <a target="_blank"
             title="View XML source" 

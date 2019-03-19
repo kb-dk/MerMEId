@@ -40,20 +40,34 @@ declare function loop:pubstatus($doc as node()) as xs:boolean
 
 };
 
+declare function loop:work-number-for-sorting ($identifier as xs:string?) as xs:string {
+      (: get anything that might be before the number :)
+      let $prefix:= replace($identifier,'^([\D\s]*)(\d*)(.*?)$','$1')
+      (: extract first number if any :)
+      let $digits:= replace($identifier,'^([\D\s]*)(\d*)(.*?)$','$2')
+      let $number:= if (string(number($digits)) != 'NaN')
+        then number($digits)
+        else 0 
+      (: and any trailing stuff :)
+      let $suffix:= replace($identifier,'^([\D\s]*)(\d*)(.*?)$','$3')
+	return concat($prefix,format-number(number($number),"0000000000"),$suffix)
+};
+
 declare function loop:sort-key (
-  $coll as xs:string, 
+  $coll as xs:string?, 
   $doc as node(),
   $key as xs:string) as xs:string
 {
 
   (: We don't want to waste time on looking up $collection if that parameter
   is fixed in the query :)
-
   let $collection:=
     if($coll) then
-      $coll
+        $coll
+    else if ($doc//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0][1]/string()) then
+        $doc//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0][1]/string()
     else
-      $doc//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0][1]/string() 
+        ""
 
   let $sort_key:=
     if($key eq "person") then
@@ -75,15 +89,7 @@ declare function loop:sort-key (
       else
         "0000"
     else if($key eq "work_number") then
-      let $identifier:=$doc/m:meiHead/m:workList[1]/m:work[1]/m:identifier[@label=$collection][1]/string()
-      (: extract any trailing number :)
-      let $number:= replace($identifier,'^.*?(\d*)$','$1')
-      (: and anything that might be before the number :)
-      let $prefix:= replace($identifier,'^(.*?)\d*$','$1')
-      (: make the number a 15 character long string padded with zeros :)
-      let $padded_number:=concat("0000000000000000",normalize-space($number))
-      let $len:=string-length($padded_number)-14
-	return concat($prefix,substring($padded_number,$len,15))
+       concat($collection," ",loop:work-number-for-sorting($doc/m:meiHead/m:workList/m:work[1]/m:identifier[@label=$collection][1]/string()) )
     else 
       ""
 
