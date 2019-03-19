@@ -50,7 +50,7 @@ declare function loop:work-number-for-sorting ($identifier as xs:string?) as xs:
         else 0 
       (: and any trailing stuff :)
       let $suffix:= replace($identifier,'^([\D\s]*)(\d*)(.*?)$','$3')
-	return concat($prefix,format-number(number($number),"0000000000"),$suffix)
+	return concat($prefix,format-number($number,"0000000000"),$suffix)
 };
 
 declare function loop:sort-key (
