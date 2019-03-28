@@ -325,91 +325,12 @@
 
   <xsl:template name="replace_nodes">
     <xsl:param name="text"/>
-    
-    <xsl:choose>
-      <xsl:when test="contains($text,'&lt;') and contains(substring-after($text,'&lt;'),'&gt;')">
-        <xsl:copy-of select="substring-before($text,'&lt;')"/>
-        <xsl:variable name="element_and_attr">
-          <xsl:value-of select="substring-before(substring-after($text,'&lt;'),'&gt;')"/>
-        </xsl:variable>
-        <xsl:variable name="element">
-          <xsl:choose>
-            <xsl:when test="contains($element_and_attr,' ')">
-              <xsl:value-of select="substring-before($element_and_attr,' ')"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:choose>
-                <xsl:when test="contains($element_and_attr,'/')">
-                  <xsl:value-of select="substring-before($element_and_attr,'/')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="$element_and_attr"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="attributes">
-          <xsl:if test="contains($element_and_attr,' ')">
-            <xsl:value-of select="substring-after($element_and_attr,' ')"/>
-          </xsl:if>
-        </xsl:variable>
-        <xsl:choose>
-          <xsl:when test="contains($text,concat('&lt;/',$element,'&gt;'))">
-            <xsl:variable name="begin" select="concat('&lt;',$element_and_attr,'&gt;')"/>
-            <xsl:variable name="end" select="concat('&lt;/',$element,'&gt;')"/>
-            <!-- nodes are assumed to be HTML, hence the HTML namespace -->
-            <xsl:element name="{$element}" namespace="http://www.w3.org/1999/xhtml">
-              <xsl:call-template name="addAttributes">
-                <xsl:with-param name="attrString" select="$attributes"/>
-              </xsl:call-template>
-              <xsl:call-template name="replace_nodes">
-                <xsl:with-param name="text" select="substring-before(substring-after($text,$begin),$end)"/>
-              </xsl:call-template>
-            </xsl:element>
-            <xsl:call-template name="replace_nodes">
-              <xsl:with-param name="text" select="substring-after($text,$end)"/>
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:otherwise>
-            <!-- No end element. Something like <br/>, <br> or <img src=""/> assumed -->
-            <xsl:if test="string-length($element) &gt; 0">
-              <xsl:element name="{$element}" namespace="http://www.w3.org/1999/xhtml">
-                <xsl:call-template name="addAttributes">
-                  <xsl:with-param name="attrString" select="$attributes"/>
-                </xsl:call-template>
-              </xsl:element>
-            </xsl:if>
-            <xsl:call-template name="replace_nodes">
-              <xsl:with-param name="text" select="substring-after($text,'&gt;')"/>
-            </xsl:call-template>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:copy-of select="$text"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <!-- Wrap contents in a temporary <div> root element and parse XML -->
+    <xsl:variable name="fragment">&lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;<xsl:value-of select="$text"/>&lt;/div&gt;</xsl:variable>
+    <xsl:for-each select="parse-xml($fragment)/h:div">
+      <xsl:apply-templates/>
+    </xsl:for-each>
   </xsl:template>
-
-  <xsl:template name="addAttributes">
-    <xsl:param name="attrString"/>
-    <xsl:variable name="thisAttrPart1" select="normalize-space(substring-before($attrString,'&#34;'))"/>
-    <xsl:variable name="thisAttrPart2" select="substring-before(substring-after($attrString,concat($thisAttrPart1,'&#34;')),'&#34;')"/>
-    <xsl:variable name="attrName" select="substring-before($thisAttrPart1,'=')"/>
-    <xsl:variable name="remainder" select="substring-after(substring-after($attrString,$thisAttrPart2),'&#34;')"/>
-    <xsl:if test="$attrName">
-      <xsl:attribute name="{$attrName}">
-        <xsl:value-of select="$thisAttrPart2"/>
-      </xsl:attribute>
-      <xsl:if test="normalize-space($remainder)!='' and normalize-space($remainder)!='/'">
-        <xsl:call-template name="addAttributes">
-          <xsl:with-param name="attrString" select="$remainder"/>
-        </xsl:call-template>
-      </xsl:if>
-    </xsl:if>
-  </xsl:template>
-
   <!-- End entity conversion -->
 
   <!-- HTML -> MEI -->
