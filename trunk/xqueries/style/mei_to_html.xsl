@@ -336,11 +336,10 @@
 		<xsl:if test="m:title[@type='main' or not(@type)][text()]">
 			<xsl:for-each select="m:title[@type='main' or not(@type)][text()]">
 				<xsl:variable name="lang" select="@xml:lang"/>
+				<xsl:variable name="pos" select="count(preceding-sibling::m:title[@xml:lang=$lang]) + 1"/>
 				<xsl:variable name="language_class">
 					<xsl:choose>
-						<xsl:when
-							test="position()&gt;1 and @xml:lang!=parent::node()/m:title[1]/@xml:lang"
-							>alternative_language</xsl:when>
+						<xsl:when test="position()&gt;1 and @xml:lang!=parent::node()/m:title[1]/@xml:lang">alternative_language</xsl:when>
 						<xsl:otherwise>preferred_language</xsl:otherwise>
 					</xsl:choose>
 				</xsl:variable>
@@ -352,7 +351,8 @@
 						<xsl:apply-templates select="."/>
 					</xsl:element>
 				</h1>
-				<xsl:for-each select="../m:title[@type='subordinate'][@xml:lang=$lang]">
+				<!-- for each title, find the matching subtitle (i.e., same language and position) -->
+				<xsl:for-each select="../m:title[@type='subordinate'][@xml:lang=$lang][position()=$pos]">
 					<h2 class="subtitle">
 						<xsl:element name="span">
 							<xsl:attribute name="class">
@@ -362,12 +362,12 @@
 						</xsl:element>
 					</h2>
 				</xsl:for-each>
-				<xsl:for-each
-					select="../m:title[@type='alternative'][@xml:lang=$lang and text()]">
+				<xsl:for-each select="../m:title[@type='alternative'][@xml:lang=$lang and text()][position()=$pos]">
 					<h2 class="subtitle alternative_title">
 						<xsl:element name="span">
-							<xsl:attribute name="class"><xsl:value-of select="$language_class"
-							/></xsl:attribute> (<xsl:apply-templates select="."/>)
+							<xsl:attribute name="class">
+								<xsl:value-of select="$language_class"/>
+							</xsl:attribute> (<xsl:apply-templates select="."/>)
 						</xsl:element>
 					</h2>
 				</xsl:for-each>
