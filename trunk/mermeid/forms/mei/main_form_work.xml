@@ -298,6 +298,8 @@
 								"http://"). </h:span></h:a></h:legend>
 					<dcm:create nodeset="m:relationList" label="Add relation"
 						origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:relationList"/>
+					<dcm:create ref="m:relationList" nodeset="m:relation" label="Add relation"
+						origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:relationList/m:relation"/>
 					<h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
 						<xf:repeat nodeset="m:relationList/m:relation" id="work_relations">
 							<h:tr>
