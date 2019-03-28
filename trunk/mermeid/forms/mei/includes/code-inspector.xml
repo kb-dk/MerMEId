@@ -3,7 +3,8 @@
     xmlns:h="http://www.w3.org/1999/xhtml">
 <!-- code inspector -->
     <xf:group ref=".[instance('parameters')/dcm:code_inspector='true']">
-        <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+        <!--<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>-->
+        <fr:code-mirror xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
     </xf:group>
 <!-- end code inspector -->    
 </h:div>
