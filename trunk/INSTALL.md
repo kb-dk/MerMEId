@@ -72,7 +72,7 @@ refer to your server as example.org.
 ### More HTTPD
 
 Then copy the file
-[apache-httpd/conf-devel.conf]/(apache-httpd/conf-devel.conf) to where
+[apache-httpd/conf-devel.conf](apache-httpd/conf-devel.conf) to where
 your httpd has its virtual host configurations and restart HTTPD.
 
 (On Ubuntu this is /etc/apache2/sites-enabled/, on Red Hat/Cent OS it is
