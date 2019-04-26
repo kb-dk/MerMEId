@@ -324,6 +324,7 @@ tinymce.PluginManager.add('title', function(editor) {
     theme_advanced_path:                    false,
     visual_table_class:                     "fr-tinymce-table",
     editor_css:                             "",
+    content_css:                            "/editor/style/xform_style.css",
     theme_advanced_fonts:                   "Arial=arial,helvetica,sans-serif;"+
                                             "Courier New=courier new,courier;"+
                                             "Helvetica=helvetica,arial,sans-serif;"+

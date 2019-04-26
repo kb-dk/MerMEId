@@ -104,11 +104,16 @@
 }
 
 /* tinyMCE text editor */
-
 .xbl-fr-tinymce {
     display: inline;
     display: inline-block;
     width: 90%;
+}
+
+.mceContentBody {
+    /* the white-space:pre-wrap option prevents &amp;nbsp; entities created by tinymce; 
+       in effect, it also cuts repeated spaces down to one */
+    white-space: pre-wrap;
 }
 
 /* END DISABLE ORBEON STYLING */
