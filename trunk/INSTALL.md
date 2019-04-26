@@ -1,6 +1,8 @@
 
 [MerMEId](../README.md) | [Source code](./README.md) | [Install](INSTALL.md) | [Using Docker](USING_DOCKER.md)
 
+__PLEASE NOTE: The installation method described below is currently not recommended due to incompatibilities causing Xinclude to fail in Orbeon. Please use the [Docker setup](USING_DOCKER.md) instead.__
+
 # Nine steps towards a MerMEId of your own
 
 Since everything is running inside portable standard server software
