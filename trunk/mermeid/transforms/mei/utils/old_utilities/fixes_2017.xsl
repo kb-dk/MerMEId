@@ -49,7 +49,7 @@
         <xsl:element name="addrLine">Royal Danish Library</xsl:element>
     </xsl:template>
     <xsl:template match="m:ptr/@target[.='http://www.kb.dk/dcm']">
-        <xsl:attribute name="target">http://www.kb.dk/en/nb/dcm</xsl:attribute>
+        <xsl:attribute name="target">http://www.kb.dk</xsl:attribute>
     </xsl:template>
         
         

@@ -25,14 +25,21 @@
                 XSL transformation for such tasks often is more efficient than editing all the
                 documents by hand. Instead of downloading all of your files, transforming them
                 locally on your computer, and upload them back to the server, MerMEId offers a
-                script to do such a transformation directly on the server. </p>
+                script to do such a transformation directly on the server.<br/>
+                Please note, however, that due to software limitations transformations cannot make 
+                any changes to the documents' root element (that is, <kbd>&lt;mei&gt;</kbd>), 
+                such as changing the <kbd>meiversion</kbd> attribute. To migrate your data to newer 
+                MEI versions, therefore, you will need to download your data, transform them locally 
+                and upload them to the new database.
+            </p>
             <ul class="important">
                 <li>Warning! Transforming your documents directly on the server is an irreversible
                     process.<br /> If your transformation does not work as expected, your data may
                     be completely and permanently damaged. Make sure to test your transformation
                     thoroughly and to save a backup copy of your data somewhere else before running
-                    the transformation. <br /> For safety reasons, only database administrators have
-                    access to using the transformation service. </li>
+                    the transformation. <br /> For safety reasons, the batch transformation service 
+                    is disabled by default. Ask your system administrator to enable it by editing the 
+                    file <kbd>/db/mermeid/tools/batch_transform.xq</kbd> in the eXist database.</li>
             </ul>
             <p>Prior to using the script, an XSLT style sheet making the desired changes must be
                 placed somewhere where your server has access to it.</p>
@@ -44,13 +51,12 @@
                 suggests default settings in some of the fields:</p>
             <p><img alt="Batch transform" src="../images/manual/batch_transform.png"
                     class="illustration" /></p>
-            <p>Fill in the form to define which files to select. Type the XSLT style sheet's URI
-                (the location http://[your-server]/storage/ is configured in MerMEId to be
-                equivalent to the eXist database's root collection /db/; but your style sheet may
-                also be located outside of the database or on some other server). Click the 'Search
-                files' button to get a list of files matching the search criteria. Possibly not all
-                files will be changed &mdash; that depends on your XSL transformation. The list only
-                indicates the files that the script will attempt to transform.</p>
+            <p>Fill in the form to define which files to select. The default location of the XSLT style sheets 
+                (http://[your-server]/storage/tools/batch_xsl/) is referring to the collection /db/mermeid/tools/batch_xsl/ 
+                in your eXist database, but your style sheet may also be located outside of the database or on some other server. 
+                Click the 'Search files' button to get a list of files matching the search criteria. 
+                Possibly not all files will actually be changed &mdash; that depends on your XSL transformation. 
+                The list only indicates the files that the script will attempt to transform.</p>
             <p>Hit the 'Transform' button to run the transformation.</p>
             <ul class="important">
                 <li>If you are transforming many files, the connection may time out before the
@@ -64,10 +70,10 @@
                 result page will list the files changed and those that were unaffected by the
                 transformation.</p>
         </div>
-        <p class="footer"><a href="http://www.kb.dk/en/nb/dcm" title="DCM"><img
+        <p class="footer"><a href="http://www.kb.dk" title="DCM"><img
                     style="border: 0px; vertical-align:middle;" alt="DCM Logo"
                     src="../images/dcm_logo_small_white.png" /></a> 2017 Danish Centre for Music
             Editing | Royal Danish Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
-                href="http://www.kb.dk/en/nb/dcm">www.kb.dk/en/nb/dcm</a></p>
+                href="http://www.kb.dk">www.kb.dk/en/nb/dcm</a></p>
     </body>
 </html>

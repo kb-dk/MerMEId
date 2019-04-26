@@ -11,7 +11,7 @@
     <dcm:create ref=".[not(m:persName)]"
         nodeset="m:persName"
         label="Add person"
-        origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName"/>
+        origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:persName"/>
     
     <xf:group ref="m:persName">
         <h:div class="blocklabel">
@@ -22,7 +22,7 @@
             <h:span class="fixed_width">
                 Certainty <h:a class="help">&#160;?<h:span class="comment">Indicates the degree of certainty of the person's identity</h:span></h:a>
             </h:span>
-            <!--<xf:group ref="..[m:persName[@authority or @authURI or @codedval]]">-->
+            <!--<xf:group ref="..[m:persName[@auth or @auth.uri or @codedval]]">-->
                 <h:span class="fixed_width_long"> Authority file <h:a class="help">&#160;?<h:span class="comment">References to
                     authority files are used for disambiguation or for linking resources by means of unique identifiers</h:span></h:a>
                 </h:span>
@@ -41,14 +41,14 @@
                 triggers="add remove up down" 
                 nodeset="m:persName" 
                 index="relators-repeat"
-                origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
+                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:persName[1]"/>
         </xf:group>
         <xf:group ref=".[name(..)='hand']">
             <dcm:element-buttons 
                 triggers="remove" 
                 nodeset="m:persName" 
                 index="relators-repeat"
-                origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[1]"/>
+                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:persName[1]"/>
         </xf:group>
         <dcm:attribute-editor ref="."/>
         <h:br/>

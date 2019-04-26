@@ -375,13 +375,13 @@
                                 </h:div>
                                 <h:div>
                                     <dcm:create ref="m:physLoc/m:repository"
-                                        nodeset="m:identifier[@authority='RISM']"
+                                        nodeset="m:identifier[@auth='RISM']"
                                         label="Add RISM siglum"
-                                        origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:identifier][1]/m:physLoc/m:repository/m:identifier[@authority='RISM']"/>
+                                        origin="xxf:instance('bibl-type-instance')/m:biblList/m:bibl[m:physLoc/m:repository/m:identifier][1]/m:physLoc/m:repository/m:identifier[@auth='RISM']"/>
                                     <dcm:rism-sigla
-                                        ref="m:physLoc/m:repository/m:identifier[@authority='RISM' or @authority='rism']"/>
+                                        ref="m:physLoc/m:repository/m:identifier[@auth='RISM' or @auth='rism']"/>
                                     <dcm:attribute-editor
-                                        ref="m:physLoc/m:repository/m:identifier[@authority='RISM' or @authority='rism']"
+                                        ref="m:physLoc/m:repository/m:identifier[@auth='RISM' or @auth='rism']"
                                     />
                                 </h:div>
                                 <dcm:create ref="m:physLoc" nodeset="m:identifier"

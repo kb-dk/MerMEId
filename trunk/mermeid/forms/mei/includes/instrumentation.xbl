@@ -94,13 +94,13 @@
 							
 							<xf:group ref=".">
 								<h:div class="blocklabel strong">Ensembles </h:div>
-								<xf:trigger ref=".[count(m:perfResList)=0]" class="create_button">
+								<xf:trigger ref=".[count(m:perfResList[not(@source)])=0]" class="create_button">
 									<xf:label><img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
 									<xf:action ev:event="DOMActivate">
 										<xxf:show dialog="ensemble-menu"/>
 									</xf:action>
 								</xf:trigger>
-								<xf:repeat nodeset="m:perfResList" id="repeat-ensemble">
+								<xf:repeat nodeset="m:perfResList[not(@source)]" id="repeat-ensemble">
 									<h:fieldset>
 										<h:legend>
 											<xf:output value="if (m:head!='') then m:head else '[Ensemble]'"/> &#160;
@@ -120,7 +120,7 @@
 												<xxf:dialog id="delete-ensemble-dialog" appearance="full">
 													<xf:label>There are references to this ensemble</xf:label>
 													<xf:var name="thisid" select="@xml:id"/>
-													<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfResList[@n=$thisid])"/> 
+													<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentList//m:perfResList[@n=$thisid])"/> 
 														music component(s) (movements or sections defined below) refer to this
 														ensemble.<h:br/>
 														Do you want to delete all occurrences in components also?
@@ -138,7 +138,7 @@
 														<xf:label>Yes, delete all occurrences</xf:label>
 														<xf:action ev:event="DOMActivate">
 															<xf:delete nodeset="."/>
-															<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfResList[@n=$thisid]">
+															<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentList//m:perfResList[@n=$thisid]">
 																<xf:delete nodeset="."/>
 															</xf:action>
 															<xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
@@ -157,7 +157,7 @@
 													<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xf:var name="id" select="@xml:id"/>
-														<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfResList[@n=$id])"/>
+														<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentList//m:perfResList[@n=$id])"/>
 														<xf:action if="$no = 0">
 															<xf:delete nodeset="."/>
 															<xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
@@ -178,7 +178,7 @@
 											<dcm:create 
 												nodeset="m:head"
 												label="Add ensemble heading"
-												origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfResList/m:head"/>
+												origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfResList/m:head"/>
 											<xf:input ref="m:head" class="long">
 												<xf:label class="fixed_width">Heading <h:a class="help">&#160;?<h:span 
 													class="comment">An optional heading or name wich may be used with or 
@@ -280,13 +280,13 @@
 												<dcm:element-buttons
 													triggers="up down add" 
 													nodeset="m:perfRes" 
-													origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"
+													origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"
 													index="repeat-ensemble-performer"/>
 												<h:span class="editmenu">
 													<xxf:dialog id="delete-ensemble-performer-dialog" appearance="full">
 														<xf:label>There are references to this performer</xf:label>
 														<xf:var name="thisid" select="@xml:id"/>
-														<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$thisid])"/> 
+														<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentList//m:perfRes[@n=$thisid])"/> 
 															music component(s) (movements or sections defined below) refer to this
 															performer.<h:br/>
 															Do you want to delete all occurrences in components also?
@@ -304,7 +304,7 @@
 															<xf:label>Yes, delete all occurrences</xf:label>
 															<xf:action ev:event="DOMActivate">
 																<xf:delete nodeset="."/>
-																<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$thisid]">
+																<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentList//m:perfRes[@n=$thisid]">
 																	<xf:delete nodeset="."/>
 																</xf:action>
 																<xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
@@ -323,7 +323,7 @@
 														<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 														<xf:action ev:event="DOMActivate">
 															<xf:var name="id" select="@xml:id"/>
-															<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$id])"/>
+															<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentList//m:perfRes[@n=$id])"/>
 															<xf:action if="$no = 0">
 																<xf:delete nodeset="."/>
 																<xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
@@ -353,7 +353,7 @@
 								<dcm:create
 									nodeset="m:perfRes"
 									label="Add performer"
-									origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"/>
+									origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"/>
 								<xf:group ref=".[m:perfRes]">
 									<h:div class="vertical_spacer"/> 
 									<h:span class="fixed_width_mediumlong">No. &amp; name <h:a class="help">&#160;?<h:span 
@@ -383,13 +383,13 @@
 										<dcm:element-buttons
 											triggers="add up down copy" 
 											nodeset="m:perfRes" 
-											origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"
+											origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfRes[1]"
 											index="repeat-performer"/>
 										<h:span class="editmenu">
 											<xxf:dialog id="delete-performer-dialog" appearance="full">
 												<xf:label>There are references to this performer</xf:label>
 												<xf:var name="thisid" select="@xml:id"/>
-												<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$thisid])"/> 
+												<h:p><xf:output value="count(ancestor::*[local-name()='expression'][1]/m:componentList//m:perfRes[@n=$thisid])"/> 
 													music component(s) (movements or sections defined below) refer to this
 													performer.<h:br/>
 													Do you want to delete all occurrences in components also?
@@ -407,7 +407,7 @@
 													<xf:label>Yes, delete all occurrences</xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xf:delete nodeset="."/>
-														<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$thisid]">
+														<xf:action xxf:iterate="ancestor::*[local-name()='expression'][1]/m:componentList//m:perfRes[@n=$thisid]">
 															<xf:delete nodeset="."/>
 														</xf:action>
 														<xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
@@ -426,7 +426,7 @@
 												<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/remove.gif" alt="Delete" title="Delete row"/></xf:label>
 												<xf:action ev:event="DOMActivate">
 													<xf:var name="id" select="@xml:id"/>
-													<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentGrp//m:perfRes[@n=$id])"/>
+													<xf:var name="no" select="count(ancestor::*[local-name()='expression'][1]/m:componentList//m:perfRes[@n=$id])"/>
 													<xf:action if="$no = 0">
 														<xf:delete nodeset="."/>
 														<xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>

@@ -30,7 +30,7 @@ declare function local:movement-title ($key as node()) as xs:string
     else
         ''
         
-    let $title := $key/m:titleStmt/m:title[string-length(.)>0][1]
+    let $title := $key/m:title[string-length(.)>0][1]
 
     return concat($num,$title,$key/m:tempo[string-length(.)>0][1]) 
 };
@@ -80,7 +80,7 @@ declare function local:movement($expression) as node()
                     ''
              }
              {
-                for $expr in $expression/(m:expressionList|m:componentGrp)/m:expression[descendant-or-self::*[normalize-space(concat(m:incip/m:incipText[1]/m:p[1]/string(),m:tempo[1]/string(),m:key[1]/string(),m:meter[1]/string()))!='']
+                for $expr in $expression/(m:expressionList|m:componentList)/m:expression[descendant-or-self::*[normalize-space(concat(m:incip/m:incipText[1]/m:p[1]/string(),m:tempo[1]/string(),m:key[1]/string(),m:meter[1]/string()))!='']
                     	    [not(descendant-or-self::*/m:incip/m:graphic[@targettype=$resolution and @target!=''])]]
             	    (: loop through sub-expressions (acts/movements) :)
                      return local:movement($expr)
@@ -101,15 +101,15 @@ declare function local:movement($expression) as node()
                     (for instance, ?c=CNW) to the URL</td></tr>
                   else 
 		    
-            	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection and m:workDesc/m:work//m:expression[
+            	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection and m:workList/m:work//m:expression[
             	    normalize-space(concat(m:incip/m:incipText[1]/m:p[1]/string(),m:tempo[1]/string(),m:key[1]/string()))!='' and
             	    not(descendant-or-self::*/m:incip/m:graphic[@targettype=$resolution and @target!=''])]]
-                    order by local:sort-key(string($c/m:workDesc/m:work/m:identifier[@label=$collection])) 
+                    order by local:sort-key(string($c/m:workList/m:work/m:identifier[@label=$collection])) 
             	    return 
             	       <div class="work" style="margin-left:2em;">
-            	         <h3 class="heading" style="page-break-after: avoid; margin-left:-2em;"><b>{concat($collection,' ',$c/m:workDesc/m:work/m:identifier[@label=$collection]/string(),' ',$c/m:workDesc/m:work[1]/m:titleStmt/m:title[@type='main' or not(@type)][1]/string())}</b></h3>
+            	         <h3 class="heading" style="page-break-after: avoid; margin-left:-2em;"><b>{concat($collection,' ',$c/m:workList/m:work/m:identifier[@label=$collection]/string(),' ',$c/m:workList/m:work[1]/m:title[@type='main' or not(@type)][1]/string())}</b></h3>
             	         {
-            	         for $expr in $c/m:workDesc/m:work/m:expressionList/m:expression[descendant-or-self::*[normalize-space(concat(m:incip/m:incipText[1]/m:p[1]/string(),m:tempo[1]/string(),m:key[1]/string()))!='']
+            	         for $expr in $c/m:workList/m:work/m:expressionList/m:expression[descendant-or-self::*[normalize-space(concat(m:incip/m:incipText[1]/m:p[1]/string(),m:tempo[1]/string(),m:key[1]/string()))!='']
                     	    [not(descendant-or-self::*/m:incip/m:graphic[@targettype=$resolution and @target!=''])]]
             	         (: loop through main expressions (versions) :)
                          return local:movement($expr)

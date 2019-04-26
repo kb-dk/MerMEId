@@ -122,15 +122,15 @@
   
   <h:fieldset id="top_status_bar">
     <xf:group id="editing_status"
-      ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[normalize-space(.)][1]">
-      <xf:output value="concat(substring(.,1,80), instance('temp')/etc[string-length(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[1])&gt;80], instance('temp')[changed='true']/change_marker)" 
+      ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:title[normalize-space(.)][1]">
+      <xf:output value="concat(substring(.,1,80), instance('temp')/etc[string-length(instance('data-instance')/m:meiHead/m:workList/m:work/m:title[1])&gt;80], instance('temp')[changed='true']/change_marker)" 
         id="work_identifier">
         <xf:label/> 
         <xf:action ev:event="xforms-value-changed">
           <xf:load resource="javascript:setPageTitle()"/>
           <!-- copy the first non-empty work title to file title -->
-          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:fileDesc/m:titleStmt/m:title[1]" 
-            value="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[normalize-space(.)][1]"/>
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:fileDesc/m:title[1]" 
+            value="instance('data-instance')/m:meiHead/m:workList/m:work/m:title[normalize-space(.)][1]"/>
         </xf:action>
       </xf:output>
     </xf:group>

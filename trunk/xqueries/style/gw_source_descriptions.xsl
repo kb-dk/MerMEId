@@ -85,10 +85,10 @@
 		<div id="main_content">
 			<!-- main identification -->
 			<xsl:variable name="catalogue_no">
-				<xsl:value-of select="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]"/>
+				<xsl:value-of select="m:meiHead/m:workList/m:work/m:identifier[@type=$file_context]"/>
 			</xsl:variable>
 
-			<xsl:if test="m:meiHead/m:workDesc/m:work/m:identifier[@type=$file_context]/text()">
+			<xsl:if test="m:meiHead/m:workList/m:work/m:identifier[@type=$file_context]/text()">
 				<div class="series_header {$file_context}">
 					<xsl:value-of select="$file_context"/>
 					<xsl:text> </xsl:text>
@@ -116,7 +116,7 @@
 	<xsl:template name="body_main_content">
 
 		<xsl:for-each select="m:meiHead/
-			m:workDesc/
+			m:workList/
 			m:work/
 			m:titleStmt">
 			<xsl:if test="m:title[@type='main' or not(@type)][text()]">
@@ -172,7 +172,7 @@
 		</xsl:for-each>
 
 		<!-- sources -->
-		<xsl:apply-templates select="//m:sourceDesc"/>
+		<xsl:apply-templates select="//m:manifestationList"/>
 	</xsl:template>
 
 
@@ -181,7 +181,7 @@
 	<!-- generate a page title -->
 	<xsl:template name="page_title">
 		<xsl:for-each select="m:meiHead/
-			m:workDesc/
+			m:workList/
 			m:work/
 			m:titleStmt">
 			<xsl:choose>
@@ -225,7 +225,7 @@
 
 
 	<!-- sources -->
-	<xsl:template match="m:sourceDesc[m:source//text()]">
+	<xsl:template match="m:manifestationList[m:manifestation//text()]">
 		<xsl:param name="global"/>
 		<p>DESCRIPTION OF THE SOURCES</p>
 		<!-- sort order lists must begin and end with a semicolon -->
@@ -240,7 +240,7 @@
 			<!-- skip reproductions (=reprints) - they are treated elsewhere. -->
 			<!-- If listing global sources, list only those not referring to a specific version (if more than one) -->
 			<xsl:for-each
-				select="m:source[not(m:relationList/m:relation[@rel='isReproductionOf'])]
+				select="m:manifestation[not(m:relationList/m:relation[@rel='isReproductionOf'])]
 						[$global!='true' or ($global='true' and (count(//m:work/m:expressionList/m:expression)&lt;2
 						or not(m:relationList/m:relation[@rel='isEmbodimentOf']/@target)))]">
 				<xsl:choose>
@@ -251,7 +251,7 @@
 							select="concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
 						<xsl:variable name="doc" select="document($doc_name)"/>
 						<xsl:copy-of
-							select="$doc/m:mei/m:meiHead/m:fileDesc/m:sourceDesc/m:source[@xml:id=$ext_id]"
+							select="$doc/m:mei/m:meiHead/m:manifestationList/m:manifestation[@xml:id=$ext_id]"
 						/>
 					</xsl:when>
 					<xsl:when test="*//text()">
@@ -263,44 +263,44 @@
 		<!-- make the source list a nodeset -->
 		<xsl:variable name="source_nodeset" select="exsl:node-set($sources)"/>
 		<xsl:variable name="sources_sorted">
-			<xsl:for-each select="$source_nodeset/m:source">
+			<xsl:for-each select="$source_nodeset/m:manifestation">
 				<!-- process all sources, sorted according to classification -->
-				<xsl:sort select="m:classification/m:termList/m:term[@classcode='#DcmContentClass']"/>
+				<xsl:sort select="m:classification/m:termList/m:term[@class='#DcmContentClass']"/>
 				<xsl:sort
-					select="m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']"/>
+					select="m:classification/m:termList/m:term[@class='#DcmPresentationClass']"/>
 				<!-- adding 100 ensures that combinations of 1- and 2-digit numbers are sorted correctly -->
 				<xsl:sort
-					select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@classcode='#DcmAuthorityClass'],';'))))"/>
+					select="number(100 + string-length(substring-before($authority_order,concat(';',m:classification/m:termList/m:term[@class='#DcmAuthorityClass'],';'))))"/>
 				<xsl:sort
-					select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@classcode=&quot;#DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
+					select="number(100 + string-length(substring-before($state_order,concat(&quot;;&quot;,translate(m:classification/m:termList/m:term[@class=&quot;#DcmStateClass&quot;],&quot;&apos;&quot;,&quot;&quot;),&quot;;&quot;))))"/>
 				<xsl:sort
-					select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@classcode='#DcmScoringClass'],';'))))"/>
+					select="number(100 + string-length(substring-before($scoring_order,concat(';',m:classification/m:termList/m:term[@class='#DcmScoringClass'],';'))))"/>
 				<xsl:sort
-					select="m:classification/m:termList/m:term[@classcode='#DcmCompletenessClass']"/>
+					select="m:classification/m:termList/m:term[@class='#DcmCompletenessClass']"/>
 				<xsl:copy-of select="."/>
 			</xsl:for-each>
 		</xsl:variable>
 		<!-- make the sorted source list a nodeset too -->
 		<xsl:variable name="source_nodeset_sorted" select="exsl:node-set($sources_sorted)"/>
-		<xsl:for-each select="$source_nodeset_sorted/m:source">
+		<xsl:for-each select="$source_nodeset_sorted/m:manifestation">
 			<xsl:choose>
 				<xsl:when
-					test="m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']='manuscript'
-						and count(preceding-sibling::m:source[m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']='manuscript'])=0">
+					test="m:classification/m:termList/m:term[@class='#DcmPresentationClass']='manuscript'
+					and count(preceding-sibling::m:manifestation[m:classification/m:termList/m:term[@class='#DcmPresentationClass']='manuscript'])=0">
 					<p>
 						<b>Manuscript</b>
 					</p>
 				</xsl:when>
 				<xsl:when
-					test="contains(m:classification/m:termList/m:term[@classcode='#DcmPresentationClass'],'print')
-						and count(preceding-sibling::m:source[contains(m:classification/m:termList/m:term[@classcode='#DcmPresentationClass'],'print')])=0">
+					test="contains(m:classification/m:termList/m:term[@class='#DcmPresentationClass'],'print')
+					and count(preceding-sibling::m:manifestation[contains(m:classification/m:termList/m:term[@class='#DcmPresentationClass'],'print')])=0">
 					<p>
 						<b>Printed</b>
 					</p>
 				</xsl:when>
 				<xsl:when
-					test="m:classification/m:termList/m:term[@classcode='#DcmContentClass']='text'
-						and count(preceding-sibling::m:source[m:classification/m:termList/m:term[@classcode='#DcmContentClass']='text'])=0">
+					test="m:classification/m:termList/m:term[@class='#DcmContentClass']='text'
+					and count(preceding-sibling::m:manifestation[m:classification/m:termList/m:term[@class='#DcmContentClass']='text'])=0">
 					<p>
 						<b>Text</b>
 					</p>
@@ -417,13 +417,13 @@
 
 	<!-- source-related templates -->
 
-	<xsl:template match="m:source[*[name()!='classification']//text()]|m:item[*//text()]">
+	<xsl:template match="m:manifestation[*[name()!='classification']//text()]|m:item[*//text()]">
 		<xsl:param name="mode" select="''"/>
 		<xsl:variable name="source_id" select="@xml:id"/>
 		<!--<xsl:if test="name()='item'"><br/></xsl:if>-->
 		<span class="{name()}">
 			<!-- source label and title -->
-			<xsl:if test="local-name()='source' and (normalize-space(@label) or normalize-space(m:identifier))">
+			<xsl:if test="local-name()='manifestation' and (normalize-space(@label) or normalize-space(m:identifier))">
 				<!-- either @label or <identifier> may be used for GW source sigla (but not both please!) -->
 				<b><xsl:apply-templates select="@label"/><xsl:apply-templates select="m:identifier"/></b>
 				<xsl:if test="m:titleStmt[m:title/text()]">
@@ -445,7 +445,7 @@
 			</xsl:for-each>
 			<!-- item label -->
 			<xsl:if
-				test="local-name()='item' and normalize-space(@label) and name(..)!='componentGrp'">
+				test="local-name()='item' and normalize-space(@label) and name(..)!='componentList'">
 				<!--  should be (the editor is supposed to mention "source" in @type):
 				<xsl:if test="normalize-space(m:identifier[contains(translate(@type,'S','s'),'source')])">
 					<b><xsl:apply-templates select="m:identifier[contains(translate(@type,'S','s'),'source')]"
@@ -507,7 +507,7 @@
 				<br/>Pl. no. <xsl:apply-templates/>.
 			</xsl:for-each>
 
-			<xsl:for-each select="m:physLoc/m:provenance[normalize-space(*//text())]">
+			<xsl:for-each select="m:history/m:provenance[normalize-space(*//text())]">
 					<br/><xsl:text>Provenance: </xsl:text>
 					<xsl:for-each select="m:eventList/m:event[*/text()]">
 						<xsl:for-each select="m:desc">
@@ -527,21 +527,21 @@
 				-->
 			<xsl:choose>
 				<xsl:when
-					test="local-name()='source' and 
+					test="local-name()='manifestation' and 
 						(count(m:itemList/m:item[//text()])&gt;1 or 
 						(m:itemList/m:item/@label and m:itemList/m:item/@label!=''))">
-					<xsl:apply-templates select="m:componentGrp"/>
+					<xsl:apply-templates select="m:componentList"/>
 					<xsl:apply-templates select="m:itemList"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:apply-templates select="m:itemList"/>
-					<xsl:apply-templates select="m:componentGrp"/>
+					<xsl:apply-templates select="m:componentList"/>
 				</xsl:otherwise>
 			</xsl:choose>
 
 			<!-- list reproductions (reprints) -->
 			<xsl:for-each
-				select="/*//m:source[m:relationList/m:relation[@rel='isReproductionOf'
+				select="/*//m:manifestation[m:relationList/m:relation[@rel='isReproductionOf'
 					and substring-after(@target,'#')=$source_id]]">
 				<xsl:if test="position()=1">
 					<xsl:if test="not(m:titleStmt/m:title/text())">
@@ -579,8 +579,8 @@
 				<xsl:when test="m:repository/m:corpName/text()">
 					<xsl:value-of select="m:repository/m:corpName/text()"/>
 				</xsl:when>
-				<xsl:when test="m:repository/m:identifier[@authority='RISM']/text()">
-					<xsl:value-of select="m:repository/m:identifier[@authority='RISM']"/>
+				<xsl:when test="m:repository/m:identifier[@auth='RISM']/text()">
+					<xsl:value-of select="m:repository/m:identifier[@auth='RISM']"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="m:repository/m:identifier"/>
@@ -608,7 +608,7 @@
 			<xsl:when
 				test="count(m:item)&gt;1 or 
 				(m:item/@label and m:item/@label!='' and
-				../m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']!='manuscript')">
+				../m:classification/m:termList/m:term[@class='#DcmPresentationClass']!='manuscript')">
 				<ul class="item_list">
 					<xsl:for-each select="m:item[*//text()]">
 						<li>
@@ -621,7 +621,7 @@
 			<xsl:when
 				test="(count(m:item)&lt;=1 and
 				m:item/@label and m:item/@label!='' and
-				../m:classification/m:termList/m:term[@classcode='#DcmPresentationClass']='manuscript')">
+				../m:classification/m:termList/m:term[@class='#DcmPresentationClass']='manuscript')">
 				<div class="ms_item">
 					<xsl:apply-templates select="m:item[*//text()]"/>
 				</div>
@@ -633,12 +633,12 @@
 	</xsl:template>
 
 
-	<xsl:template match="m:source/m:componentGrp | m:item/m:componentGrp">
+	<xsl:template match="m:manifestation/m:componentList | m:item/m:componentList">
 		<xsl:variable name="labels" select="count(*[@label!=''])"/>
 		<xsl:choose>
 			<xsl:when test="count(*)&gt;1">
 				<table cellpadding="0" cellspacing="0" border="0" class="source_component_list">
-					<xsl:for-each select="m:item | m:source">
+					<xsl:for-each select="m:item | m:manifestation">
 						<tr>
 							<xsl:if test="$labels &gt; 0">
 								<td class="label_cell">
@@ -658,7 +658,7 @@
 				</table>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:apply-templates select="m:item | m:source"/>
+				<xsl:apply-templates select="m:item | m:manifestation"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -724,7 +724,7 @@
 	</xsl:template>
 
 	<xsl:template match="m:physLoc">
-		<!-- locations - both for <source>, <item> and <bibl> -->
+		<!-- locations - both for <manifestation>, <item> and <bibl> -->
 		<xsl:for-each select="m:repository[*//text()]">
 			<xsl:if test="m:corpName[text()]or m:identifier[text()]">
 				<xsl:choose>
@@ -772,17 +772,17 @@
 
 	<!-- list scribes -->
 	<xsl:template match="m:handList">
-		<xsl:if test="count(m:hand[@initial='true' and (@medium!='' or text())]) &gt; 0">
+		<xsl:if test="count(m:hand[@type='main' and (@medium!='' or text())]) &gt; 0">
 			<xsl:text>Written in </xsl:text>
-			<xsl:for-each select="m:hand[@initial='true' and (@medium!='' or text())]">
+			<xsl:for-each select="m:hand[@type='main' and (@medium!='' or text())]">
 				<xsl:if test="position()&gt;1 and position()&lt;last()">, </xsl:if>
 				<xsl:if test="position()=last() and position()&gt;1">
 					<xsl:text> and </xsl:text>
 				</xsl:if>
 				<xsl:apply-templates select="." mode="scribe"/></xsl:for-each>. </xsl:if>
-		<xsl:if test="count(m:hand[@initial='false' and (@medium!='' or text())]) &gt; 0">
+		<xsl:if test="count(m:hand[@type='additions' and (@medium!='' or text())]) &gt; 0">
 			<xsl:text>Additions in </xsl:text>
-			<xsl:for-each select="m:hand[@initial='false']">
+			<xsl:for-each select="m:hand[@type='additions']">
 				<xsl:if test="position()&gt;1 and position()&lt;last()">, </xsl:if>
 				<xsl:if test="position()=last() and position()&gt;1">
 					<xsl:text> and </xsl:text>
@@ -987,7 +987,7 @@
 	
 	
 	<!-- omit pop-up information -->
-	<xsl:template match="m:bibl//m:title | m:identifier[@authority='RISM'] | m:perfRes/text() | 
+	<xsl:template match="m:bibl//m:title | m:identifier[@auth='RISM'] | m:perfRes/text() | 
 		m:identifier/text() | m:identifier/@type">
 		<xsl:value-of select="."/>
 	</xsl:template>
@@ -1256,7 +1256,7 @@
 				<xsl:value-of select="@xl:show"/>
 			</xsl:attribute>
 			<xsl:attribute name="title">
-				<xsl:value-of select="@xl:title"/>
+				<xsl:value-of select="@label"/>
 			</xsl:attribute>
 			<xsl:apply-templates/>
 		</xsl:element>

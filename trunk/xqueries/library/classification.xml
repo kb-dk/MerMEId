@@ -4,7 +4,7 @@
 <classification>
 
     <!-- Main type of content -->
-    <select classcode="DcmContentClass">
+    <select class="DcmContentClass">
         <item>
             <value>notated music</value>
             <label>Notated music</label>
@@ -18,7 +18,7 @@
             <label>Sound recording</label>
         </item>
         <item>
-            <value>videorecording</value>
+            <value>video recording</value>
             <label>Video recording</label>
         </item>
         <item>
@@ -29,7 +29,7 @@
     
     <!-- Presentation – describes the source's basic mode of production or carrier
          (e.g., manuscript, print, sound storage medium, electronic resource). -->
-    <select classcode="DcmPresentationClass">
+    <select class="DcmPresentationClass">
         <item>
             <value>manuscript</value>
             <label>Manuscript</label>
@@ -52,11 +52,8 @@
         </item>
     </select>
 
-    <!-- Authority. For use with manuscript sources. Describes the composer's
-        degree of involvement in the production of the source. 
-        Thus, an arranger's own manuscript would *not* be classified an
-        autograph. -->
-    <select classcode="DcmAuthorityClass">
+    <!-- Authority. For use with manuscript sources. -->
+    <select class="DcmAuthorityClass">
         <item>
             <value>autograph</value>
             <label>Autograph</label>
@@ -76,7 +73,7 @@
     </select>
     
     <!-- Scoring -->
-    <select classcode="DcmScoringClass">
+    <select class="DcmScoringClass">
         <item>
             <value>score</value>
             <label>Score</label>
@@ -108,7 +105,7 @@
     </select>
 
     <!-- State – the source's place in the process of creation or production -->
-    <select classcode="DcmStateClass">
+    <select class="DcmStateClass">
         <item>
             <value>sketch</value>
             <label>Sketch</label>
@@ -149,7 +146,7 @@
         stand-alone performance.
         "Fragment(s)" indicates that portions of the music are missing,
         e.g. a fragmentary sketch or a source from which pages are lost.  -->
-    <select classcode="DcmCompletenessClass">
+    <select class="DcmCompletenessClass">
         <item>
             <value>complete</value>
             <label>Complete</label>

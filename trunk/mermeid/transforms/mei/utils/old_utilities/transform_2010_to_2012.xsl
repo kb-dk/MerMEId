@@ -139,7 +139,7 @@
               <addrLine>Søren Kierkegaards Plads 1</addrLine>
               <addrLine>P.O. Box 2149</addrLine>
               <addrLine>DK - 1016 Copenhagen K</addrLine>
-              <addrLine><ptr target="http://www.kb.dk/dcm" label="WWW"/></addrLine>
+              <addrLine><ptr target="http://www.kb.dk" label="WWW"/></addrLine>
               <addrLine><ptr target="mailto://foa-dcm@kb.dk" label="E-mail"/></addrLine>
             </address>
             </corpName>
@@ -608,7 +608,7 @@
     </xsl:template>
 
     <xsl:template match="m:classcode">
-        <classCode authURI="http://www.kb.dk/dcm">
+        <classCode authURI="http://www.kb.dk">
             <xsl:apply-templates select="@*|*"/>
         </classCode>
     </xsl:template>
@@ -661,7 +661,7 @@
                 <classification>
                     <xsl:apply-templates select="m:classification/m:classcode"/>
                     <xsl:if test="not(m:classification/m:classcode[@xml:id='DcmCompletenessClass'])">
-                        <classCode authURI="http://www.kb.dk/dcm" xml:id="DcmCompletenessClass"/>
+                        <classCode authURI="http://www.kb.dk" xml:id="DcmCompletenessClass"/>
                     </xsl:if>
                     <xsl:apply-templates select="m:classification/m:keywords" mode="work"/>
                 </classification>

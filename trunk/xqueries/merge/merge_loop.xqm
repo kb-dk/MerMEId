@@ -20,7 +20,7 @@ declare function loop:valid-work-number($doc as node()) as xs:boolean
       if($include eq "yes") then
 	true()
       else
-	let $num:=fn:number($doc//m:workDesc/m:work/m:identifier[@label=$coll][1]/string())
+	let $num:=fn:number($doc//m:workList/m:work/m:identifier[@label=$coll][1]/string())
 	return $num >= 1 and 9999 >= $num
     else
       true()
@@ -36,7 +36,7 @@ declare function loop:date-filters(
   let $notbefore:= request:get-parameter("notbefore","")
 
   let $date := 
-    for $d in $doc//m:workDesc/m:work/m:history/m:creation/m:date
+    for $d in $doc//m:workList/m:work/m:history/m:creation/m:date
       return $d
     
   let $earliest := 
@@ -69,23 +69,19 @@ declare function loop:genre-filter(
   $genre as xs:string,
   $doc as node()) as xs:boolean
 {
-  (: we are searchin in level 2 genre keywords :)
-
-  let $docgenre1 := string-join($doc//m:workDesc/m:work/m:classification/m:termList/m:term[.=$loop:vocabulary//m:termList[@label='level1']/m:term and .!='']/string(), " ")
-  let $docgenre2 := string-join($doc//m:workDesc/m:work/m:classification/m:termList/m:term[.=$loop:vocabulary//m:termList[@label='level2']/m:term and .!='']/string(), " ")
+    
+  let $docgenre := string-join($doc//m:workList/m:work/m:classification/m:termList/m:term/string(), " ")
 
   let $occurrence :=
     if( string-length($genre)=0) then
       true()
     else 
-      if(contains($docgenre1,$genre) ) then
-	true()
-      else if( contains($docgenre2,$genre) ) then
+      if(contains($docgenre,$genre) ) then
 	true()
       else
 	false()
 
-      return $occurrence
+  return $occurrence
 };
 
 
@@ -98,17 +94,17 @@ declare function loop:sort-key (
 
   let $sort_key:=
     if($key eq "person") then
-      replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
+      replace(lower-case($doc//m:workList/m:work/m:contributor/m:persName[1]/string()),"\\\\ ","")
     else if($key eq "title") then
-      replace(lower-case($doc//m:workDesc/m:work[@analog="frbr:work"]/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
+      replace(lower-case($doc//m:workList/m:work/m:title[1]/string()),"\\\\ ","")
     else if($key eq "date") then    
       let $dates := 
-        if($doc//m:workDesc/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)) then
-          for $date in $doc//m:workDesc/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)
+        if($doc//m:workList/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)) then
+          for $date in $doc//m:workList/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)
 	      return substring($date,1,4)
 	    else 
 	      (: if the composition does not have an overall dating, look for version datings instead and use the first dated version :)
-          for $date in $doc//m:workDesc/m:work/m:expressionList/m:expression/m:creation/m:date[@notafter|@isodate|@notbefore|@startdate|@enddate][1]/(@notafter|@isodate|@notbefore|@startdate|@enddate)
+          for $date in $doc//m:workList/m:work/m:expressionList/m:expression/m:creation/m:date[@notafter|@isodate|@notbefore|@startdate|@enddate][1]/(@notafter|@isodate|@notbefore|@startdate|@enddate)
 	      return substring($date,1,4)
       return 
       if(count($dates)>=1) then
@@ -117,7 +113,7 @@ declare function loop:sort-key (
         "0000"
     else if($key eq "work_number") then
       (: make the number a 15 character long string padded with zeros :)
-      let $num:=$doc//m:workDesc/m:work/m:identifier[@label=$collection][1]/string()
+      let $num:=$doc//m:workList/m:work/m:identifier[@label=$collection][1]/string()
       let $padded_number:=concat("0000000000000000",normalize-space($num))
       let $len:=string-length($padded_number)-14
 	return substring($padded_number,$len,15)
@@ -141,23 +137,23 @@ declare function loop:getlist (
       if($coll) then 
 	if($query) then
           for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
-          where loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
+          where loop:genre-filter($genre,$doc) 
 	  order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	  return $doc 
 	else
 	  for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
-          where loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
+          where loop:genre-filter($genre,$doc) 
 	  order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	  return $doc 
         else
 	  if($query) then
             for $doc in collection($database)/m:mei[ft:query(.,$query)]
-            where loop:genre-filter($genre,$doc) and loop:date-filters($doc) 
+            where loop:genre-filter($genre,$doc) 
 	    order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	    return $doc
       else
         for $doc in collection($database)/m:mei
-        where loop:genre-filter($genre,$doc) and loop:date-filters($doc)
+        where loop:genre-filter($genre,$doc)
 	order by loop:sort-key ($doc,$sort0),loop:sort-key($doc,$sort1)
 	return $doc
 	      

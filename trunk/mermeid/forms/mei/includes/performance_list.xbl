@@ -73,14 +73,21 @@
                 <dcm:attribute-editor ref="m:eventList[@type='performances']"/>
               </h:legend>
               <h:div class="vertical_spacer"/> 
+              
+              <xf:group ref=".[m:eventList[@type='performances']/*//text() and not(ancestor::m:expression)]">
+                <h:p>Performance(s) entered at work level <h:a class="help">&#160;?<h:span class="comment">Performances should be entered 
+                  at expression (version) level whenever possible. Consider moving performances to a specific version (expresssion), unless
+                  there is more than one version and it is not possible to determine which one was performed.</h:span></h:a></h:p>
+              </xf:group>
+              
               <dcm:create 
                   nodeset="m:eventList[@type='performances']"
                   label="Add performance"
-                  origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']"/>
+                  origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:eventList[@type='performances']"/>
               <dcm:create ref="m:eventList[@type='performances']" 
                           nodeset="m:event"
                           label="Add performance"
-                          origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+                          origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:eventList[@type='performances']/m:event"/>
               <xf:group ref="m:eventList[@type='performances']">
                 <h:table class="element_list" cellspacing="0" cellpadding="0" border="0">
                   <xf:repeat nodeset="m:event" id="repeat-work-performance">
@@ -119,13 +126,13 @@
                         </xf:group>
                       </h:td>
                       <h:td class="buttons_cell"><dcm:element-buttons triggers="up down copy add del-parent-with-last" nodeset="m:event" index="repeat-work-performance" 
-                      origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='performances']/m:event"/>
+                      origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:eventList[@type='performances']/m:event"/>
                         <dcm:id/>
                         <dcm:attribute-editor/>
                       </h:td>    
                       <h:td>    
                         <!-- move performance to work level or version -->
-                        <xf:group ref=".[count($data-instance//m:workDesc/m:work/m:expressionList/m:expression)&gt;1 or name(../../..)='expression']">
+                        <xf:group ref=".[count($data-instance//m:workList/m:work/m:expressionList/m:expression)&gt;1 or name(../../..)='expression']">
                           <h:a class="popup"><h:img src="{$parameters/dcm:server_name}/editor/images/expand.png" 
                           title="Move this source to another version"/>Move to...<h:span 
                           class="comment">
@@ -151,9 +158,9 @@
                                 </xf:action>
                               </xf:trigger>
                             </h:div>
-                            <xf:repeat nodeset="$data-instance//m:workDesc/m:work/m:expressionList/m:expression[@xml:id!=$ancestor]">
+                            <xf:repeat nodeset="$data-instance//m:workList/m:work/m:expressionList/m:expression[@xml:id!=$ancestor]">
                               <xf:var name="exp" select="@xml:id"/>
-                              <xf:var name="title" select="if (m:titleStmt/m:title/text()) then m:titleStmt/m:title else concat('[',$exp,']')"/>
+                              <xf:var name="title" select="if (m:title/text()) then m:title else concat('[',$exp,']')"/>
                               <h:div>
                                 <xf:trigger>
                                   <xf:label><xf:output value="$title"/></xf:label>

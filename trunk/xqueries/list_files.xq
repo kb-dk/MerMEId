@@ -1,7 +1,9 @@
-xquery version "1.0" encoding "UTF-8";
+xquery version "3.0" encoding "UTF-8";
 
 import module namespace loop="http://kb.dk/this/getlist" at "./main_loop.xqm";
-import module namespace  app="http://kb.dk/this/listapp" at "./list_utils.xqm";
+import module namespace app="http://kb.dk/this/listapp"  at "./list_utils.xqm";
+import module namespace rd="http://kb.dk/this/redirect"  at "./redirect_host.xqm";
+import module namespace v="http://kb.dk/this/version"    at "./version.xqm";
 
 declare namespace xl="http://www.w3.org/1999/xlink";
 declare namespace request="http://exist-db.org/xquery/request";
@@ -11,6 +13,7 @@ declare namespace file="http://exist-db.org/xquery/file";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace ft="http://exist-db.org/xquery/lucene";
 declare namespace ht="http://exist-db.org/xquery/httpclient";
+declare namespace xi="http://www.w3.org/2001/XInclude";
 
 declare namespace local="http://kb.dk/this/app";
 declare namespace m="http://www.music-encoding.org/ns/mei";
@@ -44,7 +47,6 @@ declare variable $to       :=  $from      + xs:integer(session:get-attribute("nu
 declare variable $sort-options :=
 (<option value="person,title">Composer,Title</option>,
 <option value="person,date">Composer, Year</option>,
-<option value="person,work_number">Composer,Work number</option>,
 <option value="date,person">Year, Composer</option>,
 <option value="date,title">Year, Title</option>,
 <option value="null,work_number">Work number</option>
@@ -62,32 +64,34 @@ declare function local:format-reference(
 	"even"
 
       let $date_output :=
-    	if($doc//m:workDesc/m:work/m:creation/m:date/(@notbefore|@notafter|@startdate|@enddate)!='') then
-    	  concat(substring($doc//m:workDesc/m:work/m:creation/m:date/@notbefore,1,4),
-    	  substring($doc//m:workDesc/m:work/m:creation/m:date/@startdate,1,4),
+    	if($doc//m:workList/m:work/m:creation/m:date/(@notbefore|@notafter|@startdate|@enddate)!='') then
+    	  concat(substring($doc//m:workList/m:work/m:creation/m:date/@notbefore,1,4),
+    	  substring($doc//m:workList/m:work/m:creation/m:date/@startdate,1,4),
     	  '-',
-    	  substring($doc//m:workDesc/m:work/m:creation/m:date/@enddate,1,4),
-    	  substring($doc//m:workDesc/m:work/m:creation/m:date/@notafter,1,4))
-        else if($doc//m:workDesc/m:work/m:creation/m:date/@isodate!='') then
-          substring($doc//m:workDesc/m:work/m:creation/m:date/@isodate,1,4)
-        else if($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/(@notbefore|@notafter|@startdate|@enddate)!='') then
-    	  concat(substring($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@notbefore,1,4),
-    	  substring($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@startdate,1,4),
+    	  substring($doc//m:workList/m:work/m:creation/m:date/@enddate,1,4),
+    	  substring($doc//m:workList/m:work/m:creation/m:date/@notafter,1,4))
+        else if($doc//m:workList/m:work/m:creation/m:date/@isodate!='') then
+          substring($doc//m:workList/m:work/m:creation/m:date/@isodate,1,4)
+        else if($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/(@notbefore|@notafter|@startdate|@enddate)!='') then
+    	  concat(substring($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@notbefore,1,4),
+    	  substring($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@startdate,1,4),
     	  '-',
-    	  substring($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@enddate,1,4),
-    	  substring($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@notafter,1,4))
+    	  substring($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@enddate,1,4),
+    	  substring($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date/@notafter,1,4))
         else
-          substring($doc//m:workDesc/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date[@isodate][1]/@isodate,1,4)
+          substring($doc//m:workList/m:work/m:expressionList/m:expression[m:creation/m:date][1]/m:creation/m:date[@isodate][1]/@isodate,1,4)
 
+	(: for some reason the sort-key function must be called outside the actual searching to have correct work number sorting when searching within all collections :)
+    let $dummy := loop:sort-key("dummy_collection", $doc, "null")
 
 	let $ref   := 
 	<tr class="result {$class}">
 	  <td nowrap="nowrap">
-	    {$doc//m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']}
+	    {$doc//m:workList/m:work/m:contributor/m:persName[@role='composer']}
 	  </td>
 	  <td>{app:view-document-reference($doc)}</td>
 	  <td>{"  ",$date_output}</td>
-	  <td nowrap="nowrap">{app:get-edition-and-number($doc)} </td>
+	  <td nowrap="nowrap">{app:get-edition-and-number($doc)}</td>
 	  <td class="tools">
 	    <a target="_blank"
             title="View XML source" 
@@ -111,7 +115,7 @@ declare function local:format-reference(
 
 	  
 	  
-      <html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 	  <title>
 	    {app:list-title()}
@@ -322,12 +326,12 @@ declare function local:format-reference(
       </div>
     }
     <div class="footer">
-      <a href="http://www.kb.dk/en/nb/dcm" title="DCM" 
-      style="text-decoration:none;"><img 
+      <div style="float:right" class="version">MerMEId {v:version()}</div>
+      <img 
            style="border: 0px; vertical-align:middle;" 
            alt="DCM Logo" 
-           src="/editor/images/dcm_logo_small_white.png"/></a>
-           Danish Centre for Music Editing | The Royal Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk/en/nb/dcm">www.kb.dk/en/nb/dcm</a>
+           src="/editor/images/dcm_logo_small_white.png"/>
+           Danish Centre for Music Editing | Royal Danish Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk">www.kb.dk</a>
     </div>
   </body>
 </html>

@@ -60,7 +60,7 @@
 	<xsl:template match="m:work/m:biblList"/>
 	
 	<!-- omit pop-up information -->
-	<xsl:template match="m:bibl//m:title | m:identifier[@authority='RISM'] | m:instrVoice/text() | 
+	<xsl:template match="m:bibl//m:title | m:identifier[@auth='RISM' or @auth='rism'] | m:instrVoice/text() | 
 		m:identifier/text() | m:identifier/@label">
 		<xsl:value-of select="."/>
 	</xsl:template>
@@ -133,7 +133,7 @@
 			<xsl:variable name="file_context"
 				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
 			<xsl:variable name="catalogue_no"
-				select="$linkedDoc/m:mei/m:meiHead/m:workDesc/m:work/m:identifier[@label=$file_context]"/>
+				select="$linkedDoc/m:mei/m:meiHead/m:workList/m:work/m:identifier[@label=$file_context]"/>
 			<xsl:variable name="output">
 				<!-- the printed catalogue omits the collection name ("CNW") -->
 				<!--<xsl:value-of select="$file_context"/>
@@ -179,7 +179,7 @@
 	<!-- Different formatting templates -->
 	
 	<!-- work identifiers -->
-	<xsl:template match="m:meiHead/m:workDesc/m:work" mode="work_identifiers">
+	<xsl:template match="m:meiHead/m:workList/m:work" mode="work_identifiers">
 		<p>
 			<!-- omit opus and CNW numbers here -->
 			<xsl:for-each select="m:identifier[text() and contains(@label,'CNU')]">
@@ -274,7 +274,7 @@
 	
 
 	<!-- compact source description -->
-	<xsl:template match="m:source[*[name()!='classification']//text()]|m:item[*//text()]">
+	<xsl:template match="m:manifestation[*[name()!='classification']//text()]|m:item[*//text()]">
 		<xsl:param name="mode" select="''"/>
 		<xsl:param name="reprints"/>
 		<xsl:variable name="source_id" select="@xml:id"/>
@@ -284,7 +284,7 @@
 				<b><xsl:apply-templates select="m:title"/></b>.
 			</xsl:for-each>
 			<!-- item label -->
-			<xsl:if test="local-name()='item' and normalize-space(@label) and name(..)!='componentGrp'">
+			<xsl:if test="local-name()='item' and normalize-space(@label) and name(..)!='componentList'">
 				<xsl:value-of select="@label"/>.
 			</xsl:if>
 <!--			
@@ -342,22 +342,22 @@
 			     which should be shown before the components. -->
 			<xsl:choose>
 				<xsl:when
-					test="local-name()='source' and 
+					test="local-name()='manifestation' and 
 					(count(m:itemList/m:item[//text()])&gt;1 or 
 					(m:itemList/m:item/@label and m:itemList/m:item/@label!=''))">
-					<xsl:apply-templates select="m:componentGrp"/>
+					<xsl:apply-templates select="m:componentList"/>
 					<xsl:apply-templates select="m:itemList"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:apply-templates select="m:itemList"/>
-					<xsl:apply-templates select="m:componentGrp"/>
+					<xsl:apply-templates select="m:componentList"/>
 				</xsl:otherwise>
 			</xsl:choose>
 			
 			
 			<!-- List reproductions (reprints) -->
 			<xsl:if test="$reprints">
-				<xsl:for-each select="$reprints/m:sourceDesc/m:source[m:relationList/m:relation[@rel='isReproductionOf'
+				<xsl:for-each select="$reprints/m:manifestationList/m:manifestation[m:relationList/m:relation[@rel='isReproductionOf'
 					and substring-after(@target,'#')=$source_id]]">
 					<xsl:if test="position()=1">
 						<xsl:if test="not(m:titleStmt/m:title/text())">
@@ -374,7 +374,7 @@
 		
 		<!-- output the resulting source html -->
 		<xsl:choose>
-			<xsl:when test="local-name(.)='source'">
+			<xsl:when test="local-name(.)='manifestation'">
 				<p class="source">
 					<xsl:copy-of select="$html_content"/>
 				</p>
@@ -394,7 +394,7 @@
 			<xsl:when
 				test="count(m:item)&gt;1 or 
 				(m:item/@label and m:item/@label!='' and
-				../m:classification/m:termList/m:term[@classcode='DcmPresentationClass']!='manuscript')">
+				../m:classification/m:termList/m:term[@class='DcmPresentationClass']!='manuscript')">
 				<ul class="item_list">
 					<xsl:for-each select="m:item[*//text()]">
 						<li>

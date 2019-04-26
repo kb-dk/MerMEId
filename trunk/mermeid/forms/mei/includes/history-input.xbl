@@ -52,11 +52,11 @@
                             <h:div class="vertical_spacer"/>
 
                             <dcm:create nodeset="m:creation" label="Add creation notes"
-                                origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:creation"/>
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation"/>
 
                             <dcm:create ref="m:creation" nodeset="m:date"
                                 label="Add creation date"
-                                origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:creation/m:date"/>
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation/m:date"/>
                             <xf:repeat nodeset="m:creation/m:date" id="repeat-creation-date">
                                 <h:span class="fixed_width_mediumlong">Date of composition <h:a
                                         class="help">&#160;?<h:span class="comment">Date or time
@@ -64,13 +64,13 @@
                                 <dcm:date-editor style="display:inline;"/>
                                 <dcm:element-buttons triggers="remove" nodeset="m:date"
                                     index="repeat-creation-date"
-                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:creation/m:date"
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation/m:date"
                                 />
                             </xf:repeat>
                             <h:div>
                                 <dcm:create ref="m:creation" nodeset="m:geogName"
                                     label="Add place"
-                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:creation/m:geogName"/>
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation/m:geogName"/>
                                 <xf:repeat nodeset="m:creation/m:geogName"
                                     id="repeat-creation-geogname">
                                     <xf:input ref="." class="long">
@@ -80,7 +80,7 @@
                                     <dcm:attribute-editor/>
                                     <dcm:element-buttons triggers="remove" nodeset="m:geogName"
                                         index="repeat-creation-geogname"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:creation/m:geogName"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation/m:geogName"
                                     />
                                 </xf:repeat>
                             </h:div>
@@ -93,12 +93,12 @@
                                             >Text explaining details and circumstances concerning the
                                             work's genesis and history</h:span></h:a>&#160; </h:legend>
                                 <dcm:create nodeset="m:p" label="Add history note"
-                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:p"/>
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:p"/>
                                 <xf:repeat nodeset="m:p" id="repeat-history-p">
                                     <fr:tinymce ref="."/>
                                     <dcm:element-buttons triggers="remove" nodeset="m:p"
                                         index="repeat-history-p"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:p"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:p"
                                     />
                                 </xf:repeat>
                             </h:fieldset>
@@ -112,23 +112,23 @@
                                     <dcm:attribute-editor ref="m:eventList[@type='history']"/>
                                 </h:legend>
                                 <dcm:create nodeset="m:eventList[@type='history']" label="Add time line"
-                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']"/>
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:eventList[@type='history']"/>
                                 <dcm:create ref="m:eventList[@type='history']" nodeset="m:event"
                                     label="Add event"
-                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event"/>
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:eventList[@type='history']/m:event"/>
                                 <xf:repeat nodeset="m:eventList[@type='history']/m:event"
                                     id="repeat-work-history">
                                     <h:fieldset>
                                         <h:legend>Event <dcm:element-buttons
                                                 triggers="up down copy add del-parent-with-last"
                                                 nodeset="m:event" index="repeat-work-history"
-                                                origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event"/>
+                                                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:eventList[@type='history']/m:event"/>
                                             <dcm:id/>
                                             <dcm:attribute-editor/>
                                             <h:br clear="all"/>
                                         </h:legend>
                                         <dcm:create nodeset="m:date" label="Add date"
-                                            origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:date"/>
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:eventList[@type='history']/m:event/m:date"/>
                                         <h:div>
                                             <xf:group ref="m:date">
                                                 <h:span class="fixed_width">Date <h:a class="help"
@@ -140,7 +140,7 @@
                                         <dcm:create  
                                             nodeset="m:desc"
                                             label="Add description"
-                                            origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:desc"/>
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:eventList[@type='history']/m:event/m:desc"/>
                                         <fr:tinymce ref="m:desc">
                                             <xf:label class="fixed_width">Description <h:a class="help">&#160;?<h:span class="comment">A description of the 
                                                 event, e.g. "Third movement finished" or "Arranged for piano by NN"</h:span></h:a></xf:label>
@@ -149,13 +149,13 @@
                                         <!--
                                         <h:div>
                                             <dcm:create nodeset="m:desc" label="Add description"
-                                                origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:desc"/>
+                                                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:eventList[@type='history']/m:event/m:desc"/>
                                             <xf:repeat nodeset="m:desc" id="repeat-event-desc">
                                                 <fr:tinymce ref=".">
                                                 </fr:tinymce>
                                                 <dcm:element-buttons triggers="remove" nodeset="m:desc"
                                                     index="repeat-event-desc"
-                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history/m:eventList[@type='history']/m:event/m:desc"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:history/m:eventList[@type='history']/m:event/m:desc"
                                                 />
                                                 <dcm:id/>
                                                 <dcm:attribute-editor/>

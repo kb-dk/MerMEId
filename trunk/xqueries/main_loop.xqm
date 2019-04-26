@@ -40,34 +40,48 @@ declare function loop:pubstatus($doc as node()) as xs:boolean
 
 };
 
+declare function loop:work-number-for-sorting ($identifier as xs:string?) as xs:string {
+      (: get anything that might be before the number :)
+      let $prefix:= replace($identifier,'^([\D\s]*)(\d*)(.*?)$','$1')
+      (: extract first number if any :)
+      let $digits:= replace($identifier,'^([\D\s]*)(\d*)(.*?)$','$2')
+      let $number:= if (string(number($digits)) != 'NaN')
+        then number($digits)
+        else 0 
+      (: and any trailing stuff :)
+      let $suffix:= replace($identifier,'^([\D\s]*)(\d*)(.*?)$','$3')
+	return concat($prefix,format-number($number,"0000000000"),$suffix)
+};
+
 declare function loop:sort-key (
-  $coll as xs:string, 
+  $coll as xs:string?, 
   $doc as node(),
   $key as xs:string) as xs:string
 {
 
   (: We don't want to waste time on looking up $collection if that parameter
   is fixed in the query :)
-
   let $collection:=
     if($coll) then
-      $coll
+        $coll
+    else if ($doc//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0][1]/string()) then
+        $doc//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0][1]/string()
     else
-      $doc//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0][1]/string() 
+        ""
 
   let $sort_key:=
     if($key eq "person") then
-      replace(lower-case($doc/m:meiHead/m:workDesc/m:work/m:titleStmt[1]/m:respStmt/m:persName[1]/string()),"\\\\ ","")
+      replace(lower-case($doc/m:meiHead/m:workList/m:work/m:contributor/m:persName[1]/string()),"\\\\ ","")
     else if($key eq "title") then
-      replace(lower-case($doc/m:meiHead/m:workDesc/m:work/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
+      replace(lower-case($doc/m:meiHead/m:workList/m:work/m:title[1]/string()),"\\\\ ","")
     else if($key eq "date") then    
       let $dates := 
-        if($doc/m:meiHead/m:workDesc/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)) then
-          for $date in $doc/m:meiHead/m:workDesc/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)
+        if($doc/m:meiHead/m:workList/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)) then
+          for $date in $doc/m:meiHead/m:workList/m:work/m:creation/m:date/(@notafter|@isodate|@notbefore|@startdate|@enddate)
 	      return substring($date,1,4)
 	    else 
 	      (: if the composition does not have an overall dating, look for version datings instead and use the first dated version :)
-          for $date in $doc/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression/m:creation/m:date[@notafter|@isodate|@notbefore|@startdate|@enddate][1]/(@notafter|@isodate|@notbefore|@startdate|@enddate)
+          for $date in $doc/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:creation/m:date[@notafter|@isodate|@notbefore|@startdate|@enddate][1]/(@notafter|@isodate|@notbefore|@startdate|@enddate)
 	      return substring($date,1,4)
       return 
       if(count($dates)>=1) then
@@ -75,15 +89,7 @@ declare function loop:sort-key (
       else
         "0000"
     else if($key eq "work_number") then
-      let $identifier:=$doc/m:meiHead/m:workDesc[1]/m:work[1]/m:identifier[@label=$collection][1]/string()
-      (: extract any trailing number :)
-      let $number:= replace($identifier,'^.*?(\d*)$','$1')
-      (: and anything that might be before the number :)
-      let $prefix:= replace($identifier,'^(.*?)\d*$','$1')
-      (: make the number a 15 character long string padded with zeros :)
-      let $padded_number:=concat("0000000000000000",normalize-space($number))
-      let $len:=string-length($padded_number)-14
-	return concat($prefix,substring($padded_number,$len,15))
+       concat($collection," ",loop:work-number-for-sorting($doc/m:meiHead/m:workList/m:work[1]/m:identifier[@label=$collection][1]/string()) )
     else 
       ""
 

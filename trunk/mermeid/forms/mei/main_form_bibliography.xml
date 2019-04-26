@@ -10,23 +10,23 @@
   
   <h:div class="inputdiv">
     
-    <xf:group ref="instance('data-instance')/m:meiHead[not(m:workDesc/m:work/m:biblList)]">
+    <xf:group ref="instance('data-instance')/m:meiHead[not(m:workList/m:work/m:biblList)]">
       <h:div class="vertical_spacer"/>
       <dcm:create 
-        nodeset="m:workDesc"
+        nodeset="m:workList"
         label="Add basic work metadata"
-        origin="instance('reduced-template')/m:meiHead/m:workDesc"/>
-      <dcm:create ref="m:workDesc"
+        origin="instance('reduced-template')/m:meiHead/m:workList"/>
+      <dcm:create ref="m:workList"
         nodeset="m:work"
         label="Add basic work metadata"
-        origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work"/>
-      <dcm:create ref="m:workDesc/m:work" 
+        origin="instance('reduced-template')/m:meiHead/m:workList/m:work"/>
+      <dcm:create ref="m:workList/m:work" 
         nodeset="m:biblList"
         label="Add bibliography"
-        origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]"/>
+        origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:biblList[1]"/>
     </xf:group>
     
-    <xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work[m:biblList]">
+    <xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work[m:biblList]">
       
       <!-- reference types menu -->
       <xxf:dialog id="add-ref-dialog" appearance="full" level="modal"
@@ -41,28 +41,28 @@
             </xf:label>
             <xf:action ev:event="DOMActivate">
               <xf:toggle case="hide_ref_types"/>
-              <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)&gt;0">
-                <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]" 
+              <xf:action if="count(instance('data-instance')/m:meiHead/m:workList/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)&gt;0">
+                <xf:insert context="instance('data-instance')/m:meiHead/m:workList/m:work/m:biblList[index('repeat-listbibl')]" 
                 nodeset="m:bibl" 
                 at="index('repeat-references')"
                 position="after" 
                 origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-repeat')]"/>
                 </xf:action>
-              <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)=0">
+              <xf:action if="count(instance('data-instance')/m:meiHead/m:workList/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)=0">
                 <!-- first <bibl> is inserted after <head>  -->
-                <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]" 
+                <xf:insert context="instance('data-instance')/m:meiHead/m:workList/m:work/m:biblList[index('repeat-listbibl')]" 
                   nodeset="*" 
                   at="last()"
                   position="after" 
                   origin="instance('bibl-type-instance')/m:biblList/m:bibl[index('ref-type-menu-repeat')]"/>
               </xf:action>
               <xf:insert xxf:iterate="descendant-or-self::*[not(@xml:id)]"
-                context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]"
+                context="instance('data-instance')/m:meiHead/m:workList/m:work/m:biblList[index('repeat-listbibl')]"
                 origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
               
               <!-- add id to all elments not having one...:
                 <xf:insert xxf:iterate="//*[not(@xml:id)]"
-                context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]"
+                context="instance('data-instance')/m:meiHead/m:workList/m:work/m:biblList[index('repeat-listbibl')]"
                 origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>-->
               <xf:dispatch name="id-update" target="form-group"/>
               <xf:setvalue ref="xxf:instance('temp')/changed" value="'true'"/>
@@ -96,23 +96,23 @@
                   <xf:output value="$bibl_label"/>
                 </xf:label>
                 <xf:action ev:event="DOMActivate">
-                  <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)&gt;0">
-                    <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]"
+                  <xf:action if="count(instance('data-instance')/m:meiHead/m:workList/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)&gt;0">
+                    <xf:insert context="instance('data-instance')/m:meiHead/m:workList/m:work/m:biblList[index('repeat-listbibl')]"
                     nodeset="m:bibl"
                     at="index('repeat-references')" 
                     position="after" 
                     origin="instance('bibliography-instance')/m:biblList[not(normalize-space(m:head)) or m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']][index('std-bibl-repeat')]/m:bibl[index('std-bibl-menu-repeat')]"/>
                   </xf:action>
-                  <xf:action if="count(instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)=0">
+                  <xf:action if="count(instance('data-instance')/m:meiHead/m:workList/m:work/m:biblList[index('repeat-listbibl')]/m:bibl)=0">
                     <!-- first <bibl> is inserted after <head>  -->
-                    <xf:insert context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]"
+                    <xf:insert context="instance('data-instance')/m:meiHead/m:workList/m:work/m:biblList[index('repeat-listbibl')]"
                       nodeset="*"
                       at="last()" 
                       position="after" 
                       origin="instance('bibliography-instance')/m:biblList[not(normalize-space(m:head)) or m:head=instance('data-instance')/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']][index('std-bibl-repeat')]/m:bibl[index('std-bibl-menu-repeat')]"/>
                   </xf:action>
                   <xf:insert xxf:iterate="descendant-or-self::*[not(@xml:id)]"
-                    context="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:biblList[index('repeat-listbibl')]"
+                    context="instance('data-instance')/m:meiHead/m:workList/m:work/m:biblList[index('repeat-listbibl')]"
                     origin="xxf:attribute('xml:id',concat(name(.),'_',substring(digest(string(random(true)), 'MD5', 'hex'),1,8)))"/>
                   <xf:dispatch name="id-update" target="form-group"/>
                   <xxf:hide dialog="add-ref-dialog"/>
@@ -138,7 +138,7 @@
               "History" tab instead.</h:span></h:a>
             <dcm:element-buttons triggers="add up down remove" 
               nodeset="m:biblList" 
-              origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]" 
+              origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:biblList[1]" 
               index="repeat-listbibl"/>
             <dcm:id/>
             <dcm:attribute-editor/>
@@ -148,7 +148,7 @@
             <dcm:create 
               nodeset="m:head"
               label="Add heading"
-              origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]/m:head"/>
+              origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:biblList[1]/m:head"/>
             <xf:repeat nodeset="m:head" id="repeat-bibl-head">
               <xf:input ref=".">
                 <xf:label>Heading: <h:a class="help">&#160;?<h:span class="comment">A heading for this bibliography for display. 
@@ -222,7 +222,7 @@
                     triggers="up down copy" 
                     nodeset="m:bibl" 
                     index="repeat-references"
-                    origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]/m:bibl[1]"/><xf:trigger appearance="minimal"
+                    origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:biblList[1]/m:bibl[1]"/><xf:trigger appearance="minimal"
                       class="non-standard_button">
                       <xf:label><h:img src="{instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add"/></xf:label>
                       <xf:action ev:event="DOMActivate">
@@ -232,7 +232,7 @@
                       triggers="remove" 
                       nodeset="m:bibl" 
                       index="repeat-references"
-                      origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:biblList[1]/m:bibl[1]"/>
+                      origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:biblList[1]/m:bibl[1]"/>
                     <dcm:id ref="."/>
                     <dcm:attribute-editor ref="."/>
                   </h:td>

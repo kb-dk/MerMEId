@@ -75,16 +75,16 @@
                 
                 
                 
-                <xf:select1 ref="@initial" class="auto_length">
+                <xf:select1 ref="@type" class="auto_length">
                     <xf:label> Represents: <h:a class="help">&#160;?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
                         set to "additions" otherwise. For manuscript annotations in printed sources use "additions"</h:span></h:a></xf:label>
                     <xf:item>
                         <xf:label>original contents</xf:label>
-                        <xf:value>true</xf:value>
+                        <xf:value>main</xf:value>
                     </xf:item>
                     <xf:item>
                         <xf:label>additions</xf:label>
-                        <xf:value>false</xf:value>
+                        <xf:value>additions</xf:value>
                     </xf:item>
                 </xf:select1>
             </h:td>  
@@ -94,7 +94,7 @@
                     triggers="add up down del-parent-with-last" 
                     nodeset="m:hand" 
                     index="repeat-source-physdesc-handlist"
-                    origin="xxf:instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
                 <dcm:attribute-editor ref="."/>                                                    
             </h:td>
             

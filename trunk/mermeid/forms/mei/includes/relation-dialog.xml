@@ -3,7 +3,7 @@
 	The XPath to relevant <m:relation> element must be copied into instance('temp')/nodeset/ 
 	AS A STRING before opening this dialogue, e.g. by something like
 	<xf:setvalue ref="instance('temp')/nodeset" 
-	value='"instance(&apos;data-instance&apos;)/m:meiHead/m:workDesc/m:work/m:relationList/m:relation[index(&apos;work_relations&apos;)]"'/>
+	value='"instance(&apos;data-instance&apos;)/m:meiHead/m:workList/m:work/m:relationList/m:relation[index(&apos;work_relations&apos;)]"'/>
 -->
 
 <xxf:dialog

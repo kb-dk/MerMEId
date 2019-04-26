@@ -67,7 +67,7 @@ declare function loop:sort-key ($num as xs:string) as xs:string
 	<body>
 
     <h2>Names</h2>
-    <!-- Names appearing in <workDesc> or <sourceDesc> only)-->
+    <!-- Names appearing in <workList> or <manifestationList> only)-->
     <div>
 		    {
 		          if($collection="") then
@@ -76,7 +76,7 @@ declare function loop:sort-key ($num as xs:string) as xs:string
                   else 
                     for $c in distinct-values(
             		collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]/
-            		(m:fileDesc/m:sourceDesc//m:persName | m:workDesc/m:work//m:persName)
+            		(m:manifestationList//m:persName | m:workList/m:work//m:persName)
             		/normalize-space(loop:clean-names(string()))[string-length(.) > 0])
             		(: Add exception to last clause to exclude the composer, e.g. " and not(contains(.,'Carl Nielsen'))"  :)
                     order by loop:invert-names($c)
@@ -84,9 +84,9 @@ declare function loop:sort-key ($num as xs:string) as xs:string
             		  <div>{concat(loop:invert-names($c),' &#160; ',$collection,' ')} 
             		  {let $numbers :=
             		  for $n in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]
-                         where $n/(m:workDesc | m:fileDesc/m:sourceDesc)//m:persName/normalize-space(loop:clean-names(string())) = $c
-                         order by loop:sort-key($n/m:workDesc/m:work/m:identifier[@label=$collection]/string()) 
-                	     return $n/m:workDesc/m:work/m:identifier[@label=$collection]/string()
+                         where $n/(m:workList | m:manifestationList)//m:persName/normalize-space(loop:clean-names(string())) = $c
+                         order by loop:sort-key($n/m:workList/m:work/m:identifier[@label=$collection]/string()) 
+                	     return $n/m:workList/m:work/m:identifier[@label=$collection]/string()
                 	   return string-join($numbers,', ') 
                    	   } 
                 	   </div>

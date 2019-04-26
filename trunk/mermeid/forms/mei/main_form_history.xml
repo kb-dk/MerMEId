@@ -11,59 +11,59 @@
 	
 	<h:div class="inputdiv">
 		
-		<xf:group ref="instance('data-instance')/m:meiHead[not(m:workDesc/m:work/m:history)]">
+		<xf:group ref="instance('data-instance')/m:meiHead[not(m:workList/m:work/m:history)]">
 			<h:div class="vertical_spacer"/>
 			<dcm:create 
-				nodeset="m:workDesc"
+				nodeset="m:workList"
 				label="Add basic work metadata"
-				origin="instance('reduced-template')/m:meiHead/m:workDesc"/>
-			<dcm:create ref="m:workDesc"
+				origin="instance('reduced-template')/m:meiHead/m:workList"/>
+			<dcm:create ref="m:workList"
 				nodeset="m:work"
 				label="Add basic work metadata"
-				origin="instance('reduced-template')/m:meiHead/m:workDesc/m:work"/>
-			<dcm:create ref="m:workDesc/m:work" 
+				origin="instance('reduced-template')/m:meiHead/m:workList/m:work"/>
+			<dcm:create ref="m:workList/m:work" 
 				nodeset="m:history"
 				label="Add history metadata"
-				origin="instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:history"/>
+				origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:history"/>
 		</xf:group>
 		
-		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">
+		<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work">
 			
 			<dcm:history-input id="history-input-work"/>
 
 			<!-- List work level performances -->
-			<dcm:performance-list ref="m:history[m:eventList[@type='performances']//text() or
-				(count(../m:expressionList/m:expression)=1 and not(../m:expressionList/m:expression/m:history/m:eventList[@type='performances']//text()))]">
-				<!-- this list is supressed if work level performances are entered at expression level instead -->
-				<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
-				<xf:action ev:event="save-data">
-					<xf:dispatch name="save" targetid="save-button"/>
-					<xf:load resource="{event('goto-uri')}" show="replace"/>
-				</xf:action>
-			</dcm:performance-list>
-		</xf:group> 
-
-		<!-- Show "work level" performances entered at expression level, if any	-->
-		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work/m:expressionList[count(m:expression)=1]/m:expression/m:history[m:eventList//text()]">
-			<h:p>[Performance entered at expression (version) level]</h:p>
-			<dcm:performance-list>
-				<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
-				<xf:action ev:event="save-data">
-					<xf:dispatch name="save" targetid="save-button"/>
-					<xf:load resource="{event('goto-uri')}" show="replace"/>
-				</xf:action>
-			</dcm:performance-list>
-		</xf:group>
-		
-		<!-- Expression-level history and performances. Used only if more than one expression -->
-
-		<xf:group ref="instance('data-instance')/m:meiHead/m:workDesc/m:work">			
+			<xf:group ref="m:history[m:eventList[@type='performances']/*//text() or count(../m:expressionList/m:expression) &gt; 1 or
+				(count(../m:expressionList/m:expression)=1 and not(../m:expressionList/m:expression/m:history/m:eventList[@type='performances']/*//text()))]">
+				<dcm:performance-list>
+					<!-- This list is omitted (unless not empty) if there is only one expression. 
+						 Performances should be entered at expression level whenever possible -->
+					<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
+					<xf:action ev:event="save-data">
+						<xf:dispatch name="save" targetid="save-button"/>
+						<xf:load resource="{event('goto-uri')}" show="replace"/>
+					</xf:action>
+				</dcm:performance-list>
+			</xf:group>
+	
+			<!-- Show "work level" performances entered at expression level, if any	-->
+			<xf:group ref="m:expressionList[count(m:expression)=1]/m:expression/m:history[m:eventList/*//text()]">
+				<dcm:performance-list>
+					<xf:dispatch name="id-update" targetid="form-group" ev:event="xforms-value-changed"/>
+					<xf:action ev:event="save-data">
+						<xf:dispatch name="save" targetid="save-button"/>
+						<xf:load resource="{event('goto-uri')}" show="replace"/>
+					</xf:action>
+				</dcm:performance-list>
+			</xf:group>
+			
+			<!-- Expression-level history and performances. Used only if more than one expression -->
+	
 			<xf:repeat nodeset="m:expressionList[count(m:expression)>1]/m:expression" 
 				id="repeat-expression-history">
 				<h:div class="vertical_spacer"/>
 				<h:div class="vertical_spacer"/>
 				<!-- get expression title -->
-				<xf:var name="title" select="m:titleStmt/m:title[1]"/>
+				<xf:var name="title" select="m:title[1]"/>
 				<h:fieldset>
 					<h:legend>Version history 
 						<xf:group ref=".[normalize-space($title)!='']">
@@ -86,8 +86,8 @@
 					</xf:group>
 				</h:fieldset>
 			</xf:repeat>
-		</xf:group>
 		
+		</xf:group>
 	</h:div>
 	
 	<xi:include href="includes/code-inspector.xml" parse="xml"/>

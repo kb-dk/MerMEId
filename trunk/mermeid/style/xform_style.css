@@ -60,6 +60,7 @@
 .orbeon .xforms-dialog .bd {
     overflow-x: hidden;
     overflow-y: auto;
+    padding: 30px 10px 20px 10px;
 }
 
 .orbeon .xforms-dialog .xforms-trigger-appearance-minimal {
@@ -102,10 +103,17 @@
 /*    display: none; */ 
 }
 
+/* tinyMCE text editor */
 .xbl-fr-tinymce {
     display: inline;
     display: inline-block;
     width: 90%;
+}
+
+.mceContentBody {
+    /* the white-space:pre-wrap option prevents &amp;nbsp; entities created by tinymce; 
+       in effect, it also cuts repeated spaces down to one */
+    white-space: pre-wrap;
 }
 
 /* END DISABLE ORBEON STYLING */
@@ -173,7 +181,7 @@ div.inputbox {
     background-color: #e8e8e8 !important;
 }
 
-.orbeon fieldset.componentGrp, .orbeon legend.componentGrp {
+.orbeon fieldset.componentList, .orbeon legend.componentList {
         background-color: #F0F0B1 !important;
 }
 
@@ -368,6 +376,10 @@ legend .xforms-group img {
     vertical-align: middle;
 }
 
+#settings-dialog {
+    width: 300px;
+}
+
 #settings-dialog .xforms-trigger img {
     margin-left: -10px;
     vertical-align: middle;
@@ -375,6 +387,7 @@ legend .xforms-group img {
 
 #settings-dialog .xforms-dialog .bd {
     overflow: hidden;
+    padding: 25px 10px 15px 10px;
 }
 
 /* inputs and labels */

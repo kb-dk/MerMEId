@@ -120,23 +120,23 @@
                         <h:legend class="item-components">Components <h:a 
                             class="help">?<h:span class="comment">Descriptions of the individual parts that 
                                 constitute a composite source</h:span></h:a>
-                            <dcm:attribute-editor ref="m:componentGrp"/>
+                            <dcm:attribute-editor ref="m:componentList"/>
                         </h:legend>
                         <h:div class="vertical_spacer"> </h:div>
                         <dcm:create
-                            nodeset="m:componentGrp"
+                            nodeset="m:componentList"
                             label="Add components"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentGrp"/>
-                        <dcm:create ref="m:componentGrp"
+                            origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:componentList"/>
+                        <dcm:create ref="m:componentList"
                             nodeset="m:item"
                             label="Add component"
-                            origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentGrp/m:item"/>
-                        <xf:group ref=".[m:componentGrp]">
+                            origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:componentList/m:item"/>
+                        <xf:group ref=".[m:componentList]">
                             <h:table class="component_list" cellpadding="0" cellspacing="0" border="0">
-                                <xf:repeat nodeset="m:componentGrp/m:item" id="repeat-item-component">
+                                <xf:repeat nodeset="m:componentList/m:item" id="repeat-item-component">
                                     <h:tr class="component">
                                         <h:td class="{if(position()=last()) then 'last_cell' else 'index_cell'}">
-                                            <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/tree-1.png" alt="component" border="0"/>
+                                            <h:img src="{instance('parameters')/dcm:server_name}editor/images/tree-1.png" alt="---" border="0"/>
                                         </h:td>
                                         <h:td>
                                             <h:fieldset class="compact">
@@ -145,7 +145,7 @@
                                                         triggers="up down copy add remove" 
                                                         nodeset="m:item" 
                                                         index="repeat-item-component"
-                                                        origin="instance('empty-instance')/m:meiHead/m:fileDesc/m:sourceDesc/m:source/m:itemList/m:item/m:componentGrp/m:item"/>
+                                                        origin="instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:componentList/m:item"/>
                                                     <dcm:attribute-editor ref="."/>
                                                 </h:span>
                                                 <h:div class="vertical_spacer"> </h:div>

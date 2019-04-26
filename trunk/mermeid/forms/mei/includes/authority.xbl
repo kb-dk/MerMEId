@@ -45,7 +45,7 @@
           <xf:var name="nodename" value="if (xxf:instance('authority-instance')/*[name()=name($binding)]) then name($binding) else 'persName'"/>
 
           <!-- no authority-related attributes yet? -->
-            <xf:group ref="$binding[not(@authority and @authURI and @codedval)]">
+            <xf:group ref="$binding[not(@auth and @auth.uri and @codedval)]">
               <h:span class="fixed_width">
                 <xf:trigger>
                   <xf:label><h:img style="vertical-align: middle;"
@@ -55,11 +55,11 @@
                     src="{xxf:instance('parameters')/dcm:server_name}/editor/images/authority.png"
                     alt="Add authority file reference" title="Add authority file reference"/></xf:label>-->
                 <xf:action ev:event="DOMActivate">
-                  <xf:action if="not(@authority)">
-                    <xf:insert nodeset="@*" context="." origin="xxf:attribute('authority','')"/>
+                  <xf:action if="not(@auth)">
+                    <xf:insert nodeset="@*" context="." origin="xxf:attribute('auth','')"/>
                   </xf:action>
-                  <xf:action if="not(@authURI)">
-                    <xf:insert nodeset="@*" context="." origin="xxf:attribute('authURI','')"/>
+                  <xf:action if="not(@auth.uri)">
+                    <xf:insert nodeset="@*" context="." origin="xxf:attribute('auth.uri','')"/>
                   </xf:action>
                   <xf:action if="not(@codedval)">
                     <xf:insert nodeset="@*" context="." origin="xxf:attribute('codedval','')"/>
@@ -72,21 +72,21 @@
             </xf:group>
           
           <!-- select authority -->
-          <xf:select1 ref="$binding/@authority">
+          <xf:select1 ref="$binding/@auth">
             <xf:item>
               <xf:label/>
               <xf:value/>
             </xf:item>
             <xf:itemset
-              nodeset="xxf:instance('authority-instance')/*[name()=$nodename]/@authority">
+              nodeset="xxf:instance('authority-instance')/*[name()=$nodename]/@auth">
               <xf:label>
-                <xf:output value="concat(.,' (',../@authURI,')')"/>
+                <xf:output value="concat(.,' (',../@auth.uri,')')"/>
               </xf:label>
               <xf:value ref="."/>
             </xf:itemset>
             <xf:action ev:event="xforms-value-changed">
               <xf:var name="authority" select="."/>
-              <xf:setvalue ref="$binding/@authURI" value="xxf:instance('authority-instance')/*[name()=$nodename][@authority=$authority]/@authURI"/>
+              <xf:setvalue ref="$binding/@auth.uri" value="xxf:instance('authority-instance')/*[name()=$nodename][@auth=$authority]/@auth.uri"/>
             </xf:action>
           </xf:select1>
           <xf:input ref="$binding/@codedval" class="mediumlong">

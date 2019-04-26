@@ -1,5 +1,7 @@
 xquery version "1.0" encoding "UTF-8";
 
+import module namespace rd="http://kb.dk/this/redirect" at "../redirect_host.xqm";
+
 declare namespace xl="http://www.w3.org/1999/xlink";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
@@ -14,7 +16,7 @@ declare namespace m="http://www.music-encoding.org/ns/mei";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 
-declare variable $coll   := request:get-parameter("coll",    "") cast as xs:string;
+declare variable $coll   := request:get-parameter("coll","") cast as xs:string;
 declare variable $query  := request:get-parameter("query","") cast as xs:string;
 declare variable $xsl  := xs:anyURI(request:get-parameter("xsl",""));
 declare variable $database := request:get-parameter("db","/db/dcm");
@@ -26,28 +28,21 @@ declare function local:getlist (
   $coll            as xs:string,
   $query           as xs:string) as node()* 
   {
-    let $sortby := request:get-parameter("sortby",$local:sortby)
-    let $sort0  := substring-before($sortby,",")
-    let $sort1  := substring-after($sortby,",")
     let $list   := 
       if($coll) then 
-	if($query) then
-      for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
-	    order by local:sort-key ($doc,$sort0),local:sort-key($doc,$sort1)
-	  return $doc 
-	else
-	  for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
-	    order by local:sort-key ($doc,$sort0),local:sort-key($doc,$sort1)
-	  return $doc 
-    else
-	  if($query) then
-        for $doc in collection($database)/m:mei[ft:query(.,$query)]
-	      order by local:sort-key ($doc,$sort0),local:sort-key($doc,$sort1)
-	    return $doc
-    else
-      for $doc in collection($database)/m:mei
-	    order by local:sort-key ($doc,$sort0),local:sort-key($doc,$sort1)
-	  return $doc
+    	if($query) then
+          for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll  and ft:query(.,$query)] 
+    	  return $doc 
+    	else
+    	  for $doc in collection($database)/m:mei[m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/string()=$coll] 
+    	  return $doc 
+      else
+          if($query) then
+            for $doc in collection($database)/m:mei[ft:query(.,$query)]
+            return $doc
+          else
+            for $doc in collection($database)/m:mei
+        	return $doc
 	      
     return $list
 
@@ -55,37 +50,9 @@ declare function local:getlist (
 
 
 
-declare function local:sort-key (
-  $doc as node(),
-  $key as xs:string) as xs:string
-{
-
-  let $collection:=$doc//m:seriesStmt/m:identifier[@type="file_collection"]/string()[1] 
-
-  let $sort_key:=
-    if($key eq "title") then
-      replace(lower-case($doc//m:workDesc/m:work/m:titleStmt[1]/m:title[1]/string()),"\\\\ ","")
-    else if($key eq "date") then
-      substring($doc//m:workDesc/m:work/m:history/m:creation/m:date/(@notafter|@isodate|@enddate|@startdate|@notbefore)[1],1,4)
-    else if($key eq "work_number") then
-      let $identifier:=$doc//m:workDesc/m:work/m:identifier[@label=$collection][1]/string()
-      (: extract any trailing number :)
-      let $number:= replace($identifier,'^.*?(\d*)$','$1')
-      (: and anything that might be before the number :)
-      let $prefix:= replace($identifier,'^(.*?)\d*$','$1')
-      (: make the number a 15 character long string padded with zeros :)
-      let $padded_number:=concat("0000000000000000",normalize-space($number))
-      let $len:=string-length($padded_number)-14
-	return concat($prefix,substring($padded_number,$len,15))
-    else 
-      ""
-  return $sort_key
-};
-
-
 declare function local:get-work-number($doc as node() ) as xs:string* {
   let $c := $doc//m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"][1]/string()
-  let $no := $doc//m:meiHead/m:workDesc/m:work[1]/m:identifier[@label=$c][1]/string()
+  let $no := $doc//m:meiHead/m:workList/m:work[1]/m:identifier[@label=$c][1]/string()
   return ($c, $no)	
 };
 
@@ -135,9 +102,9 @@ return
                               let $html := 
                               <tr>
                                  <td>{local:get-work-number($doc)} &#160;</td>
-                                 <td><a href="{concat("http://",request:get-header('HOST'),"/storage/present.xq?doc=",substring-after(document-uri(root($doc)),$database))}" 
+                                 <td><a href="{concat("http://",rd:host(),"/storage/present.xq?doc=",substring-after(document-uri(root($doc)),$database))}" 
                                     target="_blank" title="HTML preview">{$doc/m:meiHead/m:fileDesc/m:titleStmt/m:title[1]/string()}</a> &#160;</td>
-                                 <td><a href="{concat("http://",request:get-header('HOST'),replace(document-uri(root($doc)),'/db/','/storage/'))}" 
+                                 <td><a href="{concat("http://",rd:host(),replace(document-uri(root($doc)),'/db/','/storage/'))}" 
                                     target="_blank" title="XML">{substring-after(document-uri(root($doc)),$database)}</a></td>
                               </tr>
                               

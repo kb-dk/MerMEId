@@ -333,9 +333,8 @@
 					automatically created when opening the document. Your login name is automatically added on saving. 
 					Use "Add change"-button to add rows manually.</h:span></h:a>--></h:span>
 				<h:span class="fixed_width_maxlong" style="display:inline-block;">Description </h:span>
-				<h:span class="fixed_width_mediumshort" style="display:inline-block;">&#160;Responsible <h:a class="help">&#160;?<h:span class="comment">Your 
-					login name is automatically added to the last change entry on saving. 
-					Use "Add change"-button to add rows manually.</h:span></h:a></h:span>
+				<h:span class="fixed_width_mediumshort" style="display:inline-block;">&#160;Responsible <h:a class="help">&#160;?<h:span 
+					class="comment">Enter your name or initials</h:span></h:a></h:span>
 				<xf:repeat nodeset="m:change" id="repeat-change">
 					<h:div>
 						<h:div class="fixed_width_long">
@@ -346,7 +345,7 @@
 						<!-- Date no longer editable -->
 						<!--<xf:input ref="@isodate"/>-->
 						<xf:input ref="m:changeDesc/m:p" class="maxlong"/>
-						<xf:input ref="m:respStmt/m:resp" class="mediumshort"/>
+						<xf:input ref="m:respStmt/m:name" class="mediumshort"/>
 						<dcm:element-buttons triggers="remove" 
 							nodeset="m:change"
 							index="repeat-change"

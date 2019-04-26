@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <h:div xmlns:xf="http://www.w3.org/2002/xforms" 
-    xmlns:h="http://www.w3.org/1999/xhtml">
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner">
 <!-- code inspector -->
     <xf:group ref=".[instance('parameters')/dcm:code_inspector='true']">
-        <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+        <!-- Code inspector -->
+        <fr:xforms-inspector/>  
+        <!-- Code editor - doesn't seem to work -->
+        <!--<fr:code-mirror ref="instance('data-instance')"/>-->
     </xf:group>
 <!-- end code inspector -->    
 </h:div>

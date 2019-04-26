@@ -117,7 +117,9 @@
 
 
   <!-- Remove empty attributes -->
-  <xsl:template match="@accid|@authority|@authURI|@cert|@codedval|@count|@enddate|@evidence|     @isodate|@mode|@n|@notafter|@notbefore|@pname|@reg|@resp|     @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang">
+  <xsl:template match="@accid|@auth|@auth-uri|@cert|@codedval|@count|@enddate|@evidence|     
+    @isodate|@mode|@n|@notafter|@notbefore|@pname|@reg|@resp|     
+    @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang">
     <xsl:if test="normalize-space(.)">
       <xsl:copy-of select="."/>
     </xsl:if>
@@ -182,7 +184,7 @@
 
 
   <!-- Delete duplicate language definitions (fixes an xforms problem) -->
-  <xsl:template match="m:mei/m:meiHead/m:workDesc/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
+  <xsl:template match="m:mei/m:meiHead/m:workList/m:work/m:langUsage/m:language[. = preceding-sibling::m:language]"/>
 
   <!-- Remove <rend> elements without any rendition information or empty -->
   <xsl:template match="m:rend">
@@ -213,10 +215,13 @@
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="m:source">
-    <xsl:element name="source" namespace="http://www.music-encoding.org/ns/mei">
+  <xsl:template match="m:manifestation">
+    <xsl:element name="manifestation" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
       <xsl:call-template name="make_id_if_absent"/>
+      <xsl:apply-templates select="m:head"/>
+      <xsl:apply-templates select="m:locus"/>
+      <xsl:apply-templates select="m:locusGrp"/>
       <xsl:apply-templates select="m:identifier"/>
       <xsl:apply-templates select="m:titleStmt"/>
       <xsl:apply-templates select="m:editionStmt"/>
@@ -224,13 +229,17 @@
       <xsl:apply-templates select="m:physDesc"/>
       <xsl:apply-templates select="m:physLoc"/>
       <xsl:apply-templates select="m:seriesStmt"/>
-      <xsl:apply-templates select="m:contents"/>
+      <xsl:apply-templates select="m:creation"/>
+      <xsl:apply-templates select="m:history"/>
       <xsl:apply-templates select="m:langUsage"/>
+      <xsl:apply-templates select="m:contents"/>
+      <xsl:apply-templates select="m:biblList"/>
       <xsl:apply-templates select="m:notesStmt"/>
       <xsl:apply-templates select="m:classification"/>
       <xsl:apply-templates select="m:itemList"/>
-      <xsl:apply-templates select="m:componentGrp"/>
+      <xsl:apply-templates select="m:componentList"/>
       <xsl:apply-templates select="m:relationList"/>
+      <xsl:apply-templates select="m:extMeta"/>
     </xsl:element>
   </xsl:template>
 
@@ -238,8 +247,10 @@
     <xsl:element name="work" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
       <xsl:call-template name="make_id_if_absent"/>
+      <xsl:apply-templates select="m:head"/>
       <xsl:apply-templates select="m:identifier"/>
-      <xsl:apply-templates select="m:titleStmt"/>
+      <xsl:apply-templates select="m:title"/>
+      <xsl:apply-templates select="m:contributor | m:author | m:arranger | m:composer | m:editor | m:funder"/>
       <xsl:apply-templates select="m:incip"/>
       <xsl:apply-templates select="m:tempo"/>
       <xsl:apply-templates select="m:key"/>
@@ -251,7 +262,6 @@
       <xsl:apply-templates select="m:langUsage"/>
       <xsl:apply-templates select="m:perfMedium"/>
       <xsl:apply-templates select="m:perfDuration"/>
-      <xsl:apply-templates select="m:extent"/>
       <xsl:apply-templates select="m:audience"/>
       <xsl:apply-templates select="m:contents"/>
       <xsl:apply-templates select="m:context"/>
@@ -259,8 +269,9 @@
       <xsl:apply-templates select="m:notesStmt"/>
       <xsl:apply-templates select="m:classification"/>
       <xsl:apply-templates select="m:expressionList"/>
-      <xsl:apply-templates select="m:componentGrp"/>
+      <xsl:apply-templates select="m:componentList"/>
       <xsl:apply-templates select="m:relationList"/>
+      <xsl:apply-templates select="m:extMeta"/>
     </xsl:element>
   </xsl:template>
 
@@ -269,8 +280,10 @@
     <xsl:element name="expression" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
       <xsl:call-template name="make_id_if_absent"/>
+      <xsl:apply-templates select="m:head"/>
       <xsl:apply-templates select="m:identifier"/>
-      <xsl:apply-templates select="m:titleStmt"/>
+      <xsl:apply-templates select="m:title"/>
+      <xsl:apply-templates select="m:contributor | m:author | m:arranger | m:composer | m:editor | m:funder"/>
       <xsl:apply-templates select="m:incip"/>
       <xsl:apply-templates select="m:tempo"/>
       <xsl:apply-templates select="m:key"/>
@@ -279,18 +292,17 @@
       <xsl:apply-templates select="m:otherChar"/>
       <xsl:apply-templates select="m:creation"/>
       <xsl:apply-templates select="m:history"/>
+      <xsl:apply-templates select="m:langUsage"/>
       <xsl:apply-templates select="m:perfMedium"/>
       <xsl:apply-templates select="m:perfDuration"/>
-      <xsl:apply-templates select="m:extent"/>
-      <xsl:apply-templates select="m:audience"/>
       <xsl:apply-templates select="m:contents"/>
       <xsl:apply-templates select="m:context"/>
       <xsl:apply-templates select="m:biblList"/>
       <xsl:apply-templates select="m:notesStmt"/>
       <xsl:apply-templates select="m:classification"/>
-      <xsl:apply-templates select="m:expressionList"/>
-      <xsl:apply-templates select="m:componentGrp"/>
+      <xsl:apply-templates select="m:componentList"/>
       <xsl:apply-templates select="m:relationList"/>
+      <xsl:apply-templates select="m:extMeta"/>
     </xsl:element>
   </xsl:template>
   
@@ -313,91 +325,12 @@
 
   <xsl:template name="replace_nodes">
     <xsl:param name="text"/>
-    
-    <xsl:choose>
-      <xsl:when test="contains($text,'&lt;') and contains(substring-after($text,'&lt;'),'&gt;')">
-        <xsl:copy-of select="substring-before($text,'&lt;')"/>
-        <xsl:variable name="element_and_attr">
-          <xsl:value-of select="substring-before(substring-after($text,'&lt;'),'&gt;')"/>
-        </xsl:variable>
-        <xsl:variable name="element">
-          <xsl:choose>
-            <xsl:when test="contains($element_and_attr,' ')">
-              <xsl:value-of select="substring-before($element_and_attr,' ')"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:choose>
-                <xsl:when test="contains($element_and_attr,'/')">
-                  <xsl:value-of select="substring-before($element_and_attr,'/')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="$element_and_attr"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="attributes">
-          <xsl:if test="contains($element_and_attr,' ')">
-            <xsl:value-of select="substring-after($element_and_attr,' ')"/>
-          </xsl:if>
-        </xsl:variable>
-        <xsl:choose>
-          <xsl:when test="contains($text,concat('&lt;/',$element,'&gt;'))">
-            <xsl:variable name="begin" select="concat('&lt;',$element_and_attr,'&gt;')"/>
-            <xsl:variable name="end" select="concat('&lt;/',$element,'&gt;')"/>
-            <!-- nodes are assumed to be HTML, hence the HTML namespace -->
-            <xsl:element name="{$element}" namespace="http://www.w3.org/1999/xhtml">
-              <xsl:call-template name="addAttributes">
-                <xsl:with-param name="attrString" select="$attributes"/>
-              </xsl:call-template>
-              <xsl:call-template name="replace_nodes">
-                <xsl:with-param name="text" select="substring-before(substring-after($text,$begin),$end)"/>
-              </xsl:call-template>
-            </xsl:element>
-            <xsl:call-template name="replace_nodes">
-              <xsl:with-param name="text" select="substring-after($text,$end)"/>
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:otherwise>
-            <!-- No end element. Something like <br/>, <br> or <img src=""/> assumed -->
-            <xsl:if test="string-length($element) &gt; 0">
-              <xsl:element name="{$element}" namespace="http://www.w3.org/1999/xhtml">
-                <xsl:call-template name="addAttributes">
-                  <xsl:with-param name="attrString" select="$attributes"/>
-                </xsl:call-template>
-              </xsl:element>
-            </xsl:if>
-            <xsl:call-template name="replace_nodes">
-              <xsl:with-param name="text" select="substring-after($text,'&gt;')"/>
-            </xsl:call-template>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:copy-of select="$text"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <!-- Wrap contents in a temporary <div> root element and parse XML -->
+    <xsl:variable name="fragment">&lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;<xsl:value-of select="$text"/>&lt;/div&gt;</xsl:variable>
+    <xsl:for-each select="parse-xml($fragment)/h:div">
+      <xsl:apply-templates/>
+    </xsl:for-each>
   </xsl:template>
-
-  <xsl:template name="addAttributes">
-    <xsl:param name="attrString"/>
-    <xsl:variable name="thisAttrPart1" select="normalize-space(substring-before($attrString,'&#34;'))"/>
-    <xsl:variable name="thisAttrPart2" select="substring-before(substring-after($attrString,concat($thisAttrPart1,'&#34;')),'&#34;')"/>
-    <xsl:variable name="attrName" select="substring-before($thisAttrPart1,'=')"/>
-    <xsl:variable name="remainder" select="substring-after(substring-after($attrString,$thisAttrPart2),'&#34;')"/>
-    <xsl:if test="$attrName">
-      <xsl:attribute name="{$attrName}">
-        <xsl:value-of select="$thisAttrPart2"/>
-      </xsl:attribute>
-      <xsl:if test="normalize-space($remainder)!='' and normalize-space($remainder)!='/'">
-        <xsl:call-template name="addAttributes">
-          <xsl:with-param name="attrString" select="$remainder"/>
-        </xsl:call-template>
-      </xsl:if>
-    </xsl:if>
-  </xsl:template>
-
   <!-- End entity conversion -->
 
   <!-- HTML -> MEI -->
@@ -470,7 +403,7 @@
   <xsl:template match="h:span">
     <xsl:choose>
       <xsl:when test="contains(@title,'mei:')">
-        <!-- Translate encodings like this to MEI: <span title="mei:persName" class="mei:atts[authURI(http://www.viaf.org),codedval(12345))]">Niels Gade</span> -->
+        <!-- Translate encodings like this to MEI: <span title="mei:persName" class="mei:atts[auth.uri(http://www.viaf.org),codedval(12345))]">Niels Gade</span> -->
         <xsl:variable name="tagName" select="substring-after(@title,'mei:')"/>
         <xsl:variable name="atts">
           <xsl:call-template name="tokenize">
@@ -480,7 +413,8 @@
         </xsl:variable>
         <xsl:element name="{$tagName}" namespace="http://www.music-encoding.org/ns/mei">
           <xsl:for-each select="$atts/*">
-            <xsl:variable name="attName" select="substring-before(.,'(')"/>
+            <!-- convert underscores in attribute names back to dots -->
+            <xsl:variable name="attName" select="translate(substring-before(.,'('),'_','.')"/>
             <xsl:attribute name="{$attName}">
               <xsl:value-of select="substring-before(substring-after(.,'('),')')"/>
             </xsl:attribute>
@@ -539,7 +473,7 @@
             </xsl:attribute>
           </xsl:if>
           <xsl:if test="@title">
-            <xsl:attribute name="xl:title">
+            <xsl:attribute name="label">
               <xsl:value-of select="@title"/>
             </xsl:attribute>
           </xsl:if>
@@ -595,7 +529,7 @@
         <xsl:attribute name="label">
           <xsl:value-of select="@title"/>
         </xsl:attribute>
-        <xsl:attribute name="xl:title">
+        <xsl:attribute name="label">
           <xsl:value-of select="@alt"/>
         </xsl:attribute>
         <xsl:attribute name="target">
@@ -638,7 +572,14 @@
       <xsl:choose>
         <xsl:when test="$user">
             <xsl:choose>
-              <xsl:when test="$settings/dcm:parameters/dcm:automatic_log_main_switch='true'                 and $penultimate &gt; 0                 and not(m:change[$penultimate]/m:changeDesc//text())                 and not(m:change[last()]//text())                 and $penultimateDay=$today                 and $penultimateChange/m:respStmt/m:resp=$user                 and (m:change[last()]/m:respStmt/m:resp=$user or m:change[last()]/m:respStmt/m:resp='')                 ">
+              <xsl:when test="$settings/dcm:parameters/dcm:automatic_log_main_switch='true'                 
+                and $penultimate &gt; 0                 
+                and not(m:change[$penultimate]/m:changeDesc//text())                 
+                and not(m:change[last()]//text())                 
+                and $penultimateDay=$today                 
+                and $penultimateChange/m:respStmt/m:resp=$user                 
+                and (m:change[last()]/m:respStmt/m:resp=$user or m:change[last()]/m:respStmt/m:resp='')                 
+                ">
                 <!-- last entry is just a new save from the same user with no change description - just update the last timestamp -->
                 <xsl:for-each select="m:change">
                   <xsl:choose>
@@ -664,12 +605,12 @@
                 <!-- just make sure to add the user name to the last entry if missing -->
                 <xsl:for-each select="m:change">
                   <xsl:choose>
-                    <xsl:when test="position()=last() and not(normalize-space(m:respStmt/m:resp))">
+                    <xsl:when test="position()=last() and not(normalize-space(m:respStmt/m:name))">
                       <change>
                         <xsl:copy-of select="@*"/>
                         <xsl:call-template name="make_id_if_absent"/>
                         <respStmt>
-                          <resp><xsl:value-of select="$user"/></resp>
+                          <name><xsl:value-of select="$user"/></name>
                         </respStmt>
                         <xsl:apply-templates select="m:changeDesc"/>
                       </change>

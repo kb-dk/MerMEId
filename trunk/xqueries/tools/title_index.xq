@@ -49,27 +49,27 @@ declare function local:format-main-title ($key as xs:string) as node()
                 
     		    {
     
-                	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type eq "file_collection"]  eq $collection]/m:workDesc/m:work
-                        order by lower-case($c/m:titleStmt/m:title[1]/string()), lower-case($c/m:titleStmt/m:title[@type='subordinate'][1]/string()), lower-case($c/m:titleStmt/m:title[@type='alternative'][1]/string())
+                	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type eq "file_collection"]  eq $collection]/m:workList/m:work
+                        order by lower-case($c/m:title[1]/string()), lower-case($c/m:title[@type='subordinate'][1]/string()), lower-case($c/m:title[@type='alternative'][1]/string())
                 	    return
                 	       <div>
                 	       {
                 	           (: title (first line) :)
                                 let $output := 
-                                   if(not($c/m:titleStmt/m:title[@type='alternative']) and $c/m:classification/m:termList/m:term='Song'
+                                   if(not($c/m:title[@type='alternative']) and $c/m:classification/m:termList/m:term='Song'
                 	               and not(fn:contains($c/m:identifier[@label=$collection],'Coll.'))) then
                 	                   (: song with no alternative title, i.e. title is first line :)
-                                    fn:concat($c/m:titleStmt/m:title[@type='main' or not(@type)][1]/string(),' ',
-                                    $c/m:titleStmt/m:title[@type='subordinate'][1]/string()) 
+                                    fn:concat($c/m:title[@type='main' or not(@type)][1]/string(),' ',
+                                    $c/m:title[@type='subordinate'][1]/string()) 
                         	       else
                                     <span>
-                                        {local:format-main-title($c/m:titleStmt/m:title[@type='main' or not(@type)][1]/string())}
+                                        {local:format-main-title($c/m:title[@type='main' or not(@type)][1]/string())}
                                         {let $alt:=
-                                            if($c/m:titleStmt/m:title[@type='alternative']) then 
-                                                fn:concat(' (',$c/m:titleStmt/m:title[@type='alternative'][1]/string(),') ')
+                                            if($c/m:title[@type='alternative']) then 
+                                                fn:concat(' (',$c/m:title[@type='alternative'][1]/string(),') ')
                                             else
                                                 ''
-                                         return fn:concat(' ',$c/m:titleStmt/m:title[@type='subordinate'][1]/string(),$alt)}
+                                         return fn:concat(' ',$c/m:title[@type='subordinate'][1]/string(),$alt)}
                                     </span>
                                 return $output
                              }
@@ -83,19 +83,19 @@ declare function local:format-main-title ($key as xs:string) as node()
         <div>
                 
     		    {
-                	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type eq "file_collection"]  eq $collection]/m:workDesc/m:work[m:titleStmt/m:title[@type='alternative']]
-                        order by lower-case($c/m:titleStmt/m:title[@type='alternative'][1]/string()), lower-case($c/m:titleStmt/m:title[1]/string()) 
+                	    for $c in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type eq "file_collection"]  eq $collection]/m:workList/m:work[m:title[@type='alternative']]
+                        order by lower-case($c/m:title[@type='alternative'][1]/string()), lower-case($c/m:title[1]/string()) 
                 	    return
                 	       <div>
                 	       {
                 	           (: first line (title) :)
                                 let $output := 
                                     <span>
-                                       {fn:concat($c/m:titleStmt/m:title[@type='alternative'][1]/string(),' (')}
-                                       {local:format-main-title($c/m:titleStmt/m:title[@type='main' or not(@type)][1]/string())}
+                                       {fn:concat($c/m:title[@type='alternative'][1]/string(),' (')}
+                                       {local:format-main-title($c/m:title[@type='main' or not(@type)][1]/string())}
                                        {let $sub:=
-                                        if(fn:string-length($c/m:titleStmt/m:title[@type='subordinate'][1]/string()) > 0) then
-                                            fn:concat(' ',$c/m:titleStmt/m:title[@type='subordinate'][1]/string())
+                                        if(fn:string-length($c/m:title[@type='subordinate'][1]/string()) > 0) then
+                                            fn:concat(' ',$c/m:title[@type='subordinate'][1]/string())
                                         else
                                             ''
                                         return fn:concat($sub,')') 

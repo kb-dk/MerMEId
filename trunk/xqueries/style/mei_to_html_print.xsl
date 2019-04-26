@@ -36,13 +36,13 @@
 	<!-- Exceptions/alterations to the default transform -->
 	
 	<!-- omit settings menu -->
-	<xsl:template match="*" mode="settings_menu"/>
+	<xsl:template match="*" mode="settings_menu" priority="10"/>
 	
 	<!-- omit colophon -->
-	<xsl:template match="*" mode="colophon"/>
+	<xsl:template match="*" mode="colophon" priority="10"/>
 	
 	<!-- show crosslinks as plain text -->
-	<xsl:template match="*" mode="relation_reference">
+	<xsl:template match="*" mode="relation_reference" priority="10">
 		<xsl:param name="href"/>
 		<xsl:param name="title"/>
 		<xsl:param name="class"/>
@@ -51,23 +51,23 @@
 	</xsl:template>
 	
 	<!-- show inline links as plain text -->
-	<xsl:template match="m:ref[@target][text()]">
+	<xsl:template match="m:ref[@target][text()]" priority="10">
 		<xsl:value-of select="."/>
 	</xsl:template>
 		
 	<!-- omit links -->
-	<xsl:template match="m:ptr | m:repository/m:ptr | m:annot[@type='links']"/>
+	<xsl:template match="m:ptr | m:repository/m:ptr | m:annot[@type='links']" priority="10"/>
 	
 	<!-- omit pop-up information -->
-	<xsl:template match="m:bibl//m:title | m:perfRes/text() | m:identifier/text() | m:identifier/@label">
+	<xsl:template match="m:bibl//m:title | m:perfRes/text() | m:identifier/text() | m:identifier/@label" priority="10">
 		<xsl:value-of select="."/>
 	</xsl:template>
 	
 	<!-- omit all things not intended for print -->
-	<xsl:template match="*[contains(@class,'noprint')]"/>
+	<xsl:template match="*[contains(@class,'noprint')]" priority="10"/>
 	
 	<!-- expand all folding sections -->
-	<xsl:template match="*" mode="fold_section">
+	<xsl:template match="*" mode="fold_section" priority="10">
 		<xsl:param name="heading"/>
 		<xsl:param name="id"/>
 		<xsl:param name="content"/>

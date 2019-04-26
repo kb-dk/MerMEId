@@ -136,7 +136,7 @@
       
       <xsl:choose>
         <!-- component expressions need special treatment -->
-        <xsl:when test="local-name(..)='expression' and local-name()='componentGrp'">
+        <xsl:when test="local-name(..)='expression' and local-name()='componentList'">
           <xsl:apply-templates mode="component"/>
         </xsl:when>
         <xsl:otherwise>
@@ -167,7 +167,7 @@
             select="name()"/></xsl:for-each>
     </xsl:variable>
     <!-- always copy from the model's top-level expression -->
-    <xsl:variable name="path">/m:mei/m:meiHead[1]/m:workDesc/m:work/m:expressionList/m:expression/<xsl:call-template name="substring-after-last">
+    <xsl:variable name="path">/m:mei/m:meiHead[1]/m:workList/m:work/m:expressionList/m:expression/<xsl:call-template name="substring-after-last">
         <xsl:with-param name="string" select="$complete_path"/>
         <xsl:with-param name="delimiter" select="'m:expression/'"/>
       </xsl:call-template>
@@ -311,7 +311,8 @@
     and (ancestor::m:annot or ancestor::m:p or ancestor::m:physMedium or ancestor::m:watermark or ancestor::m:condition)]" mode="mei2html">
     <xsl:variable name="atts">
      <xsl:for-each select="@*">
-      <xsl:value-of select="concat(name(),'(',.,'),')"/>
+       <!-- no dots allowed in attribute names when editing in tinyMCE -->
+       <xsl:value-of select="concat(translate(name(),'.','_'),'(',.,'),')"/>
      </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="bgColor">
@@ -342,13 +343,13 @@
       </xsl:choose><xsl:text>" </xsl:text>
     </xsl:if>
     <xsl:text>title="</xsl:text><xsl:value-of
-      select="@xl:title"/><xsl:text>"&gt;</xsl:text>
+      select="@label"/><xsl:text>"&gt;</xsl:text>
     <xsl:apply-templates mode="mei2html"/>&lt;/a&gt;
   </xsl:template>
   
   <xsl:template match="m:fig[m:graphic]" mode="mei2html">&lt;img 
     src="<xsl:value-of select="m:graphic/@target"/>" 
-    alt="<xsl:value-of select="m:graphic/@xl:title"/>"
+    alt="<xsl:value-of select="m:graphic/@label"/>"
     title="<xsl:value-of select="m:graphic/@label"/>"/&gt;</xsl:template> 
   <!-- END MEI -> HTML -->
   

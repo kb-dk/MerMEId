@@ -139,7 +139,7 @@ declare function filter:count-hits(
   $list as node()*) as xs:integer* 
 {
   let $number :=
-  for $count in count($list//m:workDesc[contains(m:work/m:classification/m:termList/m:term/string(),$term) ])
+  for $count in count($list//m:workList[contains(m:work/m:classification/m:termList/m:term/string(),$term) ])
     return $count
   return $number
 };

@@ -32,7 +32,7 @@
         <dcm:create 
             nodeset="m:head"
             label="Add ensemble heading"
-            origin="xxf:instance('empty-instance')/m:meiHead/m:workDesc/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfResList/m:head"/>
+            origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression[1]/m:perfMedium/m:perfResList/m:perfResList/m:head"/>
         <xf:input ref="m:head" class="long">
             <xf:label class="fixed_width">Heading <h:a class="help">&#160;?<h:span 
                 class="comment">An optional heading or name wich may be used with or 

@@ -92,7 +92,7 @@ CNW: <select name="cnw">
         <option value=""/>
 		    {
             	    for $c in distinct-values(
-            		collection($database)//m:workDesc/m:work/m:identifier[@label='CNW']/string()[string-length(.) > 0 and translate(.,'0123456789','')=''])
+            		collection($database)//m:workList/m:work/m:identifier[@label='CNW']/string()[string-length(.) > 0 and translate(.,'0123456789','')=''])
                     order by number($c)
             	    return 
             	       <option value="{$c}">{$c}</option>
@@ -104,7 +104,7 @@ Opus: <select name="opus">
         <option value=""/>
 		    {
             	    for $c in distinct-values(
-            		collection($database)//m:workDesc/m:work/m:identifier[@label='Opus']/string()[string-length(.) > 0])
+            		collection($database)//m:workList/m:work/m:identifier[@label='Opus']/string()[string-length(.) > 0])
                     order by number(translate($c,'abcdefghijklmnopqrstuvwxyz',''))
             	    return 
             	       <option value="{$c}">{$c}</option>
@@ -116,7 +116,7 @@ FS: <select name="fs">
         <option value=""/>
 		    {
             	    for $c in distinct-values(
-            		collection($database)//m:workDesc/m:work/m:identifier[@label='FS']/loop:simplify-list(string())[string-length(.) > 0])
+            		collection($database)//m:workList/m:work/m:identifier[@label='FS']/loop:simplify-list(string())[string-length(.) > 0])
                     order by number(translate(loop:simplify-list($c),'abcdefghijklmnopqrstuvwxyz','')), translate(loop:simplify-list($c),'01234567890','') 
             	    return 
             	       <option value="{$c}">{$c}</option>
@@ -128,7 +128,7 @@ CNS: <select name="cns">
         <option value=""/>
 		    {
             	    for $c in distinct-values(
-            		collection($database)//m:workDesc/m:work/m:identifier[@label='CNS']/string()[string-length(.) > 0])
+            		collection($database)//m:workList/m:work/m:identifier[@label='CNS']/string()[string-length(.) > 0])
                     order by number($c)
             	    return 
             	       <option value="{$c}">{$c}</option>

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-model href="../../../../Skema/MEI%203.0.0/mei-all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
-<mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="3.0.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="4.0.0">
    <meiHead>
       <fileDesc>
          <titleStmt>
@@ -30,59 +29,32 @@
             <title/>
             <identifier type="file_collection"/>
          </seriesStmt>
-         <sourceDesc>
-            <source>
-               <identifier label=""/>
-               <titleStmt>
-                  <title/>
-               </titleStmt>
-               <pubStmt>
-                  <publisher/>
-                  <pubPlace/>
-                  <date/>
-               </pubStmt>
-               <physDesc>
-                  <extent unit=""/>
-                  <dimensions unit=""/>
-                  <physMedium/>
-               </physDesc>
-               <classification>
-                  <termList>
-                     <term classcode="#DcmContentClass"/>
-                     <term classcode="#DcmPresentationClass"/>
-                     <term classcode="#DcmAuthorityClass"/>
-                     <term classcode="#DcmScoringClass"/>
-                     <term classcode="#DcmStateClass"/>
-                     <term classcode="#DcmCompletenessClass"/>
-                  </termList>
-               </classification>
-               <itemList/>
-               <componentGrp/>
-               <relationList>
-                  <relation rel="isEmbodimentOf" target=""/>
-               </relationList>
-            </source>
-         </sourceDesc>
       </fileDesc>
       <encodingDesc>
          <appInfo>
-            <application version="2013">
+            <application version="2019">
                <name>MerMEId</name>
             </application>
          </appInfo>
-         <projectDesc>
-            <p>Created using MerMEId</p>
-         </projectDesc>
+         <projectDesc/>
+         <classDecls>
+            <taxonomy xml:id="DcmSourceClassification">
+               <category xml:id="DcmContentClass"/>
+               <category xml:id="DcmPresentationClass"/>
+               <category xml:id="DcmAuthorityClass"/>
+               <category xml:id="DcmScoringClass"/>
+               <category xml:id="DcmStateClass"/>
+               <category xml:id="DcmCompletenessClass"/>
+            </taxonomy>
+         </classDecls>
       </encodingDesc>
-      <workDesc>
-         <work analog="frbr:work">
+      <workList>
+         <work>
             <identifier label=""/>
-            <titleStmt>
-               <title xml:lang="en"/>
-               <respStmt>
-                  <persName role="composer"/>
-               </respStmt>
-            </titleStmt>
+            <title xml:lang="en"/>
+            <contributor>
+               <persName role="composer"/>
+            </contributor>
             <creation>
                <date/>
                <geogName/>
@@ -93,19 +65,9 @@
             <langUsage>
                <language xml:id="en">English</language>
             </langUsage>
-            <classification>
-               <classCode xml:id="DcmContentClass"/>
-               <classCode xml:id="DcmPresentationClass"/>
-               <classCode xml:id="DcmAuthorityClass"/>
-               <classCode xml:id="DcmScoringClass"/>
-               <classCode xml:id="DcmStateClass"/>
-               <classCode xml:id="DcmCompletenessClass"/>
-            </classification>
             <expressionList>
-               <expression analog="frbr:expression" n="">
-                  <titleStmt>
-                     <title xml:lang="en"/>
-                  </titleStmt>
+               <expression n="">
+                  <title xml:lang="en"/>
                   <incip/>
                   <creation>
                      <date/>
@@ -120,16 +82,39 @@
                         <term/>
                      </termList>
                   </classification>
-                  <componentGrp/>
+                  <componentList/>
                   <relationList/>
                </expression>
             </expressionList>
          </work>
-      </workDesc>
+      </workList>
+      <manifestationList>
+         <manifestation>
+            <identifier label=""/>
+            <titleStmt>
+               <title/>
+            </titleStmt>
+            <classification>
+               <termList>
+                  <term class="#DcmContentClass"/>
+                  <term class="#DcmPresentationClass"/>
+                  <term class="#DcmAuthorityClass"/>
+                  <term class="#DcmScoringClass"/>
+                  <term class="#DcmStateClass"/>
+                  <term class="#DcmCompletenessClass"/>
+               </termList>
+            </classification>
+            <itemList/>
+            <componentList/>
+            <relationList>
+               <relation rel="isEmbodimentOf" target=""/>
+            </relationList>
+         </manifestation>
+      </manifestationList>
       <revisionDesc>
          <change isodate="">
             <respStmt>
-               <resp/>
+               <name/>
             </respStmt>
             <changeDesc>
                <p/>

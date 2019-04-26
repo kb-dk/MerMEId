@@ -20,7 +20,7 @@
     
     <!-- debug: <xf:message><xf:output value="concat('last: ',$last_revision_date,'; today: ',$today)"/></xf:message>-->
     
-    <xf:action if="$last_revision_date!=$today or ($last_revision_date=$today and ($last_revision/m:changeDesc/m:p/text() or $last_revision/m:respStmt/m:resp/text()!=''))">
+    <xf:action if="$last_revision_date!=$today or ($last_revision_date=$today and ($last_revision/m:changeDesc/m:p/text() or $last_revision/m:respStmt/m:name/text()!=''))">
         <xf:action if="$last_revision_date!=''">
             <xf:insert nodeset="xxf:instance('data-instance')/m:meiHead/m:revisionDesc/m:change" at="last()"
                 position="after" origin="xxf:instance('empty-instance')/m:meiHead/m:revisionDesc/m:change"/>

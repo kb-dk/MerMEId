@@ -81,20 +81,20 @@ declare function app:format-doc($doc  as node()) as node() {
     <file>
         <series>{$doc/m:meiHead/m:fileDesc/m:seriesStmt/m:title/text()}</series>
         <seriesId>{$doc/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"]/text()}</seriesId>
-        <composer>{$doc/m:meiHead/m:workDesc/m:work/m:titleStmt/m:respStmt/m:persName[@role='composer']/text()}</composer>
-        <title>{$doc/m:meiHead/m:workDesc/m:work/m:titleStmt/m:title[text()][1]/text()}</title>
+        <composer>{$doc/m:meiHead/m:workList/m:work/m:contributor/m:persName[@role='composer']/text()}</composer>
+        <title>{$doc/m:meiHead/m:workList/m:work/m:title[text()][1]/text()}</title>
 	<link 
 	href="{util:document-name($doc)}" />
 
-        <sources>
+        <manifestations>
 	    {
-		for $source in $doc/m:meiHead/m:fileDesc/m:sourceDesc/m:source
+		for $manifestation in $doc/m:meiHead/m:manifestationList/m:manifestation
 		return 
-                <source ref="{$source/@xml:id}">
-                    <title>{$source/m:titleStmt/m:title[text()][1]/text()}</title>
-		</source>
-            }
-        </sources>
+           <manifestation ref="{$manifestation/@xml:id}">
+                    <title>{$manifestation/m:titleStmt/m:title[text()][1]/text()}</title>
+		   </manifestation>
+        }
+        </manifestations>
     </file>
   return $ref
 };
