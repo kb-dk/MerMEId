@@ -22,33 +22,17 @@
   <xsl:variable name="empty_doc" select="document(concat($base_uri,'/editor/forms/mei/model/empty_doc.xml'))" />
   
   <xsl:template match="m:mei">
-
-    <!-- make a copy with an extra header from the empty model document -->
-    <xsl:variable name="janus">
-      <mei xmlns="http://www.music-encoding.org/ns/mei">
-        <xsl:copy-of select="@*|*"/>
-        <xsl:copy-of select="$empty_doc/m:mei/m:meiHead"/>
-      </mei>
+    <xsl:variable name="first_run">
+      <!-- copy common attributes from empty model if missing -->
+      <xsl:copy>
+        <xsl:copy-of select="@*"/>
+        <xsl:apply-templates select="m:meiHead" mode="header"/>
+        <!-- temporarily remove the music before handing the data to the editor -->
+        <xsl:apply-templates select="m:music"/>
+      </xsl:copy>
     </xsl:variable>
-    <xsl:variable name="second_run">
-      <!-- make it a nodeset and start copying all possible attributes from model 
-          (because attributes are hard to add by XForms) -->
-      <xsl:apply-templates select="$janus" mode="second_run"/>
-    </xsl:variable>
-    
     <!-- final run: convert formatted text to escaped HTML -->
-    <xsl:apply-templates select="$second_run" mode="mei2html"/>
-  </xsl:template>
-  
-  <xsl:template match="m:mei" mode="second_run">
-    <!-- transform original header and remove the temporary model header -->
-    <mei xmlns="http://www.music-encoding.org/ns/mei"
-      xmlns:xl="http://www.w3.org/1999/xlink">
-      <xsl:copy-of select="@*"/>
-      <xsl:apply-templates select="m:meiHead[1]" mode="header"/>
-      <!-- we remove the music when we deliver to the editor -->
-      <xsl:apply-templates select="m:music"/>
-    </mei>
+    <xsl:apply-templates select="$first_run" mode="mei2html"/>
   </xsl:template>
   
   <xsl:template match="m:music">
@@ -70,81 +54,26 @@
     </music>
   </xsl:template>
   
-  <!-- add @codedval and @count if missing -->
-  <xsl:template match="m:perfRes[not(@codedval) or not(@count)]" mode="mei2html">
-    <perfRes>
-      <xsl:if test="not(@codedval)">
-        <xsl:attribute name="codedval"/>
-      </xsl:if>
-      <xsl:if test="not(@count)">
-        <xsl:attribute name="count"/>
-      </xsl:if>
-      <xsl:apply-templates select="@* | node()" mode="mei2html"/>
-    </perfRes>
-  </xsl:template>
+  <!-- COPY ATTRIBUTES -->
   
-  <xsl:template match="m:perfResList[not(@codedval)]" mode="mei2html">
-    <perfResList>
-      <xsl:attribute name="codedval"/>
-      <xsl:apply-templates select="@* | node()" mode="mei2html"/>
-    </perfResList>
-  </xsl:template>
-  
-  <xsl:function name="local:evaluate" as="node()">
-    <xsl:param name="path"/>
-    <xsl:param name="node"/>
-
-    <xsl:variable name="element_name">
-      <xsl:value-of select="substring-before('/',$path)"/>
-    </xsl:variable>
-
-    <xsl:variable name="next_path">
-      <xsl:value-of select="substring-after(concat($element_name,'/'),$path)"/>
-    </xsl:variable>
-
-    <xsl:variable name="element">
-      <xsl:value-of select="$node//node()[name()=$element_name]"/>
-    </xsl:variable>
-
-    <xsl:choose>
-      <xsl:when test="string-length($path) &gt; 0">
-	<xsl:value-of select="local:evaluate($next_path,$element)"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of select="$element"/>
-      </xsl:otherwise>
-    </xsl:choose>
-
-  </xsl:function>
-  
-  
-  <!-- copying attributes from the model header to the data header -->
   <xsl:template match="*" mode="header">
-    <!-- build an xpath string to locate the corresponding node in the model header -->
-    <xsl:variable name="path"><xsl:value-of select="path()"/></xsl:variable>
-    <xsl:element name="{name()}" namespace="{namespace-uri()}">
+    <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <xsl:variable name="model" select="local:evaluate($path,$empty_doc)"/>
-      <xsl:variable name="data_node" select="."/>
-      <!-- Add all missing empty attributes. Ignores non-empty attributes in the model in order not to inject unwanted data -->
-      <xsl:for-each select="$model//@*[.='']">
-        <xsl:variable name="this_att" select="local-name()"/>
-        <xsl:if test="not($data_node/@*[local-name()=$this_att])"><xsl:attribute name="{name()}"/></xsl:if>
+      <xsl:variable name="node" select="."/>
+      <!-- see if all empty attributes in the model also exist in the data; otherwise add them -->
+      <xsl:for-each select="$empty_doc//*[name()=name($node) and .=''][1]/@*">
+        <xsl:variable name="attname" select="name(.)"/>
+        <xsl:if test="not($node/@*[name()=$attname])">
+          <xsl:attribute name="{$attname}"/>
+        </xsl:if>
       </xsl:for-each>
-      <!-- Add xml:id to instrumentation list elements if missing -->
-      <!--<xsl:if test="not(@xml:id)"><xsl:attribute name="xml:id"><xsl:value-of select="concat(name(),'_',generate-id())"/></xsl:attribute></xsl:if>-->
-      
-      <xsl:choose>
-        <!-- component expressions need special treatment -->
-        <xsl:when test="local-name(..)='expression' and local-name()='componentList'">
-          <xsl:apply-templates mode="component"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates mode="header"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:element>
-  </xsl:template>    
+      <xsl:apply-templates select="node()" mode="header"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="text()" mode="header">
+    <xsl:copy-of select="."/>
+  </xsl:template>
   
   <xsl:template match="m:ptr" mode="header">
     <!-- bibl elements are not included in the empty model, so special handling is needed -->
@@ -156,34 +85,6 @@
       <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>
-  
-  <!-- special case: expressions may occur nested in data, but not in the empty model -->
-  <xsl:template match="*" mode="component">
-    <!-- build an xpath string to locate the corresponding node in the model header -->
-    <xsl:variable name="complete_path"><xsl:for-each 
-      select="ancestor-or-self::*">/<xsl:if 
-        test="namespace-uri()='http://www.music-encoding.org/ns/mei'">m:</xsl:if><xsl:if 
-          test="namespace-uri()='http://www.tei-c.org/ns/1.0'">t:</xsl:if><xsl:value-of 
-            select="name()"/></xsl:for-each>
-    </xsl:variable>
-    <!-- always copy from the model's top-level expression -->
-    <xsl:variable name="path">/m:mei/m:meiHead[1]/m:workList/m:work/m:expressionList/m:expression/<xsl:call-template name="substring-after-last">
-        <xsl:with-param name="string" select="$complete_path"/>
-        <xsl:with-param name="delimiter" select="'m:expression/'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:element name="{name()}" namespace="{namespace-uri()}">
-      <xsl:copy-of select="@*"/>
-      <xsl:variable name="model" select="local:evaluate($path,$empty_doc)"/>
-      <xsl:variable name="data_node" select="."/>
-      <!-- Add all missing empty attributes.  -->
-      <xsl:for-each select="$model//@*">
-        <xsl:variable name="this_att" select="local-name()"/>
-        <xsl:if test="not($data_node/@*[local-name()=$this_att])"><xsl:attribute name="{name()}"/></xsl:if>
-      </xsl:for-each>
-      <xsl:apply-templates mode="component"/>
-    </xsl:element>
-  </xsl:template>    
   
   <xsl:template name="substring-after-last">
     <xsl:param name="string" />
@@ -201,7 +102,7 @@
   </xsl:template>	
   
   <!-- add elements needed -->
-  <xsl:template match="m:perfMedium" mode="component">
+  <xsl:template match="m:perfMedium" mode="header">
     <perfMedium>
       <xsl:apply-templates select="@*"/>
       <xsl:if test="not(m:castList)">
@@ -209,11 +110,22 @@
       </xsl:if>
       <xsl:apply-templates select="*"/>
       <xsl:if test="not(m:perfResList)">
-        <perfResList/>
+        <perfResList auth="" auth.uri=""/>
       </xsl:if>
     </perfMedium>
   </xsl:template>
   
+  <xsl:template match="*" mode="wrap_text">
+    <xsl:apply-templates select="." mode="mei2html"/>    
+  </xsl:template>
+  
+  <xsl:template match="text()" mode="wrap_text">
+    <p n="MerMEId_temporary_wrapper"><xsl:value-of select="."/></p>
+  </xsl:template>
+  
+  
+  <!-- MEI -> HTML and other text-editing related stuff -->
+
   <!-- Handle mixed content -->
   <!-- The text part of mixed content needs a <p> wrapper when it is to be edited separately (not using tinyMCE)-->
   
@@ -227,17 +139,6 @@
     </hand>
   </xsl:template>
   
-  <xsl:template match="*" mode="wrap_text">
-    <xsl:apply-templates select="." mode="mei2html"/>    
-  </xsl:template>
-  
-  <xsl:template match="text()" mode="wrap_text">
-    <p n="MerMEId_temporary_wrapper"><xsl:value-of select="."/></p>
-  </xsl:template>
-  
-  
-  <!-- MEI -> HTML -->
-
   <!-- tinyMCE-related stuff -->
   
   <!--  Wrap sibling p and list elements in a temporary parent <p> for editing in a single tinyMCE instance. 
