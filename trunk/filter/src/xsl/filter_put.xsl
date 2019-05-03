@@ -38,7 +38,7 @@
     <xsl:variable name="new_doc">
       <xsl:apply-templates select="*" mode="convertEntities"/>
     </xsl:variable>
-    <xsl:apply-templates select="$new_doc" mode="html2mei"/>
+    <xsl:copy-of select="$new_doc"/>
   </xsl:template>
 
   <xsl:template match="m:music">
@@ -633,12 +633,6 @@
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="@*|node()" mode="html2mei">
-    <xsl:copy>
-        <xsl:apply-templates select="@*|node()"/>
-    </xsl:copy>
-  </xsl:template>
-  
   <xsl:template match="@*|node()">
     <xsl:copy>
         <xsl:apply-templates select="@*|node()"/>
