@@ -176,6 +176,30 @@
         </xsl:attribute>
     </xsl:template>
     
+    <!-- Cleaning up errors generated prior to bugfix for issue #132: -->
+    <!-- https://github.com/Det-Kongelige-Bibliotek/MerMEId/issues/132 -->
+    <!-- (moving <creation> out of <history> in <expression>)  -->
+    <xsl:template match="m:expression">
+        <xsl:element name="expression" namespace="http://www.music-encoding.org/ns/mei">
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="m:head | m:identifier | m:title"/>
+            <xsl:apply-templates select="m:contributor | m:author | m:arranger | m:composer | m:editor | m:funder"/>
+            <xsl:apply-templates select="m:incip | m:tempo | m:key | m:mensuration | m:meter | m:otherChar"/>
+            <xsl:apply-templates select="m:creation"/>
+            <xsl:if test="m:history/m:creation">
+                <creation>
+                    <xsl:apply-templates select="m:history/m:creation/@* | m:history/m:creation/node()"/>
+                </creation>
+            </xsl:if>
+            <xsl:apply-templates select="m:history"/>
+            <xsl:apply-templates select="m:langUsage | m:perfMedium | m:perfDuration | m:contents | m:context"/>
+            <xsl:apply-templates select="m:biblList | m:notesStmt | m:classification"/>
+            <xsl:apply-templates select="m:componentList | m:relationList | m:extMeta"/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="m:expression/m:history/m:creation"/>     
+    
     <!-- Add # to @source IDref if missing -->
     <xsl:template match="@source">
         <xsl:attribute name="source">#<xsl:value-of select="translate(.,'#','')"/></xsl:attribute>
