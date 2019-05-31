@@ -176,14 +176,14 @@
         </xsl:attribute>
     </xsl:template>
     
+    
     <!-- Cleaning up errors generated prior to bugfix for issue #132: -->
     <!-- https://github.com/Det-Kongelige-Bibliotek/MerMEId/issues/132 -->
     <!-- (moving <creation> out of <history> in <work>)  -->
     <xsl:template match="m:work">
         <xsl:element name="work" namespace="http://www.music-encoding.org/ns/mei">
             <xsl:apply-templates select="@*"/>
-            <xsl:apply-templates select="m:head | m:identifier | m:titleStmt"/>
-            <xsl:apply-templates select="m:contributor | m:author | m:arranger | m:composer | m:editor | m:funder"/>
+            <xsl:apply-templates select="m:identifier | m:titleStmt"/>
             <xsl:apply-templates select="m:incip | m:tempo | m:key | m:mensuration | m:meter | m:otherChar"/>
             <xsl:apply-templates select="m:creation"/>
             <xsl:if test="m:history/m:creation">
