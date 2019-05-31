@@ -127,13 +127,13 @@
 
 
   <!-- Remove empty elements -->
-  <xsl:template match="m:castItem[not(//text())]"/>
+  <xsl:template match="m:castItem[not(.//text())]"/>
   <xsl:template match="m:castList[not(*)]"/>
   <xsl:template match="m:eventList[not(*)]"/>
   <xsl:template match="m:incipCode[not(text())]"/>
   <xsl:template match="m:notesStmt[not(*)]"/>
-  <xsl:template match="m:provenance[not(* or //text())]"/>
-  <xsl:template match="m:rend[not(* or //text())]"/>
+  <xsl:template match="m:provenance[not(* or .//text())]"/>
+  <xsl:template match="m:rend[not(* or .//text())]"/>
   <xsl:template match="m:mei/m:meiHead//m:score[not(*)]"/>
   <xsl:template match="m:titlePage[not(*)]"/>
   
