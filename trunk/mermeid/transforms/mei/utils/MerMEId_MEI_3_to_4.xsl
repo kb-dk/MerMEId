@@ -178,11 +178,31 @@
     
     <!-- Cleaning up errors generated prior to bugfix for issue #132: -->
     <!-- https://github.com/Det-Kongelige-Bibliotek/MerMEId/issues/132 -->
+    <!-- (moving <creation> out of <history> in <work>)  -->
+    <xsl:template match="m:work">
+        <xsl:element name="work" namespace="http://www.music-encoding.org/ns/mei">
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="m:head | m:identifier | m:titleStmt"/>
+            <xsl:apply-templates select="m:contributor | m:author | m:arranger | m:composer | m:editor | m:funder"/>
+            <xsl:apply-templates select="m:incip | m:tempo | m:key | m:mensuration | m:meter | m:otherChar"/>
+            <xsl:apply-templates select="m:creation"/>
+            <xsl:if test="m:history/m:creation">
+                <creation>
+                    <xsl:apply-templates select="m:history/m:creation/@* | m:history/m:creation/node()"/>
+                </creation>
+            </xsl:if>
+            <xsl:apply-templates select="m:history"/>
+            <xsl:apply-templates select="m:langUsage | m:perfMedium | m:perfDuration | m:audience | m:contents"/>
+            <xsl:apply-templates select="m:context | m:biblList | m:notesStmt | m:classification"/>
+            <xsl:apply-templates select="m:expressionList | m:componentList | m:relationList | m:extMeta"/>
+        </xsl:element>
+    </xsl:template>
+    
     <!-- (moving <creation> out of <history> in <expression>)  -->
     <xsl:template match="m:expression">
         <xsl:element name="expression" namespace="http://www.music-encoding.org/ns/mei">
             <xsl:apply-templates select="@*"/>
-            <xsl:apply-templates select="m:head | m:identifier | m:title"/>
+            <xsl:apply-templates select="m:head | m:identifier | m:titleStmt"/>
             <xsl:apply-templates select="m:contributor | m:author | m:arranger | m:composer | m:editor | m:funder"/>
             <xsl:apply-templates select="m:incip | m:tempo | m:key | m:mensuration | m:meter | m:otherChar"/>
             <xsl:apply-templates select="m:creation"/>
@@ -197,8 +217,13 @@
             <xsl:apply-templates select="m:componentList | m:relationList | m:extMeta"/>
         </xsl:element>
     </xsl:template>
+    <xsl:template match="m:work/m:history/m:creation | m:expression/m:history/m:creation"/>     
     
-    <xsl:template match="m:expression/m:history/m:creation"/>     
+    <xsl:template match="@* | *" mode="head_first">
+        <!-- process element contents, ensuring <head> is placed first -->
+        <xsl:apply-templates select="@* | m:head"/>
+        <xsl:apply-templates select="*[not(name()='head')]"/>
+    </xsl:template>
     
     <!-- Add # to @source IDref if missing -->
     <xsl:template match="@source">
@@ -206,16 +231,27 @@
     </xsl:template>
     
     <!-- Move source-specific instrumentations inside main <perfResList> (only one <perfResList> allowed in <perfMedium>)  -->
+    <xsl:template match="m:perfResList">
+        <xsl:copy>
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="*" mode="head_first"/>
+        </xsl:copy>
+    </xsl:template>
     <xsl:template match="m:perfMedium/m:perfResList[@source and ../m:perfResList[not(@source)]]">
         <!-- Delete only if there is a general <perfResList> element to move it into -->
     </xsl:template>
     <xsl:template match="m:perfMedium/m:perfResList[not(@source)]">
         <xsl:copy>
-            <xsl:apply-templates select="@* | *"/>
-            <xsl:copy-of select="//m:perfResList[@source]"/>
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="*" mode="head_first"/>
+            <xsl:for-each select="//m:perfResList[@source]">
+                <xsl:copy>
+                    <xsl:apply-templates select="@*"/>
+                    <xsl:apply-templates select="*" mode="head_first"/>
+                </xsl:copy>
+            </xsl:for-each>
         </xsl:copy>
     </xsl:template>
-    
 
     <!-- MISCELLANEOUS -->
     
