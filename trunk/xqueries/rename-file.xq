@@ -11,8 +11,8 @@ declare namespace util="http://exist-db.org/xquery/util";
 declare option    exist:serialize "method=xml media-type=text/html"; 
 
 declare variable $dcmroot      := "/db/dcm/";
-declare variable $old_name     := request:get-parameter("doc", "");
-declare variable $name         := request:get-parameter("name", "");
+declare variable $old_name     := normalize-space(request:get-parameter("doc", ""));
+declare variable $name         := normalize-space(request:get-parameter("name", ""));
 declare variable $doc_path     := concat("http://",rd:host(),"/storage/dcm/");
 declare variable $old_name_abs := concat($doc_path,$old_name);
 declare variable $now          := fn:current-dateTime() cast as xs:string;
@@ -86,11 +86,18 @@ let $result:=
 
 (: update all references to the renamed file :)
 let $list   := 
+  if ($old_name!="" and $name!="") then 
     for $doc in collection($dcmroot)/m:mei[*//@target[starts-with(.,$old_name) or starts-with(.,$old_name_abs)]]
        return local:change_targets($doc,$new_name)
+  else 
+    ""
 
 (: add a comment to the revision history :)
-let $change := local:add_revision(fn:doc(concat($dcmroot,$new_name))/m:mei, "MerMEId user", concat("file renamed from ",$old_name," to ",$new_name)) 
+let $change := 
+  if ($old_name!="" and $name!="") then 
+    local:add_revision(fn:doc(concat($dcmroot,$new_name))/m:mei, "MerMEId user", concat("file renamed from ",$old_name," to ",$new_name))
+  else
+    ""
 
 
 let $return_to := concat("http://",rd:host(),"/storage/list_files.xq")
