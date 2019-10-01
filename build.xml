@@ -19,6 +19,9 @@
                 <include name="**/*.*"/>
                 <exclude name="${build.dir}/**"/>
                 <exclude name="build.xml"/>
+                <exclude name="Dockerfile"/>
+                <exclude name=".gitignore"/>
+                <exclude name=".dockerignore"/>
                 <exclude name="*build.properties"/>
                 <exclude name="trunk/**"/>
             </fileset>
