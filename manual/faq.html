@@ -2,10 +2,10 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <title>MerMEId manual - Frequently Asked Questions</title>
-    <link href="../style/tab_style.css" rel="stylesheet" type="text/css" />
-    <link href="../style/list_style.css" rel="stylesheet" type="text/css" />
-    <link href="../style/front_page.css" rel="stylesheet" type="text/css" />
-    <link href="../style/manual.css" rel="stylesheet" type="text/css" />
+    <link href="../resources/css/tab_style.css" rel="stylesheet" type="text/css" />
+    <link href="../resources/css/list_style.css" rel="stylesheet" type="text/css" />
+    <link href="../resources/css/front_page.css" rel="stylesheet" type="text/css" />
+    <link href="../resources/css/manual.css" rel="stylesheet" type="text/css" />
   </head>
 
   <body>
@@ -14,8 +14,8 @@
       <div class="manual_header">
         <div class="close_div">
           <a href="javascript:window.close();" class="trigger"><img alt="Close" title="Close"
-              src="../images/close.gif" width="12" height="12" /></a></div>
-        <img alt="MerMEId" src="../images/mermeid_30px.png" width="130" height="23" />
+              src="../resources/images/close.gif" width="12" height="12" /></a></div>
+        <img alt="MerMEId" src="../resources/images/mermeid_30px.png" width="130" height="23" />
       </div>
       <div class="toclink"><a href="index.html">Back to table of contents</a></div>
       <h1>Frequently Asked Questions (FAQ)</h1>
@@ -85,7 +85,7 @@
       </ul> Contact<br />
       <ul>
         <li><a href="#updates">How do I stay informed about changes and updates?</a></li>
-        <li><a href="#contact">How do&nbsp;I get in touch with you if I have other questions?</a>
+        <li><a href="#contact">How do I get in touch with you if I have other questions?</a>
         </li>
       </ul>
       <h2>Installation and access </h2>
@@ -148,7 +148,7 @@
         Just make sure always to keep a copy of your data somewhere safe. </p>
       <h3>How do I know which MerMEId version is running on my server?<a name="version"></a></h3>
       <p>To see the version (revision) number of your installation, open any file in the editor (or
-        create a new one) and click the <img src="../images/mermeid_12px.png" alt="MerMEId logo" />
+        create a new one) and click the <img src="../resources/images/mermeid_12px.png" alt="MerMEId logo" />
         logo in the lower right corner.</p>
       <h2>HTML preview and presentation of data </h2>
       <h3>Can I change the way MerMEId displays my data?<a name="changing_presentation"></a></h3>
@@ -201,9 +201,9 @@
         &lt;music&gt; element).</p>
       <p>MerMEId comes with a <a href="http://labs.kb.dk/storage/present.xq?doc=incipit_demo.xml"
           >demo file</a> to illustrate different ways of including incipits. Encoded incipits are
-        rendered using the <a href="verovio.org" target="_blank">Verovio</a> MEI renderer.</p>
+        rendered using the <a href="http://verovio.org" target="_blank">Verovio</a> MEI renderer.</p>
       <p>By default, MerMEId also renders any music encoded in the main music part of the document –
-        or at least the beginning of it. This rendering also uses <a href="verovio.org"
+        or at least the beginning of it. This rendering also uses <a href="http://verovio.org"
           target="_blank">Verovio</a>. You may deactivate it temporarily by adding
         '&amp;score=false' to the URL of MerMEId's HTML presentation. To turn it off permanently,
         change the value of the variable 'view_score' to 'false' in the the MEI-to-HTML
@@ -221,7 +221,7 @@
         in the field labeled 'File Collection' under 'Series' (and save your work, of course). In
         the file list, you will now see the collection name in the 'Collection' column, and it will
         also appear in the collection drop-down list, allowing you to search for files in that
-        collection only.&nbsp; </p>
+        collection only.  </p>
       <h3>How do I make MerMEId recognize a certain number as a catalogue work number?<a
           name="add_work_number"></a></h3>
       <p>You may have noticed that the demo files in MerMEId's file list are labeled like'MerMEId
@@ -242,16 +242,16 @@
       <p>In principle yes, if you know how to write <a href="http://www.orbeon.com/" target="_blank"
           >Orbeon XForms</a>. You will find the MerMEId source code at <a
           href="https://github.com/Det-Kongelige-Bibliotek/MerMEId" target="_blank">GitHub</a>. You
-        are free to change it to make your&nbsp;customized version of MerMEId. However, note that
+        are free to change it to make your customized version of MerMEId. However, note that
         this will require you to make the same changes again after installing one of
-        our&nbsp;MerMEId updates. Also, MerMEId is based on sharing. No one else will&nbsp;benefit
+        our MerMEId updates. Also, MerMEId is based on sharing. No one else will benefit
         from your changes if you keep them for yourself. Therefore we would like to encourage you to
         share your improvements either by forking the code at GitHub and submitting a pull request
         or to discuss your wishes with us; if we agree that the changes will be of general interest,
-        we may be willing to implement them if&nbsp;we have the time. Another possibility is&nbsp;to
+        we may be willing to implement them if we have the time. Another possibility is to
         pay us (that is, the <a href="http://www.kb.dk/">Danish Centre for Music
           Editing</a> at the Royal Library) to make the desired improvements. That's a great way to
-        support the MerMEId project.&nbsp;</p>
+        support the MerMEId project. </p>
       <h3>I don't want MerMEId to create change log entries automatically. Can I turn it off?<a
           name="automatic_log"></a></h3>
       <p>In MerMEId's configuration file <kbd>mermeid_configuration.xml</kbd> there's an option to
@@ -327,8 +327,8 @@
       <p>The same way you would <a href="faq.html#customize_instruments">change pre-defined
       instruments names</a>. The keyword file (<kbd>keywords.xml</kbd>) is located in the 
         <a href="/storage/library/"><kbd>library</kbd></a> folder. It has two sections:
-        first,&nbsp;a list of hierarchically ordered keywords (called 'level 1' and 'level 2'
-        terms); second,&nbsp;a list of unordered supplementary keywords. The two-level ordered list
+        first, a list of hierarchically ordered keywords (called 'level 1' and 'level 2'
+        terms); second, a list of unordered supplementary keywords. The two-level ordered list
         of genre terms is useful if you intend to order your files by genre at some point or enable
         users to browse your catalogue by genre. That's how we generated the genre menu in the <a
           href="http://www.kb.dk/dcm/cnw.html" target="_blank">CNW</a>.</p>
@@ -356,11 +356,11 @@
           Can I turn it off?</a>
       </p>
       <h2>Publishing</h2>
-      <h3>I have published a file from the file list, but nothing happens&nbsp;except that the
+      <h3>I have published a file from the file list, but nothing happens except that the
         'Publish' indicator turns green. What is supposed to happen?<a name="publishing"></a></h3>
       <p>There's no way we can predict how and where you want to publish your data. By default,
-        therefore,&nbsp;MerMEId does nothing but copying the selected file(s) from an eXist database
-        folder&nbsp;named 'dcm' (where all your data are stored) to another folder&nbsp;named
+        therefore, MerMEId does nothing but copying the selected file(s) from an eXist database
+        folder named 'dcm' (where all your data are stored) to another folder named
         'public'. It is up to you or your system administrator to decide what is going to happen
         next. At DCM, we have set up a script that automatically copies all files from the 'public'
         folder through the firewall to the published catalog on the web once a day. The script is
@@ -368,12 +368,12 @@
         how it works. </p>
       <h3>I would like to make a web catalog like the CNW. Is the user interface included in
           MerMEId?<a name="cnw_ui"></a></h3>
-      <p>No. MerMEId is&nbsp;a tool for creating and editing the XML data for a catalogue of works
+      <p>No. MerMEId is a tool for creating and editing the XML data for a catalogue of works
         or sources, not a presentation tool. We're quite sure that every project will want to have
         their data presented in their own way, so we haven't made our presentation part of MerMEId.
-        To create the&nbsp;<a href="http://www.kb.dk/dcm/cnw.html" target="_blank">public CNW</a>
-        catalogue, we basically use MerMEId's&nbsp;MEI-to-HTML transformation, and add a few
-        exceptions and alterations on top of it. We have&nbsp;added a few XQuery&nbsp;files for the
+        To create the <a href="http://www.kb.dk/dcm/cnw.html" target="_blank">public CNW</a>
+        catalogue, we basically use MerMEId's MEI-to-HTML transformation, and add a few
+        exceptions and alterations on top of it. We have added a few XQuery files for the
         search facilities and a couple of flat HTML files for the text-only pages. A few more XQuery
         scripts wrap the pages with a header and a footer. The code is available as a separate
         project at <a href="https://github.com/Det-Kongelige-Bibliotek/dcm_catalog_ui"
@@ -384,20 +384,20 @@
           href="https://github.com/Det-Kongelige-Bibliotek/MerMEId" target="_blank">DCM's MerMEId
           project page</a> (in the right column). Don't worry – we will not flood your inbox with
         mails. We will send a mail only when releasing major upgrades or if there are other
-        important MerMEId-related&nbsp;announcements. <br /> A list of important information about
-        releases,&nbsp;transformation of data, and known issues is compiled at <a
+        important MerMEId-related announcements. <br /> A list of important information about
+        releases, transformation of data, and known issues is compiled at <a
           href="http://www.kb.dk/projekter/mermeid/" target="_blank"
           >http://www.kb.dk/projekter/mermeid/</a>.<br /> Finally, you may also want to
-        follow the discussions about the development of the MEI schema&nbsp;which defines the
+        follow the discussions about the development of the MEI schema which defines the
         structure of the (meta-)data produced by MerMEId. The MEI community even has a <a
           href="http://music-encoding.org/community/mei-organization/interest-groups-ig/"
           target="_blank">special interest group concerned with cataloging and metadata</a> with its
         own mailing list where discussions regarding the encoding of musical metadata take place.
-        Important MerMEId&nbsp;announcements will be posted there as well.</p>
-      <h3>How do&nbsp;I get in touch with you if I have other questions?<a name="contact"></a></h3>
+        Important MerMEId announcements will be posted there as well.</p>
+      <h3>How do I get in touch with you if I have other questions?<a name="contact"></a></h3>
       <p>For general enquiries, questions about the user interface or the MEI encoding please
         contact <a href="mailto:atge@kb.dk">Axel Teich Geertinger</a>. For questions
-        regarding&nbsp;installation, maintenance and updates please contact <a
+        regarding installation, maintenance and updates please contact <a
           href="mailto:slu@kb.dk">Sigfrid Lundberg</a>. For general information about the Danish
         Centre for Music Editing please refer to our <a href="http://www.kb.dk/"
           target="_blank">web site</a>.</p>
@@ -405,7 +405,7 @@
 
     <p class="footer"><a href="http://www.kb.dk" title="DCM"><img
           style="border: 0px; vertical-align:middle;" alt="DCM Logo"
-          src="../images/dcm_logo_small_white.png" /></a> 2017 Danish Centre for Music Editing |
+          src="../resources/images/dcm_logo_small_white.png" /></a> 2017 Danish Centre for Music Editing |
       Royal Danish Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
         href="http://www.kb.dk">www.kb.dk/en/nb/dcm</a></p>
   </body>

@@ -1,19 +1,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/><title>MerMEId manual</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>MerMEId manual</title>
     
-    <link href="../style/tab_style.css" rel="stylesheet" type="text/css"/>
-    <link href="../style/list_style.css" rel="stylesheet" type="text/css"/>
-    <link href="../style/xform_style.css" rel="stylesheet" type="text/css"/>
-    <link href="../style/front_page.css" rel="stylesheet" type="text/css"/>
-    <link href="../style/manual.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/tab_style.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/list_style.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/xform_style.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/front_page.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/css/manual.css" rel="stylesheet" type="text/css"/>
   </head>
   
   <body>
     <div class="main">
       <div class="manual_header">
-        <div class="close_div"> <a href="javascript:window.close();" class="trigger"><img alt="Close" title="Close" src="../images/close.gif" height="12" width="12"/></a></div>
-        <img alt="MerMEId" src="../images/mermeid_30px.png" height="23" width="130"/> </div>
+        <div class="close_div"> <a href="javascript:window.close();" class="trigger"><img alt="Close" title="Close" src="../resources/images/close.gif" height="12" width="12"/></a></div>
+        <img alt="MerMEId" src="../resources/images/mermeid_30px.png" height="23" width="130"/> </div>
       <div class="toclink"><a href="index.html">Back
         to table of contents</a></div>
       <h2><a name="basics" id="basics">MerMEId
@@ -25,13 +25,13 @@
         the metadata editing tool, and the HTML preview. </p>
       <h3><a name="File" id="File">Document list</a></h3>
       <p>The usual way to start working with MerMEId would be to open
-        the document list, usually located at <a href="/storage/list_files.xq" target="_blank"
+        the document list, usually located at <a href="../modules/list_files.xq" target="_blank"
           title="Go to the document list on this server">http://[your hostname
-        here]/storage/list_files.xq</a>. You should then see a list
+          here]/modules/list_files.xq</a>. You should then see a list
         of existing documents in your collection (if any):</p>
-      <p><img alt="" src="../images/manual/list_files.png" class="illustration"/></p>
+      <p><img alt="" src="../resources/images/manual/list_files.png" class="illustration"/></p>
       <p><strong>Creating a new document: </strong>To create a new document, click the add
-        button <img alt="New file" src="../images/new.gif" height="16" width="16"/> located in the upper right corner.  
+        button <img alt="New file" src="../resources/images/new.gif" height="16" width="16"/> located in the upper right corner.  
         This will open a new document in the metadata editor.</p>
       <p><strong>Listing existing documents: </strong>Near the top of the documents list page, 
         a number of controls allow you to you choose which documents to list.
@@ -47,16 +47,16 @@
           Click the title of any file to see its metadata displayed as formatted
           HTML.</li>
         <li><strong>XML source</strong>: Click the XML view
-          icon <img alt="XML" src="../images/xml.gif" height="16" width="16"/> to see the document's plain XML
+          icon <img alt="XML" src="../resources/images/xml.gif" height="16" width="16"/> to see the document's plain XML
           data</li>
         <li><strong>Edit file</strong>: Click the edit icon
-          <img alt="Edit" src="../images/edit.gif" height="16" width="16"/> to open the document in the
+          <img alt="Edit" src="../resources/images/edit.gif" height="16" width="16"/> to open the document in the
           metadata editor</li>
         <li><strong>Copy file</strong>: Click the copy icon
-          <img alt="Copy" src="../images/copy.gif"/> to make a copy of the document. 
+          <img alt="Copy" src="../resources/images/copy.gif"/> to make a copy of the document. 
           The copied resource will have '(copy)' added to its title to distinguish it from the original.</li>
         <li><strong>Rename file</strong>: Click the rename icon
-          <img alt="Rename" src="../images/rename.png" height="16" width="16"/> to rename a document.<br/>
+          <img alt="Rename" src="../resources/images/rename.png" height="16" width="16"/> to rename a document.<br/>
           Please note that MerMEId does not update any references in other documents pointing to the renamed
           one; in other words, links between documents are likely to be broken when renaming resources.<br/>
           Only unpublished documents can be renamed to avoid orphaned (unreachable) documents in the
@@ -65,14 +65,14 @@
         </li>
         <li><strong>Publish file(s)</strong>: The color of the checkboxes indicates whether the document is <br/>
           <img alt="Green" style="vertical-align:bottom;" title="published" 
-            src="../images/checkbox_green.png" height="16" width="16"/> published and up to date, has been <br/>
+            src="../resources/images/checkbox_green.png" height="16" width="16"/> published and up to date, has been <br/>
           <img alt="Yellow" style="vertical-align:bottom;" title="modified" 
-            src="../images/checkbox_yellow.png" height="16" width="16"/> modified since last publication, or is <br/>
+            src="../resources/images/checkbox_yellow.png" height="16" width="16"/> modified since last publication, or is <br/>
           <img alt="Red" style="vertical-align:bottom;" title="unpublished" 
-            src="../images/checkbox_red.png" height="16" width="16"/> unpublished.<br/>
+            src="../resources/images/checkbox_red.png" height="16" width="16"/> unpublished.<br/>
           To publish or unpublish documents, check the appropriate checkboxes and select the desired action from the 
           publish menu activated by moving the cursor over the publish menu button
-          <img alt="Menu" src="../images/menu.gif" height="16" width="16" style="vertical-align:bottom;"/>.<br/>
+          <img alt="Menu" src="../resources/images/menu.gif" height="16" width="16" style="vertical-align:bottom;"/>.<br/>
           <strong>Publishing</strong> in this context simply means that MerMEId copies the file to a separate 
           <a href="/storage/public/" target="_blank" title="Click to see the contents of your 'public' eXist collection">folder 
             named 'public'</a> in your eXist database.
@@ -81,7 +81,7 @@
           <strong>Unpublishing</strong> means that MerMEId deletes the copy of the document from the public folder.
         </li>
         <li><strong>Delete file</strong>: Clicking the
-          delete icon <img alt="Delete" src="../images/remove.gif" height="12" width="12"/> will display a warning that
+          delete icon <img alt="Delete" src="../resources/images/remove.gif" height="12" width="12"/> will display a warning that
           you are about to delete the selected document. Click 'OK' to delete, otherwise 'Cancel'. <br/>
           Please note that only unpublished documents can be deleted. To delete a previously published document
           you will need to unpublish it first to make sure it is deleted from the public folder as well.           
@@ -92,10 +92,10 @@
       <p>The editor (i.e. the forms for editing your data) is divided
         into a number of separate forms. You navigate through the main parts of
         it by clicking the tabs at the top of the page:</p>
-      <p><img alt="Tabs" src="../images/manual/tabs.png"/></p>
+      <p><img alt="Tabs" src="../resources/images/manual/tabs.png"/></p>
       <ul class="important">
         <li>Make sure to save any changes you have made before
-          switching tabs.&nbsp;A warning occurs if you are about to change
+          switching tabs. A warning occurs if you are about to change
           tab without having saved changes.</li>
       </ul>
       <p>Some general functions are found in the upper right corner of
@@ -103,27 +103,27 @@
       <table border="0">
         <tbody>
           <tr>
-            <td><img alt="Save" src="../images/save.gif" height="16" width="16"/></td>
+            <td><img alt="Save" src="../resources/images/save.gif" height="16" width="16"/></td>
             <td>Save file</td>
           </tr>
           <tr>
-            <td><img alt="HTML" src="../images/html.gif" height="16" width="16"/></td>
+            <td><img alt="HTML" src="../resources/images/html.gif" height="16" width="16"/></td>
             <td>HTML preview</td>
           </tr>
           <tr>
-            <td><img alt="XML" src="../images/xml.gif"/></td>
+            <td><img alt="XML" src="../resources/images/xml.gif"/></td>
             <td>XML source view</td>
           </tr>
           <tr>
-            <td><img alt="Home" src="../images/home.gif" height="16" width="16"/></td>
+            <td><img alt="Home" src="../resources/images/home.gif" height="16" width="16"/></td>
             <td>Close the editor end return to document list</td>
           </tr>
           <tr>
-            <td><img alt="Settings" src="../images/settings.png" height="16" width="16"/></td>
+            <td><img alt="Settings" src="../resources/images/settings.png" height="16" width="16"/></td>
             <td>Settings</td>
           </tr>
           <tr>
-            <td><img alt="Help" src="../images/help.png" height="16" width="16"/></td>
+            <td><img alt="Help" src="../resources/images/help.png" height="16" width="16"/></td>
             <td>Open this manual</td>
           </tr>
         </tbody>
@@ -133,49 +133,49 @@
       <table border="0">
         <tbody>
           <tr>
-            <td><img alt="Up" src="../images/arrow_up.gif" height="12" width="12"/></td>
+            <td><img alt="Up" src="../resources/images/arrow_up.gif" height="12" width="12"/></td>
             <td>Move up (change order of items)</td>
           </tr>
           <tr>
-            <td><img alt="Down" src="../images/arrow_down.gif" height="12" width="12"/></td>
+            <td><img alt="Down" src="../resources/images/arrow_down.gif" height="12" width="12"/></td>
             <td>Move down</td>
           </tr>
           <tr>
-            <td><img alt="Copy" src="../images/copy.gif" height="12" width="12"/></td>
+            <td><img alt="Copy" src="../resources/images/copy.gif" height="12" width="12"/></td>
             <td>Duplicate item (adds a copy of the current item)</td>
           </tr>
           <tr>
-            <td><img alt="Add" src="../images/add.gif" height="12" width="12"/></td>
+            <td><img alt="Add" src="../resources/images/add.gif" height="12" width="12"/></td>
             <td>Add new item below the current one</td>
           </tr>
           <tr>
-            <td><img alt="Delete" src="../images/remove.gif" height="12" width="12"/></td>
+            <td><img alt="Delete" src="../resources/images/remove.gif" height="12" width="12"/></td>
             <td>Delete</td>
           </tr>
           <tr>
-            <td><img alt="Right arrow" src="../images/arrow_right.png" height="12" width="12"/>
+            <td><img alt="Right arrow" src="../resources/images/arrow_right.png" height="12" width="12"/>
             </td>
             <td>Shift this item to the right, making it a sub-component
               (child) of the item above (applies to music components only) </td>
           </tr>
           <tr>
-            <td><img alt="Left arrow" src="../images/arrow_left.png" height="12" width="12"/>
+            <td><img alt="Left arrow" src="../resources/images/arrow_left.png" height="12" width="12"/>
             </td>
             <td>Shift this item to the left, i.e. up one level (applies
               to music components only) </td>
           </tr>
           <tr>
-            <td><img style="width: 16px; height: 16px;" alt="Edit" src="../images/edit.gif"/>
+            <td><img style="width: 16px; height: 16px;" alt="Edit" src="../resources/images/edit.gif"/>
             </td>
-            <td>Edit this item&nbsp;(opens a details editor) </td>
+            <td>Edit this item (opens a details editor) </td>
           </tr>
           <tr>
-            <td><img style="width: 15px; height: 15px;" alt="Go to link" src="../images/go_to_link.png"/>
+            <td><img style="width: 15px; height: 15px;" alt="Go to link" src="../resources/images/go_to_link.png"/>
             </td>
             <td>Go to a linked resource (implies closing the current file and opening a different one for editing) </td>
           </tr>
           <tr>
-            <td><img style="width: 16px; height: 16px;" alt="Edit" src="../images/authority.png"/>
+            <td><img style="width: 16px; height: 16px;" alt="Edit" src="../resources/images/authority.png"/>
             </td>
             <td>Add reference to an authority file (applies to personal names) </td>
           </tr>
@@ -190,21 +190,21 @@
         the (meta-)data you have entered. Your project may or may not use it as a
         basis for public display of your data as well, but probably this is not
         how your data will be displayed in the end. </p>
-      <p><img alt="HTML preview" src="../images/manual/html_view.png" class="illustration"/></p>
+      <p><img alt="HTML preview" src="../resources/images/manual/html_view.png" class="illustration"/></p>
       <p>If titles or other texts are given in more than one language,
         all other alternatives than the first one are shown in grey<!--with an
         abbreviated indication of the language at the beginning-->. To hide these
         alternative language texts, click the "Hide alternative languages" link
         in the upper right corner.</p>
       <p>By default, only the headings of the main sections are shown.
-        To view the contents, click the the expand icon <img alt="expand" src="../images/plus.png" height="10" width="10"/>
+        To view the contents, click the the expand icon <img alt="expand" src="../resources/images/plus.png" height="10" width="10"/>
         or the heading. To hide the contents, click the heading again. The
         number of headings shown depends on which sections have any content.</p>
       <p>At the bottom of the page, in grey, metadata about the file
         are displayed (i.e. the colophon).</p>
     </div>
     <p class="footer"><a href="http://www.kb.dk" title="DCM"><img style="border: 0px; vertical-align:middle;" 
-      alt="DCM Logo" src="../images/dcm_logo_small_white.png"/></a> 
+      alt="DCM Logo" src="../resources/images/dcm_logo_small_white.png"/></a> 
       2017 Danish Centre for Music Editing | Royal Danish Library,
       Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk">www.kb.dk/en/nb/dcm</a></p>
   </body>

@@ -2,10 +2,10 @@
     <head>
         <title>Structure and scope of MerMEId documents</title>
 
-        <link rel="stylesheet" type="text/css" href="../style/tab_style.css" />
-        <link rel="stylesheet" type="text/css" href="../style/list_style.css" />
-        <link rel="stylesheet" type="text/css" href="../style/front_page.css" />
-        <link rel="stylesheet" type="text/css" href="../style/manual.css" />
+        <link rel="stylesheet" type="text/css" href="../resources/css/tab_style.css" />
+        <link rel="stylesheet" type="text/css" href="../resources/css/list_style.css" />
+        <link rel="stylesheet" type="text/css" href="../resources/css/front_page.css" />
+        <link rel="stylesheet" type="text/css" href="../resources/css/manual.css" />
         <style type="text/css">
             .heading {
                 display : inline-block;
@@ -28,9 +28,9 @@
             <div class="manual_header">
                 <div class="close_div">
                     <a href="javascript:window.close();" class="trigger"><img alt="Close"
-                            title="Close" src="../images/close.gif" height="12" width="12" /></a>
+                            title="Close" src="../resources/images/close.gif" height="12" width="12" /></a>
                 </div>
-                <img alt="MerMEId" src="../images/mermeid_30px.png" height="23" width="130" />
+                <img alt="MerMEId" src="../resources/images/mermeid_30px.png" height="23" width="130" />
             </div>
             <div class="toclink"><a href="index.html">Back
                 to table of contents</a></div>
@@ -46,7 +46,7 @@
                 software and knowing which information goes where.</p>
             <p>MEI documents basically have two main sections: metadata and the encoding of the
                 actual music. MerMEId simply ignores the encoded music section and only focuses on
-                the metadata part &ndash; the so-called header (incipits are an exception: They are
+                the metadata part – the so-called header (incipits are an exception: They are
                 located in the header and thus the only music encodings within the scope of
                 MerMEId).</p>
             <h2>Main levels of description</h2>
@@ -61,8 +61,8 @@
                 Institutions (IFLA) will recognize these four levels as corresponding to the
                     <i>work</i>, <i>expression</i>, <i>manifestation</i> and <i>item</i> entities of
                 FRBR. </p>
-            <img alt="Work description levels" src="../images/manual/structure_frbr.png" width="500"
-             /><br />&nbsp; <p>Apart from information about the musical work and its sources,
+            <img alt="Work description levels" src="../resources/images/manual/structure_frbr.png" width="500"
+             /><br />  <p>Apart from information about the musical work and its sources,
                 MerMEId can also add technical and administrative metadata as well as
                 bibliographical references to your files. An overview of this type of information is
                 given at the end of this page.</p>
@@ -71,8 +71,8 @@
             <h2>The structure of the work: Work, versions, and movements</h2>
             <p>The illustration gives some typical examples of information entered at work, version,
                 and movement level, respectively. </p>
-            <img alt="Movements" src="../images/manual/structure_work_versions.png" width="500"
-             /><br />&nbsp; <p><span class="heading">Work:</span> At work level, only information
+            <img alt="Movements" src="../resources/images/manual/structure_work_versions.png" width="500"
+             /><br />  <p><span class="heading">Work:</span> At work level, only information
                 regarding the musical work in all its forms is edited. This includes the name of the
                 composer, a uniform title, and the work's number in a thematic catalogue. The main
                 key, in contrast, is NOT an information at work level since a transposition of the
@@ -88,7 +88,7 @@
                 Versions may have specific titles like 'Revised version (1864)' or 'Version for
                 string quartet' but a version title input field is available only when more than one
                 version is created (add versions by clicking the <img alt="add"
-                    src="../images/add.gif" /> button next to the label 'Version'). </p>
+                    src="../resources/images/add.gif" /> button next to the label 'Version'). </p>
             <p>With multi-movement works, some of this information such as key, metre, and tempo
                 should obviously be entered at movement level (see below). Version information is
                 entered mainly at the <span class="music tab">Music</span> tab, except for historic
@@ -104,9 +104,9 @@
                 the <span class="music tab">Music</span> tab. MerMEId calls them 'components' rather
                 than movements to emphasize that they can represent subdivisions at various levels.
                 MerMEId allows up to three levels of components to be created in a tree-structured
-                manner &ndash; sufficient to describe, for instance, the division of a stage work
+                manner – sufficient to describe, for instance, the division of a stage work
                 into acts, scenes, and numbers.</p>
-            <img alt="Movements" src="../images/manual/movements.png" class="illustration" />
+            <img alt="Movements" src="../resources/images/manual/movements.png" class="illustration" />
             <p>Once components are created and saved their details can be edited. These include
                 roughly the same information as for versions, that is, key, tempo, metre, and
                 instrumentation (which must be either the same as or a subset of the overall
@@ -124,7 +124,7 @@
                 This is probably the most difficult concept to comprehend when working with MerMEId
                 (or, in general, the FRBR-enhanced variant of MEI).</p>
             <p>The terminological confusion arises from the fact that the original, simpler version
-                of the MEI schema &ndash; without the FRBR enhancement &ndash; does not distinguish
+                of the MEI schema – without the FRBR enhancement – does not distinguish
                 'item' and 'source' levels but only has 'source'. In simple MEI, 'source' can refer
                 to either a printed edition (a print run) or a specific copy of that edition.
                 MerMEId is more specific. By adding the 'item' level, the meaning of 'source' is
@@ -133,8 +133,8 @@
                 instead.</p>
             <p>Below is an illustration of a printed first edition (source) with two exemplars
                 (items) located in Berlin and Copenhagen, respectivey.</p>
-            <img alt="Source with items" src="../images/manual/structure_source_items.png"
-                width="500" /><br />&nbsp; <p>As a consequence, library shelf marks cannot be
+            <img alt="Source with items" src="../resources/images/manual/structure_source_items.png"
+                width="500" /><br />  <p>As a consequence, library shelf marks cannot be
                 entered at source level but only at item level since shelf marks can only refer to
                 individual copies (exemplars). Conversely, the name of the publisher cannot be
                 specified at item level because this information must apply to all copies of that
@@ -165,30 +165,30 @@
                 as plate number the publisher's name), but a description of each of the parts may be
                 provided as well by creating source components. Components are added at the bottom
                 of the source details editor page.</p>
-            <img alt="Source components" src="../images/manual/structure_source_components.png"
-                width="500" /><br />&nbsp; <p>Source components can also describe the contents of a
+            <img alt="Source components" src="../resources/images/manual/structure_source_components.png"
+                width="500" /><br />  <p>Source components can also describe the contents of a
                 source containing multiple works or movements:</p>
-            <img alt="Source components" src="../images/manual/structure_source_components2.png"
-                width="500" /><br />&nbsp; <h3>Item components</h3>
+            <img alt="Source components" src="../resources/images/manual/structure_source_components2.png"
+                width="500" /><br />  <h3>Item components</h3>
             <p> At item level, components are useful for describing the physical appearance or
                 condition of the individual parts of a set, or the individual fascicles of a
                 compound source. Item components also allow the description of a set of parts in
                 which each part has its own shelf mark, or where parts have accidentally been
                 scattered over a number of locations. </p>
-            <img alt="Item components" src="../images/manual/structure_item_components.png"
-                width="500" /><br />&nbsp; <p>Sometimes it will be sufficient to describe components
+            <img alt="Item components" src="../resources/images/manual/structure_item_components.png"
+                width="500" /><br />  <p>Sometimes it will be sufficient to describe components
                 at either source or item level (for example, if only a single copy is known or if
                 other copies are not considered); sometimes you will want to use components at both
-                levels &ndash; or neither. </p>
+                levels – or neither. </p>
             <p>As source components can also have items, MerMEId can even describe complex
                 situations where surviving item components (such as part books) scattered across a
                 number of locations cannot be grouped into well-defined sets (items) but are better
                 described as individual items:</p>
             <img alt="Source components with items"
-                src="../images/manual/structure_source_components_with_items.png" width="500"
-             /><br />&nbsp; <h2>Historical information</h2>
-            <p>Details about a work's history &ndash; its creation, reception, performances etc.
-                &ndash; can be entered at the <span class="history tab">History</span> tab. If more
+                src="../resources/images/manual/structure_source_components_with_items.png" width="500"
+             /><br />  <h2>Historical information</h2>
+            <p>Details about a work's history – its creation, reception, performances etc.
+                – can be entered at the <span class="history tab">History</span> tab. If more
                 than one version of the work is defined (by adding alternative versions at the <span
                     class="music tab">Music</span> tab), historical information can be given at
                 either work or version level. See also the tutorial: <a
@@ -217,7 +217,7 @@
         </div>
         <p class="footer"><a href="http://www.kb.dk" title="DCM"><img
                     style="border: 0px; vertical-align:middle;" alt="DCM Logo"
-                    src="../images/dcm_logo_small_white.png" /></a> 2017 Danish Centre for Music
+                    src="../resources/images/dcm_logo_small_white.png" /></a> 2017 Danish Centre for Music
             Editing | Royal Danish Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
                 href="http://www.kb.dk">www.kb.dk/en/nb/dcm</a></p>
     </body>

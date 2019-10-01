@@ -3,19 +3,19 @@
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <title>MerMEId manual - Tools for generating indexes</title>
 
-        <link href="../style/tab_style.css" rel="stylesheet" type="text/css" />
-        <link href="../style/list_style.css" rel="stylesheet" type="text/css" />
-        <link href="../style/front_page.css" rel="stylesheet" type="text/css" />
-        <link href="../style/manual.css" rel="stylesheet" type="text/css" />
+        <link href="../resources/css/tab_style.css" rel="stylesheet" type="text/css" />
+        <link href="../resources/css/list_style.css" rel="stylesheet" type="text/css" />
+        <link href="../resources/css/front_page.css" rel="stylesheet" type="text/css" />
+        <link href="../resources/css/manual.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <div class="main">
             <div class="manual_header">
                 <div class="close_div">
                     <a href="javascript:window.close();" class="trigger"><img alt="Close"
-                            title="Close" src="../images/close.gif" height="12" width="12"
+                            title="Close" src="../resources/images/close.gif" height="12" width="12"
                      /></a></div>
-                <img alt="MerMEId" src="../images/mermeid_30px.png" height="23" width="130" />
+                <img alt="MerMEId" src="../resources/images/mermeid_30px.png" height="23" width="130" />
             </div>
             <div class="toclink"><a href="index.html">Back to table of contents</a></div>
             <h2>Tools for generating indexes</h2>
@@ -40,63 +40,63 @@
             <p>&#160;</p>
             <p><b>Title index</b></p>
             <p>To generate a simple list of titles, alphabetically ordered, use the <a
-                    href="/storage/tools/title_index.xq">title_index.xq</a> script located in the
+                    href="../modules/tools/title_index.xq">title_index.xq</a> script located in the
                 'tools' folder of your eXist database.</p>
             <p>The script generates a list in two sections: First a list of main titles with
                 subtitles and (in parentheses) alternative titles. Below that, it generates a list
                 of alternative titles with main titles in parenthesis. If you want both to appear as
                 a single index of titles, you will need to merge the two lists manually. </p>
-            <p><img alt="title index" src="../images/manual/title_index.png" class="illustration"  onload="this.width/=1.5;" /></p>
+            <p><img alt="title index" src="../resources/images/manual/title_index.png" class="illustration"  onload="this.width/=1.5;" /></p>
             <p>&#160;</p>
             <p><b>Index of names</b></p>
-            <p>The script <a href="/storage/tools/name_index.xq">name_index.xq</a> produces a list
+            <p>The script <a href="../modules/tools/name_index.xq">name_index.xq</a> produces a list
                 of all names encoded as &lt;persName&gt; elements within the &lt;sourceDesc&gt; and
                 &lt;workList&gt; elements. This restriction ensures that persons such as the encoder
                 or project manager (usually encoded in &lt;fileDesc&gt;) are not included.</p>
-            <p><img alt="name index" src="../images/manual/name_index.png" class="illustration"  onload="this.width/=1.5;" /></p>
+            <p><img alt="name index" src="../resources/images/manual/name_index.png" class="illustration"  onload="this.width/=1.5;" /></p>
             <ul class="important">
                 <li>Please note: The names index script is slow, as it needs to read through the
                     entire database several times. If you experience a server timeout when running
                     it, you may want to try a two-step approach instead. However, this solution
                     involves editing one of the scripts on the server. First, use the script <a
-                        href="/storage/tools/name_index_step1.xq">name_index_step1.xq</a> to
+                        href="../modules/tools/name_index_step1.xq">name_index_step1.xq</a> to
                     generate a list of all the persons found. This list is pasted into the source
                     code of the second script (the code indicates where), <a
-                        href="/storage/tools/name_index_step2.xq">name_index_step2.xq</a>, which in
+                        href="../modules/tools/name_index_step2.xq">name_index_step2.xq</a>, which in
                     turn searches for alle occurrences of each name on the list.</li>
             </ul>
             <p>&#160;</p>
             <p><b>Index of text authors</b></p>
-            <p>The index of text authors, <a href="/storage/tools/text_author_index.xq"
+            <p>The index of text authors, <a href="../modules/tools/text_author_index.xq"
                     >text_author_index.xq</a>, is a just subset of the general index of names, only
                 including the &lt;persName&gt; elements having @role='author'. This index is
                 intended to list the authors of vocal text (lyrics) only; it does not include
                 authors of documentary material or literature such as letters, articles and books,
                 which MerMEId defines using the &lt;author&gt; element.</p>
             <p>&#160;</p>
-            <p><b>Index of opus numbers</b></p> The script <a href="/storage/tools/opus_index.xq"
+            <p><b>Index of opus numbers</b></p> The script <a href="../modules/tools/opus_index.xq"
                 >opus_index.xq</a> lists the titles of works having an identifier named 'Opus' at
             the 'Work' tab:<br />
-            <img alt="opus number" src="../images/manual/opus_number.png" class="illustration" /><br />
-            <img alt="opus index" src="../images/manual/opus_index.png" class="illustration"  onload="this.width/=1.5;" />
+            <img alt="opus number" src="../resources/images/manual/opus_number.png" class="illustration" /><br />
+            <img alt="opus index" src="../resources/images/manual/opus_index.png" class="illustration"  onload="this.width/=1.5;" />
             <p>&#160;</p>
             <p><b>Index of performance locations</b></p>
-            <p>A list of performance places (cities) is generated by the <a href="/storage/tools/performance_city_index.xq">performance_city_index.xq</a> script.<br /> 
-                <img alt="opus index" src="../images/manual/performance_place_index.png" class="illustration"  onload="this.width/=1.5;" />
+            <p>A list of performance places (cities) is generated by the <a href="../modules/tools/performance_city_index.xq">performance_city_index.xq</a> script.<br /> 
+                <img alt="opus index" src="../resources/images/manual/performance_place_index.png" class="illustration"  onload="this.width/=1.5;" />
             </p>
             <p>&#160;</p>
             <p><b>Index of item (source) locations</b></p>
-            <p>The script <a href="/storage/tools/location_index.xq">location_index.xq</a> generates
+            <p>The script <a href="../modules/tools/location_index.xq">location_index.xq</a> generates
                 a list of the locations of items (that is, manuscripts or specific copies of printed
                 sources).<br /> The script tries to resolve RISM sigla; locations not recognizable
                 as RISM sigla are reproduced as written.</p>
             <p>&#160;</p>
             <p><b>List of incipit graphics</b></p>
             <p>For proofreading incipits added as graphics (images), a tool <a
-                    href="/storage/tools/list_incipit_graphics.xq">list_incipit_graphics.xq</a> is
+                href="../modules/tools/list_incipit_graphics.xq">list_incipit_graphics.xq</a> is
                 available to output all graphics including the movement titles and file URLs. The
                 script does not (yet) include incipits to be rendered at runtime. <br/>
-                <img alt="incipit list" src="../images/manual/list_incipit_graphics.png" class="illustration"  onload="this.width/=1.5;" />
+                <img alt="incipit list" src="../resources/images/manual/list_incipit_graphics.png" class="illustration"  onload="this.width/=1.5;" />
             </p>
             <p>&#160;</p>
             <!--<hr/>
@@ -106,7 +106,7 @@
         </div>
         <p class="footer"><a href="http://www.kb.dk" title="DCM"><img
                     style="border: 0px; vertical-align:middle;" alt="DCM Logo"
-                    src="../images/dcm_logo_small_white.png" /></a> 2017 Danish Centre for Music
+                    src="../resources/images/dcm_logo_small_white.png" /></a> 2017 Danish Centre for Music
             Editing | Royal Danish Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk"
                 href="http://www.kb.dk">www.kb.dk/en/nb/dcm</a></p>
     </body>
