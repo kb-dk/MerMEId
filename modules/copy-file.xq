@@ -28,8 +28,7 @@ declare function functx:copy-attributes
  } ;
 
 
-
-let $return_to := config:link-to-app("modules/list_files.xq')
+let $return_to := config:link-to-app("modules/list_files.xq")
 
 
 let $log-in := login:function()
