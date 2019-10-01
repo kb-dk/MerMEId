@@ -91,11 +91,11 @@ let $options:=
     };
 
     declare function app:view-document-reference($doc as node()) as node() {
-      (: it is assumed that we live in /storage :)
+      (: it is assumed that we live in the same collection 'modules' :)
       let $ref := 
       <a  target="_blank"
       title="View" 
-      href="/storage/present.xq?doc={util:document-name($doc)}">
+      href="./present.xq?doc={util:document-name($doc)}">
 	{$doc//m:workList/m:work/m:title[1]/string()}
       </a>
       return $ref
