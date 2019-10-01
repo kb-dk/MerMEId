@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" xmlns="http://www.music-encoding.org/ns/mei">
+    <!-- Pre-defined instrument groups for easy inserting. -->
+    <!-- Based on UNIMARC instrument codes as defined at http://iflastandards.info/ns/unimarc/terms/mop/. List generated from http://www.urfm.braidense.it/risorse/searchmedium_en.php -->
+    
+    <!-- First, a few empty (undefined) instrument groups. Please do not change. -->
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="oun">
+        <head/>
+    </perfResList>
+    <perfResList>
+        <head/>
+        <perfRes count="1" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval=""></perfRes>
+    </perfResList>
+       
+    
+    <!-- Customizable part starts here -->
+
+    <!-- Pre-defined ensembles. The <perfResList> must have a @codedval value to be recognized as an ensemble. -->
+    <!-- The @codedval value does not need to be unique, however. For instance, several orchestras of different sizes may be defined, all having @codedval="ofu". -->
+    <!-- @label values are used for the editor menu only; MerMEId does not include them in the encoding. -->    
+    
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="ofu" label="Orchestra 2.2.2.2/4.2.3.1/timp./str.">
+        <head xml:lang="en">Orchestra</head>
+        <perfRes count="2" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="wfl" xml:lang="en">flute</perfRes>
+        <perfRes count="2" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="wob" xml:lang="en">oboe</perfRes>
+        <perfRes count="2" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="wcl" xml:lang="en">clarinet</perfRes>
+        <perfRes count="2" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="wba" xml:lang="en">bassoon</perfRes>
+        <perfRes count="4" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="bho" xml:lang="en">horn</perfRes>
+        <perfRes count="2" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="btr" xml:lang="en">trumpet</perfRes>
+        <perfRes count="3" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="btb" xml:lang="en">trombone</perfRes>
+        <perfRes count="1" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="btu" xml:lang="en">tuba</perfRes>
+        <perfRes count="1" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="pti" xml:lang="en">timpani</perfRes>
+        <perfRes auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="sun" xml:lang="en">strings</perfRes>
+    </perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="ost" label="5-part strings (vl.1, vl.2, va., vc., cb.)">
+        <head xml:lang="en">Strings</head>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="svl" xml:lang="en">violin 1</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="svl" xml:lang="en">violin 2</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="sva" xml:lang="it">viola</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="svc" xml:lang="en">cello</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="sdb" xml:lang="en">double bass</perfRes>
+    </perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="ost" label="String quartet">
+        <head xml:lang="en">String quartet</head>
+        <perfRes count="2" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="svl" xml:lang="en">violin</perfRes>
+        <perfRes count="1" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="sva" xml:lang="it">viola</perfRes>
+        <perfRes count="1" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="svc" xml:lang="en">cello</perfRes>
+    </perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="cmi" label="Mixed choir (SATB)">
+        <head xml:lang="en">Choir SATB</head>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vso" xml:lang="en">S.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="val" xml:lang="en">A.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vte" xml:lang="en">T.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vbs" xml:lang="en">B.</perfRes>
+    </perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="cmi" label="Mixed choir (SSAATTBB)">
+        <head xml:lang="en">Choir SSAATTBB</head>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vso" xml:lang="en">S.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vso" xml:lang="en">S.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="val" xml:lang="en">A.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="val" xml:lang="en">A.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vte" xml:lang="en">T.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vte" xml:lang="en">T.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vbs" xml:lang="en">B.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vbs" xml:lang="en">B.</perfRes>
+    </perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="cme" label="Men's choir (TTBB)">
+        <head xml:lang="en">Men's choir</head>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vte" xml:lang="en">T.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vte" xml:lang="en">T.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vbs" xml:lang="en">B.</perfRes>
+        <perfRes count="" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vbs" xml:lang="en">B.</perfRes>
+    </perfResList>
+    
+    <!-- List of UNIMARC A/11 Orchestras and ensembles without any pre-defined instruments -->
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="oba" label="Band (no predefined instruments)"><head xml:lang="en">Band</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="obi" label="Big band (no predefined instruments)"><head xml:lang="en">Big band</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="obr" label="Brass band (no predefined instruments)"><head xml:lang="en">Brass band</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="ocb" label="Cobla (no predefined instruments)"><head xml:lang="en">Cobla</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="och" label="Chamber orchestra (no predefined instruments)"><head xml:lang="en">Chamber orchestra</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="oco" label="Combo (no predefined instruments)"><head xml:lang="en">Combo</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="odo" label="Dance orchestra (no predefined instruments)"><head xml:lang="en">Dance orchestra</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="ofu" label="Full orchestra (no predefined instruments)"><head xml:lang="en">Full orchestra</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="oga" label="Gamelan (no predefined instruments)"><head xml:lang="en">Gamelan</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="oie" label="Instrumental ensemble (no predefined instruments)"><head xml:lang="en">Instrumental ensemble</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="oja" label="Jazz band (no predefined instruments)"><head xml:lang="en">Jazz band</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="ope" label="Percussion orchestra (no predefined instruments)"><head xml:lang="en">Percussion orchestra</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="orb" label="Ragtime band (no predefined instruments)"><head xml:lang="en">Ragtime band</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="osb" label="Steel band (no predefined instruments)"><head xml:lang="en">Steel band</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="ost" label="String orchestra (no predefined instruments)"><head xml:lang="en">String orchestra</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="oiv" label="Vocal and instrumental ensemble (no predefined instruments)"><head xml:lang="en">Vocal and instrumental ensemble</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="owi" label="Wind orchestra (no predefined instruments)"><head xml:lang="en">Wind orchestra</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="ozz" label="Orchestra - other"><head xml:lang="en">Other orchestra</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="oun" label="Orchestra - unspecified"><head xml:lang="en">Unspecified orchestra</head></perfResList>
+    
+    
+    <!-- List of UNIMARC A/10 Choirs without any pre-defined instruments -->
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="cch" label="children's choir (no predefined voices)"><head xml:lang="en">children's choir</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="cme" label="men's choir (no predefined voices)"><head xml:lang="en">men's choir</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="cmi" label="mixed choir (no predefined voices)"><head xml:lang="en">mixed choir</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="cre" label="reciting choir (no predefined voices)"><head xml:lang="en">reciting choir</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="cwo" label="women's choir (no predefined voices)"><head xml:lang="en">women's choir</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="cve" label="vocal ensemble"><head xml:lang="en">vocal ensemble</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="czz" label="choir - other"><head xml:lang="en">choir - other</head></perfResList>
+    <perfResList auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="cun" label="choir - unspecified"><head xml:lang="en">choir - unspecified</head></perfResList>
+    
+    
+    
+    <!-- Groups without a @codedval are not shown in the 
+        list of pre-defined entire ensembles; instead, MerMEId uses them to insert a number of 
+        individual instruments at "performer" level, i.e. as part of an 
+        orchestra or as non-ensemble performers. -->
+
+    <perfResList label="Woodwinds 2.2.2.2">
+        <perfRes count="2" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="wfl" xml:lang="en">flute</perfRes>
+        <perfRes count="2" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="wob" xml:lang="en">oboe</perfRes>
+        <perfRes count="2" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="wcl" xml:lang="en">clarinet</perfRes>
+        <perfRes count="2" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="wba" xml:lang="en">bassoon</perfRes>
+    </perfResList>
+    <perfResList label="Brass 4.2.3.1 + timp.">
+        <perfRes count="4" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="bho" xml:lang="en">horn</perfRes>
+        <perfRes count="2" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="btr" xml:lang="en">trumpet</perfRes>
+        <perfRes count="3" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="btb" xml:lang="en">trombone</perfRes>
+        <perfRes count="1" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="btu" xml:lang="en">tuba</perfRes>
+        <perfRes count="1" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="pti" xml:lang="en">timpani</perfRes>
+    </perfResList>
+    <perfResList label="Strings (unspec.)">
+        <perfRes auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="sun" xml:lang="en">strings</perfRes>
+    </perfResList>
+    <perfResList label="Voice and piano">
+        <perfRes count="1" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="vun" xml:lang="en">voice</perfRes>
+        <perfRes count="1" auth="UNIMARC" auth.uri="http://iflastandards.info/ns/unimarc/terms/mop/" codedval="kpf" xml:lang="en">piano</perfRes>
+    </perfResList>
+    
+</perfResList>
