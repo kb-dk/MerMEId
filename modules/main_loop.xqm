@@ -14,7 +14,7 @@ declare function loop:pubstatus($doc as node()) as xs:boolean
 {
   let $published_only := session:get-attribute("published_only")
   let $dcmtime := xs:dateTime(xdb:last-modified($config:data-root, util:document-name($doc)))
-  let $uri         := concat("/db/public/",util:document-name($doc))
+  let $uri         := concat($config:data-public-root, "/", util:document-name($doc))
 
   let $status := 
     if( not($published_only) or $published_only eq '') then
@@ -22,7 +22,7 @@ declare function loop:pubstatus($doc as node()) as xs:boolean
     else
     if( doc-available($uri)) then
 	  (:	let $public_hash := util:hash(doc($uri),'md5') :)
-	  let $pubtime := xs:dateTime(xdb:last-modified("public", util:document-name($doc)))
+	  let $pubtime := xs:dateTime(xdb:last-modified($config:data-public-root, util:document-name($doc)))
 	  return
 	    (:if ($published_only eq 'pending' and $public_hash ne $dcm_hash) then :)
 	    if ($published_only eq 'modified' and $pubtime le $dcmtime) then

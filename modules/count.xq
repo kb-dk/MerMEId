@@ -31,10 +31,10 @@ declare variable $database := $config:data-root;
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <title>Counting results</title>
-      <link rel="stylesheet" type="text/css" href="/editor/style/dcm.css"/>
-      <link rel="stylesheet" type="text/css" href="/editor/style/public_list_style.css"/>
-      <link rel="styleSheet" type="text/css" href="/editor/style/list_style.css"/>
-      <link rel="styleSheet" type="text/css" href="/editor/style/xform_style.css"/>
+      <link rel="stylesheet" type="text/css" href="../resources/css/dcm.css"/>
+      <link rel="stylesheet" type="text/css" href="../resources/css/public_list_style.css"/>
+      <link rel="styleSheet" type="text/css" href="../resources/css/list_style.css"/>
+      <link rel="styleSheet" type="text/css" href="../resources/css/xform_style.css"/>
     </head>
     <body class="list_files">
     

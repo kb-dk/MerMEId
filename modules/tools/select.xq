@@ -5,6 +5,8 @@ xquery version "1.0" encoding "UTF-8";
 
 declare namespace loop="http://kb.dk/this/getlist";
 
+import module namespace config="https://github.com/edirom/mermeid/config" at "../config.xqm";
+
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
@@ -18,7 +20,7 @@ declare namespace m="http://www.music-encoding.org/ns/mei";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 
-declare variable $database := "/db/public";
+declare variable $database := $config:data-public-root;
 declare variable $coll := request:get-parameter("c","HartW");
 
 

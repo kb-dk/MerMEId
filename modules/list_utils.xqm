@@ -33,10 +33,10 @@ let $options:=
     {
       let $doc-name:=util:document-name($doc)
       let $color_style := 
-	if(doc-available(concat("public/",$doc-name))) then
+	if(doc-available(concat($config:data-public-root,'/',$doc-name))) then
 	  (
-	    let $dcmtime := xs:dateTime(xdb:last-modified("dcm",   $doc-name))
-	    let $pubtime := xs:dateTime(xdb:last-modified("public",$doc-name))
+	    let $dcmtime := xs:dateTime(xdb:last-modified($config:data-root, $doc-name))
+	    let $pubtime := xs:dateTime(xdb:last-modified($config:data-public-root, $doc-name))
 	    return
 	      if($dcmtime lt $pubtime) then
 		"publishedIsGreen"
@@ -149,7 +149,7 @@ let $options:=
     declare function app:copy-document-reference($doc as node()) as node() 
     {
       let $form-id := util:document-name($doc)
-      let $uri     := concat("/db/public/",util:document-name($doc))
+      let $uri     := concat($config:data-public-root, "/", util:document-name($doc))
       let $form := 
       <form id="copy{$form-id}" action="./copy-file.xq" method="post" style="display:inline;">
     	<input type="hidden" value="copy" name="{util:document-name($doc)}" />
@@ -163,13 +163,13 @@ let $options:=
     {
       let $doc-name := util:document-name($doc)
       let $form-id  := concat("rename",$doc-name)
-      let $uri      := concat("/db/public/",$doc-name)
+      let $uri      := concat($config:data-public-root,"/",$doc-name)
       let $form := 
       <form id="{$form-id}" action="./rename-file.xq" method="post" style="display:inline;">
     	<input type="hidden" name="doc" value="{$doc-name}" />
     	<input type="hidden" name="name" value=""/>
     	<img src="../resources/images/rename.png" name="button" value="rename" title="Rename {$doc-name}" alt="Rename" 
-    	  onclick="filename_prompt('{$form-id}','{$doc-name}',{doc-available(concat("public/",$doc-name))}); return false;"/>
+    	  onclick="filename_prompt('{$form-id}','{$doc-name}',{doc-available(concat($config:data-public-root, '/', $doc-name))}); return false;"/>
       </form>
       return  $form
     };
@@ -179,7 +179,7 @@ let $options:=
     declare function app:delete-document-reference($doc as node()) as node() 
     {
       let $form-id := util:document-name($doc)
-      let $uri     := concat("/db/public/",util:document-name($doc))
+      let $uri     := concat($config:data-public-root,"/",util:document-name($doc))
       let $form := 
     	if(doc-available($uri)) then
         <span>

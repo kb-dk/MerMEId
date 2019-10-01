@@ -24,10 +24,10 @@ let $formpage :=
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <title>Merge documents</title>
-      <link rel="stylesheet" type="text/css" href="/editor/style/dcm.css"/>
-      <link rel="stylesheet" type="text/css" href="/editor/style/public_list_style.css"/>
-      <link rel="styleSheet" type="text/css" href="/editor/style/list_style.css"/>
-      <link rel="styleSheet" type="text/css" href="/editor/style/xform_style.css"/>
+      <link rel="stylesheet" type="text/css" href="../resources/css/dcm.css"/>
+      <link rel="stylesheet" type="text/css" href="../resources/css/public_list_style.css"/>
+      <link rel="styleSheet" type="text/css" href="../resources/css/list_style.css"/>
+      <link rel="styleSheet" type="text/css" href="../resources/css/xform_style.css"/>
     </head>
   <body class="list_files">
     <div id="all">
@@ -50,7 +50,7 @@ let $formpage :=
 	      <input type="text" value="{$query}" name="query" style="width: 30em;"/><br/>&#160; 
 	      </p>
 	      <p><strong>eXist database</strong><br/>
-	      The collection /db/dcm/ is where MerMEId stores your files by default. /db/public/ usually 
+	      The collection /db/apps/mermeid/data/ is where MerMEId stores your files by default. /db/apps/mermeid/data-public/ usually 
 	      contains the files you have published with MerMEId.<br/>
 	      <input type="text" value="{$database}" name="db" style="width: 30em;"/><br/>&#160; 
 	      </p>

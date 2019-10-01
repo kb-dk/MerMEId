@@ -12,7 +12,7 @@ declare namespace util="http://exist-db.org/xquery/util";
 declare option exist:serialize "method=xml media-type=text/html"; 
 
 declare variable $dcmroot := $config:data-root;
-declare variable $pubroot := "xmldb:exist:///db/public/";
+declare variable $pubroot := $config:data-public-root;
 declare variable $action  := 
 request:get-parameter("publishing_action","publish") cast as xs:string;
 
@@ -26,7 +26,7 @@ return
   {
     for $parameter in $parameters 
     let $doc         := doc($parameter)
-    let $destination :=concat("public/",substring-after($parameter,"dcm/"))
+    let $destination :=concat($config:data-public-root,substring-after($parameter,$config:data-root))
     where request:get-parameter($parameter,"") eq 'publish'
       and not(contains($parameter,"action"))
     return 

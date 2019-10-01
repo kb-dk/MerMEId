@@ -2,22 +2,24 @@ xquery version "1.0" encoding "UTF-8";
 
 declare namespace request="http://exist-db.org/xquery/request";
 
+import module namespace config="https://github.com/edirom/mermeid/config" at "../config.xqm";
+
 declare option exist:serialize "method=xml media-type=text/html;charset=UTF-8";
 
 declare variable $coll   := request:get-parameter("coll",    "") cast as xs:string;
 declare variable $query  := request:get-parameter("query","") cast as xs:string;
 declare variable $xsl    := xs:anyURI(request:get-parameter("xsl",concat("http://",request:get-header('HOST'),"/storage/your-path-and-filename-here.xsl")));
-declare variable $database := request:get-parameter("db","/db/dcm/") cast as xs:string;
+declare variable $database := request:get-parameter("db", $config:data-root) cast as xs:string;
 
 
 let $formpage :=
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <title>Batch transform documents</title>
-      <link rel="stylesheet" type="text/css" href="/editor/style/dcm.css"/>
-      <link rel="stylesheet" type="text/css" href="/editor/style/public_list_style.css"/>
-      <link rel="styleSheet" type="text/css" href="/editor/style/list_style.css"/>
-      <link rel="styleSheet" type="text/css" href="/editor/style/xform_style.css"/>
+      <link rel="stylesheet" type="text/css" href="../../resources/css/dcm.css"/>
+      <link rel="stylesheet" type="text/css" href="../../resources/css/public_list_style.css"/>
+      <link rel="styleSheet" type="text/css" href="../../resources/css/list_style.css"/>
+      <link rel="styleSheet" type="text/css" href="../../resources/css/xform_style.css"/>
     </head>
   <body class="list_files">
     <div id="all">
@@ -36,7 +38,7 @@ let $formpage :=
 	      <input type="text" value="{$xsl}" name="xsl" style="width: 30em;"/><br/>&#160; 
 	      </p>
 	      <p><strong>Database collection to be transformed</strong><br/>
-	      The eXist database collection /db/dcm/ is where MerMEId stores your files by default. /db/public/ contains the files you have published with MerMEId.<br/>
+	      The eXist database collection /db/apps/mermeid/data/ is where MerMEId stores your files by default. /db/apps/mermeid/data-public/ contains the files you have published with MerMEId.<br/>
 	      <input type="text" value="{$database}" name="db" style="width: 30em;"/><br/>&#160; 
 	      </p>
           <p>Hitting the 'Search files' button below will generate a list of files to be transformed (no transformation yet).</p>  

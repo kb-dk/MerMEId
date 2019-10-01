@@ -3,6 +3,8 @@ xquery version "1.0" encoding "UTF-8";
 (: A script to generate select boxes for searching by keys such as opus numbers numbers or names. :)
 (: The generated code needs to be cleaned manually, though :)
 
+import module namespace config="https://github.com/edirom/mermeid/config" at "../config.xqm";
+
 declare namespace loop="http://kb.dk/this/getlist";
 
 declare namespace request="http://exist-db.org/xquery/request";
@@ -18,7 +20,7 @@ declare namespace m="http://www.music-encoding.org/ns/mei";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 
-declare variable $database := "/db/public";
+declare variable $database := $config:data-public-root;
 declare variable $coll := request:get-parameter("c","HartW");
 
 

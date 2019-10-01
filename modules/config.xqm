@@ -30,6 +30,7 @@ declare variable $config:app-root :=
 ;
 
 declare variable $config:data-root := $config:app-root || "/data";
+declare variable $config:data-public-root := $config:app-root || "/data-public";
 
 declare variable $config:repo-descriptor := doc(concat($config:app-root, "/repo.xml"))/repo:meta;
 
