@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="xar" name="mermeid">
+    <xmlproperty file="expath-pkg.xml"/>
+    <property name="project.version" value="${package(version)}"/>
+    <property name="project.app" value="mermeid"/>
+    <property name="build.dir" value="build"/>
+    
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+    
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+    </target>
+    
+    <target name="xar" depends="init">
+        <zip destfile="${build.dir}/${project.app}-${project.version}.xar">
+            <fileset dir=".">
+                <include name="**/*.*"/>
+                <exclude name="${build.dir}/**"/>
+                <exclude name="build.xml"/>
+                <exclude name="*build.properties"/>
+                <exclude name="trunk/**"/>
+            </fileset>
+        </zip>
+    </target>
+</project>
