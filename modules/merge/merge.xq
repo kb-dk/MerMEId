@@ -66,7 +66,7 @@ return
 <head>
 <title>Merged documents</title>
 <link rel="stylesheet" type="text/css" href="{$css}"/>
-<script src="/editor/js/toggle_openness.js" type="text/javascript">
+<script src="../resources/js/toggle_openness.js" type="text/javascript">
     /* js for foldable sections */
 </script>
 <script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript">
