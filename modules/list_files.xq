@@ -2,7 +2,6 @@ xquery version "3.0" encoding "UTF-8";
 
 import module namespace loop="http://kb.dk/this/getlist" at "./main_loop.xqm";
 import module namespace app="http://kb.dk/this/listapp"  at "./list_utils.xqm";
-import module namespace rd="http://kb.dk/this/redirect"  at "./redirect_host.xqm";
 import module namespace config="https://github.com/edirom/mermeid/config" at "./config.xqm";
 
 declare namespace xl="http://www.w3.org/1999/xlink";
@@ -95,7 +94,7 @@ declare function local:format-reference(
 	  <td class="tools">
 	    <a target="_blank"
             title="View XML source" 
-            href="/storage/dcm/{util:document-name($doc)}">
+            href="../data/{util:document-name($doc)}">
 	      <img src="../resources/images/xml.gif" 
 	      alt="view source" 
 	      border="0"
@@ -264,7 +263,7 @@ declare function local:format-reference(
             <th class="tools">Copy</th>
             <th class="tools">Rename</th>
             <th class="tools">	   
-              <form method="get" id="publish_form" action="/storage/publish.xq" >
+              <form method="get" id="publish_form" action="./publish.xq" >
                 <div id="publish">
                 Publish 
                 <img src="../resources/images/menu.png" 

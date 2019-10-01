@@ -1,7 +1,7 @@
 xquery version "1.0" encoding "UTF-8";
 
 module namespace  app="http://kb.dk/this/listapp";
-import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "./config.xqm";
 
 declare namespace file="http://exist-db.org/xquery/file";
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
@@ -13,7 +13,6 @@ declare namespace response="http://exist-db.org/xquery/response";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace xl="http://www.w3.org/1999/xlink";
 declare namespace xdb="http://exist-db.org/xquery/xmldb";
-
 
 
 declare function app:options() as node()*
@@ -132,7 +131,7 @@ let $options:=
 
 	<input type="hidden"
         name="uri"
-	value="http://{rd:host()}/editor/forms/mei/edit-work-case.xml" />
+	value="{config:link-to-app('forms/mei/edit-work-case.xml')}" />
 	<input type="hidden"
  	name="doc"
 	value="{util:document-name($doc)}" />

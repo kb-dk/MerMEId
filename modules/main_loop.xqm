@@ -1,6 +1,8 @@
 xquery version "1.0" encoding "UTF-8";
 module namespace loop="http://kb.dk/this/getlist";
 
+import module namespace config="https://github.com/edirom/mermeid/config" at "./config.xqm";
+
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
 declare namespace m="http://www.music-encoding.org/ns/mei";
 declare namespace ft="http://exist-db.org/xquery/lucene";
@@ -11,7 +13,7 @@ declare namespace xdb="http://exist-db.org/xquery/xmldb";
 declare function loop:pubstatus($doc as node()) as xs:boolean 
 {
   let $published_only := session:get-attribute("published_only")
-  let $dcmtime := xs:dateTime(xdb:last-modified("dcm", util:document-name($doc)))
+  let $dcmtime := xs:dateTime(xdb:last-modified($config:data-root, util:document-name($doc)))
   let $uri         := concat("/db/public/",util:document-name($doc))
 
   let $status := 
