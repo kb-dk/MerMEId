@@ -1,4 +1,4 @@
-xquery version "3.0";
+xquery version "3.1";
 
 (:~
  : A set of helper functions to access the application context from
@@ -39,6 +39,7 @@ declare variable $config:version := 'v. 2019 (13-08-2019) for MEI 4.0.0';
 
 declare function config:link-to-app($relLink as xs:string?) as xs:string {
     string-join((request:get-context-path(), request:get-attribute("$exist:prefix"), request:get-attribute("$exist:controller"), $relLink), "/")
+    => replace('//', '/')
 };
 
 (:~

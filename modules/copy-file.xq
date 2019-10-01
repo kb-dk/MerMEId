@@ -16,8 +16,6 @@ declare option    exist:serialize "method=xml media-type=text/html";
 
 declare variable $dcmroot := $config:app-root;
 
-(:declare variable $host    := rd:host();:)
-
 declare function functx:copy-attributes
   ( $copyTo as element() ,
     $copyFrom as element() )  as element() {
@@ -31,7 +29,7 @@ declare function functx:copy-attributes
 
 
 
-let $return_to := './list_files.xq' (:concat("http://",$host,"/storage/list_files.xq?"):)
+let $return_to := config:link-to-app("modules/list_files.xq')
 
 
 let $log-in := login:function()

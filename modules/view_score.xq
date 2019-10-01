@@ -2,6 +2,8 @@ xquery version "1.0" encoding "UTF-8";
 
 (: A simple MEI/Verovio score viewer :)
 
+import module namespace config="https://github.com/edirom/mermeid/config" at "./config.xqm";
+
 declare namespace xl="http://www.w3.org/1999/xlink";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
@@ -22,7 +24,7 @@ declare variable $mode     := request:get-parameter("mode", "mei");
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <title>View MEI score</title>
-      <link rel="stylesheet" type="text/css" href="/editor/style/dcm.css"/>
+      <link rel="stylesheet" type="text/css" href="../resources/css/dcm.css"/>
       <script src="http://www.verovio.org/javascript/latest/verovio-toolkit-light.js" type="text/javascript">
     	<!-- verovio toolkit -->
       </script>
@@ -52,7 +54,7 @@ declare variable $mode     := request:get-parameter("mode", "mei");
         						<mdiv>
         						{ 
         							let $list := 
-                                        for $doc in collection("/db/dcm")
+                                        for $doc in collection($config:data-root)
                                         where util:document-name($doc)=$document
                                         return $doc
                                     
@@ -65,7 +67,7 @@ declare variable $mode     := request:get-parameter("mode", "mei");
         			</mei>
                   else if ($mode = 'pae' or $mode = 'plaineAndEasie') then
                     let $list := 
-                        for $doc in collection("/db/dcm")
+                        for $doc in collection($config:data-root)
                         where util:document-name($doc)=$document
                         return $doc
                     

@@ -1,7 +1,7 @@
 xquery version "3.1" encoding "UTF-8";
 
 import module namespace login="http://kb.dk/this/login" at "./login.xqm";
-import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "./config.xqm";
 
 declare namespace functx = "http://www.functx.com";
 declare namespace m="http://www.music-encoding.org/ns/mei";
@@ -12,9 +12,9 @@ declare namespace fn="http://www.w3.org/2005/xpath-functions";
 
 declare option    exist:serialize "method=xml media-type=text/html"; 
 
-declare variable $dcmroot := "/db/dcm/";
+declare variable $dcmroot := $config:data-root;
 
-let $return_to := concat("http://",rd:host(),"/storage/list_files.xq?")
+let $return_to := config:link-to-app("modules/list_files.xq")
 
 
 let $log-in := login:function()

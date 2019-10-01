@@ -1,6 +1,6 @@
 xquery version "1.0" encoding "UTF-8";
 
-import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "./config.xqm";
 
 declare namespace transform="http://exist-db.org/xquery/transform";
 declare namespace request="http://exist-db.org/xquery/request";
@@ -19,9 +19,9 @@ declare variable $score := request:get-parameter("score", "");
 declare variable $xsl := request:get-parameter("xsl", "mei_to_html.xsl");
 declare variable $display_authority_links := request:get-parameter("display_authority_links", "");
 
-let $host := rd:host()
+let $host := request:get-hostname()
 let $list := 
-for $doc in collection("/db/dcm")
+for $doc in collection($config:data-root)
 where util:document-name($doc)=$document
 return $doc
 
@@ -37,7 +37,7 @@ let $params :=
 for $doc in $list
 return 
 if(request:get-parameter("debug","")) then
-(<d>{$params}{doc(concat("/db/mermeid/style/",$xsl))}</d>)
+(<d>{$params}{doc(concat($config:app-root,"/style/",$xsl))}</d>)
 else
-transform:transform($doc,doc(concat("/db/mermeid/style/",$xsl)),$params)
+transform:transform($doc,doc(concat($config:app-root,"/style/",$xsl)),$params)
  

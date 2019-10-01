@@ -2,6 +2,8 @@ xquery version "1.0" encoding "UTF-8";
 
 module namespace loop="http://kb.dk/this/getlist";
 
+import module namespace config="https://github.com/edirom/mermeid/config" at "../config.xqm";
+
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
 declare namespace m="http://www.music-encoding.org/ns/mei";
 declare namespace ft="http://exist-db.org/xquery/lucene";
@@ -9,7 +11,7 @@ declare namespace util="http://exist-db.org/xquery/util";
 
 declare variable $loop:sortby     := "null,work_number";
 declare variable $loop:vocabulary := 
-  doc(concat("http://",request:get-header('HOST'),"/editor/forms/mei/model/keywords.xml"));
+  doc(concat($config:app-root,"/library/keywords.xml"));
 
 declare function loop:valid-work-number($doc as node()) as xs:boolean
 {

@@ -4,6 +4,7 @@ xquery version "1.0" encoding "UTF-8";
 
 import module namespace loop="http://kb.dk/this/getlist" at "./main_loop.xqm";
 import module namespace  app="http://kb.dk/this/listapp" at "./list_utils.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "./config.xqm";
 
 declare namespace xl="http://www.w3.org/1999/xlink";
 declare namespace request="http://exist-db.org/xquery/request";
@@ -24,7 +25,7 @@ declare variable $genre  := request:get-parameter("genre","") cast as xs:string;
 declare variable $coll   := request:get-parameter("c",    "") cast as xs:string;
 declare variable $query  := request:get-parameter("query","") cast as xs:string;
 declare variable $published_only := request:get-parameter("published_only","") cast as xs:string;
-declare variable $database := "/db/dcm";
+declare variable $database := $config:data-root;
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">

@@ -1,5 +1,7 @@
+xquery version "1.0" encoding "UTF-8";
+
 import module namespace login="http://kb.dk/this/login" at "./login.xqm";
-import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "./config.xqm";
 
 declare namespace m="http://www.music-encoding.org/ns/mei";
 declare namespace xdb="http://exist-db.org/xquery/xmldb";
@@ -10,10 +12,10 @@ declare namespace util="http://exist-db.org/xquery/util";
 
 declare option    exist:serialize "method=xml media-type=text/html"; 
 
-declare variable $dcmroot      := "/db/dcm/";
+declare variable $dcmroot      := $config:data-root;
 declare variable $old_name     := normalize-space(request:get-parameter("doc", ""));
 declare variable $name         := normalize-space(request:get-parameter("name", ""));
-declare variable $doc_path     := concat("http://",rd:host(),"/storage/dcm/");
+declare variable $doc_path     := config:link-to-app("data/");
 declare variable $old_name_abs := concat($doc_path,$old_name);
 declare variable $now          := fn:current-dateTime() cast as xs:string;
 declare variable $isodate      := concat(substring($now,1,23),"Z");
@@ -100,7 +102,7 @@ let $change :=
     ""
 
 
-let $return_to := concat("http://",rd:host(),"/storage/list_files.xq")
+let $return_to := config:link-to-app("modules/list_files.xq")
 let $res := response:redirect-to($return_to cast as xs:anyURI)   
 
 return $change

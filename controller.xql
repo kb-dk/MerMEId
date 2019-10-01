@@ -28,4 +28,7 @@ else
     (: everything else is passed through :)
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <cache-control cache="yes"/>
+        <set-attribute name="$exist:prefix" value="{$exist:prefix}"/>
+        <set-attribute name="$exist:controller" value="{$exist:controller}"/>
+        <set-attribute name="$exist:root" value="{$exist:root}"/>
     </dispatch>

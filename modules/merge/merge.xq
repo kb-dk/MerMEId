@@ -1,7 +1,7 @@
 xquery version "1.0" encoding "UTF-8";
 
-
 import module namespace loop="http://kb.dk/this/getlist" at "./merge_loop.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "../config.xqm";
 
 declare namespace xl="http://www.w3.org/1999/xlink";
 declare namespace request="http://exist-db.org/xquery/request";
@@ -26,9 +26,9 @@ declare variable $page   := request:get-parameter("page", "1") cast as xs:intege
 declare variable $number := request:get-parameter("itemsPerPage","20") cast as xs:integer;
 declare variable $publ   := request:get-parameter("published_only","");
 declare variable $anthologies := request:get-parameter("anthologies","yes");
-declare variable $stURI  := xs:anyURI(request:get-parameter("style","/storage/style/mei_to_html_print.xsl"));
-declare variable $css    := xs:anyURI(request:get-parameter("css","/storage/style/mei_to_html_print.css"));
-declare variable $database := request:get-parameter("db","/db/dcm");
+declare variable $stURI  := xs:anyURI(request:get-parameter("style", config:link-to-app("style/mei_to_html_print.xsl")));
+declare variable $css    := xs:anyURI(request:get-parameter("css", config:link-to-app("style/mei_to_html_print.css")));
+declare variable $database := request:get-parameter("db", $config:data-root);
 
 declare variable $from     := ($page - 1) * $number + 1;
 declare variable $to       :=  $from      + $number - 1;
@@ -66,7 +66,7 @@ return
 <head>
 <title>Merged documents</title>
 <link rel="stylesheet" type="text/css" href="{$css}"/>
-<script src="../resources/js/toggle_openness.js" type="text/javascript">
+<script src="resources/js/toggle_openness.js" type="text/javascript">
     /* js for foldable sections */
 </script>
 <script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript">

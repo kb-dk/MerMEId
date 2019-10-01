@@ -1,5 +1,7 @@
+xquery version "1.0" encoding "UTF-8";
+
 import module namespace login="http://kb.dk/this/login" at "./login.xqm";
-import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "./config.xqm";
 
 declare namespace xdb="http://exist-db.org/xquery/xmldb";
 declare namespace request="http://exist-db.org/xquery/request";
@@ -9,12 +11,12 @@ declare namespace util="http://exist-db.org/xquery/util";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
 
-declare variable $dcmroot := "xmldb:exist:///db/dcm/";
+declare variable $dcmroot := $config:data-root;
 declare variable $pubroot := "xmldb:exist:///db/public/";
 declare variable $action  := 
 request:get-parameter("publishing_action","publish") cast as xs:string;
 
-let $return_to := concat("http://",rd:host(),"/storage/list_files.xq")
+let $return_to := config:link-to-app("modules/list_files.xq")
 
 let $res := response:redirect-to($return_to cast as xs:anyURI) 
 let $log-in := login:function()

@@ -1,7 +1,7 @@
 xquery version "1.0" encoding "UTF-8";
 
 module  namespace  filter="http://kb.dk/this/app/filter";
-import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "./config.xqm";
 
 declare namespace m="http://www.music-encoding.org/ns/mei";
 
@@ -11,7 +11,7 @@ declare variable $filter:number := request:get-parameter("itemsPerPage","20") ca
 declare variable $filter:genre := request:get-parameter("genre", "") cast as xs:string;
 declare variable $filter:uri    := "";
 declare variable $filter:vocabulary := 
-        doc(concat("http://",rd:host(),"/editor/forms/mei/model/keywords.xml"));
+        doc(concat($config:app-root,"/library/keywords.xml"));
 
 declare function filter:print-filters(
   $database        as xs:string,

@@ -1,7 +1,7 @@
 xquery version "1.0" encoding "UTF-8";
 
 import module namespace login="http://kb.dk/this/login" at "../login.xqm";
-import module namespace rd="http://kb.dk/this/redirect" at "../redirect_host.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "../config.xqm";
 
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace response="http://exist-db.org/xquery/response";
@@ -20,8 +20,8 @@ declare option exist:serialize "method=xml media-type=text/html";
 
 declare variable $coll   := request:get-parameter("coll",    "") cast as xs:string;
 declare variable $query  := request:get-parameter("query","") cast as xs:string;
-declare variable $xsl    := xs:anyURI(request:get-parameter("xsl",concat("http://",request:get-header('HOST'),"/storage/your-path-and-filename-here.xsl")));
-declare variable $database := request:get-parameter("db","/db/dcm");
+declare variable $xsl    := xs:anyURI(request:get-parameter("xsl",config:link-to-app("/your-path-and-filename-here.xsl")));
+declare variable $database := request:get-parameter("db",$config:data-root);
 
 declare variable $local:sortby     := "null,work_number";
 
@@ -97,9 +97,10 @@ let $content :=
                   let $html := 
                   <tr>
                      <td>{local:get-work-number($doc)} &#160;</td>
-                     <td><a href="{concat("http://",rd:host(),"/storage/present.xq?doc=",substring-after(document-uri(root($doc)),$database))}" 
+                     <td><a href="{config:link-to-app(concat("modules/present.xq?doc=",substring-after(document-uri(root($doc)),$database)))}" 
                         target="_blank" title="HTML preview">{$doc/m:meiHead/m:fileDesc/m:titleStmt/m:title[1]/string()}</a> &#160;</td>
-                     <td><a href="{concat("http://",rd:host(),replace(document-uri(root($doc)),'/db/','/storage/'))}" 
+                     <!-- This links is presumably broken … -->
+                     <td><a href="{config:link-to-app(concat(replace(document-uri(root($doc)), $config:data-root,'/data/')))}" 
                         target="_blank" title="XML">{substring-after(document-uri(root($doc)),$database)}</a></td>
                      <td>{local:transformed($doc)}</td>
                   </tr>
@@ -123,10 +124,10 @@ return
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Transformed documents</title>
-    <link rel="stylesheet" type="text/css" href="/editor/style/dcm.css"/>
-    <link rel="stylesheet" type="text/css" href="/editor/style/public_list_style.css"/>
-    <link rel="styleSheet" type="text/css" href="/editor/style/list_style.css"/>
-    <link rel="styleSheet" type="text/css" href="/editor/style/xform_style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/dcm.css"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/public_list_style.css"/>
+    <link rel="styleSheet" type="text/css" href="../../resources/css/list_style.css"/>
+    <link rel="styleSheet" type="text/css" href="../../resources/css/xform_style.css"/>
 </head>
 <body class="list_files">
     <div id="all">
