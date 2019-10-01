@@ -27,7 +27,9 @@ return $doc
 
 let $params := 
 <parameters>
-   <param name="hostname" value="{$host}"/>
+   <param name="hostname" value="{$host}"/>#
+   <param name="app-root" value="{$config:app-root}"/>
+   <param name="data-root" value="{$config:data-root}"/>
    <param name="doc" value="{$document}"/>
    <param name="language" value="{$language}"/>
    <param name="score" value="{$score}"/>

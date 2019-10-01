@@ -32,6 +32,8 @@
 
 	<xsl:param name="doc"/>
 	<xsl:param name="hostname"/>
+	<xsl:param name="app-root"/>
+	<xsl:param name="data-root"/>
 	<xsl:param name="language"/>
 	<xsl:param name="score"/>
 	<!-- Display all links to authority files? (string, not boolean) -->
@@ -53,23 +55,19 @@
 	<xsl:variable name="preferred_language">none</xsl:variable>
 	<!-- general MerMEId settings -->
 	<xsl:variable name="settings"
-		select="document(concat('http://',$hostname,'/editor/forms/mei/mermeid_configuration.xml'))"/>
+		select="document(concat($app-root, '/properties.xml'))"/>
 	<!-- file context - i.e. collection identifier like 'CNW' -->
 	<xsl:variable name="file_context">
 		<xsl:value-of select="/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection'][1]"/>
 	</xsl:variable>
 	<!-- files containing look-up information -->
-	<xsl:variable name="bibl_file_name"
-		select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'library/standard_bibliography.xml'))"/>
-	<xsl:variable name="bibl_file" select="document($bibl_file_name)"/>
-	<xsl:variable name="abbreviations_file_name"
-		select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'library/abbreviations.xml'))"/>
-	<xsl:variable name="abbreviations" select="document($abbreviations_file_name)/m:p/*"/>
+	<xsl:variable name="bibl_file" select="document(concat($app-root, '/library/standard_bibliography.xml'))"/>
+	<xsl:variable name="abbreviations" select="document(concat($app-root, '/library/abbreviations.xml'))/m:p/*"/>
 	
 	<xsl:variable name="language_pack_file_name">
 		<xsl:choose>
-			<xsl:when test="$language!=''"><xsl:value-of select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'style/language/',$language,'.xml'))"/></xsl:when>
-			<xsl:otherwise><xsl:value-of select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'style/language/',$default_language,'.xml'))"/></xsl:otherwise>
+			<xsl:when test="$language!=''"><xsl:value-of select="string(concat($app-root,'/style/language/',$language,'.xml'))"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="string(concat($app-root,'/style/language/',$default_language,'.xml'))"/></xsl:otherwise>
 		</xsl:choose>
 	</xsl:variable>
 	<xsl:variable name="l" select="document($language_pack_file_name)/language"/>
@@ -120,9 +118,9 @@
 
 		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
 
-		<link rel="stylesheet" type="text/css" href="./style/mei_to_html.css"/>
+		<link rel="stylesheet" type="text/css" href="../style/mei_to_html.css"/>
 
-		<script type="text/javascript" src="/editor/js/toggle_openness.js">
+		<script type="text/javascript" src="../resources/js/toggle_openness.js">
 	      <xsl:text>
     	  </xsl:text>
 		</script>
@@ -322,10 +320,10 @@
 	<xsl:template match="*" mode="settings_menu">
 		<div class="settings colophon noprint">
 			<a
-				href="javascript:loadcssfile('/editor/style/html_hide_languages.css'); hide('load_alt_lang_css'); show('remove_alt_lang_css')"
+				href="javascript:loadcssfile('../resources/css/html_hide_languages.css'); hide('load_alt_lang_css'); show('remove_alt_lang_css')"
 				id="load_alt_lang_css" class="noprint"><xsl:value-of select="$l/hide_alt_lang"/></a>
 			<a style="display:none"
-				href="javascript:removecssfile('/editor/style/html_hide_languages.css'); hide('remove_alt_lang_css'); show('load_alt_lang_css')"
+				href="javascript:removecssfile('../resources/css/html_hide_languages.css'); hide('remove_alt_lang_css'); show('load_alt_lang_css')"
 				id="remove_alt_lang_css" class="noprint"><xsl:value-of select="$l/show_alt_lang"/></a>
 		</div>
 	</xsl:template>
@@ -492,7 +490,7 @@
 		<xsl:if test="m:relation[@target!='']">
 			<p>
 				<xsl:for-each select="m:relation[@target!='']">
-					<img src="/editor/images/html_link.png" title="Link to external resource"/>
+					<img src="../resources/images/html_link.png" title="Link to external resource"/>
 					<xsl:element name="a">
 						<xsl:attribute name="href">
 							<xsl:apply-templates select="@target"/>
@@ -657,7 +655,7 @@
 			test="$mermeid_crossref='true'">
 			<!-- get collection name and number from linked files -->
 			<xsl:variable name="fileName"
-				select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,@target)"/>
+				select="concat($data-root, '/', @target)"/>
 			<xsl:variable name="linkedDoc" select="document($fileName)"/>
 			<xsl:variable name="file_context"
 				select="$linkedDoc/m:mei/m:meiHead/m:fileDesc/m:seriesStmt/m:identifier[@type='file_collection']"/>
@@ -814,7 +812,7 @@
 									<xsl:when test="@target!=''">
 										<!-- get external source description -->
 										<xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
-										<xsl:variable name="doc_name" select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
+										<xsl:variable name="doc_name" select="concat($data-root, '/', substring-before(@target,'#'))"/>
 										<xsl:variable name="doc" select="document($doc_name)"/>
 										<xsl:copy-of select="$doc/m:mei/m:meiHead/m:manifestationList/m:manifestation[@xml:id=$ext_id]"/>
 									</xsl:when>
@@ -1590,7 +1588,7 @@
 								<!-- get external source description -->
 								<xsl:variable name="ext_id" select="substring-after(@target,'#')"/>
 								<xsl:variable name="doc_name"
-									select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:document_root,substring-before(@target,'#'))"/>
+									select="concat($data-root, '/', substring-before(@target,'#'))"/>
 								<xsl:variable name="doc" select="document($doc_name)"/>
 								<xsl:copy-of select="$doc/m:mei/m:meiHead/m:manifestationList/m:manifestation[@xml:id=$ext_id]"/>
 							</xsl:when>
@@ -2924,7 +2922,7 @@
 
 	<!-- display external link -->
 	<xsl:template match="m:ptr[normalize-space(@target) or normalize-space(@xl:href)]">
-		<img src="/editor/images/html_link.png" title="Link to external resource"/>
+		<img src="../resources/images/html_link.png" title="Link to external resource"/>
 		<a target="_blank">
 			<xsl:attribute name="href">
 				<xsl:choose>
@@ -2977,7 +2975,7 @@
 				<xsl:attribute name="href"><xsl:value-of select="concat(@auth.uri,'/',@codedval)"/></xsl:attribute>
 				<xsl:attribute name="target">_blank</xsl:attribute>
 				<xsl:attribute name="style">text-decoration:none;</xsl:attribute>
-				<img src="/editor/images/external_link.gif" alt="link" title="Link to authority file" border="0"/></xsl:element>
+				<img src="../resources/images/external_link.gif" alt="link" title="Link to authority file" border="0"/></xsl:element>
 		</xsl:if>
 	</xsl:template>
 	
@@ -3266,7 +3264,7 @@
 		<div class="fold">
 			<h3 class="section_heading" id="p{$id}">
 				<span onclick="toggle('{$id}')" title="Click to show or hide">
-					<img class="noprint" id="img{$id}" border="0" src="/editor/images/plus.png"
+					<img class="noprint" id="img{$id}" border="0" src="../resources/images/plus.png"
 						alt="+"/>
 					<xsl:value-of select="concat(' ',$heading)"/>
 				</span>
@@ -3398,7 +3396,7 @@
 				string-length(translate($country,$vUpper,''))=0 and 
 				string-length(translate($archive,$vAlpha,''))=0">
 				<xsl:variable name="RISM_file_name"
-					select="string(concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'rism_sigla/',
+					select="string(concat($app-root,'/rism_sigla/',
 					substring-before(normalize-space(.),'-'),'.xml'))"/>
 				<xsl:choose>
 					<xsl:when test="boolean(document($RISM_file_name))">
