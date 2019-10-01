@@ -37,6 +37,10 @@ declare variable $config:expath-descriptor := doc(concat($config:app-root, "/exp
 
 declare variable $config:version := 'v. 2019 (13-08-2019) for MEI 4.0.0';
 
+declare function config:link-to-app($relLink as xs:string?) as xs:string {
+    string-join((request:get-context-path(), request:get-attribute("$exist:prefix"), request:get-attribute("$exist:controller"), $relLink), "/")
+};
+
 (:~
  : Resolve the given path using the current application context.
  : If the app resides in the file system,
