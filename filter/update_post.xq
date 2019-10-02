@@ -1,13 +1,13 @@
 xquery version "3.0";
 
 import module namespace request="http://exist-db.org/xquery/request";
-import module namespace login="http://kb.dk/this/login" at "./login.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "../modules/config.xqm";
 declare namespace xs="http://www.w3.org/2001/XMLSchema";
 declare option exist:serialize "method=xml encoding=UTF-8 media-type=text/html";
 
 let $method:= request:get-method()
 let $data :=  util:parse(request:get-parameter("file",""))
-let $log-in := xmldb:login("/db", "admin", "flormelis")
+(:let $log-in := xmldb:login("/db", "admin", "flormelis"):)
 
 let $exist_path  := request:get-parameter("path","")
 
@@ -16,9 +16,9 @@ let $log-in      := login:function()
 
 let $exist_path  := request:get-parameter("path","")
 let $transform   := if(true()) then
-    xs:anyURI("/db/apps/filter/xsl/filter_put.xsl")
+    xs:anyURI("xsl/filter_put.xsl")
 else
-    xs:anyURI("/db/apps/filter/xsl/null_transform.xsl")
+    xs:anyURI("xsl/null_transform.xsl")
 let $op          := doc($transform)
 let $params      := <parameters/>
 let $tdoc        := transform:transform($data,$op,$params)
@@ -27,7 +27,7 @@ let $params      := <parameters/>
 
 let $file        := replace($exist_path, "/*","")
 let $result      := if($file and $tdoc) then
-    xmldb:store("/db/dcm",$file , $tdoc)
+    xmldb:store($config:data-root, $file , $tdoc)
 else
     ()
 
