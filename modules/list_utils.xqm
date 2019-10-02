@@ -127,7 +127,7 @@ let $options:=
       let $form-id := util:document-name($doc)
       let $ref := 
       <form id="edit{$form-id}" 
-      action="/orbeon/xforms-jsp/mei-form/" style="display:inline;" method="get">
+      action="{$config:orbeon-endpoint}" style="display:inline;" method="get">
 
 	<input type="hidden"
         name="uri"

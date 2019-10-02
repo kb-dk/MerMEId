@@ -20,7 +20,7 @@ let $file := concat(util:uuid(),".xml")
 let $file_arg := concat("doc=",$file)
 let $args := string-join(($uri,$dir,$file_arg),"&amp;")
 
-let $return_to := concat("http://",$host,"/orbeon/xforms-jsp/mei-form/?",$args)
+let $return_to := concat($config:orbeon-endpoint, "?", $args)
 let $res       := response:redirect-to($return_to cast as xs:anyURI)
 let $result    := xmldb:store($config:data-root, $file, $new_doc)
 
