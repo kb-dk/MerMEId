@@ -41,7 +41,7 @@ declare variable $config:orbeon-endpoint := 'http://localhost:9090/orbeon/xforms
 declare variable $config:exist-endpoint-seen-from-orbeon := 'http://172.17.0.2:8080/exist/apps/mermeid';
 
 declare function config:link-to-app($relLink as xs:string?) as xs:string {
-    string-join((request:get-context-path(), request:get-attribute("$exist:prefix"), request:get-attribute("$exist:controller"), $relLink), "/")
+    string-join((request:get-context-path(), request:get-attribute("$exist:prefix"), 'mermeid', $relLink), "/")
     => replace('/+', '/')
 };
 
