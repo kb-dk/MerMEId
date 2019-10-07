@@ -11,15 +11,13 @@
   exclude-result-prefixes="xsl m t local"
   version="3.0">
 
-  <xsl:param name="base_uri" select="'http://localhost'"/>
-  
-  <xsl:output method="xml"
-    encoding="UTF-8"
-    omit-xml-declaration="yes" />
+  <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes"/>
   
   <xsl:strip-space elements="*"/>
   
-  <xsl:variable name="empty_doc" select="document(concat($base_uri,'/editor/forms/mei/model/empty_doc.xml'))" />
+  <xsl:variable name="empty_doc" select="document('../../forms/mei/model/empty_doc.xml')"/>
+  
+  <xsl:include href="preprocess-forms.xsl"/>
   
   <xsl:template match="m:mei">
     <xsl:variable name="first_run">
