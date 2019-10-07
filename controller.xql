@@ -25,10 +25,13 @@ else if (contains($exist:path, "/$shared/")) then
         </forward>
     </dispatch>
 else
-    (: everything else is passed through :)
+(: everything else is passed through
+    diabling serverside betterform processing for eXist versions < v5.0.0
+:)
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <cache-control cache="yes"/>
         <set-attribute name="$exist:prefix" value="{$exist:prefix}"/>
         <set-attribute name="$exist:controller" value="{$exist:controller}"/>
         <set-attribute name="$exist:root" value="{$exist:root}"/>
+        <set-attribute name="betterform.filter.ignoreResponseBody" value="true"/>
     </dispatch>
