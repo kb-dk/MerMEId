@@ -42,18 +42,18 @@
         
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
       id="empty-instance"
-      src="/editor/forms/mei/model/empty_doc.xml"
+      src="model/empty_doc.xml"
       xxf:exclude-result-prefixes="#all"
       xxf:readonly="true"/>
 
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
       id="reduced-template"
-      src="/editor/forms/mei/model/new_file.xml" 
+      src="model/new_file.xml" 
       xxf:readonly="true"/>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
       id="bibl-type-instance" 
-      src="/editor/forms/mei/model/bibl_reference_types.xml" 
+      src="model/bibl_reference_types.xml" 
       xxf:readonly="true"/>
 
     <xf:instance id="mei_attr_list" >
@@ -144,7 +144,7 @@
 
     <xf:instance id="parameters" 
       xmlns="http://www.kb.dk/dcm"
-      src="/editor/forms/mei/mermeid_configuration.xml"/>
+      src="../../properties.xml"/>
     
     <xf:instance id="temp">
       <temp-values>
@@ -172,7 +172,7 @@
       method="get" 
       serialization="none" 
       validate="false"
-      resource="/editor/forms/mei/model/new_file.xml"
+      resource="model/new_file.xml"
       replace="instance" 
       xxf:show-progress="true"
       instance="data-instance"/>
