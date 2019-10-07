@@ -2,14 +2,16 @@
 
   <!-- paths -->
 
-  <orbeon_dir>http://&lt;your host name&gt;/orbeon/xforms-jsp/mei-form/</orbeon_dir>
-  <form_home>http://&lt;your host name&gt;/editor/forms/mei/</form_home>
-  <crud_home>http://172.17.0.2/filter/dcm/</crud_home>
-  <library_crud_home>http://172.17.0.2/filter/library/</library_crud_home>
-  <rism_crud_home>http://172.17.0.2/filter/rism_sigla/</rism_crud_home>
-  <server_name>http://&lt;your host name&gt;/</server_name>  
-  <exist_dir>storage/</exist_dir>
-  <document_root>storage/dcm/</document_root>
+  <orbeon_dir>http://localhost:9090/orbeon/xforms-jsp/mei-form/</orbeon_dir>
+  <form_home>http://172.17.0.2:8080/exist/apps/mermeid/forms/mei/</form_home>
+  
+  <crud_home>http://172.17.0.2:8080/exist/apps/mermeid/data/</crud_home>
+  <library_crud_home>http://172.17.0.2:8080/exist/apps/mermeid/library/</library_crud_home>
+  <rism_crud_home>http://172.17.0.2:8080/exist/apps/mermeid/rism_sigla/</rism_crud_home>
+  
+  <server_name>http://localhost:8080/</server_name>  
+  <exist_dir>exist/apps/mermeid/</exist_dir>
+  <document_root>exist/apps/mermeid/data/</document_root>
 
   <!-- Default editor settings - (boolean; set to 'true' or nothing)  -->
   <!-- Enable automatic revisionDesc (change log) entries? -->
