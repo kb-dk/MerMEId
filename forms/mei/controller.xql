@@ -1,5 +1,6 @@
 xquery version "3.0";
 
+declare namespace repo="http://exist-db.org/xquery/repo";
 import module namespace config="https://github.com/edirom/mermeid/config" at "../../modules/config.xqm";
 
 declare variable $exist:path external;
@@ -13,12 +14,11 @@ if (ends-with($exist:resource, ".xml")) then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <view>
             <forward servlet="XSLTServlet">
-                <set-attribute name="xslt.stylesheet" value="{$exist:root}/mermeid/filter/xsl/filter_get.xsl"/>
-                <set-attribute name="xslt.resources-endpoint" value="http://localhost:8080/exist/apps/mermeid/resources"/>
+                <set-attribute name="xslt.stylesheet" value="{$exist:root}/{$config:repo-descriptor/repo:target}/filter/xsl/filter_get.xsl"/>
+                <set-attribute name="xslt.resources-endpoint" value="{config:get-property('mermeid_endpoint')}{request:get-context-path()}{request:get-attribute("$exist:prefix")}/{$config:repo-descriptor/repo:target}/resources"/>
                 <set-attribute name="xslt.exist-endpoint-seen-from-orbeon" value="{$config:exist-endpoint-seen-from-orbeon}"/>
                 <set-attribute name="xslt.orbeon-endpoint" value="{$config:orbeon-endpoint}"/>
-                <!--<set-attribute name="xslt.server-name" value="{request:get-scheme()}://{request:get-hostname()}{if(request:get-server-port() ne 80) then ':' || request:get-server-port() else ()}"/>-->
-                <set-attribute name="xslt.server-name" value="http://localhost:8080"/>
+                <set-attribute name="xslt.server-name" value="{config:get-property('mermeid_endpoint')}"/>
                 <set-attribute name="xslt.exist-dir" value="{config:link-to-app('/')}"/>
                 <set-attribute name="xslt.document-root" value="{config:link-to-app('/data/')}"/>
             </forward> 

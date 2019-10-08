@@ -4,10 +4,10 @@
     xmlns:xf="http://www.w3.org/2002/xforms"
     version="2">
     
-    <xsl:param name="xslt.resources-endpoint" select="'http://localhost:8080/exist/apps/mermeid/resources'"/>
+    <xsl:param name="xslt.resources-endpoint"/>
     
-    <xsl:param name="xslt.orbeon-endpoint" select="'http://172.17.0.2:8080/exist/apps/mermeid/forms'"/>
-    <xsl:param name="xslt.exist-endpoint-seen-from-orbeon" select="'http://172.17.0.2:8080/exist/apps/mermeid/forms'"/>
+    <xsl:param name="xslt.orbeon-endpoint"/>
+    <xsl:param name="xslt.exist-endpoint-seen-from-orbeon"/>
     <xsl:param name="xslt.server-name"/>
     <xsl:param name="xslt.exist-dir"/>
     <xsl:param name="xslt.document-root"/>
@@ -73,6 +73,12 @@
     <xsl:template match="@resource[contains(., 'model')]">
         <xsl:attribute name="resource">
             <xsl:value-of select="replace(., '.*model', concat($xslt.exist-endpoint-seen-from-orbeon, '/forms/mei/model'))"/>
+        </xsl:attribute>
+    </xsl:template>
+    
+    <xsl:template match="@resource[contains(., 'manual')]">
+        <xsl:attribute name="resource">
+            <xsl:value-of select="replace(., '.*manual', concat($xslt.resources-endpoint, '/../manual'))"/>
         </xsl:attribute>
     </xsl:template>
     
