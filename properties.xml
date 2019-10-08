@@ -1,17 +1,8 @@
-<parameters xmlns="http://www.kb.dk/dcm">
+<properties xmlns="http://www.kb.dk/dcm">
 
-  <!-- paths -->
-
-  <orbeon_dir>http://localhost:9090/orbeon/xforms-jsp/mei-form/</orbeon_dir>
-  <form_home>http://172.17.0.2:8080/exist/apps/mermeid/forms/mei/</form_home>
-  
-  <crud_home>http://172.17.0.2:8080/exist/apps/mermeid/data/</crud_home>
-  <library_crud_home>http://172.17.0.2:8080/exist/apps/mermeid/library/</library_crud_home>
-  <rism_crud_home>http://172.17.0.2:8080/exist/apps/mermeid/rism_sigla/</rism_crud_home>
-  
-  <server_name>http://localhost:8080/</server_name>  
-  <exist_dir>exist/apps/mermeid/</exist_dir>
-  <document_root>exist/apps/mermeid/data/</document_root>
+  <!-- orbeon endpoint -->
+  <orbeon_endpoint>http://localhost:9090/orbeon/xforms-jsp/mei-form/index.jsp</orbeon_endpoint>
+  <mermeid_endpoint>http://localhost:8080</mermeid_endpoint>
 
   <!-- Default editor settings - (boolean; set to 'true' or nothing)  -->
   <!-- Enable automatic revisionDesc (change log) entries? -->
@@ -24,14 +15,5 @@
   <id_main_switch>true</id_main_switch>
   <!-- Enable code inspector component? -->
   <code_inspector_main_switch>true</code_inspector_main_switch>
-
   
-  <!-- Some elements used internally by XForms - not for user configuration -->
-  <xml_file/>
-  <return_uri/>
-  <this_page/>
-  <attr_editor/>
-  <show_id/>
-  <code_inspector/>
-  
-</parameters>
+</properties>
