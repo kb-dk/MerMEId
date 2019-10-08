@@ -10,7 +10,7 @@ ENV BUILD_HOME="/opt/builder"
 
 # installing Apache Ant
 RUN apt-get update \
-    && apt-get install -y --force-yes apt-transport-https ant
+    && apt-get install -y --no-install-recommends apt-transport-https ant
 
 # now building the main App
 WORKDIR ${BUILD_HOME}
