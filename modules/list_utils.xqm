@@ -131,7 +131,7 @@ let $options:=
 
 	<input type="hidden"
         name="uri"
-	value="{config:link-to-app-from-orbeon('/forms/mei/edit-work-case.xml')}" />
+	value="{config:link-to-app-from-orbeon('/forms/edit-work-case.xml')}" />
 	<input type="hidden"
  	name="doc"
 	value="{util:document-name($doc)}" />

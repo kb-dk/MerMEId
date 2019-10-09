@@ -14,7 +14,7 @@ let $log-in     := login:function()
 let $exist_path := request:get-parameter("path","")
 let $new_doc    := doc("./new_file.xml")
 
-let $uri  := concat("uri=", config:link-to-app-from-orbeon("/forms/mei/edit-work-case.xml"))
+let $uri  := concat("uri=", config:link-to-app-from-orbeon("/forms/edit-work-case.xml"))
 let $dir  := concat("dir=", config:link-to-app-from-orbeon("filter/"))
 let $file := concat(util:uuid(),".xml")
 let $file_arg := concat("doc=",$file)

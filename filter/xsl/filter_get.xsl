@@ -15,7 +15,7 @@
   
   <xsl:strip-space elements="*"/>
   
-  <xsl:variable name="empty_doc" select="document('../../forms/mei/model/empty_doc.xml')"/>
+  <xsl:variable name="empty_doc" select="document('../../forms/model/empty_doc.xml')"/>
   
   <xsl:include href="preprocess-forms.xsl"/>
   

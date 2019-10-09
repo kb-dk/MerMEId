@@ -18,7 +18,7 @@
             <!-- paths -->
             
             <orbeon_dir><xsl:value-of select="$xslt.orbeon-endpoint"/></orbeon_dir>
-            <form_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/forms/mei/</form_home>
+            <form_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/forms/</form_home>
             
             <crud_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/data/</crud_home>
             <library_crud_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/library/</library_crud_home>
@@ -66,13 +66,13 @@
     
     <xsl:template match="@src[contains(., 'model')]">
         <xsl:attribute name="src">
-            <xsl:value-of select="replace(., '.*model', concat($xslt.exist-endpoint-seen-from-orbeon, '/forms/mei/model'))"/>
+            <xsl:value-of select="replace(., '.*model', concat($xslt.exist-endpoint-seen-from-orbeon, '/forms/model'))"/>
         </xsl:attribute>
     </xsl:template>
     
     <xsl:template match="@resource[contains(., 'model')]">
         <xsl:attribute name="resource">
-            <xsl:value-of select="replace(., '.*model', concat($xslt.exist-endpoint-seen-from-orbeon, '/forms/mei/model'))"/>
+            <xsl:value-of select="replace(., '.*model', concat($xslt.exist-endpoint-seen-from-orbeon, '/forms/model'))"/>
         </xsl:attribute>
     </xsl:template>
     

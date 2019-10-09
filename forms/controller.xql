@@ -1,7 +1,7 @@
 xquery version "3.0";
 
 declare namespace repo="http://exist-db.org/xquery/repo";
-import module namespace config="https://github.com/edirom/mermeid/config" at "../../modules/config.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "../modules/config.xqm";
 
 declare variable $exist:path external;
 declare variable $exist:resource external;
@@ -14,7 +14,7 @@ if (ends-with($exist:resource, ".xml")) then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <view>
             <forward servlet="XSLTServlet">
-                <set-attribute name="xslt.stylesheet" value="{$exist:root}{$exist:controller}/../../filter/xsl/filter_get.xsl"/>
+                <set-attribute name="xslt.stylesheet" value="{$exist:root}{$exist:controller}/../filter/xsl/filter_get.xsl"/>
                 <set-attribute name="xslt.resources-endpoint" value="{config:get-property('exist_endpoint')}/resources"/>
                 <set-attribute name="xslt.exist-endpoint-seen-from-orbeon" value="{$config:exist-endpoint-seen-from-orbeon}"/>
                 <set-attribute name="xslt.orbeon-endpoint" value="{$config:orbeon-endpoint}"/>
