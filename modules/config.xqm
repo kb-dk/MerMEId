@@ -88,25 +88,24 @@ declare function config:set-property($key as xs:string, $value as xs:string) as 
             catch * { util:log-system-out('failed to add preference "' || $key || '" with value "' || $value || '". Error was ' || string-join(($err:code, $err:description), ' ;; ')) }
 };
 
-
+(:~
+ : Return an absolute URL to the current MerMEId app for a given (relative) path 
+ :  
+ : @param $relLink the relative path within the app, e.g. "/data/incipit_demo.xml"
+ : @return xs:string 
+ :)
 declare function config:link-to-app($relLink as xs:string?) as xs:string {
-    string-join((request:get-context-path(), request:get-attribute("$exist:prefix"), $config:repo-descriptor/repo:target, $relLink), "/")
-    => replace('/+', '/')
-};
-
-declare function config:link-to-app-from-orbeon($relLink as xs:string?) as xs:string {
-    $config:exist-endpoint-seen-from-orbeon || $relLink
+    $config:exist-endpoint || replace(normalize-space($relLink), '^/*', '/')
 };
 
 (:~
- : Resolve the given path using the current application context.
- : If the app resides in the file system,
+ : Return an absolute URL to the current MerMEId app – as seen by the orbeon sidekick – for a given (relative) path 
+ :  
+ : @param $relLink the relative path within the app, e.g. "/data/incipit_demo.xml"
+ : @return xs:string 
  :)
-declare function config:resolve($relPath as xs:string) {
-    if (starts-with($config:app-root, "/db")) then
-        doc(concat($config:app-root, "/", $relPath))
-    else
-        doc(concat("file://", $config:app-root, "/", $relPath))
+declare function config:link-to-app-from-orbeon($relLink as xs:string?) as xs:string {
+    $config:exist-endpoint-seen-from-orbeon || replace(normalize-space($relLink), '^/*', '/')
 };
 
 (:~
