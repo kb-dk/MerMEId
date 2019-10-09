@@ -14,13 +14,13 @@ if (ends-with($exist:resource, ".xml")) then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <view>
             <forward servlet="XSLTServlet">
-                <set-attribute name="xslt.stylesheet" value="{$exist:root}/{$config:repo-descriptor/repo:target}/filter/xsl/filter_get.xsl"/>
-                <set-attribute name="xslt.resources-endpoint" value="{config:get-property('mermeid_endpoint')}{request:get-context-path()}{request:get-attribute("$exist:prefix")}/{$config:repo-descriptor/repo:target}/resources"/>
+                <set-attribute name="xslt.stylesheet" value="{$exist:root}{$exist:controller}/../../filter/xsl/filter_get.xsl"/>
+                <set-attribute name="xslt.resources-endpoint" value="{config:get-property('exist_endpoint')}/resources"/>
                 <set-attribute name="xslt.exist-endpoint-seen-from-orbeon" value="{$config:exist-endpoint-seen-from-orbeon}"/>
                 <set-attribute name="xslt.orbeon-endpoint" value="{$config:orbeon-endpoint}"/>
-                <set-attribute name="xslt.server-name" value="{config:get-property('mermeid_endpoint')}"/>
-                <set-attribute name="xslt.exist-dir" value="{config:link-to-app('/')}"/>
-                <set-attribute name="xslt.document-root" value="{config:link-to-app('/data/')}"/>
+                <set-attribute name="xslt.server-name" value="{config:get-property('exist_endpoint')}"/>
+                <set-attribute name="xslt.exist-dir" value="/"/>
+                <set-attribute name="xslt.document-root" value="/data/"/>
             </forward> 
         </view>
         <cache-control cache="no"/>

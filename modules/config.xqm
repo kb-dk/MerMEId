@@ -41,9 +41,13 @@ declare variable $config:properties := doc(concat($config:app-root, "/properties
 
 declare variable $config:version := 'v. 2019 (13-08-2019) for MEI 4.0.0';
 
+(:~
+ : properties read from the properties.xml file
+ : can be altered manualy or set dynamically via config:set-property()
+ :)
 declare variable $config:orbeon-endpoint := config:get-property('orbeon_endpoint');
-
-declare variable $config:exist-endpoint-seen-from-orbeon := concat('http://', request:get-hostname(), ':', request:get-server-port(), request:get-context-path(), request:get-attribute("$exist:prefix"), '/', $config:repo-descriptor/repo:target);
+declare variable $config:exist-endpoint := config:get-property('exist-endpoint');
+declare variable $config:exist-endpoint-seen-from-orbeon := config:get-property('exist-endpoint-seen-from-orbeon');
 
 (:~
  : Return the requested property value from the properties file 

@@ -2,7 +2,11 @@
 
   <!-- orbeon endpoint -->
   <orbeon_endpoint>http://localhost:9090/orbeon/xforms-jsp/mei-form/index.jsp</orbeon_endpoint>
-  <mermeid_endpoint>http://localhost:8080</mermeid_endpoint>
+  <!-- MerMEId eXist endpoint seen from outside, i.e. the URL you point your browser at -->
+  <exist_endpoint>http://localhost:8080/exist/apps/mermeid</exist_endpoint>
+  <!-- MerMEId eXist endpoint seen from Orbeon. On a production system this is likely the same as above,
+    on a development system this might be some local (Docker) IP -->
+  <exist-endpoint-seen-from-orbeon>http://172.17.0.1:8080/exist/apps/mermeid</exist-endpoint-seen-from-orbeon>
 
   <!-- Default editor settings - (boolean; set to 'true' or nothing)  -->
   <!-- Enable automatic revisionDesc (change log) entries? -->
