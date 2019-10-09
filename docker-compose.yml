@@ -1,0 +1,14 @@
+version: '3'
+services:
+  mermeid:
+    image: edirom/mermeid:develop
+    ports: 
+      - 8080:8080
+    environment: 
+      - MERMEID_orbeon_endpoint=http://localhost:9090/orbeon/xforms-jsp/mei-form/index.jsp
+      - MERMEID_exist_endpoint=http://localhost:8080/exist/apps/mermeid
+      - MERMEID_exist-endpoint-seen-from-orbeon=http://mermeid:8080/exist/apps/mermeid
+  orbeon:
+    image: edirom/orbeon4mermeid
+    ports:
+      - 9090:8080
