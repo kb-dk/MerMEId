@@ -11,7 +11,7 @@ if (ends-with($exist:resource, ".xml")) then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <view>
             <forward servlet="XSLTServlet">
-                <set-attribute name="xslt.stylesheet" value="{$exist:root}{$exist:controller}/../../filter/xsl/filter_get.xsl"/>
+                <set-attribute name="xslt.stylesheet" value="{$exist:root}{$exist:controller}/../filter/xsl/filter_get.xsl"/>
             </forward> 
         </view>
         <cache-control cache="no"/>
