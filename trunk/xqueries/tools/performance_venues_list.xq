@@ -1,17 +1,12 @@
 xquery version "1.0" encoding "UTF-8";
 
+(: Creates a simple list of performance venues without indication of city or references to which works were performed :)
+
 declare namespace loop="http://kb.dk/this/getlist";
 
 declare namespace request="http://exist-db.org/xquery/request";
-declare namespace response="http://exist-db.org/xquery/response";
 declare namespace fn="http://www.w3.org/2005/xpath-functions";
-declare namespace file="http://exist-db.org/xquery/file";
-declare namespace util="http://exist-db.org/xquery/util";
-declare namespace ft="http://exist-db.org/xquery/lucene";
-declare namespace ht="http://exist-db.org/xquery/httpclient";
-declare namespace marc="http://www.loc.gov/MARC21/slim";
 
-declare namespace local="http://kb.dk/this/app";
 declare namespace m="http://www.music-encoding.org/ns/mei";
 
 declare option exist:serialize "method=xml media-type=text/html"; 
@@ -38,7 +33,7 @@ declare function loop:sort-key ($identifier as xs:string) as xs:string
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<body>
 
-     <h2>Performance city index</h2>
+     <h2>Performance venues list</h2>
     <div>
  
 		    {
@@ -48,19 +43,12 @@ declare function loop:sort-key ($identifier as xs:string) as xs:string
                   else 
                     for $c in distinct-values(
             		collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]/
-            		m:workList/m:work//m:eventList[@type='performances']/m:event/m:geogName[@role='place' and normalize-space(.)] )
+            		m:workDesc/m:work//m:eventList[@type='performances']/m:event/m:geogName[@role='venue' and normalize-space(.)] )
                     order by normalize-space(string($c))
             	    return
             		  <div>
-            		  {concat(normalize-space($c),' &#160; ',$collection,' ')} 
-            		  {let $numbers :=
-            		  for $n in collection($database)/m:mei/m:meiHead[m:fileDesc/m:seriesStmt/m:identifier[@type="file_collection"] = $collection]
-                         where $n/m:workList/m:work//m:eventList[@type='performances']/m:event/m:geogName[@role='place' and normalize-space(.)] = $c
-                         order by loop:sort-key($n/m:workList/m:work/m:identifier[@label=$collection]/string()) 
-                	     return $n/m:workList/m:work/m:identifier[@label=$collection]/string()
-                	   return string-join($numbers,', ') 
-                   	   } 
-                	   </div>
+                		  {normalize-space($c)} 
+                	  </div>
 
             }
     </div>
@@ -69,3 +57,4 @@ declare function loop:sort-key ($identifier as xs:string) as xs:string
 
   </body>
 </html>
+

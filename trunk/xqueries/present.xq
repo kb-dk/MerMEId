@@ -1,6 +1,7 @@
 xquery version "1.0" encoding "UTF-8";
 
 import module namespace rd="http://kb.dk/this/redirect" at "./redirect_host.xqm";
+import module namespace xmldb="http://exist-db.org/xquery/xmldb";
 
 declare namespace transform="http://exist-db.org/xquery/transform";
 declare namespace request="http://exist-db.org/xquery/request";
@@ -20,10 +21,15 @@ declare variable $xsl := request:get-parameter("xsl", "mei_to_html.xsl");
 declare variable $display_authority_links := request:get-parameter("display_authority_links", "");
 
 let $host := rd:host()
+let $docname := 
+    if(contains($document,"/"))
+    then tokenize($document,"/")[last()]
+    else $document
+let $exist-coll := concat("/db/dcm/", substring-before($document,$docname))
 let $list := 
-for $doc in collection("/db/dcm")
-where util:document-name($doc)=$document
-return $doc
+   for $doc in xmldb:xcollection($exist-coll)
+   where util:document-name($doc)=$docname
+   return $doc
 
 let $params := 
 <parameters>
