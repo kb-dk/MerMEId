@@ -42,7 +42,7 @@
                         <h:fieldset>
                             <h:legend>General description <h:a class="help">&#160;?<h:span
                                         class="comment">Text describing or introducing to the
-                                        source, its history, its significance etc.<br/> Information
+                                        source, its history, its significance etc.<h:br/> Information
                                         on the source's physical appearance and condition should be
                                         given in the "physical description" area below.
                                     </h:span></h:a>
@@ -82,7 +82,7 @@
                                             <xf:input ref="@target" class="long">
                                                 <xf:label>URI <h:a class="help">&#160;?<h:span
                                                   class="comment">Link to the resource, e.g.
-                                                    "http://example.com/source_description.pdf"<br/>
+                                                    "http://example.com/source_description.pdf"<h:br/>
                                                     MerMEId interprets references without the 'http://' protocol as links to other MEI files
                                                     in the same database as this one; for instance, 'sonata.xml' will be resolved as a link to 
                                                     a file of that name in the same folder in the database, 
@@ -185,7 +185,7 @@
                                                   manuscript sources. Describes the composer's
                                                   degree of involvement in the production of the
                                                   source. Thus, an arranger's own manuscript would
-                                                  <u>not</u> be classified an
+                                                  <h:u>not</h:u> be classified an
                                                 autograph.</h:span></h:a>
                                         </xf:label>
                                         <xf:item>
@@ -242,12 +242,12 @@
                                                   that this source is complete (this would also be
                                                   true with a single solo violin part from an
                                                   orchestral work, if it is not the remainder of an
-                                                  originally larger set of parts).<br/> "Incomplete"
+                                                  originally larger set of parts).<h:br/> "Incomplete"
                                                   indicates that one or more parts are missing from
-                                                  a set of parts.<br/> "Excerpt" designates a
+                                                  a set of parts.<h:br/> "Excerpt" designates a
                                                   section of a work, published or copied for
                                                   stand-alone performance (like "Hanedansen" from
-                                                  Nielsen's "Maskarade").<br/> "Fragment(s)"
+                                                  Nielsen's "Maskarade").<h:br/> "Fragment(s)"
                                                   indicates that portions of the music are missing,
                                                   e.g. a fragmentary sketch or a source from which
                                                   pages are lost. </h:span></h:a>

@@ -95,7 +95,7 @@
 							<xf:group ref=".">
 								<h:div class="blocklabel strong">Ensembles </h:div>
 								<xf:trigger ref=".[count(m:perfResList[not(@source)])=0]" class="create_button">
-									<xf:label><img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
+									<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add ensemble</xf:label>
 									<xf:action ev:event="DOMActivate">
 										<xxf:show dialog="ensemble-menu"/>
 									</xf:action>
@@ -111,7 +111,7 @@
 												index="repeat-ensemble"/>
 											<xf:trigger style="margin:0 -7px 0 -6px;"
 												appearance="minimal" class="non-standard_button">
-												<xf:label><img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add ensemble"/></xf:label>
+												<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/add.gif" alt="Add" title="Add ensemble"/></xf:label>
 												<xf:action ev:event="DOMActivate">
 													<xxf:show dialog="ensemble-menu"/>
 												</xf:action>
@@ -246,7 +246,7 @@
 												by a list of performers, or both.</h:span></h:a></h:span>
 										</h:div>
 										<xf:trigger ref=".[count(m:perfRes)=0]" style="margin-left: 8px;" class="create_button">
-											<xf:label><img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add from list</xf:label>
+											<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add from list"/> Add from list</xf:label>
 											<xf:action ev:event="DOMActivate">
 												<xxf:show dialog="ensemble-performer-menu"/>
 											</xf:action>
@@ -270,7 +270,7 @@
 											<xf:repeat nodeset="m:perfRes" id="repeat-ensemble-performer">
 												<xi:include href="instrvoice-input.xml" parse="xml"/>
 												<xf:trigger>
-													<xf:label><img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add" title=""/> Add from list</xf:label>
+													<xf:label><h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/list.png" alt="Add" title=""/> Add from list</xf:label>
 													<xf:action ev:event="DOMActivate">
 														<xxf:show dialog="ensemble-performer-menu"/>
 													</xf:action>
@@ -343,7 +343,7 @@
 								
 								<!-- stand-alone performers -->
 								<h:div class="blocklabel strong">
-									<br/>Instruments and singers
+									<h:br/>Instruments and singers
 									<h:a class="help">&#160;?<h:span class="comment">List of performers not to be regarded 
 										as part of an ensemble. Use this section for some chamber music
 										(e.g. piano music, songs with or without piano, music for solo instruments)

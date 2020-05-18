@@ -26,11 +26,11 @@
     
     <xf:action ev:event="language-update">
         <!-- add missing language declarations -->
-        <action while="xxf:instance('languages')/m:language[@xml:id=xxf:instance('data-instance')//@xml:lang[not(.=xxf:instance('data-instance')//m:langUsage/m:language/@xml:id)]]">
+        <xf:action while="xxf:instance('languages')/m:language[@xml:id=xxf:instance('data-instance')//@xml:lang[not(.=xxf:instance('data-instance')//m:langUsage/m:language/@xml:id)]]">
             <xf:insert 
                 context="xxf:instance('data-instance')/m:meiHead/m:workList/m:work/m:langUsage"
                 origin="xxf:instance('languages')/m:language[@xml:id=xxf:instance('data-instance')//@xml:lang[not(.=xxf:instance('data-instance')//m:langUsage/m:language/@xml:id)]][1]"/>
-        </action>
+        </xf:action>
         <!-- delete unused language declarations -->        
         <xf:action while="xxf:instance('data-instance')//m:langUsage/m:language[not(@xml:id=xxf:instance('data-instance')//@xml:lang)]">
             <xf:delete nodeset="xxf:instance('data-instance')//m:langUsage/m:language[not(@xml:id=xxf:instance('data-instance')//@xml:lang)]"/>

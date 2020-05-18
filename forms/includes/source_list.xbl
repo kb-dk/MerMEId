@@ -554,34 +554,34 @@
                 </xf:itemset>
                 </xf:select1> &#160;&#160;&#160;&#160;
                 <xf:input ref="$temp/query">
-                  <xf:label>Keywords <h:a class="help">&#160;?<span class="comment search" 
+                  <xf:label>Keywords <h:a class="help">&#160;?<h:span class="comment search" 
                   style="width: 350px">
                   Narrow your search by adding keywords, e.g. part of the title.<h:br/>
                   Search is case insensitive. 
-                  Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<br/>
-                  <span class="help_table">
-                    <span class="help_example">
-                      <span class="help_label">carl or nielsen</span>
-                      <span class="help_value">Boolean OR (default)</span>
-                    </span>                        
-                    <span class="help_example">
-                      <span class="help_label">carl and nielsen</span>
-                      <span class="help_value">Boolean AND</span>
-                    </span>
-                    <span class="help_example">
-                      <span class="help_label">"carl nielsen"</span>
-                      <span class="help_value">Exact phrase</span>
-                    </span>
-                    <span class="help_example">
-                      <span class="help_label">niels*</span>
-                      <span class="help_value">Match any number of characters. Finds Niels, Nielsen and Nielsson</span>
-                    </span>
-                    <span class="help_example">
-                      <span class="help_label">niels?n</span>
-                      <span class="help_value">Match 1 character. Finds Nielsen and Nielson, but not Nielsson</span>
-                    </span>
-                  </span>
-                  </span></h:a>:
+                  Search terms may be combined using boolean operators. Wildcards allowed. Some examples:<h:br/>
+                  <h:span class="help_table">
+                    <h:span class="help_example">
+                      <h:span class="help_label">carl or nielsen</h:span>
+                      <h:span class="help_value">Boolean OR (default)</h:span>
+                    </h:span>                        
+                    <h:span class="help_example">
+                      <h:span class="help_label">carl and nielsen</h:span>
+                      <h:span class="help_value">Boolean AND</h:span>
+                    </h:span>
+                    <h:span class="help_example">
+                      <h:span class="help_label">"carl nielsen"</h:span>
+                      <h:span class="help_value">Exact phrase</h:span>
+                    </h:span>
+                    <h:span class="help_example">
+                      <h:span class="help_label">niels*</h:span>
+                      <h:span class="help_value">Match any number of characters. Finds Niels, Nielsen and Nielsson</h:span>
+                    </h:span>
+                    <h:span class="help_example">
+                      <h:span class="help_label">niels?n</h:span>
+                      <h:span class="help_value">Match 1 character. Finds Nielsen and Nielson, but not Nielsson</h:span>
+                    </h:span>
+                  </h:span>
+                  </h:span></h:a>:
                   </xf:label>
                 </xf:input>
                 <xf:trigger id="source_search">
@@ -723,11 +723,11 @@
               <xxf:dialog id="leave-warning-dialog" appearance="full">
                 <!-- The requested URI must be stored in $temp/target_uri prior to opening the dialog -->
                 <xf:label>Warning – Editing external source</xf:label>
-                <h:p>The description of this source is contained in another file.<br/> 
-                Editing an external source means that the present file will be closed and the file containing the <br/>
+                <h:p>The description of this source is contained in another file.<h:br/> 
+                Editing an external source means that the present file will be closed and the file containing the <h:br/>
                 actual source description will be opened for editing instead. <h:br/>
                 Before you continue, make sure you are entitled to make changes in the file you are about to open.<h:br/>
-                If you need to update the title of this source reference after editing, return to this file <br/>
+                If you need to update the title of this source reference after editing, return to this file <h:br/>
                 and click the "Update" button next to the reference to get the updated title.
                 </h:p>
                 <h:p>Do you want to proceed?</h:p>    
