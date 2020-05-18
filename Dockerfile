@@ -23,4 +23,6 @@ RUN ant
 #########################
 FROM stadlerpeter/existdb:4
 
+RUN sed -i -e "s@<extensions>\.xml,@<extensions>.xml,.xbl,@" ${EXIST_HOME}/mime-types.xml
+
 COPY --chown=wegajetty --from=builder /opt/builder/build/*.xar ${EXIST_HOME}/autodeploy/
