@@ -70,7 +70,7 @@
 			<xf:setvalue ref="instance('temp')/target_uri" 
 				value="concat(
 				instance('parameters')/dcm:server_name,
-				'filter/filtered_scripts/cross-link.xq?get=works&amp;query=',instance('temp')/query,
+				'/modules/cross-link.xq?get=works&amp;query=',instance('temp')/query,
 				'&amp;subject=',instance('temp')/series,
 				'&amp;page=',instance('temp')/page)"/>
 		<!--<xf:message>URI: <xf:output value="instance('temp')/target_uri"/></xf:message>-->

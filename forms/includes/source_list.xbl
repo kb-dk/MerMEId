@@ -513,7 +513,7 @@
                   title="Add source as link to an external description"/> Add link to external source</xf:label>
                   <xf:action ev:event="DOMActivate">
                     <xxf:hide dialog="add_source_dialog"></xxf:hide>
-                    <xf:setvalue ref="instance('local-temp')/target_uri" value="concat(xxf:instance('parameters')/dcm:server_name,'filter/filtered_scripts/cross-link.xq')"/>
+                    <xf:setvalue ref="instance('local-temp')/target_uri" value="concat(xxf:instance('parameters')/dcm:server_name,'/modules/cross-link.xq')"/>
                     <xf:setvalue ref="instance('local-temp')/mode" value="'reference'"/>
                     <!-- load data on open - may be deactivated if performance is an issue -->
                     <xf:send submission="load-fileList"/>
@@ -526,7 +526,7 @@
                   title="Copy source from another file"/> Copy from external source</xf:label>
                   <xf:action ev:event="DOMActivate">
                     <xxf:hide dialog="add_source_dialog"></xxf:hide>
-                    <xf:setvalue ref="instance('local-temp')/target_uri" value="concat(xxf:instance('parameters')/dcm:server_name,'filter/filtered_scripts/cross-link.xq')"/>
+                    <xf:setvalue ref="instance('local-temp')/target_uri" value="concat(xxf:instance('parameters')/dcm:server_name,'/modules/cross-link.xq')"/>
                     <xf:setvalue ref="instance('local-temp')/mode" value="'copy'"/>
                     <!-- load data on open - may be deactivated if performance is an issue -->
                     <xf:send submission="load-fileList"/>
@@ -593,7 +593,7 @@
                     <xf:setvalue ref="instance('local-temp')/target_uri" 
                                  value="concat(
                                  xxf:instance('parameters')/dcm:server_name,
-                                        'filter/filtered_scripts/cross-link.xq?query=',$temp/query,
+                                        '/modules/cross-link.xq?query=',$temp/query,
                                         '&amp;subject=',$temp/series,
                                         '&amp;page=',$temp/page)"/>
                     <xf:send submission="load-fileList"/>

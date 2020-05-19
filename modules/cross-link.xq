@@ -2,8 +2,9 @@ xquery version "1.0" encoding "UTF-8";
 
 (: Search the mei document store and return the data as an atom feed :)
 
-import module namespace source_list="http://kb.dk/this/getlist-sources" at "../main_loop_sources.xqm";
-import module namespace loop="http://kb.dk/this/getlist" at "../main_loop.xqm";
+import module namespace source_list="http://kb.dk/this/getlist-sources" at "main_loop_sources.xqm";
+import module namespace loop="http://kb.dk/this/getlist" at "main_loop.xqm";
+import module namespace config="https://github.com/edirom/mermeid/config" at "config.xqm";
 
 declare default element namespace "http://www.kb.dk/dcm";
 declare namespace transform="http://exist-db.org/xquery/transform";
@@ -116,7 +117,7 @@ declare function app:opensearch-header($total as xs:integer,
 {
   let $list := 
 	if($works) then
-          app:getlist("/db/dcm",$coll,$query)
+          app:getlist($config:data-root,$coll,$query)
         else
 	  if($target) then
 	     source_list:get-reverse-links($target)
@@ -134,7 +135,7 @@ declare function app:opensearch-header($total as xs:integer,
 		$coll),
      <collections>
 	{
-          for $c in distinct-values(collection("/db/dcm")//m:seriesStmt/m:identifier[@type="file_collection"][string()]/string())
+          for $c in distinct-values(collection($config:data-root)//m:seriesStmt/m:identifier[@type="file_collection"][string()]/string())
              return
 		<collection>{$c}</collection>
 	}
