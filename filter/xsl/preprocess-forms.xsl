@@ -17,16 +17,28 @@
             
             <!-- paths -->
             
-            <orbeon_dir><xsl:value-of select="$xslt.orbeon-endpoint"/></orbeon_dir>
-            <form_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/forms/</form_home>
+            <orbeon_dir>
+                <xsl:value-of select="$xslt.orbeon-endpoint"/>
+            </orbeon_dir>
+            <form_home>
+                <xsl:value-of select="$xslt.server-name"/>/forms/</form_home>
             
-            <crud_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/data/</crud_home>
-            <library_crud_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/library/</library_crud_home>
-            <rism_crud_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/rism_sigla/</rism_crud_home>
+            <crud_home>
+                <xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/data/</crud_home>
+            <library_crud_home>
+                <xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/library/</library_crud_home>
+            <rism_crud_home>
+                <xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/rism_sigla/</rism_crud_home>
             
-            <server_name><xsl:value-of select="$xslt.server-name"/></server_name>  
-            <exist_dir><xsl:value-of select="$xslt.exist-dir"/></exist_dir>
-            <document_root><xsl:value-of select="$xslt.document-root"/></document_root>
+            <server_name>
+                <xsl:value-of select="$xslt.server-name"/>
+            </server_name>  
+            <exist_dir>
+                <xsl:value-of select="$xslt.exist-dir"/>
+            </exist_dir>
+            <document_root>
+                <xsl:value-of select="$xslt.document-root"/>
+            </document_root>
             
             <!-- Default editor settings - (boolean; set to 'true' or nothing)  -->
             <!-- Enable automatic revisionDesc (change log) entries? -->
