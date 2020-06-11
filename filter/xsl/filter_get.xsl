@@ -17,6 +17,15 @@
   
   <xsl:variable name="empty_doc" select="document('../../forms/model/empty_doc.xml')"/>
   
+  <xsl:variable name="empty_atts" as="element()*">
+      <!-- see if all empty attributes in the model also exist in the data; otherwise add them -->
+      <xsl:for-each-group select="$empty_doc//*[.='']" group-by="./name()">
+        <xsl:element name="{./name()}">
+          <xsl:sequence select="current-group()/@*"/>
+        </xsl:element>
+      </xsl:for-each-group>    
+  </xsl:variable>
+  
   <xsl:include href="preprocess-forms.xsl"/>
   
   <xsl:template match="m:mei">
@@ -58,11 +67,9 @@
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:variable name="node" select="."/>
-      <!-- see if all empty attributes in the model also exist in the data; otherwise add them -->
-      <xsl:for-each select="$empty_doc//*[name()=name($node) and .=''][1]/@*">
-        <xsl:variable name="attname" select="name(.)"/>
-        <xsl:if test="not($node/@*[name()=$attname])">
-          <xsl:attribute name="{$attname}"/>
+      <xsl:for-each select="$empty_atts[./name() = $node/name()]/@*">
+        <xsl:if test="not($node/@*/name() = ./name())">
+          <xsl:attribute name="{./name()}"/>
         </xsl:if>
       </xsl:for-each>
       <xsl:apply-templates select="node()" mode="header"/>
@@ -85,8 +92,8 @@
   </xsl:template>
   
   <xsl:template name="substring-after-last">
-    <xsl:param name="string" />
-    <xsl:param name="delimiter" />
+    <xsl:param name="string"/>
+    <xsl:param name="delimiter"/>
     <xsl:choose>
       <xsl:when test="contains($string, $delimiter)">
         <xsl:call-template name="substring-after-last">
