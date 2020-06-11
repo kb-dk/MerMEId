@@ -12,16 +12,12 @@ declare variable $exist:root external;
 (: all XForms get preprocessed :)
 if (ends-with($exist:resource, ".xml")) then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+        <!-- here by default the XML from $exist:path is fetched and all XInclude directives are resolved
+             the result is provided to the code used in view as if it were a POST request with the XML in the body. -->
         <view>
-            <forward servlet="XSLTServlet">
-                <set-attribute name="xslt.stylesheet" value="{$exist:root}{$exist:controller}/../filter/xsl/filter_get.xsl"/>
-                <set-attribute name="xslt.resources-endpoint" value="{config:get-property('exist_endpoint')}/resources"/>
-                <set-attribute name="xslt.exist-endpoint-seen-from-orbeon" value="{$config:exist-endpoint-seen-from-orbeon}"/>
-                <set-attribute name="xslt.orbeon-endpoint" value="{$config:orbeon-endpoint}"/>
-                <set-attribute name="xslt.server-name" value="{config:get-property('exist_endpoint')}"/>
-                <set-attribute name="xslt.exist-dir" value="/"/>
-                <set-attribute name="xslt.document-root" value="/data/"/>
-            </forward> 
+            <forward url="/{$exist:controller}/../modules/transform.xq">
+                <set-attribute name="transform.stylesheet" value="../filter/xsl/filter_get.xsl"/>
+            </forward>
         </view>
         <cache-control cache="no"/>
     </dispatch>
