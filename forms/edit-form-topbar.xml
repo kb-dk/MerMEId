@@ -13,15 +13,10 @@
   
   <h:div id="tab-menu">
     
-    <xf:trigger id="work-tab"  appearance="minimal">
+    <xf:trigger id="work-tab" appearance="minimal">
       <xf:label>Work</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xf:var name="uri" 
-          select="concat(instance('parameters')/dcm:orbeon_dir,
-          '?uri=',
-          instance('parameters')/dcm:form_home,
-          'edit-work-case.xml&amp;doc=',
-          instance('parameters')/dcm:xml_file)"/>
+        <xf:var name="uri" select="concat(instance('parameters')/dcm:form_home,'edit-work-case.xml','?doc=',instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
@@ -30,15 +25,11 @@
           <xf:load resource="{$uri}" show="replace"/>
         </xf:action>
       </xf:action>
-    </xf:trigger><xf:trigger id="music-tab" appearance="minimal">
+    </xf:trigger>
+        <xf:trigger id="music-tab" appearance="minimal">
       <xf:label>Music</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xf:var name="uri" 
-          select="concat(instance('parameters')/dcm:orbeon_dir,
-          '?uri=',
-          instance('parameters')/dcm:form_home,
-          'edit-music-case.xml&amp;doc=',
-          instance('parameters')/dcm:xml_file)"/>
+        <xf:var name="uri" select="concat(instance('parameters')/dcm:form_home,'edit-music-case.xml','?doc=',instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
@@ -47,15 +38,11 @@
           <xf:load resource="{$uri}" show="replace"/>
         </xf:action>
       </xf:action>
-    </xf:trigger><xf:trigger id="source-tab" appearance="minimal">
+    </xf:trigger>
+        <xf:trigger id="source-tab" appearance="minimal">
       <xf:label>Sources</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xf:var name="uri" 
-          select="concat(instance('parameters')/dcm:orbeon_dir,
-          '?uri=',
-          instance('parameters')/dcm:form_home,
-          'edit-source-case.xml&amp;doc=',
-          instance('parameters')/dcm:xml_file)"/>
+        <xf:var name="uri" select="concat(instance('parameters')/dcm:form_home,'edit-source-case.xml','?doc=',instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
@@ -64,15 +51,11 @@
           <xf:load resource="{$uri}" show="replace"/>
         </xf:action>
       </xf:action>
-    </xf:trigger><xf:trigger id="history-tab" appearance="minimal">
+    </xf:trigger>
+        <xf:trigger id="history-tab" appearance="minimal">
       <xf:label>History</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xf:var name="uri" 
-          select="concat(instance('parameters')/dcm:orbeon_dir,
-          '?uri=',
-          instance('parameters')/dcm:form_home,
-          'edit-history-case.xml&amp;doc=',
-          instance('parameters')/dcm:xml_file)"/>
+        <xf:var name="uri" select="concat(instance('parameters')/dcm:form_home,'edit-history-case.xml','?doc=',instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
@@ -81,15 +64,11 @@
           <xf:load resource="{$uri}" show="replace"/>
         </xf:action>
       </xf:action>
-    </xf:trigger><xf:trigger  id="bibliography-tab" appearance="minimal">
+    </xf:trigger>
+        <xf:trigger id="bibliography-tab" appearance="minimal">
       <xf:label>Bibliography</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xf:var name="uri" 
-          select="concat(instance('parameters')/dcm:orbeon_dir,
-          '?uri=',
-          instance('parameters')/dcm:form_home,
-          'edit-bibliography-case.xml&amp;doc=',
-          instance('parameters')/dcm:xml_file)"/>
+        <xf:var name="uri" select="concat(instance('parameters')/dcm:form_home,'edit-bibliography-case.xml','?doc=',instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
@@ -98,15 +77,11 @@
           <xf:load resource="{$uri}" show="replace"/>
         </xf:action>
       </xf:action>
-    </xf:trigger><xf:trigger  id="file-tab"   appearance="minimal">
+    </xf:trigger>
+        <xf:trigger id="file-tab" appearance="minimal">
       <xf:label>File</xf:label>
       <xf:action ev:event="DOMActivate">
-        <xf:var name="uri" 
-          select="concat(instance('parameters')/dcm:orbeon_dir,
-          '?uri=',
-          instance('parameters')/dcm:form_home,
-          'edit-file-case.xml&amp;doc=',
-          instance('parameters')/dcm:xml_file)"/>
+        <xf:var name="uri" select="concat(instance('parameters')/dcm:form_home,'edit-file-case.xml','?doc=',instance('parameters')/dcm:xml_file)"/>
         <xf:action if="instance('temp')/changed='true'">
           <xf:setvalue ref="instance('temp')/target_uri" value="$uri"/>
           <xxf:show dialog="exit-warning-dialog"/>
@@ -120,16 +95,13 @@
   </h:div>
   
   <h:fieldset id="top_status_bar">
-    <xf:group id="editing_status"
-      ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:title[normalize-space(.)][1]">
-      <xf:output value="concat(substring(.,1,80), instance('temp')/etc[string-length(instance('data-instance')/m:meiHead/m:workList/m:work/m:title[1])&gt;80], instance('temp')[changed='true']/change_marker)" 
-        id="work_identifier">
+    <xf:group id="editing_status" ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:title[normalize-space(.)][1]">
+      <xf:output value="concat(substring(.,1,80), instance('temp')/etc[string-length(instance('data-instance')/m:meiHead/m:workList/m:work/m:title[1])&gt;80], instance('temp')[changed='true']/change_marker)" id="work_identifier">
         <xf:label/> 
         <xf:action ev:event="xforms-value-changed">
           <xf:load resource="javascript:setPageTitle()"/>
           <!-- copy the first non-empty work title to file title -->
-          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:fileDesc/m:title[1]" 
-            value="instance('data-instance')/m:meiHead/m:workList/m:work/m:title[normalize-space(.)][1]"/>
+          <xf:setvalue ref="instance('data-instance')/m:meiHead/m:fileDesc/m:title[1]" value="instance('data-instance')/m:meiHead/m:workList/m:work/m:title[normalize-space(.)][1]"/>
         </xf:action>
       </xf:output>
     </xf:group>
@@ -141,4 +113,3 @@
   <xi:include href="includes/topmenu.xml" parse="xml"/> 
   
 </h:div>
-
