@@ -10,14 +10,14 @@ tinymce.PluginManager.add('musicalsymbols', function(editor, url) {
        	// for testing 
         //editor.focus();
         //editor.selection.setContent('Hello world! ');
-        var MusSymWin = window.open("/../editor/js/musicalsymbols.html", "", "width=580, height=260");
+        var MusSymWin = window.open("../resources/js/musicalsymbols.html", "", "width=580, height=260");
     }
 
 	editor.addCommand('mceShowMusSymb', showDialog);
 
 	editor.addButton('musicalsymbols', {
 		title       : 'Musical symbols',
-        image       : '/../editor/images/warning.png',
+        image       : '../resources/images/warning.png',
 		cmd         : 'mceShowMusSymb'
 	});
 
@@ -36,7 +36,7 @@ tinymce.PluginManager.add('musicalsymbols', function(editor, url) {
       editor.addButton("dblunderlinebtn", {
         title : 'Double underline', 
         cmd : 'dblunderline',
-        image: '/../editor/images/dblunderline.png',
+        image: '../resources/images/dblunderline.png',
       });
 
       editor.onNodeChange.add(function(editor, cm, n) {
@@ -102,7 +102,7 @@ tinymce.PluginManager.add('meiElement', function(editor) {
         }
         var popupHeight = 25*count + 50;
         tinyMCE.activeEditor.windowManager.open({
-            url : '/../editor/js/set_mei_attributes.html',
+            url : '../resources/js/set_mei_attributes.html',
             width : 450,
             height : popupHeight,
             title: 'Set &lt;' + meiElementName + '&gt; attribute values',
@@ -219,7 +219,7 @@ tinymce.PluginManager.add('persName', function(editor) {
 	editor.addCommand('mceInsertPersName', insertPersName);
 
 	editor.addButton('persName', {
-        image: '/../editor/images/mei_person.png',
+        image: '../resources/images/mei_person.png',
 		tooltip: 'Person name',
 		title: 'Person name (MEI <persName>)',
 		onclick: insertPersName,
@@ -240,7 +240,7 @@ tinymce.PluginManager.add('geogName', function(editor) {
 	editor.addCommand('mceInsertGeogName', insertGeogName);
 
 	editor.addButton('geogName', {
-        image: '/../editor/images/mei_geographical.png',
+        image: '../resources/images/mei_geographical.png',
 		tooltip: 'Geographical name',
 		title: 'Geographical name (MEI <geogName>)',
 		onclick: insertGeogName,
@@ -262,7 +262,7 @@ tinymce.PluginManager.add('corpName', function(editor) {
 	editor.addCommand('mceInsertCorpName', insertCorpName);
 
 	editor.addButton('corpName', {
-        image: '/../editor/images/mei_corporate.png',
+        image: '../resources/images/mei_corporate.png',
 		tooltip: 'Corporate name',
 		title: 'Corporate name (MEI <corpName>)',
 		onclick: insertCorpName,
@@ -284,7 +284,7 @@ tinymce.PluginManager.add('title', function(editor) {
 	editor.addCommand('mceInsertTitle', insertTitle);
 
 	editor.addButton('title', {
-        image: '/../editor/images/mei_title.png',
+        image: '../resources/images/mei_title.png',
 		tooltip: 'Title',
 		title: 'Title (MEI <title>)',
 		onclick: insertTitle,
@@ -337,6 +337,6 @@ tinymce.PluginManager.add('title', function(editor) {
                                             "Symbol=symbol;"+
                                             "Webdings=webdings;"+
                                             "Wingdings=wingdings,zapf dingbats",
-    popup_css:                              "/../editor/style/tinymce_popup.css"
+    popup_css:                              "../resources/style/tinymce_popup.css"
     };
     
