@@ -20,6 +20,8 @@
                 <exclude name="${build.dir}/**"/>
                 <exclude name="build.xml"/>
                 <exclude name="Dockerfile"/>
+                <exclude name="jetty-exist-additional-config/**"/>                
+                <exclude name="*.patch"/>
                 <exclude name=".gitignore"/>
                 <exclude name=".dockerignore"/>
                 <exclude name="docker-compose.yml"/>
