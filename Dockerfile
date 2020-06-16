@@ -4,7 +4,7 @@
 # 2. run the eXist-db
 #########################
 FROM openjdk:8-jdk as builder
-LABEL maintainer="Peter Stadler"
+LABEL maintainer="Peter Stadler,Omar Siam"
 
 ENV BUILD_HOME="/opt/builder"
 
@@ -17,7 +17,8 @@ RUN curl -OL https://github.com/orbeon/orbeon-forms/releases/download/tag-releas
 RUN unzip orbeon-*.zip && rm orbeon-*.zip && mv orbeon-* orbeon-dist &&\
     mkdir orbeon && cd orbeon && unzip ../orbeon-dist/orbeon.war &&\
     rm -rf xforms-jsp &&\
-    rm -rf WEB-INF/resources/apps &&\
+    rm -rf WEB-INF/resources/apps/context WEB-INF/resources/apps/home WEB-INF/resources/apps/sandbox-transformations\
+        WEB-INF/resources/apps/xforms-[befs]* &&\
     rm -rf WEB-INF/resources/forms/orbeon/controls &&\
     rm -rf WEB-INF/resources/forms/orbeon/dmv-14  &&\
     rm -rf WEB-INF/lib/orbeon-form-builder.jar &&\
@@ -43,9 +44,9 @@ FROM existdb/existdb:5.3.0-SNAPSHOT
 
 ENV CLASSPATH=/exist/lib/exist.uber.jar:/exist/lib/orbeon-xforms-filter.jar
 
-# COPY --from=builder /opt/builder/build/*.xar ${EXIST_HOME}/autodeploy/
+COPY --from=builder /opt/builder/build/*.xar ${EXIST_HOME}/autodeploy/
 COPY --from=builder /orbeon ${EXIST_HOME}/etc/jetty/webapps/orbeon
 COPY jetty-exist-additional-config/etc/jetty/webapps/*.xml jetty-exist-additional-config/etc/jetty/webapps/*.properties ${EXIST_HOME}/etc/jetty/webapps/
 COPY jetty-exist-additional-config/etc/jetty/webapps/portal/WEB-INF/* ${EXIST_HOME}/etc/jetty/webapps/portal/WEB-INF/
 COPY --from=builder /orbeon-xforms-filter/WEB-INF/lib/orbeon-xforms-filter.jar ${EXIST_HOME}/lib/
-COPY jetty-exist-additional-config/etc/webapps/WEB-INF/web.xml ${EXIST_HOME}/etc/webapps/WEB-INF/
+COPY jetty-exist-additional-config/etc/webapp/WEB-INF/web.xml ${EXIST_HOME}/etc/webapp/WEB-INF/
