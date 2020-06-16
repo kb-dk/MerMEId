@@ -5,11 +5,9 @@
     <!-- contextPath can be set to either '/exist' or '/' -->
     <Set name="contextPath">/</Set>
     <Set name="war">
-        <Property name="jetty.home" default="."/>
-/etc/webapp</Set>
+        <Property name="jetty.home" default="."/>/etc/webapp</Set>
     <Set name="defaultsDescriptor">
-        <Property name="jetty.home" default="."/>
-/etc/jetty/webdefault.xml</Set>
+        <Property name="jetty.home" default="."/>/etc/jetty/webdefault.xml</Set>
     <Set name="securityHandler">
         <New class="org.eclipse.jetty.security.ConstraintSecurityHandler">
             <Set name="loginService">
