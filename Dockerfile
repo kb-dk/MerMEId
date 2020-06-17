@@ -13,7 +13,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends apt-transport-https ant curl unzip patch
 
 # Get and setup orbeon
-RUN curl -OL https://github.com/orbeon/orbeon-forms/releases/download/tag-release-2019.1-ce/orbeon-2019.1.0.201910220019-CE.zip
+RUN curl -OL https://github.com/orbeon/orbeon-forms/releases/download/tag-release-2018.2.1-ce/orbeon-2018.2.1.201902072242-CE.zip
 RUN unzip orbeon-*.zip && rm orbeon-*.zip && mv orbeon-* orbeon-dist &&\
     mkdir orbeon && cd orbeon && unzip ../orbeon-dist/orbeon.war &&\
     rm -rf xforms-jsp &&\
@@ -25,7 +25,7 @@ RUN unzip orbeon-*.zip && rm orbeon-*.zip && mv orbeon-* orbeon-dist &&\
     rm -rf WEB-INF/lib/exist-*.jar &&\
     rm -rf WEB-INF/exist-data &&\
     rm  WEB-INF/exist-conf.xml WEB-INF/jboss-scanning.xml WEB-INF/liferay-display.xml WEB-INF/portlet.xml \
-        WEB-INF/jboss-deployment-structure.xml WEB-INF/jboss-web.xml WEB-INF/liferay-portlet.xml WEB-INF/sun-web.xml WEB-INF/weblogic.xml &&\
+        WEB-INF/jboss-web.xml WEB-INF/liferay-portlet.xml WEB-INF/sun-web.xml WEB-INF/weblogic.xml &&\
     cd .. && mkdir orbeon-xforms-filter && cd orbeon-xforms-filter && unzip ../orbeon-dist/orbeon-xforms-filter.war
 COPY orbeon-web.xml.patch /
 RUN cd orbeon && patch -p0 < /orbeon-web.xml.patch && rm -f WEB-INF/web.xml.orig

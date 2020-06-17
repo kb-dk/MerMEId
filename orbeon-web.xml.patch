@@ -1,5 +1,5 @@
---- WEB-INF/web.xml.orig	2019-10-22 00:26:30.000000000 +0200
-+++ WEB-INF/web.xml	2020-06-17 16:00:25.174962630 +0200
+--- WEB-INF/web.xml.orig	2019-02-07 21:48:30.000000000 +0100
++++ WEB-INF/web.xml	2020-06-17 21:00:02.405363256 +0200
 @@ -40,7 +40,7 @@
      <!--Set run mode ("dev" or "prod")-->
      <context-param>
@@ -27,7 +27,7 @@
      <!--Limit concurrent access to Form Runner-->
      <filter>
          <filter-name>orbeon-limiter-filter</filter-name>
-@@ -268,29 +257,6 @@
+@@ -268,40 +257,6 @@
              <param-value>oxf:/config/error.xpl</param-value>
          </init-param>
      </servlet>
@@ -54,10 +54,21 @@
 -            <param-value>true</param-value>
 -        </init-param>
 -    </servlet>
+-    <!-- Uncomment this for the eXist WebDAV support -->
+-    <!--
+-    <servlet>
+-        <servlet-name>exist-webdav-servlet</servlet-name>
+-        <servlet-class>org.exist.http.servlets.WebDAVServlet</servlet-class>
+-        <init-param>
+-            <param-name>authentication</param-name>
+-            <param-value>basic</param-value>
+-        </init-param>
+-    </servlet>-->
+-    <!-- End eXist WebDAV support -->
      <servlet-mapping>
          <servlet-name>orbeon-main-servlet</servlet-name>
          <url-pattern>/</url-pattern>
-@@ -299,17 +265,6 @@
+@@ -310,24 +265,6 @@
          <servlet-name>orbeon-renderer-servlet</servlet-name>
          <url-pattern>/xforms-renderer</url-pattern>
      </servlet-mapping>
@@ -69,37 +80,16 @@
 -    <!--
 -    <servlet-mapping>
 -        <servlet-name>exist-xmlrpc-servlet</servlet-name>
--        <url-pattern>/exist/xmlrpc/*</url-pattern>
+-        <url-pattern>/exist/xmlrpc</url-pattern>
 -    </servlet-mapping>-->
 -    <!-- End eXist XMLRPC support -->
+-    <!-- Uncomment this for the eXist WebDAV support -->
+-    <!--
+-    <servlet-mapping>
+-        <servlet-name>exist-webdav-servlet</servlet-name>
+-        <url-pattern>/exist/webdav/*</url-pattern>
+-    </servlet-mapping>-->
+-    <!-- End eXist WebDAV support -->
      <!-- Uncomment this for the relational persistence, and change oracle if necessary -->
      <!--
      <resource-ref>
-@@ -342,27 +297,6 @@
-             <url-pattern>/fr/login-error</url-pattern>
-         </web-resource-collection>
-     </security-constraint>
--    <!-- This will cause redirect from HTTP to HTTPS but not for eXist -->
--    <!--
--    <security-constraint>
--        <web-resource-collection>
--            <web-resource-name>Entire Application</web-resource-name>
--            <url-pattern>/*</url-pattern>
--        </web-resource-collection>
--        <user-data-constraint>
--            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
--        </user-data-constraint>
--    </security-constraint>
--    <security-constraint>
--        <web-resource-collection>
--            <web-resource-name>eXist</web-resource-name>
--            <url-pattern>/exist/*</url-pattern>
--        </web-resource-collection>
--        <user-data-constraint>
--            <transport-guarantee>NONE</transport-guarantee>
--        </user-data-constraint>
--    </security-constraint>
--    -->
-     <!-- Use the form-based method by default -->
-     <login-config>
-         <auth-method>FORM</auth-method>
