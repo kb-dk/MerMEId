@@ -1,0 +1,150 @@
+diff --git a/Dockerfile b/Dockerfile
+index 654fb39..0ad28de 100644
+--- a/Dockerfile
++++ b/Dockerfile
+@@ -13,7 +13,7 @@ RUN apt-get update \
+     && apt-get install -y --no-install-recommends apt-transport-https ant curl unzip patch
+ 
+ # Get and setup orbeon
+-RUN curl -OL https://github.com/orbeon/orbeon-forms/releases/download/tag-release-2019.1-ce/orbeon-2019.1.0.201910220019-CE.zip
++RUN curl -OL https://github.com/orbeon/orbeon-forms/releases/download/tag-release-4.9-ce/orbeon-4.9.0.201505052329-CE.zip
+ RUN unzip orbeon-*.zip && rm orbeon-*.zip && mv orbeon-* orbeon-dist &&\
+     mkdir orbeon && cd orbeon && unzip ../orbeon-dist/orbeon.war &&\
+     rm -rf xforms-jsp &&\
+@@ -25,8 +25,7 @@ RUN unzip orbeon-*.zip && rm orbeon-*.zip && mv orbeon-* orbeon-dist &&\
+     rm -rf WEB-INF/lib/exist-*.jar &&\
+     rm -rf WEB-INF/exist-data &&\
+     rm  WEB-INF/exist-conf.xml WEB-INF/jboss-scanning.xml WEB-INF/liferay-display.xml WEB-INF/portlet.xml \
+-        WEB-INF/jboss-deployment-structure.xml WEB-INF/jboss-web.xml WEB-INF/liferay-portlet.xml WEB-INF/sun-web.xml WEB-INF/weblogic.xml &&\
+-    cd .. && mkdir orbeon-xforms-filter && cd orbeon-xforms-filter && unzip ../orbeon-dist/orbeon-xforms-filter.war
++        WEB-INF/jboss-web.xml WEB-INF/liferay-portlet.xml WEB-INF/sun-web.xml WEB-INF/weblogic.xml
+ COPY orbeon-web.xml.patch /
+ RUN cd orbeon && patch -p0 < /orbeon-web.xml.patch && rm -f WEB-INF/web.xml.orig
+ 
+@@ -48,6 +47,6 @@ COPY --from=builder /opt/builder/build/*.xar ${EXIST_HOME}/autodeploy/
+ COPY --from=builder /orbeon ${EXIST_HOME}/etc/jetty/webapps/orbeon
+ COPY jetty-exist-additional-config/etc/jetty/webapps/*.xml jetty-exist-additional-config/etc/jetty/webapps/*.properties ${EXIST_HOME}/etc/jetty/webapps/
+ COPY jetty-exist-additional-config/etc/jetty/webapps/portal/WEB-INF/* ${EXIST_HOME}/etc/jetty/webapps/portal/WEB-INF/
+-COPY --from=builder /orbeon-xforms-filter/WEB-INF/lib/orbeon-xforms-filter.jar ${EXIST_HOME}/lib/
++COPY --from=builder /orbeon/WEB-INF/lib/orbeon-xforms-filter.jar ${EXIST_HOME}/lib/
+ COPY jetty-exist-additional-config/etc/webapp/WEB-INF/web.xml ${EXIST_HOME}/etc/webapp/WEB-INF/
+ COPY orbeon-additional-config/WEB-INF/resources/config/* ${EXIST_HOME}/etc/jetty/webapps/orbeon/WEB-INF/resources/config/
+\ No newline at end of file
+diff --git a/orbeon-web.xml.patch b/orbeon-web.xml.patch
+index 2fae5b1..f9a32ac 100644
+--- a/orbeon-web.xml.patch
++++ b/orbeon-web.xml.patch
+@@ -1,15 +1,6 @@
+---- WEB-INF/web.xml.orig	2019-10-22 00:26:30.000000000 +0200
+-+++ WEB-INF/web.xml	2020-06-17 16:00:25.174962630 +0200
+-@@ -40,7 +40,7 @@
+-     <!--Set run mode ("dev" or "prod")-->
+-     <context-param>
+-         <param-name>oxf.run-mode</param-name>
+--        <param-value>prod</param-value>
+-+        <param-value>dev</param-value>
+-     </context-param>
+-     <!--Set location of properties.xml-->
+-     <context-param>
+-@@ -92,17 +92,6 @@
++--- WEB-INF/web.xml.orig	2020-06-16 17:41:42.959864800 +0200
+++++ WEB-INF/web.xml	2020-06-16 17:41:44.111399600 +0200
++@@ -121,17 +121,6 @@
+          <param-value>oxf:/apps/context/session-destroyed.xpl</param-value>
+      </context-param>-->
+      <!-- End session listener processors -->
+@@ -27,9 +18,9 @@
+      <!--Limit concurrent access to Form Runner-->
+      <filter>
+          <filter-name>orbeon-limiter-filter</filter-name>
+-@@ -268,29 +257,6 @@
+-             <param-value>oxf:/config/error.xpl</param-value>
+-         </init-param>
++@@ -294,40 +283,6 @@
++         <servlet-name>display-chart-servlet</servlet-name>
++         <servlet-class>org.jfree.chart.servlet.DisplayChart</servlet-class>
+      </servlet>
+ -    <!-- Uncomment this for the eXist XMLRPC support -->
+ -    <!--
+@@ -54,10 +45,21 @@
+ -            <param-value>true</param-value>
+ -        </init-param>
+ -    </servlet>
++-    <!-- Uncomment this for the eXist WebDAV support -->
++-    <!--
++-    <servlet>
++-        <servlet-name>exist-webdav-servlet</servlet-name>
++-        <servlet-class>org.exist.http.servlets.WebDAVServlet</servlet-class>
++-        <init-param>
++-            <param-name>authentication</param-name>
++-            <param-value>basic</param-value>
++-        </init-param>
++-    </servlet>-->
++-    <!-- End eXist WebDAV support -->
+      <servlet-mapping>
+          <servlet-name>orbeon-main-servlet</servlet-name>
+          <url-pattern>/</url-pattern>
+-@@ -299,17 +265,6 @@
++@@ -336,10 +291,6 @@
+          <servlet-name>orbeon-renderer-servlet</servlet-name>
+          <url-pattern>/xforms-renderer</url-pattern>
+      </servlet-mapping>
+@@ -65,41 +67,27 @@
+ -        <servlet-name>exist-rest-servlet</servlet-name>
+ -        <url-pattern>/exist/rest/*</url-pattern>
+ -    </servlet-mapping>
++     <!-- Uncomment this for the Experimental MongoDB Form Runner persistence implementation -->
++     <!--
++     <servlet-mapping>
++@@ -347,20 +298,6 @@
++         <url-pattern>/fr/service/mongo/*</url-pattern>
++     </servlet-mapping>-->
++     <!-- End Experimental MongoDB Form Runner persistence implementation -->
+ -    <!-- Uncomment this for the eXist XMLRPC support -->
+ -    <!--
+ -    <servlet-mapping>
+ -        <servlet-name>exist-xmlrpc-servlet</servlet-name>
+--        <url-pattern>/exist/xmlrpc/*</url-pattern>
++-        <url-pattern>/exist/xmlrpc</url-pattern>
+ -    </servlet-mapping>-->
+ -    <!-- End eXist XMLRPC support -->
+-     <!-- Uncomment this for the relational persistence, and change oracle if necessary -->
+-     <!--
+-     <resource-ref>
+-@@ -342,27 +297,6 @@
+-             <url-pattern>/fr/login-error</url-pattern>
+-         </web-resource-collection>
+-     </security-constraint>
+--    <!-- This will cause redirect from HTTP to HTTPS but not for eXist -->
++-    <!-- Uncomment this for the eXist WebDAV support -->
+ -    <!--
+--    <security-constraint>
+--        <web-resource-collection>
+--            <web-resource-name>Entire Application</web-resource-name>
+--            <url-pattern>/*</url-pattern>
+--        </web-resource-collection>
+--        <user-data-constraint>
+--            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+--        </user-data-constraint>
+--    </security-constraint>
+--    <security-constraint>
+--        <web-resource-collection>
+--            <web-resource-name>eXist</web-resource-name>
+--            <url-pattern>/exist/*</url-pattern>
+--        </web-resource-collection>
+--        <user-data-constraint>
+--            <transport-guarantee>NONE</transport-guarantee>
+--        </user-data-constraint>
+--    </security-constraint>
+--    -->
+-     <!-- Use the form-based method by default -->
+-     <login-config>
+-         <auth-method>FORM</auth-method>
++-    <servlet-mapping>
++-        <servlet-name>exist-webdav-servlet</servlet-name>
++-        <url-pattern>/exist/webdav/*</url-pattern>
++-    </servlet-mapping>-->
++-    <!-- End eXist WebDAV support -->
++     <servlet-mapping>
++         <servlet-name>display-chart-servlet</servlet-name>
++         <url-pattern>/chartDisplay</url-pattern>
