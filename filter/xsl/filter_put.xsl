@@ -31,7 +31,7 @@
   <xsl:strip-space elements="*"/>
 
 
-  <xsl:variable name="settings" select="document('/db/apps/mermeid/forms/mei/mermeid_configuration.xml')"/>
+  <xsl:include href="mermeid_configuration.xsl"/>
  
 
   <xsl:template match="/">
@@ -572,7 +572,7 @@
       <xsl:choose>
         <xsl:when test="$user">
             <xsl:choose>
-              <xsl:when test="$settings/dcm:parameters/dcm:automatic_log_main_switch='true'                 
+              <xsl:when test="$xforms-parameters/dcm:automatic_log_main_switch='true'                 
                 and $penultimate &gt; 0                 
                 and not(m:change[$penultimate]/m:changeDesc//text())                 
                 and not(m:change[last()]//text())                 
