@@ -21,7 +21,7 @@
                 <xsl:value-of select="$xslt.orbeon-endpoint"/>
             </orbeon_dir>
             <form_home>
-                <xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/forms/</form_home>
+                <xsl:value-of select="$xslt.server-name"/>/forms/</form_home>
             
             <crud_home>
                 <xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/data/</crud_home>
