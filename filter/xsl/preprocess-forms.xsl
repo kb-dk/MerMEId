@@ -34,6 +34,30 @@
         <xsl:attribute name="resource">
             <xsl:value-of select="replace(., '.*manual', concat($xslt.resources-endpoint, '/../manual'))"/>
         </xsl:attribute>
+    </xsl:template>    
+    
+    <xsl:variable name="old-index-jsp-regexp">\s*((xxf:)?instance\('parameters'\)|\$parameters)/dcm:orbeon_dir,\s*'\?uri='</xsl:variable>
+    <xsl:variable name="old-uri-request-parameter">,\s*xxf:get-request-parameter\('uri'\),\s*'&amp;</xsl:variable>
+    <xsl:variable name="old-form-home-form-xml">,\s*((xxf:)?instance\('parameters'\)|\$parameters)/dcm:form_home,\s*'([^&amp;]+)&amp;</xsl:variable>
+    <xsl:variable name="form_home_replacement">'<xsl:value-of select="$xforms-parameters/dcm:form_home"/>$5?</xsl:variable>
+    <xsl:variable name="request-path-replacement">xxf:get-request-path(), '?</xsl:variable>
+    
+    <xsl:template match="@value[contains(., '?uri=') and contains(., 'xxf:get-request-parameter(')]" priority="2">       
+        <xsl:attribute name="value">
+            <xsl:value-of select="replace(., concat($old-index-jsp-regexp, $old-uri-request-parameter), $request-path-replacement)"/>
+        </xsl:attribute>        
+    </xsl:template>
+    
+    <xsl:template match="@value[contains(., '?uri=')]">
+        <xsl:attribute name="value">
+            <xsl:value-of select="replace(., concat($old-index-jsp-regexp, $old-form-home-form-xml), $form_home_replacement)"/>
+        </xsl:attribute>
+    </xsl:template>
+           
+    <xsl:template match="@select[contains(., '?uri=')]">
+        <xsl:attribute name="select">
+            <xsl:value-of select="replace(., concat($old-index-jsp-regexp, $old-form-home-form-xml), $form_home_replacement)"/>
+        </xsl:attribute>
     </xsl:template>
     
     <xsl:template match="xf:instance[@id='parameters']">
