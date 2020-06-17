@@ -1,5 +1,14 @@
---- WEB-INF/web.xml.orig        2020-06-15 15:50:18.817858671 +0000
-+++ WEB-INF/web.xml     2020-06-15 15:51:43.793858654 +0000
+--- WEB-INF/web.xml.orig	2019-10-22 00:26:30.000000000 +0200
++++ WEB-INF/web.xml	2020-06-17 16:00:25.174962630 +0200
+@@ -40,7 +40,7 @@
+     <!--Set run mode ("dev" or "prod")-->
+     <context-param>
+         <param-name>oxf.run-mode</param-name>
+-        <param-value>prod</param-value>
++        <param-value>dev</param-value>
+     </context-param>
+     <!--Set location of properties.xml-->
+     <context-param>
 @@ -92,17 +92,6 @@
          <param-value>oxf:/apps/context/session-destroyed.xpl</param-value>
      </context-param>-->
@@ -66,3 +75,31 @@
      <!-- Uncomment this for the relational persistence, and change oracle if necessary -->
      <!--
      <resource-ref>
+@@ -342,27 +297,6 @@
+             <url-pattern>/fr/login-error</url-pattern>
+         </web-resource-collection>
+     </security-constraint>
+-    <!-- This will cause redirect from HTTP to HTTPS but not for eXist -->
+-    <!--
+-    <security-constraint>
+-        <web-resource-collection>
+-            <web-resource-name>Entire Application</web-resource-name>
+-            <url-pattern>/*</url-pattern>
+-        </web-resource-collection>
+-        <user-data-constraint>
+-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+-        </user-data-constraint>
+-    </security-constraint>
+-    <security-constraint>
+-        <web-resource-collection>
+-            <web-resource-name>eXist</web-resource-name>
+-            <url-pattern>/exist/*</url-pattern>
+-        </web-resource-collection>
+-        <user-data-constraint>
+-            <transport-guarantee>NONE</transport-guarantee>
+-        </user-data-constraint>
+-    </security-constraint>
+-    -->
+     <!-- Use the form-based method by default -->
+     <login-config>
+         <auth-method>FORM</auth-method>
