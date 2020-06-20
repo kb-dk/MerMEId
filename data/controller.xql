@@ -23,7 +23,7 @@ if (ends-with($exist:resource, ".xml")) then
         </forward>
         <cache-control cache="no"/>
     </dispatch>)
-    case 'PUT' return
+    case 'PUT' return try {
     let $log := console:log('/data Controller: PUT: filter_put.xsl'),
 (:        $logHeaders := console:log(for $headerName in request:get-header-names() return $headerName||': '||request:get-header($headerName)||'&#x0a;'),:)
 (:        $logAttributes := console:log(for $attrName in request:attribute-names() return $attrName||': '||request:get-attribute($attrName)||'&#x0a;'),:)
@@ -36,9 +36,19 @@ if (ends-with($exist:resource, ".xml")) then
                 <param name="xslt.server-name" value="{config:get-property('exist_endpoint')}"/>
                 <param name="xslt.exist-dir" value="/"/>
                 <param name="xslt.document-root" value="/data/"/>
+                <param name="exist:stop-on-warn" value="no"/>
+                <param name="exist:stop-on-error" value="no"/>
 </parameters>, <attributes></attributes>, "method=xml media-type=application/xml"),
         $saved := xmldb:store("/db"||$exist:prefix||$exist:controller||string-join(tokenize($exist:path, '/')[position() != last()], '/'), $exist:resource, $filtered)
     return doc($saved)
+    } catch * {
+        response:set-status-code(500),
+        <error>
+            <code>{$err:code}</code>
+            <value>{$err:value}</value>
+            <description>{$err:description}</description>
+        </error>
+    }
     default return (response:set-status-code(405), <_/>)
     )
 else
