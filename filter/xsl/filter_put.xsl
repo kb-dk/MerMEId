@@ -326,7 +326,7 @@
   <xsl:template name="replace_nodes">
     <xsl:param name="text"/>
     <!-- Wrap contents in a temporary <div> root element and parse XML -->
-    <xsl:variable name="fragment">&lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;<xsl:value-of select="$text"/>&lt;/div&gt;</xsl:variable>
+    <xsl:variable name="fragment">&lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;<xsl:value-of select="replace($text, '&amp;(\s)', '&amp;amp;$1')"/>&lt;/div&gt;</xsl:variable>
     <xsl:for-each select="parse-xml($fragment)/h:div">
       <xsl:apply-templates/>
     </xsl:for-each>
