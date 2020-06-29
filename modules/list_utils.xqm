@@ -125,21 +125,10 @@ let $options:=
       :)
 
       let $form-id := util:document-name($doc)
-      let $ref := 
-      <form id="edit{$form-id}" 
-      action="{$config:orbeon-endpoint}" style="display:inline;" method="get">
-
-	<input type="hidden"
-        name="uri"
-	value="{config:link-to-app-from-orbeon('/forms/edit-work-case.xml')}" />
-	<input type="hidden"
- 	name="doc"
-	value="{util:document-name($doc)}" />
-	<input type="image"
+      let $ref := <a href="../forms/edit-work-case.xml?doc={util:document-name($doc)}"><input type="image"
  	title="Edit" 
 	src="../resources/images/edit.gif" 
-	alt="Edit" />
-      </form>
+	alt="Edit" /></a>
 
       return $ref
 

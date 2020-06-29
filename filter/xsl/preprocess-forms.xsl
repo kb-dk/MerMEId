@@ -2,55 +2,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:dcm="http://www.kb.dk/dcm"
     xmlns:xf="http://www.w3.org/2002/xforms"
-    version="2">
+    version="2.0">
     
-    <xsl:param name="xslt.resources-endpoint"/>
-    
-    <xsl:param name="xslt.orbeon-endpoint"/>
-    <xsl:param name="xslt.exist-endpoint-seen-from-orbeon"/>
-    <xsl:param name="xslt.server-name"/>
-    <xsl:param name="xslt.exist-dir"/>
-    <xsl:param name="xslt.document-root"/>
-    
-    <xsl:variable name="xforms-parameters" as="element(dcm:parameters)">
-        <parameters xmlns="http://www.kb.dk/dcm">
-            
-            <!-- paths -->
-            
-            <orbeon_dir><xsl:value-of select="$xslt.orbeon-endpoint"/></orbeon_dir>
-            <form_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/forms/</form_home>
-            
-            <crud_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/data/</crud_home>
-            <library_crud_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/library/</library_crud_home>
-            <rism_crud_home><xsl:value-of select="$xslt.exist-endpoint-seen-from-orbeon"/>/rism_sigla/</rism_crud_home>
-            
-            <server_name><xsl:value-of select="$xslt.server-name"/></server_name>  
-            <exist_dir><xsl:value-of select="$xslt.exist-dir"/></exist_dir>
-            <document_root><xsl:value-of select="$xslt.document-root"/></document_root>
-            
-            <!-- Default editor settings - (boolean; set to 'true' or nothing)  -->
-            <!-- Enable automatic revisionDesc (change log) entries? -->
-            <automatic_log_main_switch>true</automatic_log_main_switch>
-            
-            <!-- The following settings add options to the editor's settings menu -->
-            <!-- Enable attribute editor? -->
-            <attr_editor_main_switch>true</attr_editor_main_switch>
-            <!-- Enable xml:id display component? -->
-            <id_main_switch>true</id_main_switch>
-            <!-- Enable code inspector component? -->
-            <code_inspector_main_switch>true</code_inspector_main_switch>
-            
-            
-            <!-- Some elements used internally by XForms - not for user configuration -->
-            <xml_file/>
-            <return_uri/>
-            <this_page/>
-            <attr_editor/>
-            <show_id/>
-            <code_inspector/>
-            
-        </parameters>
-    </xsl:variable>
+    <xsl:include href="mermeid_configuration.xsl" />
     
     <xsl:template match="@src[contains(., 'editor/images/')]">
         <xsl:attribute name="src">
@@ -79,6 +33,30 @@
     <xsl:template match="@resource[contains(., 'manual')]">
         <xsl:attribute name="resource">
             <xsl:value-of select="replace(., '.*manual', concat($xslt.resources-endpoint, '/../manual'))"/>
+        </xsl:attribute>
+    </xsl:template>    
+    
+    <xsl:variable name="old-index-jsp-regexp">\s*((xxf:)?instance\('parameters'\)|\$parameters)/dcm:orbeon_dir,\s*'\?uri='</xsl:variable>
+    <xsl:variable name="old-uri-request-parameter">,\s*xxf:get-request-parameter\('uri'\),\s*'&amp;</xsl:variable>
+    <xsl:variable name="old-form-home-form-xml">,\s*((xxf:)?instance\('parameters'\)|\$parameters)/dcm:form_home,\s*'([^&amp;]+)&amp;</xsl:variable>
+    <xsl:variable name="form_home_replacement">'<xsl:value-of select="$xforms-parameters/dcm:form_home"/>$5?</xsl:variable>
+    <xsl:variable name="request-path-replacement">xxf:get-request-path(), '?</xsl:variable>
+    
+    <xsl:template match="@value[contains(., '?uri=') and contains(., 'xxf:get-request-parameter(')]" priority="2">       
+        <xsl:attribute name="value">
+            <xsl:value-of select="replace(., concat($old-index-jsp-regexp, $old-uri-request-parameter), $request-path-replacement)"/>
+        </xsl:attribute>        
+    </xsl:template>
+    
+    <xsl:template match="@value[contains(., '?uri=')]">
+        <xsl:attribute name="value">
+            <xsl:value-of select="replace(., concat($old-index-jsp-regexp, $old-form-home-form-xml), $form_home_replacement)"/>
+        </xsl:attribute>
+    </xsl:template>
+           
+    <xsl:template match="@select[contains(., '?uri=')]">
+        <xsl:attribute name="select">
+            <xsl:value-of select="replace(., concat($old-index-jsp-regexp, $old-form-home-form-xml), $form_home_replacement)"/>
         </xsl:attribute>
     </xsl:template>
     

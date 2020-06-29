@@ -4,13 +4,33 @@
 # 2. run the eXist-db
 #########################
 FROM openjdk:8-jdk as builder
-LABEL maintainer="Peter Stadler"
+LABEL maintainer="Peter Stadler,Omar Siam"
 
 ENV BUILD_HOME="/opt/builder"
 
 # installing Apache Ant
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends apt-transport-https ant
+    && apt-get install -y --no-install-recommends apt-transport-https ant curl zip unzip patch
+
+# Get and setup orbeon
+RUN curl -OL https://github.com/orbeon/orbeon-forms/releases/download/tag-release-2018.2.1-ce/orbeon-2018.2.1.201902072242-CE.zip
+COPY orbeon-form-runner.jar /form-runner.jar
+RUN unzip orbeon-*.zip && rm orbeon-*.zip && mv orbeon-* orbeon-dist &&\
+    mkdir orbeon && cd orbeon && unzip ../orbeon-dist/orbeon.war &&\
+    rm -rf xforms-jsp &&\
+    rm -rf WEB-INF/resources/apps/context WEB-INF/resources/apps/home WEB-INF/resources/apps/sandbox-transformations\
+        WEB-INF/resources/apps/xforms-[befs]* &&\
+    rm -rf WEB-INF/resources/forms/orbeon/controls &&\
+    rm -rf WEB-INF/resources/forms/orbeon/dmv-14  &&\
+    rm -rf WEB-INF/lib/orbeon-form-builder.jar &&\
+    rm -rf WEB-INF/lib/exist-*.jar &&\
+    rm -rf WEB-INF/exist-data &&\
+    rm  WEB-INF/exist-conf.xml WEB-INF/jboss-scanning.xml WEB-INF/liferay-display.xml WEB-INF/portlet.xml \
+        WEB-INF/jboss-web.xml WEB-INF/liferay-portlet.xml WEB-INF/sun-web.xml WEB-INF/weblogic.xml &&\
+    cd /form-runner.jar && zip -u /orbeon/WEB-INF/lib/orbeon-form-runner.jar &&\
+    cd .. && mkdir orbeon-xforms-filter && cd orbeon-xforms-filter && unzip ../orbeon-dist/orbeon-xforms-filter.war
+COPY orbeon-web.xml.patch /
+RUN cd orbeon && patch -p0 < /orbeon-web.xml.patch && rm -f WEB-INF/web.xml.orig
 
 # now building the main App
 WORKDIR ${BUILD_HOME}
@@ -20,9 +40,16 @@ RUN ant
 #########################
 # Now running the eXist-db
 # and adding our freshly built xar-package
+# as well as orbeon and the orbeon xforms filter
 #########################
-FROM stadlerpeter/existdb:4
+FROM existdb/existdb:5.3.0-SNAPSHOT
 
-RUN sed -i -e "s@<extensions>\.xml,@<extensions>.xml,.xbl,@" ${EXIST_HOME}/mime-types.xml
+ENV CLASSPATH=/exist/lib/exist.uber.jar:/exist/lib/orbeon-xforms-filter.jar
 
-COPY --chown=wegajetty --from=builder /opt/builder/build/*.xar ${EXIST_HOME}/autodeploy/
+COPY --from=builder /opt/builder/build/*.xar ${EXIST_HOME}/autodeploy/
+COPY --from=builder /orbeon ${EXIST_HOME}/etc/jetty/webapps/orbeon
+COPY jetty-exist-additional-config/etc/jetty/webapps/*.xml jetty-exist-additional-config/etc/jetty/webapps/*.properties ${EXIST_HOME}/etc/jetty/webapps/
+COPY jetty-exist-additional-config/etc/jetty/webapps/portal/WEB-INF/* ${EXIST_HOME}/etc/jetty/webapps/portal/WEB-INF/
+COPY --from=builder /orbeon-xforms-filter/WEB-INF/lib/orbeon-xforms-filter.jar ${EXIST_HOME}/lib/
+COPY jetty-exist-additional-config/etc/webapp/WEB-INF/web.xml ${EXIST_HOME}/etc/webapp/WEB-INF/
+COPY orbeon-additional-config/WEB-INF/resources/config/* ${EXIST_HOME}/etc/jetty/webapps/orbeon/WEB-INF/resources/config/

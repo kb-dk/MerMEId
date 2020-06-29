@@ -1,0 +1,14 @@
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+ <Set name="war"><Property name="jetty.webapps" default="."/>/orbeon</Set>
+ <Set name="contextPath">/orbeon</Set>
+ <Get name="securityHandler">
+    <Set name="loginService">
+      <New class="org.eclipse.jetty.security.HashLoginService">
+        <Set name="name">Orbeon</Set>
+        <Set name="config"><Property name="jetty.webapps" default="."/>/orbeon.properties</Set>
+        <Set name="hotReload">true</Set>
+        <Call name="start"></Call>
+      </New>
+    </Set>
+ </Get>
+</Configure>

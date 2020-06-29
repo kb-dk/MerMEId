@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <properties xmlns="http://www.kb.dk/dcm">
 
   <!-- orbeon endpoint -->
-  <orbeon_endpoint>http://localhost:9090/orbeon/xforms-jsp/mei-form/index.jsp</orbeon_endpoint>
+  <orbeon_endpoint>unused</orbeon_endpoint>
   <!-- MerMEId eXist endpoint seen from outside, i.e. the URL you point your browser at -->
-  <exist_endpoint>http://localhost:8080/exist/apps/mermeid</exist_endpoint>
-  <!-- MerMEId eXist endpoint seen from Orbeon. On a production system this is likely the same as above,
-    on a development system this might be some local (Docker) IP -->
-  <exist_endpoint_seen_from_orbeon>http://172.17.0.1:8080/exist/apps/mermeid</exist_endpoint_seen_from_orbeon>
+  <exist_endpoint>http://localhost:8080/apps/mermeid</exist_endpoint>
+  <!-- MerMEId eXist endpoint seen from Orbeon. The orbeon xforms filter interferes with the
+       path provided if the same hostname as above is used so use a loopback ip which is equvalent. -->
+  <exist_endpoint_seen_from_orbeon>http://127.0.0.2:8080/apps/mermeid</exist_endpoint_seen_from_orbeon>
 
   <!-- Default editor settings - (boolean; set to 'true' or nothing)  -->
   <!-- Enable automatic revisionDesc (change log) entries? -->

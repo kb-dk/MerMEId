@@ -31,7 +31,7 @@
   <xsl:strip-space elements="*"/>
 
 
-  <xsl:variable name="settings" select="document('/editor/forms/mei/mermeid_configuration.xml')"/>
+  <xsl:include href="mermeid_configuration.xsl"/>
  
 
   <xsl:template match="/">
@@ -60,7 +60,7 @@
   <!-- CLEANING UP MEI -->
 
   <!-- Generate a value for empty @xml:id -->
-  <xsl:template match="@xml:id[.='']">
+  <xsl:template match="@xml:id[.='']" mode="#all">
     <xsl:call-template name="fill_in_id"/>
   </xsl:template>
 
@@ -80,7 +80,7 @@
   </xsl:template>
 
   <!-- Change duplicate IDs -->
-  <xsl:template match="*[@xml:id and count(key('ids', @xml:id)) &gt; 1]">
+  <xsl:template match="*[@xml:id and count(key('ids', @xml:id)) &gt; 1]" mode="#all">
     <xsl:variable name="duplicateID" select="@xml:id"/>
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
@@ -106,7 +106,7 @@
   </xsl:template>
 
   <!-- Add xml:id to certain elements if missing -->
-  <xsl:template match="m:expression | m:item | m:bibl | m:perfRes | m:perfResList | m:castItem">
+  <xsl:template match="m:expression | m:item | m:bibl | m:perfRes | m:perfResList | m:castItem" mode="#all">
     <!-- Test if perfResList is like old instrumentation -->
     <xsl:element name="{name()}" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
@@ -119,9 +119,9 @@
   <!-- Remove empty attributes -->
   <xsl:template match="@accid|@auth|@auth-uri|@cert|@codedval|@count|@enddate|@evidence|     
     @isodate|@mode|@n|@notafter|@notbefore|@pname|@reg|@resp|     
-    @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang">
-    <xsl:if test="normalize-space(.)">
-      <xsl:copy-of select="."/>
+    @solo|@startdate|@sym|@target|@targettype|@type|@unit|@xml:lang" mode="#all">
+    <xsl:if test="not(normalize-space(data()) = '')">
+      <xsl:sequence select="."/>
     </xsl:if>
   </xsl:template>
 
@@ -326,7 +326,7 @@
   <xsl:template name="replace_nodes">
     <xsl:param name="text"/>
     <!-- Wrap contents in a temporary <div> root element and parse XML -->
-    <xsl:variable name="fragment">&lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;<xsl:value-of select="$text"/>&lt;/div&gt;</xsl:variable>
+    <xsl:variable name="fragment">&lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;<xsl:value-of select="replace($text, '&amp;(\s)', '&amp;amp;$1')"/>&lt;/div&gt;</xsl:variable>
     <xsl:for-each select="parse-xml($fragment)/h:div">
       <xsl:apply-templates/>
     </xsl:for-each>
@@ -572,7 +572,7 @@
       <xsl:choose>
         <xsl:when test="$user">
             <xsl:choose>
-              <xsl:when test="$settings/dcm:parameters/dcm:automatic_log_main_switch='true'                 
+              <xsl:when test="$xforms-parameters/dcm:automatic_log_main_switch='true'                 
                 and $penultimate &gt; 0                 
                 and not(m:change[$penultimate]/m:changeDesc//text())                 
                 and not(m:change[last()]//text())                 
