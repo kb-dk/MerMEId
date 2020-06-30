@@ -3,6 +3,7 @@ xquery version "1.0";
 import module namespace xdb="http://exist-db.org/xquery/xmldb";
 import module namespace util="http://exist-db.org/xquery/util";
 import module namespace sm="http://exist-db.org/xquery/securitymanager";
+import module namespace file="http://exist-db.org/xquery/file";
 import module namespace config="https://github.com/edirom/mermeid/config" at "modules/config.xqm";
 
 (: The following external variables are set by the repo:deploy function :)
@@ -17,7 +18,11 @@ declare variable $target external := "/db/apps/mermeid";
 declare function local:set-options() as xs:string* {
     for $opt in available-environment-variables()[starts-with(., 'MERMEID_')]
     return
-        config:set-property(substring($opt, 9), string(environment-variable($opt)))
+        if($opt = 'MERMEID_admin_password') then sm:passwd('admin', string(environment-variable($opt)))
+        else if($opt = 'MERMEID_admin_password_file') then 
+            if(file:exists(string(environment-variable($opt)))) then sm:passwd('admin', normalize-space(file:read(normalize-space(environment-variable($opt)))))
+            else util:log-system-out(concat('unable to read from file "', normalize-space(environment-variable($opt)), '"'))
+        else config:set-property(substring($opt, 9), normalize-space(environment-variable($opt)))
 };
 
 
@@ -31,6 +36,6 @@ declare function local:force-xml-mime-type-xbl() as xs:string* {
     return if (exists($doc)) then xdb:store($forms-includes, $r, $doc, 'application/xml') else ()
 };
 
-(: set options passed as environment variables :)
+(: set options and admin password passed as environment variables :)
 local:set-options(),
 local:force-xml-mime-type-xbl()
