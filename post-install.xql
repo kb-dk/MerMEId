@@ -27,7 +27,7 @@ declare function local:force-xml-mime-type-xbl() as xs:string* {
     return for $r in xdb:get-child-resources($forms-includes)
     where ends-with($r, '.xbl')
     let $doc := util:binary-doc(concat($forms-includes,'/',$r))
-    (:return $r||' '||xmldb:get-mime-type(xs:anyURI(concat($forms-includes,'/',$r))):)
+    (:return $r||' '||xdb:get-mime-type(xs:anyURI(concat($forms-includes,'/',$r))):)
     return if (exists($doc)) then xdb:store($forms-includes, $r, $doc, 'application/xml') else ()
 };
 
