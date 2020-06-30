@@ -51,5 +51,5 @@ COPY --from=builder /orbeon ${EXIST_HOME}/etc/jetty/webapps/orbeon
 COPY jetty-exist-additional-config/etc/jetty/webapps/*.xml jetty-exist-additional-config/etc/jetty/webapps/*.properties ${EXIST_HOME}/etc/jetty/webapps/
 COPY jetty-exist-additional-config/etc/jetty/webapps/portal/WEB-INF/* ${EXIST_HOME}/etc/jetty/webapps/portal/WEB-INF/
 COPY --from=builder /orbeon-xforms-filter/WEB-INF/lib/orbeon-xforms-filter.jar ${EXIST_HOME}/lib/
-COPY jetty-exist-additional-config/etc/webapp/WEB-INF/web.xml ${EXIST_HOME}/etc/webapp/WEB-INF/
+COPY jetty-exist-additional-config/etc/webapp/WEB-INF/*.xml ${EXIST_HOME}/etc/webapp/WEB-INF/
 COPY orbeon-additional-config/WEB-INF/resources/config/* ${EXIST_HOME}/etc/jetty/webapps/orbeon/WEB-INF/resources/config/
