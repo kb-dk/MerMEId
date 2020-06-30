@@ -1,6 +1,7 @@
 xquery version "3.0";
 
 import module namespace config="https://github.com/edirom/mermeid/config" at "../modules/config.xqm";
+import module namespace xmldb="http://exist-db.org/xquery/xmldb";
 
 import module namespace console="http://exist-db.org/xquery/console";
 

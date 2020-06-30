@@ -2,6 +2,8 @@ xquery version "3.1";
 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace config="https://github.com/edirom/mermeid/config" at "../modules/config.xqm";
+import module namespace xmldb="http://exist-db.org/xquery/xmldb";
+
 declare namespace xs="http://www.w3.org/2001/XMLSchema";
 declare option exist:serialize "method=xml encoding=UTF-8 media-type=text/html";
 
