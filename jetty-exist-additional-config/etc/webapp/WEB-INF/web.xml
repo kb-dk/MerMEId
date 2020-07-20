@@ -429,7 +429,7 @@
     <!-- Any web resource under /apps/mermeid/forms/* is processed by the XForms engine -->
     <filter-mapping>
         <filter-name>orbeon-xforms-filter</filter-name>
-        <url-pattern>/apps/mermeid/forms/*</url-pattern>
+        <url-pattern>/forms/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>

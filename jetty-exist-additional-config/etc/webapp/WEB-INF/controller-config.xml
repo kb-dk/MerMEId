@@ -1,0 +1,78 @@
+
+<!--
+  ++ Base configuration for eXist's URL rewriting. This file defines
+  ++ all basic path mappings. A path can be mapped to a servlet or
+  ++ the root of a directory or collection hierarchy.
+  
+  $Id$
+-->
+<configuration xmlns="http://exist.sourceforge.net/NS/exist" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://exist.sourceforge.net/NS/exist file:../../schema/controller-config.xsd">
+  
+  <!-- Webstart servlet -->
+  <forward pattern="/webstart" servlet="jnlp"/>
+  
+  <!-- XMLRPC servlet -->
+  <forward pattern="/xmlrpc" servlet="org.exist.xmlrpc.RpcServlet"/>
+  
+  <!-- betterFORM resource-servlet -->
+  <forward pattern=".*bfResources/" servlet="ResourceServlet"/>
+  
+  <!-- REST interface -->
+  <forward pattern="/(rest|servlet)/" servlet="EXistServlet"/>
+  
+  <!-- WebDAV interface -->
+  <forward pattern="/webdav/" servlet="milton"/>
+  
+  <!-- RESTXQ -->
+  <forward pattern="/restxq/" servlet="RestXqServlet"/>
+  
+  <!-- scale images on the fly and cache the output. -->
+  <!-- 
+  <forward pattern="/images" servlet="ScaleImageJAI"/>
+  -->
+  
+  <!-- The JMX status servlet used to monitor the db -->
+  <forward pattern="/status" servlet="JMXServlet"/>
+  
+  <!-- 
+    ++ Default configuration: main web application is served from the
+    ++ webapp directory. 
+  -->
+<!--  <root pattern="/apps/library" path="xmldb:exist:///db/apps/tamboti"/>-->
+<!--  <root pattern="/apps/tamboti" path="xmldb:exist:///db/apps/tamboti"/>-->
+  
+  <root pattern="/apps" path="xmldb:exist:///db/apps"/>
+  
+<!--  <root pattern="/solutions" path="xmldb:exist:///db/solutions/"/>-->
+  
+  <!-- 
+    redirect all requests (not captured by the above controller rules) to the mermeid app.
+  -->
+  <root pattern=".*" path="xmldb:exist:///db/apps/mermeid"/>
+  
+  
+  <!-- 
+    <root server-name="site1.example.com" pattern="/*" path="xmldb:exist:///db/org/site1/"/>
+    <root server-name="site2.example.com" pattern="/*" path="xmldb:exist:///db/org/site2/"/>
+    <root server-name="site3.example.com" pattern="/*" path="xmldb:exist:///db/org/site3/"/>
+    <root server-name="localhost" pattern=".*" path="/"/>
+    <root server-name="site4.example.com" pattern=".*" path="/"/>
+    -->
+  
+  <!-- 
+      ++ The following configuration assumes that the main webapp
+      ++ is stored in the database. However, the contents of the /webapp directory
+      ++ should still be accessible with a /fs prefix in the path.
+  -->
+  <!--root pattern="/fs" path="/"/>
+    <root pattern=".*" path="xmldb:exist:///db/www"/-->
+  
+  <!--
+      ++ Order is important here: the forward rule for XQuery resources has 
+      ++ to be last in this document, otherwise all XQuery files would be immediately 
+      ++ forwarded to the XQueryServlet without ever going through any of the
+      ++ controllers.
+  -->
+  <forward pattern=".*\.(xq|xql|xqy|xquery)$" servlet="XQueryServlet"/>
+</configuration>
