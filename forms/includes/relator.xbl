@@ -11,7 +11,7 @@
     Axel Teich Geertinger, 2012–2015
     atge@kb.dk
   -->
-
+  
   <xbl:binding id="dcm-relator-binding" element="dcm|relator">
 
     <!-- Orbeon Form Builder Component Metadata -->
@@ -41,8 +41,8 @@
             <!-- initialization -->
             <xf:action ev:event="xforms-value-changed xforms-enabled"/>
           </xf:var>
-
-          <xf:input class="long" ref="$binding">
+          
+          <xf:input class="mediumlong" ref="$binding">
             <xf:action ev:event="xforms-enabled" if="count(@role)!=1">
               <!-- add role attribute -->
               <xf:insert nodeset="@*" context="." origin="xxf:attribute('role','')"/>
@@ -61,6 +61,8 @@
                 should be used.</h:span>
             </h:a>
           </xf:group>
+
+          <dcm:person-list ref="$binding"></dcm:person-list>
 
           <xf:select1 ref="$binding/@role" class="mediumlong">
             <xf:itemset nodeset="xxf:instance('relators-instance')/role">
