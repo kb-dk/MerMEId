@@ -45,7 +45,8 @@
         <xi:include href="includes/id.xbl" parse="xml"/>
         <xi:include href="includes/item-input.xbl" parse="xml"/>
         <xi:include href="includes/linked_sources.xbl" parse="xml"/>
-        <xi:include href="includes/relator.xbl" parse="xml"/>
+        <xi:include href="includes/relator.xbl" parse="xml"/>        
+        <xi:include href="includes/person_list.xbl" parse="xml"/>
         <xi:include href="includes/rism_sigla_select.xbl" parse="xml"/>
     </h:head>
     
@@ -87,7 +88,7 @@
                 
                 <xf:group ref="instance('data-instance')//m:item[@xml:id=instance('temp')/id]">
                     <h:span class="blocklabel strong">Item 
-                        <h:a class="help">&#160;?<h:span class="comment">At item level, 
+                        <h:a class="help">&#1p60;?<h:span class="comment">At item level, 
                             information specific to an individual copy of a source should be entered. <h:br/>
                             Information common to all copies of this source should be given at source level.<h:br/>
                             Manuscripts are somewhat special, being sources having only one item. Manuscripts, too, 
