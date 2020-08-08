@@ -42,6 +42,7 @@
             <xf:action ev:event="xforms-value-changed xforms-enabled"/>
           </xf:var>
           
+          
           <xf:input class="mediumlong" ref="$binding">
             <xf:action ev:event="xforms-enabled" if="count(@role)!=1">
               <!-- add role attribute -->
@@ -49,7 +50,9 @@
             </xf:action>
           </xf:input>
           <xf:var name="role" select="$binding/@role"/>
-
+          
+          <dcm:person-list ref="$binding"></dcm:person-list>
+          
           <!-- display a warning if role is not on standard relators list -->
           <xf:group ref=".[$role and not(xxf:instance('relators-instance')/role[.=$role])]">
             <xf:output value="$binding/@role"/>
@@ -61,8 +64,6 @@
                 should be used.</h:span>
             </h:a>
           </xf:group>
-
-          <dcm:person-list ref="$binding"></dcm:person-list>
 
           <xf:select1 ref="$binding/@role" class="mediumlong">
             <xf:itemset nodeset="xxf:instance('relators-instance')/role">

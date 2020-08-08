@@ -372,6 +372,9 @@
                     <h:span class="blocklabel">List of hands
                     <dcm:attribute-editor ref="."/>                                                    
                     </h:span>
+                    <dcm:create nodeset="m:hand"
+                      label="Add list of hands"
+                      origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:handList/m:hand"/>
                     <xf:repeat nodeset="m:hand" id="repeat-source-physdesc-handlist" class="nowrap">
                         <xi:include href="hand-input.xml" parse="xml"/>
                     </xf:repeat>
