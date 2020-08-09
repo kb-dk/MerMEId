@@ -245,12 +245,12 @@
 					</h:fieldset>
 					
 					<h:fieldset>
-						<h:legend>Persons <h:a class="help">&#160;?<h:span 
+						<h:legend>Contributors <h:a class="help">&#160;?<h:span 
 							class="comment">Persons with connection to this particular version
 							only, e.g. an arranger, or a text author in a collection of songs 
 							with different authors</h:span></h:a></h:legend>	
 						<dcm:create nodeset="m:contributor"
-							label="Add persons"
+							label="Add contributors"
 							origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:expressionList/m:expression/m:contributor"/>
 						<xf:group ref="m:contributor">
 							<xi:include href="includes/person-input.xml"/>
