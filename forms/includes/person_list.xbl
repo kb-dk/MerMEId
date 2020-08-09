@@ -97,13 +97,13 @@
                                     <xf:send submission="load-institutions"/>
                                 </xf:action>
 
-                                <xf:action if="not(@auth)">
+                                <xf:action if="not($binding/@auth)">
                                   <xf:insert nodeset="@*" context="$binding" origin="xxf:attribute('auth','')"/>
                                 </xf:action>
-                                <xf:action if="not(@auth.uri)">
+                                <xf:action if="not($binding/@auth.uri)">
                                   <xf:insert nodeset="@*" context="$binding" origin="xxf:attribute('auth.uri','')"/>
                                 </xf:action>
-                                <xf:action if="not(@codedval)">
+                                <xf:action if="not($binding/@codedval)">
                                   <xf:insert nodeset="@*" context="$binding" origin="xxf:attribute('codedval','')"/>
                                 </xf:action>
                                 <xf:var name="name" select="normalize-space($binding)"/>
