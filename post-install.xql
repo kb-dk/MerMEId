@@ -16,13 +16,25 @@ declare variable $dir external;
 declare variable $target external := "/db/apps/mermeid";
 
 declare function local:set-options() as xs:string* {
-    for $opt in available-environment-variables()[starts-with(., 'MERMEID_')]
+    for $opt in available-environment-variables()[starts-with(., 'MERMEID_')][not(. = ('MERMEID_admin_password', 'MERMEID_admin_password_file'))]
     return
-        if($opt = 'MERMEID_admin_password') then sm:passwd('admin', string(environment-variable($opt)))
-        else if($opt = 'MERMEID_admin_password_file') then 
+        config:set-property(substring($opt, 9), normalize-space(environment-variable($opt)))
+};
+
+declare function local:set-admin-password() as empty-sequence() {
+    let $opt :=
+        (: process only one possible option to set the admin password with a preference for a secret file :)
+        (
+        available-environment-variables()[. = 'MERMEID_admin_password_file'],
+        available-environment-variables()[. = 'MERMEID_admin_password']
+        )[1]
+    return
+        
+        if($opt = 'MERMEID_admin_password_file') then 
             if(file:exists(string(environment-variable($opt)))) then sm:passwd('admin', normalize-space(file:read(normalize-space(environment-variable($opt)))))
             else util:log-system-out(concat('unable to read from file "', normalize-space(environment-variable($opt)), '"'))
-        else config:set-property(substring($opt, 9), normalize-space(environment-variable($opt)))
+        else if($opt = 'MERMEID_admin_password') then sm:passwd('admin', string(environment-variable($opt)))
+        else ()
 };
 
 
@@ -36,6 +48,10 @@ declare function local:force-xml-mime-type-xbl() as xs:string* {
     return if (exists($doc)) then xdb:store($forms-includes, $r, $doc, 'application/xml') else ()
 };
 
-(: set options and admin password passed as environment variables :)
+(: set options provided as environment variables :)
 local:set-options(),
-local:force-xml-mime-type-xbl()
+local:force-xml-mime-type-xbl(),
+(: set admin password if provided. 
+    NB, this has to be the last command otherwise the other commands will not be executed properly :) 
+local:set-admin-password()
+
