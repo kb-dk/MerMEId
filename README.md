@@ -35,7 +35,7 @@ The most convenient way to set up MerMEId is by pulling the ready made Docker im
 Starting a MerMEId instance is simple: 
 
 ```sh
-$ docker -run --name my-mermeid -p 9999:8080 -d edirom/mermeid:develop
+$ docker -run --name my-mermeid -p 8080:8080 -d edirom/mermeid:develop
 ```
 
 … where `my-mermeid` is the name you want to assign to your container and `8080` is the local port where the MerMEId server will listen.
