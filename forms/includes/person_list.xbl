@@ -76,25 +76,8 @@
                     <xf:var name="binding" as="node()?">
                         <xxf:value select="." xxbl:scope="outer"/>
                     </xf:var>
-                        <xf:group ref=".[normalize-space($binding)]">
-                            <xf:action ev:event="xforms-enabled" if="count(@role)!=1">
-                                <xf:action if="$binding/local-name() = 'corpName'">
-                                    <!-- load rism country list -->
-                                    <xf:send submission="load-institutions"/>
-                                </xf:action>
-                                <xf:action if="$binding/local-name() = 'persName'">
-                                    <!-- load rism country list -->
-                                    <xf:send submission="load-persons"/>
-                                </xf:action>
-                            </xf:action>
-
-                            <xf:var name="name" select="normalize-space($binding)"/>
-                            <xf:group ref=".[not(instance('person-instance')//m:li/*/*[./text() = $name])]">
-                                <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning.png" style="vertical-align:middle;"
-                                    title="MerMEId does not recognize the person &apos;{$name}&apos;."/>
-                            </xf:group>
-                        </xf:group>
- 
+                    
+                    <xf:group ref=".[count(instance('person-instance')//m:li/*) > 0]"> 
                         <xf:trigger class="fixed_width">
                             <xf:label>Select from list</xf:label>
                             <xf:action ev:event="DOMActivate">
@@ -124,44 +107,64 @@
                                 <xxf:show dialog="person-dialog"/>
                             </xf:action>
                         </xf:trigger>
+                    </xf:group>
+
+                    <xf:group ref=".[normalize-space($binding)]">
+                        <xf:action ev:event="xforms-enabled" if="count(@role)!=1">
+                            <xf:action if="$binding/local-name() = 'corpName'">
+                                <!-- load rism country list -->
+                                <xf:send submission="load-institutions"/>
+                            </xf:action>
+                            <xf:action if="$binding/local-name() = 'persName'">
+                                <!-- load rism country list -->
+                                <xf:send submission="load-persons"/>
+                            </xf:action>
+                        </xf:action>
+
+                        <xf:var name="name" select="normalize-space($binding)"/>
+                        <xf:group ref=".[count(instance('person-instance')//m:li/*) > 0 and not(instance('person-instance')//m:li/*/*[./text() = $name])]">
+                            <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning.png" style="vertical-align:middle;"
+                                title="MerMEId does not recognize the person &apos;{$name}&apos;."/>
+                        </xf:group>
+                    </xf:group>
                         
-                        <xxf:dialog id="person-dialog" appearance="full" level="modal"
-                            close="true" draggable="true" visible="false">
-                            <xf:label>Person selection</xf:label>
-                            <xf:select1 ref="instance('temp')/id" xxf:refresh-items="false" class="maxlong">
-                                <xf:label class="fixed_width">Name</xf:label>
-                                <xf:item>
-                                    <xf:label>- Select name -</xf:label>
-                                    <xf:value/>
-                                </xf:item>
-                                <xf:itemset nodeset="instance('person-instance')//m:li/*">
-                                    <xf:label ref="./*[contains(@type, 'main')]"/>
-                                    <xf:value ref="./m:identifier[@auth='GND']/text()"/>
-                                </xf:itemset>
-                            </xf:select1>      
-                            <h:br/>&#160;
-                            <h:br/>
-                            <xf:trigger>
-                                <xf:label> OK </xf:label>
-                                <xf:action ev:event="DOMActivate">
-                                    <xf:var name="el" select="instance('person-instance')//m:li/*[./m:identifier[./text() = instance('temp')/id]]"/>
-                                    <xf:setvalue ref="instance('temp')/persName" value="$el/*[@type='main']"></xf:setvalue>
-                                    <xf:setvalue ref="$binding" value="instance('temp')/persName"></xf:setvalue>
-                                    <xf:setvalue ref="$binding/@codedval" value="instance('temp')/id"></xf:setvalue>
-                                    <xf:setvalue ref="$binding/@auth" value="$el/m:identifier[@auth]/@auth"></xf:setvalue>
-                                    <xf:setvalue ref="$binding/@auth.uri" value="$el/m:identifier[@auth]/@auth.uri"></xf:setvalue>
-                                    <xxf:hide dialog="person-dialog"/>
-                                </xf:action>
-                            </xf:trigger>
-                            <xf:trigger>
-                                <xf:label> Cancel </xf:label>
-                                <xf:action ev:event="DOMActivate">
-                                    <xxf:hide dialog="person-dialog"/>
-                                </xf:action>
-                            </xf:trigger>
-                        </xxf:dialog>
-                        
-                        <dcm:attribute-editor ref="$binding"/>
+                    <xxf:dialog id="person-dialog" appearance="full" level="modal"
+                        close="true" draggable="true" visible="false">
+                        <xf:label>Person selection</xf:label>
+                        <xf:select1 ref="instance('temp')/id" xxf:refresh-items="false" class="maxlong">
+                            <xf:label class="fixed_width">Name</xf:label>
+                            <xf:item>
+                                <xf:label>- Select name -</xf:label>
+                                <xf:value/>
+                            </xf:item>
+                            <xf:itemset nodeset="instance('person-instance')//m:li/*">
+                                <xf:label ref="./*[contains(@type, 'main')]"/>
+                                <xf:value ref="./m:identifier[@auth='GND']/text()"/>
+                            </xf:itemset>
+                        </xf:select1>      
+                        <h:br/>&#160;
+                        <h:br/>
+                        <xf:trigger>
+                            <xf:label> OK </xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:var name="el" select="instance('person-instance')//m:li/*[./m:identifier[./text() = instance('temp')/id]]"/>
+                                <xf:setvalue ref="instance('temp')/persName" value="$el/*[@type='main']"></xf:setvalue>
+                                <xf:setvalue ref="$binding" value="instance('temp')/persName"></xf:setvalue>
+                                <xf:setvalue ref="$binding/@codedval" value="instance('temp')/id"></xf:setvalue>
+                                <xf:setvalue ref="$binding/@auth" value="$el/m:identifier[@auth]/@auth"></xf:setvalue>
+                                <xf:setvalue ref="$binding/@auth.uri" value="$el/m:identifier[@auth]/@auth.uri"></xf:setvalue>
+                                <xxf:hide dialog="person-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                        <xf:trigger>
+                            <xf:label> Cancel </xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xxf:hide dialog="person-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </xxf:dialog>
+                    
+                    <dcm:attribute-editor ref="$binding"/>
                 </xf:group>
             </xf:group>
         </xbl:template>
