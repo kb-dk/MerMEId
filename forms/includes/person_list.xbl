@@ -77,6 +77,17 @@
                         <xxf:value select="." xxbl:scope="outer"/>
                     </xf:var>
                         <xf:group ref=".[normalize-space($binding)]">
+                            <xf:action ev:event="xforms-enabled" if="count(@role)!=1">
+                                <xf:action if="$binding/local-name() = 'corpName'">
+                                    <!-- load rism country list -->
+                                    <xf:send submission="load-institutions"/>
+                                </xf:action>
+                                <xf:action if="$binding/local-name() = 'persName'">
+                                    <!-- load rism country list -->
+                                    <xf:send submission="load-persons"/>
+                                </xf:action>
+                            </xf:action>
+
                             <xf:var name="name" select="normalize-space($binding)"/>
                             <xf:group ref=".[not(instance('person-instance')//m:li/*/*[./text() = $name])]">
                                 <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning.png" style="vertical-align:middle;"

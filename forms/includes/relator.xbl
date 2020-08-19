@@ -55,7 +55,6 @@
           
           <!-- display a warning if role is not on standard relators list -->
           <xf:group ref=".[$role and not(xxf:instance('relators-instance')/role[.=$role])]">
-            <xf:output value="$binding/@role"/>
             <h:a class="help_plain">
               <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning.png"
                 alt="warning"/>

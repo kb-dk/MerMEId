@@ -37,14 +37,14 @@
         <xi:include href="certainty-input.xml" parse="xml"/>
         <dcm:authority/>
         <!-- a more generic condition would have been nice but didn't work here -->
-        <xf:group ref=".[name(..)!='hand']">
+        <xf:group ref=".[name(.)!='hand']">
             <dcm:element-buttons 
                 triggers="add remove up down" 
                 nodeset="m:persName" 
                 index="relators-repeat"
                 origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:persName[1]"/>
         </xf:group>
-        <xf:group ref=".[name(..)='hand']">
+        <xf:group ref=".[name(.)='hand']">
             <dcm:element-buttons 
                 triggers="remove" 
                 nodeset="m:persName" 
@@ -55,13 +55,13 @@
         <h:br/>
     </xf:repeat>
 
-    <xf:group ref=".[name(.)='contributor']">
-        <dcm:create ref=".[not(m:corpName)]"
-            nodeset="m:corpName"
+    <xf:group ref=".[name(.) = ('contributor', 'event') or name(..) = 'titleStmt']">
+        <dcm:create ref=".[not(m:corpName[@role != 'ensemble'])]"
+            nodeset="m:corpName[@role != 'ensemble']"
             label="Add institution"
-            origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:corpName"/>
+            origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:corpName[1]"/>
 
-        <xf:group ref="m:corpName">
+        <xf:group ref="m:corpName[@role!='ensemble']">
             <h:div class="blocklabel strong">Institutions</h:div>
             <h:div class="blocklabel">
                 <h:span class="fixed_width_mediumlong">Name</h:span>
@@ -80,7 +80,7 @@
             </h:div>
         </xf:group>
 
-        <xf:repeat nodeset="m:corpName" id="corp-relators-repeat">
+        <xf:repeat nodeset="m:corpName[@role!='ensemble']" id="corp-relators-repeat">
             <dcm:relator/>
             <xi:include href="certainty-input.xml" parse="xml"/>
             <dcm:authority/>
