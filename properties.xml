@@ -4,7 +4,7 @@
   <!-- orbeon endpoint -->
   <orbeon_endpoint>unused</orbeon_endpoint>
   <!-- MerMEId eXist endpoint seen from outside, i.e. the URL you point your browser at -->
-  <exist_endpoint>http://localhost:8080/apps/mermeid</exist_endpoint>
+  <exist_endpoint>http://localhost:8080</exist_endpoint>
   <!-- MerMEId eXist endpoint seen from Orbeon. The orbeon xforms filter interferes with the
        path provided if the same hostname as above is used so use a loopback ip which is equvalent. -->
   <exist_endpoint_seen_from_orbeon>http://127.0.0.2:8080/apps/mermeid</exist_endpoint_seen_from_orbeon>
