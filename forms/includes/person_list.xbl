@@ -100,6 +100,9 @@
                                 <xf:action if="not($binding/@codedval)">
                                   <xf:insert nodeset="@*" context="$binding" origin="xxf:attribute('codedval','')"/>
                                 </xf:action>
+                                <xf:action if="not($binding/@corresp)">
+                                  <xf:insert nodeset="@*" context="$binding" origin="xxf:attribute('corresp','')"/>
+                                </xf:action>
                                 <xf:var name="name" select="normalize-space($binding)"/>
                                 <xf:var name="id" select="$binding/@codedval"/>
                                 <xf:setvalue ref="instance('temp')/persName" value="$name"/>
@@ -151,6 +154,7 @@
                                 <xf:setvalue ref="instance('temp')/persName" value="$el/*[@type='main']"></xf:setvalue>
                                 <xf:setvalue ref="$binding" value="instance('temp')/persName"></xf:setvalue>
                                 <xf:setvalue ref="$binding/@codedval" value="instance('temp')/id"></xf:setvalue>
+                                <xf:setvalue ref="$binding/@corresp" value="$el/m:identifier[@label = 'Register-ID']/text()"></xf:setvalue>
                                 <xf:setvalue ref="$binding/@auth" value="$el/m:identifier[@auth]/@auth"></xf:setvalue>
                                 <xf:setvalue ref="$binding/@auth.uri" value="$el/m:identifier[@auth]/@auth.uri"></xf:setvalue>
                                 <xxf:hide dialog="person-dialog"/>
