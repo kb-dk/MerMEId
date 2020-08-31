@@ -54,19 +54,43 @@
                             <dcm:create nodeset="m:creation" label="Add creation notes"
                                 origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation"/>
 
-                            <dcm:create ref="m:creation" nodeset="m:date"
-                                label="Add creation date"
-                                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation/m:date"/>
-                            <xf:repeat nodeset="m:creation/m:date" id="repeat-creation-date">
-                                <h:span class="fixed_width_mediumlong">Date of composition <h:a
+                            <h:div>
+                            <dcm:create ref="m:creation" nodeset="m:date[@type='start']"
+                                label="Add creation start date"
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation/m:date[@type='start']"/>
+                            <xf:repeat nodeset="m:creation/m:date[@type='start']" id="repeat-creation-date">
+                                <h:span class="fixed_width_mediumlong">Start date of composition <h:a
                                         class="help">&#160;?<h:span class="comment">Date or time
                                             span of composition</h:span></h:a></h:span>
                                 <dcm:date-editor style="display:inline;"/>
-                                <dcm:element-buttons triggers="remove" nodeset="m:date"
+                                <dcm:element-buttons triggers="remove" nodeset="m:date[@type='start']"
                                     index="repeat-creation-date"
-                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation/m:date"
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation/m:date[@type='start']"
                                 />
                             </xf:repeat>
+                            </h:div>
+                            <h:div>
+                            <dcm:create ref="m:creation" nodeset="m:date[@type='end']"
+                                label="Add creation end date"
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation/m:date[@type='end']"/>
+                            <xf:repeat nodeset="m:creation/m:date[@type='end']" id="repeat-creation-date-end">
+                                <h:span class="fixed_width_mediumlong">End date of composition <h:a
+                                        class="help">&#160;?<h:span class="comment">Date or time
+                                            span of composition</h:span></h:a></h:span>
+                                <dcm:date-editor style="display:inline;"/>
+                                <dcm:element-buttons triggers="remove" nodeset="m:date[@type='end']"
+                                    index="repeat-creation-date"
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:creation/m:date[@type='end']"
+                                />
+                              <xf:group ref="..[xs:date(m:date[@type='start']/@isodate) ge xs:date(./@isodate)]">
+                                    <h:a class="help_plain">
+                                        <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning.png"
+                                        alt="warning"/>
+                                        <h:span class="comment">Creation start date has to be earlier than end date.</h:span>
+                                    </h:a>
+                                </xf:group>
+                              </xf:repeat>
+                            </h:div>
                             <h:div>
                                 <dcm:create ref="m:creation" nodeset="m:geogName"
                                     label="Add place"
