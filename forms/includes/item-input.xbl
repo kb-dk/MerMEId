@@ -432,63 +432,23 @@
                 </h:div>
 
                 <h:div>
+
                   <dcm:create nodeset="m:addDesc"
                               label="Add additions"
-                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:addDesc/m:p"></dcm:create>
-                  <xf:repeat nodeset="m:addDesc/m:p" id="repeat-additions">
-                    <xf:group ref=".[not(@type)]">
-                      <xf:action ev:event="xforms-enabled">
-                          <xf:action if="$binding/local-name() = 'corpName'">
-                              <!-- load rism country list -->
-                              <xf:send submission="load-institutions"/>
-                          </xf:action>
-                          <xf:action if="$binding/local-name() = 'persName'">
-                              <!-- load rism country list -->
-                              <xf:send submission="load-persons"/>
-                          </xf:action>
-                      </xf:action>
-                    </xf:group>
+                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:addDesc"></dcm:create>
 
-                    <xf:select1 ref="./@type" class="mediumlong">
-                        <xf:item>
-                            <xf:value>autograph</xf:value>
-                            <xf:label>Autograph</xf:label>
-                        </xf:item>
-                        <xf:item>
-                            <xf:value>other</xf:value>
-                            <xf:label>Other</xf:label>
-                        </xf:item>
-                    </xf:select1>
-
-                    <fr:tinymce ref="." class="mediumheight">
-                      <xf:label class="blocklabel">Additions</xf:label>
+                  <xf:repeat nodeset="m:addDesc" id="repeat-additions">
+                    <fr:tinymce ref="m:p[@type='autograph']" class="mediumheight">
+                      <xf:label class="blocklabel">Additions (autograph)</xf:label>
                     </fr:tinymce>
                     <dcm:attribute-editor/>
-                    <dcm:element-buttons triggers="add remove"
+                    <dcm:element-buttons triggers="remove"
                                          nodeset="m:addDesc"
                                          index="repeat-additions"
                                          origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:addDesc"/>
                     <h:br/>           
                   </xf:repeat>
                 </h:div>
-
-                <h:div>
-                  <dcm:create nodeset="m:watermark"
-                              label="Add watermark"
-                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:watermark"></dcm:create>
-                  <xf:repeat nodeset="m:watermark" id="repeat-watermark">
-                    <fr:tinymce ref="." class="mediumheight">
-                      <xf:label class="blocklabel">Watermark</xf:label>
-                    </fr:tinymce>
-                    <dcm:attribute-editor/>
-                    <dcm:element-buttons triggers="remove"
-                                         nodeset="m:watermark"
-                                         index="repeat-watermark"
-                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:watermark"/>
-                    <h:br/>           
-                  </xf:repeat>
-                </h:div>
-
 
               </h:fieldset>
             </xf:group>
