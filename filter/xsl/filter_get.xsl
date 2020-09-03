@@ -165,7 +165,7 @@
 
   <!-- Convert <p> and <list> to entities for editing in tinymce (with some exceptions handled with simple input fields). -->
   <!-- An exception is needed for all <p> elements NOT to be edited with tinyMCE. -->
-  <xsl:template match="m:p [name(..)!='changeDesc' and name(..)!='addDesc' and name(..)!='supportDesc' and name(..)!='binding' and name(..)!='incipText' and name(../../..)!='provenance'] | m:list" mode="mei2html">
+  <xsl:template match="m:p [name(..)!='changeDesc' and name(..)!='addDesc' and name(..)!='supportDesc' and name(..)!='binding' and name(..)!='condition' and name(..)!='incipText' and name(../../..)!='provenance'] | m:list" mode="mei2html">
         <xsl:variable name="element">
           <xsl:choose>
             <xsl:when test="name()='list'">
