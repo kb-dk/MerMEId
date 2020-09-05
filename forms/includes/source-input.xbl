@@ -517,7 +517,7 @@
                                     <xf:input ref="m:binding/m:p[@type='definition']" class="mediumheight">
                                       <xf:label class="blocklabel">Definition</xf:label>
                                     </xf:input>
-                                    <fr:tinymce ref="m:binding/m:p[@type='general_description']" class="mediumheight">
+                                    <fr:tinymce ref="m:binding/m:condition/m:p[@type='general_description']" class="mediumheight">
                                       <xf:label class="blocklabel">General description</xf:label>
                                     </fr:tinymce>
                                     <dcm:attribute-editor/>
@@ -534,9 +534,9 @@
                                               label="Add binding"
                                               origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:condition"></dcm:create>
                                   <xf:repeat nodeset="m:condition" id="repeat-source-condition">
-                                    <xf:input ref="m:p" class="mediumheight">
+                                    <xf:tinymce ref="m:p" class="mediumheight">
                                       <xf:label class="blocklabel">Condition</xf:label>
-                                    </xf:input>
+                                    </xf:tinymce>
                                     <dcm:attribute-editor/>
                                     <dcm:element-buttons triggers="remove"
                                                          nodeset="m:condition"
