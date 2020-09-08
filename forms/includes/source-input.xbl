@@ -390,20 +390,14 @@
                                 <h:div>
                                     <dcm:create nodeset="m:dimensions" label="Add dimensions"
                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions"/>
-                                    <xf:group ref="m:dimensions"> 
+                                    <xf:group ref="m:dimensions">
+                                    
+                                    <h:div class="strong blocklabel">Dimensions:</h:div>
                                     
                                     <dcm:create nodeset="m:height" label="Add height"
                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:height"/>
-                                    <dcm:create nodeset="m:width" label="Add width"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:width"/>
-                                    <dcm:create nodeset="m:depth" label="Add depth"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:depth"/>
-                                    <dcm:create nodeset="m:dim" label="Add other dimension"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:dim"/>
-
                                     <xf:repeat nodeset="m:height" id="physdesc-dimensions-height">
                                         <h:div>
-                                            <h:span class="fixed_width">Dimensions:</h:span>
                                                 <xf:input ref="@quantity">
                                                     <xf:label>Height <h:a class="help">&#160;?<h:span
                                                       class="comment">Numbers describing the physical
@@ -421,6 +415,9 @@
                                                 <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>
+                                    <dcm:create nodeset="m:width" label="Add width"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:width"/>
+                                    
                                     <xf:repeat nodeset="m:width" id="physdesc-dimensions-width">
                                         <h:div>
                                                 <xf:input ref="@quantity">
@@ -439,6 +436,9 @@
                                                 <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>
+                                    <dcm:create nodeset="m:depth" label="Add depth"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:depth"/>
+
                                     <xf:repeat nodeset="m:depth" id="physdesc-dimensions-depth">
                                         <h:div>
                                                 <xf:input ref="@quantity">
@@ -457,9 +457,12 @@
                                                 <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>
+                                    <dcm:create nodeset="m:dim" label="Add custom dimension"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:dim"/>
+
+                                    <h:div ref="m:dim" class="blocklabel">Custom dimensions:</h:div>
                                     <xf:repeat nodeset="m:dim" id="physdesc-dimensions-dim">
                                         <h:div>
-                                            <h:span class="fixed_width">Custom dimension</h:span>
                                                 <xf:input ref="@type">
                                                     <xf:label>Type <h:a class="help">&#160;?<h:span
                                                       class="comment">Dimension type</h:span></h:a></xf:label>
