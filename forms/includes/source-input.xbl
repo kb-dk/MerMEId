@@ -386,26 +386,101 @@
                                     </xf:repeat>
                                 </h:div>
 
+                                
                                 <h:div>
                                     <dcm:create nodeset="m:dimensions" label="Add dimensions"
                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions"/>
-                                    <xf:repeat nodeset="m:dimensions" id="physdesc-dimensions">
+                                    <xf:group ref="m:dimensions"> 
+                                    
+                                    <dcm:create nodeset="m:height" label="Add height"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:height"/>
+                                    <dcm:create nodeset="m:width" label="Add width"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:width"/>
+                                    <dcm:create nodeset="m:depth" label="Add depth"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:depth"/>
+                                    <dcm:create nodeset="m:dim" label="Add other dimension"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:dim"/>
+
+                                    <xf:repeat nodeset="m:height" id="physdesc-dimensions-height">
                                         <h:div>
                                             <h:span class="fixed_width">Dimensions:</h:span>
-                                            <xf:input ref=".">
-                                                <xf:label>Value <h:a class="help">&#160;?<h:span
-                                                  class="comment">Numbers describing the physical
-                                                  dimensions of the source given as height x width,
-                                                  e.g. '23.5x34'</h:span></h:a></xf:label>
-                                            </xf:input>
-                                            <xi:include href="unit-select.xml" parse="xml"/>
-                                            <dcm:element-buttons triggers="add remove"
-                                                nodeset="m:dimensions" index="physdesc-dimensions"
-                                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions"/>
-                                            <dcm:id/>
-                                            <dcm:attribute-editor/>
+                                                <xf:input ref="@quantity">
+                                                    <xf:label>Height <h:a class="help">&#160;?<h:span
+                                                      class="comment">Numbers describing the physical
+                                                      dimensions of the source given as height x width,
+                                                      e.g. '23.5x34'</h:span></h:a></xf:label>
+                                                    <xf:action ev:event="xforms-value-changed">
+                                                        <xf:setvalue ref=".." value="concat(@quantity, ' (height in ', @unit, ')')"></xf:setvalue>
+                                                    </xf:action>
+                                                </xf:input>
+                                                <xi:include href="unit-select.xml" parse="xml"/>
+                                                <dcm:element-buttons triggers="remove"
+                                                    nodeset="m:height" index="physdesc-dimensions-height"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:height"/>
+                                                <dcm:id/>
+                                                <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>
+                                    <xf:repeat nodeset="m:width" id="physdesc-dimensions-width">
+                                        <h:div>
+                                                <xf:input ref="@quantity">
+                                                    <xf:label>Width <h:a class="help">&#160;?<h:span
+                                                      class="comment">Width value of the source eg. 22.5'</h:span></h:a></xf:label>
+                                                    <xf:action ev:event="xforms-value-changed">
+                                                        <xf:setvalue ref=".." value="concat(@quantity, ' (width in ', @unit, ')')"></xf:setvalue>
+                                                    </xf:action>
+                                                </xf:input>
+                                                <xi:include href="unit-select.xml" parse="xml"/>
+                                            
+                                                <dcm:element-buttons triggers="remove"
+                                                    nodeset="m:width" index="physdesc-dimensions-width"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:width"/>
+                                                <dcm:id/>
+                                                <dcm:attribute-editor/>
+                                        </h:div>
+                                    </xf:repeat>
+                                    <xf:repeat nodeset="m:depth" id="physdesc-dimensions-depth">
+                                        <h:div>
+                                                <xf:input ref="@quantity">
+                                                    <xf:label>Depth <h:a class="help">&#160;?<h:span
+                                                      class="comment">Height value of the source eg. 30</h:span></h:a></xf:label>
+                                                    <xf:action ev:event="xforms-value-changed">
+                                                        <xf:setvalue ref=".." value="concat(@quantity, ' (depth in ', @unit, ')')"></xf:setvalue>
+                                                    </xf:action>
+                                                </xf:input>
+                                                <xi:include href="unit-select.xml" parse="xml"/>
+                                            
+                                                <dcm:element-buttons triggers="remove"
+                                                    nodeset="m:depth" index="physdesc-dimensions-depth"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:depth"/>
+                                                <dcm:id/>
+                                                <dcm:attribute-editor/>
+                                        </h:div>
+                                    </xf:repeat>
+                                    <xf:repeat nodeset="m:dim" id="physdesc-dimensions-dim">
+                                        <h:div>
+                                            <h:span class="fixed_width">Custom dimension</h:span>
+                                                <xf:input ref="@type">
+                                                    <xf:label>Type <h:a class="help">&#160;?<h:span
+                                                      class="comment">Dimension type</h:span></h:a></xf:label>
+                                                </xf:input>
+                                                <xf:input ref="@quantity">
+                                                    <xf:label>Quantity <h:a class="help">&#160;?<h:span
+                                                      class="comment">Dimansion value</h:span></h:a></xf:label>
+                                                    <xf:action ev:event="xforms-value-changed">
+                                                        <xf:setvalue ref=".." value="concat(@quantity, ' (depth in ', @unit, ')')"></xf:setvalue>
+                                                    </xf:action>
+                                                </xf:input>
+                                                <xi:include href="unit-select.xml" parse="xml"/>
+                                            
+                                                <dcm:element-buttons triggers="add remove"
+                                                    nodeset="m:depth" index="physdesc-dimensions-dim"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:dim"/>
+                                                <dcm:id/>
+                                                <dcm:attribute-editor/>
+                                        </h:div>
+                                    </xf:repeat>
+                                  </xf:group>
                                 </h:div>
 
                                 <h:div>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <h:span xmlns:h="http://www.w3.org/1999/xhtml" 
+        xmlns:ev="http://www.w3.org/2001/xml-events" 
+
     xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns:dcm="http://www.kb.dk/dcm">
 
@@ -64,6 +66,9 @@
                 <xf:value>vu</xf:value>
                 <xf:label>vu (MEI virtual unit)</xf:label>
             </xf:item>
+            <xf:action ev:event="xforms-value-changed">
+                <xf:setvalue ref=".." value="concat(@quantity, ' (height in ', @unit, ')')"></xf:setvalue>
+            </xf:action>
     </xf:select1>
 
 </h:span>
