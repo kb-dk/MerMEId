@@ -14,8 +14,10 @@
         origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:persName"/>
     
     <xf:group ref="m:persName">
+        <h:div class="blocklabel strong">Persons</h:div>
         <h:div class="blocklabel">
-            <h:span class="fixed_width_long">Name</h:span>
+            <h:span class="fixed_width_mediumlong">Name</h:span>
+            <h:span class="fixed_width"></h:span>
             <h:span class="fixed_width_mediumlong"> Relation <h:a class="help">&#160;?<h:span class="comment">Specifies the person's relation to the item, e.g. "Composer"
                 or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
             </h:span>
@@ -30,20 +32,19 @@
         </h:div>
     </xf:group>
     
-
     <xf:repeat nodeset="m:persName" id="relators-repeat">
         <dcm:relator/>
         <xi:include href="certainty-input.xml" parse="xml"/>
         <dcm:authority/>
         <!-- a more generic condition would have been nice but didn't work here -->
-        <xf:group ref=".[name(..)!='hand']">
+        <xf:group ref=".[name(.)!='hand']">
             <dcm:element-buttons 
                 triggers="add remove up down" 
                 nodeset="m:persName" 
                 index="relators-repeat"
                 origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:persName[1]"/>
         </xf:group>
-        <xf:group ref=".[name(..)='hand']">
+        <xf:group ref=".[name(.)='hand']">
             <dcm:element-buttons 
                 triggers="remove" 
                 nodeset="m:persName" 
@@ -53,6 +54,44 @@
         <dcm:attribute-editor ref="."/>
         <h:br/>
     </xf:repeat>
-    
-    
+
+    <xf:group ref=".[name(.) = ('contributor', 'event') or name(..) = 'titleStmt']">
+        <dcm:create ref=".[not(m:corpName[@role != 'ensemble'])]"
+            nodeset="m:corpName[@role != 'ensemble']"
+            label="Add institution"
+            origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:corpName[1]"/>
+
+        <xf:group ref="m:corpName[@role!='ensemble']">
+            <h:div class="blocklabel strong">Institutions</h:div>
+            <h:div class="blocklabel">
+                <h:span class="fixed_width_mediumlong">Name</h:span>
+                <h:span class="fixed_width"></h:span>
+                <h:span class="fixed_width_mediumlong"> Relation <h:a class="help">&#160;?<h:span class="comment">Specifies the person's relation to the item, e.g. "Composer"
+                    or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+                </h:span>
+                <h:span class="fixed_width">
+                    Certainty <h:a class="help">&#160;?<h:span class="comment">Indicates the degree of certainty of the person's identity</h:span></h:a>
+                </h:span>
+                <!--<xf:group ref="..[m:persName[@auth or @auth.uri or @codedval]]">-->
+                    <h:span class="fixed_width_long"> Authority file <h:a class="help">&#160;?<h:span class="comment">References to
+                        authority files are used for disambiguation or for linking resources by means of unique identifiers</h:span></h:a>
+                    </h:span>
+                <!--</xf:group>-->
+            </h:div>
+        </xf:group>
+
+        <xf:repeat nodeset="m:corpName[@role!='ensemble']" id="corp-relators-repeat">
+            <dcm:relator/>
+            <xi:include href="certainty-input.xml" parse="xml"/>
+            <dcm:authority/>
+            <!-- a more generic condition would have been nice but didn't work here -->
+            <dcm:element-buttons 
+                triggers="add remove up down" 
+                nodeset="m:corpName" 
+                index="corp-relators-repeat"
+                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:corpName[1]"/>
+            <dcm:attribute-editor ref="."/>
+            <h:br/>
+        </xf:repeat>        
+    </xf:group>
 </h:div>

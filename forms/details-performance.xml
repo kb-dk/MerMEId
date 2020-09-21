@@ -50,6 +50,7 @@
         <xi:include href="includes/element_buttons_typed.xbl" parse="xml"/>
         <xi:include href="includes/id.xbl" parse="xml"/>
         <xi:include href="includes/relator.xbl" parse="xml"/>
+        <xi:include href="includes/person_list.xbl" parse="xml"/>
         
     </h:head>
     
@@ -127,7 +128,7 @@
                             
                             <h:div class="persname-box">
                                 <h:div class="vertical_spacer"/>
-                                <h:div class="blocklabel strong">Persons</h:div>
+                                <h:div class="blocklabel strong">Contributors</h:div>
                                 <xi:include href="includes/person-input.xml"/>
                             </h:div>
                             <h:br clear="all"/>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xbl="http://www.w3.org/ns/xbl"
+    xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+    xmlns:dcm="http://www.kb.dk/dcm"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:marc="http://www.loc.gov/MARC21/slim"
+    xmlns:zs="http://www.loc.gov/zing/srw/"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    
+    <!--
+    Component to select a RISM siglum from lists of countries and archives.
+    Danish Centre for Music Editing (DCM) 
+    Axel Teich Geertinger, 2012
+    atge@kb.dk
+  -->
+    
+    <xbl:binding id="dcm-person-list-binding" element="dcm|person-list">
+        <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+            <display-name lang="en">Person selection component</display-name>
+        </metadata>
+        
+        <xbl:resources>
+            <xbl:style/>
+        </xbl:resources>
+        <xbl:implementation>
+            <!-- Local model -->
+            <xf:model id="person-model">
+                <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
+                    id="person-instance">
+                    <list/>
+                </xf:instance>
+                                
+                <xf:submission id="load-persons"
+                    xxf:show-progress="false"
+                    method="get" 
+                    serialization="none" 
+                    validate="false"
+                    resource="{xxf:instance('parameters')/dcm:library_crud_home}persons.xml"
+                    replace="instance" 
+                    instance="person-instance"/>
+
+                <xf:submission id="load-institutions"
+                    xxf:show-progress="false"
+                    method="get" 
+                    serialization="none" 
+                    validate="false"
+                    resource="{xxf:instance('parameters')/dcm:library_crud_home}institutions.xml"
+                    replace="instance" 
+                    instance="person-instance"/>
+                                
+                <xf:instance id="temp">
+                    <temp>
+                        <persName/>
+                        <id/>
+                    </temp>
+                </xf:instance> 
+                
+                <!-- "onload" xforms actions -->
+                
+                <xf:action ev:event="xforms-submit-error"  ev:propagate="stop">
+                    <xf:var name="code" select="event('response-status-code')"/>
+                    <xf:message>Error. Submission return code: <xf:output value="$code"/></xf:message>
+                </xf:action>
+                
+            </xf:model>
+            
+        </xbl:implementation>
+        
+        <xbl:template>
+            <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
+                <xf:group appearance="xxf:internal" xxbl:scope="inner">
+                    <xf:var name="binding" as="node()?">
+                        <xxf:value select="." xxbl:scope="outer"/>
+                    </xf:var>
+                    
+                    <xf:group ref=".[count(instance('person-instance')//m:li/*) > 0]"> 
+                        <xf:trigger class="fixed_width">
+                            <xf:label>Select from list</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:action if="$binding/local-name() = 'persName'">
+                                    <!-- load rism country list -->
+                                    <xf:send submission="load-persons"/>
+                                </xf:action>
+
+                                <xf:action if="$binding/local-name() = 'corpName'">
+                                    <!-- load rism country list -->
+                                    <xf:send submission="load-institutions"/>
+                                </xf:action>
+
+                                <xf:action if="not($binding/@auth)">
+                                  <xf:insert nodeset="@*" context="$binding" origin="xxf:attribute('auth','')"/>
+                                </xf:action>
+                                <xf:action if="not($binding/@auth.uri)">
+                                  <xf:insert nodeset="@*" context="$binding" origin="xxf:attribute('auth.uri','')"/>
+                                </xf:action>
+                                <xf:action if="not($binding/@codedval)">
+                                  <xf:insert nodeset="@*" context="$binding" origin="xxf:attribute('codedval','')"/>
+                                </xf:action>
+                                <xf:action if="not($binding/@corresp)">
+                                  <xf:insert nodeset="@*" context="$binding" origin="xxf:attribute('corresp','')"/>
+                                </xf:action>
+                                <xf:var name="name" select="normalize-space($binding)"/>
+                                <xf:var name="id" select="$binding/@codedval"/>
+                                <xf:setvalue ref="instance('temp')/persName" value="$name"/>
+                                <xf:setvalue ref="instance('temp')/id" value="$id"/>
+                                <xxf:show dialog="person-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </xf:group>
+
+                    <xf:group ref=".[normalize-space($binding)]">
+                        <xf:action ev:event="xforms-enabled" if="count(@role)!=1">
+                            <xf:action if="$binding/local-name() = 'corpName'">
+                                <!-- load rism country list -->
+                                <xf:send submission="load-institutions"/>
+                            </xf:action>
+                            <xf:action if="$binding/local-name() = 'persName'">
+                                <!-- load rism country list -->
+                                <xf:send submission="load-persons"/>
+                            </xf:action>
+                        </xf:action>
+
+                        <xf:var name="name" select="normalize-space($binding)"/>
+                        <xf:group ref=".[count(instance('person-instance')//m:li/*) > 0 and not(instance('person-instance')//m:li/*/*[./text() = $name])]">
+                            <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning.png" style="vertical-align:middle;"
+                                title="MerMEId does not recognize the person &apos;{$name}&apos;."/>
+                        </xf:group>
+                    </xf:group>
+                        
+                    <xxf:dialog id="person-dialog" appearance="full" level="modal"
+                        close="true" draggable="true" visible="false">
+                        <xf:label>Person selection</xf:label>
+                        <xf:select1 ref="instance('temp')/id" xxf:refresh-items="false" class="maxlong">
+                            <xf:label class="fixed_width">Name</xf:label>
+                            <xf:item>
+                                <xf:label>- Select name -</xf:label>
+                                <xf:value/>
+                            </xf:item>
+                            <xf:itemset nodeset="instance('person-instance')//m:li/*">
+                                <xf:label ref="./*[contains(@type, 'main')]"/>
+                                <xf:value ref="./m:identifier[@auth='GND']/text()"/>
+                            </xf:itemset>
+                        </xf:select1>      
+                        <h:br/>&#160;
+                        <h:br/>
+                        <xf:trigger>
+                            <xf:label> OK </xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:var name="el" select="instance('person-instance')//m:li/*[./m:identifier[./text() = instance('temp')/id]]"/>
+                                <xf:setvalue ref="instance('temp')/persName" value="$el/*[@type='main']"></xf:setvalue>
+                                <xf:setvalue ref="$binding" value="instance('temp')/persName"></xf:setvalue>
+                                <xf:setvalue ref="$binding/@codedval" value="instance('temp')/id"></xf:setvalue>
+                                <xf:setvalue ref="$binding/@corresp" value="$el/m:identifier[@label = 'Register-ID']/text()"></xf:setvalue>
+                                <xf:setvalue ref="$binding/@auth" value="$el/m:identifier[@auth]/@auth"></xf:setvalue>
+                                <xf:setvalue ref="$binding/@auth.uri" value="$el/m:identifier[@auth]/@auth.uri"></xf:setvalue>
+                                <xxf:hide dialog="person-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                        <xf:trigger>
+                            <xf:label> Cancel </xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xxf:hide dialog="person-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </xxf:dialog>
+                    
+                    <dcm:attribute-editor ref="$binding"/>
+                </xf:group>
+            </xf:group>
+        </xbl:template>
+    </xbl:binding>
+</xbl:xbl>

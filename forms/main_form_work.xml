@@ -196,11 +196,11 @@
 			</h:fieldset>
 
 			<h:fieldset>
-				<h:legend>Persons <h:a class="help">&#160;?<h:span class="comment">A list of person
+				<h:legend>Contributors <h:a class="help">&#160;?<h:span class="comment">A list of person
 							involved in the creation or transmission of this work in general, such
 							as the composer or text author</h:span></h:a></h:legend>
 				<dcm:create ref="instance('data-instance')/m:meiHead/m:workList/m:work"
-					nodeset="m:contributor" label="Add person"
+					nodeset="m:contributor" label="Add contributor"
 					origin="instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor"/>
 				<xf:group ref="instance('data-instance')/m:meiHead/m:workList/m:work/m:contributor">
 					<xi:include href="includes/person-input.xml"/>

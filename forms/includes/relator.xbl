@@ -11,7 +11,7 @@
     Axel Teich Geertinger, 2012–2015
     atge@kb.dk
   -->
-
+  
   <xbl:binding id="dcm-relator-binding" element="dcm|relator">
 
     <!-- Orbeon Form Builder Component Metadata -->
@@ -41,18 +41,20 @@
             <!-- initialization -->
             <xf:action ev:event="xforms-value-changed xforms-enabled"/>
           </xf:var>
-
-          <xf:input class="long" ref="$binding">
+          
+          
+          <xf:input class="mediumlong" ref="$binding">
             <xf:action ev:event="xforms-enabled" if="count(@role)!=1">
               <!-- add role attribute -->
               <xf:insert nodeset="@*" context="." origin="xxf:attribute('role','')"/>
             </xf:action>
           </xf:input>
           <xf:var name="role" select="$binding/@role"/>
-
+          
+          <dcm:person-list ref="$binding"></dcm:person-list>
+          
           <!-- display a warning if role is not on standard relators list -->
           <xf:group ref=".[$role and not(xxf:instance('relators-instance')/role[.=$role])]">
-            <xf:output value="$binding/@role"/>
             <h:a class="help_plain">
               <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning.png"
                 alt="warning"/>
