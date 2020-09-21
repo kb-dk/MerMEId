@@ -455,6 +455,97 @@
                                         <dcm:attribute-editor/>
                                     </xf:repeat>
                                 </h:div>
+
+                                <h:div>
+                                    <dcm:create nodeset="m:addDesc"
+                                              label="Add additions"
+                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:addDesc"></dcm:create>
+                                    <xf:group ref="m:addDesc">
+                                        <h:span class="blocklabel strong">Additions</h:span>
+                                    </xf:group>
+
+                                  <xf:repeat nodeset="m:addDesc" id="repeat-source-additions">
+                                    <fr:tinymce ref="m:p[@type='autograph']" class="mediumheight">
+                                      <xf:label class="blocklabel">Autograph</xf:label>
+                                    </fr:tinymce>
+                                    <fr:tinymce ref="m:p[@type='foreign']" class="mediumheight">
+                                      <xf:label class="blocklabel">Foreign</xf:label>
+                                    </fr:tinymce>
+                                    <dcm:attribute-editor/>
+                                    <dcm:element-buttons triggers="remove"
+                                                         nodeset="m:addDesc"
+                                                         index="repeat-source-additions"
+                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:addDesc"/>
+                                    <h:br/>           
+                                  </xf:repeat>
+                                </h:div>
+
+                                <h:div>
+                                  <dcm:create nodeset="m:supportDesc"
+                                              label="Add foliation"
+                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:supportDesc"></dcm:create>
+                                    <xf:group ref="m:supportDesc">
+                                        <h:span class="blocklabel strong">Foliation</h:span>
+                                    </xf:group>
+
+
+                                  <xf:repeat nodeset="m:supportDesc" id="repeat-source-foliation">
+                                    <fr:tinymce ref="m:p[@type='autograph']" class="mediumheight">
+                                      <xf:label class="blocklabel">Autograph</xf:label>
+                                    </fr:tinymce>
+                                    <fr:tinymce ref="m:p[@type='foreign']" class="mediumheight">
+                                      <xf:label class="blocklabel">Foreign</xf:label>
+                                    </fr:tinymce>
+                                    <dcm:attribute-editor/>
+                                    <dcm:element-buttons triggers="remove"
+                                                         nodeset="m:supportDesc"
+                                                         index="repeat-source-foliation"
+                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:supportDesc"/>
+                                    <h:br/>           
+                                  </xf:repeat>
+                                </h:div>
+
+                                <h:div>
+                                  <dcm:create nodeset="m:bindingDesc"
+                                              label="Add binding"
+                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:bindingDesc"></dcm:create>
+                                    <xf:group ref="m:bindingDesc">
+                                        <h:span class="blocklabel strong">Binding</h:span>
+                                    </xf:group>
+
+                                  <xf:repeat nodeset="m:bindingDesc" id="repeat-source-binding">
+                                    <xf:input ref="m:binding/m:p[@type='definition']" class="mediumheight">
+                                      <xf:label class="blocklabel">Definition</xf:label>
+                                    </xf:input>
+                                    <fr:tinymce ref="m:binding/m:condition/m:p[@type='general_description']" class="mediumheight">
+                                      <xf:label class="blocklabel">General description</xf:label>
+                                    </fr:tinymce>
+                                    <dcm:attribute-editor/>
+                                    <dcm:element-buttons triggers="remove"
+                                                         nodeset="m:bindingDesc"
+                                                         index="repeat-source-binding"
+                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:bindingDesc"/>
+                                    <h:br/>           
+                                  </xf:repeat>
+                                </h:div>
+
+                                <h:div>
+                                  <dcm:create nodeset="m:condition"
+                                              label="Add binding"
+                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:condition"></dcm:create>
+                                  <xf:repeat nodeset="m:condition" id="repeat-source-condition">
+                                    <xf:tinymce ref="m:p" class="mediumheight">
+                                      <xf:label class="blocklabel">Condition</xf:label>
+                                    </xf:tinymce>
+                                    <dcm:attribute-editor/>
+                                    <dcm:element-buttons triggers="remove"
+                                                         nodeset="m:condition"
+                                                         index="repeat-source-condition"
+                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:condition"/>
+                                    <h:br/>           
+                                  </xf:repeat>
+                                </h:div>
+
                             </xf:group>
                         </h:fieldset>
 
