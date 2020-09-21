@@ -354,9 +354,7 @@
                         <h:div>
                             <xf:input ref="@quantity">
                                 <xf:label>Height <h:a class="help">&#160;?<h:span
-                                  class="comment">Numbers describing the physical
-                                  dimensions of the source given as height x width,
-                                  e.g. '23.5x34'</h:span></h:a></xf:label>
+                                  class="comment">Height value of the source eg. 22.5</h:span></h:a></xf:label>
                                 <xf:action ev:event="xforms-value-changed">
                                     <xf:setvalue ref=".." value="concat(@quantity, ' (height in ', @unit, ')')"></xf:setvalue>
                                 </xf:action>
@@ -375,7 +373,7 @@
                         <h:div>
                             <xf:input ref="@quantity">
                                 <xf:label>Width <h:a class="help">&#160;?<h:span
-                                  class="comment">Width value of the source eg. 22.5'</h:span></h:a></xf:label>
+                                  class="comment">Width value of the source eg. 22.5</h:span></h:a></xf:label>
                                 <xf:action ev:event="xforms-value-changed">
                                     <xf:setvalue ref=".." value="concat(@quantity, ' (width in ', @unit, ')')"></xf:setvalue>
                                 </xf:action>
@@ -395,7 +393,7 @@
                         <h:div>
                             <xf:input ref="@quantity">
                                 <xf:label>Depth <h:a class="help">&#160;?<h:span
-                                  class="comment">Height value of the source eg. 30</h:span></h:a></xf:label>
+                                  class="comment">Depth value of the source eg. 30</h:span></h:a></xf:label>
                                 <xf:action ev:event="xforms-value-changed">
                                     <xf:setvalue ref=".." value="concat(@quantity, ' (depth in ', @unit, ')')"></xf:setvalue>
                                 </xf:action>
