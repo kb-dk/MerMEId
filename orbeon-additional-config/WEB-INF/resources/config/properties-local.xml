@@ -1,0 +1,8 @@
+<properties xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:oxf="http://www.orbeon.com/oxf/processors">
+    <!-- Renaming existdb session and the "DUMMY" refix is required to prevent Orbeon sending duplicate JSESSIONID -->
+    <property
+    as="xs:string"
+    name="oxf.http.forward-cookies"
+    value="DUMMY XSESSIONID"/>
+</properties>

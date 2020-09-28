@@ -67,6 +67,10 @@
          <param-value>UTF-8</param-value>
       </init-param>
    </servlet>
+    <context-param>
+    <param-name>org.eclipse.jetty.servlet.SessionCookie</param-name>
+    <param-value>XSESSIONID</param-value>
+  </context-param>
    <!--
         EXistServlet is a helper servlet that is used to ensure that
         eXist is running in the background.
@@ -91,6 +95,7 @@
          <param-name>basedir</param-name>
          <param-value>WEB-INF/</param-value>
       </init-param>
+
       <init-param>
          <param-name>start</param-name>
          <param-value>true</param-value>
