@@ -193,7 +193,7 @@ declare function local:format-reference(
     		  <select name="c" onchange="this.form.submit();">
     		    <option value="">All collections</option>
     		    {
-               	      for $c in distinct-values(collection("/db/dcm")//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0]/string())
+               	      for $c in distinct-values(collection($database)//m:seriesStmt/m:identifier[@type="file_collection" and string-length(.) > 0]/string())
                         let $option :=
                 		      if(not(session:get-attribute("coll")=$c)) then 
                 		      <option value="{$c}">{$c}</option>
