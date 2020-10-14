@@ -2,6 +2,7 @@ xquery version "1.0";
 
 import module namespace xdb="http://exist-db.org/xquery/xmldb";
 import module namespace util="http://exist-db.org/xquery/util";
+import module namespace dbutil="http://exist-db.org/xquery/dbutil";
 import module namespace sm="http://exist-db.org/xquery/securitymanager";
 import module namespace file="http://exist-db.org/xquery/file";
 import module namespace config="https://github.com/edirom/mermeid/config" at "modules/config.xqm";
@@ -16,7 +17,8 @@ declare variable $dir external;
 declare variable $target external := "/db/apps/mermeid";
 
 declare function local:set-options() as xs:string* {
-    for $opt in available-environment-variables()[starts-with(., 'MERMEID_')][not(. = ('MERMEID_admin_password', 'MERMEID_admin_password_file'))]
+    for $opt in available-environment-variables()[starts-with(., 'MERMEID_')][not(. = ('MERMEID_admin_password', 'MERMEID_admin_password_file',
+        'MERMEID_mermeid_password', 'MERMEID_mermeid_password_file'))]
     return
         config:set-property(substring($opt, 9), normalize-space(environment-variable($opt)))
 };
@@ -38,6 +40,44 @@ declare function local:set-admin-password() as empty-sequence() {
 };
 
 
+declare function local:create-group() as empty-sequence() {
+    sm:create-group('mermedit')
+};
+
+declare function local:change-group() as empty-sequence() {
+    sm:chgrp(xs:anyURI(concat($target, '/data')), 'mermedit'),
+    dbutil:scan(xs:anyURI(concat($target, '/data')), function($collection, $resource) {
+        if ($resource) then (
+            sm:chgrp($resource, "mermedit"),
+            sm:chmod($resource, 'rwxrwxr-x')
+        ) else
+            ()
+    })
+
+};
+
+
+declare function local:create-user() as empty-sequence() {
+    let $opt :=
+        (: process only one possible option to set the admin password with a preference for a secret file :)
+        (
+        available-environment-variables()[. = 'MERMEID_mermeid_password_file'],
+        available-environment-variables()[. = 'MERMEID_mermeid_password']
+        )[1]
+               
+    let $password := if($opt = 'MERMEID_mermeid_password_file') then 
+            if(file:exists(string(environment-variable($opt)))) then
+                normalize-space(file:read(normalize-space(environment-variable($opt))))
+            else util:log-system-out(concat('unable to read from file "', normalize-space(environment-variable($opt)), '"'))
+        else if($opt = 'MERMEID_mermeid_password') then 
+            string(environment-variable($opt))
+            else ()
+
+    return if ($password) then 
+        sm:create-account('mermeid', $password, 'mermeid', ('mermedit'))
+    else ()
+};
+
 declare function local:force-xml-mime-type-xbl() as xs:string* {
     let $forms-includes := concat($target, '/forms/includes'),
         $log := util:log-system-out(concat('Storing .xbl as XML documents in ', $forms-includes))
@@ -53,5 +93,7 @@ local:set-options(),
 local:force-xml-mime-type-xbl(),
 (: set admin password if provided. 
     NB, this has to be the last command otherwise the other commands will not be executed properly :) 
+local:create-group(),
+local:change-group(),
+local:create-user(),
 local:set-admin-password()
-
