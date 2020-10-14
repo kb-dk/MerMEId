@@ -35,10 +35,22 @@ The most convenient way to set up MerMEId is by pulling the ready made Docker im
 Starting a MerMEId instance is simple: 
 
 ```sh
-$ docker -run --name my-mermeid -p 8080:8080 -d edirom/mermeid:develop
+$ docker run --name my-mermeid -p 8080:8080 -d edirom/mermeid:develop
 ```
 
 … where `my-mermeid` is the name you want to assign to your container and `8080` is the local port where the MerMEId server will listen.
+
+### Logs
+
+Orbeon logs everything to stdout, so you can access them with `docker logs my-mermeid`. Existdb writes most information into logifles though, so in case you want to access them you should mount a host directory to /exist/logs like this:
+```
+$ docker run --name my-mermeid -p 8080:8080 -d --mount type=bind,source="$(pwd)/logs",target=/exist/logs edirom/mermeid:develop
+```
+
+### Default user credentials
+
+The install script accepts the environment variables MERMEID_admin_password_file or MERMEID_admin_password to set the DBA password and MERMEID_mermeid_password_file or MERMEID_mermeid_password to set the password for the default editor user "mermeid"
+
 
 ### … via docker stack deploy or docker-compose
 
