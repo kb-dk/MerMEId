@@ -28,7 +28,7 @@ else if (contains($exist:path, "/$shared/")) then
         </forward>
     </dispatch>
 
-else if (ends-with($exist:path, ".js") or ends-with($exist:path, ".css") or ends-with($exist:path, ".css") or contains($exist:path, "/resources/") or contains($exist:path, "/orbeon/"))) then
+else if (ends-with($exist:path, ".js") or ends-with($exist:path, ".css") or ends-with($exist:path, ".css") or contains($exist:path, "/resources/") or contains($exist:path, "/orbeon/")) then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <cache-control cache="yes"/>
         <set-attribute name="$exist:prefix" value="{$exist:prefix}"/>
