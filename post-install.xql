@@ -6,6 +6,7 @@ import module namespace dbutil="http://exist-db.org/xquery/dbutil";
 import module namespace sm="http://exist-db.org/xquery/securitymanager";
 import module namespace file="http://exist-db.org/xquery/file";
 import module namespace config="https://github.com/edirom/mermeid/config" at "modules/config.xqm";
+declare namespace dcm="http://www.kb.dk/dcm";
 
 (: The following external variables are set by the repo:deploy function :)
 
@@ -71,12 +72,24 @@ declare function local:create-user() as empty-sequence() {
             else util:log-system-out(concat('unable to read from file "', normalize-space(environment-variable($opt)), '"'))
         else if($opt = 'MERMEID_mermeid_password') then 
             string(environment-variable($opt))
-            else ()
+        else "mermeid"
 
     return if ($password) then 
         sm:create-account('mermeid', $password, 'mermeid', ('mermedit'))
     else ()
 };
+
+
+declare function local:set-app-url() {
+    let $url := if(available-environment-variables()[. = 'MERMEID_app_url']) then 
+            string(environment-variable('MERMEID_app_url'))
+        else "localhost:8080"
+
+    let $props := doc(concat($target, '/properties.xml'))
+
+    return update value $props//dcm:exist_endpoint with $url
+};
+
 
 declare function local:force-xml-mime-type-xbl() as xs:string* {
     let $forms-includes := concat($target, '/forms/includes'),
@@ -90,6 +103,7 @@ declare function local:force-xml-mime-type-xbl() as xs:string* {
 
 (: set options provided as environment variables :)
 local:set-options(),
+local:set-app-url(),
 local:force-xml-mime-type-xbl(),
 (: set admin password if provided. 
     NB, this has to be the last command otherwise the other commands will not be executed properly :) 
