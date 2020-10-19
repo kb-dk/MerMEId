@@ -47,7 +47,7 @@ declare function local:create-group() as empty-sequence() {
 
 declare function local:change-group() as empty-sequence() {
     sm:chgrp(xs:anyURI(concat($target, '/data')), 'mermedit'),
-    sm:chmod(xs:anyURI(concat($target, '/data')), 'rwxrwxr-x')
+    sm:chmod(xs:anyURI(concat($target, '/data')), 'rwxrwxr-x'),
     dbutil:scan(xs:anyURI(concat($target, '/data')), function($collection, $resource) {
         if ($resource) then (
             sm:chgrp($resource, "mermedit"),
