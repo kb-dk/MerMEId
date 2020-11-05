@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://music-encoding.org/schema/4.0.0/mei-all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://music-encoding.org/schema/4.0.0/mei-all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<list xml:id="mei_5607df02-a8c8-4760-a721-4336707cc0da" xmlns="http://www.music-encoding.org/ns/mei" xmlns:xl="http://www.w3.org/1999/xlink">
+	<head>Persons</head>
+	<li>
+   		<watermark xml:id="watermark_example">
+            <title type="main">Anton Kiesling &amp; Sohn Typ 1</title>
+            <title type="Nomenklatur-WD">Anton Kiesling &amp; Sohn Typ III</title>
+            <identifier label="ID-Wasserzeichen"/>
+            <!--Prüfen ob das so bleibt-->
+            <!--<identifier label="Codierung_gemäß_MoP"></identifier>
+            <identifier label="Codierung_gemäß_IPH"></identifier>-->
+            <fig>
+                <graphic mimetype="images/jpg" target="./Wasserzeichen-Pausen/AKuS/AKuS_III_Typ1.jpg"/>
+                <graphic mimetype="images/jpg" target="./Wasserzeichen-Pausen/AKuS/AKuS_III_Typ1_02.jpg"/>
+                <graphic mimetype="images/jpg" target="./Wasserzeichen-Pausen/AKuS/AKuS_III_Typ1_03.jpg"/>
+                <figDesc>
+                    <heraldry type="Hauptzeichen" xml:id="watermark_ID_20-01">
+                        <head>Main</head>
+                        <identifier type="WZIS" codedval="103002003003002001005" auth.uri="https://www.wasserzeichen-online.de/wzis/struktur.php?klassi="/>
+                        <term>Wappen</term>
+                        <term>Gemeine Figuren</term>
+                        <term>Flora</term>
+                        <term>Lilie</term>
+                        <term>eine Lilie (Schild bekrönt)</term>
+                        <term>ohne weitere Belegung</term>
+                        <term>Marke</term>
+                        <locus>links</locus>
+                        <annot>
+                            <p>Auf der linken Seite bekröntes Wappenschild mit Lilie und Ziffer 4 am unteren Ende, darunter links das Monogramm „L“, oftmals nur schwach, oder als „I“ erkennbar, auf der rechten Seite die Initialen „AK &amp; S“.</p>
+                        </annot>
+                        <relation rel="countermark" target="#watermark_ID_20-02, #watermark_ID_20-03"/>
+                    </heraldry>
+                    <heraldry type="Gegenzeichen" xml:id="watermark_ID_20-02">
+                        <identifier type="WZIS" codedval="011003132" auth.uri="https://www.wasserzeichen-online.de/wzis/struktur.php?klassi="/>
+                        <term>Buchstaben/Ziffern</term>
+                        <term>drei Buchstaben</term>
+                        <term label="initial">AK&amp;S</term>
+                        <term>frei, ohne Beizeichen</term>
+                        <locus>rechts mittig</locus>
+                        <relation rel="countermark" target="#watermark_ID_20-01, #watermark_ID_20-03"/>
+                    </heraldry>
+                    <heraldry type="Gegenzeichen" xml:id="watermark_ID_20-03">
+                        <identifier type="WZIS" codedval="011001011001" auth.uri="https://www.wasserzeichen-online.de/wzis/struktur.php?klassi="/>
+                        <term>Buchstaben/Ziffern</term>
+                        <term>ein Buchstabe</term>
+                        <term label="Monogramm">Buchstabe L</term>
+                        <term>frei, ohne Beizeichen</term>
+                        <term>vollständig zweikonturig</term>
+                        <!--WZ in dieser Version in WZIS noch nicht ordentlich vorhanden, technische Probleme der DB.-->
+                        <locus>links unten</locus>
+                        <relation rel="countermark" target="#watermark_ID_20-01, #watermark_ID_20-02"/>
+                    </heraldry>
+                </figDesc>
+            </fig>
+            <ptr target="#Link"/>
+            <date label="Benutzungszeitraum" startdate="1818" enddate="1828"
+                >1818–1828</date>
+            <corpName label="Papiermühle">Lauterwasser</corpName>
+            <corpName label="Firma">Anton Kiesling und Sohn</corpName>
+            <geogName>
+                <country>Tschechien</country>
+                <annot>ehem. Böhmen</annot>
+                <region>Královéhradecký kraj</region>
+                <settlement>Lauterwasser</settlement>
+            </geogName>
+            <ref>
+                <bibl>
+                    <title type="abbreviated">Eineder</title>
+                    <biblScope unit="page">S. 119, 122–123</biblScope>
+                </bibl>
+                <bibl>
+                <title type="abbreviated">Paper studies and the future research</title>
+                    <author>Winter, Robert</author>
+                <identifier>Vb, VIb, VIIIa</identifier>
+                </bibl>
+            </ref>
+            <annot label="Kommentar">
+                <p>AK&amp;S, Lilie und L (Lauterwasser). 1818 verließ Anton Ignaz Kiesling den gemeinsam mit seinen Brüdern geführten Papiermühlenbetrieb Lauterwasser und Nieder-Hohenelbe und übernahm mit seinem Sohn die Papiermühle Lauterwasser.</p>                                 
+            </annot>
+        </watermark>
+	</li>
+</list>
