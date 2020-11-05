@@ -1,0 +1,142 @@
+<xbl:xbl xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xxbl="http://orbeon.org/oxf/xml/xbl" xmlns:xbl="http://www.w3.org/ns/xbl" xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xxf="http://orbeon.org/oxf/xml/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:zs="http://www.loc.gov/zing/srw/" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:dcm="http://www.kb.dk/dcm">
+    
+    <!--
+    Component to select a RISM siglum from lists of countries and archives.
+    Danish Centre for Music Editing (DCM) 
+    Axel Teich Geertinger, 2012
+    atge@kb.dk
+  -->
+    
+    <xbl:binding id="dcm-watermark-list-binding" element="dcm|watermark-list">
+        <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+            <display-name lang="en">Watermark</display-name>
+        </metadata>
+        
+        <xbl:resources>
+            <xbl:style/>
+        </xbl:resources>
+        <xbl:implementation>
+            <!-- Local model -->
+            <xf:model id="watermark-model">
+                <xf:instance xmlns="http://www.music-encoding.org/ns/mei" id="watermark-instance">
+                    <list/>
+                </xf:instance>
+                                
+                <xf:submission id="load-watermarks" xxf:show-progress="false" method="get" serialization="none" validate="false" resource="{xxf:instance('parameters')/dcm:library_crud_home}watermarks.xml" replace="instance" instance="watermark-instance"/>
+                                
+                <xf:instance id="temp">
+                    <temp>
+                        <title/>
+                        <id/>
+                        <component/>
+                    </temp>
+                </xf:instance> 
+                
+                <!-- "onload" xforms actions -->
+                
+                <xf:action ev:event="xforms-submit-error" ev:propagate="stop">
+                    <xf:var name="code" select="event('response-status-code')"/>
+                    <xf:message>Error. Submission return code: <xf:output value="$code"/>
+                    </xf:message>
+                </xf:action>
+                
+            </xf:model>
+            
+        </xbl:implementation>
+        
+        <xbl:template>
+            <xf:group xbl:attr="model context ref bind" xxbl:scope="outer">
+                <xf:group appearance="xxf:internal" xxbl:scope="inner">
+                    <xf:var name="binding" as="node()?">
+                        <xxf:value select="." xxbl:scope="outer"/>
+                    </xf:var>
+                    
+                    <xf:group ref=".[count(instance('watermark-instance')//m:li/*) &gt; 0]"> 
+                        <xf:trigger class="fixed_width">
+                            <xf:label>Select from list</xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:action>
+                                    <!-- load rism country list -->
+                                    <xf:send submission="load-watermarks"/>
+                                </xf:action>
+
+                                <xf:var name="name" select="normalize-space($binding/m:title)"/>
+                                <xf:var name="id" select="$binding/m:ref/@corresp"/>
+                                <xf:setvalue ref="instance('temp')/title" value="$name"/>
+                                <xf:setvalue ref="instance('temp')/id" value="$id"/>
+                                <xf:setvalue ref="instance('temp')/component" value="$binding/m:heraldry/@corresp"/>
+                                <xxf:show dialog="watermark-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </xf:group>
+
+                    <xf:action ev:event="xforms-enabled" if="count(@role)!=1">
+                        <xf:action if="$binding/local-name() = 'corpName'">
+                            <!-- load rism country list -->
+                            <xf:send submission="load-institutions"/>
+                        </xf:action>
+                        <xf:action>
+                            <!-- load rism country list -->
+                            <xf:send submission="load-watermarks"/>
+                        </xf:action>
+                    </xf:action>
+
+                    <xf:group ref=".[normalize-space($binding)]">
+                        <xf:var name="name" select="normalize-space($binding)"/>
+                        <xf:group ref=".[count(instance('watermark-instance')//m:li/*) &gt; 0 and not(instance('watermark-instance')//m:li/*/*[./text() = $name])]">
+                            <h:img src="{xxf:instance('parameters')/dcm:server_name}/editor/images/warning.png" style="vertical-align:middle;" title="MerMEId does not recognize the person '{$name}'."/>
+                        </xf:group>
+                    </xf:group>
+                        
+                    <xxf:dialog id="watermark-dialog" appearance="full" level="modal" close="true" draggable="true" visible="false">
+                        <xf:label>Watermark</xf:label>
+                        <xf:select1 ref="instance('temp')/id" xxf:refresh-items="true" class="maxlong">
+                            <xf:label class="fixed_width">Type</xf:label>
+                            <xf:item>
+                                <xf:label>- Select type -</xf:label>
+                                <xf:value/>
+                            </xf:item>
+                            <xf:itemset nodeset="instance('watermark-instance')//m:li/m:watermark">
+                                <xf:label ref="./m:title[@type = 'main']"/>
+                                <xf:value ref="./@xml:id"/>
+                            </xf:itemset>
+                        </xf:select1>      
+                        <h:br/> 
+                        <xf:select1 ref="instance('temp')/component" xxf:refresh-items="true" class="maxlong">
+                            <xf:label class="fixed_width">Component</xf:label>
+                            <xf:item>
+                                <xf:label>- Select component -</xf:label>
+                                <xf:value/>
+                            </xf:item>
+                            <xf:itemset nodeset="instance('watermark-instance')//m:li/m:watermark[./@xml:id = instance('temp')/id]//m:heraldry">
+                                <xf:label ref="./m:head[1]"/>
+                                <xf:value ref="./@xml:id"/>
+                            </xf:itemset>
+                        </xf:select1>  
+                        <h:br/>
+                        <xf:trigger>
+                            <xf:label> OK </xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xf:var name="el" select="instance('watermark-instance')//m:li/m:watermark[./@xml:id = instance('temp')/id]"/>
+                                <xf:setvalue ref="instance('temp')/title" value="$el/m:title[@type='main']"/>
+                                <xf:setvalue ref="$binding/m:title" value="instance('temp')/title"/>
+                                <xf:setvalue ref="$binding/m:ref/@corresp" value="instance('temp')/id"/>
+                                <xf:setvalue ref="$binding/m:heraldry/@corresp" value="instance('temp')/component"/>
+                                <xf:setvalue ref="$binding/m:heraldry" value="$el//m:heraldry[./@xml:id = instance('temp')/component]/m:head[1]"/>
+                                <xxf:hide dialog="watermark-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                        <xf:trigger>
+                            <xf:label> Cancel </xf:label>
+                            <xf:action ev:event="DOMActivate">
+                                <xxf:hide dialog="watermark-dialog"/>
+                            </xf:action>
+                        </xf:trigger>
+                    </xxf:dialog>
+                    
+                    <dcm:attribute-editor ref="$binding"/>
+                </xf:group>
+            </xf:group>
+        </xbl:template>
+    </xbl:binding>
+</xbl:xbl>

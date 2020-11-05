@@ -499,7 +499,7 @@
                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:watermark[@type='predefined']"/>
                     <xf:repeat nodeset="m:watermark[@type='predefined']" id="repeat-source-watermark-predefined">
                         <xf:input ref="m:title" class="mediumlong">
-                            <xf:label class="fixed_width">Title</xf:label>
+                            <xf:label class="fixed_width">Type</xf:label>
                         </xf:input>
                         <xf:input ref="m:heraldry" class="mediumlong">
                             <xf:label class="fixed_width">Component</xf:label>
