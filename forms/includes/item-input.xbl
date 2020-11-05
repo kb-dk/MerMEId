@@ -492,21 +492,40 @@
                   </xf:repeat>
                 </h:div>
                 
+                <h:div class="strong blocklabel">Watermark:</h:div>
+
                 <h:div>
-                  <dcm:create nodeset="m:watermark"
-                              label="Add watermark"
-                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:watermark"></dcm:create>
-                  <xf:repeat nodeset="m:watermark" id="repeat-watermark">
-                    <fr:tinymce ref="." class="mediumheight">
-                      <xf:label class="blocklabel">Watermark</xf:label>
-                    </fr:tinymce>
-                    <dcm:attribute-editor/>
-                    <dcm:element-buttons triggers="remove"
-                                         nodeset="m:watermark"
-                                         index="repeat-watermark"
-                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:itemList/m:item/m:physDesc/m:watermark"/>
-                    <h:br/>						
-                  </xf:repeat>
+                    <dcm:create nodeset="m:watermark[@type='predefined']" label="Add predefined watermark"
+                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:watermark[@type='predefined']"/>
+                    <xf:repeat nodeset="m:watermark[@type='predefined']" id="repeat-source-watermark-predefined">
+                        <xf:input ref="m:title" class="mediumlong">
+                            <xf:label class="fixed_width">Type</xf:label>
+                        </xf:input>
+                        <xf:input ref="m:heraldry" class="mediumlong">
+                            <xf:label class="fixed_width">Component</xf:label>
+                        </xf:input>
+                        <dcm:watermark-list />
+                        <dcm:element-buttons triggers="add remove" nodeset="m:watermark[@type='predefined']"
+                            index="repeat-source-watermark-predefined"
+                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:watermark[@type='predefined']"/>
+                        <dcm:id/>
+                        <dcm:attribute-editor/>
+                    </xf:repeat>
+                </h:div>
+
+                <h:div>
+                    <dcm:create nodeset="m:watermark[@type='text']" label="Add watermark contents"
+                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:watermark[@type='text']"/>
+                    <xf:repeat nodeset="m:watermark[@type='text']" id="repeat-source-watermark">                                        
+                        <fr:tinymce ref="." class="mediumheight">
+                            <xf:label class="blocklabel">Contents</xf:label>
+                        </fr:tinymce>
+                        <dcm:element-buttons triggers="remove" nodeset="m:watermark[@type='text']"
+                            index="repeat-source-watermark"
+                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:watermark[@type='text']"/>
+                        <dcm:id/>
+                        <dcm:attribute-editor/>
+                    </xf:repeat>
                 </h:div>
               </h:fieldset>
             </xf:group>
