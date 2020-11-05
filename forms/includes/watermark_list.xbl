@@ -1,10 +1,7 @@
 <xbl:xbl xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xxbl="http://orbeon.org/oxf/xml/xbl" xmlns:xbl="http://www.w3.org/ns/xbl" xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xxf="http://orbeon.org/oxf/xml/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:zs="http://www.loc.gov/zing/srw/" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:dcm="http://www.kb.dk/dcm">
     
-    <!--
-    Component to select a RISM siglum from lists of countries and archives.
-    Danish Centre for Music Editing (DCM) 
-    Axel Teich Geertinger, 2012
-    atge@kb.dk
+<!--
+    Component to select a watermark entry from a list with optional components if the watermark is partial. 
   -->
     
     <xbl:binding id="dcm-watermark-list-binding" element="dcm|watermark-list">
