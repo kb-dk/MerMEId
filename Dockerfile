@@ -24,6 +24,7 @@ RUN unzip orbeon-*.zip && rm orbeon-*.zip && mv orbeon-* orbeon-dist &&\
     rm -rf WEB-INF/resources/forms/orbeon/dmv-14  &&\
     rm -rf WEB-INF/lib/orbeon-form-builder.jar &&\
     rm -rf WEB-INF/lib/exist-*.jar &&\
+    rm -rf WEB-INF/lib/slf4j-*.jar &&\
     rm -rf WEB-INF/exist-data &&\
     rm  WEB-INF/exist-conf.xml WEB-INF/jboss-scanning.xml WEB-INF/liferay-display.xml WEB-INF/portlet.xml \
         WEB-INF/jboss-web.xml WEB-INF/liferay-portlet.xml WEB-INF/sun-web.xml WEB-INF/weblogic.xml &&\
@@ -42,7 +43,7 @@ RUN ant
 # and adding our freshly built xar-package
 # as well as orbeon and the orbeon xforms filter
 #########################
-FROM existdb/existdb:5.3.0-SNAPSHOT
+FROM existdb/existdb:5.2.0
 
 ENV CLASSPATH=/exist/lib/exist.uber.jar:/exist/lib/orbeon-xforms-filter.jar
 
@@ -53,3 +54,4 @@ COPY jetty-exist-additional-config/etc/jetty/webapps/portal/WEB-INF/* ${EXIST_HO
 COPY --from=builder /orbeon-xforms-filter/WEB-INF/lib/orbeon-xforms-filter.jar ${EXIST_HOME}/lib/
 COPY jetty-exist-additional-config/etc/webapp/WEB-INF/*.xml ${EXIST_HOME}/etc/webapp/WEB-INF/
 COPY orbeon-additional-config/WEB-INF/resources/config/* ${EXIST_HOME}/etc/jetty/webapps/orbeon/WEB-INF/resources/config/
+RUN ["java", "-cp", "/exist/lib/exist.uber.jar", "net.sf.saxon.Transform", "-s:/exist/etc/log4j2.xml", "-xsl:/exist/etc/jetty/webapps/orbeon/WEB-INF/resources/config/log4j2-patch.xsl", "-o:/exist/etc/log4j2.xml"]
