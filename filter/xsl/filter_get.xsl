@@ -214,7 +214,7 @@
   <!--   <xsl:template match="m:annot//m:persName | m:p//m:persName | m:physMedium//m:persName" mode="mei2html">
      -->
   <xsl:template match="*[(self::m:persName or self::m:geogName or self::m:corpName or self::m:title) 
-    and (ancestor::m:annot or ancestor::m:p or ancestor::m:physMedium or ancestor::m:watermark or ancestor::m:condition)]" mode="mei2html">
+    and (ancestor::m:annot or ancestor::m:p or ancestor::m:physMedium or ancestor::m:condition or ancestor::m:watermark[@type='text'] )]" mode="mei2html">
     <xsl:variable name="atts">
      <xsl:for-each select="@*">
        <!-- no dots allowed in attribute names when editing in tinyMCE -->
@@ -239,7 +239,9 @@
     <xsl:when test="@form = 'ordered'">&lt;ol&gt;<xsl:for-each select="m:li">&lt;li&gt;<xsl:apply-templates mode="mei2html"/>&lt;/li&gt;</xsl:for-each>&lt;/ol&gt;</xsl:when>
   </xsl:choose></xsl:template>
   
-  <xsl:template match="m:ref[@target]" mode="mei2html">
+
+
+  <xsl:template match="m:ref[@target and (not(ancestor::m:watermark) or ancestor::m:watermark[@type='text'])]" mode="mei2html">
     <xsl:text>&lt;a href="</xsl:text><xsl:value-of select="@target"/><xsl:text>" </xsl:text>
     <xsl:if test="@xl:show!=''">
       <xsl:text>target="</xsl:text><xsl:choose>
