@@ -40,18 +40,6 @@ $ docker run --name my-mermeid -p 8080:8080 -d edirom/mermeid:develop
 
 … where `my-mermeid` is the name you want to assign to your container and `8080` is the local port where the MerMEId server will listen.
 
-### Logs
-
-Orbeon logs everything to stdout, so you can access them with `docker logs my-mermeid`. Existdb writes most information into logifles though, so in case you want to access them you should mount a host directory to /exist/logs like this:
-```
-$ docker run --name my-mermeid -p 8080:8080 -d --mount type=bind,source="$(pwd)/logs",target=/exist/logs edirom/mermeid:develop
-```
-
-### Default user credentials
-
-The install script accepts the environment variables MERMEID_admin_password_file or MERMEID_admin_password to set the DBA password and MERMEID_mermeid_password_file or MERMEID_mermeid_password to set the password for the default editor user "mermeid"
-
-
 ### … via docker stack deploy or docker-compose
 
 Example `stack.yml` for `MerMEId`:
@@ -70,6 +58,8 @@ services:
 
 Run `docker stack deploy -c stack.yml mermeid` (or `docker-compose -f stack.yml up`), 
 wait for it to initialize completely, and visit `http://localhost:8080`.
+
+The default credentials to log in to the MerMEId are username "mermeid" and password "mermeid". 
 
 ### Environment Variables
 
@@ -90,3 +80,31 @@ provide an admin password. CAUTION: This will override any previously set passwo
 provide an admin password via a secrets file. 
 The environment variable `MERMEID_admin_password_file` must provide the path to that file within the container.
 CAUTION: This will override any previously set password!
+
+#### `MERMEID_mermeid_password`
+
+provide a password for the mermeid user (defaults to "mermeid"). 
+CAUTION: This will override any previously set password!
+
+#### `MERMEID_mermeid_password_file`
+
+provide a password for the mermeid user via a secrets file (defaults to "mermeid"). 
+The environment variable `MERMEID_mermeid_password_file` must provide the path to that file within the container.
+CAUTION: This will override any previously set password!
+
+### Persistent Data Volume
+
+For running the MerMEId service in production you probably want to persist the data volume. 
+Otherwise restarting the container might result in data loss!
+
+The database files are stored within `/exist/data` in the container so you simply mount a host directory there:
+```
+$ docker run --name my-mermeid -p 8080:8080 -d --mount type=bind,source="$(pwd)/exist-data",target=/exist/data edirom/mermeid:develop
+```
+
+### Logs
+
+Orbeon logs everything to stdout, so you can access them with `docker logs my-mermeid`. Existdb writes most information into logfiles though, so in case you want to access them you should mount a host directory to `/exist/logs` like this:
+```
+$ docker run --name my-mermeid -p 8080:8080 -d --mount type=bind,source="$(pwd)/exist-logs",target=/exist/logs edirom/mermeid:develop
+```
