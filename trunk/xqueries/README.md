@@ -1,2 +1,0 @@
-
-# XQuery source tree
