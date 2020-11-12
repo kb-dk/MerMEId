@@ -6,6 +6,7 @@ import module namespace dbutil="http://exist-db.org/xquery/dbutil";
 import module namespace sm="http://exist-db.org/xquery/securitymanager";
 import module namespace file="http://exist-db.org/xquery/file";
 import module namespace config="https://github.com/edirom/mermeid/config" at "modules/config.xqm";
+declare namespace dcm="http://www.kb.dk/dcm";
 
 (: The following external variables are set by the repo:deploy function :)
 
@@ -46,6 +47,7 @@ declare function local:create-group() as empty-sequence() {
 
 declare function local:change-group() as empty-sequence() {
     sm:chgrp(xs:anyURI(concat($target, '/data')), 'mermedit'),
+    sm:chmod(xs:anyURI(concat($target, '/data')), 'rwxrwxr-x'),
     dbutil:scan(xs:anyURI(concat($target, '/data')), function($collection, $resource) {
         if ($resource) then (
             sm:chgrp($resource, "mermedit"),
@@ -71,12 +73,13 @@ declare function local:create-user() as empty-sequence() {
             else util:log-system-out(concat('unable to read from file "', normalize-space(environment-variable($opt)), '"'))
         else if($opt = 'MERMEID_mermeid_password') then 
             string(environment-variable($opt))
-            else ()
+        else "mermeid"
 
     return if ($password) then 
         sm:create-account('mermeid', $password, 'mermeid', ('mermedit'))
     else ()
 };
+
 
 declare function local:force-xml-mime-type-xbl() as xs:string* {
     let $forms-includes := concat($target, '/forms/includes'),
