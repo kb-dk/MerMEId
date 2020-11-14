@@ -366,34 +366,62 @@
                                 origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']"/>
                             <xf:group ref="m:physDesc[@type='paper_type']">
                                 <xf:repeat nodeset="m:physDesc[@type='paper_type']" id="papertype">
-                                    <h:div>
-                                        <dcm:create nodeset="m:extent" label="Number of lines"
-                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:extent"/>
-                                        <xf:repeat nodeset="m:extent" id="papertype-extent">
-                                            <h:div>
-                                                <h:span class="fixed_width">Extent:</h:span>
-                                                <xf:input ref=".">
-                                                    <xf:label>Value <h:a class="help">&#160;?<h:span
-                                                      class="comment">The number of pages or folios,
-                                                      e.g. '48', '12 + 236', 'XII + 36' or 'VIII'. 
-                                                      Non-standard units of measurements can be included in the text field.</h:span></h:a></xf:label>
-                                                </xf:input>
-                                                <xi:include href="unit-select.xml" parse="xml"/>
-                                                <dcm:element-buttons triggers="add remove"
-                                                    nodeset="m:extent" index="papertype-extent"
-                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:extent"/>
-                                                <dcm:id/>
-                                                <dcm:attribute-editor/>
-                                            </h:div>
-                                        </xf:repeat>
-                                    </h:div>
-
+                                    <xf:input ref="./@label">
+                                        <xf:label>Name</xf:label>
+                                    </xf:input>
+                                    
 
                                     <h:div>
                                         <dcm:create nodeset="m:dimensions" label="Add dimensions"
                                             origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions"/>
                                         <xf:group ref="m:dimensions">
                                             <h:div class="strong blocklabel">Dimensions:</h:div>
+
+                                            <h:div>
+                                                <dcm:create nodeset="m:locusGrp" label="Pages"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:locusGrp"/>
+                                                    <xf:group ref="m:locusGrp">
+                                                    <dcm:create nodeset="m:locus" label="Add pages range"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:locusGrp/m:locus"/>
+
+                                                    <xf:repeat nodeset="m:locus" id="papertype-locus">
+                                                        <h:div>
+                                                            <h:span class="fixed_width">Pages:</h:span>
+                                                            <xf:input ref=".">
+                                                                <xf:label>Range <h:a class="help">&#160;?<h:span
+                                                                  class="comment">Enter the page range of the given paper type</h:span></h:a></xf:label>
+                                                            </xf:input>
+                                                            <dcm:element-buttons triggers="add remove"
+                                                                nodeset="m:locus" index="papertype-locus"
+                                                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:locusGrp/m:locus"/>
+                                                            <dcm:id/>
+                                                            <dcm:attribute-editor/>
+                                                        </h:div>
+                                                    </xf:repeat>  
+                                                </xf:group>                                              
+                                            </h:div>
+
+                                            <h:div>
+                                                <dcm:create nodeset="m:extent" label="Number of lines"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:extent"/>
+                                                <xf:repeat nodeset="m:extent" id="papertype-extent">
+                                                    <h:div>
+                                                        <h:span class="fixed_width">Extent:</h:span>
+                                                        <xf:input ref=".">
+                                                            <xf:label>Value <h:a class="help">&#160;?<h:span
+                                                              class="comment">The number of pages or folios,
+                                                              e.g. '48', '12 + 236', 'XII + 36' or 'VIII'. 
+                                                              Non-standard units of measurements can be included in the text field.</h:span></h:a></xf:label>
+                                                        </xf:input>
+                                                        <xi:include href="unit-select.xml" parse="xml"/>
+                                                        <dcm:element-buttons triggers="add remove"
+                                                            nodeset="m:extent" index="papertype-extent"
+                                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:extent"/>
+                                                        <dcm:id/>
+                                                        <dcm:attribute-editor/>
+                                                    </h:div>
+                                                </xf:repeat>
+                                            </h:div>
                                             
                                             <dcm:create nodeset="m:height" label="Add height"
                                                 origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:height"/>
