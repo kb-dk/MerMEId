@@ -318,11 +318,11 @@
                <pubPlace/>
                <date isodate="" startdate="" enddate="" notbefore="" notafter=""/>
             </pubStmt>
-            <physDesc type="paper_type">
+            <physDesc type="paper_type" label="">
                <dimensions>
-                  <locus></locus>
+                  <locusGrp><locus></locus></locusGrp>
                   <term></term>
-                  <extent unit="lines"></extent>
+                  <extent unit="lines" quantity=""></extent>
                   <dimensions type="format">
                      <height quantity="" unit="cm"></height>
                      <width quantity="" unit="cm"></width>
@@ -333,16 +333,14 @@
                   </dimensions>
                </dimensions>
                <supportDesc>
-                  <support type="paper_quality"></support>
-                  <condition></condition>
+                  <support type="paper_quality"><p/></support>
+                  <condition><p/></condition>
                </supportDesc>
                <bindingDesc>
                   <binding>
-                     <p type="definition"/>
                      <condition><p type="general_description"/></condition>
                   </binding>
                </bindingDesc>
-               <condition><p type="general_description"/></condition>  
                <watermark type="predefined">
                   <title></title>
                   <ref corresp="" target=""/>
@@ -405,11 +403,11 @@
             <itemList>
                <item label="" target="">
                   <identifier label=""/>
-                     <physDesc type="paper_type">
+                  <physDesc type="paper_type" label="">
                      <dimensions>
-                        <locus></locus>
+                        <locusGrp><locus></locus></locusGrp>
                         <term></term>
-                        <extent unit="lines"></extent>
+                        <extent unit="lines" quantity=""></extent>
                         <dimensions type="format">
                            <height quantity="" unit="cm"></height>
                            <width quantity="" unit="cm"></width>
@@ -420,8 +418,8 @@
                         </dimensions>
                      </dimensions>
                      <supportDesc>
-                        <support type="paper_quality"></support>
-                        <condition></condition>
+                        <support type="paper_quality"><p/></support>
+                        <condition><p/></condition>
                      </supportDesc>
                      <bindingDesc>
                         <binding>
@@ -429,7 +427,6 @@
                            <condition><p type="general_description"/></condition>
                         </binding>
                      </bindingDesc>
-                     <condition><p type="general_description"/></condition>  
                      <watermark type="predefined">
                         <title></title>
                         <ref corresp="" target=""/>

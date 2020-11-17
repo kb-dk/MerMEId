@@ -353,6 +353,277 @@
                         </h:fieldset>
 
                         <h:fieldset>
+                            <h:legend>Paper details <h:a class="help">&#160;?<h:span
+                                        class="comment">Describes features shared by all copies of
+                                        this source. <h:br/> For details on a specific item (a
+                                        specific copy, or a manuscript), use the "Items" section
+                                        below.</h:span></h:a>
+                                <dcm:attribute-editor ref="."/>
+                            </h:legend>
+
+                            <h:div class="vertical_spacer"> </h:div>
+                            <dcm:create nodeset="m:physDesc[@type='paper_type']" label="Add paper type"
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']"/>
+                                <xf:repeat nodeset="m:physDesc[@type='paper_type']" id="papertype">
+                                    <xf:input ref="./@label">
+                                        <xf:label>Name</xf:label>
+                                    </xf:input>
+                                    
+
+                                    <h:div>
+                                        <dcm:create nodeset="./m:dimensions" label="Add dimensions"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions"/>
+                                        <xf:group ref="./m:dimensions">
+                                            <h:div class="strong blocklabel">Dimensions:</h:div>
+
+                                            <h:div>
+                                                <dcm:create nodeset="m:locusGrp" label="Pages"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:locusGrp"/>
+                                                <xf:group ref="m:locusGrp">
+                                                    <dcm:create nodeset="m:locus" label="Add pages range"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:locusGrp/m:locus"/>
+
+                                                    <xf:repeat nodeset="m:locus" id="papertype-locus">
+                                                        <h:div>
+                                                            <h:span class="fixed_width">Pages:</h:span>
+                                                            <xf:input ref=".">
+                                                                <xf:label>Range <h:a class="help">&#160;?<h:span
+                                                                  class="comment">Enter the page range of the given paper type</h:span></h:a></xf:label>
+                                                            </xf:input>
+                                                            <dcm:element-buttons triggers="add remove"
+                                                                nodeset="m:locus" index="papertype-locus"
+                                                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:locusGrp/m:locus"/>
+                                                            <dcm:id/>
+                                                            <dcm:attribute-editor/>
+                                                        </h:div>
+                                                    </xf:repeat>  
+                                                </xf:group>                                              
+                                            </h:div>
+
+                                            <h:div>
+                                                <dcm:create nodeset="m:extent" label="Number of lines"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:extent"/>
+                                                <xf:repeat nodeset="m:extent" id="papertype-extent">
+                                                <xf:group ref=".">
+                                                    <h:div>
+                                                        <h:span class="fixed_width">Extent:</h:span>
+                                                        <xf:input ref="@quantity">
+                                                            <xf:label>Value <h:a class="help">&#160;?<h:span
+                                                              class="comment">The number of lines on the page.</h:span></h:a></xf:label>
+                                                        </xf:input>
+                                                        <dcm:element-buttons triggers="add remove"
+                                                            nodeset="m:extent" index="papertype-extent"
+                                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:extent"/>
+                                                        <dcm:id/>
+                                                        <dcm:attribute-editor/>
+                                                    </h:div>
+                                                </xf:group>
+                                                </xf:repeat>
+                                            </h:div>
+                                            
+                                            <dcm:create nodeset="./m:dimensions[@type='format']" label="Add format information"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:dimensions[@type='format']"/>
+                                            <xf:group ref="./m:dimensions[@type='format']">
+                                                <h:div class="strong blocklabel">Format:</h:div>
+
+                                                <dcm:create nodeset="m:height" label="Add height"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:dimensions[@type='format']/m:height"/>
+                                                <xf:repeat nodeset="m:height" id="papertype-format-height">
+                                                    <xf:group ref=".">
+                                                    <h:div>
+                                                            <xf:input ref="@quantity">
+                                                                <xf:label>Height <h:a class="help">&#160;?<h:span
+                                                                  class="comment">Height value of the source eg. 22.5</h:span></h:a></xf:label>
+                                                                <xf:action ev:event="xforms-value-changed">
+                                                                    <xf:setvalue ref=".." value="concat(@quantity, ' (height in ', @unit, ')')"></xf:setvalue>
+                                                                </xf:action>
+                                                            </xf:input>
+                                                            <xi:include href="unit-select.xml" parse="xml"/>
+                                                            <dcm:element-buttons triggers="remove"
+                                                                nodeset="m:height" index="papertype-format-height"
+                                                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:dimensions[@type='format']/m:height"/>
+                                                            <dcm:id/>
+                                                            <dcm:attribute-editor/>
+                                                    </h:div>
+                                                </xf:group>
+                                                </xf:repeat>
+                                                <dcm:create nodeset="m:width" label="Add width"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:dimensions[@type='format']/m:width"/>
+                                                
+                                                <xf:repeat nodeset="m:width" id="papertype-format-width">
+                                                    <h:div>
+                                                            <xf:input ref="@quantity">
+                                                                <xf:label>Width <h:a class="help">&#160;?<h:span
+                                                                  class="comment">Width value of the source eg. 22.5</h:span></h:a></xf:label>
+                                                                <xf:action ev:event="xforms-value-changed">
+                                                                    <xf:setvalue ref=".." value="concat(@quantity, ' (width in ', @unit, ')')"></xf:setvalue>
+                                                                </xf:action>
+                                                            </xf:input>
+                                                            <xi:include href="unit-select.xml" parse="xml"/>
+                                                        
+                                                            <dcm:element-buttons triggers="remove"
+                                                                nodeset="m:width" index="papertype-format-width"
+                                                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:dimensions[@type='format']/m:width"/>
+                                                            <dcm:id/>
+                                                            <dcm:attribute-editor/>
+                                                    </h:div>
+                                                </xf:repeat>
+                                            </xf:group>
+
+                                            <dcm:create nodeset="./m:dimensions[@type='rastral_mirror']" label="Add rastral mirror information"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:dimensions[@type='rastral_mirror']"/>
+                                            <xf:group ref="./m:dimensions[@type='rastral_mirror']">
+                                                <h:div class="strong blocklabel">Rastral mirror:</h:div>
+
+                                                <dcm:create nodeset="m:height" label="Add height"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:dimensions[@type='rastral_mirror']/m:height"/>
+                                                <xf:repeat nodeset="m:height" id="papertype-rastral-height">
+                                                    <xf:group ref=".">
+                                                    <h:div>
+                                                            <xf:input ref="@quantity">
+                                                                <xf:label>Height <h:a class="help">&#160;?<h:span
+                                                                  class="comment">Height value of the source eg. 22.5</h:span></h:a></xf:label>
+                                                                <xf:action ev:event="xforms-value-changed">
+                                                                    <xf:setvalue ref=".." value="concat(@quantity, ' (height in ', @unit, ')')"></xf:setvalue>
+                                                                </xf:action>
+                                                            </xf:input>
+                                                            <xi:include href="unit-select.xml" parse="xml"/>
+                                                            <dcm:element-buttons triggers="remove"
+                                                                nodeset="m:height" index="papertype-rastral-height"
+                                                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:dimensions[@type='rastral_mirror']/m:height"/>
+                                                            <dcm:id/>
+                                                            <dcm:attribute-editor/>
+                                                    </h:div>
+                                                </xf:group>
+                                                </xf:repeat>
+                                                <dcm:create nodeset="m:width" label="Add width"
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:dimensions[@type='rastral_mirror']/m:width"/>
+                                                
+                                                <xf:repeat nodeset="m:width" id="papertype-rastral-width">
+                                                    <h:div>
+                                                            <xf:input ref="@quantity">
+                                                                <xf:label>Width <h:a class="help">&#160;?<h:span
+                                                                  class="comment">Width value of the source eg. 22.5</h:span></h:a></xf:label>
+                                                                <xf:action ev:event="xforms-value-changed">
+                                                                    <xf:setvalue ref=".." value="concat(@quantity, ' (width in ', @unit, ')')"></xf:setvalue>
+                                                                </xf:action>
+                                                            </xf:input>
+                                                            <xi:include href="unit-select.xml" parse="xml"/>
+                                                        
+                                                            <dcm:element-buttons triggers="remove"
+                                                                nodeset="m:width" index="papertype-rastral-width"
+                                                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:dimensions[@type='rastral_mirror']/m:width"/>
+                                                            <dcm:id/>
+                                                            <dcm:attribute-editor/>
+                                                    </h:div>
+                                                </xf:repeat>
+                                            </xf:group>
+                                        </xf:group>
+                                    </h:div>
+
+                                    <h:div class="strong blocklabel">Watermark:</h:div>
+
+                                    <h:div>
+                                        <dcm:create nodeset="m:watermark[@type='predefined']" label="Add predefined watermark"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:watermark[@type='predefined']"/>
+                                        <xf:repeat nodeset="m:watermark[@type='predefined']" id="repeat-source-paper-watermark-predefined">
+                                            <xf:input ref="m:title" class="mediumlong">
+                                                <xf:label class="fixed_width">Type</xf:label>
+                                            </xf:input>
+                                            <xf:input ref="m:heraldry" class="mediumlong">
+                                                <xf:label class="fixed_width">Component</xf:label>
+                                            </xf:input>
+                                            <dcm:watermark-list />
+                                            <dcm:element-buttons triggers="add remove" nodeset="m:watermark[@type='predefined']"
+                                                index="repeat-source-paper-watermark-predefined"
+                                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:watermark[@type='predefined']"/>
+                                            <dcm:id/>
+                                            <dcm:attribute-editor/>
+                                        </xf:repeat>
+                                    </h:div>
+
+                                    <h:div>
+                                        <dcm:create nodeset="m:watermark[@type='text']" label="Add watermark contents"
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:watermark[@type='text']"/>
+                                        <xf:repeat nodeset="m:watermark[@type='text']" id="repeat-source-paper-watermark">                                        
+                                            <fr:tinymce ref="." class="mediumheight">
+                                                <xf:label class="blocklabel">Contents</xf:label>
+                                            </fr:tinymce>
+                                            <dcm:element-buttons triggers="remove" nodeset="m:watermark[@type='text']"
+                                                index="repeat-source-paper-watermark"
+                                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:watermark[@type='text']"/>
+                                            <dcm:id/>
+                                            <dcm:attribute-editor/>
+                                        </xf:repeat>
+                                    </h:div>
+
+                                    <h:div>
+                                  <dcm:create nodeset="m:supportDesc"
+                                              label="Add quality and condition"
+                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:supportDesc"></dcm:create>
+
+                                  <xf:repeat nodeset="m:supportDesc" id="repeat-source-paper-support">
+                                    <fr:tinymce ref="m:support/m:p" class="mediumheight">
+                                      <xf:label class="blocklabel">Paper quality</xf:label>
+                                    </fr:tinymce>
+                                    <fr:tinymce ref="m:condition/m:p" class="mediumheight">
+                                      <xf:label class="blocklabel">Condition</xf:label>
+                                    </fr:tinymce>
+                                    <dcm:attribute-editor/>
+                                    <dcm:element-buttons triggers="remove"
+                                                         nodeset="m:supportDesc"
+                                                         index="repeat-source-paper-support"
+                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:supportDesc"/>
+                                    <h:br/>           
+                                  </xf:repeat>
+                                </h:div>
+
+                                <h:div>
+                                  <dcm:create nodeset="m:bindingDesc"
+                                              label="Add binding"
+                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:bindingDesc"></dcm:create>
+                                    <xf:group ref="m:bindingDesc">
+                                        <h:span class="blocklabel strong">Binding</h:span>
+                                    </xf:group>
+
+                                  <xf:repeat nodeset="m:bindingDesc" id="repeat-source-paper-binding">
+                                    <fr:tinymce ref="m:binding/m:condition/m:p[@type='general_description']" class="mediumheight">
+                                      <xf:label class="blocklabel">General description</xf:label>
+                                    </fr:tinymce>
+                                    <dcm:attribute-editor/>
+                                    <dcm:element-buttons triggers="remove"
+                                                         nodeset="m:bindingDesc"
+                                                         index="repeat-source-paper-binding"
+                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:bindingDesc"/>
+                                    <h:br/>           
+                                  </xf:repeat>
+                                </h:div>
+
+                                <h:div>
+                                  <dcm:create nodeset="m:condition"
+                                              label="Add binding"
+                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:condition"></dcm:create>
+                                  <xf:repeat nodeset="m:condition" id="repeat-source-paper-condition">
+                                    <fr:tinymce ref="m:p" class="mediumheight">
+                                      <xf:label class="blocklabel">Condition</xf:label>
+                                    </fr:tinymce>
+                                    <dcm:attribute-editor/>
+                                    <dcm:element-buttons triggers="remove"
+                                                         nodeset="m:condition"
+                                                         index="repeat-source-paper-condition"
+                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:condition"/>
+                                    <h:br/>           
+                                  </xf:repeat>
+                                </h:div>
+
+                                    <dcm:element-buttons triggers="add remove"
+                                        nodeset="m:physDesc[@type='paper_type']" index="papertype"
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']"/>
+                                    <dcm:id/>
+                                </xf:repeat>
+                        </h:fieldset>
+
+                        <h:fieldset>
                             <h:legend>Physical description <h:a class="help">&#160;?<h:span
                                         class="comment">Describes features shared by all copies of
                                         this source. <h:br/> For details on a specific item (a
@@ -361,9 +632,9 @@
                                 <dcm:attribute-editor ref="."/>
                             </h:legend>
                             <h:div class="vertical_spacer"> </h:div>
-                            <dcm:create nodeset="m:physDesc[not(@type)]" label="Add physical description"
-                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]"/>
-                            <xf:group ref="m:physDesc[not(@type)]">
+                            <dcm:create nodeset="m:physDesc[not(@type='paper_type')]" label="Add physical description"
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type='paper_type')]"/>
+                            <xf:group ref="m:physDesc[not(@type='paper_type')]">
                                 <h:div>
                                     <dcm:create nodeset="m:extent" label="Add extent"
                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:extent"/>
