@@ -54,24 +54,36 @@
                     </h:div>
 
                     <h:div>
+                        <dcm:create nodeset="m:term" label="Orientation"
+                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:term"/>
+
+                        <xf:group ref="m:term">
+                            <h:div>
+                                <h:span class="fixed_width">Orientation:</h:span>
+                                <xf:input ref=".">
+                                    <xf:label><h:a class="help">&#160;?<h:span
+                                      class="comment">Page orientation eg. landscape or portrait.</h:span></h:a></xf:label>
+                                </xf:input>
+                                <dcm:id/>
+                                <dcm:attribute-editor/>
+                            </h:div>
+                        </xf:group>
+                    </h:div>
+
+                    <h:div>
                         <dcm:create nodeset="m:extent" label="Number of lines"
                             origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:extent"/>
-                        <xf:repeat nodeset="m:extent" id="papertype-extent">
-                        <xf:group ref=".">
+                        <xf:group ref="m:extent">
                             <h:div>
                                 <h:span class="fixed_width">Extent:</h:span>
                                 <xf:input ref="@quantity">
                                     <xf:label>Lines <h:a class="help">&#160;?<h:span
                                       class="comment">The number of lines on the page.</h:span></h:a></xf:label>
                                 </xf:input>
-                                <dcm:element-buttons triggers="add remove"
-                                    nodeset="m:extent" index="papertype-extent"
-                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[@type='paper_type']/m:dimensions/m:extent"/>
                                 <dcm:id/>
                                 <dcm:attribute-editor/>
                             </h:div>
                         </xf:group>
-                        </xf:repeat>
                     </h:div>
                     
                     <dcm:create nodeset="./m:dimensions[@type='format']" label="Add format information"
