@@ -76,7 +76,7 @@
                 
                 
                 <xf:select1 ref="@type" class="auto_length">
-                    <xf:label> Represents: <h:a class="help">&#160;?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
+                    <xf:label>Represents:<h:a class="help">&#160;?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
                         set to "additions" otherwise. For manuscript annotations in printed sources use "additions"</h:span></h:a></xf:label>
                     <xf:item>
                         <xf:label>original contents</xf:label>
@@ -85,6 +85,46 @@
                     <xf:item>
                         <xf:label>additions</xf:label>
                         <xf:value>additions</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>notes</xf:label>
+                           <xf:value>notes</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>title</xf:label>
+                           <xf:value>title</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>writer</xf:label>
+                           <xf:value>writer</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>dating</xf:label>
+                           <xf:value>dating</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>lyrics</xf:label>
+                           <xf:value>lyrics</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>caption</xf:label>
+                           <xf:value>caption</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>corrections</xf:label>
+                           <xf:value>corrections</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>revision</xf:label>
+                           <xf:value>revision</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>draft</xf:label>
+                           <xf:value>draft</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>other</xf:label>
+                           <xf:value>other</xf:value>
                     </xf:item>
                 </xf:select1>
             </h:td>  
