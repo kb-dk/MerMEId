@@ -69,7 +69,7 @@ return
 <script src="resources/js/toggle_openness.js" type="text/javascript">
     /* js for foldable sections */
 </script>
-<script src="http://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript">
+<script src="https://www.verovio.org/javascript/latest/verovio-toolkit.js" type="text/javascript">
     /* Include the Verovio toolkit for displaying incipits */
 </script>
  <script type="text/javascript">
