@@ -41,6 +41,7 @@ if (ends-with($exist:resource, ".xml")) then
                 <param name="exist:stop-on-error" value="no"/>
 </parameters>, <attributes></attributes>, "method=xml media-type=application/xml"),
         $saved := xmldb:store(string-join(($config:data-root,tokenize($exist:path, '/')[position() != last()]), '/'), $exist:resource, $filtered)
+        return doc($saved)
     } catch * {
         response:set-status-code(500),
         <error>
