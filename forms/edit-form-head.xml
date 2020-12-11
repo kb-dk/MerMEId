@@ -51,11 +51,6 @@
       src="model/new_file.xml" 
       xxf:readonly="true"/>
     
-    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
-      id="bibl-type-instance" 
-      src="model/bibl_reference_types.xml" 
-      xxf:readonly="true"/>
-
     <xf:instance id="mei_attr_list" >
       <xi:include href="./model/MEI_attr_list.xml"/>
     </xf:instance>
@@ -77,6 +72,11 @@
 
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei"
       id="instrument-groups">
+      <mei/>
+    </xf:instance>
+    
+    <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
+      id="bibl-types-instance">
       <mei/>
     </xf:instance>
     
@@ -250,6 +250,12 @@
       resource="{instance('parameters')/dcm:library_crud_home}/standard_bibliography.xml"
       replace="instance" 
       instance="bibliography-instance"/>
+    <xf:submission id="load-bibl-types"
+      method="get" 
+      serialization="none" 
+      resource="{instance('parameters')/dcm:library_crud_home}/bibl_reference_types.xml"
+      replace="instance" 
+      instance="bibl-types-instance"/>
 
     <xf:submission id="load-authorities"
       method="get" 
@@ -313,6 +319,7 @@
       <!-- load reference data from library -->
       <xf:send submission="load-authorities"/>
       <xf:send submission="load-classification"/>
+      <xf:send submission="load-bibl-types"/>
       <xf:send submission="load-bibliography"/>
       <xf:send submission="load-ensembles"/>
       <xf:send submission="load-instruments"/>
