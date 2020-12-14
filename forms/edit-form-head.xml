@@ -76,7 +76,7 @@
     </xf:instance>
     
     <xf:instance xmlns="http://www.music-encoding.org/ns/mei" 
-      id="bibl-types-instance">
+      id="bibl-type-instance">
       <mei/>
     </xf:instance>
     
@@ -255,7 +255,7 @@
       serialization="none" 
       resource="{instance('parameters')/dcm:library_crud_home}/bibl_reference_types.xml"
       replace="instance" 
-      instance="bibl-types-instance"/>
+      instance="bibl-type-instance"/>
 
     <xf:submission id="load-authorities"
       method="get" 
