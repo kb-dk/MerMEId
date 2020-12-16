@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbl:xbl xmlns:h="http://www.w3.org/1999/xhtml" 
+     xmlns:xf="http://www.w3.org/2002/xforms"
+     xmlns:ev="http://www.w3.org/2001/xml-events"
+     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+     xmlns:xi="http://www.w3.org/2001/XInclude" 
+     xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+     xmlns:xxf="http://orbeon.org/oxf/xml/xforms" 
+     xmlns:xbl="http://www.w3.org/ns/xbl" 
+     xmlns:xxbl="http://orbeon.org/oxf/xml/xbl"
+     xmlns:dcm="http://www.kb.dk/dcm"
+     xmlns:marc="http://www.loc.gov/MARC21/slim"
+     xmlns:zs="http://www.loc.gov/zing/srw/">
+  
+  <!--
+      Component for item-level editing 
+      Danish Centre for MusHTMLic Publication (DCM) 
+      Axel Teich Geertinger, 2012
+      atge@kb.dk
+  -->
+
+
+
+  <xbl:binding id="dcm-person-input-binding" element="dcm|person-input">
+    <!-- Orbeon Form Builder Component Metadata -->
+    <metadata xmlns="http://orbeon.org/oxf/xml/form-builder">
+      <display-name lang="en">Person editor</display-name>
+    </metadata>
+    <xbl:implementation>
+
+    </xbl:implementation>
+
+    <xbl:template>
+      <!-- outer group -->
+      <xf:group xxbl:scope="outer" xbl:attr="model context ref bind">
+        
+        <!-- Inner group -->
+        <xf:group appearance="xxf:internal" xxbl:scope="inner">
+          
+          <!-- Variables pointing to external single-node bindings -->
+          <xf:var name="binding" as="node()?">
+            <xxf:value select="." xxbl:scope="outer"/>
+          </xf:var>
+          <!-- get item level (itemList or componentList) -->
+          <xf:var name="parent" as="string">
+            <xxf:value select="name(..)" xxbl:scope="outer"/>
+          </xf:var>
+
+    <h:div xmlns:h="http://www.w3.org/1999/xhtml" 
+        xmlns:xf="http://www.w3.org/2002/xforms"
+        xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+        xmlns:xi="http://www.w3.org/2001/XInclude" 
+        xmlns:ev="http://www.w3.org/2001/xml-events" 
+        xmlns:dcm="http://www.kb.dk/dcm">
+        
+        <!-- Component for lists of persons including role and authority file reference    -->
+
+        <xf:group ref="$binding">
+        <dcm:create 
+            ref=".[not(m:persName)]"
+            nodeset="$binding/m:persName"
+            label="Add person"
+            origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:persName"/>
+            
+        
+        <xf:group ref="m:persName">
+            <h:div class="blocklabel strong">Persons</h:div>
+            <h:div class="blocklabel">
+                <h:span class="fixed_width_mediumlong">Name</h:span>
+                <h:span class="fixed_width"></h:span>
+                <h:span class="fixed_width_mediumlong"> Relation <h:a class="help">&#160;?<h:span class="comment">Specifies the person's relation to the item, e.g. "Composer"
+                    or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+                </h:span>
+                <h:span class="fixed_width">
+                    Certainty <h:a class="help">&#160;?<h:span class="comment">Indicates the degree of certainty of the person's identity</h:span></h:a>
+                </h:span>
+                <!--<xf:group ref="..[m:persName[@auth or @auth.uri or @codedval]]">-->
+                    <h:span class="fixed_width_long"> Authority file <h:a class="help">&#160;?<h:span class="comment">References to
+                        authority files are used for disambiguation or for linking resources by means of unique identifiers</h:span></h:a>
+                    </h:span>
+                <!--</xf:group>-->
+            </h:div>
+        </xf:group>
+        
+        <xf:repeat nodeset="m:persName" id="relators-repeat">
+            <dcm:relator/>
+            <xi:include href="certainty-input.xml" parse="xml"/>
+            <dcm:authority/>
+            <!-- a more generic condition would have been nice but didn't work here -->
+            <xf:group ref=".[name(.)!='hand']">
+                <dcm:element-buttons 
+                    triggers="add remove up down" 
+                    nodeset="$binding/m:persName" 
+                    index="relators-repeat"
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:persName[1]"/>
+            </xf:group>
+            <xf:group ref=".[name(.)='hand']">
+                <dcm:element-buttons 
+                    triggers="remove" 
+                    nodeset="$binding/m:persName" 
+                    index="relators-repeat"
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:persName[1]"/>
+            </xf:group>
+            <dcm:attribute-editor ref="."/>
+            <h:br/>
+        </xf:repeat>
+
+        <xf:group ref=".[name(.) = ('contributor', 'event') or name(..) = 'titleStmt']">
+            <dcm:create ref=".[not(m:corpName[@role != 'ensemble'])]"
+                nodeset="m:corpName[@role != 'ensemble']"
+                label="Add institution"
+                origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:corpName[1]"/>
+
+            <xf:group ref="m:corpName[@role!='ensemble']">
+                <h:div class="blocklabel strong">Institutions</h:div>
+                <h:div class="blocklabel">
+                    <h:span class="fixed_width_mediumlong">Name</h:span>
+                    <h:span class="fixed_width"></h:span>
+                    <h:span class="fixed_width_mediumlong"> Relation <h:a class="help">&#160;?<h:span class="comment">Specifies the person's relation to the item, e.g. "Composer"
+                        or "Author". The list is based on MARC relators as defined at http://id.loc.gov/vocabulary/relators</h:span></h:a>
+                    </h:span>
+                    <h:span class="fixed_width">
+                        Certainty <h:a class="help">&#160;?<h:span class="comment">Indicates the degree of certainty of the person's identity</h:span></h:a>
+                    </h:span>
+                    <!--<xf:group ref="..[m:persName[@auth or @auth.uri or @codedval]]">-->
+                        <h:span class="fixed_width_long"> Authority file <h:a class="help">&#160;?<h:span class="comment">References to
+                            authority files are used for disambiguation or for linking resources by means of unique identifiers</h:span></h:a>
+                        </h:span>
+                    <!--</xf:group>-->
+                </h:div>
+            </xf:group>
+
+            <xf:repeat nodeset="m:corpName[@role!='ensemble']" id="corp-relators-repeat">
+                <dcm:relator/>
+                <xi:include href="certainty-input.xml" parse="xml"/>
+                <dcm:authority/>
+                <!-- a more generic condition would have been nice but didn't work here -->
+                <dcm:element-buttons 
+                    triggers="add remove up down" 
+                    nodeset="m:corpName" 
+                    index="corp-relators-repeat"
+                    origin="xxf:instance('empty-instance')/m:meiHead/m:workList/m:work/m:contributor/m:corpName[1]"/>
+                <dcm:attribute-editor ref="."/>
+                <h:br/>
+            </xf:repeat>        
+        </xf:group>
+        </xf:group>
+    </h:div>
+</xf:group></xf:group>
+    </xbl:template>
+  </xbl:binding>
+</xbl:xbl>
