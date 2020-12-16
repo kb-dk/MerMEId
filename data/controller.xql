@@ -1,5 +1,8 @@
 xquery version "3.0";
 
+declare namespace exist="http://exist.sourceforge.net/NS/exist";
+declare namespace request="http://exist-db.org/xquery/request";
+
 import module namespace config="https://github.com/edirom/mermeid/config" at "../modules/config.xqm";
 import module namespace xmldb="http://exist-db.org/xquery/xmldb";
 
@@ -20,7 +23,7 @@ if (ends-with($exist:resource, ".xml")) then
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
        <forward url="/{$exist:controller}/../modules/transform.xq" method="{request:get-method()}">
             <set-attribute name="transform.stylesheet" value="../filter/xsl/filter_get.xsl"/>
-            <set-attribute name="transform.doc" value="/db{$exist:prefix}{$exist:controller}{$exist:path}"/>
+            <set-attribute name="transform.doc" value="{$config:data-root}{$exist:path}"/>
         </forward>
         <cache-control cache="no"/>
     </dispatch>)
@@ -40,8 +43,8 @@ if (ends-with($exist:resource, ".xml")) then
                 <param name="exist:stop-on-warn" value="no"/>
                 <param name="exist:stop-on-error" value="no"/>
 </parameters>, <attributes></attributes>, "method=xml media-type=application/xml"),
-        $saved := xmldb:store("/db"||$exist:prefix||$exist:controller||string-join(tokenize($exist:path, '/')[position() != last()], '/'), $exist:resource, $filtered)
-    return doc($saved)
+        $saved := xmldb:store(string-join(($config:data-root,tokenize($exist:path, '/')[position() != last()]), '/'), $exist:resource, $filtered)
+        return doc($saved)
     } catch * {
         response:set-status-code(500),
         <error>
