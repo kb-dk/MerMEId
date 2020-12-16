@@ -352,6 +352,8 @@
                             </xf:group>
                         </h:fieldset>
 
+                        <xi:include href="paper-type.xml"/>
+
                         <h:fieldset>
                             <h:legend>Physical description <h:a class="help">&#160;?<h:span
                                         class="comment">Describes features shared by all copies of
@@ -361,12 +363,12 @@
                                 <dcm:attribute-editor ref="."/>
                             </h:legend>
                             <h:div class="vertical_spacer"> </h:div>
-                            <dcm:create nodeset="m:physDesc" label="Add physical description"
-                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc"/>
-                            <xf:group ref="m:physDesc">
+                            <dcm:create nodeset="m:physDesc[not(@type='paper_type')]" label="Add physical description"
+                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type='paper_type')]"/>
+                            <xf:group ref="m:physDesc[not(@type='paper_type')]">
                                 <h:div>
                                     <dcm:create nodeset="m:extent" label="Add extent"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:extent"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:extent"/>
                                     <xf:repeat nodeset="m:extent" id="physdesc-extent">
                                         <h:div>
                                             <h:span class="fixed_width">Extent:</h:span>
@@ -379,7 +381,7 @@
                                             <xi:include href="unit-select.xml" parse="xml"/>
                                             <dcm:element-buttons triggers="add remove"
                                                 nodeset="m:extent" index="physdesc-extent"
-                                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:extent"/>
+                                                origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:extent"/>
                                             <dcm:id/>
                                             <dcm:attribute-editor/>
                                         </h:div>
@@ -389,13 +391,13 @@
                                 
                                 <h:div>
                                     <dcm:create nodeset="m:dimensions" label="Add dimensions"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:dimensions"/>
                                     <xf:group ref="m:dimensions">
                                     
                                     <h:div class="strong blocklabel">Dimensions:</h:div>
                                     
                                     <dcm:create nodeset="m:height" label="Add height"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:height"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:dimensions/m:height"/>
                                     <xf:repeat nodeset="m:height" id="physdesc-dimensions-height">
                                         <h:div>
                                                 <xf:input ref="@quantity">
@@ -408,13 +410,13 @@
                                                 <xi:include href="unit-select.xml" parse="xml"/>
                                                 <dcm:element-buttons triggers="remove"
                                                     nodeset="m:height" index="physdesc-dimensions-height"
-                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:height"/>
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:dimensions/m:height"/>
                                                 <dcm:id/>
                                                 <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>
                                     <dcm:create nodeset="m:width" label="Add width"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:width"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:dimensions/m:width"/>
                                     
                                     <xf:repeat nodeset="m:width" id="physdesc-dimensions-width">
                                         <h:div>
@@ -429,13 +431,13 @@
                                             
                                                 <dcm:element-buttons triggers="remove"
                                                     nodeset="m:width" index="physdesc-dimensions-width"
-                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:width"/>
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:dimensions/m:width"/>
                                                 <dcm:id/>
                                                 <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>
                                     <dcm:create nodeset="m:depth" label="Add depth"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:depth"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:dimensions/m:depth"/>
 
                                     <xf:repeat nodeset="m:depth" id="physdesc-dimensions-depth">
                                         <h:div>
@@ -450,13 +452,13 @@
                                             
                                                 <dcm:element-buttons triggers="remove"
                                                     nodeset="m:depth" index="physdesc-dimensions-depth"
-                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:depth"/>
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:dimensions/m:depth"/>
                                                 <dcm:id/>
                                                 <dcm:attribute-editor/>
                                         </h:div>
                                     </xf:repeat>
                                     <dcm:create nodeset="m:dim" label="Add custom dimension"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:dim"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:dimensions/m:dim"/>
 
                                     <h:div ref="m:dim" class="blocklabel">Custom dimensions:</h:div>
                                     <xf:repeat nodeset="m:dim" id="physdesc-dimensions-dim">
@@ -476,7 +478,7 @@
                                             
                                                 <dcm:element-buttons triggers="add remove"
                                                     nodeset="m:depth" index="physdesc-dimensions-dim"
-                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:dimensions/m:dim"/>
+                                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:dimensions/m:dim"/>
                                                 <dcm:id/>
                                                 <dcm:attribute-editor/>
                                         </h:div>
@@ -486,7 +488,7 @@
 
                                 <h:div>
                                     <dcm:create nodeset="m:physMedium" label="Add physical medium"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:physMedium"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:physMedium"/>
                                     <xf:repeat nodeset="m:physMedium" id="repeat-source-physMedium">
                                         <fr:tinymce ref="." class="mediumheight">
                                             <xf:label class="blocklabel">Physical medium <h:a
@@ -496,7 +498,7 @@
                                         </fr:tinymce>
                                         <dcm:element-buttons triggers="remove"
                                             nodeset="m:physMedium" index="repeat-source-physMedium"
-                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:physMedium"/>
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:physMedium"/>
                                         <dcm:id/>
                                         <dcm:attribute-editor/>
                                     </xf:repeat>
@@ -507,7 +509,7 @@
 
                                 <h:div>
                                     <dcm:create nodeset="m:watermark[@type='predefined']" label="Add predefined watermark"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:watermark[@type='predefined']"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:watermark[@type='predefined']"/>
                                     <xf:repeat nodeset="m:watermark[@type='predefined']" id="repeat-source-watermark-predefined">
                                         <xf:input ref="m:title" class="mediumlong">
                                             <xf:label class="fixed_width">Type</xf:label>
@@ -518,7 +520,7 @@
                                         <dcm:watermark-list />
                                         <dcm:element-buttons triggers="add remove" nodeset="m:watermark[@type='predefined']"
                                             index="repeat-source-watermark-predefined"
-                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:watermark[@type='predefined']"/>
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:watermark[@type='predefined']"/>
                                         <dcm:id/>
                                         <dcm:attribute-editor/>
                                     </xf:repeat>
@@ -526,14 +528,14 @@
 
                                 <h:div>
                                     <dcm:create nodeset="m:watermark[@type='text']" label="Add watermark contents"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:watermark[@type='text']"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:watermark[@type='text']"/>
                                     <xf:repeat nodeset="m:watermark[@type='text']" id="repeat-source-watermark">                                        
                                         <fr:tinymce ref="." class="mediumheight">
                                             <xf:label class="blocklabel">Contents</xf:label>
                                         </fr:tinymce>
                                         <dcm:element-buttons triggers="remove" nodeset="m:watermark[@type='text']"
                                             index="repeat-source-watermark"
-                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:watermark[@type='text']"/>
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:watermark[@type='text']"/>
                                         <dcm:id/>
                                         <dcm:attribute-editor/>
                                     </xf:repeat>
@@ -541,14 +543,14 @@
 
                                 <h:div>
                                     <dcm:create nodeset="m:plateNum" label="Add plate number"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:plateNum"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:plateNum"/>
                                     <xf:repeat nodeset="m:plateNum" id="repeat-source-plateNum">
                                         <xf:input ref="." class="mediumlong">
                                             <xf:label class="fixed_width">Plate no. </xf:label>
                                         </xf:input>
                                         <dcm:element-buttons triggers="remove" nodeset="m:plateNum"
                                             index="repeat-source-plateNum"
-                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:plateNum"/>
+                                            origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:plateNum"/>
                                         <dcm:id/>
                                         <dcm:attribute-editor/>
                                     </xf:repeat>
@@ -557,7 +559,7 @@
                                 <h:div>
                                     <dcm:create nodeset="m:addDesc"
                                               label="Add additions"
-                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:addDesc"></dcm:create>
+                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:addDesc"></dcm:create>
                                     <xf:group ref="m:addDesc">
                                         <h:span class="blocklabel strong">Additions</h:span>
                                     </xf:group>
@@ -573,7 +575,7 @@
                                     <dcm:element-buttons triggers="remove"
                                                          nodeset="m:addDesc"
                                                          index="repeat-source-additions"
-                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:addDesc"/>
+                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:addDesc"/>
                                     <h:br/>           
                                   </xf:repeat>
                                 </h:div>
@@ -581,7 +583,7 @@
                                 <h:div>
                                   <dcm:create nodeset="m:supportDesc"
                                               label="Add foliation"
-                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:supportDesc"></dcm:create>
+                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:supportDesc"></dcm:create>
                                     <xf:group ref="m:supportDesc">
                                         <h:span class="blocklabel strong">Foliation</h:span>
                                     </xf:group>
@@ -598,7 +600,7 @@
                                     <dcm:element-buttons triggers="remove"
                                                          nodeset="m:supportDesc"
                                                          index="repeat-source-foliation"
-                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:supportDesc"/>
+                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:supportDesc"/>
                                     <h:br/>           
                                   </xf:repeat>
                                 </h:div>
@@ -606,7 +608,7 @@
                                 <h:div>
                                   <dcm:create nodeset="m:bindingDesc"
                                               label="Add binding"
-                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:bindingDesc"></dcm:create>
+                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:bindingDesc"></dcm:create>
                                     <xf:group ref="m:bindingDesc">
                                         <h:span class="blocklabel strong">Binding</h:span>
                                     </xf:group>
@@ -622,7 +624,7 @@
                                     <dcm:element-buttons triggers="remove"
                                                          nodeset="m:bindingDesc"
                                                          index="repeat-source-binding"
-                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:bindingDesc"/>
+                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:bindingDesc"/>
                                     <h:br/>           
                                   </xf:repeat>
                                 </h:div>
@@ -630,7 +632,7 @@
                                 <h:div>
                                   <dcm:create nodeset="m:condition"
                                               label="Add binding"
-                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:condition"></dcm:create>
+                                              origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:condition"></dcm:create>
                                   <xf:repeat nodeset="m:condition" id="repeat-source-condition">
                                     <fr:tinymce ref="m:p" class="mediumheight">
                                       <xf:label class="blocklabel">Condition</xf:label>
@@ -639,7 +641,7 @@
                                     <dcm:element-buttons triggers="remove"
                                                          nodeset="m:condition"
                                                          index="repeat-source-condition"
-                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:condition"/>
+                                                         origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:condition"/>
                                     <h:br/>           
                                   </xf:repeat>
                                 </h:div>
@@ -656,7 +658,7 @@
                                 </h:legend>
                                 <h:div class="vertical_spacer"> </h:div>
                                 <dcm:create nodeset="m:titlePage" label="Add title page"
-                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:titlePage"/>
+                                    origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:titlePage"/>
                                 <xf:repeat nodeset="m:titlePage" id="physdesc-titlepage">
                                     <xf:input ref="@label">
                                         <xf:label>Label <h:a class="help">&#160;?<h:span
@@ -669,12 +671,12 @@
                                     </xf:input>
                                     <dcm:element-buttons triggers="up down add copy remove"
                                         nodeset="m:titlePage" index="physdesc-titlepage"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:titlePage"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:titlePage"/>
                                     <dcm:id/>
                                     <dcm:attribute-editor/>
                                     <h:br/>
                                     <dcm:create nodeset="m:p" label="Add transcript"
-                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc/m:titlePage/m:p"/>
+                                        origin="xxf:instance('empty-instance')/m:meiHead/m:manifestationList/m:manifestation/m:physDesc[not(@type)]/m:titlePage/m:p"/>
                                     <fr:tinymce ref="m:p" class="mediumheight"/>
                                     <h:hr/>
                                 </xf:repeat>

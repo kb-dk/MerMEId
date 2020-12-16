@@ -165,7 +165,7 @@
 
   <!-- Convert <p> and <list> to entities for editing in tinymce (with some exceptions handled with simple input fields). -->
   <!-- An exception is needed for all <p> elements NOT to be edited with tinyMCE. -->
-  <xsl:template match="m:p [name(..)!='changeDesc' and name(..)!='addDesc' and name(..)!='supportDesc' and name(..)!='binding' and name(..)!='condition' and name(..)!='incipText' and name(../../..)!='provenance'] | m:list" mode="mei2html">
+  <xsl:template match="m:p [name(..)!='changeDesc' and name(..)!='addDesc' and name(..)!='supportDesc' and name(..)!='binding' and name(..)!='support' and name(..)!='condition' and name(..)!='incipText' and name(../../..)!='provenance'] | m:list" mode="mei2html">
         <xsl:variable name="element">
           <xsl:choose>
             <xsl:when test="name()='list'">
@@ -214,7 +214,7 @@
   <!--   <xsl:template match="m:annot//m:persName | m:p//m:persName | m:physMedium//m:persName" mode="mei2html">
      -->
   <xsl:template match="*[(self::m:persName or self::m:geogName or self::m:corpName or self::m:title) 
-    and (ancestor::m:annot or ancestor::m:p or ancestor::m:physMedium or ancestor::m:condition or ancestor::m:watermark[@type='text'] )]" mode="mei2html">
+    and (ancestor::m:annot or ancestor::m:p or ancestor::m:physMedium or ancestor::m:condition or ancestor::m:support or ancestor::m:watermark[@type='text'] )]" mode="mei2html">
     <xsl:variable name="atts">
      <xsl:for-each select="@*">
        <!-- no dots allowed in attribute names when editing in tinyMCE -->
