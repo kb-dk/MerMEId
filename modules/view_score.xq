@@ -25,7 +25,7 @@ declare variable $mode     := request:get-parameter("mode", "mei");
     <head>
       <title>View MEI score</title>
       <link rel="stylesheet" type="text/css" href="../resources/css/dcm.css"/>
-      <script src="http://www.verovio.org/javascript/latest/verovio-toolkit-light.js" type="text/javascript">
+      <script src="https://www.verovio.org/javascript/latest/verovio-toolkit-light.js" type="text/javascript">
     	<!-- verovio toolkit -->
       </script>
       <script type="text/javascript">
