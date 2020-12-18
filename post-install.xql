@@ -40,6 +40,9 @@ declare function local:set-admin-password() as empty-sequence() {
         else ()
 };
 
+declare function local:first-run() as xs:boolean {
+    not(sm:list-groups() = 'mermedit')
+};
 
 declare function local:create-group() as empty-sequence() {
     sm:create-group('mermedit')
@@ -96,7 +99,10 @@ local:set-options(),
 local:force-xml-mime-type-xbl(),
 (: set admin password if provided. 
     NB, this has to be the last command otherwise the other commands will not be executed properly :) 
-local:create-group(),
-local:change-group(),
-local:create-user(),
+if (local:first-run()) then
+    (
+        local:create-group(),
+        local:change-group(),
+        local:create-user())
+else (),
 local:set-admin-password()
