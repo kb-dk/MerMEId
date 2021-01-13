@@ -13,7 +13,8 @@
                 <xf:label for="hand_desc">Hand: <h:a class="help">&#160;?<h:span class="comment">Identification of the scribe or handwriting style 
                     such as 'NN' or 'Hand A'. An identified scribe's name should be given below, not in this field.</h:span></h:a></xf:label>
             </h:td>
-            <h:td><xf:input ref="m:p[@n='MerMEId_temporary_wrapper']" id="hand_desc"/>&#160;
+            <h:td>
+                <xf:input ref="m:p" id="hand_desc"/>&#160;
                 
                 <!-- input/select emulating selection="open" behaviour -->
                 <h:span class="selection_open_short">
@@ -76,7 +77,7 @@
                 
                 
                 <xf:select1 ref="@type" class="auto_length">
-                    <xf:label> Represents: <h:a class="help">&#160;?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
+                    <xf:label>Represents:<h:a class="help">&#160;?<h:span class="comment">Set to "original contents" if this is the source's primary hand (mss. only);
                         set to "additions" otherwise. For manuscript annotations in printed sources use "additions"</h:span></h:a></xf:label>
                     <xf:item>
                         <xf:label>original contents</xf:label>
@@ -85,6 +86,46 @@
                     <xf:item>
                         <xf:label>additions</xf:label>
                         <xf:value>additions</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>notes</xf:label>
+                           <xf:value>notes</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>title</xf:label>
+                           <xf:value>title</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>writer</xf:label>
+                           <xf:value>writer</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>dating</xf:label>
+                           <xf:value>dating</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>lyrics</xf:label>
+                           <xf:value>lyrics</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>caption</xf:label>
+                           <xf:value>caption</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>corrections</xf:label>
+                           <xf:value>corrections</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>revision</xf:label>
+                           <xf:value>revision</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>draft</xf:label>
+                           <xf:value>draft</xf:value>
+                    </xf:item>
+                    <xf:item>
+                           <xf:label>other</xf:label>
+                           <xf:value>other</xf:value>
                     </xf:item>
                 </xf:select1>
             </h:td>  
@@ -103,7 +144,7 @@
         <h:tr>
             <h:td/>
             <h:td>
-                <xi:include href="person-input.xml"/>
+                <dcm:person-input ref="."/>
                 <h:div class="vertical_spacer">&#160;</h:div>
             </h:td>
             <h:td/>
