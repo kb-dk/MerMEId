@@ -44,7 +44,13 @@ if (ends-with($exist:resource, ".xml")) then
                 <param name="exist:stop-on-error" value="no"/>
 </parameters>, <attributes></attributes>, "method=xml media-type=application/xml"),
         $saved := xmldb:store(string-join(($config:data-root,tokenize($exist:path, '/')[position() != last()]), '/'), $exist:resource, $filtered)
-        return doc($saved)
+        return <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+           <forward url="/{$exist:controller}/../modules/transform.xq" method="{request:get-method()}">
+                <set-attribute name="transform.stylesheet" value="../filter/xsl/filter_get.xsl"/>
+                <set-attribute name="transform.doc" value="/db{$exist:prefix}{$exist:controller}{$exist:path}"/>
+            </forward>
+            <cache-control cache="no"/>
+        </dispatch>
     } catch * {
         response:set-status-code(500),
         <error>
