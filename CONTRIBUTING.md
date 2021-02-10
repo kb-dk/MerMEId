@@ -13,6 +13,7 @@ Please note that this project is released with a [Contributor Code of Conduct]. 
 ## I don't want to read this whole thing I just have a question!!!
 
 The best way to initially get in touch with the MerMEId community is via the `mermeid` [Slack channel] on music-encoding.slack.com.
+Or you can start a discussion here at [GitHub Discussions].
 
 
 ## Bug reports and feature requests
@@ -83,6 +84,7 @@ Large portions of these Contributing Guidelines were copied from [ActiveAdmin]. 
 
 [Contributor Code of Conduct]: CODE_OF_CONDUCT.md
 [Slack channel]: https://join.slack.com/t/music-encoding/shared_invite/zt-4zgx6zbq-2jEjDiUT7ym3dygTaY8C0g 
+[GitHub Discussions]: https://github.com/Edirom/MerMEId/discussions
 [GitHub issue]: https://github.com/Edirom/MerMEId/issues/new
 [fork this repo]: https://help.github.com/articles/fork-a-repo
 [Docker installed]: https://docs.docker.com/get-docker/
