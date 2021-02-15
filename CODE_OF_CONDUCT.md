@@ -60,7 +60,8 @@ representative at an online or offline event.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders [Daniel Schopper][mailDaniel] and [Peter Stadler][mailPeter].
+reported to the community leaders [Margrethe Støkken Bue][mailMargrethe], 
+[Daniel Schopper][mailDaniel], or [Peter Stadler][mailPeter].
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the
@@ -130,6 +131,7 @@ at [https://www.contributor-covenant.org/translations][translations].
 [Mozilla CoC]: https://github.com/mozilla/diversity
 [FAQ]: https://www.contributor-covenant.org/faq
 [translations]: https://www.contributor-covenant.org/translations
+[mailMargrethe]: mailto:margrethe.bue@nb.no
 [mailDaniel]: mailto:Daniel.Schopper@OEAW.AC.AT
 [mailPeter]: mailto:stadler@edirom.de
 
