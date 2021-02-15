@@ -69,10 +69,10 @@ Finally, go to GitHub and [make a Pull Request]
 
 A PR can only be merged into master by a maintainer if:
 
-* It is passing CI.
-* It has been approved by at least two maintainers. If it was a maintainer who opened the PR, only one extra approval is needed.
+* The branch is building ok on [DockerHub].
+* It has been approved by at least two people. If it was a maintainer who opened the PR, only one extra approval is needed.
 * It has no requested changes.
-* It is up to date with current develop.
+* It has no conflicts with current develop. (Even better: it is up to date with current develop)
 
 Any maintainer is allowed to merge a PR if all of these conditions are
 met.
@@ -90,3 +90,4 @@ Large portions of these Contributing Guidelines were copied from [ActiveAdmin]. 
 [Docker installed]: https://docs.docker.com/get-docker/
 [make a pull request]: https://help.github.com/articles/creating-a-pull-request
 [ActiveAdmin]: https://github.com/activeadmin/activeadmin/blob/HEAD/CONTRIBUTING.md
+[DockerHub]: https://hub.docker.com/r/edirom/mermeid
