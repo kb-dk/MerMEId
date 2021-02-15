@@ -2,7 +2,6 @@ xquery version "3.0";
 
 import module namespace login="http://exist-db.org/xquery/login" at "resource:org/exist/xquery/modules/persistentlogin/login.xql";
 import module namespace util="http://exist-db.org/xquery/util";
-import module namespace console="http://exist-db.org/xquery/console";
                 
 declare variable $exist:path external;
 declare variable $exist:resource external;
@@ -39,7 +38,6 @@ else if (ends-with($exist:path, ".js") or ends-with($exist:path, ".css") or ends
     </dispatch>
 
 else if (not(ends-with($exist:path, "index.html"))) then (
-        console:log('login request'),
         (: login:set-user creates a authenticated session for a user :)
         login:set-user("org.exist.login", (), false()),
 
