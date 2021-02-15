@@ -9,8 +9,9 @@ LABEL maintainer="Peter Stadler,Omar Siam"
 ENV BUILD_HOME="/opt/builder"
 
 # installing Apache Ant
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends apt-transport-https ant curl zip unzip patch
+RUN apt-get install -y --no-install-recommends apt-transport-https \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends ant curl zip unzip patch git
 
 # Get and setup orbeon
 RUN curl -OL https://github.com/orbeon/orbeon-forms/releases/download/tag-release-2018.2.1-ce/orbeon-2018.2.1.201902072242-CE.zip
@@ -36,7 +37,7 @@ RUN cd orbeon && patch -p0 < /orbeon-web.xml.patch && rm -f WEB-INF/web.xml.orig
 # now building the main App
 WORKDIR ${BUILD_HOME}
 COPY . .
-RUN ant 
+RUN ant
 
 #########################
 # Now running the eXist-db

@@ -39,7 +39,7 @@ declare variable $config:expath-descriptor := doc(concat($config:app-root, "/exp
 
 declare variable $config:properties := doc(concat($config:app-root, "/properties.xml"))/dcm:properties;
 
-declare variable $config:version := 'v. 2019 (13-08-2019) for MEI 4.0.0';
+declare variable $config:version := config:get-property('version');
 
 (:~
  : properties read from the properties.xml file
@@ -55,10 +55,10 @@ declare variable $config:exist-endpoint-seen-from-orbeon := config:get-property(
  : @param $key the element to look for in the properties file
  : @return xs:string the option value as string identified by the key otherwise the empty sequence
  :)
-declare function config:get-property($key as xs:string?) as xs:string? {
-    let $result := $config:properties/dcm:*[local-name() = $key] ! normalize-space(.)
+declare function config:get-property($key as xs:string?) as item()? {
+    let $result := $config:properties/dcm:*[local-name() = $key]/node()
     return
-        if($result) then $result
+        if($result) then if ($result instance of text()) then normalize-space($result) else $result[. instance of element()]
         else util:log-system-out('config:get-property(): unable to retrieve the key "' || $key || '"')
 };
 
@@ -120,4 +120,12 @@ declare function config:repo-descriptor() as element(repo:meta) {
  :)
 declare function config:expath-descriptor() as element(expath:package) {
     $config:expath-descriptor
+};
+(:~
+ : Replace properties like {$config:poperty_name} in a string
+ :)
+declare function config:property-replacer($content as xs:string, $properties as xs:string+) as xs:string {
+    let $replacer := '\{\$config:'||$properties[1]||'\}'
+    return if (count($properties) = 1) then replace($content, $replacer, serialize(config:get-property($properties[1])))
+    else replace(config:property-replacer($content, subsequence($properties, 2)), $replacer, serialize(config:get-property($properties[1])))
 };
