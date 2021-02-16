@@ -5,6 +5,7 @@ MerMEId
 [![GitHub release](https://img.shields.io/github/release/edirom/MerMEId.svg)](https://github.com/Edirom/MerMEId/releases)
 [![Docker Automated build](https://img.shields.io/docker/automated/edirom/mermeid)](https://hub.docker.com/r/edirom/mermeid/)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/edirom/MerMEId)](https://hub.docker.com/r/edirom/mermeid/)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 
 MerMEId is a system for the editing, handling, and (pre-)viewing of music
 metadata, based on the the [Music Encoding Initiative](http://www.music-encoding.org/) (MEI)  XML schema. 
@@ -108,3 +109,10 @@ Orbeon logs everything to stdout, so you can access them with `docker logs my-me
 ```
 $ docker run --name my-mermeid -p 8080:8080 -d --mount type=bind,source="$(pwd)/exist-logs",target=/exist/logs edirom/mermeid:develop
 ```
+
+
+## Code of Conduct
+
+Please note that this project is released with a [Contributor Code of Conduct][CODE_OF_CONDUCT]. By participating in this project you agree to abide by its terms.
+
+[CODE_OF_CONDUCT]: CODE_OF_CONDUCT.md
