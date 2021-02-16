@@ -40,15 +40,24 @@ declare function local:set-admin-password() as empty-sequence() {
         else ()
 };
 
+declare function local:first-run() as xs:boolean {
+    not(sm:list-groups() = 'mermedit')
+};
 
 declare function local:create-group() as empty-sequence() {
     sm:create-group('mermedit')
 };
 
 declare function local:change-group() as empty-sequence() {
-    sm:chgrp(xs:anyURI(concat($target, '/data')), 'mermedit'),
-    sm:chmod(xs:anyURI(concat($target, '/data')), 'rwxrwxr-x'),
-    dbutil:scan(xs:anyURI(concat($target, '/data')), function($collection, $resource) {
+    if (not(xmldb:collection-available($config:data-root))) 
+    then (xmldb:create-collection(string-join(tokenize($config:data-root, '/')[position() < last()], '/'), tokenize($config:data-root, '/')[last()]),
+          let $sample-resources := dbutil:scan(xs:anyURI(concat($target, '/data')), function($_, $resource) {
+          tokenize($resource, '/')[last()][. != 'controller.xql']})
+          for $res in $sample-resources return xmldb:move(concat($target, '/data'), $config:data-root, $res))
+    else (),
+    sm:chgrp(xs:anyURI($config:data-root), 'mermedit'),
+    sm:chmod(xs:anyURI($config:data-root), 'rwxrwxr-x'),
+    dbutil:scan(xs:anyURI($config:data-root), function($collection, $resource) {
         if ($resource) then (
             sm:chgrp($resource, "mermedit"),
             sm:chmod($resource, 'rwxrwxr-x')
@@ -96,7 +105,10 @@ local:set-options(),
 local:force-xml-mime-type-xbl(),
 (: set admin password if provided. 
     NB, this has to be the last command otherwise the other commands will not be executed properly :) 
-local:create-group(),
-local:change-group(),
-local:create-user(),
-local:set-admin-password()
+if (local:first-run()) then
+    (
+        local:create-group(),
+        local:change-group(),
+        local:create-user(),
+        local:set-admin-password())
+else ()
