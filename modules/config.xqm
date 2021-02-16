@@ -30,7 +30,7 @@ declare variable $config:app-root :=
         substring-before($modulePath, "/modules")
 ;
 
-declare variable $config:data-root := config:get-property('orbeon_endpoint');
+declare variable $config:data-root := config:get-property('data-root');
 declare variable $config:data-public-root := $config:app-root || "/data-public";
 
 declare variable $config:repo-descriptor := doc(concat($config:app-root, "/repo.xml"))/repo:meta;
