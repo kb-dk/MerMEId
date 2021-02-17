@@ -102,13 +102,12 @@ declare function local:force-xml-mime-type-xbl() as xs:string* {
 (: set options provided as environment variables :)
 local:set-options(),
 local:force-xml-mime-type-xbl(),
-(: set admin password if provided. 
-    NB, this has to be the last command otherwise the other commands will not be executed properly :) 
 if (local:first-run()) then
     (
-        local:set-admin-password(),
         local:create-group(),
         local:create-user(),
-        local:change-group()
+        local:change-group(),
+         (: This has to be the last command otherwise the other commands will not be executed properly :) 
+        local:set-admin-password()
     )
 else ()
