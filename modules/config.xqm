@@ -60,6 +60,12 @@ declare variable $config:exist-endpoint := config:get-property('exist_endpoint')
 declare variable $config:exist-endpoint-seen-from-orbeon := config:get-property('exist_endpoint_seen_from_orbeon');
 
 (:~
+ : Return all possible property names
+ :)
+declare function config:get-property-names() as xs:string* {
+    distinct-values(($config:expath-descriptor/@*/local-name(), $config:expath-descriptor/expath:*[node()]/local-name(), 'footer', $config:properties/dcm:*/local-name()))
+};
+(:~
  : Return the requested property value from the properties file 
  :  
  : @param $key the element to look for in the properties file
