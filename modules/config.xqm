@@ -41,6 +41,16 @@ declare variable $config:properties := doc(concat($config:app-root, "/properties
 
 declare variable $config:version := config:get-property('version');
 
+declare variable $config:footer := 
+    <div class="footer" xmlns="http://www.w3.org/1999/xhtml">
+      <div style="float:right" class="version">v. {$config:version} for MEI 4.0.0</div>
+      <img 
+           style="border: 0px; vertical-align:middle;" 
+           alt="DCM Logo" 
+           src="/resources/images/dcm_logo_small_white.png"/>
+           2010-2019 Danish Centre for Music Editing | Royal Danish Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk">www.kb.dk</a> – 2020 ff. MerMEId Community
+    </div>;
+
 (:~
  : properties read from the properties.xml file
  : can be altered manualy or set dynamically via config:set-property()
@@ -56,9 +66,12 @@ declare variable $config:exist-endpoint-seen-from-orbeon := config:get-property(
  : @return xs:string the option value as string identified by the key otherwise the empty sequence
  :)
 declare function config:get-property($key as xs:string?) as item()? {
-    let $result := $config:properties/dcm:*[local-name() = $key]/node()
+    let $expath-property := ($config:expath-descriptor/@*[local-name()=$key]/data(), $config:expath-descriptor/expath:*[local-name() = $key]/node()),
+        $result := if (exists($expath-property)) then $expath-property
+                   else if ($key = "footer") then $config:footer
+                   else $config:properties/dcm:*[local-name() = $key]/node()
     return
-        if($result) then if ($result instance of text()) then normalize-space($result) else $result[. instance of element()]
+        if($result) then if ($result instance of text() or $result instance of xs:anyAtomicType) then normalize-space($result) else $result[. instance of element()]
         else util:log-system-out('config:get-property(): unable to retrieve the key "' || $key || '"')
 };
 

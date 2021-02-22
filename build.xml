@@ -13,7 +13,7 @@
         <mkdir dir="${build.dir}"/>
     </target>
     
-    <target name="xar" depends="init,properties.xml">
+    <target name="xar" depends="init,expath-pkg.xml">
         <zip destfile="${build.dir}/${project.app}-${project.version}.xar">
             <fileset dir=".">
                 <include name="**/*.*"/>
@@ -53,8 +53,8 @@
         <echo message="${repository.version}" />
     </target>
 
-    <target name="properties.xml" depends="git.revision" description="build properties.xml, login.html and index.html from template">
-        <copy file="properties.xml.template" tofile="properties.xml" overwrite="yes">
+    <target name="expath-pkg.xml" depends="git.revision" description="build expath-pkg.xml from template">
+        <copy file="expath-pkg.xml.template" tofile="expath-pkg.xml" overwrite="yes">
             <filterchain>
                 <replacetokens>
                     <token key="repository.version" value="${repository.version}" />
