@@ -65,7 +65,12 @@ else if (not(ends-with($exist:path, "index.html"))) then (
                 When there is a logout request parameter we send the user back to the unrestricted page.
                 :)
                 <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+                    <cache-control cache="no"/>
                     <forward url="/login.html"/>
+                    <view>
+                       <set-header name="Cache-Control" value="no-cache"/>
+                       <forward url="{$exist:controller}/modules/replace-vars.xq"/>
+                    </view>
                 </dispatch>
             )
             else if ($user and not(sm:get-user-groups($user) = 'mermedit')) then
@@ -75,7 +80,12 @@ else if (not(ends-with($exist:path, "index.html"))) then (
                 page will get served from cache and not hit the controller any more.:)
                 
                 <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+                    <cache-control cache="no"/>
                     <forward url="/denied.html"/>
+                    <view>
+                       <set-header name="Cache-Control" value="no-cache"/>
+                       <forward url="{$exist:controller}/modules/replace-vars.xq"/>
+                    </view>
                 </dispatch>
             else if ($user and sm:get-user-groups($user) = 'mermedit') then
                 (:
@@ -99,17 +109,25 @@ else if (not(ends-with($exist:path, "index.html"))) then (
                 to not complicate things further with templating etc.
                 :)
                 <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+                    <cache-control cache="no"/>
                     <forward url="/fail.html"/>
+                    <view>
+                       <set-header name="Cache-Control" value="no-cache"/>
+                       <forward url="{$exist:controller}/modules/replace-vars.xq"/>
+                    </view>
                 </dispatch>
             else
                 (: if nothing of the above matched we got a login attempt. :)
                 <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-                    <forward url="/login.html"/>
+                    <cache-control cache="no"/>
+                    <forward url="{$exist:controller}/login.html"/>
+                    <view>
+                       <set-header name="Cache-Control" value="no-cache"/>
+                       <forward url="{$exist:controller}/modules/replace-vars.xq"/>
+                    </view>
                 </dispatch>
         )
-    else ()
-     (:)       
-else
+    else 
 (: everything else is passed through
     diabling serverside betterform processing for eXist versions < v5.0.0
 :)
@@ -119,5 +137,8 @@ else
         <set-attribute name="$exist:controller" value="{$exist:controller}"/>
         <set-attribute name="$exist:root" value="{$exist:root}"/>
         <set-attribute name="betterform.filter.ignoreResponseBody" value="true"/>
+        <view>
+            <set-header name="Cache-Control" value="no-cache"/>
+            <forward url="{$exist:controller}/modules/replace-vars.xq"/>
+        </view>
     </dispatch>
-:)

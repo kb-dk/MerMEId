@@ -39,7 +39,17 @@ declare variable $config:expath-descriptor := doc(concat($config:app-root, "/exp
 
 declare variable $config:properties := doc(concat($config:app-root, "/properties.xml"))/dcm:properties;
 
-declare variable $config:version := 'v. 2019 (13-08-2019) for MEI 4.0.0';
+declare variable $config:version := config:get-property('version');
+
+declare variable $config:footer := 
+    <div class="footer" xmlns="http://www.w3.org/1999/xhtml">
+      <div style="float:right" class="version">v. {$config:version} for MEI 4.0.0</div>
+      <img 
+           style="border: 0px; vertical-align:middle;" 
+           alt="DCM Logo" 
+           src="/resources/images/dcm_logo_small_white.png"/>
+           2010-2019 Danish Centre for Music Editing | Royal Danish Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk">www.kb.dk</a> – 2020 ff. MerMEId Community
+    </div>;
 
 (:~
  : properties read from the properties.xml file
@@ -50,15 +60,24 @@ declare variable $config:exist-endpoint := config:get-property('exist_endpoint')
 declare variable $config:exist-endpoint-seen-from-orbeon := config:get-property('exist_endpoint_seen_from_orbeon');
 
 (:~
+ : Return all possible property names
+ :)
+declare function config:get-property-names() as xs:string* {
+    distinct-values(($config:expath-descriptor/@*/local-name(), $config:expath-descriptor/expath:*[node()]/local-name(), 'footer', $config:properties/dcm:*/local-name()))
+};
+(:~
  : Return the requested property value from the properties file 
  :  
  : @param $key the element to look for in the properties file
  : @return xs:string the option value as string identified by the key otherwise the empty sequence
  :)
-declare function config:get-property($key as xs:string?) as xs:string? {
-    let $result := $config:properties/dcm:*[local-name() = $key] ! normalize-space(.)
+declare function config:get-property($key as xs:string?) as item()? {
+    let $expath-property := ($config:expath-descriptor/@*[local-name()=$key]/data(), $config:expath-descriptor/expath:*[local-name() = $key]/node()),
+        $result := if (exists($expath-property)) then $expath-property
+                   else if ($key = "footer") then $config:footer
+                   else $config:properties/dcm:*[local-name() = $key]/node()
     return
-        if($result) then $result
+        if($result) then if ($result instance of text() or $result instance of xs:anyAtomicType) then normalize-space($result) else $result[. instance of element()]
         else util:log-system-out('config:get-property(): unable to retrieve the key "' || $key || '"')
 };
 
@@ -120,4 +139,12 @@ declare function config:repo-descriptor() as element(repo:meta) {
  :)
 declare function config:expath-descriptor() as element(expath:package) {
     $config:expath-descriptor
+};
+(:~
+ : Replace properties like {$config:poperty_name} in a string
+ :)
+declare function config:property-replacer($content as xs:string, $properties as xs:string+) as xs:string {
+    let $replacer := '\{\$config:'||$properties[1]||'\}'
+    return if (count($properties) = 1) then replace($content, $replacer, serialize(config:get-property($properties[1])))
+    else replace(config:property-replacer($content, subsequence($properties, 2)), $replacer, serialize(config:get-property($properties[1])))
 };

@@ -324,14 +324,7 @@ declare function local:format-reference(
         </table>
       </div>
     }
-    <div class="footer">
-      <div style="float:right" class="version">MerMEId {$config:version}</div>
-      <img 
-           style="border: 0px; vertical-align:middle;" 
-           alt="DCM Logo" 
-           src="../resources/images/dcm_logo_small_white.png"/>
-           Danish Centre for Music Editing | Royal Danish Library, Copenhagen | <a name="www.kb.dk" id="www.kb.dk" href="http://www.kb.dk">www.kb.dk</a>
-    </div>
+    {config:get-property('footer')}
   </body>
 </html>
 
