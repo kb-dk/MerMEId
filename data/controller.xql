@@ -2,6 +2,8 @@ xquery version "3.0";
 
 declare namespace exist="http://exist.sourceforge.net/NS/exist";
 declare namespace request="http://exist-db.org/xquery/request";
+declare namespace response="http://exist-db.org/xquery/response";
+declare namespace transform="http://exist-db.org/xquery/transform";
 
 import module namespace config="https://github.com/edirom/mermeid/config" at "../modules/config.xqm";
 import module namespace xmldb="http://exist-db.org/xquery/xmldb";
