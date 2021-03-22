@@ -17,6 +17,5 @@ return transform:transform($inputDoc, doc(request:get-attribute('transform.style
                 <param name="xslt.exist-endpoint-seen-from-orbeon" value="{$config:exist-endpoint-seen-from-orbeon}"/>
                 <param name="xslt.orbeon-endpoint" value="{$config:orbeon-endpoint}"/>
                 <param name="xslt.server-name" value="{config:get-property('exist_endpoint')}"/>
-                <param name="xslt.exist-dir" value="/"/>
                 <param name="xslt.document-root" value="/data/"/>
 </parameters>, <attributes></attributes>, "method=xml media-type=application/xml")
