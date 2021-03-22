@@ -1,12 +1,14 @@
 xquery version "3.1";
 
-declare option exist:serialize "method=xml media-type=application/xml";
+declare namespace exist="http://exist.sourceforge.net/NS/exist";
 
 import module namespace transform = "http://exist-db.org/xquery/transform";
 
 import module namespace config="https://github.com/edirom/mermeid/config" at "config.xqm";
 
 import module namespace console="http://exist-db.org/xquery/console";
+
+declare option exist:serialize "method=xml media-type=application/xml";
 
 let $inputDoc := (doc(request:get-attribute('transform.doc')), request:get-data())[1]
 
