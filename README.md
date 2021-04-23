@@ -19,6 +19,7 @@ MerMEId is used for the creation and maintenance of
 * [Catalogue of Carl Nielsen's Works, CNW](http://www.kb.dk/dcm/cnw.html),
 * [Johann Adolph Scheibe. A Catalogue of His Works](http://www.kb.dk/dcm/schw.html), and
 * [J.P.E. Hartmann. A Thematic-Bibliographic Catalogue of His Works](http://www.kb.dk/dcm/hartw.html)
+* [Niels W. Gade. Thematic-Bibliographic Catalogue of His Works](http://www.kb.dk/dcm/nwgw.html)
 
 The services mentioned are delivered using [DCM Catalog UI](https://github.com/Det-Kongelige-Bibliotek/dcm_catalog_ui)
 
