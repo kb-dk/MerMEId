@@ -15,4 +15,5 @@ jobs:
       - name: Run Docker image
         run: docker run --rm -p 8080:8080 -d mermeid
       - name: Check the deployed service URL
-        run: curl --fail -sv  http://localhost:8080/index.html --retry 5 --retry-delay 20 --retry-connrefused 
+        run: i=0 ; while (! curl --fail -sv http://localhost:8080/index.html) ; do if ((i > 20)) ; then echo ' **** timeout ... aborting **** ' ; exit 1 ; else sleep 5 ; echo waiting for container ... ; i=$((i+1)) ; fi ; done
+
