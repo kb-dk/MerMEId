@@ -15,10 +15,4 @@ jobs:
       - name: Run Docker image
         run: docker run --rm -p 8080:8080 -d mermeid
       - name: Check the deployed service URL
-        uses: jtalk/url-health-check-action@v1.5
-        with:
-          url: http://localhost:8080/index.html
-          follow-redirect: no
-          max-attempts: 5
-          retry-delay: 20s
-          retry-all: no
+        run: curl --fail -sv  http://localhost:8080/index.html --retry 5 --retry-delay 20 --retry-connrefused 
