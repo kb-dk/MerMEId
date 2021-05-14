@@ -43,6 +43,7 @@ if (ends-with($exist:resource, ".xml")) then
                 <param name="xslt.document-root" value="/data/"/>
                 <param name="exist:stop-on-warn" value="no"/>
                 <param name="exist:stop-on-error" value="no"/>
+                <param name="target" value="{$config:data-root}{$exist:path}"/>
 </parameters>, <attributes></attributes>, "method=xml media-type=application/xml"),
         $saved := xmldb:store(string-join(($config:data-root,tokenize($exist:path, '/')[position() != last()]), '/'), $exist:resource, $filtered)
         return <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
