@@ -9,7 +9,6 @@
     <xsl:param name="xslt.orbeon-endpoint"/>
     <xsl:param name="xslt.exist-endpoint-seen-from-orbeon"/>
     <xsl:param name="xslt.server-name"/>
-    <xsl:param name="xslt.exist-dir"/>
     <xsl:param name="xslt.document-root"/>
     
     <xsl:variable name="xforms-parameters" as="element(dcm:parameters)">
@@ -33,9 +32,6 @@
             <server_name>
                 <xsl:value-of select="$xslt.server-name"/>
             </server_name>  
-            <exist_dir>
-                <xsl:value-of select="$xslt.exist-dir"/>
-            </exist_dir>
             <document_root>
                 <xsl:value-of select="$xslt.document-root"/>
             </document_root>

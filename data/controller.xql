@@ -2,6 +2,8 @@ xquery version "3.0";
 
 declare namespace exist="http://exist.sourceforge.net/NS/exist";
 declare namespace request="http://exist-db.org/xquery/request";
+declare namespace response="http://exist-db.org/xquery/response";
+declare namespace transform="http://exist-db.org/xquery/transform";
 
 import module namespace config="https://github.com/edirom/mermeid/config" at "../modules/config.xqm";
 import module namespace xmldb="http://exist-db.org/xquery/xmldb";
@@ -38,7 +40,6 @@ if (ends-with($exist:resource, ".xml")) then
                 <param name="xslt.exist-endpoint-seen-from-orbeon" value="{$config:exist-endpoint-seen-from-orbeon}"/>
                 <param name="xslt.orbeon-endpoint" value="{$config:orbeon-endpoint}"/>
                 <param name="xslt.server-name" value="{config:get-property('exist_endpoint')}"/>
-                <param name="xslt.exist-dir" value="/"/>
                 <param name="xslt.document-root" value="/data/"/>
                 <param name="exist:stop-on-warn" value="no"/>
                 <param name="exist:stop-on-error" value="no"/>

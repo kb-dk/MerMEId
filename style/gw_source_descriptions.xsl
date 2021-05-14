@@ -42,10 +42,10 @@
 	</xsl:variable>
 	<!-- files containing look-up information -->
 	<xsl:variable name="bibl_file_name"
-		select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'library/standard_bibliography.xml'))"/>
+		select="string(concat('http://',$hostname,'/library/standard_bibliography.xml'))"/>
 	<xsl:variable name="bibl_file" select="document($bibl_file_name)"/>
 	<xsl:variable name="abbreviations_file_name"
-		select="string(concat('http://',$hostname,'/',$settings/dcm:parameters/dcm:exist_dir,'library/abbreviations.xml'))"/>
+		select="string(concat('http://',$hostname,'/library/abbreviations.xml'))"/>
 	<xsl:variable name="abbreviations_file" select="document($abbreviations_file_name)"/>
 
 

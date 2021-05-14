@@ -96,7 +96,7 @@
                         <xf:group ref=".[*]">
                                 <h:a 
                                     href="javascript:void(0);"
-                                    onclick="window.open('{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}modules/view_score.xq?doc={instance('parameters')/dcm:xml_file}&amp;score_id={@xml:id}',
+                                    onclick="window.open('{instance('parameters')/dcm:server_name}/modules/view_score.xq?doc={instance('parameters')/dcm:xml_file}&amp;score_id={@xml:id}',
                                     '_blank', 'height=360,width=1090,location=no,status=no,menubar=no,toolbar=no');return false;"
                                     ><h:img src="{instance('parameters')/dcm:server_name}/editor/images/score.png" alt="Score" title="View incipit" 
                                         border="0" style="vertical-align:middle;"/></h:a>
@@ -208,7 +208,7 @@
                     <xf:group ref=".[text()]">
                         <h:a 
                             href="javascript:void(0);"
-                            onclick="window.open('{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:exist_dir}modules/view_score.xq?doc={instance('parameters')/dcm:xml_file}&amp;mode=pae&amp;score_id={@xml:id}',
+                            onclick="window.open('{instance('parameters')/dcm:server_name}/modules/view_score.xq?doc={instance('parameters')/dcm:xml_file}&amp;mode=pae&amp;score_id={@xml:id}',
                             '_blank', 'height=200,width=1000,location=no,status=no,menubar=no,toolbar=no');return false;"
                             ><h:img src="{instance('parameters')/dcm:server_name}/editor/images/score.png" alt="Score" title="View incipit" 
                                 border="0" style="vertical-align:middle;"/></h:a>

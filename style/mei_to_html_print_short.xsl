@@ -107,7 +107,7 @@
 		<xsl:variable name="href">
 			<xsl:choose>
 				<xsl:when test="$mermeid_crossref='true'">
-					<xsl:value-of select="concat($settings/dcm:parameters/dcm:server_name,$settings/dcm:parameters/dcm:exist_dir,'present.xq?doc=',@target)"/>
+					<xsl:value-of select="concat($settings/dcm:parameters/dcm:server_name,'/present.xq?doc=',@target)"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="@target"/>
