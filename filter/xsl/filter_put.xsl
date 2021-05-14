@@ -41,7 +41,7 @@
     <xsl:copy-of select="$new_doc"/>
   </xsl:template>
 
-  <xsl:template match="m:music">
+  <xsl:template match="m:music" mode="#all">
     <xsl:element name="music" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:choose>
         <!-- If no new content has been uploaded into <music>, reinstate the original content from the database. -->
