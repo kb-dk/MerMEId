@@ -21,10 +21,11 @@ Or you can start a discussion here at [GitHub Discussions].
 If you've noticed a bug or have a feature request, please open a [GitHub issue] (well, you might want to look through the open issues before to avoid creating duplicates)! It's generally best if you get confirmation of your bug or approval for your feature request this way before starting to code.
 
 
-## Fork & create a branch
+## Create a branch
 
-If this is something you think you can fix, then [fork this repo] and create
-a branch with a descriptive name. Please keep in mind that before coding along there should be a ticket for the task you want to accomplish.
+If this is something you think you can fix, then create a branch with a descriptive name, either in a [fork of this repo] (if it is clear that you will be the only one working on issue in the new branch), or in this repo directly.
+
+Please keep in mind that before coding along there should be a ticket for the task you want to accomplish.
 
 A good branch name would be (where issue #33 is the ticket you're working on):
 
