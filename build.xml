@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="xar" name="mermeid">
-    <xmlproperty file="expath-pkg.xml"/>
-    <property name="project.version" value="${package(version)}"/>
+    
     <property name="project.app" value="mermeid"/>
     <property name="build.dir" value="build"/>
     
     <target name="clean">
         <delete dir="${build.dir}"/>
+        <delete file="expath-pkg.xml"/>
     </target>
     
     <target name="init">
@@ -37,27 +37,27 @@
     
     <available file=".git" type="dir" property="git.present"/>
 
-    <target name="git.revision" description="Store git revision in ${repository.version}" if="git.present">
+    <target name="git.revision" description="Store git revision in ${project.version}" if="git.present">
         <exec executable="git" outputproperty="git.revision" failifexecutionfails="false" errorproperty="">
             <arg value="describe"/>
             <arg value="--tags"/>
             <arg value="--always"/>
             <arg value="HEAD"/>
         </exec>
-        <condition property="repository.version" value="${git.revision}" else="unknown">
+        <condition property="project.version" value="${git.revision}" else="unknown">
             <and>
                 <isset property="git.revision"/>
                 <length string="${git.revision}" trim="yes" length="0" when="greater"/>
             </and>
         </condition>
-        <echo message="${repository.version}" />
+        <echo message="${project.version}" />
     </target>
 
     <target name="expath-pkg.xml" depends="git.revision" description="build expath-pkg.xml from template">
         <copy file="expath-pkg.xml.template" tofile="expath-pkg.xml" overwrite="yes">
             <filterchain>
                 <replacetokens>
-                    <token key="repository.version" value="${repository.version}" />
+                    <token key="repository.version" value="${project.version}" />
                 </replacetokens>
             </filterchain>
         </copy>
