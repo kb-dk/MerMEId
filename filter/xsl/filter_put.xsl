@@ -205,7 +205,8 @@
 
 
   <!-- Ensure correct order of elements -->
-
+ 
+  <!-- NB: This template only matches in the default mode which is probably never called  -->
   <xsl:template match="m:biblList">
     <xsl:element name="biblList" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
@@ -215,6 +216,7 @@
     </xsl:element>
   </xsl:template>
 
+  <!-- NB: This template only matches in the default mode which is probably never called  -->
   <xsl:template match="m:manifestation">
     <xsl:element name="manifestation" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
@@ -243,6 +245,7 @@
     </xsl:element>
   </xsl:template>
 
+  <!-- NB: This template only matches in the default mode which is probably never called  -->
   <xsl:template match="m:work">
     <xsl:element name="work" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
@@ -276,6 +279,7 @@
   </xsl:template>
 
 
+  <!-- NB: This template only matches in the default mode which is probably never called  -->
   <xsl:template match="m:expression">
     <xsl:element name="expression" namespace="http://www.music-encoding.org/ns/mei">
       <xsl:apply-templates select="@*"/>
