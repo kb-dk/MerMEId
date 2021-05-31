@@ -6,4 +6,4 @@ import module namespace config="https://github.com/edirom/mermeid/config" at "co
 
 let $content := request:get-data()
 return
-  parse-xml(config:property-replacer(serialize($content), config:get-property-names()))
+  config:replace-properties($content)

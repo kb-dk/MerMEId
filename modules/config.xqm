@@ -41,7 +41,7 @@ declare variable $config:properties := doc(concat($config:app-root, "/properties
 
 declare variable $config:version := config:get-property('version');
 
-declare variable $config:footer := config:get-property('footer');
+declare variable $config:footer := config:replace-properties(config:get-property('footer'));
 
 (:~
  : properties read from the properties.xml file
@@ -52,11 +52,15 @@ declare variable $config:exist-endpoint := config:get-property('exist_endpoint')
 declare variable $config:exist-endpoint-seen-from-orbeon := config:get-property('exist_endpoint_seen_from_orbeon');
 
 (:~
- : Return all possible property names
+ : Return all possible property names in reverse alphabetical order
  :)
 declare function config:get-property-names() as xs:string* {
-    distinct-values(($config:expath-descriptor/@*/local-name(), $config:expath-descriptor/expath:*[node()]/local-name(), 'footer', $config:properties/dcm:*/local-name()))
+    for $propertyName in ($config:expath-descriptor/@*/local-name(), $config:expath-descriptor/expath:*[node()]/local-name(), $config:properties/dcm:*/local-name())
+    group by $propertyName
+    order by $propertyName descending
+    return $propertyName[1]
 };
+
 (:~
  : Return the requested property value from the properties file 
  :  
@@ -66,7 +70,6 @@ declare function config:get-property-names() as xs:string* {
 declare function config:get-property($key as xs:string?) as item()? {
     let $expath-property := ($config:expath-descriptor/@*[local-name()=$key]/data(), $config:expath-descriptor/expath:*[local-name() = $key]/node()),
         $result := if (exists($expath-property)) then $expath-property
-                   else if ($key = "footer") then $config:footer
                    else $config:properties/dcm:*[local-name() = $key]/node()
     return
         if($result) then if ($result instance of text() or $result instance of xs:anyAtomicType) then normalize-space($result) else $result[. instance of element()]
@@ -132,11 +135,49 @@ declare function config:repo-descriptor() as element(repo:meta) {
 declare function config:expath-descriptor() as element(expath:package) {
     $config:expath-descriptor
 };
+
 (:~
  : Replace properties like {$config:poperty_name} in a string
+ : This function can do limited recursive replacement if the property that has other properties
+ : to replace is after those in the properties sequence.
+ : This is used to replace $config:version within $config:footer when $properties is sorted
+ : alphabetically descending.
  :)
 declare function config:property-replacer($content as xs:string, $properties as xs:string+) as xs:string {
-    let $replacer := '\{\$config:'||$properties[1]||'\}'
-    return if (count($properties) = 1) then replace($content, $replacer, serialize(config:get-property($properties[1])))
-    else replace(config:property-replacer($content, subsequence($properties, 2)), $replacer, serialize(config:get-property($properties[1])))
+    let $replacer := '\{\$config:'||$properties[1]||'\}',
+        $replace := replace(serialize(config:get-property($properties[1])), '$', '\$', 'q')
+(:        , $_ := util:log-system-out( :)
+(:            'Replacing ' || $replacer ||:)
+(:            ' with ' || $replace:)
+(:            || ' in '  || replace($content, '.*\n(.*\n[^{]*'||$replacer||'.*(\n.*\n)?).*', '$1', 's'):)
+(:            ):)
+    return try {
+    if (count($properties) = 1) then replace($content, $replacer, $replace)
+    else replace(config:property-replacer($content, subsequence($properties, 2)), $replacer, $replace)
+    } catch err:FORX0004 {
+        error($err:code, $err:description|| '&#10;' ||
+        '$replacer: ' || $replacer || '&#10;' ||
+        '$replace: ' || $replace)
+    }
+};
+
+(:~
+ : Replace properties like {$config:poperty_name} in an XML fragment
+ : using config:property-replacer
+ : If there is an error that error is logged and the fragment is returned
+ : without the properties replaced.
+ :)
+declare function config:replace-properties($content as item()*) as item()* {
+try {
+   parse-xml-fragment(config:property-replacer(serialize($content), config:get-property-names()))
+} catch * {
+   util:log-system-out('Propery replace error. $content: ' || $content || '&#10;' ||
+   $err:code || '&#10;' ||
+   $err:description || '&#10;' ||
+   $err:value || '&#10;' ||
+   $err:module || '&#10;' ||
+   $err:line-number || '&#10;' ||
+   $err:additional),
+   $content
+}
 };
