@@ -194,7 +194,7 @@
             <xsl:apply-templates select="m:history"/>
             <xsl:apply-templates select="m:langUsage | m:perfMedium | m:perfDuration | m:audience | m:contents"/>
             <xsl:apply-templates select="m:context | m:biblList | m:notesStmt | m:classification"/>
-            <xsl:apply-templates select="m:expressionList | m:componentList | m:relationList | m:extMeta"/>
+            <xsl:apply-templates select="m:expressionList | m:componentGrp | m:relationList | m:extMeta"/>
         </xsl:element>
     </xsl:template>
     
@@ -214,7 +214,7 @@
             <xsl:apply-templates select="m:history"/>
             <xsl:apply-templates select="m:langUsage | m:perfMedium | m:perfDuration | m:contents | m:context"/>
             <xsl:apply-templates select="m:biblList | m:notesStmt | m:classification"/>
-            <xsl:apply-templates select="m:componentList | m:relationList | m:extMeta"/>
+            <xsl:apply-templates select="m:componentGrp | m:relationList | m:extMeta"/>
         </xsl:element>
     </xsl:template>
     <xsl:template match="m:work/m:history/m:creation | m:expression/m:history/m:creation"/>     
