@@ -40,22 +40,30 @@ declare function local:set-admin-password() as empty-sequence() {
         else ()
 };
 
+declare function local:first-run() as xs:boolean {
+    not(sm:list-groups() = 'mermedit')
+};
 
 declare function local:create-group() as empty-sequence() {
     sm:create-group('mermedit')
 };
 
 declare function local:change-group() as empty-sequence() {
-    sm:chgrp(xs:anyURI(concat($target, '/data')), 'mermedit'),
-    sm:chmod(xs:anyURI(concat($target, '/data')), 'rwxrwxr-x'),
-    dbutil:scan(xs:anyURI(concat($target, '/data')), function($collection, $resource) {
+    if (not(xmldb:collection-available(config:get-property('data-root')))) 
+    then (xmldb:create-collection(string-join(tokenize(config:get-property('data-root'), '/')[position() < last()], '/'), tokenize(config:get-property('data-root'), '/')[last()])[2],
+          let $sample-resources := dbutil:scan(xs:anyURI(concat($target, '/data')), function($_, $resource) {
+          tokenize($resource, '/')[last()][. != 'controller.xql']})
+          for $res in $sample-resources return xmldb:move(concat($target, '/data'), config:get-property('data-root'), $res))
+    else (),
+    sm:chgrp(xs:anyURI(config:get-property('data-root')), 'mermedit'),
+    sm:chmod(xs:anyURI(config:get-property('data-root')), 'rwxrwxr-x'),
+    dbutil:scan(xs:anyURI(config:get-property('data-root')), function($collection, $resource) {
         if ($resource) then (
             sm:chgrp($resource, "mermedit"),
             sm:chmod($resource, 'rwxrwxr-x')
         ) else
             ()
     })
-
 };
 
 
@@ -94,9 +102,12 @@ declare function local:force-xml-mime-type-xbl() as xs:string* {
 (: set options provided as environment variables :)
 local:set-options(),
 local:force-xml-mime-type-xbl(),
-(: set admin password if provided. 
-    NB, this has to be the last command otherwise the other commands will not be executed properly :) 
-local:create-group(),
-local:change-group(),
-local:create-user(),
-local:set-admin-password()
+if (local:first-run()) then
+    (
+        local:create-group(),
+        local:create-user(),
+        local:change-group(),
+         (: This has to be the last command otherwise the other commands will not be executed properly :) 
+        local:set-admin-password()
+    )
+else ()

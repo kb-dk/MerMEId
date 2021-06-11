@@ -324,7 +324,7 @@ declare function local:format-reference(
         </table>
       </div>
     }
-    {config:get-property('footer')}
+    {config:replace-properties(config:get-property('footer'))}
   </body>
 </html>
 

@@ -18,7 +18,7 @@ declare variable $exist:root external;
 
 (console:log('/data Controller'),
 if (ends-with($exist:resource, ".xml")) then
-    (console:log('/data Controller: XML data'),
+    (console:log('/data Controller: XML data session: '||session:exists()),
     switch (request:get-method())
     case 'GET' return
     (console:log('/data Controller: GET: dispatching to transform.xq'),
@@ -49,7 +49,7 @@ if (ends-with($exist:resource, ".xml")) then
         return <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
            <forward url="/{$exist:controller}/../modules/transform.xq" method="{request:get-method()}">
                 <set-attribute name="transform.stylesheet" value="../filter/xsl/filter_get.xsl"/>
-                <set-attribute name="transform.doc" value="/db{$exist:prefix}{$exist:controller}{$exist:path}"/>
+                <set-attribute name="transform.doc" value="{$config:data-root}{$exist:path}"/>
             </forward>
             <cache-control cache="no"/>
         </dispatch>
