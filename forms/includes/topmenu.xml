@@ -29,7 +29,7 @@
       class="xforms-trigger" 
       target="view_{instance('parameters')/dcm:xml_file}"><h:img 
         src="{instance('parameters')/dcm:server_name}/editor/images/html.gif" alt="HTML" title="View as HTML" border="0"/></h:a><h:a 
-      href="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:crud_home}{instance('parameters')/dcm:xml_file}"
+      href="{instance('parameters')/dcm:server_name}{instance('parameters')/dcm:document_root}{instance('parameters')/dcm:xml_file}"
       class="xforms-trigger" 
       target="xml_{instance('parameters')/dcm:xml_file}"><h:img 
         src="{instance('parameters')/dcm:server_name}/editor/images/xml.gif" alt="XML" title="View XML data" border="0"/></h:a><xf:trigger appearance="minimal">
