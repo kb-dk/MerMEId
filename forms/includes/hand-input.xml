@@ -10,11 +10,11 @@
 
         <h:tr>
             <h:td>
-                <xf:label for="hand_desc">Hand: <h:a class="help">&#160;?<h:span class="comment">Identification of the scribe or handwriting style 
-                    such as 'NN' or 'Hand A'. An identified scribe's name should be given below, not in this field.</h:span></h:a></xf:label>
-            </h:td>
-            <h:td>
-                <xf:input ref="m:p" id="hand_desc"/>&#160;
+                <xf:input ref="m:p">
+                    <xf:label>Hand: <h:a class="help">&#160;?<h:span class="comment">Identification of the scribe or handwriting style such as 'NN' or 'Hand A'. An identified scribe's name should be given below, not in this field.</h:span></h:a>
+                </xf:label>
+
+                </xf:input>&#160;
                 
                 <!-- input/select emulating selection="open" behaviour -->
                 <h:span class="selection_open_short">
@@ -142,7 +142,6 @@
         </h:tr>
         
         <h:tr>
-            <h:td/>
             <h:td>
                 <dcm:person-input ref="."/>
                 <h:div class="vertical_spacer">&#160;</h:div>
